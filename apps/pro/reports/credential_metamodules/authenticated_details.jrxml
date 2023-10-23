@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="authenticated_details" language="groovy" pageWidth="563" pageHeight="752" columnWidth="563" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f7b40ce5-6219-4b83-b93e-5f9ddc24a833">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Fri May 31 11:37:55 CDT 2013"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mask_credentials" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subreport_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "auth_apps/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select x.*
+from
+(
+WITH logins_by_host as (
+ select hosts.id host_id, count(services.*) related_service_count
+ from metasploit_credential_logins logins
+ inner join services ON (services.id = logins.service_id)
+ inner join hosts ON (services.host_id = hosts.id)
+ inner join credential_logins_tasks clt ON (clt.login_id = logins.id)
+ inner join tasks ON (clt.task_id = tasks.id)
+ where tasks.app_run_id = $P{app_run_id}
+ and $P!{host_address_clause}
+ and logins.status = 'Successful'
+ group by hosts.id
+),
+
+sessions_by_host as (
+ select hosts.id host_id, count(ses.*) session_count
+ from sessions ses
+ inner join task_sessions tses on (ses.id = tses.session_id)
+ inner join tasks t on (tses.task_id = t.id)
+ inner join app_runs ar on (t.app_run_id = ar.id)
+ inner join hosts on (ses.host_id = hosts.id)
+ where ar.id = $P{app_run_id}
+ and $P!{host_address_clause}
+ group by hosts.id
+)
+
+select
+ hosts.created_at, hosts.id,
+ hosts.name,
+ host(hosts.address) as address,
+ hosts.os_name, hosts.os_flavor, hosts.os_sp,
+ coalesce((select session_count from sessions_by_host where host_id = hosts.id), 0) session_count,
+ coalesce((select related_service_count from logins_by_host where host_id = hosts.id), 0) service_count
+from hosts
+where $P!{host_address_clause}
+and hosts.workspace_id = $P{workspace_id}
+GROUP BY hosts.id
+order by hosts.id
+) x
+where (session_count > 0 or service_count > 0)]]>
+	</queryString>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="os_name" class="java.lang.String"/>
+	<field name="os_flavor" class="java.lang.String"/>
+	<field name="os_sp" class="java.lang.String"/>
+	<field name="session_count" class="java.lang.Long"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="service_count" class="java.lang.Long"/>
+	<detail>
+		<band height="56">
+			<textField>
+				<reportElement uuid="da200720-1d79-40d4-af33-44b2074b51b3" style="section_header_2" x="0" y="10" width="563" height="25"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[// This renders: HOSTNAME[or address if none] (ADDRESS[if name], OSINFO)
+($F{name} ? $F{name} : $F{address}) +
+(($F{name} || $F{os_flavor} || $F{os_name}) ? (
+    " (" +
+        ($F{name} ? $F{address} : "") +
+        ($F{os_name} ? ( ($F{name} ? ", " : "") + $F{os_name}) : "") +
+        ($F{os_flavor} ? (" " + $F{os_flavor}) : "")
+    + ")"
+) : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="da200720-1d79-40d4-af33-44b2074b51b3" style="table_text_underlined" x="0" y="36" width="563" height="20"/>
+				<textElement>
+					<paragraph leftIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Added: " + new SimpleDateFormat("yyyy/MM/dd h:mma").format($F{created_at})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="bfd29620-3a13-4010-8918-82bf1601dc19" style="separator_line_darker" x="0" y="35" width="563" height="1"/>
+			</line>
+		</band>
+		<band height="72">
+			<printWhenExpression><![CDATA[$F{service_count} > 0]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="1dc18a5d-655f-445a-b1b6-f8dd8f0d740d" style="table_text" x="0" y="0" width="563" height="20"/>
+				<textElement>
+					<paragraph leftIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Services:"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="867418d3-e7a9-4c4d-b834-5f32eb81493e" x="20" y="20" width="543" height="40"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "authenticated_details_services.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="69">
+			<printWhenExpression><![CDATA[$F{session_count} > 0]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="62fe42a2-55e0-4c86-944e-76b4c40540e0" x="20" y="20" width="543" height="40"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "authenticated_details_sessions.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="1dc18a5d-655f-445a-b1b6-f8dd8f0d740d" style="table_text" x="0" y="0" width="563" height="20"/>
+				<textElement>
+					<paragraph leftIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{session_count} <= 1 ?
+ "Session:" :
+ "Sessions (" + $F{session_count} + "): "]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

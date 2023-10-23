@@ -1,0 +1,41 @@
+
+<% unless @working: %>
+  <% klass = if @expanded then 'contract' else 'expand' %>
+  <div class='group-row'>
+    <a class='<%= klass %>' href='javascript:void(0)' title='Show creds in this group'></a>
+
+    <span class='name'>
+      <%= @name %>
+    </span>
+
+    <a class='right delete' href='javascript:void(0)'>
+      &times;
+    </a>
+  </div>
+<% end %>
+
+<% if @loading: %>
+  
+  <p>
+    <div class='loading'></div>
+  </p>
+
+  <ul class='cred-rows'>
+  </ul>
+
+<% else if @working: %>
+
+  <ul class='cred-rows'>
+  </ul>
+
+<% else if @expanded: %>
+
+  <ul class='cred-rows'>
+  </ul>
+
+<% else: %>
+
+  <ul class='cred-rows' style='display:none'>
+  </ul>
+
+<% end %>

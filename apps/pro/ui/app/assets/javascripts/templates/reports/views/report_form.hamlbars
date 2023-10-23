@@ -1,0 +1,11 @@
+.report-form
+  {{#form "/" class="form formtastic"}}
+  {{hidden '_method' 'create'}}
+  %ul
+    %li.file
+      {{label "report_custom_resource[file_data]" "Resource file"}}
+      {{file "report_custom_resource[file_data]"}}
+    %li.name
+      {{label "report_custom_resource[name]" "Resource name"}}
+      {{input "report_custom_resource[name]" ''}}
+  {{/form}}

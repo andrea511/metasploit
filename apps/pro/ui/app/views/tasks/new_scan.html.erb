@@ -1,0 +1,163 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, link_to("New Discovery Scan", "#") %>
+
+
+<%= required_label %>
+
+<%= semantic_form_for @task, :url => start_scan_path, :complete => "enableSubmitButtons();", :remote => true  do |f| %>
+	<%= f.hidden_field :workspace_id %>
+
+	<div id="popup_errors"></div>
+
+	<div class="one_col_no_sidebar">
+		<%= f.inputs "Target Settings" do -%>
+			<%= f.input :address_string, :label => "Target addresses", :as => :text, :required => true %>
+		<% end -%>
+
+		<%= advanced_options_button %>
+
+		<div class="advanced">
+			<%= f.inputs "Advanced Target Settings" do %>
+				<%= f.input :blacklist_string, :label => "Excluded addresses", :as => :text %>
+				<%= f.input :initial_nmap,     :label => "Perform initial portscan", :as => :boolean %>
+
+				<% if current_user and current_user.admin? %>
+					<%= f.input :custom_nmap,          :label => "Custom Nmap arguments" %>
+					<%= f.input :ports_extra,          :label => "Additional TCP ports" %>
+					<%= f.input :ports_blacklist,      :label => "Excluded TCP ports" %>
+					<%= f.input :ports_custom,         :label => "Custom TCP port range" %>
+					<%= f.input :portscan_source_port, :label => "Custom TCP source port" %>
+					<%= f.input :fast_detect,          :label => "Fast detect: Common TCP ports only", :as => :boolean %>
+				<% end -%>
+			<% end -%>
+
+			<%= f.inputs "Discovery Settings" do -%>
+				<%= f.input :portscan_speed, :label => "Portscan speed", :as => :select,
+						:collection => ScanTask::PORTSCAN_SPEED_LABELS.zip(ScanTask::PORTSCAN_SPEEDS) %>
+				<%= f.input :portscan_timeout, :label => "Portscan timeout", :hint => "(minutes)" %>
+				<%= f.input :udp_probes, :label => "UDP service discovery", :as => :boolean %>
+				<%= f.input :snmp_scan,  :label => "Scan SNMP community strings", :as => :boolean %>
+				<%= f.input :h323_scan,  :label => "Scan H.323 video endpoints", :as => :boolean %>
+				<%= f.input :finger_users, :label => "Enumerate users via finger", :as => :boolean %>
+				<%= f.input :identify_services, :label => "Identify unknown services", :as => :boolean %>
+				<%= f.input :single_scan, :label => "Single scan: scan hosts individually", :as => :boolean %>
+				<%= f.input :dry_run, :label => "Dry run: only show scan information", :as => :boolean %>
+        <% if License.get.pro? -%>
+				  <%= f.input :initial_webscan, :label => "Web Scan: run the Pro Web Scanner", :as => :boolean %>-
+        <% end -%>
+			<% end -%>
+
+			<%= f.inputs "Discovery Credentials" do -%>
+				<%= f.input :smb_username, :label => "SMB username" %>
+				<%= f.input :smb_password, :label => "SMB password", :input_html => {:autocomplete => :off} %>
+				<%= f.input :smb_domain, :label => "SMB domain" %>
+			<% end -%>
+      <% if License.get.pro? -%>
+        <%= f.inputs "Web Scan Settings" do %>
+            <%= f.input :webscan_max_pages, :label => "Maximum requests (pages/URL)" %>
+            <%= f.input :webscan_max_minutes, :label => "Time limit (minutes/URL)" %>
+            <%= f.input :webscan_max_threads, :label => "Concurrent requests" %>
+        <% end -%>
+      <% end -%>
+      <%= render :partial => 'generic/autotag', :locals => {:f => f, :supports_os_tagging => true} %>
+
+      <% if License.get.pro? -%>
+        <%= f.inputs "Web Crawler Settings (Advanced)" do %>
+            <%= render :partial => "web_auth_fields", :locals => {:f => f} %>
+        <% end -%>
+      <% end -%>
+    </div>
+
+
+    <% if @no_launch.blank? %>
+      <%= f.actions do -%>
+        <span class="btn">
+        <%= f.submit "Launch Scan", :class => "scan", :id => 'popup_submit' %>
+        </span>
+      <% end -%>
+    <% end %>
+
+
+		<%= f.help_link :initial_nmap do %>
+			<h3> Perform Initial Portscan </h3>
+			<p> If selected, begin Discovery with a portscan. Unchecking this option cause Discovery to move directly
+			to service version verification, presuming all known open ports are available for checks.  </p>
+			</p>
+		<% end %>
+
+		<%= f.help_link :address_string do -%>
+			<h3>Discovery Configuration</h3>
+			<p>
+				Set <b>Target Addresses</b> to configure targets for the scan. The Target Addresses field will be automatically populated based on the project scope.
+			</p>
+		<% end -%>
+		<%= f.help_link :blacklist_string do -%>
+			<h3>Discovery Configuration</h3>
+			<p>
+				Set <b>Excluded Addresses</b> to avoid specific target systems. <b>Additional TCP Ports</b> can be specified, and will be added to the default port list. These ports will be listed during a scan, and the <b>dry run</b> setting can be specified to inspect the port list before scanning. Similarly, the <b>Excluded TCP Ports</b> will be subtracted from the default list. <br/> <br/> Specifying a <b>Custom TCP Port Range </b> will override all default (and Fast Detect) port settings. A <b>Custom TCP Source Port </b> can also be specified to test firewall rules. <b>Fast Detect</b> limits the included ports specifies only a small number of well-known ports. It is best used for a quick initial discovery.
+			</p>
+		<% end -%>
+		<%= f.help_link :custom_nmap do -%>
+			<h3>Custom Nmap Arguments</h3>
+			<p>If this is populated with a list of command-line arguments to Nmap, those will take precidence over any internal configuration. This can be used to specify custom scanning technqiues, alternate timeout configurations, speeds, and the like. Only the list of ports and targets will be passed automatically to nmap.</p>
+			<% if License.get.multi_user? %>
+				<p>Note that only Administrators have this option due to project boundary concerns.</p>
+			<% end %>
+		<% end %>
+		<%= f.help_link :portscan_speed do  -%>
+			<h3>Portscan Speed</h3>
+			<p>'Insane' should only be used on a fast LAN, while 'Normal' is acceptable for most external connections. Slower speeds may help when bypassing intrusion detection systems.</p>
+		<% end -%>
+		<%= f.help_link :portscan_timeout do -%>
+			<h3>Portscan Timeout</h3>
+			<p>This option is passed to the scan as a per-host timeout.</p>
+		<% end -%>
+		<%= f.help_link :udp_probes do -%>
+			<h3>UDP Service Discovery</h3>
+			<p>This option specifies a small number of common UDP ports for host discovery. Note that disabling UDP Service Discovery will also disable SNMP community string scanning.</p>
+		<% end -%>
+		<%= f.help_link :snmp_scan do -%>
+			<h3>Scan SNMP Community Strings</h3>
+			<p>This option launches a background task to scan for SNMP devices responding to a variety of community strings. As this can be a long-running event, it is run in tandem with the rest of the discovery scan.</p>
+		<% end -%>
+		<%= f.help_link :h323_scan do -%>
+			<h3>Scan H.323 Video Endpoints</h3>
+			<p>This option specifies that h.323 video endpoints should be identified. This may cause identified devices to briefly ring.</p>
+		<% end -%>
+		<%= f.help_link :finger_users do -%>
+			<h3>Enumerate Users via Finger</h3>
+			<p>If finger is detected, attempt to query usernames. Slow.</p>
+		<% end -%>
+		<%= f.help_link :identify_services do -%>
+			<h3>Identify Unknown Services</h3>
+			<p>This option uses a number of additional Metasploit modules to discover more information about open services.</p>
+		<% end -%>
+		<%= f.help_link :single_scan do -%>
+			<h3>Single Scan</h3>
+			<p>This option configures scans to be run individually, speeding up import into the database, but slowing the overall scan process. Select this if you want to begin inspecting host information immediately, even if the scan is not complete.</p>
+		<% end -%>
+		<%= f.help_link :dry_run do -%>
+			<h3>Dry Run</h3>
+			<p>Configure a discovery scan based on the specified options, and immediately quit. Results can be inspected in the task log.</p>
+		<% end -%>
+		<%= f.help_link :smb_username do -%>
+			<h3>Discovery Credentials</h3>
+			<p>Specify SMB credentials to use during discovery. These credentials will be used for share, and username discovery on a Windows network, or on hosts running Samba.</p>
+		<% end -%>
+
+      <%= f.help_link :webscan_max_pages do -%>
+          <h3>Maximum Requests</h3>
+          <p>Sets a limit on how many pages to request within each specified web site.</p>
+      <% end -%>
+      <%= f.help_link :webscan_max_minutes do -%>
+          <h3>Time Limit</h3>
+          <p>The maximum amount of time (in minutes) that the crawler will spend per web site.</p>
+      <% end -%>
+      <%= f.help_link :webscan_max_threads do -%>
+          <h3>Concurrent Request</h3>
+          <p>Determines how many parallel requests should be used to crawl each site.</p>
+      <% end -%>
+
+    </div>
+<% end -%>
+

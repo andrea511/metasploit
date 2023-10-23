@@ -1,0 +1,186 @@
+@import 'css3-mixins';
+
+$base-font: 12px;
+
+.kill-whitespace {
+  /* the below allows us to use inline-block elements inside of .page   *
+   * with percentage-based widths; otherwise the whitespace between the *
+   * elements would force rows to add up to >100% and force a wrap.     */
+  &>div.page {
+    font-size: 0;
+    &>* {
+      font-size: $base-font;
+    }
+  }
+}
+
+$textarea-height: 7em;
+$total-width: 20%;
+$label-width: 25%;
+$invalid-color: #f00;
+
+.tab-loading-bar {
+  background-image: image-url('loader-bar.gif') !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+
+.ui-dialog .loading { @extend .tab-loading-bar; }
+
+#modals, .config {
+  .content.loading {
+    @extend .tab-loading-bar;
+  }
+
+  form.metamodule {
+    p.inline-error {
+      color: $invalid-color;
+      margin: 0;
+      font-size: .9em;
+      @include box-sizing;
+    }
+
+    @extend .kill-whitespace;
+    .dataTables_wrapper {
+      min-height: 0;
+    }
+    .advanced table {
+      th, td {
+        &.key_file_stored, &.pass {
+          max-width: 150px;
+        }
+      }
+    }
+    label.side-label {
+      width: 20%;
+      text-align: right;
+      display: inline-block;
+      padding-right: 10px;
+      @include box-sizing;
+    }
+    li.input {
+      list-style: none;
+      textarea {
+        height: $textarea-height;
+      }
+      &.hidden { display: none; }
+      &.radio  { width: 100%;   }
+      &.password {
+        &~label.plaintext {
+          display: block;
+          width: auto;
+          font-size: .9em;
+          margin-left: 20%;
+          position: relative;
+          top: -5px;
+          padding-left: 5px;
+        }
+      }
+      &.error {
+        textarea, input { border-color: $invalid-color; }
+        label, .label { color: $invalid-color; }
+      }
+      & [disabled] {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+    }
+    &>li.input, &>div>li.input, .advanced>li.input {
+      padding: 10px;
+      width: 100%-$total-width;
+      display: inline-block;
+      @include box-sizing;
+      @extend .kill-whitespace;
+
+      &.full-width {
+        width: 100%;
+      }
+      &.small-inline {
+        width: auto;
+        padding: 0;
+        &>input {
+          width: 100%;
+        }
+      }
+      &>label {
+        display: inline-block;
+        width: $label-width;
+        text-align: right;
+        font-size: 1em;
+        font-weight: 600;
+        padding-right: 15px;
+        color: #000;
+        vertical-align: top;
+        @include box-sizing;
+      }
+      &>textarea, &>input {
+        display: inline-block;
+        width: 100%-$label-width;
+        @include box-sizing;
+      }
+      &.text {
+        &~a.advanced { line-height: $textarea-height; }
+      }
+      &~a.advanced {
+        vertical-align: top;
+        padding: 10px 15px 10px 20px;
+        font-size: 11px;
+      }
+
+      p.inline-error {
+        color: $invalid-color;
+        margin: 0;
+        margin-left: $label-width;
+        font-size: .9em;
+        @include box-sizing;
+      }
+
+      fieldset.choices {
+        border: none;
+        float: none;
+        padding: 0;
+        width: 100%;
+        legend.label {
+          float: left;
+          text-align: right;
+          font-weight: 600;
+          color: #000;
+          width: 20%;
+          padding-right: 15px;
+          @include box-sizing;
+        }
+        ol.choices-group {
+          display: inline-block;
+          width: 80%;
+          p.inline-error {
+            margin-left: 0;
+            padding-top: 3px;
+          }
+        }
+      }
+    }
+
+    input[type=checkbox] { margin-top: 0;}
+
+    textarea {
+      padding: 4px 6px;
+      min-height: 64px;
+      margin-bottom: 3px;
+      overflow: auto;
+    }
+
+    input[type=text], input[type=password] {
+      padding: 3px 6px;
+    }
+
+    input[type=text], input[type=password], textarea {
+      border-radius: 2px;
+      box-shadow: inset 1px 1px 1px rgba(0,0,0, .2);
+      outline: none;
+      border: 1px solid #aaa;
+      @include box-sizing;
+    }
+
+    @import "shared/pretty_file_inputs";
+  }
+}

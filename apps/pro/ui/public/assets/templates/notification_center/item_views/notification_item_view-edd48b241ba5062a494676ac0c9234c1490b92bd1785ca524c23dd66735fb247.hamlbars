@@ -1,0 +1,14 @@
+{{#if title}}
+{{#if_eq true  compare=read}}
+.notification-message.message-read
+  {{> notification_center/item_views/_notification}}
+{{/if_eq}}
+{{#if_eq false compare=read}}
+.notification-message{ :class => "{{kind}}" }
+  {{> notification_center/item_views/_notification}}
+{{/if_eq}}
+{{else}}
+.no-new-notifications
+  No new notifications
+{{/if}}
+

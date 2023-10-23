@@ -1,0 +1,17 @@
+@import 'css3-mixins';
+
+ul.tabs {
+  border-bottom: 1px solid #ccc;
+  li.tab {
+    a {
+      background-image: none;
+      padding-left: 18px;
+    }
+  }
+}
+div.tabs {
+  &>div {
+    display: none;
+    min-height: 500px;
+  }
+}

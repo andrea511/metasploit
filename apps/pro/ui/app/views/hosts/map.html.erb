@@ -1,0 +1,56 @@
+<% title "Network Topology" %>
+<% breadcrumb workspace_link, link_to("Analysis", hosts_path(@workspace)), link_to("Map", map_host_path(@workspace)) %>
+
+<%= render :partial => 'shared/analysis_tabs' %>
+
+<div id="map-table-wrapper">
+	<div class='tab_panel'>
+
+<% content_for :header_buttons do %>
+	<%= form_tag map_host_path(@workspace), :method => :get do %>
+		<%= text_field_tag :search, '', :title => "Search Map", placeholder: "Search Map" %>
+
+		<% if params.has_key?(:trace_hosts) %>
+			<%= hidden_field_tag "trace_hosts" %>
+		<% end %>
+
+	<% end %>
+<% end %>
+
+<% if flash[:nodes] and !params[:all] -%>
+      <div class="errors"><%= flash[:nodes] %></div>
+      <%= link_to "CONTINUE", map_host_path(@workspace, all: true, trace_hosts: params[:trace_hosts], search: params[:search])%>
+<% else %>
+  <meta name="msp:map_total_nodes" content="<%= @total_nodes.to_i %>" />
+  <meta name="msp:map_trace_hosts" content="<%= params[:trace_hosts] %>" />
+  <meta name="msp:map_search" content="<%= params[:search] %>" />
+
+  <%= include_javascript 'jquery.tipsy' %>
+  <%= include_javascript 'd3' %>
+  <%= include_javascript 'd3.layout' %>
+
+
+  <%= content_tag :style, :type => "text/css" do -%>
+  .link { fill: none; stroke: #ccc; stroke-width: 1.5;}
+  .nodetext {color: #000; text-align:left; pointer-events: none; font: 12px sans-serif; }
+  .treetext_small {color: #000; text-align:left; padding-left: 2px; pointer-events: none; font: 10px sans-serif; }
+  .treetext_large {color: #000; text-align:left; padding-left: 2px; pointer-events: none; font: 12px sans-serif; }
+  .al { color: #069; text-align:left; font: 14px sans-serif;}
+  .linktext { color: #069; text-align:left; font: 13px sans-serif; }
+
+  path.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+  <% end -%>
+
+  <% content_for :bottom_javascript do %>
+    <% javascript_include_tag 'hosts/map' %>
+  <% end %>
+
+  </div>
+<% end %>
+
+</div>
+

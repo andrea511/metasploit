@@ -1,0 +1,218 @@
+modalViewPaths = <%= metamodule_dir_map.to_json %>
+
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/metamodule_task') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+  '<%= javascript_path('apps/backbone/views/modal_views/pass_the_hash') %>'
+], ($, Template, TaskConfigView, PassTheHash) ->
+  class MetaModuleTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/metamodule_task']
+
+    ui: _.extend({}, TaskConfigView.prototype.ui,{
+      mm_select : '.mm-select'
+      file_upload_path: '.file_upload_path'
+      file: '#task_config_key_file'
+      use_last_uploaded: '#task_config_use_last_uploaded'
+    })
+
+    events: _.extend({}, TaskConfigView.prototype.events,{
+      'change @ui.mm_select' : '_mmChanged'
+      'tabbed-modal-loaded @ui.config' : '_mmLoaded'
+      'change @ui.file': '_setFileUploadPath'
+      'tableload @ui.config' : '_setSelectedCred'
+      'click .stored .dataTables_wrapper tr': '_rowClicked'
+    })
+
+    initialize: ->
+      @runValidations = false
+      @enableHiddenCred = true
+
+    onBeforeRender: ->
+      @model.set('metamodules', gon.metamodules)
+
+    onShow: ->
+      @_unbindTriggers()
+      @undelegateEvents()
+      @delegateEvents()
+      @_bindTriggers()
+
+      @_initErrorMessages()
+      if @model.get('task')?
+         @task_config_id = @model.get('task').id
+         mm_symbol = @model.get("task").form_hash.mm_symbol
+         @ui.mm_select.val(mm_symbol)
+
+      if @model.get('cloned')?
+        clonedNode = @model.get('clonedConfigNode')
+        @cachedNode = $('.padding>.content form',clonedNode)[0]
+        @model.set('cloned',null)
+        @ui.mm_select.val($('[name="task_config[mm_symbol]"]',clonedNode).val())
+
+      if @selectedMM?
+        @ui.mm_select.val(@selectedMM)
+
+      path = modalViewPaths[@ui.mm_select.val()]
+
+      #If Metamodule already loaded
+      if @MM?
+        @mm.close()
+        @bindUIElements()
+        $('li.slider div',@cachedNode).remove()
+
+        if @cachedNode?
+          @runValidations = true
+
+        @mm = new @MM({el: @ui.config, appendToEl:true, cachedNode: @cachedNode, taskConfigId: @task_config_id}).open()
+
+        $('.tabbed-modal',@el).css('position','static')
+        $('.tabbed-modal', @el).css('border', '0px')
+        $('.bg',@el).remove()
+
+        @cachedNode = $('.padding>.content form', @el)[0]
+
+      else
+        #Load new Metamodule
+        @_loadMetaModule(path)
+
+
+    _bindTriggers: ->
+      $(document).on("tabbedModalValidated",@_mmValidated)
+
+    _unbindTriggers: ->
+      $(document).off("tabbedModalValidated", @_mmValidated)
+
+    _loadMetaModule: (path,clearCache=false) ->
+      rjs = requirejs.config(context: 'app')
+      rjs([
+        path
+      ], (MM) =>
+        @MM = MM
+        if @mm?
+          @mm.close()
+
+        @bindUIElements()
+
+        if clearCache
+          @cachedNode = undefined
+
+        if @cachedNode?
+          @runValidations = true
+          $('li.slider div',@cachedNode).remove()
+
+        @mm = new MM({el: @ui.config, appendToEl:true, cachedNode: @cachedNode, taskConfigId: @task_config_id}).open()
+
+        @_mmValidated(null,@mm)
+
+        $('.tabbed-modal',@el).css('position','static')
+        $('.tabbed-modal', @el).css('border', '0px')
+        $('.bg',@el).remove()
+      )
+
+    _mmValidated: (e,mm) =>
+      # If triggered by the current mm task
+      # or by re-sorted task
+      if @mm == mm || (@mm? and mm? and @mm.taskConfigId? and @mm.taskConfigId == mm.taskConfigId)
+        helpers.hideLoadingDialog.call(@)
+        @errors = mm.errors
+
+        if @errors? and ($(@el).filter(':visible').length == 0 ||
+                @_hasTabErrors(mm) ||
+                $('.hasErrors',@el).filter(':visible').length > 0)
+          @errors = "Correct Errors Below"
+          $(document).trigger('showErrorPie',@)
+        else
+          @errors = null
+          $(document).trigger('clearErrorPie',@)
+
+        @_initErrorMessages()
+        $(document).trigger('validated',@)
+
+    _hasTabErrors: (mm) ->
+      $page = $(mm.pageAt(mm._tabIdx))
+      errorCount = 0
+      _.each(mm.errors, (value, key, list)->
+        _.each(list[key], (value,key2,list) ->
+          if $(".error [name='#{key}[#{key2}]']",$page).length > 0 then errorCount++
+        )
+      )
+      if errorCount > 0 then true else false
+
+
+    _mmLoaded: ->
+      @bindUIElements()
+      $('.inline-error',@mm.$el).each((k,v)->v.remove())
+      #Don't run file validations if not a SSH Key MM or if an existing file is being used
+      noFiles = if @selectedMM=='ssh_key' and ((not @ui.use_last_uploaded.val()?) || (@ui.use_last_uploaded.val() == 'false')) then false else true
+      @_applyStashedFileInput(@ui.form[0])
+      @mm.renderFileInputs()
+
+      if @runValidations
+        #If dialog already open when validating on close and show (when sorting)
+        helpers.hideLoadingDialog.call(@)
+        helpers.showLoadingDialog.call(@,'Validating...')
+        @mm.validate(noFiles:noFiles)
+      @runValidations = true
+      @bindUIElements()
+      @undelegateEvents()
+      @delegateEvents()
+      @ui.form.append("<input type='hidden' name='task_config[task_chain]' value='true'>")
+      @ui.form.append("<input type='hidden' name='task_config[mm_symbol]' value='#{@ui.mm_select.val()}'>")
+      @trigger 'loaded'
+
+    _mmChanged: (e) ->
+      path = modalViewPaths[$(e.target).val()]
+      @task_config_id = undefined
+      @runValidations = false
+      @_loadMetaModule(path, true)
+
+    _storeForm: ->
+      @storedForm = if @ui.form[0] then helpers.cloneNodeAndForm(@ui.form[0])
+      @fileInputs = @ui.file_inputs
+
+    _setCache: ->
+      @form_cache = helpers.cloneNodeAndForm(@ui.config[0])
+      @_storeForm()
+
+    onBeforeClose: ->
+      #Need to call bindUIElements manually to update UI hash because only called onRender,
+      #and we just loaded a form via ajax :-)
+      @bindUIElements()
+      @_setCache()
+
+      #Used to restore when tabbing through between tasks
+      @selectedMM = @ui.mm_select.val()
+      #Used in the case that a MM is cloned
+      $('[name="task_config[mm_symbol]"]',@el).val(@ui.mm_select.val())
+
+      #No Validation Needed so we simulate it
+      if @mm
+        unless @mm._steps.length == 0
+          $('.inline-error',@mm.$el).each((k,v)->v.remove())
+          #Don't run file validations if not a SSH Key MM or if an existing file is being used
+          noFiles = if @selectedMM=='ssh_key' and ((not @ui.use_last_uploaded.val()?) || (@ui.use_last_uploaded.val() == 'false')) then false else true
+
+          if @runValidations
+            helpers.showLoadingDialog.call(@,'Validating...')
+            @mm.validate(noFiles:noFiles)
+
+      @cachedNode = if $('.padding>.content form', @el)? then helpers.cloneNodeAndForm($('.padding>.content form', @el)[0])
+      @_stashFileInput()
+
+      if @mm
+        @mm.close()
+
+    _setFileUploadPath: ->
+      @ui.file_upload_path.html(@ui.file.val().split('\\').pop())
+      @ui.use_last_uploaded.val(false)
+
+    _setSelectedCred: ->
+      if @mm.setHiddenCred? and @enableHiddenCred and @task_config_id and @model.get('task')['form_hash']['cred_type'] == "stored"
+        @mm.setHiddenCred(@model.get('task')['form_hash'])
+
+    _rowClicked: ->
+      if @mm.removeHiddenCred?
+        @enableHiddenCred = false
+        @mm.removeHiddenCred()
+
+

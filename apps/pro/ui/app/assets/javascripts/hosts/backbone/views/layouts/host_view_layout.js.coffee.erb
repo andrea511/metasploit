@@ -1,0 +1,10 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/host_view_layout") %>'
+], ($, Template) ->
+  class HostViewLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/host_view_layout']
+
+    regions:
+      host_stats_overview: '.host-stats-overview'
+      tags: '.tags'

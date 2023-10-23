@@ -1,0 +1,69 @@
+define [
+  'jquery',
+  '<%= javascript_path("apps/backbone/views/app_tabbed_modal") %>'
+],($, AppTabbedModalView) ->
+
+  EGADZ_START_URL = '/workspaces/'+"#{WORKSPACE_ID}"+'/apps/firewall_egress/task_config/'
+
+  class FirewallEgressModalView extends AppTabbedModalView
+    #
+    # Set up listeners for DOM events
+    #
+    events: _.extend({
+      'change #task_config_port_type_input input': 'portTypeChanged'
+      'change #task_config_scan_target_type_input input': 'scanTargetTypeChanged'
+    }, AppTabbedModalView.prototype.events)
+
+
+    #
+    # Overriden behavior
+    #
+    initialize: ->
+      super
+      @setTitle 'Segmentation and Firewall Testing'
+      @setDescription 'Runs an Nmap SYN scan against an egress target to identify the '+
+      'ports that allow egress traffic out of the network.'
+      @setTabs [
+        {name: 'Scan Config'},
+        {name: 'Generate Report', checkbox: true}
+      ]
+
+    submitUrl: => EGADZ_START_URL
+
+    formLoadedSuccessfully: (html) =>
+      super
+      @portTypeChanged()
+      @scanTargetTypeChanged()
+      $(@el).trigger('tabbed-modal-loaded')
+
+    #
+    # DOM event callbacks
+    #
+    portTypeChanged: =>
+      $portRanges = $('.advanced.port_ranges', @$modal)
+      $startPortInput = $('#task_config_nmap_start_port', @$modal)
+
+      if @manualMode()
+        $portRanges.show()
+        $startPortInput.select()
+      else
+        $portRanges.hide()
+
+    scanTargetTypeChanged: =>
+      $scanTargets = $('.advanced.scan_targets', @$modal)
+      $customHostInput = $('input#task_config_dst_host', @$modal)
+
+      if @customScanTarget()
+        $scanTargets.show()
+        $customHostInput.select()
+      else
+        $scanTargets.hide()
+
+    #
+    # DOM helpers
+    #
+    manualMode: =>
+      $('input#task_config_port_type_custom_range', @$modal).is(':checked')
+
+    customScanTarget: =>
+      $('input#task_config_scan_target_type_custom_scan_target', @$modal).is(':checked')

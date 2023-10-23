@@ -1,0 +1,11 @@
+/* line 1, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/circles.scss */
+.shared.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: #ffffff;
+  line-height: 20px;
+  text-align: center;
+  background: #6FCF00;
+}

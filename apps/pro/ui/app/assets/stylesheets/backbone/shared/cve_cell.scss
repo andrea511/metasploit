@@ -1,0 +1,24 @@
+.shared.cve-cell{
+
+  span{
+    overflow-x: auto;
+    display: inline-block;
+    text-decoration: underline;
+  }
+
+  span.ref-name{
+    text-overflow: ellipsis;
+    width:64px;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+
+}
+
+
+.shared.cve-cell.modal-content{
+  margin: 20px 0px 0px 20px;
+  .row{
+  }
+}
+

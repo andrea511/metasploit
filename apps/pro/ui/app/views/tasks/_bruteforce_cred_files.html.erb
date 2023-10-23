@@ -1,0 +1,28 @@
+<table width="auto" class="creds-table list mar-bot10">
+  <thead>
+    <tr>
+      <th class="checkbox"> <%= check_box_tag "all_cred_files", true %></th>
+      <th colspan="3">
+        <label for="bruteforce_task_brute_cred_files">Imported Credential Files</label>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="cred_file_list">
+    <% @workspace.cred_files.each do |cred_file| %>
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top">
+          <%= check_box_tag "bruteforce_task[cred_file_ids][]", cred_file.id, true, :id => "cred_file_#{cred_file}" %>
+        </td>
+        <td align="left" valign="top">
+          <%= label_tag "cred_file_#{cred_file}", h(cred_file.display_name) %>
+        </td>
+        <td align="left" valign="top">
+          <%=h cred_file.ftype %>
+        </td>
+        <td align="left" valign="top">
+          <%=h cred_file.desc %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

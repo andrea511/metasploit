@@ -1,0 +1,17 @@
+define ['<%= javascript_path('fuzzing/backbone/controllers/fuzzing_frame_controller') %>'], (FuzzingFrameController) ->
+  class Router extends Backbone.Marionette.AppRouter
+    
+    initialize: ->
+      @fuzzing_frame_controller = new FuzzingFrameController
+
+    routes:
+      "request_collector": "request_collector"
+      "fuzzing_frame" : "fuzzing_frame"
+
+    request_collector: ->
+      @fuzzing_frame_controller.showRequestCollector()
+    
+    fuzzing_frame: ->
+      @fuzzing_frame_controller.showFuzzingFrame()
+
+

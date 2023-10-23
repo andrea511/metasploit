@@ -1,0 +1,20 @@
+#dialog-region .modal {
+  min-width: 400px;
+}
+
+.payload-settings{
+  .columns.large-6{
+    label{
+      float:right;
+    }
+    margin: 4px 0;
+  }
+
+  .columns.large-12{
+    &>div{
+      width: 284px;
+      margin: 0 auto;
+    }
+  }
+
+}

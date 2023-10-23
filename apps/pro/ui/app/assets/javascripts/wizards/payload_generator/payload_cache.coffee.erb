@@ -1,0 +1,188 @@
+#
+# Maintains a collection of Payload and Encoder instances and persists
+# them to the user's localStorage. This class is completely static.
+#
+# To use, first call PayloadCache.load( -> .. )
+#
+
+$ = jQuery
+
+IGNORED_PLATFORMS = ['Platform']
+
+class @PayloadCache
+
+  #
+  # Constants
+  #
+
+  @PAYLOADS_URL: '/payloads.json'
+  @ENCODERS_URL: '/payloads/encoders.json'
+  @FORMATS_URL: '/payloads/formats.json'
+
+  #
+  # Static Properties
+  #
+
+  # Change to true to store a client-side cache of the Payloads,
+  #  Encoders, and Stages using HTML5 localStorage.
+  @useLocalStorage: false
+
+  #
+  # Static Methods
+  #
+
+  # Creates `Payload` objects for each hash in payloadsArray
+  # @param [Array] payloadsArray of Objects
+  # @option [Boolean] updateStorage (false) persists to localStorage
+  @addPayloads: (payloadsArray, opts={}) =>
+    return if _.isEmpty(payloadsArray)
+    _.each payloadsArray, (hash) => @_payloads.push(new Payload(hash))
+    @_updateLocalStorage() if opts.updateStorage
+
+  # Creates `Encoder` objects for each hash in payloadsArray
+  # @param [Array] encodersArray of Objects
+  # @option [Boolean] updateStorage (false) persists to localStorage
+  @addEncoders: (encodersArray, opts={}) =>
+    return if _.isEmpty(encodersArray)
+    _.each encodersArray, (hash) => @_encoders.push(new Encoder(hash))
+    @_updateLocalStorage() if opts.updateStorage
+
+  # Remembers the loaded formats
+  @setFormats: (formatsArray) =>
+    @_formats = formatsArray
+
+  # @opt [String] platform
+  # @opt [String] arch
+  # @return [Array] matching payloads
+  @payloads: (opts={}) =>
+    _.filter @_payloads, (payload) =>
+      m1 = !opts.platform? or _.contains(payload.platform, opts.platform)
+      m2 =     !opts.arch? or _.contains(payload.arch, opts.arch)
+      m1 and m2
+
+  # @return [Array<String>] a list of all supported platform names 
+  @platforms: =>
+    _.chain(@_payloads).pluck('platform').flatten().uniq().map((p) ->
+      _.last(p.split('::'))
+    ).reject((p) -> _.contains(IGNORED_PLATFORMS, p)).value()
+
+  # @opt [String] platform an optional platform to match against
+  # @return [Array<String>] a list of all applicable arch names
+  @arches: (opts={}) =>
+    chain = _.chain(@_payloads)
+    if opts.platform?
+      chain = chain.filter((p) => _.contains(p.platform, opts.platform))
+    chain.pluck('arch').flatten().uniq().value()
+
+  # @opt [String] platform
+  # @opt [String] arch
+  # @return [Array<Payload>] a list of matching stager Payloads
+  @stagers: (opts={}) =>
+    _.filter(@payloads(opts), (p) => p.stager)
+
+  # @opt [String] platform
+  # @opt [String] arch
+  # @return [Array] matching single payloads
+  @singles: (opts={}) =>
+    _.filter(@payloads(opts), (p) => p.single)
+
+  # @opt [String] platform
+  # @opt [String] arch
+  # @return [Array<String>] a list of matching stager handler types
+  #   e.g. ["reverse_tcp", "reverse_gopher"]
+  @stagerTypes: (opts={}) =>
+    _.chain(@stagers(opts))
+      .map((p) => _.last(p.fullname.split('/')))
+      .uniq().value()
+
+  # @opt [String] arch
+  # @opt [Boolean] includeNoneEncoder (false) includes the 'encoder/generic/none'
+  # @return [Array<Encoder>] all matching Encoders
+  @encoders: (opts={}) =>
+    _.filter @_encoders, (encoder) =>
+      if encoder.fullname == 'encoder/generic/none' and !opts.includeNoneEncoder?
+        return false
+      !opts.arch? or _.contains(encoder.arch, opts.arch?.toLowerCase())
+
+  # @opt [Boolean] buffer (false) include "buffer transform" formats
+  # @return [Array<Object>] all matching formats
+  @formats: (opts={}) =>
+    if opts?.buffer then @_formats.buffer else @_formats.exe
+
+  # @return [Boolean] the cache is empty (not loaded)
+  @isEmpty: =>
+    _.isEmpty(@_payloads) and _.isEmpty(@_encoders) and _.isEmpty(@_formats)
+  
+  # Synchronously loads payloads from HTML5 localStorage cache
+  @loadFromCache: =>
+    return unless @useLocalStorage or localStorage?.PayloadCache?
+    data = JSON.parse(localStorage.PayloadCache)
+    @addPayloads(data.payloads)
+    @addEncoders(data.encoders)
+    @setFormats(data.formats)
+
+  # Asynchronously loads payloads from the URL endpoint
+  # @complete [Function] callback with json parameter
+  @loadFromAjax: (complete=->) =>
+    async.parallel [
+      (done) => $.getJSON @PAYLOADS_URL, (json) => done(null, json)
+      (done) => $.getJSON @ENCODERS_URL, (json) => done(null, json)
+      (done) => $.getJSON @FORMATS_URL, (json) => done(null, json)
+    ], (err, [payloads, encoders, formats]) =>
+      return _.delay(@loadFromAjax, 3000, complete) if err
+      @addPayloads(payloads)
+      @addEncoders(encoders)
+      @setFormats(formats)
+      complete(@serialize())
+
+  # Loads the Payload data, one way or another.
+  # @complete [Function] callback with json parameter
+  @load: (complete) =>
+    @_expireIfNecessary()
+    return _.defer(=> complete(@serialize())) unless @isEmpty()
+    @loadFromCache()
+    if @isEmpty()
+      @loadFromAjax(complete)
+    else
+      _.defer(=> complete(@serialize()))
+
+  # Destroys the whole cache, in memory and in localStorage
+  # @opt [Boolean] preserveLocalStorage
+  @reset: (opts={}) =>
+    @_payloads = []
+    @_encoders = []
+    @_formats  = []
+    delete localStorage.PayloadCache unless opts.preserveLocalStorage
+
+  # @return [Object] hash that can be persisted to local storage
+  @serialize: =>
+    payloads: @_payloads
+    encoders: @_encoders
+    formats:  @_formats
+    version:  @_version()
+
+  #
+  # Private properties/methods
+  #
+
+  # Array of Encoder objects
+  @_encoders: []
+
+  # Array of Payload objects
+  @_payloads: []
+
+  # Expires the payloads in localStorage if there has been
+  #  a version change. Otherwise, this is a nop.
+  @_expireIfNecessary: =>
+    return unless localStorage.PayloadCache?
+    savedVersion = localStorage.PayloadCache.match(/"version":"([^"]+)"/)
+    @reset() unless savedVersion? and @_version() == savedVersion[1]
+
+  # @return [String] containing license info from the footer
+  @_version: =>
+    latestVersion = jQuery('#footer .version').html().trim()
+
+  # Persists the @localStorageCache object to the localStorage
+  @_updateLocalStorage: =>
+    return unless @useLocalStorage
+    localStorage.PayloadCache = JSON.stringify(@serialize())

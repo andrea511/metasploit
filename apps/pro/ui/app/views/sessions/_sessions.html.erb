@@ -1,0 +1,197 @@
+<% if not sessions.empty? %>
+<form>
+	<div class="control-bar">
+		<span class="button">
+			<%= submit_checkboxes_to "Collect", new_collect_evidence_path(@workspace), { :class => "collect" } %>
+		</span>
+		<span class="button">
+			<%= submit_checkboxes_to "Cleanup", new_cleanup_path(@workspace), { :class => "cleanup" } %>
+		</span>
+		<% unless sessions.upgradeable.empty? %>
+		  <span class="button">
+		    <%= submit_checkboxes_to "Upgrade", new_upgrade_sessions_path(@workspace), { :class => "upgrade_sessions" } %>
+		  </span>
+		<% end %>
+	</div>
+</form>
+<% end %>
+
+<h1>Active Sessions</h1>
+
+<% if not sessions.empty? %>
+<table class="list" id="active_sessions">
+	<thead>
+		<tr>
+			<th>Session</th>
+			<th>OS</th>
+			<th>Host</th>
+			<th>Type</th>
+			<th>Age</th>
+			<th>Description</th>
+			<th>Attack Module</th>
+		</tr>
+	</thead>
+	<tbody>
+	<% sessions.each do |session|
+		host = session.host
+	%>
+            <tr class="<%=h row_cycle %>">
+                <td class="id">
+                    <%= link_to "Session #{session.id}", session_path(session.workspace, session), :class => "session" %>
+                </td>
+                <td>
+					<%= image_tag os_to_icon(host.os) if host %>
+                </td>
+                <td>
+                    <% if host %>
+                        <%= link_to h(host.title), host %>
+                    <% else %>
+                        (Deleted Host)
+                    <% end %>
+                </td>
+                <td>
+                    <%=h session.stype.capitalize %>
+                </td>
+                <td>
+                    <%=h time_ago_in_words(session.opened_at) %>
+                </td>
+                <td>
+                    <%=h session.desc %>
+                </td>
+                <td>
+                    <% if session.via_exploit.present? %>
+   	                    <%= link_to h(session.via_exploit.split("/").last.upcase), session_reopen_path(@workspace, session), :class => "reopen" %>
+                    <% else %>
+                        (generic handler)
+                    <% end %>
+                </td>
+            </tr>
+		<% end %>
+	</tbody>
+</table>
+
+<% else %>
+
+<table class="list" id="sessions">
+	<tr>
+		<td colspan="100" style="text-align: center">No active sessions</td>
+	</tr>
+</table>
+
+<% end %>
+
+<% unless @active_routes.empty? %>
+  <h1>Active Routes</h1>
+  <table class="list" id="session_routes">
+	<thead>
+	  <tr>
+		<th>Route</th>
+		<th>Via Host</th>
+		<th>Via Session</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% @sessions.each do |session| %>
+		<% session.routes.each do |route| %>
+		<tr class="<%=h row_cycle %>">
+			<td class="route">
+			<%=h route.subnet %> /
+			<%=h route.netmask %>
+			</td>
+			<td>
+			<% if route.session.host %>
+				<%= link_to h(route.session.host), route.session.host %>
+			<% else %>
+				(deleted host)
+			<% end %>
+			</td>
+			<td class="id">
+				<%= link_to "Session #{route.session.id}", session_path(route.session.workspace, route.session) %>
+			</td>
+		</tr>
+		<% end %>
+	<% end %>
+  </tbody>
+</table>
+<% end %>
+
+<h1>Closed Sessions</h1>
+
+<% if not @dead_sessions.empty? %>
+
+<form>
+	<div class="control-bar">
+		<span class="button">
+			<%= submit_checkboxes_to "Rerun", new_replay_path(@workspace), { :class => "refresh" } %>
+		</span>
+	</div>
+</form>
+
+<table class="list" id="closed_sessions">
+	<thead>
+		<tr>
+			<th>Session</th>
+			<th>OS</th>
+			<th>Host</th>
+			<th>Type</th>
+			<th>Opened</th>
+			<th>Description</th>
+			<th>Attack Module</th>
+		</tr>
+	</thead>
+	<tbody>
+        <% if @dead_sessions.length > 0 %>
+            <% @dead_sessions.each do |session|
+            	host = session.host
+            	host_address = session.host.address
+            %>
+            <tr class=<%=h row_cycle %>>
+                <td>
+                    <%= link_to "Session #{session.id}", session_history_path(@workspace, session.id), :class => "session" %>
+                </td>
+                <td>
+					<%= image_tag os_to_icon(host.os) if host %>
+                </td>
+                <td>
+                    <% if host %>
+                        <%= link_to h(host.title), host %>
+                    <% else %>
+						<%=h host_address %>
+                    <% end %>
+                </td>
+                <td>
+                    <%=h session.stype.capitalize %>
+                </td>
+                <td>
+                    <%=h session.opened_at %>
+				</td>
+				<td>
+                    <%=h session.desc %>
+				</td>
+                <td>
+                  <% if session.via_exploit.present? %>
+                	<%= link_to h(session.via_exploit.split("/").last.upcase), session_reopen_path(@workspace, session), :class => "reopen" %>
+                  <% else %>
+                      (generic handler)
+                  <% end %>
+                </td>
+            </tr>
+            <% end %>
+        <% else %>
+            <tr class=<%=h row_cycle %>>
+                <td colspan=10 align=center>
+                    No closed sessions
+                </td>
+            </tr>
+        <% end %>
+	</tbody>
+</table>
+<% else %>
+<table class="list" id="sessions">
+	<tr>
+		<td colspan="100" style="text-align: center">No closed sessions</td>
+	</tr>
+</table>
+
+<% end %>
+

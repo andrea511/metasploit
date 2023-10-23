@@ -1,0 +1,9 @@
+<form>
+  <select id="type" name="private[type]">
+    <option value="none">None</option>
+    <option value="plaintext">Plaintext Password</option>
+    <option value="ssh">SSH Key</option>
+    <option value="ntlm">NTLM Hash</option>
+    <option value="hash">Hash</option>
+  </select>
+</form>

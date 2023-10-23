@@ -1,0 +1,13 @@
+define [
+  'jquery',
+  '<%= javascript_path("fuzzing/backbone/router") %>'
+] , ($,Router) ->
+  class App
+    start: =>
+          app = new Backbone.Marionette.Application()
+          app.addInitializer () ->
+              new Router()
+              Backbone.history.start()        
+          app.start {}
+  # Remove after merging in Jquery upgrades and correct require of jquery-ujs
+  $.ajaxSetup 'beforeSend': (xhr) -> xhr.setRequestHeader("accept", "application/json")

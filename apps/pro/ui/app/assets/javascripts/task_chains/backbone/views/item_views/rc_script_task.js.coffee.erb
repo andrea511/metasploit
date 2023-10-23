@@ -1,0 +1,79 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/module_run_task') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+  '<%= javascript_path("shared/backbone/layouts/modal") %>',
+], ($, Template, TaskConfigView, Modal) ->
+  class RcLaunchTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/module_run_task']
+
+    WORKSPACE_URL_BASE: "/workspaces/#{WORKSPACE_ID}/"
+    RCSCRIPT_URL_BASE: "/workspaces/#{WORKSPACE_ID}/tasks/new_rc_script_run"
+    VALIDATION_URL: "/workspaces/#{WORKSPACE_ID}/tasks/validate_rc_script_run"
+
+
+    ui: _.extend({}, TaskConfigView.prototype.ui,{
+      'center': '.center'
+      'search_form' : '.center .searchform'
+    })
+
+    events: _.extend({}, TaskConfigView.prototype.events, {
+      'click .rc-script-link' : '_loadRCScript'
+    })
+
+    onShow: ->
+      @loadPartial("/workspaces/#{WORKSPACE_ID}/rc_scripts", @_afterLoad, @)
+
+
+    onBeforeClose: =>
+      super
+      @_validate(@VALIDATION_URL)
+
+    _removeActions: =>
+      $("#rc-script-list input[type='checkbox']").hide()
+
+
+    _loadRCScript: (e) ->
+      e.preventDefault()
+
+      l = document.createElement("a")
+      l.href = $(e.target).attr('href')
+      rc_script_path = $(e.target).text()
+      @_loadForm("#{@RCSCRIPT_URL_BASE}/#{rc_script_path}#{l.search}")
+
+    _loadForm: (url) ->
+      $form = $('form', @el)
+
+      data = [{
+        name: 'authenticity_token'
+        value: $('meta[name=csrf-token]').attr('content')
+      }]
+
+      data = data.concat($('input,select,textarea', $form).not(':file').serializeArray())
+
+      opts = {
+        type: 'GET',
+        data: data
+      }
+
+      $('ol',$form).show()
+
+      $.ajax(
+        url,
+        opts
+      ).done((data) =>
+          @ui.config.html(data)
+          $('.module-wrapper',@ui.config).css('margin','auto')
+          modulePath = $('.rc_script_filename',@el).text()
+          $('form',@el).append("<input type='hidden' name='authenticity_token' value='#{$('meta[name=csrf-token]').attr('content')}' />")
+          $('form',@el).append('<input name="utf8" type="hidden" value="✓">')
+          $('form',@el).append("<input type='hidden' name='path' value='#{modulePath}' />")
+          @bindUIElements()
+          @undelegateEvents()
+          @delegateEvents()
+          @_setCache()
+          @errors = null
+          @_initErrorMessages()
+          $(document).trigger('validated',@)
+          @moduleSelected = true
+      )

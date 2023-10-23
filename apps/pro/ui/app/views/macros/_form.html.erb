@@ -1,0 +1,12 @@
+<%= f.input :name, :as => :string, :label => 'Macro name', :required => true, :input_html => {:autocomplete => :off} %>
+
+<%= f.help_link :name do -%>
+	<h3>Macro Name</h3>
+	<p>
+		The name should describe what this macro does. It will be visible within every component of the product that supports macros.
+	</p>
+<% end -%>
+
+<%= f.input :description, :input_html => {:autocomplete => :off, :cols => 80, :rows => 3} %>
+<%= f.input :max_time, :label => "Time limit (seconds)" %>
+

@@ -1,0 +1,15 @@
+<div id="page_links">
+	<span class="index">
+		<% if @events.size > 0 %>
+			<%=h (@offset ||= 0)+1 %>-<%=h @offset + @events.size %> of <%=h @event_count %> events
+		<% end %>
+	</span>
+	<% if @num_pages > 1 %>
+		<% 1.upto(@num_pages) do |p|  %>
+			<%= link_to_if (p != @page), p, workspace_events_path(:workspace_id => @workspace.id, :page => p, :n => @rows_per_page) %>
+		<% end %>
+		<% if @page < @num_pages %>
+			<%= link_to '', workspace_events_path(:workspace_id => @workspace.id, :page => @page+1, :n => @rows_per_page), :class => 'next' %>
+		<% end %>
+	<% end %>
+</div>

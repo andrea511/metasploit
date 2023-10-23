@@ -1,0 +1,11 @@
+json.id                      note.id
+json.ntype                   note.ntype
+json.workspace_id            note.workspace_id
+json.vuln_id                 note.vuln_id
+json.service_id              note.service_id
+json.host_id                 note.host_id
+json.critical                note.critical
+json.seen                    note.seen
+json.data                    note.data
+json.created_at              note.created_at
+json.updated_at              note.updated_at

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3_detail_services" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2298c076-3bc1-4fc0-b4ea-e424f0e80917">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Serif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Serif" fontSize="18"/>
+	<style name="Detail" fontName="Serif" fontSize="12"/>
+	<parameter name="host_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="session_count" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+  sessions.id AS session_id,
+  HOST(CAST(hosts.address as inet)) AS host_address,
+  sessions.stype AS session_type,
+  sessions.via_exploit AS exploit,
+  sessions.via_payload AS payload,
+  sessions.opened_at as opened,
+  sessions.closed_at as closed,
+  (select count(*) from session_events where session_events.session_id = sessions.id) as session_event_count
+FROM
+ sessions
+LEFT OUTER JOIN hosts on sessions.host_id = hosts.id
+WHERE hosts.id = $P{host_id}
+ORDER BY sessions.opened_at ASC
+;]]>
+	</queryString>
+	<field name="session_id" class="java.lang.Integer"/>
+	<field name="host_address" class="java.lang.String"/>
+	<field name="session_type" class="java.lang.String"/>
+	<field name="exploit" class="java.lang.String"/>
+	<field name="payload" class="java.lang.String"/>
+	<field name="opened" class="java.sql.Timestamp"/>
+	<field name="closed" class="java.sql.Timestamp"/>
+	<field name="session_event_count" class="java.lang.Long"/>
+	<detail>
+		<band height="46" splitType="Immediate">
+			<subreport>
+				<reportElement uuid="e12052ca-517c-4e1c-9251-266d3e29d3ea" x="0" y="0" width="552" height="41"/>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address">
+					<subreportParameterExpression><![CDATA[$F{host_address}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="session_id">
+					<subreportParameterExpression><![CDATA[$F{session_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="closed">
+					<subreportParameterExpression><![CDATA[$F{closed}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="session_event_count">
+					<subreportParameterExpression><![CDATA[$F{session_event_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="exploit">
+					<subreportParameterExpression><![CDATA[$F{exploit}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="opened">
+					<subreportParameterExpression><![CDATA[$F{opened}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfxv3_detail_session_events.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

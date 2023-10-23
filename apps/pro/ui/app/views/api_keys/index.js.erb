@@ -1,0 +1,24 @@
+/* DO NOT MODIFY. This file was compiled Wed, 28 Mar 2012 21:22:32 GMT from
+ * /home/todb/git/rapid7/pro/ui/app/coffeescripts/api_keys/index.coffee
+ */
+
+(function() {
+
+  jQuery(function($) {
+    var ApiKey;
+    ApiKey = {
+      reveal: function($e) {
+        return $.post($e.attr('href'), function(data) {
+          return $e.replaceWith(data);
+        });
+      }
+    };
+    return $(function() {
+      return $('a.api-key-link').click(function(e) {
+        e.preventDefault();
+        return ApiKey.reveal($(this));
+      });
+    });
+  });
+
+}).call(this);

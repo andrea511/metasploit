@@ -1,0 +1,91 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, link_to("Import Data", "#") %>
+
+
+<div id="popup_errors"></div>
+
+<%= required_label %>
+
+<%= semantic_form_for @task, :html => {:multipart => true}, :url => start_import_path do |f| %>
+
+  <%= f.hidden_field :workspace_id %>
+
+  <div class="one_col_no_sidebar">
+
+    <%= f.inputs "Import Data" do %>
+      <% unless @file_upload.nil? or @file_upload.file.nil? %>
+        <li>
+          <%= label_tag 'import_task[use_last_uploaded]','Last uploaded file' %>
+          <%= hidden_field_tag "import_task[use_last_uploaded]", @file_upload.file.identifier %>
+          <div class="file_upload_path"><%= @file_upload.file.identifier %></div>
+        </li>
+      <% end %>
+
+      <%= f.input :file, :label => 'Choose file to upload', :as => :file, :required => true %>
+      <% if @task.sites.length > 1 %>
+        <%= f.input :site_name, :label => 'Choose Nexpose Site to import', :as => :select,
+          :collection => options_for_select(@task.sites) %>
+      <% end %>
+      <%= f.input :blacklist_string, :label => "Exclude Addresses" %>
+      <%= f.input :preserve_hosts,   :label => "Do not change existing hosts", :as => :boolean %>
+    <% end -%>
+
+    <%= f.help_link :file do -%>
+      <h3>Supported file types</h3>
+      <p>
+      The following file types are supported:
+      </p>
+      <ul>
+        <li>Metasploit PWDump Export</li>
+        <li>PWDump</li>
+        <li>Metasploit Zip Export and XML</li>
+        <li>Nexpose Simple XML and XML Export</li>
+        <li>Acunetix XML</li>
+        <li>Amap Log</li>
+        <li>Appscan XML</li>
+        <li>Burp Session XML</li>
+        <li>Core Impact XML</li>
+		<li>Critical Watch FusionVM XML</li>
+        <li>Foundstone Network Inventory XML</li>
+        <li>IP Address List (One address per line)</li>
+        <li>Libpcap Network Capture</li>
+        <li>Microsoft MBSA SecScan XML</li>
+        <li>Nessus XML (v1 & v2)</li>
+        <li>NetSparker XML</li>
+        <li>Nmap XML</li>
+        <li>Qualys Asset XML and Scan XML</li>
+        <li>Retina XML</li>
+        <li>nCircle IP360 (XMLv3 & ASPL)</li>
+        <li>Spiceworks Inventory Summary CSV</li>
+      </ul>
+    <% end -%>
+
+    <%= render :partial => 'generic/autotag', :locals => {:f => f, :supports_os_tagging => true} %>
+
+    <% unless @no_launch %>
+      <%= f.actions do %>
+        <span class="btn">
+          <%= f.submit "Import Data", :class => "import", :id => 'popup_submit' %>
+        </span>
+      <% end -%>
+    <% end -%>
+
+
+    <!--
+    <h3>Exclude Addresses</h3>
+    <p>
+    Specifies one or more IP addresses to exclude from the import.
+    </p>
+    <p>
+    The following formats are accepted:
+    <ul>
+      <li>10.0.0.42</li>
+      <li>192.168.1.0/24</li>
+      <li>10.0.0.1-10.0.0.99</li>
+    </ul>
+    </p>
+    -->
+  </div>
+
+<% end %>
+

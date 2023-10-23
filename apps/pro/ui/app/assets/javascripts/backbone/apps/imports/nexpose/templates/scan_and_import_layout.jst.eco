@@ -1,0 +1,37 @@
+<div class="scan" style="display: block;">
+
+  <li class="text input optional" id="nexpose_scan_task_whitelist_string_input" style="opacity: 1;">
+    <div class="row">
+      <div class="columns large-2"><label class="label" for="nexpose_scan_task_whitelist_string" style="opacity: 1;">Scan targets</label></div>
+      <div class="columns large-10">
+        <textarea id="nexpose_scan_task_whitelist_string" name="nexpose_scan_task[whitelist_string]" rows="20" style="opacity: 1;"><%= @addresses?[0] %></textarea>
+      </div>
+    </div>
+
+
+  </li>
+
+  <li class="text input optional" id="nexpose_scan_task_blacklist_string_input" style="opacity: 1;">
+    <div class="row">
+      <div class="columns large-2"><label class="label" for="nexpose_scan_task_blacklist_string" style="opacity: 1;">Excluded Addresses</label></div>
+      <div class="columns large-10">    <textarea id="nexpose_scan_task_blacklist_string" name="nexpose_scan_task[blacklist_string]" rows="20" style="opacity: 1;"></textarea></div>
+    </div>
+  </li>
+
+  <li class="select input optional" id="nexpose_scan_task_scan_template_input" style="opacity: 1;">
+    <div class="row">
+      <div class="columns large-2">
+        <label class="label" for="nexpose_scan_task_scan_template" style="opacity: 1;">Scan template</label>
+      </div>
+
+      <div class="columns large-10 align-left">
+        <select id="nexpose_scan_task_scan_template" name="nexpose_scan_task[scan_template]" style="opacity: 1;">
+          <% for template in @templates: %>
+            <option value="<%= template.scan_template_id %>"><%= template.name %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+  </li>
+
+</div>

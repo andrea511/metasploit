@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport uuid="43ed8337-5f02-4680-a4bd-4504389b93cb" xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pci" language="groovy" pageWidth="612" pageHeight="842" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="465"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<style name="column_header" forecolor="#666666" backcolor="#FFFFFF" hAlign="Left" vAlign="Middle" rotation="None" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<paragraph leftIndent="2"/>
+	</style>
+	<parameter name="reporting_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "pci/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="xPath">
+		<![CDATA[/MetasploitPCI32v1/requirements/requirement]]>
+	</queryString>
+	<field name="number" class="java.lang.String">
+		<fieldDescription><![CDATA[@number]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[description]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[result/@status]]></fieldDescription>
+	</field>
+	<field name="project" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitPCI32v1/generated/@project]]></fieldDescription>
+	</field>
+	<field name="time" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitPCI32v1/generated/@time]]></fieldDescription>
+	</field>
+	<field name="user" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitPCI32v1/generated/@user]]></fieldDescription>
+	</field>
+	<field name="sport" class="java.lang.String">
+		<fieldDescription><![CDATA[result/details/hosts/host/services/service/port]]></fieldDescription>
+	</field>
+	<field name="cport" class="java.lang.String">
+		<fieldDescription><![CDATA[result/details/hosts/host/credentials/credential/service/port]]></fieldDescription>
+	</field>
+	<field name="product_name" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitPCI32v1/product/@name]]></fieldDescription>
+	</field>
+	<field name="logo_path" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitPCI32v1/logo]]></fieldDescription>
+	</field>
+	<field name="plaintext-pci-reqs" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitPCI32v1/plaintext-pci-reqs]]></fieldDescription>
+	</field>
+	<field name="plaintext-pci-results" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitPCI32v1/plaintext-pci-results]]></fieldDescription>
+	</field>
+	<field name="plaintext-host-summary" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitPCI32v1/plaintext-host-summary]]></fieldDescription>
+	</field>
+	<field name="plaintext-test-summary" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitPCI32v1/plaintext-test-summary]]></fieldDescription>
+	</field>
+	<title>
+		<band height="676" splitType="Stretch">
+			<image scaleImage="RealHeight" onErrorType="Blank">
+				<reportElement uuid="2783c482-3f81-43c8-bbd2-bafb2ab0bdbf" x="252" y="171" width="320" height="320"/>
+				<imageExpression><![CDATA[$F{logo_path}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="f7bdae86-d32c-4008-8bab-ce06db97e0ac" x="252" y="556" width="320" height="24"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Report generated:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cf0e6a4c-db13-47a5-bc68-654ce2b306cf" x="252" y="491" width="320" height="65"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[PCI-DSS version 3.2.1 Compliance Findings]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7ea00c0a-eac6-4e15-82ec-756798b4837b" mode="Transparent" x="0" y="0" width="252" height="676" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" markup="none">
+					<font fontName="SansSerif" size="48" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement uuid="c05b3639-5f93-4511-8199-22d979c8c80e" x="252" y="580" width="320" height="23"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="15d53047-c50d-42fb-9ae4-c0056ac4a459" x="252" y="656" width="320" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Pages: " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement uuid="5012089b-3e22-403b-beff-5a48ff5eff42" x="0" y="675" width="100" height="1"/>
+			</break>
+		</band>
+	</title>
+	<detail>
+		<band height="199">
+			<printWhenExpression><![CDATA[$F{number} == "2.2.1"]]></printWhenExpression>
+			<textField textAdjust="StretchHeight" evaluationTime="Report">
+				<reportElement uuid="f98106a8-74e3-4cbb-8e6c-7494a47d9af5" style="left_indented" x="0" y="24" width="572" height="64"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["This report is an appendix for a more complete PCI-DDS compliance audit, performed by " + $F{product_name} + " from Rapid7, Inc. It contains confidential information about the state of your network. Access to this information by unauthorized personnel may allow them to compromise your network." + "\n\n" + "The table below summarizes the pass/fail status of each of the tested PCI compliance requirements."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5d5c9a00-73eb-4082-a0c4-afc1e5889bd7" style="section_header_base" x="0" y="0" width="572" height="24"/>
+				<textElement>
+					<font size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Executive Summary]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="3f39dce1-2b43-4a3a-9b05-879558b4dfd4" stretchType="RelativeToTallestObject" x="100" y="132" width="133" height="65"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plaintext-pci-reqs}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="33450182-588c-4ad2-9b58-6ea4ca7f50b5" stretchType="RelativeToTallestObject" x="407" y="132" width="100" height="65" forecolor="#000000"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plaintext-pci-results}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6d3df0ce-f6a1-4bf2-b4c0-6c98c82811cf" style="section_header_base" x="0" y="88" width="572" height="24"/>
+				<textElement>
+					<font size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Requirements Status Summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2398ee34-efe5-4ffc-97d2-7f7cd3d1f2e8" style="column_header" x="95" y="112" width="152" height="18"/>
+				<textElement>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[PCI Requirement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fe6b74c5-6a9a-4d38-b997-ea9e9b567fe0" style="column_header" x="392" y="112" width="100" height="18"/>
+				<textElement/>
+				<text><![CDATA[Result]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="986028d7-d775-434f-aa94-be7c0b2c6a2b" x="82" y="130" width="374" height="1"/>
+			</line>
+		</band>
+		<band height="125">
+			<printWhenExpression><![CDATA[$F{number} == "2.2.1"]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="d769a6b5-f968-4c14-a65d-c4e0366dae89" style="section_header_base" x="0" y="0" width="572" height="24"/>
+				<textElement>
+					<font size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Hosts Status Summary]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="45d145b4-1ab0-4b86-a0d3-486203c9c73f" stretchType="RelativeToTallestObject" x="100" y="45" width="287" height="33"/>
+				<textElement verticalAlignment="Top" markup="none"/>
+				<textFieldExpression><![CDATA[$F{plaintext-host-summary}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a4b44383-ca3f-4d0e-a503-e65dd2aa6c39" style="column_header" x="95" y="24" width="66" height="18"/>
+				<textElement/>
+				<text><![CDATA[Host]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="afd6f12b-4f26-4247-97e5-cb3a77cc7ef8" x="82" y="42" width="386" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="680f95fc-7b9a-43ae-8d06-9e7fb0f4b060" style="column_header" x="392" y="24" width="84" height="18" />
+				<textElement/>
+				<text><![CDATA[Test status]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="38502ebf-96fe-4b75-b590-0fe7782ac4c5" stretchType="RelativeToTallestObject" x="407" y="45" width="123" height="33"/>
+				<textElement verticalAlignment="Top" markup="none"/>
+				<textFieldExpression><![CDATA[$F{plaintext-test-summary}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement uuid="f41f3b91-912e-4e90-9bb2-676cd947d1a9" positionType="Float" x="0" y="78" width="572" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="5992c430-fd25-4f6c-83f2-dded9c9f0961" style="section_header_base" x="0" y="99" width="572" height="24"/>
+				<textElement>
+					<font size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Detailed Findings]]></text>
+			</staticText>
+		</band>
+		<band height="112">
+			<textField>
+				<reportElement uuid="5a9a6efc-1297-4cc6-ad90-a9d14193aeec" style="Section Header - No BG" x="0" y="0" width="285" height="20"/>
+				<textElement>
+					<font size="14" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PCI Requirement " + $F{number}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="6b260f96-b488-42f7-856e-b354f102fdea" style="gray_p" positionType="Float" x="0" y="23" width="572" height="17"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Description: " + $F{description} + "\n"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b42b1fe7-bcbb-4f1b-bb96-57a25c855183" style="generic_text" positionType="Float" x="0" y="40" width="572" height="16"/>
+				<textElement markup="none">
+					<font size="12"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status}.equalsIgnoreCase("fail") ?
+  "Results: The following hosts failed to satisfy this requirement." :
+  "Results: All surveyed hosts satisfy this requirement."]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="f508ea99-abec-4b2e-bcdc-e9f3511ae337" positionType="Float" x="10" y="61" width="562" height="16">
+					<printWhenExpression><![CDATA[$F{status}.equalsIgnoreCase("fail")]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sport">
+					<subreportParameterExpression><![CDATA[$F{sport}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="vuln_related">
+					<subreportParameterExpression><![CDATA[$F{number} == "6.2"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cred_related">
+					<subreportParameterExpression><![CDATA[$F{number} in ["8.2","8.2.1","8.2.3","8.5"]]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{REPORT_DATA_SOURCE}.subDataSource("requirement/result/details/hosts/host")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "hosts_subreport.jasper"]]></subreportExpression>
+			</subreport>
+			<image>
+				<reportElement uuid="656e786d-daeb-4354-ba47-baea524cbba5" x="532" y="0" width="40" height="18"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([status:$F{status},img_dir:$P{image_dir}])).evaluate("""
+
+if (status.equalsIgnoreCase('pass')) {
+ file_name = 'pass.png'
+} else if (status.equalsIgnoreCase('fail')) {
+ file_name = 'fail.png'
+}
+
+img_path = img_dir + file_name
+
+return img_path
+""")]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="07a3af3f-fbdf-43bc-aae1-429a72e8d5b1" style="separator_line" positionType="FixRelativeToBottom" x="86" y="81" width="400" height="1" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{number} != "8.5"]]></printWhenExpression>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

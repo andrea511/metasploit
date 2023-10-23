@@ -1,0 +1,17 @@
+<div class="foundation">
+  <h5>Go to Session</h5>
+
+  <div class='scrollie'>
+    <% unless @rowData?: %>
+    <div class='spinner'></div>
+    <% else: %>
+    <% for data,index in @rowData: %>
+    <div class='row'>
+      <div class="columns large-12">
+        <a href="<%= Routes.session_path(WORKSPACE_ID,data.id) %>" class="underline">Session <%= data.id%></a>
+      </div>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+</div>

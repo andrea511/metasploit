@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <% if @refresh.nil? || @refresh == true %>
+    <meta http-equiv="refresh" content="5"/>
+  <% end %>
+  <title><%= yield :title %></title>
+  <link rel="stylesheet" type="text/css" href="/errors.css" />
+</head>
+
+<body><div id='wrap'>
+  <div class='orange-strip'>
+  </div>
+
+  <div class='r7bottom-strip'>
+  </div>
+
+  <svg class='seven-bg'  preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 100" enable-background="new 0 0 200 100" xml:space="preserve">
+       <pattern id="img1" patternUnits="userSpaceOnUse" width="100" height="100">
+         <image preserveAspectRatio="xMinYMin" xlink:href="<%= image_path 'tileable_contours_white.jpg' %>" x="0" y="0" width="100" height="100" />
+      </pattern>
+      <g>
+        <image overflow="visible" opacity="0.2" width="954" height="517" xlink:href="/seven_shadow.png"  transform="matrix(0.24 0 0 0.24 -19.0732 -11)">
+        </image>
+      </g>
+  <polyline fill="url(#img1)" points="0.148,0 199.801,0 142.437,100 0.148,100 0.148,100 44.406,32.874 -2.08,32.874 -5.073,0.785   "/>
+  </svg>
+
+  <div id='box-wrap'>
+    <div id="box">
+      <div class="dialog-row">
+        <div class="before"></div>
+        <div class="center" id="frame">
+          <div class='stripe'></div>
+          <%= image_tag('logo_pro_black_new_overlay.png', class: 'header') %>
+          <%= image_tag('r7logo_new_dark.png', class: 'logo') %>
+          <div class="content status">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

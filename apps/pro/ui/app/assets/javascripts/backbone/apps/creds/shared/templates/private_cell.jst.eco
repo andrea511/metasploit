@@ -1,0 +1,15 @@
+<% if @displayFilterEventLink: %>
+  <a class="filter event" href="javascript:void(0)">
+    <%= ( @['private.data_truncated'] || @['core.private.data_truncated'] )  %>
+  </a>
+<% else if @displayFilterLink: %>
+  <a class="filter" href="#creds?search=private.data:<%= encodeURIComponent(@['private.data']) %>">
+    <%= ( @['private.data_truncated'] || @['core.private.data_truncated'] )  %>
+  </a>
+<% else: %>
+  <%= ( @['private.data_truncated'] || @['core.private.data_truncated'] )  %>
+<% end %>
+
+<% if @truncated: %>
+  <a href="javascript:void(0);" class="private-data-disclosure">more</a>
+<% end %>

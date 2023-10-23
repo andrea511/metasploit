@@ -1,0 +1,16 @@
+<% title "Macro - Modify" %>
+<% breadcrumb link_to("Global Settings", settings_path), link_to("Macros", macros_path), link_to("Modify: #{h @macro.name}", edit_macro_path(@macro)) %>
+
+
+<% include_view_javascript -%>
+
+<% content_for :header_buttons do %>
+	<span class="btn">
+		<%= link_to "Back to Macros", macros_path, :class => "back" %>
+	</span>
+<% end %>
+
+<%= required_label %>
+
+<%= render 'edit_fields', :macro => @macro %>
+

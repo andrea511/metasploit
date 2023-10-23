@@ -1,0 +1,21 @@
+.nexpose_console_form {
+  font-size: 12px;
+  margin-top: 10px;
+  .connectivity {
+    div {
+      position: absolute;
+      bottom: 19px;
+      right: 16px;
+    }
+    .connection_success {
+      display: none;
+      padding-left: 20px;
+      background: url(<%= asset_path 'icons/silky/tick.png' %>) 0 0 no-repeat;
+    }
+    .connection_error {
+      display: none;
+      padding-left: 20px;
+      background: url(<%= asset_path 'icons/silky/exclamation.png' %>) 0 0 no-repeat;
+    }
+  }
+}

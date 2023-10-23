@@ -1,0 +1,9 @@
+json.id                      service.id
+json.host_id                 service.host_id
+json.port                    service.port
+json.proto                   service.proto
+json.state                   service.state
+json.name                    service.name
+json.info                    service.info
+json.created_at              service.created_at
+json.updated_at              service.updated_at

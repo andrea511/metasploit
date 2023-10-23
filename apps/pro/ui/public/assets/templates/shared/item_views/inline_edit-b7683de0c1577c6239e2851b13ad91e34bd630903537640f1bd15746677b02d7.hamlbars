@@ -1,0 +1,7 @@
+.container
+  .input-container
+  .field-text
+    {{ ref }}
+  .controls
+    %a.garbage{:href => 'javascript:void(0)'}
+    %a.pencil{:href => 'javascript:void(0)'}

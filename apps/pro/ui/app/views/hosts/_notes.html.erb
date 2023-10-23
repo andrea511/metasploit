@@ -1,0 +1,21 @@
+<% if notes.visible.count > 0 %>
+<table class="list sortable" id="notes">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Port</th>
+      <th>Service Information</th>
+    </tr>
+  </thead>
+<tbody>
+<% reset_cycle "rows" %>
+<% notes.visible.each do |note| %>
+	<tr class="<%= row_cycle %>">
+		<td class="timestamp"><%= note.timestamp %></td>
+		<td class="<%= (note.critical and ! note.seen) ? "critical_note" : "normal_note" %>"><%= note.ntype %></td>
+		<td><%= note.data.kind_of?(Hash) ? render('generic/hash', :hash => note.data) : note.data %></td>
+	</tr>
+<% end %>
+</tbody>
+</table>
+<% end %>

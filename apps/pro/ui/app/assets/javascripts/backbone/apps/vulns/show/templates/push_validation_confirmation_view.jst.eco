@@ -1,0 +1,11 @@
+<div class="msg">
+  You are about to push this vulnerability to Nexpose as a validated vulnerability. Are you sure?
+</div>
+
+<div class="error-state">
+  Nexpose push failed. Please try again.
+</div>
+
+<div class="processing ellipsis">
+  Processing
+</div>

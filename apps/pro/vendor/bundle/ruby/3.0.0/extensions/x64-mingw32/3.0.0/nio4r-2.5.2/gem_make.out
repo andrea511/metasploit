@@ -1,0 +1,14 @@
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/nio4r-2.5.2/ext/nio4r
+C:/Users/vagrant/pro/pkg/w32/ruby/bin/ruby.exe -I C:/Users/vagrant/pro/pkg/w32/ruby/lib/ruby/site_ruby/3.0.0 -r ./siteconf20230522-388-k2yt2z.rb extconf.rb
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/nio4r-2.5.2/ext/nio4r
+make DESTDIR\= clean
+make: *** No rule to make target 'clean'.  Stop.
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/nio4r-2.5.2/ext/nio4r
+make DESTDIR\=
+make: Nothing to be done for 'all'.
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/nio4r-2.5.2/ext/nio4r
+make DESTDIR\= install
+make: Nothing to be done for 'install'.

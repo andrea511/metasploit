@@ -1,0 +1,41 @@
+define [
+  '<%= javascript_path("apps/backbone/views/card_view") %>'
+  '<%= javascript_path("templates/apps/views/no_cards_found_view") %>'
+  'jquery'
+], (CardView, NoCardsTemplate, $) ->
+  class NoItemsView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['apps/views/no_cards_found_view']
+
+  class CardsCollectionView extends Backbone.Marionette.CollectionView
+    cardsPerRow: 3
+    childView: CardView
+    emptyView: NoItemsView
+
+    initialize: =>
+      $(window).resize =>
+        cardsPerRow = @cardsPerRow
+        if @_updateCardsPerRow() != cardsPerRow
+          @render()
+
+    onBeforeRender: =>
+      $(@el).html('')
+
+    onRender: =>
+      # wrap groups of 3 cards in a .row
+      $cols = $('div.columns', @el).parent()
+      $wrapper = null
+      @_updateCardsPerRow()
+      _.each($cols, (col, idx) =>
+        if idx % @cardsPerRow == 0
+          $wrapper = $('<div class="row" />').appendTo(@el)
+        $(col).appendTo($wrapper)
+      )
+      width = "#{100/@cardsPerRow}%"
+      _.each($('.card', @el), (card) =>
+        $(card).parent().css(width: width)
+      )
+      _.defer =>
+        $('.card p.description', @el).truncate(maxLines: 5)
+
+    _updateCardsPerRow: =>
+      @cardsPerRow = if $(window).width() > 1180 then 4 else 3

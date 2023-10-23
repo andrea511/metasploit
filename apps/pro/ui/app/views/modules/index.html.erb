@@ -1,0 +1,126 @@
+<% content_for :head do %>
+  <meta name="msp:module_run_path" content="<%= new_module_run_path(@workspace.id, '') %>" />
+<% end %>
+
+<% title "Modules" %>
+<% breadcrumb workspace_link, modules_link %>
+<% include_view_javascript %>
+
+<div class='center'>
+	<% if @hosts.size > 0 %>
+		<h2><%= h pluralize(@hosts.size, 'host') %> selected</h2>
+		<br/>
+	<% end %>
+
+	<%= form_for :modules, :url => { :action => 'index' }, :html => { :class => "searchform", :method => "POST", :autocomplete => 'off' } do |f| %>
+		<%= label_tag :q, "Search Modules" %>
+		<%= text_field_tag :q, @q, :size => 70, :id => "q", autofocus: true %>
+		<% @hosts.each do |host| %>
+			<%= hidden_field_tag 'host_ids[]', host.id, :id => "host_ids_#{host.id}_search" %>
+		<% end %>
+	<% end %>
+
+	<br/>
+
+<table align="center" style="margin: auto; border-collapse: separate; border-spacing: 10px 0;">
+<tr><td valign="top">
+
+<b>Module Statistics <%= (@q ? show_hide_link("module_stats") : "") %></b>
+<table class="list" id="module_stats" style="<%= display_none_if @q %>"/>
+	<thead>
+		<tr>
+			<th style="text-align: right">Stat</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<%= render 'stat_row', :label => "Total Modules", :value => @stat_modules_total %>
+	<%= render 'stat_row', :label => "Exploit Modules", :value => @stat_modules_exploit %>
+	<%= render 'stat_row', :label => "Auxiliary Modules", :value => @stat_modules_auxiliary %>
+	<%= render 'stat_row', :label => "Post Modules", :value => @stat_modules_post %>
+	<%= render 'stat_row', :label => "Server-Side Exploits", :value => @stat_modules_server %>
+	<%= render 'stat_row', :label => "Client-Side Exploits", :value => @stat_modules_client %>
+</table>
+</td>
+<td valign="top">
+<b>Search Keywords <%= (@q ? show_hide_link("search_keywords") : "") %></b>
+<table class="list" id="search_keywords" style="<%= display_none_if @q %>"/>
+	<thead>
+		<tr class="<%= row_cycle %>">
+			<th>Keyword</th>
+			<th>Description</th>
+			<th>Example</th>
+		</tr>
+	</thead>
+	<%= render 'keyword_row', :kw => "name",     :desc => "Search within the module's descriptive name", :ex => "name:Microsoft" %>
+	<%= render 'keyword_row', :kw => "path",     :desc => "Search within the module's path name", :ex => "path:windows/smb" %>
+	<%= render 'keyword_row', :kw => "platform", :desc => "Search for modules affecting this platform/target", :ex => "platform:linux" %>
+	<%= render 'keyword_row', :kw => "type",     :desc => "Search for modules that are of a specific type (exploit, auxiliary, or post)", :ex => "type:exploit" %>
+	<%= render 'keyword_row', :kw => "app",      :desc => "Search for modules that are either client or server attacks", :ex => "app:client" %>
+	<%= render 'keyword_row', :kw => "author",   :desc => "Search for modules written by author", :ex => "author:hdm" %>
+	<%= render 'keyword_row', :kw => "cve",      :desc => "Search for modules with a matching CVE ID", :ex => "cve:2009" %>
+	<%= render 'keyword_row', :kw => "bid",      :desc => "Search for modules with a matching Bugtraq ID", :ex => "bid:10078" %>
+	<%= render 'keyword_row', :kw => "osvdb",    :desc => "Search for modules with a matching OSVDB ID", :ex => "osvdb:875" %>
+	<%= render 'keyword_row', :kw => "edb",      :desc => "Search for modules with a matching Exploit-DB ID", :ex => "edb:18606" %>
+</table>
+
+</td></tr>
+</table>
+</div>
+
+<div id="modules">
+
+<% if @q %>
+	<h3>Found <%=h pluralize(@modules.size, "matching module") %></h3>
+<% else %>
+	<h3><%=h @modules.size %> most recent disclosures</h3>
+<% end %>
+
+<% if @hosts.size > 0 %>
+	<%= form_tag '',  :method => "POST", :id => 'new_module_run' do |f| %>
+
+		<% @hosts.each do |host| %>
+			<%= hidden_field_tag 'host_ids[]', host.id, :id => "host_ids_#{host.id}_module" %>
+		<% end %>
+	<% end %>
+
+<% end %>
+
+<table class="module_list list">
+	<thead>
+		<tr>
+			<%= sortable_th "Module&nbsp;Type", "type" %>
+			<th>OS</th>
+			<%= sortable_th "Module", "title" %>
+			<%= sortable_th "Disclosure&nbsp;Date", "disclosure" %>
+			<%= sortable_th "Module&nbsp;Ranking", "rank" %>
+			<% ["CVE", "BID", "OSVDB", "EDB"].each do |type| %>
+				<th><%=h type %></th>
+			<% end %>
+		</tr>
+	</thead>
+<% @modules.each do |m| %>
+	<tr class="<%= row_cycle %>">
+		<td class="type"><%= m.type %></td>
+		<td><%= module_icons_html(m) %></td>
+
+		<% if @hosts.size == 0 %>
+			<td><%= link_to h(m.title), new_module_run_path(@workspace, m.fullname), :class => "module-name", :module_fullname => m.fullname %>
+				<br/><%= m.fullname %>
+			</td>
+		<% else %>
+		  <td><%= link_to h(m.title), "#", :class => "module-name", :module_fullname => m.fullname %>
+				<br/><%= m.fullname %>
+		  </td>
+		<% end %>
+
+		<td><%=h m.disclosure_date ? m.disclosure_date.strftime("%B %e, %Y") : '' %></td>
+		<td><%= module_star_icons(m.rank) %></td>
+		<% ["CVE", "BID", "OSVDB", "EDB"].each do |type| %>
+			<td>
+				<%=h m.references_by_type(type).map { |t, ref| ref }.join(", ") %>
+			</td>
+		<% end %>
+	</tr>
+<% end %>
+</table>
+</div>

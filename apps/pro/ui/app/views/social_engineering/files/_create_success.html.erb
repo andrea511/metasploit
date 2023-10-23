@@ -1,0 +1,10 @@
+<%
+  # due to some encoding-jankiness in IE we have to pass JSON
+  #   data to iframe-based request in HTML format. So, we return
+  #   a dom with one meta tag into which we insert our JSON
+  # see [http://www.malsup.com/jquery/form/#file-upload]
+%>
+
+<div>
+  <meta name='save-status' content="<%= { success: true, user_submitted_file: @file }.to_json %>" />
+</div>

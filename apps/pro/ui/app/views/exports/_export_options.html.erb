@@ -1,0 +1,9 @@
+<%= f.inputs 'Options' do -%>
+    <%= f.input :mask_credentials,
+                :as => :boolean %>
+
+    <%= f.help_link 'mask_credentials' do %>
+        <h3>Export Options</h3>
+        <p>Mask credentials: select this option to obfuscate any display of credential values in the resultant export. Note that this will not be applied to existing artifacts included in some exports, e.g. existing reports that are exported in a Zip Workspace export.</p>
+    <% end %>
+<% end %>

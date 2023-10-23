@@ -1,0 +1,12 @@
+<h2>Phishing Result <%= @phishing_result.id %></h2>
+<p>received from: <strong><%= @phishing_result.address %></strong></p>
+
+<h3>HTTP Headers</h3>
+<pre>
+<%= @phishing_data['headers'].to_yaml %>
+</pre>
+
+<h3>Captured Form Data</h3>
+<pre>
+<%= @phishing_data['body'].to_yaml %>
+</pre>

@@ -1,0 +1,31 @@
+<% if update.error %>
+	<p style="color: red">
+		Failed to get updates: <%=h update.error %>
+	</p>
+<% elsif update.up_to_date? %>
+	<h2>No Updates Found</h2>
+
+	<p>There are no updates available.</p>
+
+	<p>
+		Installed version: <strong><%=h update.current_version %></strong>
+	</p>
+
+<% else %>
+	<h2>Updates Available</h2>
+
+	<p style="text-decoration: underline">
+		Version <%=h update.version %>
+	</p>
+
+	<p>
+		<%=
+			update.info.html_safe # Intentional display of HTML content here
+		%>
+	</p>
+
+	<span class="btn">
+		<%= submit_tag "Install", :action => "apply" %>
+	</span>
+<% end %>
+

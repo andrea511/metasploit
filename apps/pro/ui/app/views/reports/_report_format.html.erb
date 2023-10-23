@@ -1,0 +1,14 @@
+<%= f.inputs 'File Formats' do -%>
+  <%= f.input :file_formats,
+              :as            => :check_boxes,
+              :required      => true,
+              :collection    => @report.rtype.formats_labeled.sort
+
+  %>
+
+  <%= f.help_link :file_formats do %>
+      <h3>File Format</h3>
+      <p>Select one or more file formats to use when generating this report. Each resultant artifact will be available from the Reports page once generated.</p>
+  <% end %>
+<% end %>
+

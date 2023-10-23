@@ -1,0 +1,11 @@
+define ['jquery'], ($) ->
+  class Loot extends Backbone.Model
+    defaults:
+      content_type: 'text/plain'
+      info: ''
+      data: null
+      host_id: 0
+      workspace_id: 0
+
+    url: =>
+      "/workspaces/#{@get('workspace_id')}/loots/#{@id}.json"

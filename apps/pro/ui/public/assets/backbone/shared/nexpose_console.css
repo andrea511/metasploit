@@ -1,0 +1,23 @@
+/* line 1, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/nexpose_console.css.scss.erb */
+.nexpose_console_form {
+  font-size: 12px;
+  margin-top: 10px;
+}
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/nexpose_console.css.scss.erb */
+.nexpose_console_form .connectivity div {
+  position: absolute;
+  bottom: 19px;
+  right: 16px;
+}
+/* line 10, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/nexpose_console.css.scss.erb */
+.nexpose_console_form .connectivity .connection_success {
+  display: none;
+  padding-left: 20px;
+  background: url(/assets/icons/silky/tick-644faffc659fb1e6778cf5290022fbcde177952c66881848e6380ed91211e878.png) 0 0 no-repeat;
+}
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/nexpose_console.css.scss.erb */
+.nexpose_console_form .connectivity .connection_error {
+  display: none;
+  padding-left: 20px;
+  background: url(/assets/icons/silky/exclamation-c89b56c55b934b1f05ef01d47aa7169b5ca0322c37d1fcf62b067d660eb29f12.png) 0 0 no-repeat;
+}

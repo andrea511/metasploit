@@ -1,0 +1,7 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/empty_task_config') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+], ($, Template, TaskConfigView) ->
+  class EmptyTaskConfig extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/empty_task_config']

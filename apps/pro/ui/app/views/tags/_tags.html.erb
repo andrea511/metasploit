@@ -1,0 +1,26 @@
+<table class="list host_tags sortable" id="tags-table">
+  	<thead>
+    	<tr>
+      		<th class="checkbox"><%= check_box_tag "all_tags", false %></th>
+      		<th>Name</th>
+      		<th>Description</th>
+      		<th>Hosts</th>
+      		<th>Report Summary</th>
+      		<th>Report Details</th>
+      		<th>Critical Finding</th>
+    	</tr>
+  	</thead>
+  	<tbody>
+    	<% tags.each do |tag| -%>
+      		<tr>
+				<td><%= check_box_tag("tag_ids[]", tag.id, false, :id => nil) %><%= link_to '', edit_workspace_tag_path(@workspace, tag), :html_options => {:class => 'invisible'} %></td>
+        		<td><%= h(tag.name) %></td>
+        		<td><%= h(tag.desc) %></td>
+        		<td><%= tag.hosts.count %></td>
+        		<td style='text-align:center;'><%= icon('complete') if tag.report_summary? %></td>
+        		<td style='text-align:center;'><%= icon('complete') if tag.report_detail? %></td>
+        		<td style='text-align:center;'><%= icon('complete') if tag.critical? %></td>
+      		</tr>
+    	<% end -%>
+  	</tbody>
+</table>

@@ -1,0 +1,10 @@
+<% title "Backup - Create" %>
+<% breadcrumb link_to("Global Settings", settings_path), link_to("Backups", settings_path(anchor: 'backups')), link_to("Create", new_backup_path) %>
+
+<% content_for :header_buttons do %>
+	<span class="btn">
+		<%= link_to "Back to Backups", settings_path(anchor: 'backups'), :class => "back" %>
+	</span>
+<% end %>
+
+<%= render 'fields' %>

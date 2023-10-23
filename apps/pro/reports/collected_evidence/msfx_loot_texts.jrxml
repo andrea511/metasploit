@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3_details" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" scriptletClass="org.metasploit.util.ScriptletUtil" uuid="5509b0b5-149e-461f-a26c-4bb3ac746ee5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Serif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Serif" fontSize="18"/>
+	<style name="Detail" fontName="Serif" fontSize="12"/>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_id" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_address_clause" class="java.lang.String">
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+  loots.path as loot_path,
+  loots.ltype as loot_type,
+  COALESCE(hosts.name, HOST(CAST(hosts.address as inet))) as host_name,
+  HOST(CAST(hosts.address as inet)) as host_address,
+  COALESCE(hosts.os_name,'<Unknown>') as os_name,
+  COALESCE(loots.updated_at, loots.created_at, hosts.updated_at, hosts.created_at, current_timestamp) as collected_at
+FROM workspaces
+  LEFT OUTER JOIN "hosts" ON "hosts".workspace_id = "workspaces".id
+  LEFT OUTER JOIN "loots" ON "loots".host_id = "hosts".id
+  WHERE "hosts".workspace_id = $P{workspace_id} and $P!{host_address_clause} and
+  loots.content_type = 'text/plain']]>
+	</queryString>
+	<field name="loot_path" class="java.lang.String"/>
+	<field name="loot_type" class="java.lang.String"/>
+	<field name="host_name" class="java.lang.String"/>
+	<field name="host_address" class="java.lang.String"/>
+	<field name="os_name" class="java.lang.String"/>
+	<field name="collected_at" class="java.sql.Timestamp"/>
+	<variable name="has_vulns" class="java.lang.Boolean">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="has_creds" class="java.lang.Boolean">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="inherited_subdir_path" class="java.lang.String">
+		<initialValueExpression><![CDATA[$P{report_dir}]]></initialValueExpression>
+	</variable>
+	<columnHeader>
+		<band height="90">
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="2ab6e471-15ba-41e0-8a0d-923a4ff54cf8" style="Detail" mode="Opaque" x="0" y="0" width="555" height="29" backcolor="#E0EDF1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{host_name} == $F{host_address} ? $F{host_name} : $F{host_name} + " (" + $F{host_address} + ")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="86700a45-76d6-4838-84a0-cbda0abc3a49" style="Detail" x="0" y="29" width="555" height="29"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Collected: " + $F{collected_at}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b721189d-fce4-4225-b644-b36a866c8af2" style="Detail" x="0" y="58" width="555" height="29"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["OS: " + $F{os_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="82" splitType="Prevent">
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="b6df58e9-86c6-4c02-af1c-863f9ebb8ae5" x="14" y="29" width="520" height="48"/>
+				<textElement>
+					<font fontName="Monospaced" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORT_SCRIPTLET}.loadTextFile( $F{loot_path} )]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="495d38cf-7441-4bc1-8816-b85a67c2de41" style="Detail" mode="Opaque" x="0" y="0" width="555" height="22" backcolor="#E0EDF1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="true"/>
+					<paragraph rightIndent="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{loot_type}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

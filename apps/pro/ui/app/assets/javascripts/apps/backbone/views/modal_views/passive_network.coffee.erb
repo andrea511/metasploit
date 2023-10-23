@@ -1,0 +1,127 @@
+define [
+  'jquery',
+  '<%= javascript_path("apps/backbone/views/app_tabbed_modal") %>'
+],($, AppTabbedModalView) ->
+
+  PND_START_URL = "/workspaces/#{WORKSPACE_ID}/apps/passive_network_discovery/task_config/"
+
+  class PassiveNetworkDiscoveryModalView extends AppTabbedModalView
+
+    @TIMEOUT_SELECTOR: "task_config[timeout]"
+    @MAX_FILE_SIZE_SELECTOR: "task_config[max_file_size]"
+    @MAX_TOTAL_SIZE_SELECTOR: "task_config[max_total_size]"
+    @FILTER_TYPE_SELECTOR: "task_config[filter_type]"
+    @BPF_STRING_SELECTOR: "task_config[bpf_string]"
+
+    initialize: ->
+      super
+      @setTitle 'Passive Network Discovery'
+      @setDescription 'Stealthily monitors broadcast traffic to identify the IP addresses '+
+                      'of hosts on the network and updates the Hosts page with the information '+
+                      'that it finds.'
+      @setTabs [
+        {name: 'Pcap Configuration'},
+        {name: 'Filters'},
+        {name: 'Generate Report', checkbox: true}
+      ]
+
+    #
+    # Set up listeners for DOM events
+    #
+    events: _.extend({
+      'change .simple-rows .simple-row > label > input[type=checkbox]': 'simpleCheckboxChanged',
+      'change .simple-rows .simple-row div.advanced input[type=checkbox]': 'simpleAdvancedCheckboxChanged',
+      'change input[type=checkbox]': 'rewriteBpfString',
+      'change #task_config_filter_type_input': 'filterTypeChanged',
+      'click span.editLink a': 'editBpfLinkClicked'
+    }, AppTabbedModalView.prototype.events)
+
+    formOverrides: ($node=null) =>
+      $node = if $node? then $node else @$modal
+      {
+        '[max_file_size]': $("[name='#{PassiveNetworkDiscoveryModalView.MAX_FILE_SIZE_SELECTOR}']", $node).data('bytes'),
+        '[max_total_size]': $("[name='#{PassiveNetworkDiscoveryModalView.MAX_TOTAL_SIZE_SELECTOR}']", $node).data('bytes')
+      }
+
+    updateSliderValue: ($input, value) =>
+      if $input.attr('name').match(/timeout/i)
+        super
+      else
+        # Store original byte value as data attribute
+        if value.toString().match(/(B|KB|MB|GB|TB)/g)?
+          value = helpers.parseBytes(value)
+        else
+          $input.val helpers.formatBytes(value).toUpperCase()
+        $input.data('bytes', value)
+
+    submitUrl: => PND_START_URL
+
+    formLoadedSuccessfully: (html) =>
+      super
+      @filterTypeChanged()
+      $(@el).trigger('tabbed-modal-loaded')
+
+    filterTypeChanged: =>
+      showSimple = @packetFilterType() == 'simple'
+      $('.simple-rows', @$modal).toggle(showSimple)
+      @editBpfLink().toggle(showSimple)
+      @generatedBpfView().toggle(showSimple)
+      @bpfTextArea().parents('li.input').first().toggle(!showSimple)
+      @rewriteBpfString() if showSimple
+
+    # checkbox inside the "advanced" section is toggled
+    simpleAdvancedCheckboxChanged: (e) =>
+      $row = $(e.currentTarget).parents('.simple-row')
+      $cbs = $row.find('.advanced input[type=checkbox]')
+      $checkedCbs = $cbs.filter(':checked')
+      $parentCb = $row.find('>label>input[type=checkbox]')
+      $parentCb.prop('checked', $checkedCbs.length > 0)
+
+    # select all checkboxes in .advanced when outer checkbox is toggled
+    simpleCheckboxChanged: (e) =>
+      $boxes = $(e.currentTarget).parents('.simple-row').find('.advanced input[type=checkbox]')
+      $boxes.prop 'checked', $(e.currentTarget).is(':checked')
+
+    # called whenever the Bpf String should be recalculated
+    rewriteBpfString: =>
+      if @packetFilterType() == 'simple'
+        $sections = $('.simple-rows div.advanced', @$modal)
+        str = _.compact(_.map($sections, (sec) ->
+          protocols = _.map($(sec).find('.protocols input[type=checkbox]:checked'), (cb) ->
+            $(cb).attr('id')
+          )
+          ports = _.map($(sec).find('.ports input[type=checkbox]:checked'), (cb) ->
+            $(cb).attr('id').replace('_', ' ')
+          )
+          if protocols.length + ports.length > 0
+            _.compact([protocols.join(' or '), ports.join(' or ')]).join(' ')
+          else
+            null
+        )).join(") or\n (")
+        filter = if _.isEmpty(str) then "" else "(#{str})"
+        @bpfTextArea().val(filter)
+        @generatedBpfView().find('pre').text(filter)
+
+    editBpfLinkClicked: =>
+      $cbs = $("[name='#{PassiveNetworkDiscoveryModalView.FILTER_TYPE_SELECTOR}']", @$modal)
+      $(_.find($cbs, (cb) -> $(cb).val() == 'manual')).click()
+      _.defer => @bpfTextArea().focus()
+
+    #
+    # Helpers
+    #
+
+    # returns 'simple' or 'manual', depending on the state of the Packet Filter
+    packetFilterType: =>
+      $("[name='#{PassiveNetworkDiscoveryModalView.FILTER_TYPE_SELECTOR}']:checked", @$modal).val()
+
+    bpfTextArea: =>
+      $("[name='#{PassiveNetworkDiscoveryModalView.BPF_STRING_SELECTOR}']", @$modal)
+
+    generatedBpfView: =>
+      $('.generatedView', @$modal)
+
+    editBpfLink: =>
+      @_bpfLink ||= 
+        $('<span class="editLink">[<a href="#">Edit</a>]</span>')
+          .appendTo('.generatedView label', @$modal)

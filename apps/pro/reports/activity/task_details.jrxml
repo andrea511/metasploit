@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="task_details" language="groovy" pageWidth="573" pageHeight="752" columnWidth="573" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f75af10f-c7bc-44e3-adde-7583ec0b7d2c">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="workspace_id" class="java.lang.Integer"/>
+	<parameter name="include_task_logs" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="activity_task_file_path" class="java.lang.String"/>
+	<parameter name="activity_task_xml_content" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new GroovyShell(new Binding([path:$P{activity_task_file_path}])).evaluate("""
+
+import javax.xml.parsers.DocumentBuilderFactory
+import groovy.xml.XmlUtil
+
+file_reader = new FileInputStream(path)
+// Make it into a org.w3c.dom.Document to serve as XML_DATA_DOCUMENT
+file_parsed = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file_reader)
+
+return file_parsed
+""")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	t.id task_id,
+	coalesce(t.module, 'Module Unknown') module,
+	coalesce(t.description, 'None') description,
+	coalesce(t.created_by, 'Unknown') created_by,
+	t.created_at,
+	coalesce(t.info, 'None') info,
+	t.progress
+from
+	workspaces w
+	inner join tasks t on (w.id = t.workspace_id)
+where w.id = $P{workspace_id}
+order by t.created_at asc]]>
+	</queryString>
+	<field name="task_id" class="java.lang.Integer"/>
+	<field name="module" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="created_by" class="java.lang.String"/>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="info" class="java.lang.String"/>
+	<field name="progress" class="java.lang.Integer"/>
+	<detail>
+		<band height="67" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3fbae76e-3673-4cb6-9c48-74223eb6df61" style="table_text" x="0" y="29" width="73" height="18"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Description: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="87fa8b9f-c7b2-4bd4-9656-2e312b9eada9" style="table_text" x="73" y="29" width="200" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a494d264-66cb-4ca6-a148-b5f96ee043d3" style="table_text" x="385" y="29" width="188" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd h:mm:ss a").format($F{created_at})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dbb16cd6-92f6-4435-a1b6-cc59d8c2d54d" style="table_text" x="323" y="29" width="62" height="18"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Started: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a15d648b-0c3d-4ac1-96bc-7974ecf2f011" style="important_item" mode="Opaque" x="455" y="0" width="118" height="29"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{progress} != 'Unknown' ?
+ ($F{progress} + '%' + ' complete')
+ : '']]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dbb16cd6-92f6-4435-a1b6-cc59d8c2d54d" style="table_text" x="323" y="47" width="62" height="18"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["By: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a494d264-66cb-4ca6-a148-b5f96ee043d3" style="table_text" x="385" y="47" width="188" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{created_by}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="a494d264-66cb-4ca6-a148-b5f96ee043d3" style="table_text" x="73" y="47" width="250" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{info}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dbb16cd6-92f6-4435-a1b6-cc59d8c2d54d" style="table_text" x="0" y="47" width="73" height="18"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Info: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fa07b228-3920-4930-abc2-4d8426d763b5" style="Section Header - No BG" x="0" y="0" width="455" height="29"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Task (" + $F{task_id} + ") module: " + $F{module}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<subreport isUsingCache="false">
+				<reportElement uuid="3e53cb1b-b8b5-4927-a661-286882eb526a" x="0" y="0" width="573" height="56"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="XML_DATA_DOCUMENT">
+					<subreportParameterExpression><![CDATA[$P{activity_task_xml_content}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="task_id">
+					<subreportParameterExpression><![CDATA[$F{task_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="include_task_logs">
+					<subreportParameterExpression><![CDATA[$P{include_task_logs}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA[$P{report_dir} + "task_log_content.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="21"/>
+	</detail>
+</jasperReport>

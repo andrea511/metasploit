@@ -1,0 +1,25 @@
+<% unless Mdm::Task.running.where(:workspace_id => @workspace.id).blank? %>
+<div class="control-bar">
+	<span class="button">
+		<%= link_to 'Stop all tasks', stop_tasks_in_workspace_path(@workspace.id), :data => { :remote => true, :method => :post, :confirm => 'Immediately stop all tasks in this project?'}, :class => 'cancel', :title => "Stop all tasks" %>
+	</span>
+</div>
+<% end %>
+
+<div class="whiteCover">
+	<table class="list">
+	<thead>
+		<tr>
+			<th>Task</th>
+			<th>Task Details</th>
+			<th class="progress">Progress</th>
+			<th>Timestamp/Duration</th>
+		</tr>
+	</thead>
+	<% tasks.each do |task| %>
+		<tr class="<%= row_cycle %>" id="<%= dom_id(task) %>">
+			<%= render :partial => 'task', :object => task %>
+		</tr>
+	<% end %>
+	</table>
+</div>

@@ -1,0 +1,30 @@
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/boxes.scss */
+.shared.boxes {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 1px solid #CCCCCC;
+  background: #f9f9f9;
+}
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/boxes.scss */
+.shared.inset {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* line 4, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/nexpose_sites.css.scss.erb */
+.shared.nexpose-sites {
+  text-align: center;
+  font-size: 18px;
+  color: #c0c0c0;
+}
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/nexpose_sites.css.scss.erb */
+.shared .nexpose-sites-region .filter-region {
+  position: absolute;
+  top: -24px;
+  right: 9px;
+}
+/* line 16, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/nexpose_sites.css.scss.erb */
+.shared .nexpose-sites-region .filter-region .help-icon {
+  bottom: auto;
+  right: 9px !important;
+  top: 18px !important;
+}

@@ -1,0 +1,21 @@
+<div class="stepInfo begin">
+	<div class="pad8">
+		<%= form_for workspace do |f| %>
+			<%= render "shared/error_messages", :target => @workspace %>
+			<p>
+				<%= f.label :name %>
+				<br/>
+				<%= f.text_field :name, autofocus: true %>
+			</p>
+
+			<p>
+				<%= f.label :boundary, "Network Range" %>
+				<br/>
+				<%= f.text_area :boundary, :cols => 20, :rows => 8 %>
+			</p>
+
+			<%= submit_tag "Add Project" %>
+		<% end %>
+	</div>
+</div>
+

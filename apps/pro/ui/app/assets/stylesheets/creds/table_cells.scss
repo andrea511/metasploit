@@ -1,0 +1,59 @@
+@import 'css3-mixins';
+@import 'components/spinner';
+
+// Contains styles for the table cells in Credential-related tables
+// These are used in both the Creds App and in the Single Host View's Creds tab
+
+td.clone, th.clone {
+  width: 40px;
+  text-align: center;
+}
+
+td.clone {
+  text-align: center;
+
+  a.clone {
+    display: inline-block;
+    height: 10px;
+    width: 21px;
+    background-image: image-url('creds/clone.png');
+    @include image-2x(image-path('creds/clone@2x.png'), 21px, 10px);
+  }
+}
+
+td.get_session {
+  width: 100px;
+  .loading {
+    background-image: image-url('spinner.gif');
+    height: 16px;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+}
+
+td.access_level {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+div.key {
+  background-image: image-url('key.png');
+  background-position: center center;
+  height: 16px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  opacity: 0.4;
+  &:hover {
+    opacity: 0.6;
+  }
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+td.realm label {
+  // Ensure the fields for realm appear on two separate lines when cloning.
+  display: inline-block;
+}
+
+

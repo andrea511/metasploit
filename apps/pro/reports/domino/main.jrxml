@@ -1,0 +1,1319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="main" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="540b0d35-4db7-46ce-a978-c2af2f56b2ee">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1983"/>
+	<property name="ireport.callouts" value="##Mon Jun 03 16:39:41 CDT 2013"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<subDataset name="HostsCompromised" uuid="d8c1959e-374c-4b2b-95f5-e97a749add98">
+		<parameter name="app_run_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="hosts_total" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="hosts_compromised" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="hv_hosts" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="hv_hosts_compromised" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[select compromised_hosts, uncompromised_hosts, host_type from (
+	select $P{hosts_compromised} as compromised_hosts, ($P{hosts_total} - $P{hosts_compromised}) uncompromised_hosts, 'Normal' host_type
+	UNION
+	select $P{hv_hosts_compromised} as compromised_hosts, ($P{hv_hosts} - $P{hv_hosts_compromised}) uncompromised_hosts, 'High Value' host_type
+) x]]>
+		</queryString>
+		<field name="compromised_hosts" class="java.lang.Integer"/>
+		<field name="uncompromised_hosts" class="java.lang.Integer"/>
+		<field name="host_type" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="CompromisesPerIteration" uuid="a994703f-e2f0-4c81-a6bb-8ca08fb63725">
+		<parameter name="app_run_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[--
+-- The total captured_creds_count for all nodes per depth
+-- as well as the number of logins per depth.
+--
+select
+sum(mdn.captured_creds_count) as creds_captured,
+(
+	select count(mde.*)
+	from mm_domino_edges mde
+	inner join mm_domino_nodes n on (mde.dest_node_id = n.id)
+	where mde.run_id = $P{app_run_id}
+	and n.run_id = $P{app_run_id}
+	and n.depth = mdn.depth
+) as logins,
+(mdn.depth + 1) as iteration
+from mm_domino_nodes mdn
+where mdn.run_id = $P{app_run_id}
+group by mdn.depth
+order by mdn.depth]]>
+		</queryString>
+		<field name="creds_captured" class="java.lang.Long"/>
+		<field name="logins" class="java.lang.Long"/>
+		<field name="iteration" class="java.lang.Integer"/>
+	</subDataset>
+	<subDataset name="ServicesCompromised" uuid="de583a23-0da8-4c51-971b-c30a0bd97c9f">
+		<parameter name="app_run_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[--
+-- Services compromised, by name; high value
+--
+with comp_svc as (
+select
+s.name,
+count(s.id) service_count
+from services s
+inner join metasploit_credential_logins l on (s.id = l.service_id)
+inner join mm_domino_edges mde on (l.id = mde.login_id)
+where mde.run_id = $P{app_run_id}
+group by name
+),
+high_value_svc as (
+select
+s.name,
+count(s.id) hv_service_count
+from services s
+inner join metasploit_credential_logins l on (s.id = l.service_id)
+inner join mm_domino_edges mde on (l.id = mde.login_id)
+inner join mm_domino_nodes mdn on (mde.dest_node_id = mdn.id)
+where mde.run_id = $P{app_run_id}
+and mdn.run_id = $P{app_run_id}
+and mdn.high_value
+group by name
+)
+
+select
+comp_svc.name, comp_svc.service_count--, hv_service_count
+from comp_svc
+left outer join high_value_svc on (comp_svc.name = high_value_svc.name)
+order by service_count desc]]>
+		</queryString>
+		<field name="name" class="java.lang.String"/>
+		<field name="service_count" class="java.lang.Long"/>
+	</subDataset>
+	<parameter name="workspace_id" class="java.lang.Integer"/>
+	<parameter name="usernames_reported" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="product_name" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[The name of the product used to generate the report]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Metasploit Pro"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subreport_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "domino/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="include_charts" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_cover_page" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_exec_summary" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_proj_summary" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_run_selections" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_findings_summary" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_summary_charts" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_comp_hv_hosts" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_uncomp_hv_hosts" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_all_comp_hosts" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_all_uncomp_hosts" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_appendix_options" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+-- Workspace info
+	w.name as project_name,
+	w.created_at as project_created,
+	w.updated_at as project_updated,
+-- MetaModule and run info
+	a.name as app_name,
+	ar.started_at,
+	ar.stopped_at,
+	ar.state,
+  	(ar.stopped_at - ar.started_at) as run_duration,
+	(
+		select count(mdn.*)
+		from mm_domino_nodes mdn
+		where mdn.high_value
+		and mdn.run_id = $P{app_run_id}
+	) as hv_hosts,
+-- MetaModule run config. Note that null values here are recorded as 'null' string since they are nested within a string
+	case replace(substring(ar.config, 'initial_attack_type":([^,]*),'), '"', '')
+		when 'session'
+		then concat('Session ', replace(substring(ar.config, 'initial_session_id":([^,]*),'), '"', ''), ', opened at ', (select concat(to_char(s.opened_at, 'YYYY-MM-DD HH24:MI:SS'), ' UTC') from sessions s where s.id = replace(substring(ar.config, 'initial_session_id":([^,]*),'), '"', '')::int))
+		when 'login' then
+		(select concat(coalesce(publics.username, '*BLANK*'), ' (Public), ', coalesce(split_part(privates.type, '::', 3), '*BLANK*'), ' (Private type), ', s.name, ' service')
+		from metasploit_credential_logins logins
+		inner join metasploit_credential_cores cores on (logins.core_id = cores.id)
+		inner join services s on (logins.service_id = s.id)
+		left outer join metasploit_credential_publics publics on (cores.public_id = publics.id)
+		left outer join metasploit_credential_privates privates on (cores.private_id = privates.id)
+		where logins.id = replace(substring(ar.config, 'initial_login_id":([^,]*),'), '"', '')::int)
+	end as entry_point,
+	(
+	select concat(host(hosts.address), (case when hosts.name is not null then concat(' (', hosts.name, ')') end) )
+	from app_runs ar
+	inner join hosts on (replace(substring(ar.config, 'initial_host_id":([^,]*),'), '"', '')::int = hosts.id)
+	where ar.id = $P{app_run_id}
+	) as initial_host,
+           -- Can we do this more cleanly by grabbing ID and name in one pass, split in outer into two columns?
+	(
+	select replace(substring(ar.config, 'initial_host_id":([^,]*),'), '"', '')::int
+	from app_runs ar
+	where ar.id = $P{app_run_id}
+	) as initial_host_id,
+	case replace(substring(ar.config, 'max_iterations":([^,]*),'), '"', '')
+		when 'null' then 'Unlimited'
+		else replace(substring(ar.config, 'max_iterations":([^,]*),'), '"', '')
+	end as max_iterations,
+	replace(substring(ar.config, 'overall_timeout":([^,]*),'), '"', '') as overall_timeout,
+ 	-- Beware this is position-dependent (substring on } vs ,):
+	replace(substring(ar.config, 'service_timeout":([^,]*)}'), '"', '') as service_timeout,
+	replace(replace(replace(replace(substring(ar.config, 'target_addresses":([^\]]*),'), '["', ''), '","', ', '), ']', ''), '"', '') as target_addresses,
+	coalesce(replace(regexp_replace(substring(ar.config, 'excluded_addresses":\[([^\]]*)'), '","', ', ', 'g'), '"', ''), 'None specified') as excluded_addresses,
+	replace(regexp_replace(substring(ar.config, 'high_value_tags":\[([^\]]*)'), '","', ', ', 'g'), '"', '') as high_value_tags,
+	replace(regexp_replace(substring(ar.config, 'high_value_addresses":\[([^\]]*)'), '","', ', ', 'g'), '"', '') as high_value_addresses,
+--  login (initial_login_id, public/private/service of related core),
+--  session (initial_session_id, session number, open date)
+-- All Edges (Logins) that are connected to a high value Node (Host):
+(
+	select count(mde.*)
+	from mm_domino_edges mde
+	inner join mm_domino_nodes mdn on (mde.dest_node_id = mdn.id)
+	where mdn.high_value
+	and mdn.run_id = $P{app_run_id}
+	and mde.run_id = $P{app_run_id}
+) as hv_hosts_compromised,
+-- Run stats
+coalesce(( select data
+	 from run_stats rs
+	 inner join tasks t on (rs.task_id = t.id)
+	 inner join app_runs ar on (t.app_run_id = ar.id)
+	 where rs.name = 'hosts_total'
+	 and ar.id = $P{app_run_id})::int, 0) hosts_selected,
+coalesce(( select data
+	 from run_stats rs
+	 inner join tasks t on (rs.task_id = t.id)
+	 inner join app_runs ar on (t.app_run_id = ar.id)
+	 where rs.name = 'creds_captured'
+	 and ar.id = $P{app_run_id})::int, 0) creds_captured,
+coalesce(( select data
+	 from run_stats rs
+	 inner join tasks t on (rs.task_id = t.id)
+	 inner join app_runs ar on (t.app_run_id = ar.id)
+	 where rs.name = 'hosts_compromised'
+	 and ar.id = $P{app_run_id})::int, 0) hosts_compromised,
+-- Iterations stores the current iteration, so by the time the report
+-- runs and the MM is done this should correspond to the last iteration,
+-- i.e. the total number of iterations:
+coalesce(( select data
+	 from run_stats rs
+	 inner join tasks t on (rs.task_id = t.id)
+	 inner join app_runs ar on (t.app_run_id = ar.id)
+	 where rs.name = 'iterations'
+	 and ar.id = $P{app_run_id})::int, 0) iterations
+from app_runs ar
+inner join tasks t on (ar.id = t.app_run_id)
+inner join apps a on (ar.app_id = a.id)
+inner join workspaces w on (ar.workspace_id = w.id)
+-- No way to respect white/black lists here, stats aren't recorded at that granularity
+where ar.id = $P{app_run_id}
+and w.id = $P{workspace_id}]]>
+	</queryString>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="project_created" class="java.sql.Timestamp"/>
+	<field name="project_updated" class="java.sql.Timestamp"/>
+	<field name="app_name" class="java.lang.String"/>
+	<field name="started_at" class="java.sql.Timestamp"/>
+	<field name="stopped_at" class="java.sql.Timestamp"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="run_duration" class="org.postgresql.util.PGInterval"/>
+	<field name="hosts_selected" class="java.lang.Integer"/>
+	<field name="hosts_compromised" class="java.lang.Integer"/>
+	<field name="creds_captured" class="java.lang.Integer"/>
+	<field name="iterations" class="java.lang.Integer"/>
+	<field name="hv_hosts_compromised" class="java.lang.Integer"/>
+	<field name="hv_hosts" class="java.lang.Integer"/>
+	<field name="entry_point" class="java.lang.String"/>
+	<field name="max_iterations" class="java.lang.String"/>
+	<field name="overall_timeout" class="java.lang.Integer"/>
+	<field name="service_timeout" class="java.lang.Integer"/>
+	<field name="target_addresses" class="java.lang.String"/>
+	<field name="excluded_addresses" class="java.lang.String"/>
+	<field name="high_value_tags" class="java.lang.String"/>
+	<field name="high_value_addresses" class="java.lang.String"/>
+	<field name="initial_host" class="java.lang.String"/>
+	<field name="initial_host_id" class="java.lang.Integer"/>
+	<variable name="titleLogo" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{image_dir} + "rapid7_logo_padded.jpg"]]></initialValueExpression>
+	</variable>
+	<variable name="desc" class="java.lang.String">
+		<initialValueExpression><![CDATA["This report presents the results for a Credentials Domino MetaModule run. It shows how a successful login or open session can impact a network and result in the compromise of additional hosts. This report highlights high value hosts that were compromised and lists the credentials that were captured from those hosts. It also provides details for all other compromised and uncompromised hosts."]]></initialValueExpression>
+	</variable>
+	<variable name="title" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA["Credentials Domino MetaModule Report"]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="663" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_cover_page}]]></printWhenExpression>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="1752fb27-e37e-4d33-964d-dac4348341ae" x="221" y="37" width="351" height="297"/>
+				<imageExpression><![CDATA[$V{titleLogo}]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement uuid="ff7a39e5-44d6-44a0-b6ba-d0e751de91f5" x="221" y="642" width="320" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Pages: " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="86c12df4-2ac5-46d8-a00c-fda0954d0425" style="generic_text" x="221" y="433" width="320" height="159"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3c874e63-9cf7-4e53-a602-55d3f24258c9" x="222" y="334" width="351" height="69"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="28"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{title}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement uuid="e510a785-6605-4c88-bf40-34970dfd6fa6" x="0" y="662" width="571" height="1"/>
+			</break>
+			<textField>
+				<reportElement uuid="dce9a2e9-4cf4-449c-9fda-cc5f405af041" mode="Transparent" x="1" y="1" width="220" height="661" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" markup="none">
+					<font fontName="SansSerif" size="48" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{product_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_cover_page} ? $V{PAGE_NUMBER} == 2 : $V{PAGE_NUMBER} == 1]]></printWhenExpression>
+			<textField pattern="">
+				<reportElement uuid="ce820390-da68-4546-b7e1-eb3676a1bc24" style="last_audited" x="309" y="17" width="263" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Test started on " + (new SimpleDateFormat("MMMMM dd, yyyy")).format($F{started_at}) + " at " + (new SimpleDateFormat("hh:mm a")).format($F{started_at})]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement uuid="893d8d8d-ea98-452e-b6d1-f4f534d83612" style="report_generated" x="395" y="0" width="177" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3813069f-31e2-4874-a34b-b4529a2c281e" style="section_header_1_no_bg" x="0" y="1" width="309" height="30"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$V{title}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="081e9a59-938a-4683-a8c1-4e65071949a1" style="separator_line" x="0" y="33" width="572" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="103">
+			<printWhenExpression><![CDATA[$P{display_exec_summary}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="df9f4e2a-973d-47ab-8e7a-c2f689e28294" style="section_header_2" x="0" y="0" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[EXECUTIVE SUMMARY]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d826154f-d773-49c2-809e-137ae001daae" style="table_text_indented" mode="Transparent" x="1" y="30" width="570" height="58" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["During this MetaModule run, " + $F{hosts_selected} + " hosts were targeted for authentication attempts against SSH and SMB services. " + $F{hosts_compromised} + " hosts were compromised from these attempts, including authentications made possible by use of credentials gathered from compromised assets. " + $F{hv_hosts_compromised} + " of the assets compromised were flagged as critically important."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="80">
+			<printWhenExpression><![CDATA[$P{display_proj_summary}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="eb853492-a55d-4c48-955f-d9c52fd7e0fa" style="section_header_2" x="0" y="0" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[PROJECT SUMMARY]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1c621fdf-455f-464b-b586-e318dd773505" style="table_text" mode="Transparent" x="136" y="31" width="424" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="3b8f4362-2f58-4a2c-acab-04b027ba1260" style="separator_line_darker" x="0" y="30" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8bf9c126-534b-427f-9c5c-40e3db57bbc7" style="table_text_indented" x="1" y="31" width="135" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Project Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1baa55c1-7929-492f-ac40-e933954ae20d" style="table_text_indented" x="1" y="53" width="135" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[User:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="17cbd32a-55ba-472a-86b0-bab57ca9e248" style="separator_line_lighter" x="0" y="51" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="17635201-f126-4109-8f85-31975a8eb15b" style="table_text" mode="Transparent" x="136" y="53" width="424" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="124">
+			<printWhenExpression><![CDATA[$P{display_run_selections}]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="f84d91c4-6264-4f60-aa7c-1bed6c423f5f" style="table_text" mode="Transparent" x="136" y="73" width="425" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{initial_host}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="c4f5d5ff-30e2-4975-b5b0-d7f195227f3b" style="separator_line_lighter" x="0" y="51" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="ed8f076e-3348-41c0-96af-e7cf92d46dd2" style="table_text" x="136" y="30" width="425" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new GroovyShell(new Binding([started_at:$F{started_at},stopped_at:$F{stopped_at},state:$F{state}])).evaluate("""
+
+import groovy.time.TimeDuration
+import groovy.time.TimeCategory
+
+TimeDuration duration = TimeCategory.minus(stopped_at, started_at)
+// Duration is close, but let's make it prettier:
+
+def (days, hours, minutes, seconds) = [duration.getDays(),
+                                       duration.getHours(),
+                                       duration.getMinutes(),
+                                       duration.getSeconds()]
+
+def (day_str, hour_str, min_str, sec_str) = []
+
+// Handle pluralization:
+if (days > 0) {
+  if (days > 1) {
+    day_str = days + " days"
+  } else {
+    day_str = days + " day"
+  }
+}
+
+if (hours > 0) {
+  if (hours > 1) {
+    hour_str = hours + " hours"
+  } else {
+    hour_str = hours + " hour"
+  }
+}
+
+if (minutes > 0) {
+  if (minutes > 1) {
+    min_str = minutes + " minutes"
+  } else {
+    min_str = minutes + " minute"
+  }
+}
+
+if (seconds > 0) {
+  if (seconds > 1) {
+    sec_str = seconds + " seconds"
+  } else {
+    sec_str = seconds + " second"
+  }
+}
+
+// Join what we calculated:
+time_str = [day_str, hour_str, min_str, sec_str]
+time_str.removeAll([null])
+time_str = time_str.join(', ')
+
+return time_str
+
+""")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4d3b7038-9114-4b3e-9b77-839a04aa6e72" style="table_text_indented" x="0" y="30" width="136" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Runtime:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9b2ba4c2-1d2c-4cad-a114-96b3835964d7" style="table_text_indented" x="0" y="73" width="136" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Initial host:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="674d6378-452c-4a51-8165-f8e6af0a3f7f" style="section_header_2" x="0" y="0" width="571" height="29"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[RUN SUMMARY]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="109b259a-1629-44e7-8a66-4b8a7b2a1d61" style="separator_line_lighter" x="0" y="93" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="78b322a3-099b-4299-a479-f3f9cf47b5c0" style="table_text" mode="Transparent" x="136" y="94" width="423" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entry_point}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="73c640ac-1f5f-4093-b2b3-6eee22cea6e4" style="table_text_indented" mode="Transparent" x="0" y="94" width="136" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Entry point:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="bfd29620-3a13-4010-8918-82bf1601dc19" style="separator_line_darker" x="0" y="29" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="c4f5d5ff-30e2-4975-b5b0-d7f195227f3b" style="separator_line_lighter" x="-1" y="72" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="8eaf0309-30a9-4edd-a3dd-3aacae2061c0" style="table_text" x="136" y="52" width="425" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{iterations}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4d3b7038-9114-4b3e-9b77-839a04aa6e72" style="table_text_indented" x="0" y="52" width="136" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Iterations:]]></text>
+			</staticText>
+		</band>
+		<band height="132">
+			<printWhenExpression><![CDATA[$P{display_findings_summary}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="7d7f0df0-41cf-4262-aed2-562792a5129d" x="204" y="35" width="99" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Credentials Captured]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c732fad7-10f8-457b-8123-24c9a56d7fbe" style="exec_summ_text" mode="Transparent" x="327" y="70" width="99" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hosts_compromised} +
+($F{hosts_compromised} > 0 ?
+" (" +
+($F{hosts_selected} > 0 ? ((($F{hosts_compromised} / $F{hosts_selected}) * 100).intValue()) : 0)
++ "%)" : ""
+)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3e805b07-1901-45b0-9f72-a6ac8580014d" style="exec_summ_text" mode="Transparent" x="17" y="70" width="82" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hosts_selected}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e5cdfd28-a0a5-460a-b3a6-d59a437a7a91" x="25" y="35" width="69" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Hosts Selected]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="86af9f10-7f1d-4920-b82e-f5d888485d5f" style="separator_line_lighter" x="103" y="31" width="1" height="65"/>
+			</line>
+			<line>
+				<reportElement uuid="d26d99a5-a8b9-488b-b898-c7b0077f5100" style="separator_line" x="15" y="30" width="534" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="5630a0d4-d72c-45b0-b643-fe4efe78046d" style="separator_line" x="15" y="96" width="534" height="1">
+					<property name="local_mesure_unity" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement uuid="6ddd5a94-2507-428a-a51b-0f6b825d5dcc" style="exec_summ_text" mode="Transparent" x="204" y="70" width="99" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{creds_captured}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4f9c310d-76cc-432d-9652-13ee3950b80d" style="separator_line_lighter" x="314" y="31" width="1" height="65"/>
+			</line>
+			<line>
+				<reportElement uuid="4a4c3180-5634-499d-9e09-a696ad456ed8" style="separator_line_lighter" x="434" y="31" width="1" height="65"/>
+			</line>
+			<textField>
+				<reportElement uuid="266b2530-039e-4dcb-8849-3d70326026d6" style="exec_summ_text" mode="Opaque" x="444" y="70" width="99" height="18" forecolor="#FFFFFF" backcolor="#FF3333"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hv_hosts_compromised} +
+($F{hv_hosts_compromised} > 0 ?
+" (" +
+($F{hv_hosts} > 0 ? ((($F{hv_hosts_compromised} / $F{hv_hosts}) * 100).intValue()) : 0)
++ "%)" : ""
+)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a768b1da-fce1-4b0a-bd71-0c75b3de0f9e" x="326" y="35" width="99" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Hosts Compromised]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a28a667-8d84-4d87-9547-77e31842b79b" x="443" y="35" width="99" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[High Value Hosts Compromised]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ba5ce372-1b99-4bc4-bc2c-0395f9a8c90a" style="section_header_2" x="1" y="0" width="571" height="29"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[FINDINGS SUMMARY]]></text>
+			</staticText>
+			<break>
+				<reportElement uuid="02dbb0d1-1ecf-44b9-8209-6cb8a8a73209" x="0" y="121" width="570" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="e5cdfd28-a0a5-460a-b3a6-d59a437a7a91" x="115" y="35" width="69" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[High Value Hosts]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="86af9f10-7f1d-4920-b82e-f5d888485d5f" style="separator_line_lighter" x="196" y="31" width="1" height="65"/>
+			</line>
+			<textField>
+				<reportElement uuid="3e805b07-1901-45b0-9f72-a6ac8580014d" style="exec_summ_text" mode="Transparent" x="108" y="70" width="82" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hv_hosts}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="553">
+			<printWhenExpression><![CDATA[$P{display_summary_charts} && $P{include_charts}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="0c3ebf84-9fe0-468c-9ff8-1d5a46c2db52" style="section_header_1" x="0" y="0" width="573" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Summary Charts]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="d26d99a5-a8b9-488b-b898-c7b0077f5100" style="separator_line" x="0" y="30" width="571" height="1"/>
+			</line>
+			<break>
+				<reportElement uuid="4a4f86ac-6d04-44c6-a10a-5786c498a782" x="0" y="479" width="572" height="1"/>
+			</break>
+			<stackedBarChart>
+				<chart isShowLegend="true" theme="se_charts">
+					<reportElement uuid="1699be53-5df6-4c39-86d1-e8b71fc3df60" x="35" y="254" width="506" height="211"/>
+					<chartTitle color="#666666">
+						<font size="14"/>
+						<titleExpression><![CDATA["Activity by Iteration"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Bottom"/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="CompromisesPerIteration" uuid="f0a37174-b90e-487c-a431-8d2b6f5f6e59">
+							<datasetParameter name="app_run_id">
+								<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Logins"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{iteration}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{logins}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Credentials Captured"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{iteration}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{creds_captured}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot/>
+					<itemLabel>
+						<font size="6" isItalic="true"/>
+					</itemLabel>
+					<categoryAxisLabelExpression><![CDATA["Iteration"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont>
+								<font size="12" isBold="false"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+				</barPlot>
+			</stackedBarChart>
+			<pieChart>
+				<chart customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="ebe60c60-52b6-407e-ac39-e7b4a2209c60" x="296" y="32" width="274" height="207"/>
+					<chartTitle color="#666666">
+						<font size="12"/>
+						<titleExpression><![CDATA["Service Compromise Rates"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="ServicesCompromised" uuid="3bdccba4-c3b1-45d8-866b-3002535c4921">
+							<datasetParameter name="app_run_id">
+								<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{name}]]></keyExpression>
+					<valueExpression><![CDATA[$F{service_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{0}: {1} ({2})">
+					<plot/>
+					<itemLabel>
+						<font size="6"/>
+					</itemLabel>
+				</piePlot>
+			</pieChart>
+			<stackedBarChart>
+				<chart isShowLegend="true" theme="se_charts">
+					<reportElement uuid="1699be53-5df6-4c39-86d1-e8b71fc3df60" x="0" y="32" width="296" height="207"/>
+					<chartTitle color="#666666">
+						<font size="14"/>
+						<titleExpression><![CDATA["Host Compromise Rates"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Bottom"/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="HostsCompromised" uuid="f0a37174-b90e-487c-a431-8d2b6f5f6e59">
+							<datasetParameter name="app_run_id">
+								<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="hosts_total">
+								<datasetParameterExpression><![CDATA[$F{hosts_selected}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="hosts_compromised">
+								<datasetParameterExpression><![CDATA[$F{hosts_compromised}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="hv_hosts">
+								<datasetParameterExpression><![CDATA[$F{hv_hosts}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="hv_hosts_compromised">
+								<datasetParameterExpression><![CDATA[$F{hv_hosts_compromised}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Compromised Hosts"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{host_type}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{compromised_hosts}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Uncompromised Hosts"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{host_type}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{uncompromised_hosts}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot/>
+					<itemLabel>
+						<font size="6" isItalic="true"/>
+					</itemLabel>
+					<categoryAxisLabelExpression><![CDATA["Host Type"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont>
+								<font size="12" isBold="false"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+				</barPlot>
+			</stackedBarChart>
+			<staticText>
+				<reportElement uuid="c3dcd908-26ec-479e-a104-9f67fcbea3f7" style="section_header_1" x="0" y="523" width="573" height="30">
+					<printWhenExpression><![CDATA[$F{hosts_selected} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Detailed Findings]]></text>
+			</staticText>
+		</band>
+		<band height="155">
+			<printWhenExpression><![CDATA[$P{display_comp_hv_hosts} && $F{hv_hosts_compromised} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="0c89f88b-be55-4c7e-9c0c-9e155fdb83c5" style="section_header" x="0" y="0" width="572" height="27"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Compromised High Value Hosts]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="6979488f-01b1-4964-92a6-5b678e8ad2d9" x="-1" y="27" width="572" height="100"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="subreport_dir">
+					<subreportParameterExpression><![CDATA[$P{subreport_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "compromised_hv_hosts.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="116">
+			<printWhenExpression><![CDATA[$P{display_uncomp_hv_hosts} && ($F{hv_hosts} - $F{hv_hosts_compromised} > 0)]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="0c89f88b-be55-4c7e-9c0c-9e155fdb83c5" style="section_header" x="-1" y="2" width="572" height="27"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Uncompromised High Value Hosts]]></text>
+			</staticText>
+			<subreport isUsingCache="false">
+				<reportElement uuid="cf6dba5d-a138-4ce1-8cbb-e998e1573864" x="1" y="29" width="572" height="63"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="display_all">
+					<subreportParameterExpression><![CDATA[false]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "uncompromised_hosts.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="124">
+			<printWhenExpression><![CDATA[$P{display_all_comp_hosts} && $F{hosts_compromised} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="0c89f88b-be55-4c7e-9c0c-9e155fdb83c5" style="section_header" x="0" y="3" width="572" height="27"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[All Compromised Hosts]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="41740555-b89d-48fa-92f4-1ceb28d3b8ce" x="0" y="30" width="571" height="70"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "compromised_hosts.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="114">
+			<printWhenExpression><![CDATA[$P{display_all_uncomp_hosts} && ($F{hosts_selected} - $F{hosts_compromised}) > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="0c89f88b-be55-4c7e-9c0c-9e155fdb83c5" style="section_header" x="1" y="2" width="569" height="30"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[All Uncompromised Hosts]]></text>
+			</staticText>
+			<subreport isUsingCache="false">
+				<reportElement uuid="cf6dba5d-a138-4ce1-8cbb-e998e1573864" x="0" y="32" width="572" height="63"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="display_all">
+					<subreportParameterExpression><![CDATA[true]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="initial_host_id">
+					<subreportParameterExpression><![CDATA[$F{initial_host_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "uncompromised_hosts.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="413">
+			<printWhenExpression><![CDATA[$P{display_appendix_options}]]></printWhenExpression>
+			<break>
+				<reportElement uuid="9785fb68-1868-4362-b943-e4097762c854" x="0" y="1" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="441a744d-e9a8-4600-ba4a-e51bda358e8d" style="section_header_1" x="-1" y="2" width="573" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Options Selected]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b1f12bef-5700-4583-9346-6c1ee862bb84" style="title2" x="15" y="35" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Report Sections]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="93ab646d-de2d-4fab-acc2-2e6f49e36c7b" style="title2" x="15" y="208" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Report Options]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="820df4cd-3801-4094-a6bc-90828a8fe9e2" style="title2" x="350" y="35" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Key]]></text>
+			</staticText>
+			<image scaleImage="RealSize">
+				<reportElement uuid="dbe50efe-1cd7-4fb7-bc28-02fc982b458b" mode="Opaque" x="25" y="62" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_cover_page}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="70883101-527a-46d4-bdec-d4bc8c0d5862" x="357" y="86" width="10" height="10"/>
+				<imageExpression><![CDATA[$P{image_dir} + "subtract.png"]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="385366a0-e22a-46c7-bf6c-13bdd8743f21" x="357" y="63" width="10" height="10"/>
+				<imageExpression><![CDATA[$P{image_dir} + "add.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="af1408f5-8b8a-4b8c-8e16-5f1323a44bb5" style="glossary_def" x="378" y="61" width="101" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Selected"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ffcf7b8f-ec8d-4988-bfab-44c019abe4c5" style="glossary_def" x="378" y="84" width="101" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Unselected"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement uuid="ab03b8ed-5de7-47b8-bd81-2be6d9918fb6" x="25" y="76" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_exec_summary}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="f646870e-ceb6-4dd4-aef6-a27a3ea7f0ad" x="25" y="91" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_proj_summary}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="a281a08b-3966-46b8-8914-e86219030818" x="25" y="145" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_comp_hv_hosts}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="77829cf0-f20d-4da6-b910-36c293301d1a" x="25" y="131" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_summary_charts}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="5544b532-bbed-4fcc-9928-3d4d90e0c8d2" style="glossary_def" x="41" y="60" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Cover Page]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d5eb3a3-2e86-4b63-bbe7-d0de9d2ce32a" style="glossary_def" x="41" y="74" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Executive Summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="324c6aaf-5b19-40b8-8c87-c1b2060e228e" style="glossary_def" x="41" y="88" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Project Summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="11b56087-6729-41cb-aadd-ab7b6536abf7" style="glossary_def" x="41" y="130" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Summary Charts]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d02a1fc5-6211-4523-a426-03765e75c1a8" style="glossary_def" x="41" y="144" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Compromised High Value Hosts]]></text>
+			</staticText>
+			<image scaleImage="RealSize">
+				<reportElement uuid="5295f64b-8ef9-40dd-a21d-c8b4e192c60c" x="25" y="236" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{include_charts}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="d84f492e-1670-441d-9c09-cb0d33f5be44" style="glossary_def" x="41" y="233" width="239" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Include charts and graphs"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3ee1c67c-0560-4044-819a-b60d1d282212" style="title2" x="15" y="258" width="144" height="20"/>
+				<textElement/>
+				<text><![CDATA[MetaModule Options]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="69c1abec-7fda-4750-97e8-ff0515da5756" style="table_text" mode="Transparent" x="151" y="279" width="421" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{max_iterations}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="842d588b-e581-43cd-8955-fceda4c3d534" style="table_text" x="1" y="279" width="150" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Maximum iterations:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="93577b26-407f-441f-b125-e75b7e3a4e90" style="table_text" mode="Transparent" x="151" y="299" width="421" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{overall_timeout} + "s"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6e4078a0-4e42-451f-8c9a-1abfed0c792c" style="table_text" x="1" y="299" width="150" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Overall timeout:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="99aa80eb-48db-413d-b99c-bc2036ef71e0" style="table_text" x="1" y="319" width="150" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Timeout per service:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a691b166-13e0-4b6c-b718-e289472f735a" style="table_text" mode="Transparent" x="151" y="319" width="421" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{service_timeout} + "s"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="137ebf3b-cfa8-4f1a-8088-b31fe1580b3e" style="glossary_def" x="41" y="116" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Findings Summary]]></text>
+			</staticText>
+			<image scaleImage="RealSize">
+				<reportElement uuid="ddbb0385-961b-495c-adfa-bed8622b1f6b" x="25" y="118" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_findings_summary}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="c8e256c2-e5ef-4c06-b06a-b2913b60f937" style="table_text" positionType="Float" mode="Transparent" x="151" y="381" width="421" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{high_value_tags} ? "Tags: " + $F{high_value_tags} + "; " : "")
++ ($F{high_value_addresses} ? "Addresses: " + $F{high_value_addresses} : "")
++ (!$F{high_value_tags} && !$F{high_value_addresses} ? "None specified" : "")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8013e85a-9956-4aa2-bfd1-1bf3579442ae" style="glossary_def" x="41" y="102" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Run Summary]]></text>
+			</staticText>
+			<image scaleImage="RealSize">
+				<reportElement uuid="ddbb0385-961b-495c-adfa-bed8622b1f6b" x="25" y="104" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_run_selections}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="a281a08b-3966-46b8-8914-e86219030818" x="25" y="158" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_uncomp_hv_hosts}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="80615dbb-86cc-43e1-8053-baee510db7c9" style="glossary_def" x="41" y="157" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Uncompromised High Value Hosts]]></text>
+			</staticText>
+			<image scaleImage="RealSize">
+				<reportElement uuid="a281a08b-3966-46b8-8914-e86219030818" x="25" y="171" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_all_comp_hosts}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="9bcf10f5-5c5f-4cd1-8081-dd3010f9b09a" style="glossary_def" x="41" y="170" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[All Compromised Hosts]]></text>
+			</staticText>
+			<image scaleImage="RealSize">
+				<reportElement uuid="a281a08b-3966-46b8-8914-e86219030818" x="25" y="184" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_all_uncomp_hosts}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="31668a8b-23f3-48bb-ac3c-6da263168230" style="glossary_def" x="41" y="183" width="267" height="13"/>
+				<textElement markup="none"/>
+				<text><![CDATA[All Uncompromised Hosts]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="99aa80eb-48db-413d-b99c-bc2036ef71e0" style="table_text" x="1" y="339" width="150" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Included Hosts:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="5baec3ca-b8ad-4739-8cf5-26802984526b" style="table_text" mode="Transparent" x="151" y="339" width="421" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{target_addresses}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="219c3c6a-ade9-4fe7-bcaf-95c39fe92323" positionType="Float" x="17" y="359" width="421" height="1" forecolor="#FFFFFF"/>
+			</line>
+			<line>
+				<reportElement uuid="219c3c6a-ade9-4fe7-bcaf-95c39fe92323" positionType="Float" x="17" y="380" width="552" height="1" forecolor="#FFFFFF"/>
+			</line>
+			<staticText>
+				<reportElement uuid="99aa80eb-48db-413d-b99c-bc2036ef71e0" style="table_text" positionType="Float" x="1" y="360" width="150" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Excluded Hosts:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="5baec3ca-b8ad-4739-8cf5-26802984526b" style="table_text" positionType="Float" mode="Transparent" x="151" y="360" width="421" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{excluded_addresses}.length() > 0) ? $F{excluded_addresses} : "None specified"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="99aa80eb-48db-413d-b99c-bc2036ef71e0" style="table_text" positionType="Float" x="1" y="381" width="150" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[High Value Host Selection:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}>1]]></printWhenExpression>
+			<image scaleImage="RealSize" vAlign="Middle" isUsingCache="false" onErrorType="Blank">
+				<reportElement uuid="4cf7dcae-ea2a-434f-831f-5881fbd8c9c1" x="0" y="4" width="58" height="11"/>
+				<imageExpression><![CDATA[$P{image_dir} + "r7-logo_footer.jpg"]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement uuid="12e5a2b8-0918-4a80-ac57-1a92a978e57b" style="last_audited" x="519" y="0" width="52" height="18"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d1b07045-f888-4c3c-a8dc-cac2bdbff17b" style="last_audited" x="331" y="0" width="188" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Page " + ($V{PAGE_NUMBER} - 1) +" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

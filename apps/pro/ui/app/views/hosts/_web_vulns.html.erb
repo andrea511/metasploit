@@ -1,0 +1,19 @@
+<% if web_vulns.count > 0 %>
+<table id="web-vulns-table" class="sortable list">
+	<thead>
+	<tr>
+		<th>Risk</th>
+		<th>Category</th>
+		<th>Name</th>
+		<th>Blame</th>		
+		<th width="200">URL</th>
+		<th>Parameter</th>
+		<th>Proof</th>
+	</tr>
+	</thead>
+	<tbody>
+	<%= render :partial => 'web_vuln', :collection => web_vulns %>
+	</tbody>
+</table>
+
+<% end %>

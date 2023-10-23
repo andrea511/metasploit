@@ -1,0 +1,42 @@
+<%= form_for Mdm::Tag.new, :url => {:action => :create_or_update_tag} do |f| %>
+  <h3> New Tag </h3>
+  <table class="list host_tags" id="new_host_tag">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Attributes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="tag-row">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <%= hidden_field_tag :workspace_id, @workspace.id %>
+          <td style="padding-top: 5px;">
+            <%= f.text_field :name, :autocomplete => :on, :style => "width: 70%;", :value => "" %>
+            <span class="btn" style="vertical-align: top;"><%= f.submit 'Save', :class => "save" %></span>
+          </td>
+          <td>
+            <%= f.text_area :desc, {:rows => 4, :cols => 50, :value => ""} %>
+          </td>
+          <td>
+            <table class="list mar-tb10" style="background-color: transparent;">
+              <tr><td>
+              <%= f.check_box :report_summary %>
+                  <%= f.label :report_summary, "Include in report summary?", :class => :inline %>
+              </td></tr>
+              <tr><td>
+              <%= f.check_box :report_detail %>
+                  <%= f.label :report_detail, "Include in report details?", :class => :inline %>
+              </td></tr>
+              <tr><td>
+              <%= f.check_box :critical %>
+                  <%= f.label :critical, "Critical Finding?", :class => :inline %>
+              </td></tr>
+            </table>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+

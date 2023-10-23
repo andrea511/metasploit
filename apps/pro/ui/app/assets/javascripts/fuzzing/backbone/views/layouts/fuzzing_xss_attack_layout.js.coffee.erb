@@ -1,0 +1,24 @@
+define [
+  '<%= javascript_path('templates/fuzzing/layouts/fuzzing_xss_attack_layout') %>',
+  '<%= javascript_path('fuzzing/backbone/views/item_views/request_item_view') %>',
+  '<%= javascript_path('fuzzing/backbone/views/item_views/replayer_parameters_item_view')%>',
+  '<%= javascript_path('fuzzing/backbone/views/item_views/replayer_target_browsers_item_view')%>'
+], (Template, RequestItemView, ReplayerParametersItemView, ReplayerTargetBrowsersItemView) ->
+  class FuzzingXSSAttackLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['fuzzing/layouts/fuzzing_xss_attack_layout']
+
+    regions:
+      request: '.request'
+      parameters: '.parameters'
+      target_browsers: '.target-browsers'
+      xss_crafter: '.xss-crafter'
+
+    onRender: ->
+      #Stubbed out Req
+      @.request.show(new RequestItemView)
+      
+      @.parameters.show(new ReplayerParametersItemView)
+      @.target_browsers.show(new ReplayerTargetBrowsersItemView)
+      ###
+      @.xss_crafter.show(new XssCrafterItemView)
+      ###

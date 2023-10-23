@@ -1,0 +1,8 @@
+<% title h('New Export') %>
+<% include_stylesheet('exports') %>
+
+<% breadcrumb workspace_link, exports_link, link_to("New Export", "#") %>
+
+<div id='export_container'>
+  <%= render :partial => 'exports/export_wrapper_form' %>
+</div>

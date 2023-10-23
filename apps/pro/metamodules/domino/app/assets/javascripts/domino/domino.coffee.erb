@@ -1,0 +1,412 @@
+define [
+  'jquery',
+  '<%= javascript_path("apps/backbone/views/app_tabbed_modal") %>',
+], ($, AppTabbedModalView) ->
+
+  class DominoModalView extends AppTabbedModalView
+    @WIDTH: 900
+
+    DOMINO_APP_URL = "/workspaces/#{WORKSPACE_ID}/apps/domino/task_config/"
+    HOSTS_URL = "#{DOMINO_APP_URL}hosts_table.json"
+    LOGINS_URL = "#{DOMINO_APP_URL}logins_table.json"
+    SESSIONS_URL = "#{DOMINO_APP_URL}sessions_table.json"
+    SERVICES_SUBURL = "#{DOMINO_APP_URL}services_subtable.json"
+    LOGINS_SUBURL = "#{DOMINO_APP_URL}logins_subtable.json"
+    TAGS_SUBURL = "#{DOMINO_APP_URL}tags_subtable.json"
+
+    EMPTY_MESSAGE = """
+      No hosts were found with at least 1 session or login.
+    """
+
+    events: _.extend({
+      'change .termination-conditions input': 'terminationInputChanged',
+      'keyup .termination-conditions input': 'terminationInputChanged'
+      'change input#task_config_dynamic_stagers' : 'changeDynamicStagers'
+    }, AppTabbedModalView.prototype.events)
+
+    #
+    # Overriden behavior
+    #
+    initialize: ->
+      super
+      @setTitle 'Credentials Domino'
+      @setDescription 'Performs an iterative credentials-based attack against a set of targets '+
+                      'using a valid login or open session.'
+      @setTabs [
+        {name: 'Select Initial Host'},
+        {name: 'Scope'},
+        {name: 'Settings'},
+        {name: 'Generate Report', checkbox: true}
+      ]
+
+    handleErrors: (errorsHash) =>
+      if errorsHash?.errors?.task_config?.initial_attack?
+        $tab = @tabAt(0)
+        $tab.find('.hasErrors').show()   # show red *
+        $page = @pageAt(0)
+        modelErrors = errorsHash.errors.task_config.initial_attack.join(", ")
+        $page.find('p.inline-error').remove()
+        $page.find('p.error-desc').remove()
+        $page.prepend($('<p>').addClass('error-desc').text(modelErrors)) # dump msg up top
+        delete errorsHash.errors.task_config.initial_attack
+      super
+
+    changeDynamicStagers: (e) ->
+      if $(e.target).prop('checked')
+        $('.dynamic_stagers_warning',@el).removeClass('display-none')
+      else
+        $('.dynamic_stagers_warning',@el).addClass('display-none')
+
+
+    # ensure integer settings can only take an int
+    terminationInputChanged: ({target}) ->
+      $(target).val($(target).val().replace(/[^\d]+/g, ''))
+
+    formOverrides: =>
+      {
+        'task_config[high_value_tags_string]': @tagForm?.tokenInput.val() || '',
+      }
+
+
+    # Shove in our table render call.
+    formLoadedSuccessfully: (html) =>
+      tabbedModal = @
+
+      initProRequire [
+        'base_layout'
+        'base_itemview'
+        'lib/components/table/table_controller'
+        'lib/components/table/cell_views'
+        'lib/components/tags/new/new_controller'
+        'lib/shared/creds/cell_views'
+        'lib/components/filter/filter_controller'
+      ], =>
+        super(html)
+
+        initHost = null
+        initLogin = null
+        initSession = null
+
+        @$el.find('label[for=task_config_high_value_hosts_string]').after(
+          $('<p />', text: 'Enter IP range or address(es) of high value hosts.')
+        )
+
+        @$el.find('label[for=task_config_high_value_tags_string]').after(
+          $('<p />', text: 'Enter the tags you applied to high value hosts.')
+        )
+
+        @$el.find('a.back').click =>
+          tabbedModal.$el.find('#domino-hosts-table').show()
+          tabbedModal.$el.find('.drill-in').hide()
+          tabbedModal.$el.find('.page.select_initial_host input:checked').prop('checked', false)
+          initHost = null
+          initLogin = null
+          initSession = null
+          tabbedModal.$el.find('[name=saved_login_id]').val('')
+          tabbedModal.$el.find('[name=saved_session_id]').val('')
+          tabbedModal.$el.find('[name=saved_host_id]').val('')
+
+        @$el.find('.select_initial_host .region').hide()
+        @$el.find('.select_initial_host .tab-loading').show()
+
+        @tagRegion = new Backbone.Marionette.Region(el: '#high_value_tags_region')
+        @tagForm = new Pro.Components.Tags.New.TagForm(model: new Backbone.Model, tokenValue: 'name')
+        @tagRegion.show(@tagForm)
+        @$el.find('#add_tags').css(padding: 0)
+
+        class TableLayout extends Pro.Views.Layout
+          regions:
+            tableRegion: '.table-region'
+
+          template: ->
+            "<div class='table-region'></div>"
+
+          val: (name, val=null) =>
+            if val?
+              tabbedModal.$el.find("[name='#{name}']").first().val(val)
+            else
+              tabbedModal.$el.find("[name='#{name}']").first().val()
+
+          onShow: =>
+            Collection = Backbone.Collection.extend({url: HOSTS_URL })
+            @table = Pro.request "table:component",
+              perPage: 10
+              region: @tableRegion
+              selectable: false
+              title: 'Choose a host from the list below'
+              collection: new Collection
+              tableEmptyView:
+                class View extends Pro.Components.Table.Empty
+                  template: -> "<td colspan='100%'>#{EMPTY_MESSAGE}</td>"
+              columns: [
+                {
+                  label: 'Host IP'
+                  attribute: 'address'
+                  class: 'truncate'
+                  view:
+                    class View extends Pro.Views.ItemView
+                      ui:
+                        input: 'input'
+                      events:
+                        'change @ui.input': 'inputChanged'
+                      inputChanged: =>
+                        @model.selected = @ui.input.is(':checked')
+                        @model.collection?.trigger('inputChanged', @model)
+                      template: (m) ->
+                        "<label><input type='radio' name='task_config[initial_host_id]' value='#{_.escape m.id}' />#{_.escape m.address}</label>"
+                }
+                {
+                  label: 'Host Name'
+                  attribute: 'name'
+                  view: Pro.Components.Table.CellViews.TruncateView( max: 14, attribute: 'name' )
+                }
+                { label: 'OS', attribute: 'os_name', class: 'truncate' }
+                {
+                  label: 'Services'
+                  attribute: 'services_count'
+                  view: Pro.Creds.CellViews.Count
+                  viewOpts:
+                    attribute: 'services_count'
+                    subject: 'service'
+                  hoverView: Pro.Creds.CellViews.CollectionHover.extend(
+                    attributes:
+                      style: 'width: 260px; margin-left:-50%;'
+                    url: -> SERVICES_SUBURL + '?host_id=' + @model.get('id')
+                    columns: [
+                      { label: 'Service', size: 8, attribute: 'name' }
+                      { label: 'Port', size: 4, attribute: 'port' }
+                    ]
+                  )
+                  hoverOn: ->
+                    parseInt(@model.get('services_count'), 10) > 0
+                }
+                {
+                  label: 'Logins'
+                  attribute: 'logins_count'
+                  view: Pro.Creds.CellViews.Count
+                  viewOpts:
+                    attribute: 'logins_count'
+                    subject: 'login'
+                  hoverView: Pro.Creds.CellViews.CollectionHover.extend(
+                    attributes:
+                      style: 'width: 260px; margin-left:-60%;'
+                    url: -> LOGINS_SUBURL + '?host_id=' + @model.get('id')
+                    columns: [
+                      { label: 'Public', size: 6, attribute: 'public' }
+                      { label: 'Private', size: 6, attribute: 'private' }
+                    ]
+                  )
+                  hoverOn: ->
+                    parseInt(@model.get('logins_count'), 10) > 0
+                }
+                {
+                  label: 'Sessions'
+                  attribute: 'sessions_count'
+                  view: Pro.Creds.CellViews.Count
+                  viewOpts:
+                    attribute: 'sessions_count'
+                    subject: 'session'
+                    link: false
+                }
+                {
+                  label: 'Tags'
+                  attribute: 'tags_count'
+                  view: Pro.Creds.CellViews.Count
+                  viewOpts:
+                    attribute: 'tags_count'
+                    subject: 'tag'
+                  hoverView: Pro.Creds.CellViews.CollectionHover.extend(
+                    attributes:
+                      style: 'width: 100px; margin-left:-70%;'
+                    url: -> TAGS_SUBURL + '?host_id=' + @model.get('id')
+                    columns: [
+                      { label: 'Name', size: 12, attribute: 'name' }
+                    ]
+                  )
+                  hoverOn: ->
+                    parseInt(@model.get('tags_count'), 10) > 0
+                }
+              ]
+              filterOpts:
+                filterValuesEndpoint: window.gon.filter_values_apps_domino_task_config_index_path
+                helpEndpoint: window.gon.search_operators_apps_domino_task_config_index_path
+                keys: [{label: 'host.address', value: 'address'}
+                       {label: 'host.name',    value: 'name'}
+                       {label: 'host.os_name', value: 'os_name'}]
+
+
+            initHost    = @val('saved_host_id')
+            initLogin   = @val('saved_login_id')
+            initSession = @val('saved_session_id')
+
+            @tabbedModalLoaded = false
+            unless _.isBlank(initHost)
+              _.defer =>
+                @table.collection.trigger('inputChanged', {id: initHost})
+            else
+              $(@el).trigger('tabbed-modal-loaded')
+              @tabbedModalLoaded = true
+
+            @listenTo @table.collection, 'inputChanged', (m) =>
+              Collection = Backbone.Collection.extend({url: HOSTS_URL+'?id='+m.id })
+              tabbedModal.$el.find('#domino-hosts-table').hide()
+              tabbedModal.$el.find('.drill-in').show()
+              @val('saved_host_id', m.id)
+              @drillRegion ?= new Backbone.Marionette.Region(el: '#domino-metamodule-modal .selected-host-table')
+              @drillTable = Pro.request("table:component",
+                perPage: 10
+                region: @drillRegion
+                selectable: false
+                collection: new Collection
+                columns: [
+                  {
+                    label: 'Host IP'
+                    attribute: 'address'
+                    class: 'truncate'
+                    view:
+                      class View extends Pro.Views.ItemView
+                        ui:
+                          input: 'input'
+                        events:
+                          'change @ui.input': 'inputChanged'
+                        inputChanged: =>
+                          @model.selected = @ui.input.is(':checked')
+                          @model.collection?.trigger('inputChanged', @model)
+                        template: (m) ->
+                          "<label><input type='radio' name='task_config[initial_host_id]' value='#{m.id}' checked />#{_.escape m.address}</label>"
+                  }
+                  { label: 'Host Name', attribute: 'name', class: 'truncate' }
+                  { label: 'OS', attribute: 'os_name', class: 'truncate' }
+                  { label: 'Services', attribute: 'services_count' }
+                  { label: 'Logins', attribute: 'logins_count' }
+                  { label: 'Sessions', attribute: 'sessions_count' }
+                  { label: 'Tags', attribute: 'tags_count' }
+                ]
+              )
+              @listenTo @drillTable.collection, 'inputChanged', (m) =>
+                tabbedModal.$el.find('task_config[initial_login_id]:checked').prop('checked', false)
+                tabbedModal.$el.find('task_config[initial_session_id]:checked').prop('checked', false)
+
+              @loginsRegion ?= new Backbone.Marionette.Region(el: '#domino-metamodule-modal .logins-table')
+              @sessionsRegion ?= new Backbone.Marionette.Region(el: '#domino-metamodule-modal .sessions-table')
+
+              @loginsRegion.$el.toggle(!_.isBlank(initLogin) && _.isBlank(initSession))
+              @sessionsRegion.$el.toggle(_.isBlank(initLogin) && !_.isBlank(initSession))
+
+              loginURL = LOGINS_URL+'?host_id='+m.id
+              unless _.isBlank(initLogin)
+                loginURL = LOGINS_URL+'?id='+initLogin
+
+              checked = if _.isBlank(initLogin) then '' else 'checked'
+              val = @val
+
+              @loginsTable = Pro.request("table:component",
+                perPage: 10
+                region: @loginsRegion
+                selectable: false
+
+                collection: new (Backbone.Collection.extend(url: loginURL))
+                columns: [
+                  {
+                    label: 'Public'
+                    attribute: 'public'
+                    class: 'truncate'
+                    view:
+                      class View extends Pro.Views.ItemView
+                        ui:
+                          input: 'input'
+                        events:
+                          'change @ui.input': 'inputChanged'
+                        inputChanged: (e) =>
+                          tabbedModal.$el.find('[name="task_config[initial_session_id]"]:checked').prop('checked', false)
+                          val('saved_login_id', $(e.target).val())
+                          val('saved_session_id', '')
+                        template: (m) ->
+                          "<label><input name='task_config[initial_login_id]' type='radio' #{checked} value='#{_.escape m.login_id}' />#{_.escape m.public}</label>"
+                  }
+                  { label: 'Private', attribute: 'private', class: 'truncate' }
+                  {
+                    label: 'Realm'
+                    attribute: 'realm_key'
+                    view: Pro.Creds.CellViews.Realm
+                    hoverView: Pro.Creds.CellViews.RealmHover
+                    hoverOn: ->
+                      !_.isEmpty(@model.get('realm'))
+                  }
+                  { label: 'Service', attribute: 'service_name' }
+                  { label: 'Port', attribute: 'service_port' }
+                ]
+              )
+              done = 0
+              toggleOr = =>
+                done++
+                if @loginsTable.collection.models.length > 0 && @sessionsTable.collection.models.length > 0
+                  tabbedModal.$el.find('.or').show()
+                if done >= 2
+                  $(@el).trigger('tabbed-modal-loaded') unless @tabbedModalLoaded
+                  @tabbedModalLoaded = true
+                  if @loginsTable.collection.models.length == 0 && !_.isBlank(initLogin)
+                    tabbedModal.$el.find('a.back').click()
+                  if @sessionsTable.collection.models.length == 0 && !_.isBlank(initSession)
+                    tabbedModal.$el.find('a.back').click()
+
+              @listenTo @loginsTable.collection, 'sync', =>
+                tabbedModal.$el.find('.select_initial_host .tab-loading').hide()
+                @loginsRegion.$el.show() if @loginsTable.collection.models.length > 0
+                toggleOr()
+
+              @listenTo @drillTable.collection, 'sync', =>
+                if @drillTable.collection.models.length == 0 && !_.isBlank(initHost)
+                  tabbedModal.$el.find('a.back').click()
+
+              sessionURL = SESSIONS_URL+'?host_id='+m.id
+              sessionChecked = ''
+              unless _.isBlank(initSession)
+                sessionURL = SESSIONS_URL+'?id='+initSession
+                sessionChecked = 'checked'
+
+              @sessionsTable = Pro.request("table:component",
+                perPage: 10
+                region: @sessionsRegion
+                selectable: false
+                collection: new (Backbone.Collection.extend(url: sessionURL))
+                columns: [
+                  {
+                    label: 'Sessions'
+                    attribute: 'id'
+                    view:
+                      class View extends Pro.Views.ItemView
+                        ui:
+                          input: 'input'
+                        events:
+                          'change @ui.input': 'inputChanged'
+                        inputChanged: (e) =>
+                          tabbedModal.$el.find('[name="task_config[initial_login_id]"]:checked').prop('checked', false)
+                          val('saved_session_id', $(e.target).val())
+                          val('saved_login_id', '')
+                        template: (m) ->
+                          "<label><input name='task_config[initial_session_id]' type='radio' #{sessionChecked} value='#{_.escape m.id}'/>Session #{_.escape m.id}</label>"
+                  }
+                ]
+              )
+              @listenTo @sessionsTable.collection, 'sync', =>
+                tabbedModal.$el.find('.select_initial_host .tab-loading').hide()
+                @sessionsRegion.$el.show() if @sessionsTable.collection.models.length > 0
+                toggleOr()
+
+        @region = new Backbone.Marionette.Region(el: '#domino-hosts-table')
+        @region.show(new TableLayout())
+        _.delay => tabbedModal.$el.click() # unfocus the broken search field
+
+    # return the URL endpoint to load from and submit to
+    submitUrl: => DOMINO_APP_URL
+
+    close: =>
+      super
+      # destroy the views in these regions
+      @tagRegion?.empty?()
+      @region?.empty?()
+      @drillRegion?.empty?()
+      @loginsRegion?.empty?()
+      @sessionsRegion?.empty?()
+

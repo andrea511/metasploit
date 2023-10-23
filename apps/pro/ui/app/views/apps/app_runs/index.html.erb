@@ -1,0 +1,34 @@
+<% breadcrumb workspace_link, link_to(workspace_apps_runs_path(@workspace)) { 'MetaModule Runs' } %>
+
+<% include_stylesheet 'metamodules' -%>
+<% include_stylesheet 'rollup_modal' -%>
+<% include_stylesheet 'tasks/show' -%>
+<% include_stylesheet 'backbone/pro_carpenter' -%>
+
+<% title "MetaModule Runs" %>
+<script id='rollup-modal' type='text/x-tmpl'>
+  <%= render :partial => 'shared/rollup_modal' %>
+</script>
+<%= javascript_include_tag 'shared/backbone/views/rollup_modal_view' %>
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<meta name='selected_app_run' content='<%= @app_run_id %>' />
+
+<div id='global-apps-container' class='foundation'>
+  <!-- Backbone region is rendered here. -->
+</div>
+
+
+<%= nonced_javascript_tag do %>
+  jQuery(document).bind('requirejs-ready', function(){
+    initRequire(
+      [
+        'jquery',
+        '<%= javascript_path('apps/app_runs_app')%>'
+      ],
+      function($, AppsRunsApp){
+        app = new AppsRunsApp();
+        app.start();
+      });
+  });
+<% end %>

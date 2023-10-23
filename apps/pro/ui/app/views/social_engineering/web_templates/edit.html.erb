@@ -1,0 +1,9 @@
+<div class='form-header'>
+  <h3 class="max-width">Edit Web Template</h3>
+</div>
+
+<%= semantic_form_for(@web_template, :url => workspace_social_engineering_web_template_path(@workspace, @web_template)) do |f| %>
+  
+  <%= render 'form', :f => f %>
+
+<% end %>

@@ -1,0 +1,35 @@
+
+.window-slider-container {
+  position: relative;
+
+  .window-slider-pane {
+    position: absolute;
+    width: 100%;
+    left: 100%;
+    height: auto;
+    min-height: 200px;
+
+    transition-property: left;
+    transition-duration: 1s;
+
+    &.tab-loading {
+      top: 200px;
+    }
+
+    &.show {
+      left: 0%;
+    }
+
+    &.slideOutLeft {
+      left: -100%;
+    }
+
+    &.first {
+      position: relative;
+    }
+
+    .content-region {
+      overflow-y: hidden;
+    }
+  }
+}

@@ -1,0 +1,214 @@
+define [
+  'jquery'
+], ($) ->
+  class TaskConfigView extends Backbone.Marionette.LayoutView
+
+    baseEditUrl: "/workspaces/#{WORKSPACE_ID}/tasks"
+
+    events:
+      'click @ui.form_headers': '_toggleAccordian'
+      'keydown @ui.form' : '_formChanged'
+      'change @ui.file_inputs' : '_formChanged'
+
+    ui:
+      config: '.config'
+      errors: '.columns > .errors'
+      form: '.config form.formtastic, .config form.new_module_run_task, .config .form-inputs, .config form.metamodule, .config form.rc_script_run_task, .config form.exception-push-form'
+      form_headers: '.formtastic fieldset.inputs legend:not(.label)'
+      form_section_titles: 'fieldset.inputs legend span'
+      form_sections: 'fieldset.inputs ol'
+      advanced_options: 'fieldset.inputs advanced-options-container'
+      file_inputs: ':file'
+
+    regions:
+      configRegion : '.config'
+
+    close: () ->
+      @onBeforeClose?()
+      @onClose?()
+      @stopListening()
+      @off()
+
+
+    onBeforeClose: ()->
+      @_setCache()
+
+    _storeForm: ->
+      hidden_fields = @ui.form.find('ol:hidden')
+      hidden_fields.show()
+      @storedForm = if @ui.form[0] then helpers.cloneNodeAndForm(@ui.form[0])
+      @fileInputs = @ui.file_inputs
+      hidden_fields.hide()
+
+    _setCache: ()->
+      @form_cache = helpers.cloneNodeAndForm(@ui.config[0])
+      @_storeForm()
+
+    _formChanged: ->
+      $(@el).trigger('taskConfigChanged',@)
+
+    _centerModule: ->
+      $('.module-wrapper',@el).css('margin','auto')
+
+    loadPartial: (url, func, args)->
+      #If existing task and not yet cached
+      if @model.get('task')? and !@form_cache?
+        $.ajax {
+          url: "#{@baseEditUrl}/#{@model.get('task').id}/edit"
+          data: {kind: @model.get('task').kind,_nl: 1}
+          contentType:"application/json; charset=utf-8"
+          success: (data) =>
+            #only if we are showing the config in the UI
+            #unless typeof @ui.config == 'string'
+              @bindUIElements()
+              @ui.config.html(data)
+              @_removeFormCSRF()
+              @_removeActions()
+              @_initErrorMessages()
+              #Need to call bindUIElements manually to update UI hash because only called onRender,
+              #and we just loaded a form via ajax :-)
+              @bindUIElements()
+              @undelegateEvents()
+              @delegateEvents()
+              @_init_accordian()
+              @_setCache()
+              @_centerModule()
+
+              if func
+                func.call(args)
+
+              @trigger('loaded')
+        }
+      else
+        #If not a cloned task and form is cached
+        if @form_cache? and !@model.get('cloned')?
+          @_applyStashedFileInput(@form_cache)
+          @ui.config[0].parentNode.replaceChild(@form_cache,@ui.config[0])
+
+          @_initErrorMessages()
+          @bindUIElements()
+          #Need to re-bind event listeners after the view has been closed
+          @undelegateEvents()
+          @delegateEvents()
+
+          if func
+            func.call(args)
+        else
+          #If a Cloned Task
+          if @model.get('cloned')?
+            clonedNode = @model.get('clonedConfigNode')
+            @ui.config[0].parentNode.replaceChild(clonedNode,@ui.config[0])
+            @bindUIElements()
+            @undelegateEvents()
+            @delegateEvents()
+
+            @model.set('cloned',null)
+
+            if func
+              func.call(args)
+
+          #If a brand new task
+          else
+            $.ajax {
+              url: url
+              contentType:"application/json; charset=utf-8"
+              success: (data) =>
+                @ui.config.html(data)
+                @_removeFormCSRF()
+                @_removeActions()
+                @_initErrorMessages()
+                #Need to call bindUIElements manually to update UI hash because only called onRender,
+                #and we just loaded a form via ajax :-)
+                @bindUIElements()
+                @undelegateEvents()
+                @delegateEvents()
+                @_init_accordian()
+                @_setCache()
+
+                if func
+                  func.call(args)
+
+                @trigger('loaded')
+            }
+
+    hideForSubmit: () ->
+      @ui.config.html('<div class="tab-loading"></div>')
+
+    _removeActions: () ->
+      $('fieldset.actions',@ui.config).remove()
+
+    _removeFormCSRF: () ->
+      $('input[name=authenticity_token]',@ui.config).remove()
+
+    _initErrorMessages: () ->
+
+      if typeof @ui.errors != "string"
+        if @errors
+          @ui.errors.show()
+          @ui.errors.html(@errors)
+        else
+          @ui.errors.hide()
+          @ui.errors.html('')
+
+
+    _validate: (url, overrides=[]) ->
+      if @storedForm?
+        $form = $('form', @el)
+
+        data = [{
+          name: 'authenticity_token'
+          value: $('meta[name=csrf-token]').attr('content')
+        }]
+
+        data = data.concat($('input,select,textarea', $form).not(':file, [name="_method"][value="delete"] ').serializeArray())
+        data = data.concat(overrides)
+
+        opts = {
+          type: 'POST',
+          data: data
+        }
+
+        $('ol',$form).show()
+
+        $.ajax(
+            url,
+            opts
+        ).done((data)=>
+          unless data.success
+            @errors = data.errors
+            #Can't bind to @el b/c no longer in the Dom at this point
+            $(document).trigger('showErrorPie', @)
+          else
+            @errors = null
+          $(document).trigger('validated',@)
+        )
+      @_stashFileInput()
+
+    _init_accordian: ->
+      @ui.form_section_titles.prepend('<span class="expand">+ </span><span class="collapse">- <span> ')
+      @ui.form_sections.hide()
+
+    _toggleAccordian: (e) ->
+      $scope = $(e.target).closest('fieldset')
+      $('.expand', $scope).toggle()
+      $('.collapse',$scope).toggle()
+      $('ol',$scope).slideToggle('fast')
+
+
+    _stashFileInput: () ->
+      if @ui.file_inputs.length > 0
+        $('.stashed-form-region').append(@ui.file_inputs)
+        @stashedFile = $('.stashed-form-region input:last-child')
+
+    _applyStashedFileInput: (node) ->
+      if @stashedFile? and @stashedFile.length >0
+        stashed_id = $(@stashedFile).attr('id')
+
+        #If node is generated from InputGenerator concern
+        if $("#" + stashed_id, node).length == 0
+          $(node).append(@stashedFile)
+        else
+          #Swap out placeholder for stashed file
+          $placeholder = $("##{stashed_id}",node)
+          $placeholder.before(@stashedFile)
+          $placeholder.remove()

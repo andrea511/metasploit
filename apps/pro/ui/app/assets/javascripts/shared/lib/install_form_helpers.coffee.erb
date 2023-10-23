@@ -1,0 +1,5 @@
+# Helper module that loads and installs Handlebars Form Helpers via AMD
+define [
+  '<%= javascript_path("shared/lib/handlebars_form_helpers") %>'
+], (FormHelpers) ->
+  FormHelpers.register(Handlebars)

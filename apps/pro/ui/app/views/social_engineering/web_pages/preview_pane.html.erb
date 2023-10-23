@@ -1,0 +1,12 @@
+<div class='preview-pane web_page'>
+  <div class='row action-row'>
+    <div class='cell left-action'><%= image_tag('campaigns/icons_large/web_pages.png') %> <%= @web_page.name %></div>
+    <div class='cell right-action'><%= @web_page.url %></div>
+  </div>
+  <div style='position:relative'>
+    <iframe src="<%= workspace_social_engineering_campaign_web_page_preview_path(@workspace, @web_page.campaign, @web_page) %>" sandbox='allow-same-origin'></iframe>
+    <div style='position:absolute;top:0;left:0;right:0;bottom:0;'>
+      <!-- iframe interaction blocker -->
+    </div>
+  </div>
+</div>

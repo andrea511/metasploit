@@ -1,0 +1,27 @@
+<%= form_for @task, :html => {:multipart => true}, :url => session_upload_path do |f| %>
+	<%= hidden_field_tag 'workspace', h(@session.workspace.name) %>
+	<%= hidden_field_tag 'path', @path %>
+
+	<p>
+		<%= label_tag :upload, 'File to Upload' %>
+    <%= file_field_tag :file, :size => 80, :autofocus => true %>
+	</p>
+
+	<p>
+		<%= label_tag :name, 'File name (empty for default)' %>
+		<%= text_field_tag :name, '', :size => 80 %>
+	</p>
+
+	<p>
+		<%= check_box_tag :execute %> <%= label_tag :execute, 'Run file after upload?', :class => "inline" %>
+	</p>
+
+	<div class="buttons">
+		<span class="btn">
+			<%= submit_tag "Upload", :class => "upload" %>
+		</span>
+		<span class="btn">
+      <%= link_to 'Cancel', '#', class: 'popup-cancel' %>
+		</span>
+	</div>
+<% end %>

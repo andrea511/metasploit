@@ -1,0 +1,1 @@
+json.array! @vulns, partial: 'vuln', as: :vuln

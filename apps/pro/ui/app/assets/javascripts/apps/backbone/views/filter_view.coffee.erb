@@ -1,0 +1,117 @@
+define [
+  '<%= javascript_path("templates/apps/views/filter_view") %>'
+  '<%= javascript_path("apps/backbone/models/app") %>'
+  'jquery'
+], (Template, App, $) ->
+  class FilterView extends Backbone.Marionette.ItemView
+    MAX_APP_RATING: <%= Apps::App::MAX_APP_RATING %>
+
+    # public state
+    collection: null
+    collectionView: null
+    categories: [] # [{name: 'Penetration Testing', count: 123}]
+    safetyRatings: [] # [{name: '5', count: 2}]
+    template: HandlebarsTemplates['apps/views/filter_view']
+
+    # private state
+    _initialCollection: null
+    events:
+      'change ul.categories input[type=checkbox]': 'updateFilters'
+      'click ul.safety-ratings li a': 'ratingClicked'
+      'click a.reset': 'resetClicked'
+
+    initialize: ({ @collectionView, @collection }) =>
+      @categories = @_buildCategories(@collection)
+      @safetyRatings = @_buildSafetyRatings(@collection)
+
+    updateFilters: =>
+      $selectedCategories = $('ul.categories input[type=checkbox]:checked~span span.name', @el)
+      categoryNames = _.map($selectedCategories, (cat) -> $(cat).text())
+      
+      collection = @collection
+      models = collection.models
+      # first filter by category
+      if categoryNames?.length > 0
+        models = _.filter(models, (app) ->
+          _.any(app.get('app_categories'), (cat) ->
+            _.contains(categoryNames, cat.name)
+          )
+        )
+      # now filter by ratings
+      minRating = @_minRating()
+      if minRating > 0
+        models = _.filter(models, (app) -> app.get('rating') >= minRating)
+      # update filter in the collection view
+      @collectionView.collection = new Backbone.Collection(models, { model: App })
+      @collectionView.render()
+      @updateCounts(@collectionView.collection)
+
+    ratingClicked: (e) =>
+      e.preventDefault()
+      $li = $(e.target).parents('li').first()
+      $ul = $(e.target).parents('ul').first()
+      $lis = $('>li', $ul)
+      selIdx = $('>li.selected', $ul).index()
+      newIdx = $li.index()
+      $lis.removeClass('selected')
+      if selIdx != newIdx
+        $li.addClass('selected')
+      @updateFilters()
+
+    resetClicked: (e) =>
+      e.preventDefault()
+      $('ul.categories input:checked', @el).prop('checked', false)
+      @updateFilters()
+
+    updateCounts: (collection) =>
+      @_toggleReset()
+      newCounts = @_buildCategories(@collection)
+      $('ul.categories span.count', @el).text('(0)')
+      _.each newCounts, (item) ->
+        $count = $('ul.categories span.name', @el)
+          .filter(":contains('#{item.name}')")
+          .siblings('.count')
+        $count.text "(#{item.count})"
+
+    _toggleReset: =>
+      $('span.reset', @el).toggle(
+        $('ul.categories input:checked', @el).length > 0
+      )
+
+    _minRating: =>
+      $selRating = $('ul.safety-ratings li.selected a', @el)
+      if $selRating?.length > 0 then parseInt($selRating.attr('data-stars')) else 0
+
+    # starts with the initial apps collection and yanks
+    #   out category name & count data
+    # @return [Object] with name => count pairs
+    _buildCategories: (collection=@collection) =>
+      # scope models to those that match safety rating
+      minRating = @_minRating()
+      models = collection.models
+      if minRating > 0
+       models = _.filter(models, (mod) -> mod.get('rating') >= minRating)
+      # pull all the categories out of collection
+      categories = _.flatten(_.map(models, (item) -> 
+        item.get('app_categories') || []
+      ))
+      # now map to names and add counts
+      counts = _.countBy(categories, (item) -> item.name)
+      # coerce counts back to an array of hashes and carry on
+      categories = _.map(counts, (v, k) -> { count: v, name: k })
+      # sort categories by name
+      _.sortBy(categories, (cat) -> cat.name)
+
+    # creates a list of safety rating links to click from 0 -> MAX stars
+    _buildSafetyRatings: (collection=@collection) =>
+      counts = _.countBy(collection.models, (item) -> item.get('rating'))
+      safetyRatings = _.map(_.range(1, @MAX_APP_RATING+1), (i) ->
+        # build e.g. "3 & up" count
+        count = 0 # _.reduce was giving me problems here :(
+        _.each counts, (v, k) -> count += parseInt(v) if parseFloat(k) >= i
+        { name: "#{i}", count: "#{count}" }
+      )
+      # sort by num stars descending
+      _.sortBy(safetyRatings, (item) -> item.name).reverse()
+
+    serializeData: -> @

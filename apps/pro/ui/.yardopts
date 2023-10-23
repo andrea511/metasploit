@@ -1,0 +1,7 @@
+--exclude lib/generators/.*/templates/.*
+--markup=markdown
+--protected
+{app,lib}/**/*.rb
+db/migrate/*.rb
+features/**/*.feature
+features/**/*_steps.rb

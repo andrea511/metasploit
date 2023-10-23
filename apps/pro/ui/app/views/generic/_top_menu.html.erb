@@ -1,0 +1,76 @@
+<div id="top-menu">
+  <ul class="drop-menu">
+    <% if current_user %>
+      <%= notification_menu %>
+
+      <li class="menu">
+        <a href="#" class="menu-title" id="workspace-menu">Project<%= " - " + h(truncate(@workspace.name, :length => 10)) if (@workspace && !@workspace.new_record?) %> <small>▼</small></a>
+        <ul class="sub-menu">
+          <% recent_workspaces(@workspace).includes(:social_engineering_campaigns).each do |workspace| %>
+            <li class="more">
+              <%= link_to h(truncate(workspace.name, :length => 18)), workspace_path(workspace), :id => dom_id(workspace),
+                :title => workspace.name %>
+              <ul class="sub-sub-menu">
+                <li><%= link_to "Hosts", hosts_path(workspace), :class => 'hosts' %></li>
+                <li><%= link_to "Notes", workspace_notes_path(workspace), :class => 'notes' %></li>
+                <li><%= link_to "Services", workspace_services_path(workspace), :class => 'services' %></li>
+                <li><%= link_to "Disclosed Vulnerabilities", workspace_vulns_path(workspace), :class => 'vulnerabilities' %></li>
+                <% if workspace.web_vulns.count > 0 %>
+                <li><%= link_to "Web Vulnerabilities", workspace_vulns_path(workspace), :class => 'web-vulnerabilities' %></li>
+                <% end %>
+                <li><%= link_to "Captured Data", workspace_loots_path(workspace), :class => 'loots' %></li>
+                <li><%= link_to "Tasks", tasks_path(workspace), :class => 'tasks' %></li>
+                <li><%= link_to workspace_sessions_path(workspace), :class => 'sessions' do %>
+                  Sessions
+                  <%= badge_tag workspace.sessions.alive.size %>
+                  <% end %></li>
+                <li><%= link_to workspace_social_engineering_campaigns_path(workspace), :class => 'campaigns' do %>
+                    Campaigns
+                    <%= badge_tag workspace.social_engineering_campaigns.running.size %>
+                  <% end %>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+          <li><%= link_to "Show All Projects...", workspaces_path, :id => 'show-workspaces-link' %>
+          </li>
+        </ul>
+      </li>
+      <li class="menu" id="account-menu-wrapper">
+        <a href="#" class="menu-title" id="account-menu">Account - <%=h truncate(current_user.username, :length => 10) %> <small>▼</small></a>
+        <ul class="sub-menu">
+          <li><%= link_to "User Settings", edit_user_path(:current), :id => 'user-settings-link' %></li>
+          <li><%= link_to "Logout", logout_path, { :method => :post, :id => 'logout-link' } %></li>
+        </ul>
+      </li>
+    <% end %>
+    <% if current_user and current_user.admin? %>
+      <li class="menu">
+        <a href="#" class="menu-title" id="admin-menu">Administration <small>▼</small></a>
+        <ul class="sub-menu">
+          <li><%= link_to "Software Updates", updates_path, :id => 'software-update-link' %></li>
+          <% if current_user.admin and License.get.multi_user? %>
+            <li><%= link_to "User Administration", admin_users_path %></li>
+
+          <% end %>
+          <% if current_user.admin %>
+            <li><%= link_to "Software License", licenses_path, :id => 'license-link' %></li>
+            <li><%= link_to "Global Settings", settings_path, :id => 'global-settings-link' %></li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+    <li>
+      <a href="https://community.rapid7.com/community/metasploit" target="_support" title="Metasploit Community" class="support-link"><strong>Community</strong></a>
+    </li>
+    <li>
+      <a href="/docs/OnlineHelp/Metasploit-How-To-Guide/index.html" target="_support" title="Metasploit Pro Help" class="help-link"><strong>Help</strong></a>
+    </li>
+    </li>
+  </ul>
+  <% if active_pivots? %>
+    <span class="route_notice">
+      Pivoting: <b>Active</b>
+    </span>
+  <% end %>
+</div>

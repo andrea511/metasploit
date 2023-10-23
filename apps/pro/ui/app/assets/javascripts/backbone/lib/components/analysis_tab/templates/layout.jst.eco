@@ -1,0 +1,14 @@
+<div id="action-buttons-region" class="control-bar"></div>
+
+<ul class="tabs">
+  <li class="tab"><a class="hosts" href="<%= Routes.hosts_path WORKSPACE_ID %>">Hosts</a></li>
+  <li class="tab"><a class="notes" href="<%= Routes.workspace_notes_path WORKSPACE_ID %>">Notes</a></li>
+  <li class="tab"><a class="services" href="<%= Routes.workspace_services_path WORKSPACE_ID %>">Services</a></li>
+  <li class="tab"><a class="vulnerabilities" href="<%= Routes.workspace_vulns_path WORKSPACE_ID %>">Disclosed Vulnerabilities</a></li>
+  <li class="tab"><a class="web-vulnerabilities" href="<%= Routes.workspace_web_vulns_path WORKSPACE_ID %>">Web Vulnerabilities</a></li>
+  <li class="tab"><a class="modules" href="<%= Routes.workspace_related_modules_path WORKSPACE_ID %>">Applicable Modules</a></li>
+  <li class="tab"><a class="loots" href="<%= Routes.workspace_loots_path WORKSPACE_ID %>">Captured Data</a></li>
+  <li class="tab"><a class="map" href="<%= Routes.map_host_path WORKSPACE_ID %>">Network Topology</a></li>
+</ul>
+
+<div id="analysis-tabs-region" class="tab_panel"></div>

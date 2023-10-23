@@ -1,0 +1,33 @@
+<table id="sites" class="list">
+  <thead>
+    <tr>
+      <th class="checkbox"><%= check_box_tag "all_sites", true %></th>
+      <%= sortable_th "Risk", "risk" %>
+      <%= sortable_th "IP Address", "address" %>
+      <%= sortable_th "Web Site", "url" %>      
+      <%= sortable_th "Service Info", "service" %>
+      <%= sortable_th "Pages", "pages" %>
+      <%= sortable_th "Forms", "forms" %>
+      <%= sortable_th "Vulns", "vulns" %>
+    </tr>
+  </thead>
+  <tbody id="site_list">
+  <% if sites.empty? %>
+    <tr class="emptyset odd">
+      <td colspan="8">No results</td>
+    </tr>
+  <% else %>
+  <%= render :partial => 'site', :collection => @sites_sorted %>
+  <% end %>
+  </tbody>
+</table>
+
+<%= render "page_links", :sites => sites %>
+
+<%= nonced_javascript_tag do %>
+  (function() {
+    jQuery(function($) {
+      $("#all_sites").checkAll($("#site_list"));
+    });
+  }).call(this);
+<% end %>

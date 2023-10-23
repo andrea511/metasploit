@@ -1,0 +1,40 @@
+define [
+    'jquery',
+    '<%= javascript_path("shared/backbone/views/modal_form") %>',
+    '<%= javascript_path("templates/reports/views/report_form") %>',
+    'form_helpers',
+], ($, ModalForm, Template) ->
+  class ReportForm extends ModalForm
+    template: HandlebarsTemplates['reports/views/report_form']
+
+    events: _.extend({}, ModalForm.prototype.events, {
+      'submit form': '_formSubmitted',
+    })
+
+    initialize: ({ @url }) =>
+
+    _formSubmitted: (e) =>
+      e.preventDefault()
+      $form = $('form', @el)
+      data = $(':input', $form[0]).not(':file').serializeArray()
+      data.push({
+        name: 'authenticity_token'
+        value: $('meta[name=csrf-token]').attr('content')
+      })
+      @setLoading(true)
+      $.ajax(
+        url: @url
+        type: 'POST'
+        processData: false
+        data: data
+        files: $form.find(':file').removeAttr('disabled')
+        iframe: true
+      ).complete (data) =>
+        @setLoading(false)
+        json = $.parseJSON(data.responseText)
+        if json.success
+            @$el.trigger('destroy')
+            window.location.reload()
+        else
+            @_clearErrors()
+            @_renderErrors(json)

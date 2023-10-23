@@ -1,0 +1,43 @@
+
+<div class="form-container export-form">
+    <div>
+        <input id="filename" name="filename" type="text">
+        <label for="filename">File Name</label>
+    </div>
+
+    <div>
+        <div class="radio-label inline-block">Format</div>
+
+        <div class="inline-block">
+            <div class="inline-radio">
+                <input id="csv" type="radio" name="export_format" value="csv" checked>
+                <label for="csv">CSV</label>
+            </div>
+
+            <div class="inline-radio wide">
+                <input id="pwdump" type="radio" name="export_format" value="radio">
+                <label for="pwdump">pwdump (logins only)</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="pwdump-warning">
+      SSH keys will not be exported in pwdump format
+    </div>
+
+    <div class="row-options">
+        <div class="radio-label inline-block">Rows</div>
+
+        <div class="inline-block">
+            <div class="inline-radio">
+                <input id="selected" type="radio" name="rows" value="selected" checked>
+                <label for="selected">Selected</label>
+            </div>
+
+            <div class="inline-radio">
+                <input id="all" type="radio" name="rows" value="all">
+                <label for="all">All</label>
+            </div>
+        </div>
+    </div>
+</div>

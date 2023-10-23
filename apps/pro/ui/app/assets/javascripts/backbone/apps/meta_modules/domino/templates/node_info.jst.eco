@@ -1,0 +1,45 @@
+<label class='no-margin'>Host Name</label>
+<div class='host-name'>
+  <% if @host_name: %>
+    <%= @host_name %> <%= if typeof @address == 'string' then "(#{@address})" %>
+  <% else: %>
+    <%= @address %>
+  <% end %>
+</div>
+<hr />
+<% if @hasParent: %>
+  <label>Initial Credential Information</label>
+  <div class='table'>
+    <label class='left'>Public</label>
+    <span class='right truncate'><%= @credInfo.public %></span>
+  </div>
+  <div class='table'>
+    <label class='left'>Private</label>
+    <span class='right truncate'><%= @credInfo.private %></span>
+  </div>
+  <% if @credInfo.realm? and @credInfo.realm.length: %>
+    <div class='table'>
+      <label class='left'>Realm</label>
+      <span class='right truncate'><%= @credInfo.realm %></span>
+    </div>
+  <% end %>
+  <div class='table'>
+    <label class='left'>Service</label>
+    <span class='right truncate'><%= @credInfo.service_name %></span>
+  </div>
+  <div class='table'>
+    <label class='left'>Port</label>
+    <span class='right truncate'><%= @credInfo.service_port %></span>
+  </div>
+  <div style='clear:both'></div>
+<% else: %>
+<!--   <label>Initial Session</label>
+  <div class='session'>
+  </div>
+ -->  <div style='clear:both'></div>
+<% end %>
+<hr />
+<label>Number of Unique Credentials Captured</label>
+<div class='unique-creds'>
+  <%= @captured_creds_count %> credential<%= 's' if @captured_creds_count != 1 %>
+</div>

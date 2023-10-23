@@ -1,0 +1,69 @@
+<td class="checkbox">
+  <input type="checkbox" <% if @selected: %>checked <% end %> >
+</td>
+<td class="schedule">
+  <div class="schedule-wrapper">
+    <div class="<% if @schedule_state == 'unscheduled': %>no-schedule<% else: %>schedule<% end %>"></div>
+    <div class="<%= @schedule_state %>"></div>
+  </div>
+</td>
+<td class="name">
+  <a href="<%= @edit_workspace_task_chain_path %>"><%= @name %></a>
+</td>
+<td class="last-updated">
+  <%= @last_updated %>
+</td>
+<td class="created-by">
+  <%= @created_by %>
+</td>
+<td class="tasks">
+  <%= @task_names %>
+</td>
+<td class="history">
+  <% if @last_run_url: %>
+    <a href="<%= @last_run_url %>" <% if @last_run_error: %> class="error" <% end %>><%= @last_run %></a>
+  <% else: %>
+    <%= @last_run %>
+  <% end %>
+  <br/>
+  <%= @next_run %>
+</td>
+<td class="status">
+  <% if @last_run_task_state == "stopped": %>
+    <div class="stopped-state"></div>
+    <div class="task-info">
+      Task chain was stopped
+    </div>
+  <% end %>
+
+  <% if @last_run_task_state == "interrupted": %>
+    <div class="failed-state"></div>
+    <div class="task-info">
+      Last task chain failed. See: <a href="<%= @last_run_url %>">Error log</a>
+    </div>
+  <% end %>  
+
+  <% if @state != 'running' && @last_run_task_state == "completed": %> 
+    <% if @last_run_url: %>
+      <% if @last_run_error: %>
+        <div class="failed-state"></div>
+        <div class="task-info">
+          Last task chain failed. See: <a href="<%= @last_run_url %>">Error log</a>
+        </div>
+      <% else: %>
+        <div class="success-state"></div>
+        <div class="task-info">
+          <%= @total_tasks %> of <%= @total_tasks %> tasks completed successfully
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if @state == 'running': %>
+    <canvas height="35px" width="35px" />
+    <div class="task-info">
+      <a href="<%= @current_task_url %>">Task <%= @started_tasks %> of <%= @total_tasks %><br/>
+      <%= @current_task_name %></a>
+    </div>
+  <% end %>
+</td>

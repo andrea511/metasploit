@@ -1,0 +1,45 @@
+<% disabled ||= false %>
+
+<% vuln_params = @vuln.params
+
+   if @vuln.pname and vuln_params.length == 0
+     vuln_params = [
+             [
+                     @vuln.pname,
+                     ''
+             ]
+     ]
+   end
+
+   if @vuln.pname == 'PATH'
+     # Remove vparams entries with PATH
+     vuln_params.reject!{ |vuln_params|
+       name = vuln_params[0]
+       name == 'PATH'
+     }
+   end
+%>
+<div style='width: 420px; margin: 0 auto;'>
+  <form id="vulnerable" action="<%= @vuln_action %>" method="<%= @vuln.method %>" style="<%= disabled ? 'opacity: 0.4;' : '' %>" >
+
+    <% vuln_params.each do |vp|
+      name = vp[0]
+      value = vp[1].dup
+    %>
+      <div>
+        <label style="display:block" for="<%= name %>">
+          <%= name %>
+        </label>
+        <textarea cols=80 rows=5 name="<%= name %>" <%= disabled ? 'disabled' : '' %>><%= value %></textarea>
+      </div>
+    <% end %>
+
+    <div style='text-align: right'>
+      <input type="submit" class="btn primary" style='margin-top: 10px' value="Replay <%= @vuln.category_label %> Attack" <%= disabled ? 'disabled' : '' %>>
+    </div>
+  </form>
+
+  <% if disabled %>
+    <p>Form replay has been disabled for this vuln due to known problems.</p>
+  <% end %>
+</div>

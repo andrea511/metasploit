@@ -1,0 +1,586 @@
+$ = jQuery
+
+@INFINITY = '\u221E'
+@INFINITY_DISCRETE = 99999999999 # we set any "infinity" values to this
+
+class @TabbedModalView extends Backbone.View
+  # private vars
+  _tabIdx: -1
+  _opened: false
+  # ivar to contain step_name, url pairs: [[:create_project, '/quick_pentest/c_p']]
+  # will be loaded in formLoadedSuccessfully
+  _steps: []
+  _edited: false
+  _modelsToTabs: {
+  # transition map to figure out which tab a nested model is on, used for
+  #  figuring out where to display the model's errors. e.g.:
+  # workspace: 0,
+  # import: 1,
+  # scan_task: 1,
+  # nexpose_task: 1,
+  # exploit_task: 2,
+  # report: 3
+  }
+
+  events: {
+    'click a.advanced': 'toggleAdvanced',
+    'click a.close': 'close',
+    'click ul.tabs>li': 'tabClicked',
+    'click ul.tabs input[type=checkbox], ul.tabs label': 'tabCheckboxClicked',
+    'change select': 'someInputChanged',
+    'change input, textarea': 'someInputChanged',
+    'keydown input, textarea': 'someInputChanged',
+    'click .tabbed-modal .modal-actions .btn.primary': 'submitButtonClicked',
+    'change label.plaintext input': 'passwordDisplayChanged',
+    'change input.select-all-in-parent-div[type=checkbox]': 'selectAllInParentDiv',
+    'change .selectable-by-parent input[type=checkbox]': 'childCheckboxChanged'
+  }
+
+  initialize: (opts) ->
+    @setMaxWidth 1000
+    @origConfirm ||= window.origConfirm || window.confirm
+    # move #modals to be last child of <body>
+    _.extend @, opts
+    @$el.appendTo($('body')) unless opts.appendToEl
+
+
+  # selects all checkboxes contained in the parent
+  selectAllInParentDiv: (e) =>
+    checked = $(e.currentTarget).is(':checked')
+    $(e.currentTarget).parents('div').first().find('input[type=checkbox]').prop('checked', checked)
+
+  childCheckboxChanged: (e) =>
+    $children = $(e.currentTarget).parents('div.selectable-by-parent')
+    $notChecked = $children.find('input[type=checkbox]').not(':checked')
+    $children.parent().find('h3 input.select-all-in-parent-div').prop('checked', $notChecked.length is 0)
+
+  # load the entire QuickPentest form into our @content() div
+  loadForm: (url) ->
+    # modal html is not yet rendered, can't mutate dom
+    if @cachedNode?
+      _.defer(@formLoadedSuccessfully, @cachedNode)
+    else
+      $.ajax
+        url: url
+        method: 'get'
+        success: @formLoadedSuccessfully
+        data: {task_config_id: @taskConfigId}
+        error: =>
+          # display error message
+          @content().removeClass('loading').addClass('error')
+            .text("Unable to reach Metasploit Pro. Please ensure you" +
+            " are connected and the Metasploit Pro service is running.")
+          # if modal still present, retry connection in 5s
+          _.delay((=>@content().is(':visible') && @loadForm(url)), 5000)
+
+  # called when user checks the "show as plaintext" checkbox
+  passwordDisplayChanged: (e) =>
+    # ie doesn't let you change input[type] attribute, so we have to $.replaceWith()
+    $passInput = $(e.currentTarget).parents().filter('label.plaintext')
+      .first().prev().find('input')
+    if $(e.currentTarget).attr('checked') # replace :password with :text
+      $newInput = $("<input type='text'>")
+      $newInput.attr('name', $passInput.attr('name'))
+      $newInput.val($passInput.val())
+      $passInput.replaceWith($newInput)
+    else
+      $newInput = $("<input type='password'>")
+      $newInput.attr('name', $passInput.attr('name'))
+      $newInput.val($passInput.val())
+      $passInput.replaceWith($newInput)
+
+  formLoadedSuccessfully: (html) =>
+    # update content of modal to show entire class
+    @content().removeClass('loading tab-loading').html(html)
+    # re-enable tabs
+    _.each @tabs(), (t) -> $(t).removeClass('ui-disabled')
+    # load steps into constant
+    # https://github.com/jquery/jquery-migrate/blob/master/warnings.md
+    @_steps = $.parseJSON($('meta[name=steps]', @$modal).attr('content') || 'null')
+
+  initTabs: =>
+    # re-enable tabs
+    _.each @tabs(), (t) -> $(t).removeClass('ui-disabled')
+    # add the page overlays (todo: move this to template)
+    $('div.content form .page', @$modal).each ->
+      $(this).append($('<div>').addClass('page-overlay'))
+    # render any help links in there
+    Forms.renderHelpLinks(@el)
+    $('#modals .inline-help').css(position: 'fixed')
+    # todo: punt this out to a library for scripting :FILE inputs
+    @renderFileInputs()
+    @index(0)
+    # recalculate layout after stack pops
+    _.defer @layout
+    # auto-select the first input
+    _.defer => $('form :text:visible:first', @content()).focus()
+    @renderSliders()
+
+  renderFileInputs: =>
+    if @cachedNode
+      $('input:file', @$modal).each ->
+        $(@).on 'change', (e) ->
+          $p = $('p',$(e.target).parent())
+          path = $(@).val().replace(/.*(\\|\/)/g, '')
+          if _.isEmpty(path) then $p.html('&nbsp;') else $p.text(path)
+      return
+
+    $('input:file', @$modal).each ->
+      return if $(@).data('rendered')
+      $label = $(@).prev()
+      origText = $label.text() || 'file'
+      $(@).attr('size', '50').css(overflow: 'hidden')
+      $p = $('<p>').text('No file selected')
+      $span = $('<span>').text("Choose #{origText}...")
+      $label.html('').append($p).append($span)
+      $(@).data('rendered', '1')
+      $(@).change ->
+        path = $(@).val().replace(/.*(\\|\/)/g, '')
+        if _.isEmpty(path) then $p.html('&nbsp;') else $p.text(path)
+
+  formLoadedSuccessfully: (html) =>
+    # update content of modal to show entire class
+    @content().removeClass('loading tab-loading').html(html) if html?
+    # load steps into constant
+    # https://github.com/jquery/jquery-migrate/blob/master/warnings.md
+    @_steps = $.parseJSON($('meta[name=steps]', @$modal).attr('content') || 'null')
+    @initTabs()
+
+  renderSliders: =>
+    # render some sliders however we want :)
+    update = @updateSliderValue # otherwise OOP refinement fails :(
+    $('form li.slider', @$modal).each (index,elem) =>
+      $field = $(':input', elem).first()
+      return if $field.data('slidered')
+      $(elem).data('slidered', true)
+      min = parseInt($field.attr('data-min')) || 0
+      max = parseInt($field.attr('data-max')) || 0
+      inc = parseInt($field.attr('data-inc')) || 0
+      isBytes = $field.attr('data-bytes') || false
+      infinity = !!$field.attr('data-infinity')
+      onChange = (e, ui) ->
+        $input = $(':input', elem)
+        $input = $(elem).siblings(':input') if $input.length == 0
+        update($input, ui.value)
+        if infinity && max == ui.value
+          $input.val INFINITY
+      $slider = $("<div />").appendTo(elem).slider
+        min: parseInt(min)
+        max: parseInt(max)
+        value: @_parseInputField($field)
+        step: inc
+        slide: onChange
+        change: onChange
+      $field.focusout ->
+        $el = $(elem).find('input').addBack().filter('input').first()
+        newVal = if isBytes
+          helpers.parseBytes($el.val())
+        else
+          parseInt $el.val()
+        try
+          if parseInt($slider.slider('value')) != newVal
+            $slider.slider('value', newVal)
+        catch e
+          console.log("exception caught")
+      update($field, $field.val())
+
+
+  updateSliderValue: ($input, value) =>
+    $input.val value
+
+  showLoadingDialog: =>
+    helpers.showLoadingDialog.call(@)
+
+  hideLoadingDialog: =>
+    helpers.hideLoadingDialog.call(@)
+
+  submitButtonClicked: (e) =>
+    e.preventDefault()
+    return if $(e.currentTarget).hasClass('disabled')
+    @resetErrors()
+    $form = $('form', @$modal).first()
+    $form.attr('action', @submitUrl()) if @submitUrl?
+    $('.hasErrors', @$modal).hide()
+    $page = @pageAt(@_tabIdx) #.addClass('page-loading')
+    @showLoadingDialog()
+    # disable all the other tabs
+    @submitFormAjax $form,
+      url: @_url || $form.attr('action')
+      method: 'POST'
+      error: @handleSubmitError
+      success: @formSubmittedSuccessfully
+
+  # This is a vestige from the old reporting implementation. Leaving here
+  # but making it do nothing for now.
+  transformFormData: (data) ->
+    data
+
+  transformErrorData: (data) ->
+    data
+
+  handleSubmitError: (e) =>
+    @hideLoadingDialog()
+    $primaryBtn = $('a.btn.primary', @$modal)
+    $closeBtn = $('.modal-actions a.close', @$modal)
+    $page = @pageAt(@_tabIdx)
+    $page.removeClass('page-loading')
+    $primaryBtn.addClass('disabled')
+    $closeBtn.removeClass('ui-disabled')
+    @handleErrors.apply(@, arguments)
+    $errTab = $('ul.tabs>li span.hasErrors:visible', @$modal).parents('li').first()
+    $selTab = $('ul.tabs>li.selected', @$modal)
+    if $errTab.size() > 0 && $errTab[0] != $selTab[0]
+      @index($errTab.index(), false) # dont re-validate current tab
+
+  formSubmittedSuccessfully: (data) ->
+    window.location = data.path
+
+  applyFormOverrides: (data, $node=null) =>
+    if not @formOverrides?
+      data
+    else
+      overrides = @formOverrides($node)
+      $ _.map(data, (input) ->
+        matching_key = _.find(_.keys(overrides), (key) -> input.name.indexOf(key) > -1)
+        if matching_key
+          $('<input />', name: input.name, type: 'hidden', value: overrides[matching_key])[0]
+        else
+          input
+      )
+
+  sendAjax: ($form, $node=null) ->
+    data = $(':input', $form).not(':file')
+    data = @transformFormData(data)
+    data = @applyFormOverrides(data, $node)
+
+
+  # wrap the form up and submit it!
+  # adds some opts to not push files
+  submitFormAjax: ($form, opts={}) ->
+    # set Rails' _method parameter. defaults to PUT.
+    $('input[name=_method]', $form).not(':first').remove()
+    $('input[name=_method]', $form).val(opts.method || 'PUT')
+    # we don't want to push up FILEs during validations, only on
+    #   final submit. it would add too much overhead to the validation calls.
+    $('input[name=no_files]', $form).val((opts.noFiles && '1') || '')
+    # we only want the VISIBLE options on the report_task page.
+    #   otherwise we will end up kicking off 15 reports.
+    # we maintain visibility as the ".active_report_option" class
+    data = @sendAjax()
+    $.ajax
+      url: opts['url'] || @_steps[@_tabIdx][1]
+      type: 'POST'
+      data: if opts['noFiles'] then data.serialize() else data.serializeArray()
+      processData: !!opts['noFiles'] # the horror
+      iframe: !opts['noFiles']
+      files: if opts['noFiles'] then $() else $(':file', $form) # see above comment
+      dataType: 'json'
+      complete: (resp) =>
+        try
+          data = $.parseJSON(resp.responseText)
+        catch e
+          alert('Error processing response from server. Please ensure Metasploit Pro is running.')
+          @hideLoadingDialog()
+          $primaryBtn = $('a.btn.primary', @$modal)
+          $closeBtn = $('.modal-actions a.close', @$modal)
+          $primaryBtn.removeClass('disabled')
+          $closeBtn.removeClass('ui-disabled')
+          return
+
+        if !data || !data['success']
+          opts?.error?.call(@, data)
+        else
+          opts?.success?.call(@, data)
+
+
+  # generic handler for toggling the div next to <a.advanced>
+  toggleAdvanced: (e) =>
+    e.preventDefault()
+    $(e.currentTarget).toggleClass('not_advanced')
+    $toShow = $('~div.advanced', e.currentTarget)
+    $toShow = $($(e.currentTarget).attr('data-toggle-selector'), @$modal) if $toShow.size() == 0
+    $toShow.toggle()
+
+  # setTabs accepts an array of hashes {name, class, checkbox(bool)}
+  setTabs: (@_tabs) =>
+    _.each @_tabs, (tab) ->
+      tab['class'] ||= ''
+      tab['checkbox'] ||= false
+
+  setButtons: (@_btns) =>
+    _.each @_btns, (btn) ->
+      btn['class'] ||= ''
+
+  setDescription: (@description) =>
+  setTitle: (@title) =>
+  setMaxWidth: (@maxWidth) =>
+
+
+  # Updates the description field
+  updateDescription: (@description) =>
+    @$modal.find('>div.padding>p').text(@description)
+
+  # Override this method to change the framing.
+  # layout resizes and repositions the modal
+  layout: =>
+    # applies a max-width
+    if @$modal.width() > @maxWidth
+      @$modal.width(@maxWidth)
+    @center()
+
+  center: =>
+    # centers on the screen
+    modalWidth = @$modal.width()
+    screenWidth = $(window).width()
+    @$modal.css('left', parseInt(($(window).width()-@$modal.width())/2)+'px')
+    @$modal.css('top', parseInt(($(window).height()-@$modal.height())/2)+'px')
+    $('ul.tabs>li:first-child', @el).addClass('first-child')
+
+  #Re-styles Disabled Overlay for Modal
+  styleDisabledOverlay: =>
+    $('.tabbed-modal', @$el).css({maxWidth: 800})
+    $('.tabbed-modal', @$el).css("width", '800')
+    disabled_overlay = $('.body-disabled-overlay', @$el)
+    disabled_overlay.removeClass('invisible')
+    disabled_overlay.addClass('disabled-overlay-modal')
+
+  # pre-parse the underscore template
+  template: _.template($('#tabbed-modal').html())
+
+  open: =>
+    @render()
+    @_opened = true
+    @escEnabled = true
+    @stubCustomConfirm()
+    $('#modals').removeClass('empty')
+    unless @appendToEl?
+      $('body').css(overflow: 'hidden').height($(window).height())
+    @$el.find('.tabbed-modal').addClass(_.str.underscored(@constructor.name))
+    $(window).unbind('resize.tabbedModal', @layout)
+    $(window).unbind('keyup.tabbedModal', @escKeyHandler)
+    $(window).bind('resize.tabbedModal', @layout)
+    $(window).bind('keyup.tabbedModal', @escKeyHandler)
+    @
+
+  close: (e) =>
+    $('#modals').addClass('empty')
+    e.preventDefault() if e && e.preventDefault
+    @$el.html('')
+    @_opened = false
+    @escEnabled = false
+    $('body').css(overflow: 'auto').css(height: 'auto', overflow: 'inherit')
+    $(window).unbind('resize.tabbedModal', @layout)
+    $(window).unbind('keyup.tabbedModal', @escKeyHandler)
+    window.confirm = @origConfirm
+    # we never see the view again. goodbye!
+    @undelegateEvents()
+
+  escKeyHandler: (e) =>
+    return if @appendToEl # appendToEl means we are not in a modal
+    if String.fromCharCode(e.keyCode)?.match(/[\w]+/)?.length > 0
+      @_edited = true
+    if e.keyCode == 27 and @escEnabled
+      if @_edited
+        if window.confirm('Are you sure you want to close this panel? Any text input will be lost.')
+          @close()
+      else
+        @close()
+
+  stubCustomConfirm: =>
+    window.confirm = =>
+      if @_opened
+        @escEnabled = false
+        _.delay (=> @escEnabled = true), 300
+        @origConfirm.apply(window, arguments)
+      else
+        @origConfirm.apply(window, arguments)
+
+  #Run Validations on all tabs
+  validate: (opts={noFiles:true}) =>
+    $form = $('form', @el)
+    $allTabs = $('form>div.page', @$el)
+    @_somethingHasChanged = false
+
+    # show a spinner on the current tab & validate
+    $li = $('ul.tabs>li', @$modal).eq(@_tabIdx).addClass('tab-loading')
+    $page = $('div.content form .page').eq(@_tabIdx).addClass('page-loading')
+    $page.find('p.error-desc').remove() #  remove possible stale messages
+    success = =>
+      # remove spinner
+      $li.removeClass('tab-loading ui-disabled')
+      $page.removeClass('page-loading')
+      # we should probably force ordering of callbacks here, but since rails
+      #   blocks we can pretty much assume they will come back in the right order
+      #   </lazydev>
+      @errors = null
+      $(document).trigger("tabbedModalValidated",@)
+      unless $('.hasErrors:visible', @$modal).length > 0
+        # if we're the last blocker, enable submission
+        $('a.btn.primary', @$modal).removeClass('disabled')
+
+    @submitFormAjax $form, {
+    noFiles: opts.noFiles # don't push up FILES until the very end :)
+    success: success
+    error: (data) =>
+      $('p.inline-error',@el).remove() #  remove possible stale messages
+      $li.removeClass('tab-loading ui-disabled')
+      $page.removeClass('page-loading')
+      $('a.btn.primary', @$modal).addClass('disabled')
+      @handleErrors.call(@, data)
+      $(document).trigger("tabbedModalValidated",@)
+    }
+
+
+  # hook for tab change
+  index: (idx, validate=true) =>
+    # run validations on tab we just left
+    $form = $('form', @$el)
+    $allTabs = $('form>div.page', @$el)
+    $currTab = $allTabs.eq(idx)
+    @_somethingHasChanged = false
+    unless @_tabIdx < 0 || idx == @_tabIdx || !validate # initial state @_tabIdx=-1
+      # clear errors on prev tab
+      oldTabIdx = @_tabIdx
+      @resetErrorsOnTab(oldTabIdx)
+      # show a spinner on the current tab & validate
+      $li = $('ul.tabs>li', @$modal).eq(@_tabIdx).addClass('tab-loading')
+      $page = $('div.content form .page').eq(@_tabIdx).addClass('page-loading')
+      $page.find('p.error-desc').remove() #  remove possible stale messages
+      success = =>
+        # remove spinner
+        $li.removeClass('tab-loading ui-disabled')
+        $page.removeClass('page-loading')
+        # we should probably force ordering of callbacks here, but since rails
+        #   blocks we can pretty much assume they will come back in the right order
+        #   </lazydev>
+        @errors = null
+        $(document).trigger("tabbedModalValidated",@)
+        unless $('.hasErrors:visible', @$modal).length > 0
+          # if we're the last blocker, enable submission
+          $('a.btn.primary', @$modal).removeClass('disabled')
+      @submitFormAjax $form, {
+        noFiles: true # don't push up FILES until the very end :)
+        success: success
+        error: (data) =>
+          $li.removeClass('tab-loading ui-disabled')
+          $page.removeClass('page-loading')
+          $('a.btn.primary', @$modal).addClass('disabled')
+          @handleErrors.call(@, data, oldTabIdx)
+          $(document).trigger("tabbedModalValidated",@)
+      }
+    # show/hide the correct tab content
+    $allTabs.hide().eq(idx).show()
+    @_index(idx)
+
+  # "private" index method actually does the page-changing
+  _index: (idx) =>
+    return @_tabIdx if typeof idx == 'undefined'
+    return @_tabIdx if idx == @_tabIdx || idx < 0 || idx >= @_tabs.length
+    $ul = $('ul.tabs', @el)
+    $li = $('li', $ul).removeClass('selected').eq(idx).addClass('selected')
+    $('div.content', @el).toggleClass('top-left-square', idx == 0)
+    @_tabIdx = idx
+    @_tabIdx
+
+  # for a given attr on a given model, returns a css selector string
+  # to look up the matching DOM element
+  mapErrorToSelector: (attrName, modelName) => "#{modelName}[#{attrName}]"
+
+  handleErrors: (errorsHash) =>
+    errorsHash = @transformErrorData(errorsHash)
+    # render the errors on to the formtastic form
+    $('.hasError', @$modal).hide()
+    alreadyClearedTabs = {}
+
+    # ENTERING THE MATRIX
+    _.each errorsHash.errors, (modelErrors, modelName) =>
+      tabIdx = @_modelsToTabs[modelName]
+      if typeof modelErrors == 'string' && $.trim(modelErrors).length > 0
+        # one error per modal, due to a limitation in old-school TaskConfig model
+        #  that I just can't bring myself to fix
+        $tab = @tabAt(tabIdx)
+        $tab.find('.hasErrors').show()   # show red *
+        $page = @pageAt(tabIdx)
+        if !alreadyClearedTabs["#{tabIdx}"]
+          $page.find('p.inline-error').remove()
+          $page.find('p.error-desc').remove()
+          alreadyClearedTabs["#{tabIdx}"] = true
+        $page.prepend($('<p>').addClass('error-desc').text(modelErrors)) # dump msg up top
+      else if typeof modelErrors == 'object' && _.keys(modelErrors).length > 0
+        # when we get an object back, that means we have normal ActiveModal/Formtastic
+        #   Errors hashes, hooray! Put the messages where they belong.
+        modelName = @_modelsToModels[modelName] if @_modelsToModels
+        _.each modelErrors, (attrErrors, attrName) =>
+          inputName = @mapErrorToSelector(attrName, modelName)
+          $input = $("[name='#{inputName}']", @modal)
+          $page = $input.parents('div.page').first()
+          if !alreadyClearedTabs["#{tabIdx}"]
+            $page.find('p.inline-error').remove()
+            $page.find('p.error-desc').remove() #  remove possible stale messages
+            alreadyClearedTabs["#{tabIdx}"] = true
+          idx = $page.index('div.page')
+          if idx > -1
+            @tabAt(idx).find('.hasErrors').show()
+            $li = $input.parents('li').first().addClass('error')
+            $li.find('.inline-error').remove()
+            _.each attrErrors, (errorMsg) ->
+              $("<p>", class: 'inline-error').appendTo($li).text(errorMsg)
+    null # avoid coffeescript's jangly bumbling return _.each
+
+  resetErrors: (scope=@$modal) =>
+    $('p.inline-error', scope).remove()
+    $('li.error', scope).removeClass('error')
+
+  resetErrorsOnTab: (tabIdx=@_tabIdx) =>
+    @resetErrors $('form:first>div.page', @$el).eq(tabIdx)
+    # turn asterisk into loading
+    @tabAt(tabIdx).find('.hasErrors').hide()
+
+  someInputChanged: (e) =>
+    # enable the submit btn
+    $('a.btn.primary', @$modal).removeClass('disabled')
+    # save into a pvt var for determining whether ESC closes immediately
+    @_somethingHasChanged = true
+
+  tabClicked: (e) =>
+    return false if $(e.currentTarget).hasClass('ui-disabled')
+    $li = $(e.currentTarget)
+    @index($li.index())
+
+  tabCheckboxClicked: (e) =>
+    $li = $(e.currentTarget).parents('li').first()
+    e.preventDefault() unless $li.hasClass('selected') or $(e.target).is('input')
+
+  tabAt: (idx) =>
+    $('ul.tabs li', @$modal).eq(idx)
+
+  pageAt: (idx) =>
+    $('>form>div.page', @content()).eq(idx)
+
+  render: ->
+    super
+    #Grab License Status from Meta Data on page
+    #Selector searches whole DOM b/c partial outside of view scope
+    @license = @validLicense()
+    # at first we will be invisible, then :layout will fix us up we'll show again
+    @$el.html(@template(this))
+    @$modal = $('.tabbed-modal', @$el)
+    @index(0) if @_tabIdx < 0
+    @styleDisabledOverlay() if @license == 'false'
+    @layout()
+
+  validLicense: =>
+    $('meta[name=license]').attr("content")
+
+  # returns collection of dom elements
+  tabs: -> $('ul.tabs>li', @$modal)
+  content: -> $('.padding>.content', @$modal)
+
+  #
+  # Handle parsing a input field if it already has a non byte value
+  #
+  _parseInputField: ($field) ->
+    if $field.val().match(/(B|KB|MB|GB|TB)/g)?
+      helpers.parseBytes($field.val())
+    else
+      parseInt($field.val())

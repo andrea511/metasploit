@@ -1,0 +1,184 @@
+digraph flood {
+  graph [
+    nodesep = 1
+    rankdir = "LR"
+    ranksep = 1
+  ]
+
+  /*
+   *  Nodes
+   */
+
+  subgraph cluster_electro {
+    label = "Electro"
+
+    "metasploit_data_models (Electro)" [
+      label = "metasploit_data_models"
+    ]
+    "metasploit-framework (Electro)" [
+      label = "metasploit-framework"
+    ]
+    "metasploit-model (Electro)" [
+      label = "metasploit-model"
+    ]
+    "Rails 3.2"
+    "Ruby 1.9.3"
+  }
+
+  subgraph cluster_great_one {
+    label = "GREAT #1"
+
+    "metasploit_data_models (GREAT #1)" [
+      label = "metasploit_data_models"
+    ]
+    "metasploit-model (GREAT #1)" [
+      label = "metasploit-model"
+      style = "dotted"
+    ]
+    "metasploit-framework (GREAT #1)" [
+      label = "metasploit-framework"
+    ]
+  }
+
+  subgraph cluster_flood {
+    label = "Flood"
+
+    subgraph cluster_flood_native {
+      label = "Developed in Flood"
+
+      "metasploit-cache"
+      "metasploit-search"
+    }
+
+    subgraph cluster_flood_upgrade {
+      label = "Upgraded in Flood"
+
+      /*
+       * Nodes
+       */
+
+      "metasploit-concern (Flood)" [
+        label = "metasploit-concern"
+      ]
+      "metasploit-credential (Flood)" [
+        label = "metasploit-credential"
+      ]
+      "metasploit-erd (Flood)" [
+        label = "metasploit-erd"
+      ]
+      "metasploit-framework (Flood)" [
+        label = "metasploit-framework"
+      ]
+      "metasploit-model (Flood)" [
+        label = "metasploit-model"
+      ]
+      "metasploit_data_models (Flood)" [
+        label = "metasploit_data_models"
+      ]
+      "pro (Flood)" [
+        label = "pro"
+      ]
+
+      /*
+       * Edges
+       */
+
+      "metasploit-concern (Flood)" -> "metasploit-credential (Flood)"
+      "metasploit-concern (Flood)" -> "metasploit_data_models (Flood)"
+      "metasploit-concern (Flood)" -> "pro (Flood)"
+
+      "metasploit-credential (Flood)" -> "metasploit-framework (Flood)"
+      "metasploit-credential (Flood)" -> "pro (Flood)"
+
+      "metasploit-erd (Flood)" -> "metasploit-credential (Flood)"
+      "metasploit-erd (Flood)" -> "metasploit_data_models (Flood)"
+      "metasploit-erd (Flood)" -> "pro (Flood)"
+
+      "metasploit-framework (Flood)" -> "pro (Flood)"
+
+      "metasploit_data_models (Flood)" -> "metasploit-credential (Flood)"
+    }
+
+    /*
+     *  Nodes
+     */
+
+    "cucumber/aruba"
+    "Rails 4.1"
+    "Ruby 2.0"
+    "Ruby 2.1"
+
+    /*
+     *  Flood -> Flood Edges
+     */
+
+    "cucumber/aruba" -> "metasploit-framework (Flood)"
+
+    "metasploit-cache" -> "metasploit-framework (Flood)"
+    "metasploit-cache" -> "metasploit_data_models (Flood)"
+
+    "metasploit-erd (Flood)" -> "metasploit-cache"
+
+    "metasploit-framework (GREAT #1)" -> "metasploit-framework (Flood)"
+    "metasploit-framework (Electro)" -> "metasploit-framework (Flood)"
+
+    "metasploit-model (Flood)" -> "metasploit-search"
+    "metasploit-model (Flood)" -> "metasploit-framework (Flood)"
+
+    "metasploit-search" -> "metasploit-cache"
+    "metasploit-search" -> "metasploit-credential (Flood)"
+    "metasploit-search" -> "metasploit-framework (Flood)"
+    "metasploit-search" -> "metasploit_data_models (Flood)"
+
+    "Rails 4.1" -> "metasploit-model (Flood)"
+
+    "Ruby 2.0" -> "Ruby 2.1"
+
+    "Ruby 2.0" -> "metasploit-concern (Flood)"
+    "Ruby 2.0" -> "metasploit-credential (Flood)"
+    "Ruby 2.0" -> "metasploit-erd (Flood)"
+    "Ruby 2.0" -> "metasploit-framework (Flood)"
+    "Ruby 2.0" -> "metasploit-model (Flood)"
+    "Ruby 2.0" -> "metasploit_data_models (Flood)"
+    "Ruby 2.0" -> "pro (Flood)"
+
+    "Ruby 2.1" -> "metasploit-concern (Flood)"
+    "Ruby 2.1" -> "metasploit-credential (Flood)"
+    "Ruby 2.1" -> "metasploit-erd (Flood)"
+    "Ruby 2.1" -> "metasploit-framework (Flood)"
+    "Ruby 2.1" -> "metasploit-model (Flood)"
+    "Ruby 2.1" -> "metasploit_data_models (Flood)"
+    "Ruby 2.1" -> "pro (Flood)"
+  }
+
+  subgraph cluster_jduck {
+     label = "JDuck"
+
+     "metasploit-framework (JDuck)" [
+       label = "metasploit-framework"
+     ]
+  }
+
+  /*
+   *
+   *  Edges
+   *
+   */
+
+
+  "metasploit-framework (JDuck)" -> "metasploit-framework (Flood)"
+  "metasploit-model (GREAT #1)" -> "metasploit-model (Electro)" [
+    style = "dotted"
+  ]
+
+  "metasploit_data_models (Electro)" -> "metasploit-search"
+  "metasploit_data_models (GREAT #1)" -> "metasploit-cache"
+
+  /*
+   *  Electro -> Flood
+   */
+
+  "metasploit-model (Electro)" -> "metasploit-cache"
+  "Rails 3.2" -> "Rails 4.1"
+  "Ruby 1.9.3" -> "Ruby 2.0"
+}

@@ -1,0 +1,9 @@
+<tr id="<%= dom_id(web_vuln) %>" class="<%= row_cycle %>">
+  <td width="60"><%= web_vuln.risk_label %> (<%= web_vuln.confidence %>%)</td>
+  <td><%= web_vuln.category_label %></td>
+  <td width="100"><%= web_vuln.name %></td>
+  <td width="100"><%= web_vuln.blame %></td>
+  <td><%= link_to("#{web_vuln.web_site.to_url}#{web_vuln.path}", web_vuln_path(@workspace, web_vuln[:id])) %></td>
+  <td><%= web_vuln.pname %></td>
+  <td><%= truncate(web_vuln.proof, :length => 40) %></td>
+</tr>

@@ -1,0 +1,23 @@
+.row
+  .columns.small-12
+    .vuln-exceptions.row
+      .row
+        .header.columns.small-12.invisible
+          .left.small-2.columns
+            {{checkbox "select_hosts" "yes" false}}
+            %label{:for=>"select_hosts"}
+              Select All Hosts
+          .middle.small-5.columns
+
+
+          .right.small-3.columns
+            %input{:name=>'expire', :type=>"radio", :value=>"never", :id=>"never_expire", :checked=> true}
+            %label{:for => "never_expire"}
+              Never Expire
+            %input{:name=>'expire', :type=>"radio", :value=>"all", :id=>"all_expire"}
+
+            %label{:for=> "all_expire"}
+              All Expire
+            %input{:class=>'global-datepicker', :name=>'global_datepicker'}
+
+      .vulns

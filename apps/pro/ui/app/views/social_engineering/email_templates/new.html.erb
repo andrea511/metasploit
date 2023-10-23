@@ -1,0 +1,6 @@
+<div class='form-header'>
+  <h3 class="max-width">New Email Template</h3>
+</div>
+<%= semantic_form_for(@email_template, :url => workspace_social_engineering_email_templates_path(@workspace)) do |f| %>
+  <%= render 'form', :f => f %>
+<% end %>

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# chkconfig: 2345 @@BITROCK_SERVICE_START_PRIORITY@@ @@BITROCK_SERVICE_STOP_PRIORITY@@
+# description: @@BITROCK_PRODUCT_FULLNAME@@ RPC and web daemons
+
+### BEGIN INIT INFO
+# Provides:          @@BITROCK_PRODUCT_SHORTNAME@@
+# Required-Start:    $remote_fs $network $named
+# Required-Stop:     $remote_fs $network $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: @@BITROCK_PRODUCT_FULLNAME@@ RPC and web daemons
+### END INIT INFO
+
+exec @@BITROCK_INSTALLDIR@@/@@BITROCK_CTLSCRIPT@@ "$@"

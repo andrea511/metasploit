@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="columns large-12">
+    Bruteforce will attempt <%= @combo_count %><%= if @fuzz then '+' %> possible combinations, which can
+    potentially cause system lockouts.
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns large-12">
+    <span>Do you wish to continue?</span>
+  </div>
+</div>

@@ -1,0 +1,220 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, link_to("New Automated Bruteforce Attempt", "#") %>
+
+<% if License.get.supports_bruteforce? %>
+  <% include_view_javascript %>
+
+
+
+  <%= required_label %>
+
+  <%= semantic_form_for @task, :url => start_bruteforce_path, :remote => true, :complete => "enableSubmitButtons();" do |f| %>
+    <%= f.hidden_field :workspace_id %>
+
+    <div id="popup_errors">
+      <% unless @task.valid? || params[:whitelist_string].nil? %>
+        <div class="errors">
+          <p>
+          <%=h @task.error %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="one_col_no_sidebar">
+
+      <%= f.inputs "Automated Bruteforce Settings" do -%>
+        <%= f.input :whitelist_string, :label => "Target Addresses", :as => :text %>
+          <table width="auto" class="list mar-bot10">
+            <thead>
+              <tr>
+                <th class="checkbox"><%= check_box_tag "all_services", true %></th>
+                <th colspan="2">
+                  <%= label_tag 'all_services', "Toggle All Services" %>
+                </th>
+                <th>Lockout Risk</th>
+              </tr>
+            </thead>
+            <tbody id="service_list">
+              <% BruteforceTask::SERVICES.each do |service| %>
+                <tr class="<%=h row_cycle %>">
+                  <td align="left" valign="top">
+                    <%= check_box_tag "bruteforce_task[brute_services][]", service, @task.brute_services.include?(service), :id => "service_#{service}" %>
+                  </td>
+                  <td align="left" valign="top">
+                    <%= label_tag "service_#{service}", service %>
+                  </td>
+                  <td align="left" valign="top">
+                    <%=h BruteforceTask::DESCRIPTION_BY_SERVICE[service] %>
+                  </td>
+                  <td align="left" valign="top">
+                    <%=h BruteforceTask::LOCKOUT_RISK_BY_SERVICE[service].capitalize %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      <% end -%>
+
+
+
+      <%= f.inputs "Credential Selection" do %>
+        <%= f.input :quickmode_creds, :label => "Credentials", :as => :text %>
+        <div class="creds-table-target"></div>
+        <%= f.input :smb_domains, :label => "SMB Domains" %>
+        <%= f.input :db_names, :label => "Database Names" %>
+        <%= f.input :skip_blank_passwords, :label => "Skip blank password generation", :as => :boolean %>
+        <%= f.input :use_default_creds, :label => "Use known default credentials", :as => :boolean %>
+        <%= f.input :mssql_windows_auth, :label => "MSSQL: Use Windows Authentication", :as => :boolean %>
+      <% end -%>
+
+      <%= f.inputs "Payload Settings" do %>
+          <%= f.input :brute_sessions, :label => "Automatically open sessions with guessed credentials", :as => :boolean %>
+          <%= f.input :payload_type, :label => "Payload Type", :as => :select, :collection => BruteforceTask::PAYLOAD_TYPES %>
+          <%= f.input :payload_ports, :label => "Listener Ports" %>
+          <%= f.input :connection, :label => "Connection Type", :as => :select, :collection => BruteforceTask::CONNECTIONS %>
+          <%= f.input :payload_lhost, :label => "Listener Host" %>
+          <% if License.get.supports_macros? %>
+            <%= f.input :macro_name, :label => "Auto Launch Macro", :as => :select, :collection => Mdm::Macro.all.map{|m| m.name } %>
+          <% end %>
+          <% if License.get.supports_dynamic_stagers? %>
+            <%= f.input :dynamic_stager, :label => "Use Dynamic Stagers for EXE Payloads (AV evasion)", :as => :boolean %>
+          <% end %>
+          <%= f.input :stage_encoding, :label => "Enable Stage Encoding (IPS evasion)", :as => :boolean %>
+      <% end -%>
+
+      <%= advanced_options_button %>
+
+      <div class="advanced">
+
+        <%= f.inputs "Targeting" do %>
+
+          <%= f.input :blacklist_string, :label => "Excluded Addresses", :as => :text %>
+          <%= f.input :speed, :label => 'Speed', :as => :select, :collection => BruteforceTask::SPEED_LABELS.zip(BruteforceTask::SPEEDS) %>
+          <%= f.input :dry_run, :label => "Dry run: generate credentials, but do not attempt to authenticate", :as => :boolean %>
+          <%= f.input :verbose, :label => "Produce verbose output in the task log", :as => :boolean %>
+        <% end -%>
+
+
+
+        <%= f.inputs "Bruteforce Limiters" do %>
+          <%= f.input :stop_on_success, :label => "Limit to one cracked credential per service", :as => :boolean %>
+          <%= f.input :max_guesses_per_service, :label => "Max guesses per service" %>
+          <%= f.input :max_guesses_per_user, :label => "Max guesses per user" %>
+          <%= f.input :max_minutes_per_service, :label => "Timeout per service", :hint => "(minutes)" %>
+          <%= f.input :max_minutes_overall, :label => "Timeout overall", :hint => "(minutes)" %>
+          <%= f.input :max_guesses_overall, :label => "Max guesses overall" %>
+        <% end -%>
+
+      </div>
+
+      <% if @no_launch.blank? %>
+        <%= f.actions do -%>
+          <span class="btn">
+            <%= f.submit "Launch Bruteforce", :class => "brute", :id => 'popup_submit' %>
+          </span>
+        <% end -%>
+      <% end -%>
+
+      <%= f.help_link :whitelist_string do -%>
+        <h3>Target Addresses</h3>
+        <p> Specify <b>Target Addresses</b> to configure the hosts to target during the bruteforce attack.</p>
+      <% end -%>
+
+
+      <%= f.help_link :blacklist_string do -%>
+        <h3>Excluded Addresses</h3>
+        <p> To avoid targeting specific hosts, specify their IP addresses as<b>Excluded Address</b>.</p>
+        <h3> Speed </h3>
+        <p>The <b>Speed</b> setting is configured for a LAN. If testing on the internet, choose 'Normal'.</p>
+        <h3> Dry Run </h3>
+        <p>The <b>Dry run: generate credentials, but do not attempt to authenticate</b> runs a bruteforce correlation, prints a transcript of the selected exploits, and immediately quits. </p>
+        <h3> Verbose </h3>
+        <p>If the <b>Produce verbose output in the task log</b> setting is selected, the task log will record more detail on the individual successes and failures of the bruteforce modules run.</p>
+      <% end -%>
+
+      <%= f.help_link :quickmode_creds do -%>
+        <h3>Additional Credentials</h3>
+        <p>
+        The <b>Additional credentials</b> option allows you to specify "username password" combinations to try for this bruteforce task. This is a simple way to include additional credentials to test. Domain-specific credentials can be added as "domain/username password" (note the forward slash). </p>
+        <p>    To specify a username with no password, simply enter the username. To specify multiple passwords for a single username, use a format of "username pass1 pass2 pass3". To specify a blank username and one or several passwords, use a username of "<%= h('<BLANK>') %>". </p>
+        <p>        To permanently include credentials, use the Manage Credentials function at the top of the Bruteforce configuration page. </p>
+        <h3>SMB Domains</h3>
+        <p> For services which accept Windows-based authentication, add the desired <b>SMB domains</b> as a space-delimited list.  </p>
+        <h3>Database Names</h3>
+        <p> For Database services which require a database name or SID to authenticate against. (i.e. Oracle, Postgres). Add as a space-delimited list.  </p>
+      <% end -%>
+
+      <%= f.help_link :payload_type do -%>
+        <h3>Advanced Payload Settings</h3>
+        <ul>
+          <li>
+          <b>Connection Type</b> - Specify the type of payload connection. Automatic is the default, and chooses 'bind' payloads when NAT is detected and all available ports on the target system are not filtered. Otherwise, reverse payloads are chosen.
+          </li>
+          <li>
+          <b>Payload Type</b> - Specify the type of payload used. Meterpreter is the default and the best choice in most scenarios but in some cases Command shell is more desirable.
+          </li>
+          <li>
+          <b>Listener Ports</b> - Specify the port or range of ports that should be used for Reverse connect payloads. Some exploits require at least two ports to be available.
+          </li>
+          <li>
+          <b>Listener Host</b> - Specify the IP address for the payload to connect back. This is only useful when the address needs to be overridden (Amazon Elastic IPs, NAT, etc)
+          </li>
+          <li>
+          <b>AutoLaunch Macro</b> -  Specify a Post Exploitation Macro to automatically run when the Session is created
+          </li>
+          <li>
+          <b>Dynamic EXE</b> -  Dynamically generates a payload EXE for SMB, overriding default templates. This is designed to attempt to bypass AV detection
+          </li>
+        </ul>
+      <% end -%>
+
+      <%= f.help_link :stop_on_success do -%>
+        <h3>Bruteforce Limiters</h3>
+        <p> A number of limiters are available to fine-tune the bruteforce run. Limiters set to zero will not be employed.
+        <ul>
+          <li><b>Limited to one cracked credential per service</b> - If selected, this option configures Metasploit to stop bruteforcing a service upon the first credential found. </li>
+          <li><b>Max guesses per service</b> - This limits the total number of credential guesses per unique service instance. </li>
+          <li><b>Max guesses per user</b> - This limits the total number of guesses per uniqe user. Note that this is <b>not</b> per username. </li>
+          <li><b>Timeout per service</b> - This limits the total time dedicated to each service. </li>
+          <li><b>Timeout overall</b> - This limits the total time dedicated to the entire bruteforce attack.</li>
+          <li><b>Max guesses overall</b> - This limits the total number of credential guesses over the entire bruteforce attack.</li>
+        </ul>
+      <% end -%>
+
+      <%= f.help_link :include_known do -%>
+        <h3> Credential Generation </h3>
+        <ul>
+          <li><b>Include known credentials</b> - If previous bruteforce attempts were successful, retry those credentials. </li>
+          <li><b>Skip blank password generation</b> -  Skip attempts at usernames with blank passwords </li>
+          <li><b>Exclude machine names as passwords</b> -  When generating new guesses based on known credentials, do not attempt usernames based on discovered machine names.</li>
+          <li><b>Skip common Windows machine accounts</b> -  When generating credentials for Windows services, do not attempt to use common, but usually useless, accounts.</li>
+          <li><b>Skip common Unix machine accounts</b> -  When generating credentials for Unix services, do not attempt to use common, but usually useless, accounts.</li>
+          <li><b>Recombine known, imported, and additional credentials</b> -  Recombine every password with every user from these groups of credentials. For example, if "foouser" has the password of "foopass" and "baruser" has the password of "barpass," attempt to login as "foouser:barpass" and "baruser:barpass" as well. </li>
+          <li><b>MSSQL: Use Windows Authentication</b> -  For Microsoft SQL Server, use Windows authentication instead of Builtin MSSQL authentication.</li>
+          <li><b>SMB: Preserve original domain names</b> -  For SMB, if a known or imported credential is fully qualified with an SMB domain, attempt that domain name as well as any additional domains listed in the <b>SMB Domains</b> field. </li>
+        </ul>
+      <% end -%>
+
+      <%= f.help_link :mutate_known do -%>
+        <h3>Credential Mutation Switches</h3>
+
+        <p>
+        Known, Additional, and Imported credentials can be mutated to detect common variations
+        of passwords from these lists. For the number and punctuation-based mutators, if a
+        digit or a punctuation mark is already present in the indicated position, it will be
+        replaced in order to detect common password rotation schemes.
+        </p>
+
+        <p>
+        Due to the combinatorial nature of these mutations, a large number of potential
+        passwords may be generated if several of these mutation are applied.
+        </p>
+      <% end -%>
+    </div>
+  <% end %>
+
+  <% @config = {} %>
+<% end %>
+
+<%= add_disable_overlay([:pro, :express]) if not @licensed %>

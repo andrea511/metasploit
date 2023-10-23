@@ -1,0 +1,148 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/layouts/task_chain_nav') %>',
+  '<%= javascript_path('shared/lib/pie_chart') %>',
+  '<%= javascript_path('task_chains/backbone/models/task_chain_item')%>',
+  '<%= javascript_path('task_chains/backbone/views/collection_views/task_chain_items')%>',
+], ($, Template, PieChart, TaskChainItem, TaskChainItems) ->
+  class TaskChainNav extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['task_chains/layouts/task_chain_nav']
+
+    #We Need this hash so we can load the nested require modules on demand. Import is a reserved word.
+    _taskViewPaths:
+      bruteforce: '<%= javascript_path('task_chains/backbone/views/item_views/bruteforce_task')%>'
+      cleanup: '<%= javascript_path('task_chains/backbone/views/item_views/cleanup_task')%>'
+      collect: '<%= javascript_path('task_chains/backbone/views/item_views/collect_task')%>'
+      exploit: '<%= javascript_path('task_chains/backbone/views/item_views/exploit_task') %>'
+      'import': '<%= javascript_path('task_chains/backbone/views/item_views/import_task')%>'
+      module_run: '<%= javascript_path('task_chains/backbone/views/item_views/module_run_task')%>'
+      nexpose: '<%= javascript_path('task_chains/backbone/views/item_views/nexpose_task')%>'
+      report: '<%= javascript_path('task_chains/backbone/views/item_views/report')%>'
+      webscan: '<%= javascript_path('task_chains/backbone/views/item_views/webscan_task')%>'
+      scan: '<%= javascript_path('task_chains/backbone/views/item_views/scan_task')%>'
+      metamodule: '<%= javascript_path('task_chains/backbone/views/item_views/metamodule_task') %>'
+      rc_script: '<%= javascript_path('task_chains/backbone/views/item_views/rc_script_task') %>'
+      nexpose_push: '<%= javascript_path('task_chains/backbone/views/item_views/export_task') %>'
+
+    events:
+      'click .add-task' : '_toggleAddTask'
+      'click .add-task-options' : '_addTask'
+      'click .action.delete' : '_deleteTask'
+      'click .action.reset' : '_resetTask'
+      'click .action.clone' : '_cloneTask'
+      'pieChanged .container' : '_pieChanged'
+
+    ui:
+      addTaskOptions: '.add-task-options'
+
+    regions:
+      pies: '.pie-charts'
+
+    onShow: =>
+        $('.delete').tooltip()
+        $('.clone').tooltip()
+        $('.reset').tooltip()
+        @_initPies()
+        @_bindTriggers()
+
+    onClose: =>
+      @_unbindTriggers()
+
+    _bindTriggers: ->
+     $(document).on('click', @_closeDropdownHandler)
+
+    _unbindTriggers: ->
+     $(document).unbind('click', @_closeDropdownHandler)
+
+    _closeDropdownHandler: (e) =>
+      if e.target != $('.add-task',@el)[0]
+        @_closeDropdown()
+
+    _closeDropdown: ->
+      @ui.addTaskOptions.hide()
+
+    _toggleAddTask: ->
+      @ui.addTaskOptions.toggle()
+
+    _resetTask: (e) ->
+      status = confirm("Are you sure you want to reset the current task chain?")
+      if status
+        collection = @pies.currentView.collection
+        collection.reset()
+
+    _deleteTask: (e) ->
+      status = confirm("Are you sure you want to delete the current task?")
+      if status
+        collection = @pies.currentView.collection
+        current_task = collection.findWhere({selected: true})
+        collection.remove(current_task)
+
+    addExistingTask: (task) =>
+      #TODO: Make Types Consistent With Model Types
+      if task.kind == "collect_evidence"
+        task.kind = "collect"
+      if task.kind == "scan_and_import"
+        task.kind = 'nexpose'
+
+      opts =
+        task_type : task.kind
+        task: task
+      @_requireTaskConfig(@_addTaskUpdateView, opts)
+
+    _addTask: (e) ->
+      e.stopPropagation()
+      opts =
+        task_type : $(e.target).data('task-type')
+
+      @_requireTaskConfig(@_addTaskUpdateView, opts)
+
+    _cloneTask: (e) ->
+      collection = @pies.currentView.collection
+      $(@el).trigger('cloneTaskConfig')
+      current_task = collection.findWhere({selected:true})
+      collection.add(new TaskChainItem({type: current_task.get('type'), cloned:true}))
+
+    _pieChanged: (e, view) ->
+      opts =
+        task_chain_item : view.model
+        task_type : view.model.get('type')
+        task: view.model.get('task')
+      @_requireTaskConfig(@_updateView, opts)
+
+    _addTaskUpdateView: (opts, TaskView) ->
+      #TODO: Make Types Consistent With Model Types
+      if opts.task_type == "collect_evidence"
+        opts.task_type = "collect"
+
+      task_chain_item = @_addPieChart({type: opts.task_type, task: opts.task})
+      show_opts =
+        task_view : TaskView
+        form_id : task_chain_item.cid
+        task: opts.task
+      if TaskView?
+        $(@el).trigger('showTaskConfig', show_opts)
+      @_closeDropdown()
+
+
+    _updateView: (opts, TaskView) ->
+      show_opts =
+        cloned: opts.task_chain_item.get('cloned')
+        task_view : TaskView
+        form_id : opts.task_chain_item.cid
+        task: opts.task
+      $(@el).trigger('showTaskConfig', show_opts)
+
+    _requireTaskConfig: (func, opts) ->
+      rjs = requirejs.config(context: "reports")
+      rjs([
+        @_taskViewPaths[opts.task_type]
+      ], (TaskView)=>
+        func.call(@, opts, TaskView)
+      )
+
+    _addPieChart: (options={}) ->
+      @tasks.add(options)
+
+    _initPies: ->
+      @tasks = new Backbone.Collection([],model: TaskChainItem)
+      @pies.show(new TaskChainItems(collection:@tasks, sort:false))

@@ -1,0 +1,80 @@
+<% title "Edit Campaign: " + @campaign.name %>
+
+
+<% include_view_javascript -%>
+
+<% include_stylesheet "editors" %>
+<% include_javascript "ModuleSearch" %>
+<% include_javascript "social_engineering/shared/editors" %>
+<% include_javascript "Placeholders" %>
+<% include_javascript "HTMLCloner" %>
+
+<% breadcrumb workspace_link, social_engineering_campaigns_link, social_engineering_campaign_link, link_to("Edit Campaign", edit_workspace_social_engineering_campaign_path) %>
+
+<div class="one_col_no_sidebar campaigns">
+  <div class="add-div">
+    <label for="add-type" style="position: relative; bottom: 6px;">Add component</label>
+    <select id="add-type" style="position: relative; bottom: 6px;">
+      <option value="<%= workspace_social_engineering_campaign_path + '/emails/new' %>" name="email">Email</option>
+      <option value="<%= workspace_social_engineering_campaign_path + '/web_pages/new' %>" name="web">Web Page</option>
+      <option value="<%= workspace_social_engineering_campaign_path + '/portable_files/new' %>" name="usb">USB Key</option>
+    </select>
+    <span class="btn"><%= link_to "Add", '', :class => "new", :id => "add-tab" %></span>
+  </div>
+
+  <div class='title-form'>
+    <%= semantic_form_for [@workspace, @campaign], :format => :json, :method => :put, :remote => true, :html => {:class => 'edit_title_form'} do |f| %>
+      <%= f.inputs do %>
+        <%= f.input :name %>
+      <% end %>
+      <span class="btn">
+        <%= f.submit 'Save', :class => "save" %>
+      </span>
+      <span class="btn">
+        <%= link_to "Cancel", '', :class => "cancel" %>
+      </span>
+      <span style="vertical-align: baseline; color: #B94A48; display: none;" class="error"></span>
+    <% end %>
+    <div class="static">
+      <h1><%= @campaign.name %></h1> <a href="#" id="edit-title-button">Edit Name</a>
+    </div>
+  </div>
+
+  
+  <div id="tabs" class="clearfix">
+      <% if @campaign.emails.present? || @campaign.web_pages.present? || @campaign.portable_files.present? %>
+        <ul>
+          <% @campaign.emails.each do |email| %>
+            <li>
+              <a href="<%= workspace_social_engineering_campaign_path(@workspace, email) + '/emails/' + email.id.to_s %>"
+                 class="email-templates"
+                 title="<%= 'Email' + email.id.to_s %>"><%= email.name %></a>
+            </li>
+          <% end %>
+          
+          <% @campaign.web_pages.each do |web_page| %>
+            <li>
+              <a href="<%= workspace_social_engineering_campaign_path(@workspace, web_page) + '/web_pages/' + web_page.id.to_s %>"
+                 class="web-templates"
+                 title="<%= 'Web Page' + web_page.id.to_s %>"><%= web_page.name %></a>
+            </li>
+          <% end %>
+
+          <% @campaign.portable_files.each do |portable_file| %>
+            <li>
+              <a href="<%= workspace_social_engineering_campaign_path(@workspace, portable_file) + '/portable_files/' + portable_file.id.to_s %>"
+                 class="usb-keys"
+                 title="<%= 'USB Key' + portable_file.id.to_s %>"><%= portable_file.name %></a>
+            </li>
+          <% end %>
+        </ul>
+        <div class="empty" style="display: none">No components have been added yet.</div>
+      <% else %>
+        <ul></ul>
+        <div class="empty">No components have been added yet.</div>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<%= add_disable_overlay unless @licensed %>

@@ -1,0 +1,12 @@
+<div class="step">
+	<h3>Penetration</h3>
+	<div class="stepInfo begin" id="penetration">
+		<%= render :partial => 'pen_results' %>
+	</div>
+	<div class="btns">
+		<span class="btn"><%= link_to "Bruteforce...", workspace_brute_force_guess_index_path(@workspace) + '#quick', { :class => "brute" } %></span>
+		<span class="btn"><%= submit_checkboxes_to "Exploit...", new_exploit_path(@workspace), { :class => "exploit" } %></span>
+	</div>
+</div>
+
+

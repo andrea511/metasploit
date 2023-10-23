@@ -1,0 +1,44 @@
+<div class="control-bar" style='margin-bottom: 0;'>
+  <% campaign_status_for do |status| %>
+    <% if status.executable? %>
+      <span class="button">
+        <%= link_to status.next_execute_action, 
+                  execute_workspace_social_engineering_campaign_path(@workspace, @campaign), 
+                  :data => {
+                    :confirm => status.confirmation,
+                    :method => :get,
+                    :remote => true
+                  },
+                  :class  => status.css_class
+        %>
+      </span>
+    <% end %>
+  <% end %>
+  <span class="button">
+    <%= link_to "Reset", reset_workspace_social_engineering_campaign_path, :class => "restart", :data => { :confirm => "Are you sure you want to reset this campaign? Any associated tracking information will be deleted." } %>
+  </span>
+  <div class='rule'></div>
+  <span class="button">
+    <a href="#" class='report'>
+      Report
+    </a>
+  </span>
+  <div class='rule'></div>
+  <span class="button">
+    <a href="#" class='schedule'>
+      Schedule
+    </a>
+  </span>
+  <div class='control-right'>
+    <span class="button">
+      <%= link_to_if(!@campaign.running?, "Edit Campaign", edit_workspace_social_engineering_campaign_path, :class => "edit") do %>
+        <a id="edit_denied" href="#" class="edit">Edit Campaign</a>
+      <% end %>
+    </span>
+    <span class="button">
+      <a href="#" class='delete'>
+        Delete
+      </a>
+    </span>
+  </div>
+</div>

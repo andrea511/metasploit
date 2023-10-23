@@ -1,0 +1,13 @@
+<% title "Edit Host" %>
+<% breadcrumb workspace_link, hosts_link, host_link %>
+
+
+<%= semantic_form_for(@host, :html => {:class => 'clearfix'}) do |f| %>
+
+	<%= render 'form', :f => f %>
+
+	<%= f.actions do -%>
+		<span class="btn"><%= f.submit 'Save', :class => "save" %></span>
+		<span class="btn"><%= link_to "Cancel", @host, :class => "cancel" %></span>
+	<% end -%>
+<% end %>

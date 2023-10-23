@@ -1,0 +1,200 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, web_link, link_to("New Web Application Scan", "#") %>
+<% include_view_javascript %>
+
+<%= semantic_form_for @task, :url => start_webscan_path, :remote => true, :complete => "enableSubmitButtons();", :html => { :autocomplete => 'off' } do |f| %>
+
+	<%= f.hidden_field :workspace_id %>
+
+	<div id="popup_errors"></div>
+
+	<div class="one_col_with_sidebar">
+		<%= f.inputs "Web Crawler Seed URLs" do -%>
+			<%= f.input :urls, :label => "URLs", :as => :text, :input_html => {:style => "z-index:1;"} %>
+		<% end -%>
+
+		<%= f.inputs "Web Crawler Settings" do %>
+			<%= f.input :max_pages, :label => "Maximum requests (pages/URL)" %>
+			<%= f.input :max_minutes, :label => "Time limit (minutes/URL)" %>
+			<%= f.input :max_threads, :label => "Concurrent requests" %>
+		<% end -%>
+
+      <%= f.help_link :urls do -%>
+			<h3>Web Crawler Seed URLs</h3>
+			<p>
+ 				A list of URLs may be specified here as starting points for the web crawler. To specify a custom virtual host for a given URL prefix it with the virtual host name followed by a comma.
+ 				Examples:
+ 			</p>
+ 			<ul>
+				<li>http://www.example.com/</li>
+				<li>INTRANET,http://192.168.0.1/admin/login.aspx</li>
+			</ul>
+			<h3>IPv6 Addresses</h3>
+			<p>IPv6 addresses must be surrounded by brackets when included as part of a URL. Examples:</p>
+			<ul>
+				<li>http://[2001:db8:85a3::8a2e:370:7334]/</li>
+				<li>http://[2001:db8:85a3::8a2e:370:7334]:3000/</li>
+			</ul>
+		<% end -%>
+
+		<%= f.help_link :max_pages do -%>
+ 			<h3>Maximum Requests</h3>
+			<p>Sets a limit on how many pages to request within each specified web site.</p>
+		<% end -%>
+	    <%= f.help_link :max_minutes do -%>
+			<h3>Time Limit</h3>
+			<p>The maximum amount of time (in minutes) that the crawler will spend per web site.</p>
+		<% end -%>
+		<%= f.help_link :max_threads do -%>
+			<h3>Concurrent Request</h3>
+			<p>Determines how many parallel requests should be used to crawl each site.</p>
+		<% end -%>
+		
+		
+		<% if @task.known_servers.length > 0 %>
+
+				<%= f.inputs "Identified Web Services" do -%>
+					<div id="known_targets" style="width: 95%; float: left;">
+						<table width="100%" class="list mar-tb10">
+							<thead>
+								<tr>
+									<th width="5"><%= check_box_tag "all_vhosts", true %></th>
+									<th>Virtual Host</th>
+									<th>IP Address & Service</th>
+									<th>Service Banner</th>
+								</tr>
+							</thead>
+
+							<tbody id="vhost_list">
+								<%  @task.known_servers.each_index do |tidx|
+									checked = @task.targeted ? true : false 
+								%>
+									<tr class="<%=h row_cycle %>">
+										<td align="left" valign="top">
+											<%= check_box_tag "webscan_task[known_targets][#{tidx}][enabled]", tidx.to_s, checked, :id => "server-enabled-#{tidx}" %>
+										</td>
+										<td align="right" valign="top">
+											<%= text_field_tag "webscan_task[known_targets][#{tidx}][vhost]", @task.known_servers[tidx][0], { :size => 16 } %>
+										</td>
+										<td align="left" valign="top">
+											<%= text_field_tag "webscan_task[known_targets][#{tidx}][url]", @task.known_servers[tidx][1], { :size => 23 }%>
+										</td>
+										<td align="left" valign="top">
+											<%=h truncate(@task.known_servers[tidx][3]) %>
+										</td>
+									</tr>
+
+								<% end %>
+							</tbody>
+						</table>
+					</div>
+					<%= link_to(icon('silky/information'), '', :target => '_blank', :class => 'help', :'data-field' => 'webscan_tasks_known_targets_input', :style => "float: right;") %>
+				<% end -%>
+		<% end %>
+
+		<% if @task.known_servers.length > 0 %>
+			<div class="inline-help" data-field="webscan_tasks_known_targets_input">
+				<h3>Identified Web Services</h3>
+				<p>
+ 					This list of web sites was obtained from the previous results of a Scan or Import.<br/>
+ 					The left-most field specifies the virtual host name to use to crawl the displayed<br/>
+ 					host, port, and URL. The center field indicates the actual host, port, and URL<br/>
+ 					that will be tested. Each of these entries will be treated as a Seed URL if the<br/>
+ 					checkbox next to it is toggled.<br/>
+				</p>
+			</div>
+		<% end %>
+
+
+
+		<%= advanced_options_button %>
+
+		<div class="advanced">
+          <%= f.inputs "URL access" do %>
+              <%= f.input :unauthorized_access_url_patterns,
+                          :label => "URL patterns that shouldn't be accessible to guest web traffic",
+                          :as => :text %>
+
+              <%= f.input :unauthorized_access_forbidden_phrases,
+                          :label => "Count status codes of 200 as forbidden when body contains any of the following words/phrases",
+                          :as => :text %>
+          <% end-%>
+
+          <%= f.help_link :unauthorized_access_url_patterns do -%>
+              <h3>URL patterns that shouldn't be accessible to guest web traffic</h3>
+              <p>
+                A list of URL patterns may be specified here signifying pages that
+                should not be accessible to guest/logged-out visitors.<br/>
+                Examples:
+              </p>
+              <ul>
+                <li>*/admin/*</li>
+                <li>*/subrosa-contexts/*</li>
+                <li>*/horrid-secrets/*</li>
+                <li>*/not/for/you/*</li>
+              </ul>
+          <% end -%>
+
+          <%= f.help_link :unauthorized_access_forbidden_phrases do -%>
+              <h3>Count status codes of 200 as forbidden when body contains any of the following words/phrases</h3>
+              <p>
+                A list of words or phrases signifying that access to a page is forbidden.<br/>
+                Examples:
+              </p>
+              <ul>
+                <li>forbidden</li>
+                <li>unauthorized</li>
+                <li>access denied</li>
+              </ul>
+          <% end -%>
+
+        <%= f.inputs "Transport Layer Security" do %>
+        	<%= f.input :ssl_required, :label => "Report if SSL is not enabled", :as => :boolean %>
+        	<%= f.input :report_weak, :label => "Report if weak SSL ciphers are allowed", :as => :boolean %>
+        <% end-%>
+
+        <%= f.help_link :ssl_required do -%>
+	      <h3>Report a vulnerability if the web service is not running over SSL</h3>
+	      <p>
+	        If the targeted web service is not running over SSL we will report it as<br/>
+	        a Web Vuln.
+          </p>
+        <% end -%>
+
+        <%= f.help_link :report_weak do -%>
+	      <h3>Report a vulnerability if the web service allows weak ciphers</h3>
+	      <p>
+	        If the targeted web service is running SSL and allows weak cyptographic<br/>
+	        ciphers, then we will report it as a Web Vuln.
+          </p>
+        <% end -%>
+
+		<%= f.inputs "Web Crawler Settings (Advanced)" do %>
+              <%= f.input :exclude_path_patterns , :as=> :text, :label=> 'Path exclusion patterns' %>
+
+              <%= render :partial => "web_auth_fields", :locals => {:f => f} %>
+		<% end -%>
+
+		</div>
+
+      <%= f.help_link :exclude_path_patterns do -%>
+          <h3>Path exclusion patterns</h3>
+          <p>Determines which paths should be skipped when crawling.</p>
+          <ul>
+            <li>*logout*</li>
+            <li>*/admin/*</li>
+          </ul>
+    <% end -%>
+
+
+      <% if @no_launch.blank? %>
+      <%= f.actions do -%>
+        <span class="btn">
+          <%= f.submit "Launch Scan", :class => "webscan", :id => 'popup_submit' %>
+        </span>
+      <% end -%>
+		<% end -%>
+	</div>
+<% end -%>
+
+<%= add_disable_overlay([:pro]) if not @licensed %>

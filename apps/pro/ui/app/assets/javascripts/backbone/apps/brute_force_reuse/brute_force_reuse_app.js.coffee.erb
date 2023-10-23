@@ -1,0 +1,25 @@
+define [
+  'lib/concerns/entities/chooser'
+  'lib/concerns/views/chooseable'
+  'lib/utilities/navigation'
+  'apps/brute_force_reuse/cred_selection/cred_selection_controller'
+  'entities/cred'
+  'lib/components/window_slider/window_slider_controller'
+  'apps/brute_force_reuse/index/index_controller'
+], ->
+  @Pro.module 'BruteForceReuseApp', (BruteForceReuseApp, App)->
+
+    class BruteForceReuseApp.Router extends Marionette.AppRouter
+      appRoutes:
+        "reuse": "reuse"
+
+    API =
+      reuse: (id=null) ->
+        indexController = new BruteForceReuseApp.Index.Controller (core_id: id)
+
+    App.addInitializer ->
+      new BruteForceReuseApp.Router(controller: API)
+
+    App.vent.on "quickReuse:show", (core_id) ->
+      App.navigate("#reuse", {trigger:false})
+      API.reuse(core_id)

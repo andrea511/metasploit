@@ -1,0 +1,39 @@
+
+.lazy-list-component {
+  .lazy-list {
+    &.collection-loading {
+      pointer-events: none;
+      background-image: image-url('spinner.gif');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      * {
+        opacity: 0.7;
+      }
+      .empty-view {
+        color: #fff;
+      }
+    }
+
+    .empty-view {
+      padding: 12px 0;
+      text-align: center;
+    }
+  }
+
+  div.load-more {
+    a {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      padding: 12px 0;
+      &:hover {
+        background: #f0f0f0;
+      }
+      &:active {
+        background: #d0d0d0;
+      }
+    }
+  }
+}

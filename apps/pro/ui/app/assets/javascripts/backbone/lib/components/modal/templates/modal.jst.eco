@@ -1,0 +1,32 @@
+
+<div class="bg"></div>
+
+
+<div class="modal <%= @class  %>" id="modal">
+    <div class="header">
+        <a class="close small"  href="javascript:void 0"> &times; </a>
+        <% if @title: %>
+            <h1><%= @title %></h1>
+        <% end %>
+
+        <% if @description: %>
+            <p><%= @description %></p>
+        <% end %>
+    </div>
+
+    <div class="padding">
+        <div class="content"></div>
+
+        <% if @showAgainOption: %>
+          <div class="show-again-option">
+            <label>
+              <input type="checkbox" name="showOnce">
+              Do not show this again
+            </label>
+          </div>
+        <% end %>
+
+        <div class="clearfix"></div>
+        <div class="modal-actions"></div>
+    </div>
+</div>

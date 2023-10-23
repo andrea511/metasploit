@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3_detail_services" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="165c3818-7d75-4305-9d32-2cf6103d08d4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Serif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Serif" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Serif" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Serif" fontSize="12"/>
+	<parameter name="host_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    services.name as name,
+    services.port as port,
+    services.proto as proto,
+    services.info as info
+FROM
+    services
+WHERE
+    services.state = 'open' and
+    services.host_id = $P{host_id}
+ORDER BY
+    services.port ASC]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="port" class="java.lang.Integer"/>
+	<field name="proto" class="java.lang.String"/>
+	<field name="info" class="java.lang.String"/>
+	<pageHeader>
+		<band height="21">
+			<line>
+				<reportElement uuid="82c450e9-c7a4-4ed0-aba2-6b0128a681a5" positionType="FixRelativeToBottom" x="0" y="20" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="b4f9c4fb-089f-4bd2-95f4-0bb2abe2ab53" style="Column header" x="3" y="0" width="62" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Port]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5226a30e-7c9d-424a-bbb9-07b0092c5f6e" style="Column header" x="226" y="0" width="329" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Info]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7eb4738e-34c3-42dc-b53f-ec81cc440fbe" style="Column header" x="65" y="0" width="62" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Protocol]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ddb5a1b3-a8f0-458e-a750-d7d88acf3666" style="Column header" x="127" y="0" width="99" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement uuid="2a526683-ab74-4230-9040-3135705d8e07" positionType="FixRelativeToBottom" x="3" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="4d479268-67a4-45ca-9e84-67460e768b16" style="Detail" x="127" y="2" width="99" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[null==$F{name} ? "<unknown>" : $F{name}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement uuid="c2c48585-513c-4a42-a4de-3733d1ca12af" style="Detail" positionType="Float" stretchType="RelativeToTallestObject" x="226" y="0" width="329" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{info}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e426b95b-0f5e-4e0f-9673-40f6e549d181" style="Detail" x="65" y="2" width="62" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d8ec4bd8-2608-4eaf-82a8-e0613e8f116c" style="Detail" x="3" y="0" width="62" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{port}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

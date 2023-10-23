@@ -1,0 +1,19 @@
+.columns.small-12
+  .errors
+
+  .columns.small-12
+    .row.spacer
+
+    .columns.small-6
+
+    .columns.small-6.mm-select-container
+      %label{:for=>'mm-select'}
+        Metamodule:
+      %select.mm-select#mm-select
+        {{#each metamodules}}
+        :plain
+          <option value="{{symbol}}">{{name}}</option>
+        {{/each}}
+
+  .config
+    .tab-loading

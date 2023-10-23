@@ -1,0 +1,9 @@
+<div class="step">
+	<h3>Web Apps</h3>
+	<div class="stepInfo begin" id="cleanup">
+		<%= render :partial => 'web_results' %>
+	</div>
+	<div class="btns">
+		<span class="btn"><%= submit_checkboxes_to "WebScan...", new_webscan_path(@workspace), { :class => "webscan" } %></span>
+	</div>
+</div>

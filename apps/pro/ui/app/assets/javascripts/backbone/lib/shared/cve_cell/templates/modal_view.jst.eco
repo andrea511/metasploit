@@ -1,0 +1,8 @@
+<% for ref in @refs: %>
+  <%# The dash below means this is NOT escaped before putting it in the HTML %>
+  <%# This is fine since it's a derived field that is rendered safely by a Ruby helper %>
+  <div class="row">
+    <%- ref.html_link %>
+  </div>
+
+<% end %>

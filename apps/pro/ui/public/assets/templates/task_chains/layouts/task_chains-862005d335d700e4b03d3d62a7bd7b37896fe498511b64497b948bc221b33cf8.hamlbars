@@ -1,0 +1,9 @@
+.foundation
+  .header.row
+  .row#task-chain-content
+    .columns.small-12.container
+      .nav.row
+      .content.row
+      %form.row{:id=>"hidden-form", :method => "post", :enctype => "multipart/form-data"}
+        %input{:type=>'hidden', :name =>'schedule_suspend', :value=>'future'}
+        .hidden-inputs

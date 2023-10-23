@@ -1,0 +1,17 @@
+<form id="add_tags" style="padding: 3px 0;" action="">
+    <ul>
+        <li class="name tags" style="margin-bottom: 20px; position:relative;">
+            <label id="tags-component" style="position: absolute; margin-left: 4px; margin-top: 2px; right: -25px;"></label>
+            <input name="name"/>
+        </li>
+    </ul>
+</form>
+
+
+<div class="inline-help" data-field="tags-component">
+    <a href class="help" data-field="tags-component" target="_blank">
+    <%- @informationAssetTag %>
+    </a>
+    <h3>Tags</h3>
+    <div style="margin-top: 6px;"><%- @content %></div>
+</div>

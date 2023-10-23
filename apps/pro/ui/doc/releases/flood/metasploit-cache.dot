@@ -1,0 +1,201 @@
+digraph flood {
+  graph [
+    label = "Electro to Flood metasploit-cache changes"
+    rankdir = "LR"
+    ranksep = "8"
+    splines="line"
+  ]
+  node [
+    shape = "record"
+  ]
+
+  /*
+   *  Nodes
+   */
+
+  subgraph cluster_electro {
+    label = "Electro"
+
+    "metasploit-model (Electro)" [
+      label = "<title> metasploit-model | " +
+              "<architecture> Metasploit::Model::Architecture | " +
+              "<author> Metasploit::Model::Author | " +
+              "<authority> Metasploit::Model::Authority | " +
+              "<derivation> Metasploit::Model::Derivation::* | " +
+              "<email_address> Metasploit::Model::EmailAddress | " +
+              "<module> Metasploit::Model::Module | " +
+              "<module_action> Metasploit::Model::Module::Action | " +
+              "<module_ancestor> Metasploit::Model::Module::Action | " +
+              "<module_ancestor_spec_template> Metasploit::Model::Module::Ancestor::Spec::Template | " +
+              "<module_architecture>  Metasploit::Model::Module::Architecture | " +
+              "<module_author> Metasploit::Model::Module::Author | " +
+              "<module_class> Metasploit::Model::Module::Class | " +
+              "<module_class_spec_template> Metasploit::Model::Module::Class::Spec::Template | " +
+              "<module_handler> Metasploit::Model::Module::Handler | " +
+              "<module_instance> Metasploit::Model::Module::Instance | " +
+              "<module_instance_spec_template> Metasploit::Model::Module::Instance::Spec::Template | " +
+              "<module_path> Metasploit::Model::Module::Path | " +
+              "<module_platform> Metasploit::Model::Module::Platform | " +
+              "<module_rank> Metasploit::Model::Module::Rank | " +
+              "<module_reference> Metasploit::Model::Module::Reference | " +
+              "<module_stance> Metasploit::Model::Module::Stance | " +
+              "<module_target> Metasploit::Model::Module::Target | " +
+              "<module_target_architecture> Metasploit::Model::Module::Target::Architecture | " +
+              "<module_target_platform> Metasploit::Model::Module::Target::Platform | " +
+              "<module_type> Metasploit::Model::Module::Type | " +
+              "<platform> Metasploit::Model::Platform | " +
+              "<reference> Metasploit::Model::Reference | " +
+              "<search_operator_deprecated> Metasploit::Model::Search::Operator::Deprecated"
+    ]
+  }
+
+  subgraph cluster_great_one {
+    label = "GREAT #1"
+
+    "metasploit_data_models (GREAT #1)" [
+      label = "<title> metasploit_data_models | " +
+              "<architecture> Mdm::Architecture | " +
+              "<author> Mdm::Author | " +
+              "<authority> Mdm::Authority | " +
+              "<email_address> Mdm::EmailAddress | " +
+              "<module_action> Mdm::Module::Action | " +
+              "<module_ancestor> Mdm::Module::Ancestor | " +
+              "<module_architecture> Mdm::Module::Architecture | " +
+              "<module_author> Mdm::Module::Author | " +
+              "<module_class> Mdm::Module::Class | " +
+              "<module_instance> Mdm::Module::Instance | " +
+              "<module_path> Mdm::Module::Path | " +
+              "<module_rank> Mdm::Module::Rank | " +
+              "<module_reference> Mdm::Module::Reference | " +
+              "<module_relationship> Mdm::Module::Relationship | " +
+              "<module_target> Mdm::Module::Target | " +
+              "<module_target_architecture> Mdm::Module::Target::Architecture | " +
+              "<module_target_platform> Mdm::Module::Target::Platform | " +
+              "<platform> Mdm::Platform | " +
+              "<reference> Mdm::Reference"
+    ]
+  }
+
+  subgraph cluster_flood {
+    label = "Flood"
+
+    /*
+     * Nodes
+     */
+
+    "metasploit-cache" [
+      label = "<title> metasploit-cache | " +
+              "{ PostgreSQL | Sqlite3 } | " +
+              "<architecture> Metasploit::Cache::Architecture | " +
+              "<author> Metasploit::Cache::Author | " +
+              "<authority> Metasploit::Cache::Authority | " +
+              "<derivation> Metasploit::Cache::Derivation | " +
+              "<email_address> Metapsloit::Cache::EmailAddress | " +
+              "<module> Metasploit::Cache::Module | " +
+              "<module_action> Metasploit::Cache::Module::Action | " +
+              "<module_ancestor> Metasploit::Cache::Module::Ancestor | " +
+              "<module_ancestor_spec_template> Metasploit::Module::Ancestor::Spec::Template | " +
+              "<module_architecture> Metasploit::Cache::Module::Architecture | " +
+              "<module_author> Metasploit::Cache::Module:Author | " +
+              "<module_class> Metasploit::Cache::Module::Class | " +
+              "<module_class_spec_template> Metasploit::Cache::Module::Class::Spec::Template | " +
+              "<module_handler> Metasploit::Cache::Module::Handler | " +
+              "<module_instance> Metasploit::Cache::Module::Instance | " +
+              "<module_instance_spec_template> Metasploit::Cache::Module::Instance::Spec::Template | " +
+              "<module_path> Metasploit::Cache::Module::Path | " +
+              "<module_platform> Metasploit::Cache::Module::Platform | " +
+              "<module_rank> Metasploit::Cache::Module::Rank | " +
+              "<module_reference> Metasploit::Cache::Module::Reference | " +
+              "<module_relationship> Metasploit::Cache::Module::Relationship | " +
+              "<module_stance> Metasploit::Cache::Module::Stance | " +
+              "<module_target> Metasploit::Cache::Module::Target | " +
+              "<module_target_architecture> Metasploit::Cache::Module::Target::Architecture | " +
+              "<module_target_platform> Metasploit::Cache::Module::Target::Platform | " +
+              "<module_type> Metasploit::Cache::Module::Type | " +
+              "<platform> Metasploit::Cache::Platform | " +
+              "<reference> Metasploit::Cache::Reference | " +
+              "<search_operator> Metasploit::Cache::Search::Operator"
+    ]
+
+    "metasploit-search"
+    "metasploit-version"
+    "metasploit-yard"
+
+    /*
+     * Edges
+     */
+
+    "metasploit-search" -> "metasploit-cache" [
+      label = "use"
+    ]
+    "metasploit-version" -> "metasploit-cache" [
+      label = "use"
+    ]
+    "metasploit-yard" -> "metasploit-cache" [
+      label = "use"
+    ]
+  }
+
+  /*
+   *
+   *  Edges
+   *
+   */
+
+  /*
+   *  Great #1 -> Flood
+   */
+
+  "metasploit_data_models (GREAT #1)":architecture -> "metasploit-cache":architecture
+  "metasploit_data_models (GREAT #1)":author -> "metasploit-cache":author
+  "metasploit_data_models (GREAT #1)":authority -> "metasploit-cache":authority
+  "metasploit_data_models (GREAT #1)":email_address -> "metasploit-cache":email_address
+  "metasploit_data_models (GREAT #1)":module_action -> "metasploit-cache":module_action
+  "metasploit_data_models (GREAT #1)":module_ancestor -> "metasploit-cache":module_ancestor
+  "metasploit_data_models (GREAT #1)":module_architecture -> "metasploit-cache":module_architecture
+  "metasploit_data_models (GREAT #1)":module_author -> "metasploit-cache":module_author
+  "metasploit_data_models (GREAT #1)":module_class -> "metasploit-cache":module_class
+  "metasploit_data_models (GREAT #1)":module_instance -> "metasploit-cache":module_instance
+  "metasploit_data_models (GREAT #1)":module_path -> "metasploit-cache":module_path
+  "metasploit_data_models (GREAT #1)":module_rank -> "metasploit-cache":module_rank
+  "metasploit_data_models (GREAT #1)":module_reference -> "metasploit-cache":module_reference
+  "metasploit_data_models (GREAT #1)":module_relationship -> "metasploit-cache":module_relationship
+  "metasploit_data_models (GREAT #1)":module_target -> "metasploit-cache":module_target
+  "metasploit_data_models (GREAT #1)":module_target_architecture -> "metasploit-cache":module_target_architecture
+  "metasploit_data_models (GREAT #1)":module_target_platform -> "metasploit-cache":module_target_platform
+  "metasploit_data_models (GREAT #1)":platform -> "metasploit-cache":platform
+  "metasploit_data_models (GREAT #1)":reference -> "metasploit-cache":reference
+
+  /*
+   *  Electro -> Flood
+   */
+
+  "metasploit-model (Electro)":architecture -> "metasploit-cache":architecture
+  "metasploit-model (Electro)":author -> "metasploit-cache":author
+  "metasploit-model (Electro)":authority -> "metasploit-cache":authority
+  "metasploit-model (Electro)":derivation -> "metasploit-cache":derivation
+  "metasploit-model (Electro)":email_address -> "metasploit-cache":email_address
+  "metasploit-model (Electro)":module -> "metasploit-cache":module
+  "metasploit-model (Electro)":module_action -> "metasploit-cache":module_action
+  "metasploit-model (Electro)":module_ancestor -> "metasploit-cache":module_ancestor
+  "metasploit-model (Electro)":module_ancestor_spec_template -> "metasploit-cache":module_ancestor_spec_template
+  "metasploit-model (Electro)":module_architecture -> "metasploit-cache":module_architecture
+  "metasploit-model (Electro)":module_author -> "metasploit-cache":module_author
+  "metasploit-model (Electro)":module_class -> "metasploit-cache":module_class
+  "metasploit-model (Electro)":module_class_spec_template -> "metasploit-cache":module_class_spec_template
+  "metasploit-model (Electro)":module_handler -> "metasploit-cache":module_handler
+  "metasploit-model (Electro)":module_instance -> "metasploit-cache":module_instance
+  "metasploit-model (Electro)":module_instance_spec_template -> "metasploit-cache":module_instance_spec_template
+  "metasploit-model (Electro)":module_path -> "metasploit-cache":module_path
+  "metasploit-model (Electro)":module_platform -> "metasploit-cache":module_platform
+  "metasploit-model (Electro)":module_rank -> "metasploit-cache":module_rank
+  "metasploit-model (Electro)":module_reference -> "metasploit-cache":module_reference
+  "metasploit-model (Electro)":module_stance -> "metasploit-cache":module_stance
+  "metasploit-model (Electro)":module_target -> "metasploit-cache":module_target
+  "metasploit-model (Electro)":module_target_architecture -> "metasploit-cache":module_target_architecture
+  "metasploit-model (Electro)":module_target_platform -> "metasploit-cache":module_target_platform
+  "metasploit-model (Electro)":module_type -> "metasploit-cache":module_type
+  "metasploit-model (Electro)":platform -> "metasploit-cache":platform
+  "metasploit-model (Electro)":reference -> "metasploit-cache":reference
+  "metasploit-model (Electro)":search_operator_deprecated -> "metasploit-cache":search_operator
+}

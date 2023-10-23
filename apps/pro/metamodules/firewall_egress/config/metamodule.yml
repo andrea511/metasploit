@@ -1,0 +1,13 @@
+name:
+  Segmentation and Firewall Testing
+description:
+  Runs a full Nmap SYN scan against an external server hosted by Rapid7 that acts as an egress scan target.
+  Use this MetaModule to discover outbound ports on a firewall that an attacker can use to exfiltrate information.
+  You will need to specify the ports and protocols that you want to audit.
+rating:
+  5
+categories:
+  - Auditing
+  - Discovery
+symbol:
+  firewall_egress

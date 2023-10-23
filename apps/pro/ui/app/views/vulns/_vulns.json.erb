@@ -1,0 +1,24 @@
+{ 
+  "sEcho": <%= echo_data_tables %>,
+  "iTotalRecords": <%= @vulns_total_count.to_json %>,
+  "iTotalDisplayRecords": <%= @vulns_total_display_count.to_json %>,
+  "aaData": [
+  <% @vulns.each_with_index do |vuln, index| -%>
+    {
+      "DT_RowId":   <%= dom_id(vuln).to_json.html_safe %>,
+      "checkbox":   <%= vuln_host_checkbox_tag(vuln) %>,
+      "host":       <%= vuln_host_name_html(vuln) %>,
+      "service":    <%= vuln_service_html(vuln) %>,		
+      "name":       <%= vuln_name_html(vuln) %>,
+
+      <% if License.get.supports_vuln_validation? %>
+        "status":   <%= vuln_status_html(vuln, params) %>,
+      <% else %>
+        "exploits": <%= vuln_exploits_html(vuln) %>,
+      <% end %>
+
+    "refs":       <%= vuln_refs_html(vuln) %>
+    }<%= ',' unless index == (@vulns.size - 1) %>
+  <% end -%>
+  ]
+}

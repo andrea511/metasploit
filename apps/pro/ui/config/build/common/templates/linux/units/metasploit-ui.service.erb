@@ -1,0 +1,27 @@
+[Unit]
+Description=Metasploit Pro web service
+Requires=metasploit-env.service metasploit-config-swapper.service
+BindsTo=metasploit-postgresql.service metasploit-prosvc.service
+
+# Can start in parallel with prosvc
+After=network.target metasploit-postgresql.service metasploit-env.service metasploit-config-swapper.service
+
+PartOf=metasploit.target
+
+[Service]
+Type=simple
+TimeoutStartSec=600
+User=daemon
+Group=daemon
+
+# TODO: populate from config, though it is hard-coded elsewhere
+Environment=PORT=3001
+EnvironmentFile=@@BITROCK_INSTALLDIR@@/scripts/.env.txt
+
+SyslogIdentifier=proui
+WorkingDirectory=@@BITROCK_INSTALLDIR@@/apps/pro/ui
+
+ExecStart=@@BITROCK_INSTALLDIR@@/ruby/bin/ruby ./proui.rb
+ExecStartPost=@@BITROCK_INSTALLDIR@@/scripts/wait_for_port ${PORT}
+KillMode=mixed
+KillSignal=SIGINT

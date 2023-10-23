@@ -1,0 +1,18 @@
+[Unit]
+Description=Metasploit Pro updater service
+Requires=metasploit-env.service
+
+After=network.target metasploit-env.service
+
+[Service]
+Type=oneshot
+TimeoutSec=600
+User=root
+Group=root
+
+EnvironmentFile=@@BITROCK_INSTALLDIR@@/scripts/.env.txt
+
+SyslogIdentifier=proupdate
+WorkingDirectory=@@BITROCK_INSTALLDIR@@/apps/pro
+
+ExecStart=@@BITROCK_INSTALLDIR@@/apps/pro/finish_update.sh

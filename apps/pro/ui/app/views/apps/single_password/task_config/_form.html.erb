@@ -1,0 +1,64 @@
+<%= meta_module_form_for @task_config do |f| %>
+  <%= form_tab "Create Project" do %>
+    <%= f.input :whitelist_string, :label => "Address Range", :as =>:text %>
+    <%= advanced_link 'Create Project' %>
+    <%= advanced_area 'Create Project' do %>
+      <%= f.input :blacklist_string, :as => :text, :label => "Excluded Addresses" %>
+    <% end %>
+  <% end %>
+  <%= form_tab "Services" do %>
+    <%= tab_title 'Services to Authenticate' %>
+    <%= advanced_area "Services", :show => true, 'padding-bottom' => '20px' do %>
+      <% services = BruteforceTask::Services::LOCKOUT_RISK_BY_SERVICE %>
+      <% services.values.uniq.each do |ranking| %>
+        <div class='foundation'>
+          <h5>
+            <label>
+              <input type='checkbox' class='select-all-in-parent-div' checked/>
+              <%= ranking.capitalize %> Lockout Risk
+            </label>
+          </h5>
+          <div class='selectable-by-parent'>
+            <div class='row dat-grid'>
+              <% cols = 4 %>
+              <% services.select{|k,v| v == ranking}.each_with_index do |section,i| %>
+                <% if i%cols==0 and i>0 %></div><div class='row dat-grid'><% end %>
+                <div class='cell large-3'>
+                  <label>
+                    <%= check_box_tag "task_config[services][]", section[0], @task_config.services.include?(section[0]) %>
+                    <%= section[0] %>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <% if ranking != 'high' %>
+          <hr style='margin: 15px 0 20px;' />
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= form_tab "Credentials" do %>
+    <%= hidden_field_tag "task_config[core_id]", @task_config.core.try(:id) %>
+    <%= f.input :cred_type, :collection => Apps::SinglePassword::TaskConfig::CRED_TYPES.invert, :as => :radio %>
+    <%= advanced_area "User Supplied" do %>
+      <%= f.input :auth_username, :label => 'Public' %>
+      <li class="password input required stringish" id="task_config_password_input">
+        <label class=" label" for="task_config_password">Private<abbr title="required">*</abbr></label><input id="task_config_password" name="task_config[password]" type="password" value="<%= @task_config.password %>">
+      </li>
+      <label class='plaintext'>
+        <input id="show_plaintext" name="show_plaintext" type="checkbox">
+        Display private
+      </label>
+      <%= f.input :domain, :label =>'Realm' %>
+    <% end %>
+    <%= advanced_area "Stored" do %>
+      <table id="creds_table" class="list sortable"></table>
+      <div class='clearfix'></div>
+    <% end %>
+  <% end %>
+  <%= render :partial => 'wizards/report_tab', :locals => {
+             :f => f,
+             :rtypes => [Apps::SinglePassword::TaskConfig::REPORT_TYPE] } %>
+<% end %>

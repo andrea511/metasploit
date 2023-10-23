@@ -1,0 +1,57 @@
+#sonar-import-container {
+
+  .error{
+    position: absolute;
+  }
+
+  .table-component{
+    margin-top: 28px;
+
+    .filter-region{
+      position: absolute;
+      top: 56px;
+      right: 9px;
+
+      .help-icon{
+        bottom: auto;
+        right: 9px !important;
+        top: 18px !important;
+      }
+    }
+  }
+
+  #sonar-domain-input-region {
+    .last-seen, .domain, .query{
+      vertical-align: top;
+    }
+
+    .query{
+      padding: 1px 0px 0px 8px;
+    }
+
+    #sonar-domain-input-textbox, #sonar-last-seen-input {
+      height: 28px;
+      width: 330px;
+      padding-left: 10px;
+      margin-right: 6px;
+      vertical-align: top;
+    }
+
+    #sonar-last-seen-input{
+      width: 50px;
+      margin-right:3px;
+      vertical-align: initial;
+    }
+
+    #sonar-domain-query-button {
+      height: 26px;
+      vertical-align: top;
+    }
+  }
+  #sonar-results-region {
+    margin-top: 12px;
+    #sonar-empty-results { }
+    #sonar-results-table { }
+  }
+
+}

@@ -1,0 +1,279 @@
+@import "css3-mixins";
+@import "shared/variables";
+
+$max-width: 1366px;
+$orange-text: #E95709;
+
+// styles for the nice lookin scrollbar WOOO
+.notification-center-container {
+  .nano {
+    width: 310px;
+  }
+}
+
+// push the center over slightly to the right on big displays
+@media (min-width: $max-width+60px) {
+  #notification-center-region {
+    right: -30px !important;
+  }
+}
+
+#header #top-menu ul.drop-menu li.notification-menu {
+  background-color: $new-notification-color;
+ -webkit-transition:background-color 0.2s ease-in-out;
+ -moz-transition:background-color 0.2s ease-in-out;
+ -o-transition:background-color 0.2s ease-in-out;
+ transition:background-color 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 3px rgba(46,73,21,.2);
+  }
+  &.empty:hover {
+    box-shadow: 0 0 3px rgba(0,0,0,.3);
+  }
+  &.empty:active, &:active {
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  }
+  &.selected, &.selected:hover {
+
+    background-color: #FFFFFF;
+    box-shadow: inset 0 0 6px rgba(0,0,0,.2);
+    .menu-title {
+      color: #555;
+    }
+
+    &.empty {
+      background-color: #FFFFFF;
+      .menu-title {
+        color: #555;
+      }
+    }
+  }
+  &.empty.selected, &.empty.selected:hover {
+    @include no-box-shadow;
+  }
+  &.empty {
+    background-color: #777777;
+  }
+
+  &.flash {
+     background-color:#ea5709;
+  }
+}
+
+.notification-center-container.hidden {
+  display:none;
+}
+
+.notification-nub {
+  background-image: url(<%= image_path 'nub.png' %>);
+  width: 14px;
+  height: 12px;
+  margin-left: 7px;
+  z-index: 10002;
+  position: absolute;
+}
+
+#notification-center-region {
+  position: absolute;
+  width: 310px;
+  right: 0;
+  top: 45px;
+  z-index: 10001;
+  overflow-y: auto;
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: 0 1px 6px rgba(0,0,0, .17);
+  border: solid 1px #C1C1C1;
+  border-top: solid 1px #d0d0d0;
+
+
+  .notification-list {
+    position: static;
+    right:0px;
+    font-family: $base-font-stack;
+
+    .notification-type {
+      padding: 6px 0px 6px 0px;
+      border-bottom: 1px solid #E6E6E6;
+      height:20px;
+
+      .type-title {
+        padding: 0px 10px 0px 10px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #E95709;
+        line-height:22px;
+        float:left;
+      }
+      .sort-options {
+        float:right;
+        margin-right:6px;
+      }
+
+    }
+
+    .notifications-container {
+      width: 100%;
+      $message-bgcolor: #f6f6f6;
+      .scrollable-container {
+        width: 310px;
+        &>div>div:last-child>div.notification-message {
+          border-bottom: 0;
+        }
+
+        .no-new-notifications {
+          padding: 9px 0;
+          color: #555;
+          text-align: center;
+          &:hover {
+            background: $message-bgcolor;
+            cursor: auto;
+          }
+        }
+
+        .notification-message {
+          cursor: pointer;
+          width: 310px;
+          border-bottom: 1px solid #E6E6E6;
+          background: $message-bgcolor;
+          position: relative;
+
+          &.system_notification {
+            // separate styles for system notifications
+          }
+
+          &.tooltip {
+            // expand text for longer notifications
+            .table-container .content-cell .details .text {
+              display: block;
+              max-width: 85%;
+              height: 36px;
+              white-space: normal;
+              text-overflow: unset;
+              overflow-y: auto;
+              &::-webkit-scrollbar {
+                display: none;
+              }
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+            .table-container .content-cell .details .humanized {
+              margin-left: 0;
+            }
+          }
+
+          &:hover {
+            background-color: darken($message-bgcolor, 5%);
+            .action-bar {
+              display:block;
+            }
+          }
+
+          .action-bar {
+            display: none;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            height: 20px;
+            border: solid 1px #C1C1C1;
+            padding: 0px 8px 0 8px;
+            cursor: pointer;
+            color: #333;
+            @include border-radius(4px);
+            @include linear-gradient(rgba(251,251,251,1), rgba(229,229,229,1));
+            span.close {
+              font-size: 16px;
+              line-height: 21px;
+              vertical-align: middle;
+              padding: 0;
+              font-weight: 600;
+              font-family: $base-font-stack;
+              text-shadow: 0 1px 1px rgba(255,255,255,.2);
+            }
+            &:hover {
+              box-shadow: 0 0 4px rgba(0,0,0, .2);
+            }
+            &:active {
+              box-shadow: inset 0 0 4px rgba(0,0,0, .2);
+            }
+          }
+
+
+          .table-container {
+            display: table;
+            width: 100%;
+
+            .status-bar {
+              vertical-align: top;
+              display: table-cell;
+              background-color: #8FD551;
+              width: 5px;
+            }
+
+            .content-cell {
+              display: table-cell;
+              padding: 6px 0px 6px 15px;
+
+              .details {
+                .text {
+                  max-width:145px;
+                  display:inline-block;
+                  white-space:nowrap;
+                  overflow:hidden;
+                  text-overflow: ellipsis;
+                  vertical-align: middle;
+                  &:hover {
+                    text-decoration: 2px underline dashed #c8c8c8;
+                  }
+                }
+                .humanized{
+                  margin-left:2px;
+                  display:inline-block;
+                  vertical-align: middle;
+                }
+              }
+
+              .message {
+                line-height: 1;
+                .system-badge{
+                  font-size: 11px;
+                  padding: 2px;
+                  color: #FFFFFF;
+                  background-color: #D5D5D5;
+                }
+              }
+            }
+          }
+
+          &.message-read {
+            .status-bar {
+              background-color: #D5D5D5;
+            }
+          }
+
+          &.failed_notification {
+            .status-bar {
+              background-color: #ff0200;
+            }
+          }
+        }
+      }
+    }
+
+    .notifications-footer {
+      .more-text {
+        border-top: 1px solid #e0e0e0;
+        text-align: center;
+        color: #E95709;
+        padding: 8px 0;
+        cursor: pointer;
+        font-weight: 600;
+        &:hover {
+          background: #fcfcfc;
+          color: darken($orange-text, 5%);
+        }
+      }
+    }
+  }
+}

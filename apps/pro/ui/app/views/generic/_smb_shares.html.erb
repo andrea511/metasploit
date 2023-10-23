@@ -1,0 +1,45 @@
+<% if smb_shares.length > 0 %>
+<% host_record ||= false %>
+<% if host_record %>
+<h4>Exposed SMB Shares</h4>
+<% end %>
+<table class="list" id="shares_smb">
+	<% if not host_record %>
+		<caption>Exposed SMB Shares</caption>
+	<% end %>
+	<thead>
+		<tr>
+			<th>Share Name</th>
+			<th>Share Type</th>
+			<th>Description</th>
+			<th>Information</th>
+		</tr>
+	</thead>
+	<tbody>
+	<% smb_shares.each do |si| %>
+		<%
+			# XXX
+			# Temporary fix for bug introduced by
+			# https://github.com/rapid7/metasploit-framework/pull/2094/files#L0R372
+			# and https://dev.metasploit.com/redmine/issues/1233
+			#
+			# See https://dev.metasploit.com/redmine/issues/8389
+			if si.data[:shares].kind_of? Array
+		%>
+		<% si.data[:shares].each do |s| %>
+			<tr class="<%=h row_cycle %>">
+				<td><%= link_to "\\\\#{h si.host.address}\\#{h s[0]}", "smb://#{h si.host.address}/#{h s[0]}" %></td>
+				<td><%=h s[1] %></td>
+				<td><%=h s[2] %></td>
+				<td><%=h s[3].to_s %></td>
+			</tr>
+		<% end %>
+		<%
+			# XXX
+			end
+		%>
+	<% end %>
+	</tbody>
+</table>
+
+<% end %>

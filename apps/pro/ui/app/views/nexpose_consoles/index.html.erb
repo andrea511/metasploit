@@ -1,0 +1,7 @@
+<% title "Nexpose Consoles" %>
+<% breadcrumb link_to("Global Settings", settings_path), link_to("Nexpose Consoles", nexpose_consoles_path) %>
+
+<div id="nexpose_consoles">
+	<%= render "nexpose_consoles/nexpose_consoles", :consoles => @consoles %>
+</div>
+

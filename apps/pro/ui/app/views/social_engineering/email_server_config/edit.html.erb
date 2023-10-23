@@ -1,0 +1,31 @@
+<div class='email-server-config'>
+  <%= render "shared/error_messages", :target => @campaign %>
+  <div class='rollup-header'>
+    <h3 class='max-width'>Configure E-mail Server</h3>
+  </div>
+  <%= semantic_form_for @campaign, :url => workspace_social_engineering_campaign_email_server_config_path(@workspace, @campaign) do |f| %>
+    <%= f.inputs do %>
+      <%= f.input :smtp_host, :label => "Host", :required => true %>
+      <%= f.input :smtp_port, :label => "Port", :required => true %>
+      <%= f.input :smtp_username , :label => "Username" %>
+
+      <%
+        safe_password = nil
+        unless @campaign.smtp_password.blank?
+          safe_password = SmtpSettings::PASSWORD_UNCHANGED
+        end
+      %>
+      <%= f.input :smtp_password, :as => :password, :label => "Password", :input_html => { :value => safe_password } %>
+      <%= f.input :smtp_domain, :label => "Mail Domain"%>
+      <%= f.input :smtp_auth, :label => "SMTP Auth Type", :as => :select, :collection => SocialEngineering::SmtpServerConfigInterface::SMTP_AUTH_TYPES, :include_blank => false, :input_html => { :style => 'width: 150px; padding-top:3px;' } %>
+      <%= f.input :smtp_ssl, :as => :boolean, :label => "Force TLS (leave unchecked for STARTTLS)" %>
+      <%= f.input :smtp_batch_size, :label => "Emails per batch" %>
+      <%= f.input :smtp_batch_delay, :label => "Delay between batches (in seconds)" %>
+
+      <div class='validate-box'>
+        <span class='status'>
+        </span>
+      </div>
+    <% end %>
+  <% end %>
+</div>

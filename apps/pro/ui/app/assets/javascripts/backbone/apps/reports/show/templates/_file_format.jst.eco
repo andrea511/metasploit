@@ -1,0 +1,8 @@
+<% unless @not_generated || @status == 'regenerating': %>
+  <input type="checkbox" class="report-format-checkbox" />
+<% end %>
+
+<div title="" class='format-button <%= @file_format %> <%= 'not-generated' if @not_generated %> <%= @status %> <%= 'displayed' if @displayed %> '></div>
+
+
+<div class='regenerate-button <%=@status %>'></div>

@@ -1,0 +1,102 @@
+define [
+  'jquery',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_chain_item') %>'
+], ($, TaskChainItem) ->
+  class TaskChainItems extends Backbone.Marionette.CollectionView
+    childView: TaskChainItem
+
+    className: 'task-chain-items'
+
+    events:
+      'pieClicked *': 'selectPie'
+
+    collectionEvents:
+      'remove' : '_setEmptyState'
+      'reset' : '_resetState'
+      'add' : '_addState'
+
+    ui:
+      el: "#{@className}"
+
+    _hoverColor: '#2C69A0'
+    _innerFill: 'grey'
+
+    onRender:() ->
+      @collection.each(@_initTaskCount)
+      @collection.comparator =  (model) ->
+        model.get('index')
+      @_initDraggableAndSortable()
+
+    onAddChild: (item) ->
+      @_reinit()
+      if item.model.get('cloned')
+        @selectPie(true,item)
+      else
+        @selectPie(null,item)
+
+    onRemoveChild: ()->
+      @_reinit()
+
+    _addState: (item,collection) ->
+      $(@el).trigger('showAddState',collection)
+
+    _resetState: () ->
+      $(@el).trigger('showEmptyState')
+
+    _setEmptyState: (item,collection,options) ->
+      if collection.length == 0
+        $(@el).trigger('showEmptyState')
+       if collection.length > 0
+         if options.index >= collection.length
+           index = options.index-1
+         else
+           index = options.index
+         view = @children.findByModel(collection.at(index))
+         @selectPie(true,view)
+
+    _reinit: () ->
+      @collection.each(@_initTaskCount)
+      @_destroyDraggableAndSortable()
+      @_initDraggableAndSortable()
+
+    _initTaskCount:(task_chain_item, index) =>
+      view = @children.findByModel(task_chain_item)
+      view.chart.setText(index+1,true)
+
+    _destroyDraggableAndSortable: ->
+      $(@el).draggable('destroy')
+      $(@el).sortable('destroy')
+
+    _initDraggableAndSortable: =>
+      $(@el).sortable(
+        revert:true
+        update:@_updateNumbering
+        containment: '.vertical-nav'
+      )
+      $(@el).draggable(
+        connectToSortable: ".#{@el.className}"
+        helper: 'clone'
+        revert: 'invalid'
+      )
+
+    _updateCollection: ->
+      @collection.each (task_chain_item) =>
+        view = @children.findByModel(task_chain_item)
+        index = $(view.el).data('index')
+        view.chart.setText(index, true)
+        task_chain_item.set('index', index)
+      @collection.sort()
+
+    _updateNumbering: (e,ui) =>
+      pies = $('canvas', @el)
+      _.each(pies, (pieChart, index)->
+        $(pieChart).closest('.container').data('index',index+1)
+      )
+      @_updateCollection()
+
+    selectPie:(e, task_chain_item)->
+      @collection.each (task_chain_item) =>
+        task_chain_item.set('selected',false)
+      task_chain_item.model.set('selected',true)
+      if e?
+        $(task_chain_item.el).trigger('pieChanged', task_chain_item)

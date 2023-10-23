@@ -1,0 +1,140 @@
+@import 'components/circle_icons';
+
+$transitionTime: 250ms;
+
+.filter-region {
+  width: 600px;
+
+  .filter-component {
+    float: right;
+    padding-right: 20px;
+
+    #search {
+      margin: 10px;
+    }
+  }
+}
+
+.filter-region {
+  z-index: 100;
+  width: 600px;
+  float: right;
+}
+
+.VS-search {
+  width: 400px;
+  margin-left: 0;
+  margin-bottom: 10px;
+  -webkit-transition:width $transitionTime, height $transitionTime, background-color $transitionTime, -webkit-transform $transitionTime;
+  transition:width $transitionTime, margin-left $transitionTime, background-color $transitionTime, transform $transitionTime;
+  float: right;
+
+  &.expanded {
+    width: 600px;
+  }
+
+  .VS-search-inner {
+    .search_facet .category {
+      padding-top: 3px;
+    }
+
+    .search_input input {
+      margin-top:3px;
+    }
+
+    .search_facet_input_container input {
+      margin-top:1px;
+    }
+  }
+}
+
+// Facet/value dropdowns
+.VS-interface.ui-autocomplete {
+  background-color: white;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  border: 1px solid #eeeeee;
+  border-top: none;
+  opacity:1;
+
+  li.ui-menu-item a {
+    background-image: none;
+    border-top: none;
+    border-bottom: none;
+    // TODO: Lose the !important after IA restyle.
+    color: #29373f !important;
+    line-height: 13px;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: normal;
+
+    &.ui-state-focus {
+      border-top: none;
+      border-bottom: none;
+      background-color: #DCF7FD;
+      background-image: none;
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+// Help text dialog
+
+#dialog-region .filter-help {
+  &>div {
+    h5 {
+      display: block;
+      font-weight: 600;
+      font-size: 13px;
+      margin: 4px 0 2px 0;
+    }
+    p {
+      display: block;
+      font-size: 12px;
+      font-weight: 300;
+      margin: 0 0 3px 0;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+      color: #777;
+    }
+    &:last-child {
+      p {
+        border-bottom: 0;
+      }
+    }
+    &:first-child {
+      h5 {
+        margin-top: 1px;
+      }
+    }
+  }
+}
+
+.help-icon {
+  position: absolute;
+  right:8px;
+  top: 19px;
+
+  &::before {
+    @extend %circle-icon-grey;
+    @extend %circle-icon-question;
+
+    width: 15px;
+    height: 15px;
+    font-size: 12px;
+    padding-top: 1px;
+    padding-left: 1px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+
+
+

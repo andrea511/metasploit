@@ -1,0 +1,6 @@
+<form method="post" action="javascript:void(0)">
+  <div class="option">
+    <label>Email addresses</label>
+    <textarea id="report-email-addresses" placeholder="address1@example.com, address2@example.com"/>
+  </div>
+</form>

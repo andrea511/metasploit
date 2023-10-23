@@ -1,0 +1,11 @@
+define [
+  'jquery'
+  '<%= javascript_path('shared/notification-center/backbone/views/layouts/notification_center_layout') %>',
+], ($,NotificationCenterLayout) ->
+  class NotificationCenterController extends Backbone.Marionette.Controller
+
+      start: ->
+        region = new Backbone.Marionette.Region(el: "#notification-center-region")
+        region.show(new NotificationCenterLayout())
+
+  new NotificationCenterController()

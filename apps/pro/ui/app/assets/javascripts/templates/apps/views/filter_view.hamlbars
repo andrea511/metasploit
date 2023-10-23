@@ -1,0 +1,29 @@
+%h3.orange-text
+  MetaModules
+%ul.filter-sections
+  %li
+    %h6
+      Categories:
+      %span.reset
+        %a.reset{ :href => '#' } Reset
+    %ul.categories
+      {{#each categories}}
+      %li
+        %label
+          %input{ :type => 'checkbox' }
+          %span{ :href => '#' }
+            %span.name {{name}}
+            %span.count ({{count}})
+      {{/each}}
+  %li
+    %h6
+      Safety Rating:
+    %ul.safety-ratings
+      {{#each safetyRatings}}
+      %li
+        %a{ :href => '#', :'data-stars' => '{{name}}', :title => '{{name}}/5 stars' }
+          %span{ :class => 'rating-stars star{{name}}' }
+            %span
+          %span.and-up &amp; up
+          ({{count}})
+      {{/each}}

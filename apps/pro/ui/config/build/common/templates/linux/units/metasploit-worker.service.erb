@@ -1,0 +1,29 @@
+[Unit]
+Description=Metasploit Pro worker
+Requires= metasploit-env.service
+BindsTo=metasploit-postgresql.service
+Wants=metasploit-prosvc.service
+
+After=network.target metasploit-postgresql.service metasploit-env.service metasploit-prosvc.service
+
+PartOf=metasploit.target
+
+[Service]
+Type=forking
+TimeoutStartSec=600
+User=daemon
+Group=daemon
+
+EnvironmentFile=@@BITROCK_INSTALLDIR@@/scripts/.env.txt
+
+SyslogIdentifier=proworker
+PIDFile=@@BITROCK_INSTALLDIR@@/apps/pro/ui/tmp/pids/delayed_job.pid
+WorkingDirectory=@@BITROCK_INSTALLDIR@@/apps/pro/ui
+
+ExecStart=@@BITROCK_INSTALLDIR@@/ruby/bin/bundle exec ./script/delayed_job start
+ExecStop=@@BITROCK_INSTALLDIR@@/ruby/bin/bundle exec ./script/delayed_job stop
+KillMode=mixed
+KillSignal=SIGINT
+
+Restart=on-failure
+RestartSec=60

@@ -1,0 +1,14 @@
+<%= render "shared/error_messages", :target => @cred %>
+
+<%= hidden_field_tag :workspace_id, @workspace.id %>
+
+<%= f.inputs "Authentication Token (#{h @host.name || "Unknown"} - #{ h @host.address })" do -%>
+	<%= f.input :service, :as => :select,
+		:collection => @services.collect { |ns| ["#{h ns.port}/#{h ns.proto} - #{h ns.name || "unknown"}", ns.id] },
+		:include_blank => false -%>
+	<%= f.input :user, :as => :text, :label => "Username" %>
+	<%= f.input :pass, :as => :text, :label => "Password" %>
+	<%= f.input :active %>
+	<%= f.input :proof, :as => :text %>
+	<%= f.input :ptype, :label => "Type", :as => :select, :collection => Mdm::Cred::PTYPES, :include_blank => false %>
+<% end -%>

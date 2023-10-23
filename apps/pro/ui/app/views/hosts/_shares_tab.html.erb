@@ -1,0 +1,3 @@
+<%= render :partial => 'generic/smb_shares', :locals => {:host_record => true},  :object => @host.smb_shares %>
+<br/>
+<%= render :partial => 'generic/nfs_exports', :locals => {:host_record => true}, :object => @host.nfs_exports %>

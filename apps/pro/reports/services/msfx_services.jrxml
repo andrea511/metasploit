@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba938468-dbbd-4c95-9a10-cc152a9afe44">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1085"/>
+	<style name="Column header" forecolor="#666666" fontName="Serif" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Serif" fontSize="8">
+		<box>
+			<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
+		</box>
+	</style>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="footer_text" fontSize="8" isItalic="true"/>
+	<subDataset name="ServiceListDatastore" uuid="e33dc02f-e806-4f15-b35b-696b9da5dbb5">
+		<parameter name="workspace_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String">
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+    HOST(CAST(hosts.address as inet)) as address,
+    services.port as port,
+    services.name as service_name,
+    COALESCE(services.info,'') as information
+FROM
+    services
+    INNER JOIN hosts on hosts.id = services.host_id
+WHERE
+    services.state = 'open' and
+    hosts.workspace_id = $P{workspace_id} and
+    $P!{host_address_clause}
+GROUP BY
+    port, service_name, address, information]]>
+		</queryString>
+		<field name="address" class="java.lang.String"/>
+		<field name="port" class="java.lang.Integer"/>
+		<field name="service_name" class="java.lang.String"/>
+		<field name="information" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="DistinctServiceNamesChart" uuid="f315e7ef-0237-488c-a79f-bfa5834c64a2">
+		<parameter name="workspace_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String">
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT DISTINCT
+    COALESCE(services.name,'<Unknown>') as service_name,
+    count(*) as host_count
+FROM
+    services
+    INNER JOIN hosts on hosts.id = services.host_id
+WHERE
+    services.state = 'open' and
+    hosts.workspace_id = $P{workspace_id} and
+    $P!{host_address_clause}
+GROUP BY
+    service_name
+ORDER BY
+    host_count DESC, service_name
+LIMIT 45
+;]]>
+		</queryString>
+		<field name="service_name" class="java.lang.String"/>
+		<field name="host_count" class="java.lang.Long"/>
+	</subDataset>
+	<parameter name="report_dir" class="java.lang.String"/>
+	<parameter name="reporting_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{report_dir} + 'services/']]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo_path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{image_dir} + "rapid7_logo_padded.jpg"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[JASPER_WORKSPACE_ID]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="product_name" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[The name of the product used to generate the report]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Metasploit Pro"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_proj_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_exec_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_net_svc_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_net_svc_detail" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usernames_reported" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="include_charts" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    count(*) as host_count,
+    COALESCE("sesst".session_count,0) as session_count,
+    COALESCE("tt".tag_count,0) as tag_count,
+    COALESCE("st".service_filtered_count,0) as service_count,
+    COALESCE("et".exploited_count,0) as exploited_count,
+    COALESCE("vt".vuln_filtered_count,0) as vuln_count,
+    COALESCE("ct".creds_count,0) as creds_count,
+    COALESCE("wt".website_count,0) as website_count,
+    COALESCE("ctt".critical_tag_count,0) as critical_tag_count,
+    COALESCE("stt".summary_tag_count,0) as summary_tag_count,
+    "tmt".module_name as top_module_name,
+    COALESCE("tmt".top_module_count,0) as top_module_count,
+    msic.max_service_inst,
+    workspaces.id as workspace_id,
+    workspaces.name as project_name, workspaces.created_at project_created, workspaces.updated_at project_updated
+FROM
+    hosts
+    LEFT OUTER JOIN workspaces on workspaces.id = hosts.workspace_id
+    LEFT OUTER JOIN ( -- Session Count
+        SELECT
+            hosts.workspace_id as wspace,
+            count(*) as session_count
+        FROM
+            sessions
+            LEFT OUTER JOIN hosts ON hosts.id = sessions.host_id
+        WHERE
+            hosts.workspace_id = $P{workspace_id} and
+            $P!{host_address_clause}
+        GROUP BY wspace
+    ) "sesst" on "sesst".wspace = hosts.workspace_id
+    LEFT OUTER JOIN ( -- Tag Count
+        SELECT
+            hosts.workspace_id as wspace,
+            count(*) as tag_count
+        FROM
+            tags
+            LEFT OUTER JOIN hosts_tags ON hosts_tags.tag_id = tags.id
+            LEFT OUTER JOIN hosts ON hosts.id = hosts_tags.host_id
+        WHERE
+            hosts.workspace_id = $P{workspace_id} and
+            $P!{host_address_clause}
+        GROUP BY wspace
+    ) "tt" on "tt".wspace = hosts.workspace_id
+    LEFT OUTER JOIN ( -- Critical Tag Count
+        SELECT
+            hosts.workspace_id as wspace,
+            count(*) as critical_tag_count
+        FROM
+            tags
+            LEFT OUTER JOIN hosts_tags ON hosts_tags.tag_id = tags.id
+            LEFT OUTER JOIN hosts ON hosts.id = hosts_tags.host_id
+        WHERE
+            tags.critical = TRUE and
+            hosts.workspace_id = $P{workspace_id} and
+            $P!{host_address_clause}
+        GROUP BY wspace
+    ) "ctt" ON "ctt".wspace = hosts.workspace_id
+    LEFT OUTER JOIN ( -- Summary Tag Count
+        SELECT
+            hosts.workspace_id as wspace,
+            count(*) as summary_tag_count
+        FROM
+            tags
+            LEFT OUTER JOIN hosts_tags ON hosts_tags.tag_id = tags.id
+            LEFT OUTER JOIN hosts ON hosts.id = hosts_tags.host_id
+        WHERE
+            tags.critical is FALSE and
+            tags.report_summary is TRUE and
+            hosts.workspace_id = $P{workspace_id} and
+            $P!{host_address_clause}
+        GROUP BY wspace
+    ) "stt" ON "stt".wspace = hosts.workspace_id
+    LEFT OUTER JOIN ( -- Service Count
+        SELECT
+            hosts.workspace_id as wspace,
+            count(*) as service_filtered_count
+        FROM
+            services
+            LEFT OUTER JOIN hosts on hosts.id = services.host_id
+        WHERE
+            services.state = 'open' and
+            hosts.workspace_id = $P{workspace_id} and
+            $P!{host_address_clause}
+        GROUP BY wspace
+    ) "st" ON "st".wspace = hosts.workspace_id
+    LEFT OUTER JOIN ( -- Exploited Count
+        SELECT
+            hosts.workspace_id as wspace,
+            count(*) as exploited_count
+        FROM
+            vulns
+            LEFT OUTER JOIN hosts on hosts.id = vulns.host_id
+        WHERE
+            vulns.exploited_at is not NULL and
+            hosts.workspace_id = $P{workspace_id} and
+            $P!{host_address_clause}
+        GROUP BY wspace
+    ) "et" ON "et".wspace = hosts.workspace_id
+    LEFT OUTER JOIN ( -- Vuln Count
+        SELECT
+            hosts.workspace_id as wspace,
+            count(*) as vuln_filtered_count
+        FROM
+            vulns
+            LEFT OUTER JOIN hosts on hosts.id = vulns.host_id
+        WHERE
+            hosts.workspace_id = $P{workspace_id} and
+            $P!{host_address_clause}
+        GROUP BY wspace
+    ) "vt" ON "vt".wspace = hosts.workspace_id
+    LEFT OUTER JOIN ( -- Credential Count
+        SELECT
+            hosts.workspace_id as wspace,
+            count(*) as creds_count
+        FROM
+            creds
+            LEFT OUTER JOIN services ON services.id = creds.service_id
+            LEFT OUTER JOIN hosts ON hosts.id = services.host_id
+        WHERE
+            creds.active is true and
+            hosts.workspace_id = $P{workspace_id} and
+            $P!{host_address_clause}
+        GROUP BY wspace
+    ) "ct" ON "ct".wspace = hosts.workspace_id
+    LEFT OUTER JOIN ( -- Website Count
+        SELECT
+            hosts.workspace_id as wspace,
+            count(*) as website_count
+        FROM
+            web_sites
+            LEFT OUTER JOIN services ON services.id = web_sites.service_id
+            LEFT OUTER JOIN hosts ON services.host_id = hosts.id
+        WHERE
+            hosts.workspace_id = $P{workspace_id} and
+            $P!{host_address_clause}
+        GROUP BY wspace
+    ) "wt" ON "wt".wspace = hosts.workspace_id
+    LEFT OUTER JOIN ( -- America's Next Top Module
+        SELECT
+            hosts.workspace_id as wspace,
+            va.module as module_name,
+            count(va.*) as top_module_count
+        FROM vuln_attempts va
+            INNER JOIN vulns v on (va.vuln_id = v.id)
+            LEFT OUTER JOIN hosts on (hosts.id = v.host_id)
+        WHERE va.exploited
+            and hosts.workspace_id = $P{workspace_id}
+            and $P!{host_address_clause}
+        GROUP BY module_name, wspace
+        ORDER BY top_module_count DESC
+        LIMIT 1
+    ) "tmt" on "tmt".wspace = hosts.workspace_id
+    LEFT OUTER JOIN (
+      select workspace_id, max(host_count) max_service_inst from
+            (SELECT DISTINCT
+             COALESCE(services.name,'<Unknown>') as service_name,
+             count(*) as host_count, workspace_id
+             FROM
+             services
+             INNER JOIN hosts on hosts.id = services.host_id
+            WHERE
+              services.state = 'open' and
+              hosts.workspace_id = $P{workspace_id} and
+              $P!{host_address_clause}
+            GROUP BY
+              service_name, workspace_id
+            ORDER BY
+              host_count DESC, service_name
+            ) x group by workspace_id
+    ) msic on (msic.workspace_id = hosts.workspace_id)
+WHERE
+    hosts.workspace_id = $P{workspace_id} and
+    $P!{host_address_clause}
+GROUP BY
+    session_count, tag_count, service_filtered_count, exploited_count, vuln_filtered_count, creds_count, website_count, critical_tag_count, summary_tag_count, top_module_name, top_module_count, max_service_inst, workspaces.id, workspaces.name
+LIMIT 1
+;]]>
+	</queryString>
+	<field name="host_count" class="java.lang.Long"/>
+	<field name="session_count" class="java.lang.Long"/>
+	<field name="tag_count" class="java.lang.Long"/>
+	<field name="service_count" class="java.lang.Long"/>
+	<field name="exploited_count" class="java.lang.Long"/>
+	<field name="vuln_count" class="java.lang.Long"/>
+	<field name="creds_count" class="java.lang.Long"/>
+	<field name="website_count" class="java.lang.Long"/>
+	<field name="critical_tag_count" class="java.lang.Long"/>
+	<field name="summary_tag_count" class="java.lang.Long"/>
+	<field name="top_module_name" class="java.lang.String"/>
+	<field name="top_module_count" class="java.lang.Long"/>
+	<field name="max_service_inst" class="java.lang.Long"/>
+	<field name="workspace_id" class="java.lang.Integer"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="project_updated" class="java.sql.Timestamp"/>
+	<field name="project_created" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="676" splitType="Stretch">
+			<image scaleImage="RealHeight" onErrorType="Blank">
+				<reportElement uuid="2a1c48cf-a7c7-43c4-b124-9efa5b31323d" x="252" y="161" width="320" height="320"/>
+				<imageExpression><![CDATA[$P{logo_path}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="525bee0f-5713-4596-8edc-e38591b69384" x="252" y="517" width="320" height="24"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Report generated:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="037be72b-e7a7-47ca-8d79-5cae628a9a64" x="252" y="481" width="320" height="36"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Network Services Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="61410e65-b9e7-48b2-be96-211a2a99aae0" mode="Transparent" x="0" y="0" width="252" height="676" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" markup="none">
+					<font fontName="SansSerif" size="48" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{product_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement uuid="7a136d6b-6aff-4247-8414-085b13e0a344" x="252" y="541" width="320" height="23"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="8d048978-ebb6-45a3-8000-a765df45299f" x="252" y="656" width="320" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Pages: " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="125">
+			<printWhenExpression><![CDATA[$P{display_proj_summ}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="354c2995-ac91-40d0-92fa-08b87c65b8c3" mode="Opaque" x="0" y="0" width="572" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Project Summary]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="f4380599-511d-4f5c-9539-1d03869fb506" x="0" y="70" width="566" height="20" backcolor="#EDEDED"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="b19e0242-c43c-48ce-9348-ba65adbe8b47" x="0" y="30" width="566" height="20" backcolor="#EDEDED"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="34b2c84f-ab2f-4815-bc3f-e367f3bca9b1" x="0" y="50" width="566" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="1cd73d13-051d-41ca-9f84-15058a6029ec" x="0" y="90" width="566" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="5f9c602f-e9e2-47c4-a7a8-883f3d06b22d" x="120" y="30" width="446" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="812506a9-bedc-4a90-8481-64453ef8ef94" x="120" y="70" width="446" height="20" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_updated}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="93068a08-fc78-4f6f-8106-9598cb525ba8" x="0" y="70" width="120" height="20" backcolor="#CCCCFF"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Completed:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6d61e6d4-24e9-43c4-8cc8-4e08c92eabf0" x="120" y="90" width="446" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph rightIndent="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2f29d15a-08ba-40be-9ec8-fe75f1f4c895" x="0" y="50" width="120" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Started:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="caf3c361-f63e-428d-b64e-0b81f1aa0960" x="120" y="50" width="446" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_created}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="71507e09-ab40-4033-a3e6-9847abbedf8d" x="0" y="90" width="120" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + ($P{usernames_reported}.toString().contains(",") ? " Users:" : " User:")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f9d28df4-e1da-467c-8abd-19826736b28c" x="0" y="30" width="120" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Project Name:]]></text>
+			</staticText>
+		</band>
+		<band height="105">
+			<printWhenExpression><![CDATA[$P{display_exec_summ}]]></printWhenExpression>
+			<elementGroup>
+				<staticText>
+					<reportElement uuid="fe466082-7681-4d18-bf31-e4755c48d7ba" x="0" y="0" width="572" height="24"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Executive Summary]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+					<reportElement uuid="4667771a-8f42-497e-9f75-d2502fe89555" stretchType="RelativeToTallestObject" x="0" y="64" width="572" height="26" isPrintWhenDetailOverflows="true"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["During this test, " + $F{host_count} +
+" hosts with a total of " + $F{service_count} +
+" exposed services were discovered. " +
+($F{exploited_count}==0 ? "No" : $F{exploited_count}) +
+" modules were successfully run and " +
+($F{creds_count}==0 ? "no" : $F{creds_count}) +
+" login credentials were obtained. " +
+(null != $F{top_module_name} ? ("The most common module used to compromise systems was '" +
+$F{top_module_name} +
+"', which opened " + $F{top_module_count} +
+" sessions.") : "")]]></textFieldExpression>
+				</textField>
+                <textField>
+                    <reportElement uuid="73edf93f-e052-48a6-ad4a-20241e00f568" x="0" y="24" width="572" height="35"/>
+                    <textElement/>
+                    <textFieldExpression><![CDATA["This report represents a security audit performed using " + $P{product_name} + " from Rapid7, Inc. It contains confidential information about the state of your network. Access to this information by unauthorized personnel may allow them to compromise your network."]]></textFieldExpression>
+                </textField>
+			</elementGroup>
+		</band>
+		<band height="73">
+			<printWhenExpression><![CDATA[$P{display_net_svc_summ}]]></printWhenExpression>
+			<elementGroup>
+				<staticText>
+					<reportElement uuid="76e74570-fa0d-438b-a37f-cdc0941c4ea4" x="0" y="27" width="572" height="36"/>
+					<textElement/>
+					<text><![CDATA[The purpose of this report is to list the open services discovered during the penetration test. Responsive services are listed below, and may be sorted by port number, host address, or name. If a fingerprint was available, it has been included. ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="b4b5657a-bcfb-4aa0-a482-295890853c15" x="0" y="0" width="572" height="27"/>
+					<textElement>
+						<font size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Services Report Summary]]></text>
+				</staticText>
+			</elementGroup>
+		</band>
+		<band height="87">
+			<printWhenExpression><![CDATA[$P{display_net_svc_detail}]]></printWhenExpression>
+			<elementGroup>
+				<componentElement>
+					<reportElement uuid="fa716049-acac-4615-a76e-4a645026ae70" key="table 1" x="0" y="30" width="572" height="50"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="ServiceListDatastore" uuid="70e71b30-04cc-4e8a-8f56-94dc2037585a">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="90" uuid="7b270bd6-d514-4e23-ba3a-407c2456faf9">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="9eeb1ffa-ea30-4809-8bb1-4df85c536d01" style="Column header" x="0" y="0" width="90" height="30"/>
+									<textElement verticalAlignment="Middle"/>
+									<text><![CDATA[Address]]></text>
+								</staticText>
+								<genericElement>
+									<reportElement uuid="586e1f8d-a632-4716-92bf-f94b7dc77e57" mode="Transparent" x="0" y="0" width="0" height="30">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["address"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+							</jr:columnHeader>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField textAdjust="StretchHeight">
+									<reportElement uuid="b58cba63-1818-4816-9065-e5f17aef5ae7" style="Detail" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{address} + " "]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="305332c7-08e8-4865-b483-bbd5a2c81242">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="1e690548-ca14-4b18-8f69-05592da14e2d" style="Column header" x="0" y="0" width="90" height="30"/>
+									<textElement verticalAlignment="Middle"/>
+									<text><![CDATA[Port]]></text>
+								</staticText>
+								<genericElement>
+									<reportElement uuid="b7affe41-b4bc-4b45-89d1-35b926c2c5c3" mode="Transparent" x="0" y="0" width="0" height="30">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["port"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+							</jr:columnHeader>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField textAdjust="StretchHeight">
+									<reportElement uuid="13b13f6d-f84a-45ce-bfb2-675d06c8ec26" style="Detail" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{port} + " "]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="a433d5a7-7eb3-4424-8765-6deef7cac065">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="3eb7a3f1-7101-413a-8d6a-e2139e02a543" style="Column header" x="0" y="0" width="90" height="30"/>
+									<textElement verticalAlignment="Middle"/>
+									<text><![CDATA[Service Name]]></text>
+								</staticText>
+								<genericElement>
+									<reportElement uuid="338e672a-fec6-4fd0-9ba6-86c59726ae25" mode="Transparent" x="0" y="0" width="0" height="30">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["service_name"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+							</jr:columnHeader>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField textAdjust="StretchHeight">
+									<reportElement uuid="170256bc-3c79-476b-bfd7-1f2ebdae4dbe" style="Detail" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{service_name} + " "]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="284" uuid="89c204a3-8db5-4ea5-a18b-38a8e3b6b8da">
+							<jr:columnHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="94fe67e5-ac62-4497-a205-0be628c64f4b" style="Column header" x="0" y="0" width="284" height="30"/>
+									<textElement verticalAlignment="Middle"/>
+									<text><![CDATA[Additional Information]]></text>
+								</staticText>
+								<genericElement>
+									<reportElement uuid="66909d8c-8d4f-4511-941a-b71eddf9b459" mode="Transparent" x="0" y="0" width="0" height="30">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["information"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+							</jr:columnHeader>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField textAdjust="StretchHeight">
+									<reportElement uuid="3e8e920d-d34d-4d2c-b739-2939e7f453d8" style="Detail" stretchType="RelativeToBandHeight" x="0" y="0" width="284" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{information} + " "]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement uuid="f267ecb5-e4c9-4931-88e1-77a4f678bc9d" mode="Opaque" x="0" y="0" width="572" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Network Services]]></text>
+				</staticText>
+			</elementGroup>
+			<break>
+				<reportElement uuid="02fbe69d-9a51-4c0a-a741-a5d5bcfdf962" x="0" y="86" width="572" height="1"/>
+			</break>
+		</band>
+		<band height="290">
+			<printWhenExpression><![CDATA[$P{include_charts} && ($F{max_service_inst} > 1)]]></printWhenExpression>
+			<pieChart>
+				<chart customizerClass="com.jaspersoft.bizdev.PieLabels">
+					<reportElement uuid="0811988e-f349-49ec-aa40-33b66a327d18" x="0" y="0" width="572" height="286"/>
+					<chartTitle position="Top" color="#666666">
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Multiple Service Instance Frequency\n(all services with multiple running instances)"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right"/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<incrementWhenExpression><![CDATA[$F{host_count} > 1]]></incrementWhenExpression>
+						<datasetRun subDataset="DistinctServiceNamesChart" uuid="cb48addd-cc82-4815-aedc-baeb79357ed6">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{service_name} == "" ? "<Unknown>" : $F{service_name}]]></keyExpression>
+					<valueExpression><![CDATA[$F{host_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false" legendLabelFormat="{0}: {1}">
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF">
+						<font size="5"/>
+					</itemLabel>
+				</piePlot>
+			</pieChart>
+		</band>
+		<band height="290">
+			<printWhenExpression><![CDATA[$P{include_charts} && ($F{service_count} > 0)]]></printWhenExpression>
+			<pieChart>
+				<chart customizerClass="com.jaspersoft.bizdev.PieLabels">
+					<reportElement uuid="8d486c84-864d-4e7a-a08f-e8c5693bfb4c" x="0" y="0" width="572" height="286"/>
+					<chartTitle color="#666666">
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Total Service Instance Frequency\n(" + $F{service_count} + " total service instances open)"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right"/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="DistinctServiceNamesChart" uuid="b82610bf-0831-445b-b71b-9e5b33b21d3f">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{service_name} == "" ? "<Unknown>" : $F{service_name}]]></keyExpression>
+					<valueExpression><![CDATA[$F{host_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false" legendLabelFormat="{0}: {1}">
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF">
+						<font size="5"/>
+					</itemLabel>
+				</piePlot>
+			</pieChart>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="44" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}>1]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="2ba04eae-15c7-4030-8ada-3e9bf68d8e59" style="footer_text" x="289" y="14" width="283" height="14"/>
+				<textElement textAlignment="Right">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Project: " + $F{project_name}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="832d076f-5651-4161-8fe1-86bc481d5c66" x="0" y="14" width="58" height="11"/>
+				<imageExpression><![CDATA[$P{image_dir} + "r7-logo_footer.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="a0dcba32-0b2b-4b92-83e7-79243f0b7544" style="footer_text" mode="Transparent" x="289" y="28" width="283" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4430f0cc-8965-4862-935c-b6fcb4dfb187" style="footer_text" x="289" y="0" width="283" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

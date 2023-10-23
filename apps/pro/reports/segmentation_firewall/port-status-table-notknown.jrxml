@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="port-status-table-notknown" language="groovy" pageWidth="561" pageHeight="752" columnWidth="561" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="246d4fa3-2aeb-4c72-979b-fdddca98af8e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="port_states" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="port_cutoff" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[WITH run_results AS (select
+	er.start_port,
+	er.end_port,
+	er.state
+from egadz_result_ranges er
+inner join tasks t on (er.task_id = t.id)
+inner join app_runs ar on (t.app_run_id = ar.id)
+where ar.id = $P!{app_run_id}
+and er.state $P!{port_states}
+)
+
+
+-- Array -> string per state
+select  collapse_ranges(portarr) port
+	, state
+from
+(
+	-- Combine into intarray of ports per state
+	select array_agg(port)::int[] portarr, state
+	from
+	(
+		-- No info or name
+		select results.port, results.state
+		from
+			-- Expand results per port
+			(select generate_series(rr.start_port, rr.end_port) port, rr.state
+			from run_results rr) results
+		left outer join known_ports known on (results.port = known.port)
+		where results.port $P!{port_cutoff}
+		and (known.name is null and known.info is null)
+		order by port
+	) x
+	group by state
+) y]]>
+	</queryString>
+	<field name="port" class="java.lang.String"/>
+	<field name="state" class="java.lang.String"/>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<textField>
+				<reportElement uuid="2eff050e-8b64-4cf9-9517-0193a4d941e8" style="section_header_3" x="0" y="19" width="561" height="33"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{state}.capitalize()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="25">
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="ba7f8344-c936-4df6-ac3a-3318afa518cc" style="generic_table_text" positionType="Float" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="561" height="25" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<paragraph leftIndent="5" spacingBefore="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{port}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="6"/>
+	</detail>
+</jasperReport>

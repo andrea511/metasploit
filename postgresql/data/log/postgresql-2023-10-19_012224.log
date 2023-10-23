@@ -1,0 +1,11 @@
+2023-10-19 01:22:24.276 +07 [7972] LOG:  database system was shut down at 2023-10-19 01:21:21 +07
+2023-10-19 01:22:24.369 +07 [6840] LOG:  database system is ready to accept connections
+2023-10-19 01:24:29.008 +07 [2896] FATAL:  password authentication failed for user "SYSTEM"
+2023-10-19 01:24:29.008 +07 [2896] DETAIL:  Role "SYSTEM" does not exist.
+	Connection matched pg_hba.conf line 90: "host    all             all             ::1/128                 md5"
+2023-10-19 19:07:06.312 +07 [6840] LOG:  could not reserve shared memory region (addr=000001d9e2660000) for child 00000000000013e0: error code 487
+2023-10-20 15:24:46.873 +07 [6840] LOG:  could not reserve shared memory region (addr=000001d9e2660000) for child 00000000000013b4: error code 487
+2023-10-20 16:54:18.801 +07 [9756] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-20 16:54:18.825 +07 [2204] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	

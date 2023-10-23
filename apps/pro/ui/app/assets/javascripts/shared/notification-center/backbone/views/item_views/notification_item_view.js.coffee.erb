@@ -1,0 +1,37 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/notification_center/item_views/notification_item_view') %>' ,
+  '<%= javascript_path('templates/notification_center/item_views/_notification') %>' ,
+  '<%= javascript_path('shared/notification-center/backbone/event_aggregators/event_aggregator') %>'
+], ($,template, partial, EventAggregator) ->
+  class NotificationItemView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['notification_center/item_views/notification_item_view']
+
+    triggers:
+      'click' : 'notification:link:goto'
+      'click .action-bar' : 'notification:close'
+      'click .text' : 'tooltip:toggle'
+
+    initialize: ->
+      @_bind_triggers()
+
+    _bind_triggers: ->
+      @on('notification:close',@_close_notification, this)
+      @on('notification:link:goto',@_redirect_notification_link)
+      @on('tooltip:toggle',@_toggle_tooltip_text)
+
+    _toggle_tooltip_text: ->
+      this.$el.children().first().toggleClass('tooltip')
+
+    _redirect_notification_link: ->
+      if @model.get('url')?
+        if @model.get('url').startsWith(window.location.pathname)
+          window.location.reload()
+        else
+          window.location.href= @model.get('url')
+
+    _close_notification: ->
+      @model.destroy(success: @_destroy_callback)
+
+    _destroy_callback: (model,response) =>
+      EventAggregator.trigger('notification-message:destroy')

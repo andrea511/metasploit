@@ -1,0 +1,16 @@
+{ 
+  "sEcho": <%= echo_data_tables %>,
+  "iTotalRecords": <%= @vulns_total_count.to_json %>,
+  "iTotalDisplayRecords": <%= @vulns_total_display_count.to_json %>,
+  "aaData": [
+  <% @vulns.each_with_index do |vuln, index| -%>
+  	<% latest_vuln = @vulns.first -%>
+    {
+      "checkbox":   <%= vuln_host_checkbox_tag(vuln, :no_host => true) %>,
+      "name":       <%= vuln_name_html(vuln) %>,
+      "refs":       <%= vuln_refs_html(latest_vuln) %>,
+      "host_count": <%= vuln_host_count_html(vuln) %>
+    }<%= ',' unless index == (@vulns.size - 1) %>
+  <% end -%>
+  ]
+}

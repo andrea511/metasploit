@@ -1,0 +1,25 @@
+<div class="title">
+  <span class='username'><%= @['host.address'] %></span>
+  <span class='private'><%= @['name'] %></span>
+</div>
+
+<div class="subtitle">
+  <%= @['host.name'] %>&nbsp;
+</div>
+
+<div class="arrow-container">
+  <a class="expand"></a>
+</div>
+
+<div class="toggle-info display-none"><!-- why do i
+  --><div>OS: <%= @['host.os_name'] %></div><!-- have
+  --><div>Port: <%= @['port'] %></div><!-- to do this?
+  --><div>Protocol: <%= @['proto'] %></div><!--
+  --><div><%= @['info'] %></div><!--
+--></div>
+
+<a class='right delete' title='Remove this credential from the selection.' href='javascript:void(0)'>
+  <span>
+    &times;
+  </span>
+</a>

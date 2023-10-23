@@ -1,0 +1,94 @@
+<% @vuln.vuln_details.each do |vd| %>
+
+
+<div class='details_header'>
+<h2>
+	<%= vd.src.upcase %> -
+	<%= vd.title %>
+	<% if vd.cvss_score %>
+		( CVSS <%= vd.cvss_score %> )
+	<% end %>
+</h2>
+</div>
+
+<table class='details'>
+
+<tr>
+	<td class='field'>
+		Proof
+	</td>
+</tr>
+<tr>
+	<td class='value'>
+		<pre class='verbose'><%= vd.proof%></pre>
+	</td>
+</tr>
+
+
+<% if vd.src == "nexpose" %>
+
+<tr>
+	<td class='field'>
+		Nexpose Data
+	</td>
+</tr>
+<tr>
+	<td class='value'>
+
+<table class='nexpose_details'>
+
+<%
+	nx_fields = %W{ 
+		nx_vuln_status nx_vulnerable_since nx_proof_key
+		nx_severity nx_pci_severity nx_pci_compliance
+		nx_tags
+		nx_added nx_published nx_modified 
+		nx_console_id nx_device_id nx_scan_id
+	}
+
+
+nx_fields.each do |k|
+	next unless vd[k]
+
+	kn = k.gsub(/^nx_/, '').split('_').map{|x| x.capitalize }.join(" ").gsub('Id', 'ID').gsub('Pci', 'PCI')
+%>
+<tr>
+	<td class='nexpose_field'>
+		<%= kn %>
+	</td>
+	<td class='nexpose_value'>
+		<%= vd[k] %>
+	</td>
+</tr>
+<% end %>
+
+</table>
+
+	</td>
+</tr>
+
+<% end %>
+
+<tr>
+	<td class='field'>Description</td>
+</tr>
+<tr>
+	<td class='value'>
+		<pre class='verbose'><%= vd.description%></pre>
+	</td>
+</tr>
+
+<tr>
+	<td class='field'>Solution</td>
+</tr>
+<tr>
+	<td class='value'>
+		<pre class='verbose'><%= vd.solution%></pre>
+	</td>
+</tr>
+
+</table>
+
+<% end %>
+
+

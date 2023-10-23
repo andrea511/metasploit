@@ -1,0 +1,15 @@
+.notification-type 
+  .type-title
+    %span
+      Latest Notifications
+  .sort-options
+    %span
+      Show
+    %span
+      %select{:name=>'notification_type'}
+        %option{:value=>''}
+          All
+        %option{:value=>'minion_notification'}
+          Minions
+        %option{:value=>'system_notification'}
+          System

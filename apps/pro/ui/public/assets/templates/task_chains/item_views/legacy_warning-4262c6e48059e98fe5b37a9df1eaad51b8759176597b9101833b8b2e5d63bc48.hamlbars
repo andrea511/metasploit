@@ -1,0 +1,8 @@
+%div
+  The Nexpose and import configuration pages have been recently updated.
+  Both tasks now have a new workflow, which streamlines the import of data from Nexpose, Metasploit,
+  and third-party vendors. Due to these changes, you must reconfigure any task chain that contains a legacy Nexpose
+  or import task. For more information on these changes, see the release notes.
+
+  %a{:href=>"https://community.rapid7.com/docs/DOC-3105", :target=>"_blank"}
+    https://community.rapid7.com/docs/DOC-3105

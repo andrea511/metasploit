@@ -1,0 +1,256 @@
+<% title h(@module.fullname) %>
+<% breadcrumb workspace_link, modules_link, module_link %>
+
+<div class="module-wrapper">
+  <div class="col1">
+    <div class="info_box">
+      <h3>Module</h3>
+      <table>
+        <tr>
+          <td class="field_lbl">Type</td>
+          <td class="field_val">
+            <%=h @module.type %>
+          </td>
+        </tr>
+        <tr>
+          <td class="field_lbl">Ranking</td>
+          <td class="field_val">
+            <%= module_star_icons(@module.rank) %>
+          </td>
+        </tr>
+        <tr>
+          <td class="field_lbl">Privileged?</td>
+          <td class="field_val">
+            <%= @module.privileged ? "Yes" : "No" %>
+          </td>
+        </tr>
+        <% if @module.disclosure_date %>
+          <tr>
+            <td class="field_lbl">Disclosure</td>
+            <td class="field_val">
+              <%= @module.disclosure_date.strftime("%B %e, %Y") %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+
+    <% unless @module.authors.empty? %>
+      <div class="info_box">
+        <h3>Developers</h3>
+        <ul>
+          <% @module.authors.each do |author| %>
+            <li><%=h author %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% unless @module.notes.blank? %>
+
+      <div class="info_box">
+        <% notes = module_notes_formatted(@module.notes)%>
+        <% notes.each do |key, values| %>
+          <h3><%= "#{key}:" %></h3>
+            <ul>
+              <% values.each do | value | %>
+                <li><%= value %></li>
+              <% end %>
+            </ul>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% unless @module.references.empty? %>
+      <div class="info_box">
+        <h3>References</h3>
+        <ul>
+          <% @module.references.each do |type, ref| %>
+            <li><%= link_for_ref(type, ref) %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="col2">
+    <h1><%=h @task.module.title %></h1>
+    <div class="module_path"><%=h @task.module.fullname %></div>
+    <div class="module_desc">
+      <%= description_to_html(@module.description) %>
+    </div>
+    <div id="popup_errors">
+      <% if @task.newly_set_options.any? %>
+        <div class="warnings">
+          <% @task.newly_set_options.each do |opt| %>
+            <p>
+              Setting new option <%=h opt %> to <%=h @task.options[opt].inspect %>
+            </p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% if @task.module.fileformat && params[:allow_ff] != 'true' %>
+      <h1>Unsupported Module</h1>
+      <p>
+      File format exploits are not supported at this time.
+      </p>
+    <% else %>
+
+      <%= form_for @task, :url => start_module_run_path(@workspace, @task.module.fullname) do |f| %>
+        <%= f.hidden_field :workspace_id %>
+        <% if @module.stance == "aggressive" and not @module.local_exploit? %>
+          <h3>Target Systems</h3>
+          <table>
+            <tr>
+              <td align="left" valign="top">
+                <%= f.label :whitelist_string, "Target Addresses" %>
+                <br/>
+                <%= f.text_area :whitelist_string, :rows => 4, :cols => 40, :value => @target_hosts.join("\n"), :autofocus => true %>
+              </td>
+              <td align="left" valign="top">
+                <%= f.label :blacklist_string, "Excluded Addresses" %>
+                <br/>
+                <%= f.text_area :blacklist_string, :rows => 4, :cols => 40 %>
+              </td>
+            </tr>
+          </table>
+        <% end %>
+
+        <table cellpadding=2>
+          <% if @module.stance == "aggressive" %>
+            <tr>
+              <td align="left" valign="top" colspan="4">
+                <h3>Exploit Timeout (minutes)</h3>
+                <%= f.text_field :timeout, :size => 4 %>
+                <br/></br>
+              </td>
+            </tr>
+          <% elsif @module.client_exploit? %>
+            <tr>
+              <td align="left" valign="top" colspan="4">
+                <h3>Client-Side Attack</h3>
+                <p>
+                This module is designed to run in the background, exploiting client systems as they connect. In the case of
+                web browser exploits, please set the <b>URIPATH</b> option below if you want to control which URL is used
+                to host the exploit. The <b>SRVPORT</b> option can be used to change the listening port. In the case of
+                passive utility modules (auxiliary), the module output will be visible from the Task log after the
+                module has been started.
+                </p>
+              </td>
+            </tr>
+
+          <% end %>
+        </table>
+
+        <% unless @task.module.targets.empty? %>
+          <h3>Target Settings</h3>
+          <%= f.collection_select :target, @task.module.targets, :first, :last %>
+          <br/><br/>
+        <% end %>
+        <% if not @task.module.actions.empty? %>
+          <p>
+          <h3>
+            <%= f.label :selected_action, "Available Module Actions" %>
+          </h3>
+          <div id="module_actions">
+            <% @task.module.actions.keys.each do |action|
+              is_default = (@task.module.default_action and @task.module.default_action == @task.module.actions[action])
+            %>
+          <label>
+          <%= radio_button_tag('module_run_task[selected_action]', @task.module.actions[action], is_default) %> <%=h @task.module.actions[action] %></label> <br/>
+        <% end %>
+      </div>
+      </p>
+    <% end %>
+
+    <% if @module.exploit? %>
+      <h3>Payload Options</h3>
+      <table class="list mar-tb10" width="120">
+        <tr>
+          <td align="right" valign="top">
+            <%= f.label :payload_type, 'Payload Type' %>
+            </td><td align="left" valign="top">
+            <%= f.select :payload_type, BruteforceTask::PAYLOAD_TYPES %>
+          </td>
+
+          <td align="right" valign="top">
+            <%= f.label :payload_ports, 'Listener Ports' %>
+            </td><td align="left" valign="top">
+            <%= f.text_field :payload_ports, :size => 16 %>
+          </td>
+          </tr><tr>
+          <td align="right" valign="top">
+            <%= f.label :connection, "Connection Type" %>
+            </td><td align="left" valign="top">
+            <%= f.select :connection, BruteforceTask::CONNECTIONS %>
+          </td>
+          <td align="right" valign="top">
+            <%= f.label :payload_lhost, "Listener Host" %>
+            </td><td align="left" valign="top">
+            <%= f.text_field :payload_lhost, :size => 16 %>
+          </td>
+        </tr>
+        <tr>
+            <% if License.get.supports_macros? %>
+                <td align="right" valign="top">
+                  <%= f.label :macro_name, "Auto Launch Macro" %>
+                </td>
+                <td align="left" valign="top">
+                  <%= f.select :macro_name, options_for_select(
+                    ( [""] + Mdm::Macro.all.map{|m| m.name } ), ''
+                  ) %>
+              </td>
+          <% end %>
+          <td align="right" valign="top">
+            <%= f.label :stage_encoding, "Enable Stage Encoding (IPS evasion)" %>
+           </td>
+          <td>
+            <%= f.check_box :stage_encoding %>
+          </td>
+        </tr>
+
+    </table>
+  <% end %>
+
+  <h3>Module Options</h3>
+  <table id="module_options">
+    <%= render 'modules/options', :options => @task.module.basic_options %>
+  </table>
+
+  <% unless @module.advanced_options.empty? %>
+    <h3>Advanced Options <%= show_hide_link "advanced_options" %></h3>
+    <div id="advanced_options" style="display: none">
+      <table>
+        <%= render 'modules/options', :options => @task.module.advanced_options %>
+      </table>
+    </div>
+  <% end %>
+
+  <% unless @module.evasion_options.empty? %>
+    <h3>Evasion Options <%= show_hide_link "evasion_options" %></h3>
+    <div id="evasion_options" style="display: none">
+      <table>
+        <%= render 'modules/options', :options => @task.module.evasion_options %>
+      </table>
+    </div>
+  <% end %>
+
+  <% if @no_launch.blank? %>
+    <span class="btn">
+      <%= f.submit "Run Module", :class => "exploit" %>
+    </span>
+  <% else %>
+    <% if @module.type == "Post-Exploitation"%>
+      <div style="margin-top: 10px;margin-bottom:10px">
+        <span class="checkbox"><%= check_box_tag "run_on_all_sessions", "1", true %></span>
+        <span>Apply to future sessions?</span>
+      </div>
+    <% end %>
+  <% end %>
+
+<% end %>
+<% end %>
+
+</div>

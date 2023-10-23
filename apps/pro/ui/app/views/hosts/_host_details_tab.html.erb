@@ -1,0 +1,62 @@
+<% @host.host_details.each do |hd| %>
+
+
+<div class='details_header'>
+<h2>
+	<%= hd.src.upcase %>
+</h2>
+</div>
+
+<table class='details'>
+
+<% if hd.src == "nexpose" %>
+
+<tr>
+	<td class='field'>
+		Nexpose Data
+	</td>
+</tr>
+<tr>
+	<td class='value'>
+
+<table class='nexpose_details'>
+
+<%
+	nx_fields = %W{ 
+		nx_site_name nx_site_importance nx_scan_template
+		nx_risk_score
+		nx_console_id nx_device_id
+	}
+
+
+nx_fields.each do |k|
+	next unless hd[k]
+
+	kn = k.gsub(/^nx_/, '').split('_').map{|x| x.capitalize }.join(" ").gsub('Id', 'ID').gsub('Pci', 'PCI')
+
+	if k == "nx_risk_score"
+		hd[k] = hd[k].to_i.to_s
+	end
+%>
+<tr>
+	<td class='nexpose_field'>
+		<%= kn %>
+	</td>
+	<td class='nexpose_value'>
+		<%= hd[k] %>
+	</td>
+</tr>
+
+<% end %>
+
+</table>
+
+	</td>
+</tr>
+
+<% end %>
+
+</table>
+
+
+<% end %>

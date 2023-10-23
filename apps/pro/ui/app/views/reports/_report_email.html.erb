@@ -1,0 +1,11 @@
+<%= f.inputs 'Email Report' do %>
+  <%= f.input :email_recipients,
+              :label    => 'Recipients',
+              :as       => :text,
+              :required => false %>
+
+  <%= f.help_link 'email_recipients' do %>
+    <h3>Recipients</h3>
+    <p>Specify one or more recipient email addresses to receive the generated report artifacts. Multiple addresses must be separated by a comma or semicolon.</p>
+  <% end %>
+<% end %>

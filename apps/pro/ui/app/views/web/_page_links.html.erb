@@ -1,0 +1,22 @@
+<div id="page_links">
+	<span class="index">
+		<% if @sites.size > 0 %>
+			<%= (@sites_offset ||= 0)+1 %>-<%= @sites_offset + @sites.size %> of <%= @sites_count %> sites
+		<% else %>
+			0 hosts
+		<% end %>
+	</span>
+  <% if @num_pages > 1 %>
+      <%= mdm_web_sites_link '', :page => 0, :html_options => {:class => 'start' } %>
+      <%= mdm_web_sites_link '', :page => @page-1, :html_options => {:class => 'prev' } %>
+      <% 1.upto(@num_pages) do |p|  %>
+          <% if p == @page %>
+              <span class="current"><%=h @page %></span>
+          <% else %>
+              <%= mdm_web_sites_link p, :page => p %>
+          <% end %>
+      <% end %>
+      <%= mdm_web_sites_link '', :page => [@page+1, @num_pages].min, :html_options => {:class => 'next' } %>
+      <%= mdm_web_sites_link '', :page => @num_pages, :html_options => {:class => 'end' } %>
+  <% end %>
+</div>

@@ -1,0 +1,26 @@
+<%#
+  Rendering this partial includes the CreateWorkspace modal JS class
+  in your page. You can call it like so:
+    new CreateWorkspaceModal({el: $("#modals")}).open()
+  If you want to give it a base workspace to load from, include the 
+    'workspace' local when rendering this partial
+  The el: parameter specifies the DOM parent element for the modal. 
+#%>
+
+<script type='text/x-tmpl' id='create-workspace-form'>
+  <% workspace ||= Mdm::Workspace.new(:limit_to_network => true) %>
+  <%= semantic_form_for workspace do |w| %>
+    <div class='page create_project advanced_wide'>
+      <%= w.input :name, :label => "Project Name", :required => false %>
+      <%= w.input :boundary, :as => :text, :label => "Address Range" %>
+
+      <a href="#" class="advanced" style='position:static;float:right;'>Advanced</a>
+      <%= w.input :limit_to_network, :label => "Restrict to network range", :required => false %>
+      <div class='advanced' style='clear:both;text-align:center'>
+        <%= w.input :description, :as => :text %>
+      </div>
+    </div>
+  <% end %>
+</script>
+
+<%= javascript_include_tag 'wizards/create_workspace/index' %>

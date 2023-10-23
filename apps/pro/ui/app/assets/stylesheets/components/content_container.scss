@@ -1,0 +1,16 @@
+@import 'components/header_bar';
+// -----||--------------------------------------
+//      ||      Content Region Component Styles
+// =====||======================================
+.header-region.content-container{
+  @extend %header-bar;
+}
+
+.content-region.content-container{
+  @extend %header-bar-content-wrapper;
+
+  // Style the container div created by Backbone.
+  & > div:first-child {
+    @extend %header-bar-content;
+  }
+}

@@ -1,0 +1,28 @@
+<div class="one_col_without_sidebar">
+  <div class="col1">
+
+    <%= form_tag upload_backup_path, class: "formtastic", :multipart => true do  %>
+      <%= render "shared/error_messages_general", :errors => @errors %>
+
+      <fieldset>
+        <legend><span>Upload Backup File</span></legend>
+          <ol>
+
+            <li class="string input error required stringish">
+              <%= label_tag :file_input, 'File to Upload' %>
+              <%= file_field_tag :file_input, :size => 80, :autofocus => true, :accept => 'application/zip' %>
+            </li>
+
+            <li>
+              <div class="buttons">
+                <%= label_tag :submit, ' ', class: 'label'%>
+                <span class="btn"><%= submit_tag "Upload", :class => "save" %></span>
+              </div>
+            </li>
+        </ol>
+      </fieldset>
+    <% end %>
+  </div>
+
+</div>
+

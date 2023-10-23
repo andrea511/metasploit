@@ -1,0 +1,64 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/loots/preview") %>',
+  '<%= javascript_path("shared/backbone/views/modal_form") %>',
+  '<%= javascript_path("loots/backbone/models/loot") %>'
+], ($, Template, ModalForm, Loot) ->
+  MODAL_WINDOW_PADDING = 100
+  IMG_PADDING = 20
+
+  class LootPreview extends ModalForm
+    template: HandlebarsTemplates['loots/preview']
+
+    events: _.extend({}, ModalForm.prototype.events, {
+      'submit form': 'formSubmitted',
+      'keypress textarea': 'preventKey',
+      'click textarea': 'textareaClicked'
+    })
+
+    initialize: (opts={}) =>
+      $.extend(@, opts)
+      @model ||= new Loot
+      super
+
+    onRender: =>
+      @loadLoot()
+
+    preventKey: (e) => e.preventDefault()
+
+    textareaClicked: =>
+      @_textarea().focus().select()
+
+    loadLoot: =>
+      if @text and not @img and not @binary
+        @setLoading(true)
+        $.ajax
+          url: @path
+          success: (data) =>
+            @setLoading(false)
+            @_imgbox().hide()
+            @_textarea().text(data)
+            $(@el).trigger('center')
+            $(@el).trigger('updateWidth', 600)
+            @_textarea().focus()
+      else if @img
+        @setLoading(true)
+        @_textarea().hide()
+        $img = @_imgbox().find('img').hide()
+        $img.on 'load', =>
+          @setLoading(false)
+          maxHeight = Math.min($img.height(), $(window).height()-MODAL_WINDOW_PADDING*1.5)
+          maxWidth = Math.min($img.width(), $(window).width()-MODAL_WINDOW_PADDING)
+          $img.show()
+          $img.css('max-width': maxWidth, 'max-height': maxHeight, height: 'auto')
+          $(@el).trigger('center')
+          $(@el).trigger('updateWidth', Math.max(@$el.width(), maxWidth))
+        $img.attr('src', @path)
+
+    serializeData: => @
+
+    #
+    # Helpers
+    #
+    _textarea: => $('.text_dump', @el)
+    _imgbox: => $('.img_box', @el)

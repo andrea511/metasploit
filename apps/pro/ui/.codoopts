@@ -1,0 +1,8 @@
+--name       "Metasploit Pro"
+--readme     README.md
+--title      "Metasploit Pro Coffeescript Documentation"
+--private
+--quiet
+--extension  coffee
+--output     ./doc/coffeescript
+./app/assets/javascripts/

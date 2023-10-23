@@ -1,0 +1,33 @@
+<% title "Metasploit Communication Error" %>
+
+<h1 class="logo">
+	<%= logo_image_error %>
+</h1>
+
+<div class="errorBox">
+	<div class="errors">
+		<h2><%=h $error_title %></h2>
+	</div>
+
+	<h2>Problem Description</h2>
+	<p>
+		<%=h $error_reason %>
+	</p>
+	
+	<h2>Problem Solution</h2>
+	<p>
+		<%=h $error_solution %>
+	</p>
+	
+	<a class="support_link" href="http://www.rapid7.com/for-customers/">Rapid7 - Customer Support</a>
+
+	<span class="btn">
+			<input type="button" class="page-reload" name="reload" class="new" value="Retry Operation">
+	</span>
+</div>
+
+<h1 class="r7logo">
+	<a href="http://www.rapid7.com">
+		<%= image_tag "r7logoLarge.png", :size => "200x41", :class => "r7logoLarge", :alt => "Rapid7" %>
+	</a>
+</h1>

@@ -1,0 +1,39 @@
+<div class="btnRow">
+	<div class="sep" style="border-right:none;">
+		<span class="btn"><%= link_to "New Vuln", new_host_vuln_path(@host), :class => "new" %></span>
+	</div>
+</div>
+
+
+<table class="sortable list" id="vulns-table">
+	<thead>
+		<tr>
+      <th style="display:none">id</th>
+			<th>Name</th>
+			<th>References</th>
+			<th>Service</th>
+			<th>Port</th>
+			<th>Exploit</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+	<% reset_cycle "rows" %>
+	<% vulns.each do |vuln| %>
+		<tr class="<%=h row_cycle %>" id="<%= dom_id(vuln) %>">
+      <td class="id" style="display:none"><%= vuln.id %></td>
+      <td width="340">
+				<%= vuln_name(vuln) %>
+			</td>
+			<td><%= ref_link(vuln.refs).html_safe %></td>
+			<td><%= vuln_service(vuln) %></td>
+			<td><%= vuln_port(vuln) %>
+			<td><%= map_exploit(vuln, @host).html_safe %></td>
+			<td class='delete'>
+				<%= link_to(image_tag('icons/silky/bug_edit.png'), edit_host_vuln_path(vuln.host_id, vuln), :title => 'Edit Vulnerability') %>
+				<%= link_to(image_tag('icons/silky/bug_delete.png'), host_vuln_path(vuln.host_id, vuln), :method => :delete, :title => 'Delete Vulnerability', :class => 'ajax-delete') %>
+			</td>
+		</tr>
+	<% end %>
+	</tbody>
+</table>

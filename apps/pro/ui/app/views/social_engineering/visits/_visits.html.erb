@@ -1,0 +1,18 @@
+<table id="visits-table" class="sortable list">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>IP Address</th>
+      <th>Creation Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% visits.each do |visit| %>
+      <tr class="<%=h row_cycle %>">
+        <td><%= link_to visit.human_target.name, workspace_social_engineering_human_target_path(@workspace.id, visit.human_target.id) %></td>
+        <td><%= visit.address %></td>
+        <td><%= visit.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

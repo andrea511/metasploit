@@ -1,0 +1,61 @@
+<%= javascript_include_tag 'reports/switch_report_type' %>
+
+<%= render :partial => 'shared/tabbed_modal' %>
+<%= render :partial => 'shared/create_workspace_modal' %>
+<%= render :partial => 'wizards/include_assets', :locals => { :symbol => :quick_pentest } %>
+<%= render :partial => 'wizards/include_assets', :locals => { :symbol => :quick_web_app_scan } %>
+<%= render :partial => 'wizards/include_assets', :locals => { :symbol => :vuln_validation } %>
+<%= render :partial => 'wizards/include_assets', :locals => { :symbol => :payload_generator } %>
+  <div id='quick-start-menu'>
+    <h3 class='orange'>Quick Start Wizards</h3>
+    <ul>
+      <%= render :partial => 'shared/quick_start_icon', :locals => {
+        :name => 'Quick PenTest',
+        :symbol => 'quick_pentest',
+        :title => 'Rapidly discover, exploit and report on vulnerable systems.'
+      }
+      %>
+
+      <% if !License.get.nx_ultimate? %>
+        <%= render :partial => 'shared/quick_start_icon', :locals => {
+            :name => 'Phishing Campaign',
+            :symbol => 'quick_phish'
+        } %>
+        <%= render :partial => 'shared/quick_start_icon', :locals => {
+            :name       => 'Web App Test',
+            :symbol => 'quick_web_app_scan',
+            :title => 'Rapidly scan, audit, and exploit web apps.'
+        } %>
+        <% end %>
+
+      <% if License.get.supports_vuln_validation? %>
+        <%= render :partial => 'shared/quick_start_icon', :locals => {
+          :name       => 'Vulnerability Validation',
+          :symbol => 'vuln_validation',
+          :title => 'Pull data from nexpose, then validate and push back your results.'
+        } %>
+      <% end %>
+    </ul>
+  </div><!-- whitespace hax, dont hate
+    <!-- --><% if !License.get.nx_ultimate? %><div id='global-tools-menu'>
+    <h3 class='orange'>Global Tools</h3>
+    <ul>
+
+        <%= render :partial => 'shared/quick_start_icon', :locals => {
+            :name       => 'Payload Generator',
+            :symbol => 'payload_generator',
+            :title => 'Choose one of the payload options to get the applicable options for that payload'
+        } %>
+        <%= render :partial => 'shared/quick_start_icon', :locals => {
+            :href => "/create-segmentation-target.sh",
+            :name => 'Custom Segmentation Testing Target',
+            :symbol => 'egadz',
+            :title => 'Download script for setting up a Segmentation/Firewall test target'
+        } %>
+    </ul>
+  </div>
+  <div class="clearfix"></div>
+  <% end %>
+<div class='border'>
+  <hr />
+</div>

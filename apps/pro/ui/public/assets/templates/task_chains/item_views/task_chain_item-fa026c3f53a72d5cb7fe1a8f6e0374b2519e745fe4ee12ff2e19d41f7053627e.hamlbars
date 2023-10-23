@@ -1,0 +1,4 @@
+.generic-stat-wrapper{:clickable=>'true'}
+  %canvas.scan{:height =>'80px', :width=>'80px'}
+  .task
+    {{#titleize}}{{type}}{{/titleize}}

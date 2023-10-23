@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="chart_section" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4907dc5b-4439-4f14-aba2-2189ac8d0e14">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="559"/>
+	<template><![CDATA[$P{style_template_dir} + "webapp_styles.jrtx"]]></template>
+	<subDataset name="VulnCats" uuid="bf363a00-521f-434f-8820-a1bdba3506cd">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select count(wv.id) cat_count, wcm.summary category
+from web_vulns wv
+inner join web_vuln_category_metasploits wcm on (wv.category_id = wcm.id)
+inner join web_sites ws on (wv.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+group by wcm.summary
+order by cat_count desc]]>
+		</queryString>
+		<field name="cat_count" class="java.lang.Long"/>
+		<field name="category" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="VhostService-PagesVulns" uuid="d22df179-7ad2-4bef-8b66-5841f1134fa9">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[-- Site vhost, service name, # pages, # vulns
+select concat(y.vhost, ' - ', y.name) as site, y.pages, y.vulns
+from
+(
+select xws.vhost, xs.name,
+(select count(wp.id) as pages
+from web_pages wp
+inner join web_sites ws on (wp.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+and ws.vhost = xws.vhost
+and s.name = xs.name
+) as pages,
+(select count(wv.id) as vulns
+from web_vulns wv
+inner join web_sites ws on (wv.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+and ws.vhost = xws.vhost
+and s.name = xs.name
+) as vulns
+from
+  web_sites xws
+inner join services xs on (xws.service_id = xs.id)
+inner join hosts on (xs.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+group by xws.vhost, xs.name
+) y
+order by y.vhost]]>
+		</queryString>
+		<field name="site" class="java.lang.String"/>
+		<field name="pages" class="java.lang.Long"/>
+		<field name="vulns" class="java.lang.Long"/>
+	</subDataset>
+	<subDataset name="VulnsOS" uuid="0051efe4-6c5b-4ccc-a9a7-731385c2c6fe">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[-- Combine OS and flavor
+select concat(os_name, ' - ', os_flavor) os_full, vuln_count
+from
+( -- Get count of vulns per OS/flavor
+  select os_name, os_flavor, array_length(vulns, 1) as vuln_count
+  from
+  ( -- Base OS, flavor, all related vulns
+    select hosts.os_name, hosts.os_flavor, array_agg(wv.id) as vulns
+    from web_vulns wv
+    inner join web_sites ws on (wv.web_site_id = ws.id)
+    inner join services s on (ws.service_id = s.id)
+    inner join hosts on (s.host_id = hosts.id)
+    where hosts.workspace_id = $P{workspace_id}
+    and $P!{host_address_clause}
+    group by hosts.os_name, hosts.os_flavor
+  ) x
+) y
+order by os_name, os_flavor]]>
+		</queryString>
+		<field name="os_full" class="java.lang.String"/>
+		<field name="vuln_count" class="java.lang.Integer"/>
+	</subDataset>
+	<subDataset name="OWASPFailures" uuid="8feb1333-4da3-4220-ad56-63b5588fc24e">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select count(wv.id) cat_count, coalesce(wco.summary, 'Uncategorized') owasp_category
+from web_vulns wv
+inner join web_vuln_category_metasploits wcm on (wv.category_id = wcm.id)
+left outer join web_vuln_category_projection_metasploit_owasps wcmo on (wcm.id = wcmo.metasploit_id)
+left outer join web_vuln_category_owasps wco on (wcmo.owasp_id = wco.id)
+inner join web_sites ws on (wv.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+and wco.version = '2013rc1'
+group by wco.summary
+order by cat_count desc]]>
+		</queryString>
+		<field name="cat_count" class="java.lang.Long"/>
+		<field name="owasp_category" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="reporting_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "webapp_assessment/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="site_count" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="os_vuln_count" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="vuln_cat_count" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="owasp_failure_count" class="java.lang.Long" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[select 1]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="225" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{vuln_cat_count} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="4017e2bc-dbe7-48f9-9d5f-279a9827040b" style="important_item" x="164" y="1" width="245" height="31"/>
+				<textElement textAlignment="Center" markup="html"/>
+				<text><![CDATA[Web Vulnerabilities by Category]]></text>
+			</staticText>
+			<pieChart>
+				<chart isShowLegend="false" customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="3e1683d7-dd49-44d5-9e47-ed2987bbe602" x="0" y="32" width="572" height="190"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="VulnCats" uuid="b352fd84-cfdb-4e20-8ce2-95fe427c0240">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{category}]]></keyExpression>
+					<valueExpression><![CDATA[$F{cat_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{0} ({1}): {2}">
+					<plot labelRotation="0.0"/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+		<band height="224">
+			<printWhenExpression><![CDATA[$P{os_vuln_count} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="e4f7a4e0-7f1d-4ba1-aa75-e65544993dee" style="important_item" x="157" y="0" width="259" height="31"/>
+				<textElement textAlignment="Center" markup="html"/>
+				<text><![CDATA[Web Vulnerabilities by OS]]></text>
+			</staticText>
+			<pieChart>
+				<chart customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="8d9f1ea9-564d-428e-b661-2dd091aac302" x="16" y="31" width="541" height="190"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="VulnsOS" uuid="0c6a0c27-c911-467f-90db-fbd10c772752">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{os_full}]]></keyExpression>
+					<valueExpression><![CDATA[$F{vuln_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{0} ({1}): {2}">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+		<band height="232">
+			<printWhenExpression><![CDATA[$P{owasp_failure_count} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="2463b7dd-3643-44d8-9faa-731cb1cb784f" style="important_item" x="207" y="1" width="159" height="31"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[OWASP Failures]]></text>
+			</staticText>
+			<pieChart>
+				<chart customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="5d044666-12ae-4f21-8980-90d66533b85c" x="16" y="32" width="541" height="190"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="OWASPFailures" uuid="10f91642-625b-47db-b56f-4e677dd4298a">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{owasp_category}]]></keyExpression>
+					<valueExpression><![CDATA[$F{cat_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{0} ({1}): {2}">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+		<band height="272">
+			<printWhenExpression><![CDATA[$P{site_count} > 1]]></printWhenExpression>
+			<break>
+				<reportElement uuid="de607d74-76aa-4f5f-8343-2ab1b411ce53" x="0" y="1" width="572" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="74ffa739-ad15-4e6b-b745-a1e5cbd29159" style="important_item" x="0" y="2" width="572" height="30"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Pages and Vulnerabilites per Site]]></text>
+			</staticText>
+			<scatterChart>
+				<chart isShowLegend="true" theme="se_charts">
+					<reportElement uuid="ce14ed44-6bc5-493e-a82d-d32c235f84bd" x="57" y="32" width="453" height="229"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<xyDataset>
+					<dataset>
+						<datasetRun subDataset="VhostService-PagesVulns" uuid="eab9134d-f56b-4c9a-bcb8-9b688109ae1a">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<xySeries>
+						<seriesExpression><![CDATA[$F{site}]]></seriesExpression>
+						<xValueExpression><![CDATA[$F{pages}]]></xValueExpression>
+						<yValueExpression><![CDATA[$F{vulns}]]></yValueExpression>
+					</xySeries>
+				</xyDataset>
+				<scatterPlot isShowLines="false">
+					<plot/>
+					<xAxisLabelExpression><![CDATA["Pages"]]></xAxisLabelExpression>
+					<yAxisLabelExpression><![CDATA["Vulnerabilities"]]></yAxisLabelExpression>
+				</scatterPlot>
+			</scatterChart>
+		</band>
+	</detail>
+</jasperReport>

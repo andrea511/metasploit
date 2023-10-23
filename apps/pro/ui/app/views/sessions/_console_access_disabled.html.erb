@@ -1,0 +1,27 @@
+<body>
+  <style type='text/css'>
+    body .buttons {
+      display: none;
+    }
+    body.embed, body.embed a {
+      color: #fff;
+    }
+    body.embed .buttons {
+      position: fixed;
+      bottom: 2px;
+      right: 5px;
+      display: block;
+    }
+    body.embed .buttons a {
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+
+  Console access is disabled. Go to the <%= link_to "Global Settings", settings_path, :target => :_top  %> to enable it.
+  <div class='buttons'>
+    <a class='console_close' title='close' href='#'>&times;</a>
+  </div>
+
+  <%= javascript_include_tag 'console_disabled' %>
+</body>

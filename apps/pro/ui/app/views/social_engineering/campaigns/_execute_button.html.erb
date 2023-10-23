@@ -1,0 +1,10 @@
+<% campaign_status_for do |status| %>
+  <%= link_to status.next_execute_action, 
+              execute_workspace_social_engineering_campaign_path(@workspace, @campaign), 
+              :data => {
+                      :confirm => 'Are you sure?',
+                      :method => :get,
+                      :remote => true
+              }
+  %>
+<% end %>

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Bam! Application Error</title>
+  <link rel="stylesheet" type="text/css" href="/errors.css" />
+</head>
+<body><div id='wrap'>
+  <div class='orange-strip'>
+  </div>
+  <div class='r7bottom-strip'>
+  </div>
+
+  <script type='text/javascript'>
+    var div = document.createElement && document.createElement('div');
+    if (div) div.innerHTML = '<svg/>';
+    window['hasSvg'] = (div.firstChild && div.firstChild.namespaceURI == 'http://www.w3.org/2000/svg');
+
+    // check for SVG support. if supported, add some styles
+    if (!window['hasSvg']){
+      document.body.onload = function() {
+        document.body.style.padding = 0;
+        document.body.style.margin = 0;
+        document.body.style.background = '#f3f3f3';
+        document.body.style.backgroundImage = 'url(/assets/tileable_contours_white.jpg)';
+        document.body.style.backgroundRepeat = 'repeat';
+        var bottom = document.getElementsByClassName('r7bottom-strip')[0];
+        bottom.style.display = 'none';
+        var svn = document.getElementsByClassName('seven-bg')[0];
+        svn.style.display = 'none';
+        var svg  = document.getElementsByTagName('svg')[0];
+        svg.parentNode.removeChild(svg);
+      }
+    }
+  </script>
+
+
+<script>if (!window['hasSvg']) document.write('<!--');</script>
+  <svg class='seven-bg'  preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 100" enable-background="new 0 0 200 100" xml:space="preserve">
+       <pattern id="img1" patternUnits="userSpaceOnUse" width="100" height="100">
+          <image preserveAspectRatio="xMinYMin" xlink:href="/assets/tileable_contours_white.jpg" x="0" y="0" width="100" height="100" />
+      </pattern>
+
+    
+      <g>
+        <image overflow="visible" opacity="0.2" width="954" height="517" xlink:href="/seven_shadow.png"  transform="matrix(0.24 0 0 0.24 -19.0732 -11)">
+        </image>
+      </g>
+  <polyline fill="url(#img1)" points="0.148,0 199.801,0 142.437,100 0.148,100 0.148,100 44.406,32.874 -2.08,32.874 -5.073,0.785   "/>
+  </svg>
+<script>if (!window['hasSvg']) document.write('-->');</script>
+
+
+  <div id='box-wrap'>
+
+    <div id="box">
+      
+  <div class="dialog-row">
+    <div class="before"></div>
+    <div class="center" id="frame">
+      <div class='stripe'></div>
+      <img src="/logo_pro_black_new_overlay.png" class='header'>
+      <img src="/r7logo_new_dark.png" class='logo'>
+      <div class="content">
+
+
+		<p class="justify">The Metasploit application refused to process your request due to the wrong form token being supplied. Try clearing your browser cache and cookies then resubmitting your request. If the problem persists, please visit the <a href="http://www.rapid7.com/for-customers/">Rapid7 Customer Center</a>. Users of the Community Edition are encouraged to use the <a href="https://community.rapid7.com/community/metasploit/">Rapid7 Community forums</a> for assistance.
+		</p>
+
+
+
+        <p style='text-align:center'><b><span style='font-size:1.5em'>&raquo;</span> Return to your <a href="javascript:history.back()">previous location</a></b></p>
+      </div>
+    </div>
+  </div></div>
+</body>
+</html>
+

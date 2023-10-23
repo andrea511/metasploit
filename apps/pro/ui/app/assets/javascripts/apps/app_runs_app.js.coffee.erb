@@ -1,0 +1,15 @@
+define [
+  'jquery',
+  '<%= javascript_path("apps/backbone/controllers/app_runs_controller") %>',
+], ($, AppRunsController) ->
+
+  # minor ui tweaks
+  $('div.mainPad').css(padding: 0)
+  $('div#crumbHolder').css(marginLeft: '15px')
+
+  class AppRunsApp
+    start: =>
+      @region = new Backbone.Marionette.Region(el: '#global-apps-container')
+      @controller = new AppRunsController(region: @region)
+      app = new Backbone.Marionette.Application
+      app.start()

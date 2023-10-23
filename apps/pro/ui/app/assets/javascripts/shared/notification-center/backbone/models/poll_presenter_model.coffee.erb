@@ -1,0 +1,3 @@
+define [], () ->
+  class PollPresenter extends Backbone.Model
+    urlRoot: "#{Routes.poll_notifications_messages_path()}.json?workspace_id=#{WORKSPACE_ID}"

@@ -1,0 +1,9 @@
+.row 
+  .columns.small-2 Response
+  .columns.small-6
+    %button.small-2 RENDERED
+    %button.small-2 OTHER
+    .small-8
+  .columns.small-4
+    .columns.small-8
+    %button.columns.small-4 Loot!

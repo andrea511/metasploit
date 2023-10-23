@@ -1,0 +1,62 @@
+<td>
+  <%= link_to task_detail_path(task.workspace, task) do %>
+    <div><strong><%=h task.description %></strong></div>
+  <% end %>
+</td>
+<td>
+  <div class="task_info">
+    <%= h task.info %>
+  </div>
+
+  <% if task.error %>
+    <div class="task_error">
+      <%= h truncate(task.error, :length => 100) %>
+    </div>
+  <% end %>
+</td>
+<td width="200" align="center">
+	<% if task.failed? %>
+		<span class="error">Error</span>
+	<% elsif task.running? %>
+		<% if task.indeterminate? %>
+			<span class="running">Running</span>
+		<% else %>
+			<div class="progress_percent">
+				<%=h task.progress %>%
+			</div>
+			<div class="progress_bar">
+				<div class="progress_value" style="width: <%= task.progress %>%"></div>
+			</div>
+		<% end %>
+	<% elsif task.stopped? %>
+		<span class="stopped">Stopped</span>
+	<% elsif task.paused? %>
+    <span class="paused">Paused</span>
+  <% elsif task.interrupted? %>
+		<span class="error">Interrupted</span>
+    <% else %>
+    <span class="done">Completed</span>
+	<% end %>
+</td>
+<td>
+  <span class="elapsed">
+    Started: <%=h task.created_at %>
+    <br />
+    <% if task.completed_at %>
+      Duration:
+      <%= h distance_of_time_in_words(task.created_at, task.completed_at, include_seconds:true) %>
+    <% else %>
+      Elapsed:
+      <%= h distance_of_time_in_words_to_now(task.created_at, include_seconds:true) %>
+    <% end %>
+  </span>
+  <% if task.running? %>
+    <br />
+    <%= link_to("Stop", stop_task_path(:id => task.id), :data => {:remote => true, :method => :post, :confirm => "Stop this task?"}, :class => 'stop') %>
+  <%# For the moment, we don't want to be able to replay bruteforce tasks. MSP-11760 %>
+  <% elsif !task.settings.blank? && task.settings[:task_type] && task.settings[:task_type] != 'BruteforceTask' %>
+    <br />
+    <%= link_to("Replay", replay_task_path(:id => task.id), :class => 'refresh') %>
+  <% end %>
+</td>
+

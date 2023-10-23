@@ -1,0 +1,160 @@
+define [
+  'jquery',
+  '<%= javascript_path("apps/backbone/views/app_tabbed_modal") %>',
+  '<%= javascript_path("moment.min.js") %>'
+], ($, AppTabbedModalView, m) ->
+  SSH_KEY_APP_URL = "/workspaces/#{WORKSPACE_ID}/apps/ssh_key/task_config/"
+  SSH_KEY_APP_TABLE_URL = "#{SSH_KEY_APP_URL}show_ssh_keys.json"
+  TRUNCATE_KEY_LEN = 150
+
+  class SshKeyModalView extends AppTabbedModalView
+
+    #
+    # Set up listeners for DOM events
+    #
+    events: _.extend({
+      'change #task_config_cred_type_input input': 'credTypeChanged',
+      'click .stored tr': 'rowClicked'
+    }, AppTabbedModalView.prototype.events)
+
+
+    #
+    # Overriden behavior
+    #
+    initialize: ->
+      super
+      @setTitle 'SSH Key Testing'
+      @setDescription 'Attempts to log in to systems on a target range with a recovered '+
+                      'private SSH key and reports the hosts that it was able to successfully '+
+                      'authenticate.' 
+      @setTabs [
+        {name: 'Scope'},
+        {name: 'Credentials'},
+        {name: 'Generate Report', checkbox: true}
+      ]
+
+    # stuffs the username/password selected in the creds table into the
+    #  manual user/password input fields
+    formOverrides:($node=null) =>
+      overrides = {}
+      if not @manualMode($node) and @chosenRow($node).size()
+        $row = @chosenRow()
+        $.extend(overrides, {
+          '[ssh_username]': $($row.find('td')[1]).text()
+          '[password]' : $($row.find('td')[2]).text()
+          '[key_file_content]': $($row.find('td')[3]).text()
+          '[core_id]': $row.find("td.id input").val()
+        })
+      overrides
+    
+    # add the error to the creds table if not in manual mode
+    transformErrorData: (data) =>
+      if data.errors?.task_config?.core?
+        data.errors.task_config.cred_type = data.errors.task_config.core
+        delete data.errors.task_config.core
+      data
+
+    formLoadedSuccessfully: (html) =>
+      super
+      @credTypeChanged()
+      # render the datatable of creds
+      unless @cachedNode
+        helpers.loadRemoteTable({
+          el: $('.advanced.stored', @$modal)
+          additionalCols: ["id"]
+          columns:
+            id:
+              sClass: 'id'
+              name: ''
+              bSortable: false
+              mData: null
+              mDataProp: null
+              sWidth: "20px"
+              fnRender: (o) ->
+                "<input type='radio' name='cred-datatable' value='#{_.escape o.aData.id}'/>"
+            user:
+              sClass: 'username'
+            pass:
+              name: 'SSH Key'
+              sClass: 'key_file_stored'
+              fnRender: (o) ->
+                if o.aData.pass?.length > TRUNCATE_KEY_LEN
+                  short = _.escape(o.aData.pass.slice(0, TRUNCATE_KEY_LEN)) + "&hellip;"
+                  title = _.escape o.aData.pass
+                  "<span title='#{title}'>#{short}</span>"
+                else
+                  o.aData.pass
+            created_at:
+              name: 'Created'
+              sType: 'title-string'
+              fnRender: (o) ->
+                time = o.aData?.created_at
+                "<span title='#{_.escape(time)}'>#{_.escape(moment(time).fromNow())}</span>"
+          dataTable:
+            aaSorting: [[ 1, "desc" ]]
+            bAutoWidth: true
+            sAjaxSource: SSH_KEY_APP_TABLE_URL
+            oLanguage:
+              sEmptyTable: "No SSH keys were found in this workspace."
+            fnInitComplete: () =>
+              $(@el).trigger('tabbed-modal-loaded')
+        })
+      else
+        $(@el).trigger('tabbed-modal-loaded')
+
+
+    # return the URL endpoint to load from and submit to
+    submitUrl: => SSH_KEY_APP_URL
+
+    #
+    # DOM event callbacks
+    #
+
+    # toggle advanced views based on user's choice
+    credTypeChanged: (e) =>
+      $('.advanced.user_supplied', @$modal).toggle(@manualMode())
+      $('.advanced.stored', @$modal).toggle(!@manualMode())
+
+    # user clicked row, auto check the checkbox in the first cell in the row
+    rowClicked: (e) =>
+      $(e.currentTarget).find('input[type=radio]').prop('checked', true)
+
+    #
+    # DOM helpers
+    #
+
+    # returns true if user wants to supply his own username/password
+    manualMode:($node=null) =>
+      $node = if $node? then $node else @$modal
+      !$('#task_config_cred_type_stored', $node).is(':checked')
+
+    # returns selected row in creds table
+    chosenRow:($node=null) =>
+      $node = if $node? then $node else @$modal
+      $('.stored.advanced input[type=radio]:checked', $node).parents('tr').first()
+
+    setHiddenCred : (form) ->
+      ssh_key = $('[name="password"]',@el).val()
+
+      radio_input =
+        """
+        <div class="hidden_cred">
+          <div>Last Selected Cred</div>
+          <table class="list">
+            <tr>
+              <th>Public</th>
+              <th>Private</th>
+            </tr>
+            <tr class="odd">
+              <td class="id" style="display:none;"><input type="radio" name="cred-datatable" checked="checked" value="#{_.escape(form['core_id'])}"></td>
+              <td class="username sorting_1">#{_.escape(form['ssh_username'])}</td>
+              <td class="key_file_content">#{_.escape(form['key_file_content'])||_.escape(ssh_key)}</td>
+            </tr>
+          </table>
+        </div>
+        """
+
+      $('.stored.advanced', @el).prepend(radio_input)
+
+    removeHiddenCred: () ->
+      $('.hidden_cred',@el).remove()

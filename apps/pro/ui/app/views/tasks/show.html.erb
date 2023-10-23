@@ -1,0 +1,84 @@
+<% title "Task #{@task.id}" %>
+
+<% include_stylesheet 'tasks/show' %>
+<%= javascript_include_tag 'backbone/require_config' %>
+<%= javascript_include_tag 'tasks/show' %>
+
+<% breadcrumb workspace_link, tasks_link, task_link %>
+
+<style type='text/css'>
+  #taskDetails table td:nth-child(2) {
+    width: 45%;
+  }
+  #taskDetails table td:last-child {
+    width: 150px;
+  }
+  #taskDetails table td:first-child {
+    width: 180px;
+  }
+  .rollup-header .max-width {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .rollup-header h3 {
+    display: inline-block;
+    font-size: 16px;
+    padding-right: 10px;
+    margin-bottom: 8px;
+  }
+  .rollup-tabs {
+    margin-top: 10px !important;
+  }
+</style>
+
+<% if @task.presenter.present? %>
+  <div id="tasks-app" class="tab-loading"></div>
+  <meta name='presenter' content="<%= @task.presenter %>">
+  <% include_stylesheet 'metamodules' -%>
+  <% include_stylesheet 'backbone/pro_carpenter' -%>
+<% elsif @task.app_run_id.present? %>
+  <meta name='app_run_id' content="<%= @task.app_run_id %>">
+  <div id="appStats"></div>
+  <% include_stylesheet 'metamodules' -%>
+<% else %>
+  <% content_for :header_buttons do %>
+    <div align="right" style="margin-top:10px;">
+      <%= form_tag do %>
+        <% if @task.discovery? %>
+          <span class="btn"><%= submit_checkboxes_to "Bruteforce...", workspace_brute_force_guess_index_path(@workspace) + '#quick', { :class => "brute" } %></span>
+          <span class="btn"><%= submit_checkboxes_to "Exploit...", new_exploit_path,  { :class => "exploit" } %></span>
+        <% elsif @task.report? %>
+          <span class="btn"><%= submit_checkboxes_to "Reports", reports_path(@workspace), { :class => "reports" } %></span>
+        <% elsif (@task.penetration? && @task.running?) || @task.active_sessions? %>
+          <span class="btn"><%= submit_checkboxes_to "Collect...", new_collect_evidence_path, { :class => "collect" } %></span>
+        <% elsif @task.webscan? %>
+          <span class="btn"><%= submit_checkboxes_to "Audit Web Apps", new_webaudit_path(@workspace), { :class => "webaudit" } %></span>
+        <% elsif @task.webaudit? %>
+          <span class="btn"><%= submit_checkboxes_to "Exploit Web Apps", new_websploit_path(@workspace), { :class => "websploit" } %></span>
+        <% else %>
+          <span class="btn"><%= link_to "Back to Task List", tasks_path(@workspace), :class => "back" %></span>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  <% if @task.quick_web_app_scan? %>
+    <%= render :partial => "shared/web_scan_stats_view", :locals => {
+        :task => @task,
+        :run_now => true
+      }
+    %>
+  <% end %>
+
+  <div id="taskDetails">
+    <%= render :partial => 'task_header' %>
+  </div>
+
+  <% if @task.has_error? %>
+    <p class="errors">
+      <%= h @task.error %>
+    </p>
+  <% end %>
+
+  <pre class="console logs" id="task_logs" task="<%= @task.id %>">
+  </pre>
+<% end %>

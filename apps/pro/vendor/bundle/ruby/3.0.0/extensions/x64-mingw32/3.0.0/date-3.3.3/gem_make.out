@@ -1,0 +1,1687 @@
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/date-3.3.3/ext/date
+C:/Users/vagrant/pro/pkg/w32/ruby/bin/ruby.exe -I C:/Users/vagrant/pro/pkg/w32/ruby/lib/ruby/site_ruby/3.0.0 -r ./siteconf20230522-388-abd7eu.rb extconf.rb
+checking for rb_category_warn()... yes
+checking for timezone in time.h with  -Werror... no
+checking for altzone in time.h with  -Werror... no
+creating Makefile
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/date-3.3.3/ext/date
+make DESTDIR\= clean
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/date-3.3.3/ext/date
+make DESTDIR\=
+generating date_core-x64-mingw32.def
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 16466 s in the future
+compiling date_core.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+date_core.c: In function 'datetime_to_time':
+date_core.c:310:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  310 |     union DateData *adat;\
+      |     ^~~~~
+date_core.c:310:5: note: in definition of macro 'get_d1a'
+  310 |     union DateData *adat;\
+      |     ^~~~~
+date_core.c: In function 'datetime_s_jisx0301':
+date_core.c:8707:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8707 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8708:7: note: here
+ 8708 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_httpdate':
+date_core.c:8662:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8662 |  str = rb_str_new2("Mon, 01 Jan -4712 00:00:00 GMT");
+date_core.c:8663:7: note: here
+ 8663 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_rfc2822':
+date_core.c:8622:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8622 |  str = rb_str_new2("Mon, 1 Jan -4712 00:00:00 +0000");
+date_core.c:8623:7: note: here
+ 8623 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_xmlschema':
+date_core.c:8581:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8581 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8582:7: note: here
+ 8582 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_rfc3339':
+date_core.c:8541:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8541 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8542:7: note: here
+ 8542 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_iso8601':
+date_core.c:8501:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8501 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8502:7: note: here
+ 8502 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_parse':
+date_core.c:8454:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8454 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8455:7: note: here
+ 8455 |       case 1:
+      |       ^~~~
+date_core.c:8456:7: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8456 |  comp = Qtrue;
+date_core.c:8457:7: note: here
+ 8457 |       case 2:
+      |       ^~~~
+date_core.c: In function 'datetime_s_strptime':
+date_core.c:8401:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8401 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8402:7: note: here
+ 8402 |       case 1:
+      |       ^~~~
+date_core.c:8403:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8403 |  fmt = rb_str_new2("%FT%T%z");
+date_core.c:8404:7: note: here
+ 8404 |       case 2:
+      |       ^~~~
+date_core.c: In function 'datetime_s_commercial':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:7956:2: note: in expansion of macro 'val2sg'
+ 7956 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:7957:7: note: here
+ 7957 |       case 7:
+      |       ^~~~
+date_core.c:5090:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5090 |     if (!offset_to_sec(vof, &iof)) {\
+      |        ^
+date_core.c:7958:2: note: in expansion of macro 'val2off'
+ 7958 |  val2off(vof, rof);
+      |  ^~~~~~~
+date_core.c:7959:7: note: here
+ 7959 |       case 6:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7961:2: note: in expansion of macro 'num2int_with_frac'
+ 7961 |  num2int_with_frac(s, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7962:7: note: here
+ 7962 |       case 5:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7964:2: note: in expansion of macro 'num2int_with_frac'
+ 7964 |  num2int_with_frac(min, 5);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7965:7: note: here
+ 7965 |       case 4:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7967:2: note: in expansion of macro 'num2int_with_frac'
+ 7967 |  num2int_with_frac(h, 4);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7968:7: note: here
+ 7968 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7970:2: note: in expansion of macro 'num2int_with_frac'
+ 7970 |  num2int_with_frac(d, 3);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7971:7: note: here
+ 7971 |       case 2:
+      |       ^~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   38 | #define RB_NUM2INT  rb_num2int_inline
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: note: in definition of macro 'RB_NUM2INT'
+   38 | #define RB_NUM2INT  rb_num2int_inline
+      |                     ^~~~~~~~~~~~~~~~~
+date_core.c:7973:6: note: in expansion of macro 'NUM2INT'
+ 7973 |  w = NUM2INT(vw);
+      |      ^~~~~~~
+date_core.c:7974:7: note: here
+ 7974 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_initialize':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:7852:2: note: in expansion of macro 'val2sg'
+ 7852 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:7853:7: note: here
+ 7853 |       case 7:
+      |       ^~~~
+date_core.c:5090:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5090 |     if (!offset_to_sec(vof, &iof)) {\
+      |        ^
+date_core.c:7854:2: note: in expansion of macro 'val2off'
+ 7854 |  val2off(vof, rof);
+      |  ^~~~~~~
+date_core.c:7855:7: note: here
+ 7855 |       case 6:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7857:2: note: in expansion of macro 'num2int_with_frac'
+ 7857 |  num2int_with_frac(s, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7858:7: note: here
+ 7858 |       case 5:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7860:2: note: in expansion of macro 'num2int_with_frac'
+ 7860 |  num2int_with_frac(min, 5);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7861:7: note: here
+ 7861 |       case 4:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7863:2: note: in expansion of macro 'num2int_with_frac'
+ 7863 |  num2int_with_frac(h, 4);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7864:7: note: here
+ 7864 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7866:2: note: in expansion of macro 'num2int_with_frac'
+ 7866 |  num2int_with_frac(d, 3);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7867:7: note: here
+ 7867 |       case 2:
+      |       ^~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   38 | #define RB_NUM2INT  rb_num2int_inline
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: note: in definition of macro 'RB_NUM2INT'
+   38 | #define RB_NUM2INT  rb_num2int_inline
+      |                     ^~~~~~~~~~~~~~~~~
+date_core.c:7869:6: note: in expansion of macro 'NUM2INT'
+ 7869 |  m = NUM2INT(vm);
+      |      ^~~~~~~
+date_core.c:7870:7: note: here
+ 7870 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_ordinal':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:7769:2: note: in expansion of macro 'val2sg'
+ 7769 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:7770:7: note: here
+ 7770 |       case 6:
+      |       ^~~~
+date_core.c:5090:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5090 |     if (!offset_to_sec(vof, &iof)) {\
+      |        ^
+date_core.c:7771:2: note: in expansion of macro 'val2off'
+ 7771 |  val2off(vof, rof);
+      |  ^~~~~~~
+date_core.c:7772:7: note: here
+ 7772 |       case 5:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7774:2: note: in expansion of macro 'num2int_with_frac'
+ 7774 |  num2int_with_frac(s, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7775:7: note: here
+ 7775 |       case 4:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7777:2: note: in expansion of macro 'num2int_with_frac'
+ 7777 |  num2int_with_frac(min, 4);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7778:7: note: here
+ 7778 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7780:2: note: in expansion of macro 'num2int_with_frac'
+ 7780 |  num2int_with_frac(h, 3);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7781:7: note: here
+ 7781 |       case 2:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7783:2: note: in expansion of macro 'num2int_with_frac'
+ 7783 |  num2int_with_frac(d, 2);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7784:7: note: here
+ 7784 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_jd':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:7696:2: note: in expansion of macro 'val2sg'
+ 7696 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:7697:7: note: here
+ 7697 |       case 5:
+      |       ^~~~
+date_core.c:5090:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5090 |     if (!offset_to_sec(vof, &iof)) {\
+      |        ^
+date_core.c:7698:2: note: in expansion of macro 'val2off'
+ 7698 |  val2off(vof, rof);
+      |  ^~~~~~~
+date_core.c:7699:7: note: here
+ 7699 |       case 4:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7701:2: note: in expansion of macro 'num2int_with_frac'
+ 7701 |  num2int_with_frac(s, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7702:7: note: here
+ 7702 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7704:2: note: in expansion of macro 'num2int_with_frac'
+ 7704 |  num2int_with_frac(min, 3);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7705:7: note: here
+ 7705 |       case 2:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7707:2: note: in expansion of macro 'num2int_with_frac'
+ 7707 |  num2int_with_frac(h, 2);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7708:7: note: here
+ 7708 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_initialize':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:3522:2: note: in expansion of macro 'val2sg'
+ 3522 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:3523:7: note: here
+ 3523 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:3525:2: note: in expansion of macro 'num2int_with_frac'
+ 3525 |  num2int_with_frac(d, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:3526:7: note: here
+ 3526 |       case 2:
+      |       ^~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   38 | #define RB_NUM2INT  rb_num2int_inline
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: note: in definition of macro 'RB_NUM2INT'
+   38 | #define RB_NUM2INT  rb_num2int_inline
+      |                     ^~~~~~~~~~~~~~~~~
+date_core.c:3528:6: note: in expansion of macro 'NUM2INT'
+ 3528 |  m = NUM2INT(vm);
+      |      ^~~~~~~
+date_core.c:3529:7: note: here
+ 3529 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_jisx0301':
+date_core.c:5021:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5021 |  str = rb_str_new2("-4712-01-01");
+date_core.c:5022:7: note: here
+ 5022 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_httpdate':
+date_core.c:4948:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4948 |  str = rb_str_new2("Mon, 01 Jan -4712 00:00:00 GMT");
+date_core.c:4949:7: note: here
+ 4949 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_rfc2822':
+date_core.c:4880:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4880 |  str = rb_str_new2("Mon, 1 Jan -4712 00:00:00 +0000");
+date_core.c:4881:7: note: here
+ 4881 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_xmlschema':
+date_core.c:4806:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4806 |  str = rb_str_new2("-4712-01-01");
+date_core.c:4807:7: note: here
+ 4807 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_rfc3339':
+date_core.c:4737:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4737 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:4738:7: note: here
+ 4738 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_iso8601':
+date_core.c:4666:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4666 |  str = rb_str_new2("-4712-01-01");
+date_core.c:4667:7: note: here
+ 4667 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_parse':
+date_core.c:4586:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4586 |  str = rb_str_new2("-4712-01-01");
+date_core.c:4587:7: note: here
+ 4587 |       case 1:
+      |       ^~~~
+date_core.c:4588:7: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4588 |  comp = Qtrue;
+date_core.c:4589:7: note: here
+ 4589 |       case 2:
+      |       ^~~~
+date_core.c: In function 'date_s_strptime':
+date_core.c:4434:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4434 |  str = rb_str_new2("-4712-01-01");
+date_core.c:4435:7: note: here
+ 4435 |       case 1:
+      |       ^~~~
+date_core.c:4436:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4436 |  fmt = rb_str_new2("%F");
+date_core.c:4437:7: note: here
+ 4437 |       case 2:
+      |       ^~~~
+date_core.c: In function 'date_s_commercial':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:3623:2: note: in expansion of macro 'val2sg'
+ 3623 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:3624:7: note: here
+ 3624 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:3626:2: note: in expansion of macro 'num2int_with_frac'
+ 3626 |  num2int_with_frac(d, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:3627:7: note: here
+ 3627 |       case 2:
+      |       ^~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   38 | #define RB_NUM2INT  rb_num2int_inline
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: note: in definition of macro 'RB_NUM2INT'
+   38 | #define RB_NUM2INT  rb_num2int_inline
+      |                     ^~~~~~~~~~~~~~~~~
+date_core.c:3629:6: note: in expansion of macro 'NUM2INT'
+ 3629 |  w = NUM2INT(vw);
+      |      ^~~~~~~
+date_core.c:3630:7: note: here
+ 3630 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_ordinal':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:3437:2: note: in expansion of macro 'val2sg'
+ 3437 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:3438:7: note: here
+ 3438 |       case 2:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:3440:2: note: in expansion of macro 'num2int_with_frac'
+ 3440 |  num2int_with_frac(d, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:3441:7: note: here
+ 3441 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_jd':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:3370:2: note: in expansion of macro 'val2sg'
+ 3370 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:3371:7: note: here
+ 3371 |       case 1:
+      |       ^~~~
+compiling date_parse.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling date_strftime.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+date_strftime.c: In function 'date_strftime_with_tmx':
+date_strftime.c:573:14: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  573 |      padding = '0';
+      |      ~~~~~~~~^~~~~
+date_strftime.c:574:4: note: here
+  574 |    case '1':  case '2': case '3': case '4':
+      |    ^~~~
+compiling date_strptime.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+linking shared-object date_core.so
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/date-3.3.3/ext/date
+make DESTDIR\= install
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 16453 s in the future
+compiling date_core.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+date_core.c: In function 'datetime_to_time':
+date_core.c:310:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  310 |     union DateData *adat;\
+      |     ^~~~~
+date_core.c:310:5: note: in definition of macro 'get_d1a'
+  310 |     union DateData *adat;\
+      |     ^~~~~
+date_core.c: In function 'datetime_s_jisx0301':
+date_core.c:8707:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8707 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8708:7: note: here
+ 8708 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_httpdate':
+date_core.c:8662:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8662 |  str = rb_str_new2("Mon, 01 Jan -4712 00:00:00 GMT");
+date_core.c:8663:7: note: here
+ 8663 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_rfc2822':
+date_core.c:8622:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8622 |  str = rb_str_new2("Mon, 1 Jan -4712 00:00:00 +0000");
+date_core.c:8623:7: note: here
+ 8623 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_xmlschema':
+date_core.c:8581:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8581 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8582:7: note: here
+ 8582 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_rfc3339':
+date_core.c:8541:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8541 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8542:7: note: here
+ 8542 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_iso8601':
+date_core.c:8501:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8501 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8502:7: note: here
+ 8502 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_parse':
+date_core.c:8454:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8454 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8455:7: note: here
+ 8455 |       case 1:
+      |       ^~~~
+date_core.c:8456:7: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8456 |  comp = Qtrue;
+date_core.c:8457:7: note: here
+ 8457 |       case 2:
+      |       ^~~~
+date_core.c: In function 'datetime_s_strptime':
+date_core.c:8401:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8401 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:8402:7: note: here
+ 8402 |       case 1:
+      |       ^~~~
+date_core.c:8403:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 8403 |  fmt = rb_str_new2("%FT%T%z");
+date_core.c:8404:7: note: here
+ 8404 |       case 2:
+      |       ^~~~
+date_core.c: In function 'datetime_s_commercial':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:7956:2: note: in expansion of macro 'val2sg'
+ 7956 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:7957:7: note: here
+ 7957 |       case 7:
+      |       ^~~~
+date_core.c:5090:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5090 |     if (!offset_to_sec(vof, &iof)) {\
+      |        ^
+date_core.c:7958:2: note: in expansion of macro 'val2off'
+ 7958 |  val2off(vof, rof);
+      |  ^~~~~~~
+date_core.c:7959:7: note: here
+ 7959 |       case 6:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7961:2: note: in expansion of macro 'num2int_with_frac'
+ 7961 |  num2int_with_frac(s, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7962:7: note: here
+ 7962 |       case 5:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7964:2: note: in expansion of macro 'num2int_with_frac'
+ 7964 |  num2int_with_frac(min, 5);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7965:7: note: here
+ 7965 |       case 4:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7967:2: note: in expansion of macro 'num2int_with_frac'
+ 7967 |  num2int_with_frac(h, 4);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7968:7: note: here
+ 7968 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7970:2: note: in expansion of macro 'num2int_with_frac'
+ 7970 |  num2int_with_frac(d, 3);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7971:7: note: here
+ 7971 |       case 2:
+      |       ^~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   38 | #define RB_NUM2INT  rb_num2int_inline
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: note: in definition of macro 'RB_NUM2INT'
+   38 | #define RB_NUM2INT  rb_num2int_inline
+      |                     ^~~~~~~~~~~~~~~~~
+date_core.c:7973:6: note: in expansion of macro 'NUM2INT'
+ 7973 |  w = NUM2INT(vw);
+      |      ^~~~~~~
+date_core.c:7974:7: note: here
+ 7974 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_initialize':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:7852:2: note: in expansion of macro 'val2sg'
+ 7852 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:7853:7: note: here
+ 7853 |       case 7:
+      |       ^~~~
+date_core.c:5090:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5090 |     if (!offset_to_sec(vof, &iof)) {\
+      |        ^
+date_core.c:7854:2: note: in expansion of macro 'val2off'
+ 7854 |  val2off(vof, rof);
+      |  ^~~~~~~
+date_core.c:7855:7: note: here
+ 7855 |       case 6:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7857:2: note: in expansion of macro 'num2int_with_frac'
+ 7857 |  num2int_with_frac(s, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7858:7: note: here
+ 7858 |       case 5:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7860:2: note: in expansion of macro 'num2int_with_frac'
+ 7860 |  num2int_with_frac(min, 5);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7861:7: note: here
+ 7861 |       case 4:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7863:2: note: in expansion of macro 'num2int_with_frac'
+ 7863 |  num2int_with_frac(h, 4);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7864:7: note: here
+ 7864 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7866:2: note: in expansion of macro 'num2int_with_frac'
+ 7866 |  num2int_with_frac(d, 3);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7867:7: note: here
+ 7867 |       case 2:
+      |       ^~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   38 | #define RB_NUM2INT  rb_num2int_inline
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: note: in definition of macro 'RB_NUM2INT'
+   38 | #define RB_NUM2INT  rb_num2int_inline
+      |                     ^~~~~~~~~~~~~~~~~
+date_core.c:7869:6: note: in expansion of macro 'NUM2INT'
+ 7869 |  m = NUM2INT(vm);
+      |      ^~~~~~~
+date_core.c:7870:7: note: here
+ 7870 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_ordinal':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:7769:2: note: in expansion of macro 'val2sg'
+ 7769 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:7770:7: note: here
+ 7770 |       case 6:
+      |       ^~~~
+date_core.c:5090:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5090 |     if (!offset_to_sec(vof, &iof)) {\
+      |        ^
+date_core.c:7771:2: note: in expansion of macro 'val2off'
+ 7771 |  val2off(vof, rof);
+      |  ^~~~~~~
+date_core.c:7772:7: note: here
+ 7772 |       case 5:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7774:2: note: in expansion of macro 'num2int_with_frac'
+ 7774 |  num2int_with_frac(s, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7775:7: note: here
+ 7775 |       case 4:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7777:2: note: in expansion of macro 'num2int_with_frac'
+ 7777 |  num2int_with_frac(min, 4);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7778:7: note: here
+ 7778 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7780:2: note: in expansion of macro 'num2int_with_frac'
+ 7780 |  num2int_with_frac(h, 3);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7781:7: note: here
+ 7781 |       case 2:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7783:2: note: in expansion of macro 'num2int_with_frac'
+ 7783 |  num2int_with_frac(d, 2);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7784:7: note: here
+ 7784 |       case 1:
+      |       ^~~~
+date_core.c: In function 'datetime_s_jd':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:7696:2: note: in expansion of macro 'val2sg'
+ 7696 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:7697:7: note: here
+ 7697 |       case 5:
+      |       ^~~~
+date_core.c:5090:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5090 |     if (!offset_to_sec(vof, &iof)) {\
+      |        ^
+date_core.c:7698:2: note: in expansion of macro 'val2off'
+ 7698 |  val2off(vof, rof);
+      |  ^~~~~~~
+date_core.c:7699:7: note: here
+ 7699 |       case 4:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7701:2: note: in expansion of macro 'num2int_with_frac'
+ 7701 |  num2int_with_frac(s, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7702:7: note: here
+ 7702 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7704:2: note: in expansion of macro 'num2int_with_frac'
+ 7704 |  num2int_with_frac(min, 3);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7705:7: note: here
+ 7705 |       case 2:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:7707:2: note: in expansion of macro 'num2int_with_frac'
+ 7707 |  num2int_with_frac(h, 2);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:7708:7: note: here
+ 7708 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_initialize':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:3522:2: note: in expansion of macro 'val2sg'
+ 3522 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:3523:7: note: here
+ 3523 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:3525:2: note: in expansion of macro 'num2int_with_frac'
+ 3525 |  num2int_with_frac(d, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:3526:7: note: here
+ 3526 |       case 2:
+      |       ^~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   38 | #define RB_NUM2INT  rb_num2int_inline
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: note: in definition of macro 'RB_NUM2INT'
+   38 | #define RB_NUM2INT  rb_num2int_inline
+      |                     ^~~~~~~~~~~~~~~~~
+date_core.c:3528:6: note: in expansion of macro 'NUM2INT'
+ 3528 |  m = NUM2INT(vm);
+      |      ^~~~~~~
+date_core.c:3529:7: note: here
+ 3529 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_jisx0301':
+date_core.c:5021:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 5021 |  str = rb_str_new2("-4712-01-01");
+date_core.c:5022:7: note: here
+ 5022 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_httpdate':
+date_core.c:4948:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4948 |  str = rb_str_new2("Mon, 01 Jan -4712 00:00:00 GMT");
+date_core.c:4949:7: note: here
+ 4949 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_rfc2822':
+date_core.c:4880:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4880 |  str = rb_str_new2("Mon, 1 Jan -4712 00:00:00 +0000");
+date_core.c:4881:7: note: here
+ 4881 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_xmlschema':
+date_core.c:4806:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4806 |  str = rb_str_new2("-4712-01-01");
+date_core.c:4807:7: note: here
+ 4807 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_rfc3339':
+date_core.c:4737:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4737 |  str = rb_str_new2("-4712-01-01T00:00:00+00:00");
+date_core.c:4738:7: note: here
+ 4738 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_iso8601':
+date_core.c:4666:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4666 |  str = rb_str_new2("-4712-01-01");
+date_core.c:4667:7: note: here
+ 4667 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_parse':
+date_core.c:4586:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4586 |  str = rb_str_new2("-4712-01-01");
+date_core.c:4587:7: note: here
+ 4587 |       case 1:
+      |       ^~~~
+date_core.c:4588:7: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4588 |  comp = Qtrue;
+date_core.c:4589:7: note: here
+ 4589 |       case 2:
+      |       ^~~~
+date_core.c: In function 'date_s_strptime':
+date_core.c:4434:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4434 |  str = rb_str_new2("-4712-01-01");
+date_core.c:4435:7: note: here
+ 4435 |       case 1:
+      |       ^~~~
+date_core.c:4436:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 4436 |  fmt = rb_str_new2("%F");
+date_core.c:4437:7: note: here
+ 4437 |       case 2:
+      |       ^~~~
+date_core.c: In function 'date_s_commercial':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:3623:2: note: in expansion of macro 'val2sg'
+ 3623 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:3624:7: note: here
+ 3624 |       case 3:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:3626:2: note: in expansion of macro 'num2int_with_frac'
+ 3626 |  num2int_with_frac(d, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:3627:7: note: here
+ 3627 |       case 2:
+      |       ^~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_core.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   38 | #define RB_NUM2INT  rb_num2int_inline
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:38:21: note: in definition of macro 'RB_NUM2INT'
+   38 | #define RB_NUM2INT  rb_num2int_inline
+      |                     ^~~~~~~~~~~~~~~~~
+date_core.c:3629:6: note: in expansion of macro 'NUM2INT'
+ 3629 |  w = NUM2INT(vw);
+      |      ^~~~~~~
+date_core.c:3630:7: note: here
+ 3630 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_ordinal':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:3437:2: note: in expansion of macro 'val2sg'
+ 3437 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:3438:7: note: here
+ 3438 |       case 2:
+      |       ^~~~
+date_core.c:3298:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3298 |     if (f_nonzero_p(fr)) {\
+      |        ^
+date_core.c:3440:2: note: in expansion of macro 'num2int_with_frac'
+ 3440 |  num2int_with_frac(d, positive_inf);
+      |  ^~~~~~~~~~~~~~~~~
+date_core.c:3441:7: note: here
+ 3441 |       case 1:
+      |       ^~~~
+date_core.c: In function 'date_s_jd':
+date_core.c:3322:8: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 3322 |     if (!c_valid_start_p(dsg)) {\
+      |        ^
+date_core.c:3370:2: note: in expansion of macro 'val2sg'
+ 3370 |  val2sg(vsg, sg);
+      |  ^~~~~~
+date_core.c:3371:7: note: here
+ 3371 |       case 1:
+      |       ^~~~
+compiling date_parse.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_parse.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling date_strftime.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from date_strftime.c:7:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+date_strftime.c: In function 'date_strftime_with_tmx':
+date_strftime.c:573:14: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  573 |      padding = '0';
+      |      ~~~~~~~~^~~~~
+date_strftime.c:574:4: note: here
+  574 |    case '1':  case '2': case '3': case '4':
+      |    ^~~~
+compiling date_strptime.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from date_strptime.c:5:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+linking shared-object date_core.so
+/usr/bin/install -c -m 0755 date_core.so ./.gem.20230522-388-i4fo8b
+make: warning:  Clock skew detected.  Your build may be incomplete.

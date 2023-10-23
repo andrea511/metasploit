@@ -1,0 +1,44 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/modules") %>'
+], ($, Template, RowDropdownLayout, Exploit) ->
+  class ModulesLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/modules']
+
+    initialize: ({@host_id}) =>
+
+    hostModulesURL: => "/hosts/#{@host_id}/exploits.json"
+
+    onRender: ->
+      @_loadTable()
+
+    _loadTable: ->
+      $.get(@hostModulesURL(), (data) =>
+        $('.modules', @el).html('<table class="list" id="modules-table">')
+        @_initDataTable(data)
+        $(@el).trigger('tabload')
+      )
+
+    _initDataTable: (data) =>
+      data_mapped = data.map((m) =>
+        [  '<a data-name="'+m.name+'" title="'+m.description+'" style="visibility: visible" href="'+Routes.new_module_run_path({workspace_id: WORKSPACE_ID, path: m.fullname })+'?target_host='+@options.host_address+'">'+m.name+'</a>',
+         m.mtype, m.refname, m.stance, m.privileged, m.module_star_icons, m.readiness_state]
+      )
+      $('.control-bar', @el).remove()
+      $table = $('#modules-table', @el).dataTable({
+        oSettings:
+          sInstance: "modules"
+        sDom: 'ft<"list-table-footer clearfix"ip <"sel" l>>r'
+        aaData: data_mapped
+        aoColumns: [
+          { sTitle: "Name", sWidth: 'auto' },
+          { sTitle: "Type" },
+          { sTitle: "Ref" },
+          { sTitle: "Stance", bSortable: false },
+          { sTitle: "Privileged", bSortable: false },
+          { sTitle: "Rank", sWidth: 'auto', bSortable: false }
+          { sTitle: "Readiness State", sWidth: 'auto', bSortable: true }
+        ]
+        sPaginationType: "r7Style"
+      })
+      $(@el).trigger('tabload')

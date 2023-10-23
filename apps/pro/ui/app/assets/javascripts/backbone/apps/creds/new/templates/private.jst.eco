@@ -1,0 +1,36 @@
+<form>
+  <div>
+    <label for="type">Private type</label>
+    <select id="type" name="private[type]">
+      <option value="none">None</option>
+      <option value="plaintext">Plaintext Password</option>
+      <option value="ssh">SSH Key</option>
+      <option value="ntlm">NTLM Hash</option>
+      <option value="hash">Hash</option>
+    </select>
+  </div>
+
+  <div class='clear-floats'>
+    <div class="none">
+
+    </div>
+
+    <div class="plaintext invisible option">
+      <label for="data">Password</label>
+    </div>
+
+    <div class="ssh invisible option">
+      <label for="data">SSH Key</label>
+    </div>
+
+    <div class="ntlm invisible option">
+      <label for="data">NTLM Hash</label>
+    </div>
+
+    <div class="hash invisible option">
+      <label for="data">Hash</label>
+    </div>
+    <textarea id="data" type="text" name="private[data]"></textarea>
+  </div>
+
+</form>

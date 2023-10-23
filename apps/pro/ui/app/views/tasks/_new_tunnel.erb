@@ -1,0 +1,117 @@
+<% if @workspace.sessions.length > 0 %>
+<% if @task.interfaces.keys.length > 0 %>
+  <%= semantic_form_for @task, :url => start_tunnel_path do |f| %>
+
+  <div id="popup_errors"></div>
+
+  <%= f.hidden_field :workspace_id %>
+  <%= f.hidden_field :tunnel_session, :value => @sess %>
+
+  <div id="tunnel_items">
+
+  <table cellpadding=2 class="mar-tb10">
+
+    <tr class="<%=h row_cycle %>">
+      <td align="left" valign="top" colspan="3">
+        <%= f.label :tunnel_interface, "Select the Remote Tunnel Interface" %>
+      </td>
+      <td align="left" valign="top">
+        <%= f.select :tunnel_interface, @task.interface_options %>
+      </td>
+    </tr>
+
+    <tr class="<%=h row_cycle %>">
+      <td align="left" valign="top" colspan="3">
+        <%= f.label :tunnel_dhcp, "Obtain an IP address through DHCP", :class => "inline" %>
+      </td>
+      <td align="left" valign="top">
+      <%= f.check_box :tunnel_dhcp, {:checked => "checked"}, true, false %>
+      </td>
+    </tr>
+
+    <tr class="<%=h row_cycle %>">
+      <td align="left" valign="top" colspan="3">
+        <%= f.label :tunnel_address, "Local Tunnel Interface Address" %>
+      </td>
+      <td align="left" valign="top">
+        <%= f.text_field  :tunnel_address, :value => @task.suggested_address %>
+      </td>
+    </tr>
+
+    <tr class="<%=h row_cycle %>">
+      <td align="left" valign="top" colspan="3">
+        <%= f.label :tunnel_netmask, "Local Tunnel Interface Netmask" %>
+      </td>
+      <td align="left" valign="top">
+        <%= f.text_field  :tunnel_netmask, :value => @task.suggested_netmask %>
+      </td>
+    </tr>
+
+  </table>
+  </div>
+
+  <div class="buttons">
+    <span class="btn"><%= submit_tag "Start Pivoting", :class => "pivot", :id => 'popup_submit' %></span>
+    <span class="btn"><%= link_to "Cancel", '#', class: 'popup-cancel' %></span>
+  </div>
+
+  <% end %>
+  
+<% else 
+
+  if @task.error
+%>
+<h1> VPN Pivoting Error</h1>
+
+<% if @task.missing_drivers 
+
+  arch = Rex::Compat.is_wow64 ? "amd64" : "i386"
+  path = ::File.expand_path( ::File.join(__FILE__, "..", "..", "..", "..", "..", "data", "drivers", arch) ).capitalize.gsub("/", "\\")
+%>
+
+<p>
+  In order to use VPN Pivoting on the Windows platform, you will need to install the Metasploit TAP drivers.
+  This can be accomplished by opening a command shell as Administrator and executing the following commands.
+  If prompted to allow the installation of "Rapid7 LLC Network Adapters", please choose "Install".
+</p>
+<blockquote>
+<pre>cd <%=h path %>
+<%=h path %>&gt;msftap_install.bat</pre>
+</blockquote>
+  <br/>
+  <span class="btn"><%= link_to "Cancel", '#', class: 'popup-cancel' %></span>
+  
+<% else %>
+<p> The VPN Pivot feature is not available on this session for the following reason: <%=h @task.error %>. </p>
+  <br/>
+  <span class="btn"><%= link_to "Cancel", '#', class: 'popup-cancel' %></span>
+<% end %>
+
+<%
+  else
+%>
+  
+  
+  <h1> No interfaces are available for VPN Pivoting </h1>
+  <p> The VPN Pivot feature creates a local interface to the remote network. As such, it is not able to create a bridge to a network
+      that the Metasploit Pro system is already attached to since this would create a conflicting route for the target network. To
+      use the VPN Pivot feature, ensure that your Metasploit Pro system does not have a direct connection to any networks with the
+      exact same IP range and netmask as your target network. The interfaces connected to the target system are as follows:
+  </p>
+  <ul>
+  <% @task.all_interfaces.keys.sort{|a,b| a<=>b}.each do |i| 
+     intf = @task.all_interfaces[i]
+  %>
+    <li><%=h "##{i} - #{intf["address"]}/#{intf["netmask"]} - #{intf["description"]}" %></li>
+  <% end %>
+  </ul>
+  <br/>
+  <span class="btn"><%= link_to "Cancel", '#', class: 'popup-cancel' %></span>
+<% end %>
+<% end %>
+
+<% else %>
+  <h1> No Active Sessions </h1>
+  <span class="btn"><%= link_to "Cancel", '#', class: 'popup-cancel' %></span>
+<% end %>
+

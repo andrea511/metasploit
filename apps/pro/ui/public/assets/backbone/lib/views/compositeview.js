@@ -1,0 +1,23 @@
+(function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  define(['base_view'], function() {
+    return this.Pro.module("Views", function(Views, App, Backbone, Marionette, jQuery, _) {
+      return Views.CompositeView = (function(_super) {
+
+        __extends(CompositeView, _super);
+
+        function CompositeView() {
+          return CompositeView.__super__.constructor.apply(this, arguments);
+        }
+
+        CompositeView.prototype.itemViewEventPrefix = "childview";
+
+        return CompositeView;
+
+      })(Marionette.CompositeView);
+    });
+  });
+
+}).call(this);

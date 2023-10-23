@@ -1,0 +1,42 @@
+<form>
+  <% unless @taskChain: %>
+  <div class="header-region content-container">
+    <h1>Bruteforce</h1>
+  </div>
+  <% end %>
+
+  <div class="content-region content-container">
+    <div class="foundation">
+      <div class="row"></div>
+      <div class="row">
+        <div class="columns small-8">
+          Bruteforce systematically attempts to use credentials to authenticate to services on target hosts.
+          Select the hosts and services you want to bruteforce and the credentials you want to use to attempt authentication.
+        </div>
+      </div>
+
+
+      <div class="row breadcrumbs space">
+
+      </div>
+
+      <div class="row box-container">
+        <div id="targets-region" class="columns large-4"></div>
+        <div id="creds-region" class="columns large-4"></div>
+        <div id="options-region" class="columns large-4"></div>
+      </div>
+
+      <% unless @taskChain: %>
+      <div class="row">
+        <div class="columns empty large-10"></div>
+
+        <div class="columns large-2 launch-container">
+          <a href="javascript:void(0)" class="btn primary launch disabled">LAUNCH</a>
+        </div>
+      </div>
+      <% end %>
+
+    </div>
+  </div>
+</form>
+

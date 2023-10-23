@@ -1,0 +1,23 @@
+<div class="nub-spacer"></div>
+
+<div class="row">
+    <% for tag in @lastTags: %>
+       <div class="no-whitespace">
+           <a class="tag" href="javacript:void(0)">
+               <span class="name"><%=tag.name%></span>
+           </a>
+
+          <% if @model?.tagUrl?: %>
+            <a class="tag-close" href="javascript:void(0)" data-id="<%= tag.id %>">&times;</a>
+          <% end %>
+
+       </div>
+    <% end %>
+</div>
+
+<% if @model?.tagUrl?: %>
+  <div class="row add-tags">
+      <label class="tags">Tags</label>
+      <a class="green-add" href="javascript:void(0)" title="Add tags">+</a>
+  </div>
+<% end %>

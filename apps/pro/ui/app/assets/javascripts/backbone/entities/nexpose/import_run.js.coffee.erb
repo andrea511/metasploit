@@ -1,0 +1,41 @@
+define [
+  'base_model'
+  'base_collection'
+], ->
+  @Pro.module "Entities.Nexpose", (Nexpose, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+    # Corresponds to Nexpose::Data::ImportRun
+    class Nexpose.ImportRun extends App.Entities.Model
+      urlRoot: ->
+        Routes.workspace_nexpose_data_import_runs_path(WORKSPACE_ID)
+
+
+      # @return [Boolean] has the import run not yet started?
+      isNotYetStarted: =>
+        @get('state') == 'not_yet_started'
+
+      # @return [Boolean] ist he import run ready to import?
+      isReadyToImport: =>
+        @get('state') == 'ready_to_import'
+
+      # @return [Boolean] is the import run finished?
+      isFinished: =>
+        @get('state') == 'finished'
+
+
+    #
+    # API
+    #
+    API =
+      getImportRun: (opts = {}) ->
+        sites = new Nexpose.ImportRun(opts)
+        sites
+
+    #
+    # REQUEST HANDLERS
+    #
+    App.reqres.setHandler "nexpose:importRun:entity", (opts={}) ->
+      API.getImportRun(opts)

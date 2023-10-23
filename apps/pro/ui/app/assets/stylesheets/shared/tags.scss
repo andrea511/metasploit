@@ -1,0 +1,99 @@
+@import 'css3-mixins';
+
+$tag-color: #d9d9d9;
+$btn-width: 20px;
+$tag-height: 18px;
+$max-width: 100px;
+
+div.tags, div.tags-wrap {
+  .tag, .tag-close {
+    font-weight: normal;
+    color: #666;
+    background: $tag-color;
+    font-size: 11px;
+    padding: 0px 5px;
+    display: inline-block;
+    height: $tag-height;
+    vertical-align: top;
+    a {
+      color: #444;
+    }
+  }
+  .tag {
+    @include border-radius-separate(0, 0, 0, 0);
+    position: relative;
+    margin-left: 10px;
+    padding-left: 8px;
+    &:before {
+      width: 0;
+      height: 0;
+      content: '';
+      position: absolute;
+      left: -9px;
+      top: 0;
+      bottom: 1px;
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent; 
+      border-right: 9px solid $tag-color;
+    }
+    &:after {
+      position: absolute;
+      content: '\2022';
+      top: 0;
+      left: -3px;
+      bottom: 0;
+      color: #fff;
+    }
+    &:hover {
+      @include linear-gradient(lighten($tag-color, 3%), $tag-color);
+    }
+    &>a, &>span.name {
+      display: inline-block;
+      max-width: $max-width;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &:hover {
+        max-width: none;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .tag-close {
+    margin-right: 10px;
+    font-size: 16px;
+    color: #b3b3b3;
+    border-left: 1px solid darken($tag-color, 5%);
+    &:hover {
+      text-decoration: none;
+      @include linear-gradient(lighten($tag-color, 3%), $tag-color);
+    }
+    &:active {
+      box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+    }
+  }
+}
+
+// alternate style for the hosts table
+div.tags-wrap {
+  $bg: #333;
+  $color: #fff;
+  .tag, .tag a, .tag-close {
+    background: $bg;
+    color: $color;
+  }
+  .tag {
+    @include border-radius-separate(0, 5px, 5px, 0);
+    padding-right: 8px;
+    &:before {
+      border-right: 9px solid $bg;
+    }
+    &>a {
+      max-width: 80px;
+    }
+    &:hover {
+      background: $bg;
+      max-width: 80px;
+    }
+  }
+}

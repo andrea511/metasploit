@@ -1,0 +1,147 @@
+<% title "Project search results" %>
+<%
+if @workspace
+	breadcrumb workspace_link
+else
+	breadcrumb link_to("Project search", workspaces_path)
+end
+%>
+
+<% include_view_javascript -%>
+
+<% content_for :header_buttons do %>
+	<%= form_tag workspaces_search_path, :method => :get do %>
+		<% if @workspace %>
+			<%= hidden_field_tag "workspace_id", @workspace.id %>
+		<% end %>
+		<div class="searchForm">
+			<%= text_field_tag :search, @search %>
+			<span class="btn">
+				<%= submit_tag "Search", :class => "search" %>
+			</span>
+		</div>
+	<% end %>
+<% end %>
+
+<h3>
+	<% if @search_terms.empty? %>
+	All hosts &amp; services
+	<% else %>
+	Search results for <%=h @search_terms.map{|s| "'#{s}'" }.join(" AND ") %>
+	<% end %>
+</h3>
+
+<div class="search_results">
+	<% @workspaces.each do |workspace, data| %>
+		<% hosts    = data[:hosts] %>
+		<% services = data[:services] %>
+		<% vulns = data[:vulns] %>
+		<% notes = data[:notes] %>
+		<% loots = data[:loots] %>
+		<ul class="workspaces">
+			<% unless hosts.empty? && services.empty? && vulns.empty? %>
+				<li class="workspace">
+
+				<% if not @workspace %>
+				<h2 class="title"><%= link_to h(workspace.name), workspace %></h2>
+				<% end %>
+
+				<div class="desc">
+					<% unless hosts.empty? %>
+						<div class ="section">
+							<div class="dashboard-title">
+								Hosts
+								<div class="expander expanded"></div>
+							</div>
+							<div class="step hosts-content">
+								<table class="list">
+									<thead>
+										<tr>
+											<th>IP Address</th>
+											<th>Name</th>
+											<th>OS Name</th>
+											<th>Version</th>
+											<th>Purpose</th>
+										</tr>
+									</thead>
+									<tbody>
+									<% hosts.each do |host| %>
+										<tr id="<%=h dom_id(host) %>" class="<%=h row_cycle %>">
+											<td><%= link_to h(host.address), host %></td>
+											<td><%=h host.name %></td>
+											<td> <img src="<%= os_to_icon(host.os) %>" class="os_icon"> <%=h truncate(host.os) %></td>
+											<td> <%=h truncate(host.os_sp.to_s) %></td>
+											<td> <%=h truncate(host.purpose.to_s) %></td>
+										</tr>
+									<% end %>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<% end %>
+					<% unless services.empty? %>
+						<div class="section">
+							<div class="dashboard-title">
+								Services
+								<div class="expander expanded"></div>
+							</div>
+							<div class="step services-content">
+								<table class="list">
+									<thead>
+										<tr>
+											<th>IP Address</th>
+											<th>Service&nbsp;Name</th>
+											<th>Port</th>
+											<th>Protocol</th>
+											<th>Service&nbsp;Info</th>
+										</tr>
+									</thead>
+									<tbody>
+									<% services.each do |svc| %>
+										<tr id="<%=h dom_id(svc) %>" class="<%=h row_cycle %>">
+											<td><%= link_to h(svc.host.address), host_path(svc.host, :anchor => "services") %></td>
+											<td><%=h svc.name %></td>
+											<td><%=h svc.port %></td>
+											<td><%=h svc.proto %></td>
+											<td><%=h svc.info %></td>
+										</tr>
+									<% end %>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<% end %>
+					<% unless vulns.empty? %>
+						<div class="section">
+							<div class="dashboard-title">
+								Vulnerabilities
+								<div class="expander expanded"></div>
+							</div>
+							<div class="step vulns-content">
+								<table class="list">
+									<thead>
+										<tr>
+											<th>IP Address</th>
+											<th>Vuln&nbsp;Name</th>
+											<th>References</th>
+										</tr>
+									</thead>
+									<tbody>
+									<% vulns.each do |vuln| %>
+										<tr id="<%= dom_id(vuln) %>" class="<%= row_cycle %>">
+											<td><%= link_to h(vuln.host.address), host_path(vuln.host, :anchor => "vulns") %></td>
+											<td><%= vuln.name %></td>
+											<td><%= global_search_vuln_refs_html(vuln) %></td>
+										</tr>
+									<% end %>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<% end %>
+				</div>
+			</li>
+		<% end %>
+		</ul>
+	<% end %>
+</div>

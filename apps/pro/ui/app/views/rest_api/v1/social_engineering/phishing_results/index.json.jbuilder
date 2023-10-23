@@ -1,0 +1,1 @@
+json.array! @phishing_results, partial: 'phishing_result', as: :phishing_result

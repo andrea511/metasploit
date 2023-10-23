@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="remediation" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "webapp_styles.jrtx"]]></template>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+unnest(ARRAY[
+'Command Injection (CMDi)',
+'Cross-Site Scripting (XSS)',
+'Cross-Site Request Forgery (CSRF)',
+'Insecure Direct Object Reference (DOR)',
+'Local and Remote File Includes (LFI, RFI)',
+'Publicly Writeable Directory',
+'Session Fixation',
+'SQL Injection (SQLi)',
+'Insufficient Transport Layer Security',
+'Unauthorized Access',
+'Unvalidated Redirect',
+'Vulnerable Version',
+'Other Resources'
+]) as title,
+
+unnest(ARRAY[
+-- Command Injection
+'Command Injection attacks can be ameliorated through input validation, whitelisting
+of allowed characters and the use of APIs versus direct system calls. Limiting the
+privileges of the application user is also useful since the injected commands run with
+the same environment as the application user.',
+-- XSS
+'The primary defense against XSS is contextually appropriate escaping of user input.
+The extent and approach to this will depend on whether you need to accept actual code
+from users and of what sort. Since there are several potential pitfalls in implementing
+this, the use of a security-focused encoding library is wise.<br/><br/>
+An XSS attack could also read a user''s cookie and then use that information on the
+originating web site. If your application uses cookies, you can invalidate the session
+if the user''s IP changes. For an extensive list of remediation steps, see the
+<a style=''color:blue;text-decoration:underline;'' href=''https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet''>XSS Prevention Cheat Sheet</a>.',
+-- CSRF
+'CSRF is essentially an issue of authentication and user intent: actions
+are taken by an attacker on behalf of an authorized user without their
+knowledge. To protect against it, web applications need strong authentication
+measures and a reliable way to judge the user intended to take a particular action.
+The latter is commonly missed, but without it otherwise secure authentication
+methods can still be abused.<br/><br/>
+While there are a large number of defenses against CSRF with varying
+effectiveness, one common approach is to add a secret random token valid for
+the current user or even per request, also known as the Synchronizer
+Token pattern. This token is then validated by the server to ensure that
+the request was from the proper user <em>and</em> that the user intended
+to make the request (since the value is inserted into forms before
+submission). There are also a number of libraries that can be plugged into applications which can make
+CSRF protection much easier to implement.<br/><br />
+It''s important to note that the effect of a CSRF attack is entirely dependent on
+the application privileges of the user being attacked. Limit application
+permissions to the minimum necessary to reduce your risk profile. For an extensive
+list of remediation steps, see the <a style=''color:blue;text-decoration:underline;'' href=''https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet''>CSRF Prevention Cheat Sheet</a>.
+',
+-- DOR
+'By directly referencing internal objects such as filenames or database record IDs in URLs, a web application becomes susceptible
+to an attacker altering those references and attempting to take actions not otherwise allowed or intended. The result can be varied
+and potentially disastrous, such as a user viewing sensitive files on the application server to removing another user''s account.<br/><br/>
+The main defenses against DOR are mapping of objects versus direct reference as well as proper authentication of all sensitive requests. By mapping selections
+made on a per user or per session basis to their actual values on the server side, no database details are revealed to the end user.<br/><br/>
+Redirects and files in URL parameters deserve special attention. Redirects must be implemented with a white list in order to prevent users from being redirected
+to a malicious site in phishing attacks. A similar approach is needed for serving files with their path in the URL. If the file requested isn''t verified
+the user could guess the relative path to a sensitive file from the web root and modify the URL to serve it. For any resource that is directly referenced, the main defense is
+verifying the requesting user and that they have permission to access the resource.',
+-- RFI/LFI
+'<strong>RFI</strong> attacks are caused by unvalidated user input interacting with
+functions that load resource files. By manipulating the values of variables in a page''s
+URL for example, external files hosted by the attacker can be dynamically rendered,
+resulting in malicious code being run. To protect against this attack you must prevent
+unvalidated user input from being used in file include requests. For more information and
+examples, see this article: <a style=''color:blue;text-decoration:underline;''
+href=''http://www.esecurityplanet.com/browser-security/how-to-prevent-remote-file-inclusion-rfi-attacks.html''>http://www.esecurityplanet.com/browser-security/how-to-prevent-remote-file-inclusion-rfi-attacks.html</a><br/><br/>
+<strong>LFI</strong> attacks are allowed by the same lack of input validation in resource
+loading requests as RFIs, but the result is that local files (i.e. on the target webserver)
+can be viewed and exfiltrated. Never allow unchecked user input to be directly used in resource
+calls. Limiting your web server application''s permissions to only those needed will prevent access to sensitive files not needed by the web application.',
+-- Publicly Writeable Directory
+'Using publicly or world-writeable directories in your web application can be dangerous
+because the files they contain can be changed by a user with any access level on the host machine.
+Since some web applications use such directories to store, for example, session information this
+can open a number of security holes. To avoid this, ensure your application only uses specific
+subdirectories with the needed permissions, and that they are otherwise locked down. Avoid publicly-writeable directories altogether if possible.',
+-- Session Fixation
+'Session fixation is made possible through poor web application authentication. If the server does not provide a new
+session ID when authentication occurs it is possible for the original ID to serve as a valid
+authenticated session ID. An attacker can set this original ID to a value she knows and place it in a URL parameter, cookie or hidden form field
+that is then presented to the victim. Thus the best way to avoid this vulnerability is to always invalidate the existing session ID
+and create a new one whenever authentication occurs, which should be required before any sensitive or important request.<br/><br/>
+It is important to protect against XSS in this same context since session fixation is rarely feasible if the attacker cannot inject malicious code that
+sets the desired session ID in user''s cookie.',
+-- SQL Injection (SQLi)
+'As with other common vulnerabilities, user input validation is key to preventing SQLi. Directly
+applying user input to raw SQL queries should never be allowed. This can be accomplished through a
+number of methods such as binding user input to parameters that are passed into DB statements,
+using ORM libraries and escaping characters that have special meaning to SQL.<br/><br/>
+In addition, audit the permissions of your web application''s DB user to ensure it does not
+have more access than is needed. This will help reduce the impact if an injection attack does make
+it through. For an extensive list of remediation steps, see the <a style="color:blue;text-decoration:underline;" href="https://www.owasp.org/index.php/SQL_Injection_Prevention_Cheat_Sheet">SQL Injection Prevention Cheat Sheet</a>.',
+-- Insufficient Transport Layer Security
+'The transport layer of a web application needs to use SSL for all sensitive requests. In addition, the protocol, cipher type and key length of the
+SSL implementation selected must not have known weaknesses. Ensure that all sensitive actions occur over a connection established with an acceptable
+implementation of SSL. Your SSL certificate should also be valid and current to avoid training users into thinking certificate related warnings and errors are normal.
+Without such sufficient protections in place an attacker could compromise sensitive transferred data, potentially leading to compromise of the entire application aside
+from data exfiltration. For more information on see the <a style=''color:blue;text-decoration:underline;'' href=''https://www.owasp.org/index.php/Transport_Layer_Protection_Cheat_Sheet#Secure_Server_Design''>OWASP Transport Layer Protection Cheat Sheet</a>.',
+-- Unauthorized Access
+'The issue of what users should be allowed to perform what functions in a web application is both a simple and a complex issue. While the notion of access control is
+straighforward in concept, the manifestations of it in a real world application can be sprawling, difficult to understand and potentially vulnerable. If a single function called from a URL is
+not properly validated for the user making the request, sensitive data could be exposed, records could be deleted, etc.<br/><br/>
+The solution is also simple in notion and complex in manifestation: select an effective authentication mechanism and ensure that all pages in your application are properly validated with that mechanism.
+If a page should not be accessible to every user, there must be a verification that only allowed users can access it, that they are authenticated and made the request. Your role-based access control
+scheme should be kept as simple and configurable as possible to make such audits possible. Additional information on many aspects of this topic can be found in the
+<a style=''color:blue;text-decoration:underline;'' href=''https://www.owasp.org/index.php/Guide_to_Authorization''>OWASP Guide to Authorization</a>.',
+-- Unvalidated Redirect
+'If your web application doesn''t verify the destinations of redirects (AKA forwards, transfers) then it can be used as a vector to send users to malicious sites. A user is much more likely to click
+a link in a phishing attack if the site linked to is one she knows and trusts. Improper configuration of the application can allow an attacker to use an altered URL to redirect a user from the known site to one of the
+attacker''s choosing. This site might be a copy of a valid site designed to steal credentials, install malware on the user''s machine, etc.<br/><br/>
+Audit your application for any redirects that employ a URL parameter to specify all or part of the destination path. When you need to employ redirects, try to avoid storing the path in a parameter. If you must do this,
+verify that the destination is allowed via a white list and that the user making the request is authorized to access it. You might also consider mapping the needed path to a value that is
+translated by the server as well as presenting a confirmation page to the user when a redirect occurs.',
+-- Version
+'Avoiding the use of components with known vulnerabilities in your application is an ongoing process of awareness and auditing. Applications almost always employ a number of external components to save development time
+and follow accepted practices. These components, as well as the sometimes non-trivial number of dependencies they themselves have, must be audited carefully to avoid the possibility of a component being compromised, which
+could result in the entire application being compromised. Keeping a record of all known components and their current version is a good start to this process. Making it an explicit responsibility to regularly monitor
+the providers of these components and decide if an upgrade is warranted in the face of an update is crucial, as is monitoring vulnerability disclosure databases such as nvd.nist.gov and cve.mitre.org.',
+-- Other
+'<ul>
+<li><a style=''color:blue;text-decoration:underline;'' href=''https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project''>OWASP Top 10 Project</a></li>
+<li><a style=''color:blue;text-decoration:underline;'' href=''https://www.owasp.org/index.php/OWASP_Risk_Rating_Methodology''>OWASP: Understanding Risk</a></li>
+</ul>'
+]) as description
+-- Number of advice items; specified to avoid Cartesian product dupes:
+limit 12]]>
+	</queryString>
+	<field name="title" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<detail>
+		<band height="71" splitType="Stretch">
+			<textField>
+				<reportElement style="important_term" x="0" y="0" width="400" height="20"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement style="important_def" x="14" y="20" width="519" height="35" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Top" markup="html">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,25 @@
+<% sections = @report.rtype.sections_labeled %>
+<%# If cloning a report or if it is a scheduled "task", allow the cloned report's section selections
+    to be shown. %>
+<% checked_sections = if request[:action] != 'clone' and params[:task_config_id].nil?
+                        { :checked => 'checked' }
+                      end
+%>
+
+<% if License.get.supports_custom_reporting? %>
+
+  <%= f.inputs "Sections" do -%>
+    <%= f.input :sections,
+                :as         => :check_boxes,
+                :required   => true,
+                :input_html => checked_sections || {},
+                :collection => sections.collect { |c| [c[0], c[1].to_s] }
+    %>
+
+    <%= f.help_link :sections do %>
+      <h3>Report Sections</h3>
+      <p>Reports are broken down into separate sections based on content covered. They are listed in the order in which they appear. Each section may be enabled or disabled in the resultant report via this control.</p>
+    <% end %>
+
+  <% end %>
+<% end %>

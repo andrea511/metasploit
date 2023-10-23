@@ -1,0 +1,45 @@
+<div class='notifications-wrapper' style="margin-bottom: 23px">
+  
+  {% if(campaignSummary.id) { %}
+  <h3 class="max-width">Notifications</h3>
+  <div class="list section campaign-notification">
+    <p>
+      <label style='color:#444;'>
+        <input type="checkbox" style="vertical-align:baseline;" name="social_engineering_campaign[prefs][notifications_enabled]">
+        Notify others before launching the campaign
+      </label>
+      <a class="notification-settings" href="#" style="display:none">
+        Settings
+      </a>
+    </p>
+  </div>
+  {% } %}
+
+  <div id="notification-dialog" style="display:none;padding: .4em 1em;">
+    <form class='formtastic notification-dialog'>
+      <li>
+        <p>Notify the following users before launching the campaign:</p>
+      </li>
+      <div class='errors' style='display:none;margin:0 0 10px;font-size:12px'>
+
+      </div>
+      <li class="email input optional stringish" id="social_engineering_campaign_notification_email_address_input">
+        <label class=" label" for="social_engineering_campaign_notification_email_address">To</label>
+        <input id="social_engineering_campaign_notification_email_address" maxlength="255" name="social_engineering_campaign[notification_email_address]" type="email">
+        <br />
+        <p style="font-size: .9em;color:#999;">Separate multiple email addresses with commas</p>
+
+      </li>
+      <li class="email input optional stringish" id="social_engineering_campaign_notification_email_subject_input">
+        <label class=" label" for="social_engineering_campaign_notification_email_subject">Subject</label>
+        <input id="social_engineering_campaign_notification_email_subject" maxlength="255" name="social_engineering_campaign[notification_email_subject]" type="email">
+      </li>
+      
+      <li class="text input optional" id="social_engineering_campaign_notification_email_message_input">
+        <label class=" label" for="social_engineering_campaign_notification_email_message">Message</label>
+        <textarea id="social_engineering_campaign_notification_email_message" name="social_engineering_campaign[notification_email_message]" rows="20"></textarea>
+      </li>
+    </form>
+    <p style='font-size:11px'><strong>Note:</strong> Notification Email will be sent through the SMTP server specified in your <%= link_to "Global Settings", settings_path(:anchor => "smtp_settings"), :style => 'text-decoration:underline;color:#069 !important;', :target => '_blank' %></p>
+  </div>
+</div>

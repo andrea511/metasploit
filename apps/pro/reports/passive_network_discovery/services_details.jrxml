@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="services_details" language="groovy" pageWidth="538" pageHeight="52" columnWidth="538" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="88991a06-dff3-48c6-8f15-502077b077b2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<subDataset name="Services" uuid="ffe67ce9-adf9-4204-a94f-83d5f5e28b13">
+		<parameter name="host_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="app_run_id" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[select coalesce(s.name, 'Unknown') service_name, s.port, upper(s.proto) proto, s.info, initcap(s.state) state
+from services s
+inner join task_services ts on (s.id = ts.service_id)
+inner join tasks t on (ts.task_id = t.id)
+inner join app_runs ar on (t.app_run_id = ar.id)
+where ar.id = $P{app_run_id}
+and host_id = $P{host_id}
+order by state, port]]>
+		</queryString>
+		<field name="service_name" class="java.lang.String"/>
+		<field name="port" class="java.lang.Integer"/>
+		<field name="proto" class="java.lang.String"/>
+		<field name="info" class="java.lang.String"/>
+		<field name="state" class="java.lang.String"/>
+		<variable name="record_counter" class="java.lang.Integer" calculation="Count">
+			<variableExpression><![CDATA[$F{service_name}]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+	</subDataset>
+	<parameter name="host_id" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select 1]]>
+	</queryString>
+	<field name="?column?" class="java.lang.Integer"/>
+	<summary>
+		<band height="52">
+			<componentElement>
+				<reportElement uuid="a14fa628-7060-40f2-a73c-ecb1f4ed08b9" key="table" x="0" y="0" width="538" height="52"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Services" uuid="6d74e138-1145-4072-930f-00db16e5d2d0">
+						<datasetParameter name="host_id">
+							<datasetParameterExpression><![CDATA[$P{host_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="app_run_id">
+							<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="65" uuid="7de6f4f4-f920-486f-896b-737fbd0b48af">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="174bddf4-ca0f-4550-80da-adb50c8eaa35" style="section_header_3" x="0" y="0" width="65" height="25"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Port]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" x="0" y="1" width="65" height="24"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{port}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="65" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="83" uuid="a48a16b3-c616-4645-a634-b5fea7b56174">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="32c7d6d4-e870-46ad-a36b-ed19335bcde4" style="section_header_3" x="0" y="0" width="83" height="25"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Name]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" x="0" y="1" width="83" height="24"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{service_name}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="83" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="64" uuid="69dca396-6ad1-4b94-a7c7-e91fadfc2997">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="d6212a3c-0e8c-40f2-a81b-c9526d4ab0e9" style="section_header_3" x="0" y="0" width="64" height="25"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<text><![CDATA[Protocol]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" x="0" y="1" width="64" height="24"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{proto}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="64" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="58" uuid="4b3841a3-828f-47d1-9348-ee119672cf93">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="5dfcb782-92a9-4b7c-9072-3f99bc42ea6e" style="section_header_3" x="0" y="0" width="58" height="25"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<text><![CDATA[State]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" x="0" y="1" width="58" height="24"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{state}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="58" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="268" uuid="4fb12251-fb0f-4f5e-93ab-c207841d4b2e">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="6fb0fd99-40e7-465f-93af-148f4fe25207" style="section_header_3" x="0" y="0" width="268" height="25" forecolor="#000000"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Info]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" x="0" y="1" width="268" height="24" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" forecolor="#666666"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5" spacingAfter="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{info}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="268" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

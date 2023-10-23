@@ -1,0 +1,12 @@
+jQuery(document).bind('requirejs-ready', function(){
+  initRequire(
+    [
+      'jquery',
+      '<%= javascript_path('shared/notification-center/backbone/controllers/notification_center_controller')%>',
+      '<%= javascript_path('shared/banner_message/banner_message_controller')%>'
+    ],
+    function($, NotificationCenterController, BannerMessageController){
+      NotificationCenterController.start();
+      new BannerMessageController();
+  });
+});

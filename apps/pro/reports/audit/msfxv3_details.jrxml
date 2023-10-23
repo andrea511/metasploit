@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3_details" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0771732b-5856-45a5-9300-c0c4af60da11">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Serif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Serif" fontSize="18"/>
+	<style name="Detail" fontName="Serif" fontSize="12"/>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_id" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mask_credentials" class="java.lang.Boolean"/>
+	<parameter name="report_dir" class="java.lang.String"/>
+	<parameter name="host_address_clause" class="java.lang.String">
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tag_count" class="java.lang.Long"/>
+	<parameter name="session_count" class="java.lang.Long"/>
+	<parameter name="include_sessions" class="java.lang.Boolean"/>
+	<parameter name="vuln_count" class="java.lang.Long"/>
+	<parameter name="service_count" class="java.lang.Long"/>
+	<parameter name="port_states" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["('open')"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    hosts.id as host_id,
+    hosts.created_at as discovered,
+    HOST(CAST(hosts.address as inet)) as address,
+    COALESCE(hosts.name, HOST(CAST(hosts.address as inet))) as name,
+    COALESCE(hosts.os_name,'<Unknown>') as os_name,
+    (select count(*) from services where services.host_id = hosts.id) as services,
+    (select count(*) from sessions where sessions.host_id = hosts.id) as sessions,
+    (select count(*) from vulns where vulns.host_id = hosts.id and vulns.exploited_at is not null) as exploited_hosts,
+    (select count(*) from vulns where vulns.host_id = hosts.id) as vulns
+FROM hosts
+WHERE hosts.workspace_id = $P{workspace_id} and
+    $P!{host_address_clause}
+ORDER BY exploited_hosts DESC, vulns DESC, discovered;]]>
+	</queryString>
+	<field name="host_id" class="java.lang.Integer"/>
+	<field name="discovered" class="java.sql.Timestamp"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="os_name" class="java.lang.String"/>
+	<field name="services" class="java.lang.Long"/>
+	<field name="vulns" class="java.lang.Long"/>
+	<field name="sessions" class="java.lang.Long"/>
+	<variable name="has_vulns" class="java.lang.Boolean">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="inherited_subdir_path" class="java.lang.String">
+		<initialValueExpression><![CDATA[$P{report_dir}]]></initialValueExpression>
+	</variable>
+	<detail>
+		<band height="94" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7e72e2fe-d735-4371-b865-eb8c942e5f06" style="Detail" mode="Opaque" x="0" y="0" width="555" height="29" backcolor="#DDDDDD"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}  + ( null==$F{name} ? "" : (" - " + $F{name}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6dec7e7e-292f-4cd8-bab4-99ad5fd0a516" style="Detail" x="0" y="29" width="555" height="29"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Discovered: " + $F{discovered}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="078050ad-8b9a-4b6f-a8ad-06c03180d184" style="Detail" x="0" y="58" width="555" height="29"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Operating System: " + ((null==$F{os_name} || $F{os_name}.matches("")) ? "<Unknown OS>" : $F{os_name})]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="68">
+			<subreport>
+				<reportElement uuid="3153beb6-27e4-41a0-904b-e3e51f2a76fb" x="10" y="22" width="545" height="37" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="mask_credentials">
+					<subreportParameterExpression><![CDATA[$P{mask_credentials}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{host_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfxv3_detail_creds.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="1b2d92f2-fc56-4d24-95d5-3f9dccdc4d57" mode="Opaque" x="0" y="0" width="555" height="22" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Credentials]]></text>
+			</staticText>
+		</band>
+		<band height="66">
+			<subreport>
+				<reportElement uuid="62846887-fc72-4222-975c-857d14f26642" x="10" y="22" width="545" height="37" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{host_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfxv3_detail_exploits.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="f2deeb67-2440-43b0-bb52-322e7d1868f5" mode="Opaque" x="0" y="0" width="555" height="22" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Successful Attacks]]></text>
+			</staticText>
+		</band>
+		<band height="67">
+			<printWhenExpression><![CDATA[$F{services} > 0]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="a36aefd4-98bc-495f-a75f-b58966387ad6" x="10" y="22" width="545" height="37" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{host_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="port_states">
+					<subreportParameterExpression><![CDATA[$P{port_states}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfxv3_detail_services.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="5515610b-1d20-4605-9a71-554b9b924edc" mode="Opaque" x="0" y="0" width="555" height="22" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Active Services]]></text>
+			</staticText>
+		</band>
+		<band height="69">
+			<subreport>
+				<reportElement uuid="4120949d-0308-46e5-a8fa-ef60a7cf635c" x="10" y="22" width="545" height="37" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{host_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="port_states">
+					<subreportParameterExpression><![CDATA[$P{port_states}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfxv3_detail_web.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="210d02c5-2bcf-4cf4-8e5f-18ed7700f1ba" mode="Opaque" x="0" y="0" width="555" height="22" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Web Vulnerabilities]]></text>
+			</staticText>
+		</band>
+		<band height="68">
+			<printWhenExpression><![CDATA[$P{tag_count} > 0]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="4cea7f65-d170-401e-b9a8-f7497c1df15e" x="10" y="22" width="545" height="37" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{host_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfxv3_detail_tags.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="901d154b-f54e-435e-80bb-ad00e96f8d4f" mode="Opaque" x="0" y="0" width="555" height="22" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tags]]></text>
+			</staticText>
+		</band>
+		<band height="71">
+			<printWhenExpression><![CDATA[$F{vulns} > 0 ]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="284e5302-bdd9-45c4-b49d-123d6e7c51f5" x="10" y="22" width="545" height="37" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{host_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfxv3_detail_vulns.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="a444e82b-6c84-4221-ab24-38bcfd04cdc4" mode="Opaque" x="0" y="0" width="555" height="22" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Disclosed Vulnerabilities]]></text>
+			</staticText>
+		</band>
+		<band height="67">
+			<printWhenExpression><![CDATA[$P{include_sessions} && $F{sessions} > 0]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="4a506801-2ce8-4ec8-9e8f-50407bbea862" x="10" y="22" width="545" height="37" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{host_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="session_count">
+					<subreportParameterExpression><![CDATA[$P{session_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfxv3_detail_sessions.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="8c40a651-dc90-495d-be33-a22334d5025e" mode="Opaque" x="0" y="0" width="555" height="22" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Session Activity]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

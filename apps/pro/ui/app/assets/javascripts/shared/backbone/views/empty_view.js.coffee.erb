@@ -1,0 +1,6 @@
+define [
+  'jquery'
+  '<%= javascript_path("templates/shared/item_views/empty_view") %>'
+], ($, Template) ->
+  class EmptyView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['shared/item_views/empty_view']

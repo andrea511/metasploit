@@ -1,0 +1,160 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/shared/modal") %>'
+], ($, tmpl) ->
+
+  class EmptyView extends Backbone.Marionette.ItemView
+    template: _.template('')
+
+
+  class Modal extends Backbone.Marionette.LayoutView
+    @MODAL_CONFIRM_MSG: 'Are you sure you want to close this panel? Any text input will be lost.'
+
+    template: HandlebarsTemplates['shared/modal']
+
+    regions:
+      content: '.content'
+
+    # override to set a custom title
+    title: null
+
+    # override to set a custom description
+    description: null
+
+    # disable background interaction
+    bg: true
+
+    # override to set custom events
+    events: {
+      'destroy' : '_close'
+      'center': '_center'
+      'updateWidth': '_updateWidth'
+      'click a.close': '_close'
+      'click a.btn.primary': 'primaryClicked'
+    }
+
+    # Options:
+    #   bg: true         # disable bg interaction
+    #   class: "modal"   # add a class to the .modal el
+    #   description: ""  # displayed under the title
+    #   title: ""        # displayed at top of modal
+    #   width: 500       # sets width of the modal
+    #   height: 300      # sets height of the modal
+    initialize: (opts={}) =>
+      @class = ''
+      $.extend(@, opts)
+      @origConfirm = window.confirm
+      super
+
+    open: => # override show since the modal will replace the entire screen!
+      @_modalRegion().show(@, preventDestroy: true)
+      # must put window-level binds here, since it is out of scope of the actual view
+      @_unbindWindow()
+      @_bindWindow()
+      @_stubCustomConfirm()
+      @$el.hide()
+      _.defer =>
+        @$el.show()
+        @_center()
+      $('#modals').appendTo(document.body) # fuck everyone else, this modal is on top
+      $('#modals').removeClass('empty')
+
+    buttons: [
+      {name: 'Cancel', class: 'close'},
+      {name: 'Submit', class: 'btn primary'}
+    ]
+
+    # pass our own attributes down as data, since we aren't holding a Model
+    serializeData: => @
+
+    # large primary button was clicked
+    primaryClicked: (e) =>
+      e.preventDefault()
+      $('form', @el).first().submit()
+
+    # closes the modal
+    _close: (e) =>
+      #Because the events hash stops propegation
+      @trigger('destroy')
+      return if e?.target? and $(e.target).is('.disabled')
+      $modalDiv = @_modalRegion()
+
+      # if we are using a second div inside #modals, remove that second div
+      $modalDiv.$el.remove() if $modalDiv.$el.is('.my_modal')
+      $modalDiv.show(new EmptyView(),preventDestroy: true)
+      @_unbindWindow()
+      $('#modals').addClass('empty') if $('#modals').is(':empty')
+
+    _updateWidth: (e, w) =>
+      @width = w
+      @_center()
+
+    #
+    # Private methods
+    #
+
+    # returns the #modals region that is in the application.html template
+    _modalRegion: =>
+      return @region if @region? # prefer cached
+      $modalDiv = $('#modals')
+      if $modalDiv.is(':empty')
+        @region = new Backbone.Marionette.Region(el: $('#modals'))
+      else
+        # create somethign inside #modals to render into
+        $myDiv = $('<div />', class: 'my_modal').appendTo($modalDiv)
+        @region = new Backbone.Marionette.Region(el: $myDiv)
+
+    # returns the actual .modal div inside this layout
+    _modalDiv: => $('.modal', @el).first()
+
+    onShow: =>
+      _.defer @_center
+
+    # let the user close modal on escape
+    _escEnabled: true
+
+    # must put window-level unbinds here, since it is out of scope of the actual view
+    _unbindWindow: =>
+      window.confirm = @origConfirm
+      $(window).unbind('resize.tabbedModal', @_center)
+      $(window).unbind('keyup.modal', @_escKeyHandler)
+
+    # must put window-level binds here, since it is out of scope of the actual view
+    _bindWindow: =>
+      window.origConfirm ||= window.confirm
+      $(window).bind('resize.tabbedModal', @_center)
+      $(window).bind('keyup.modal', @_escKeyHandler)
+
+    _escKeyHandler: (e) =>
+      if String.fromCharCode(e.keyCode)?.match(/[\w]+/)?.length > 0
+        @_edited = true
+      if e.keyCode == 27 and @_escEnabled
+        if @_edited
+          @_close() if window.confirm(Modal.MODAL_CONFIRM_MSG)
+        else
+          @_close()
+        e.preventDefault()
+        e.stopImmediatePropagation()
+
+    _stubCustomConfirm: =>
+      window.confirm = =>
+        if @_modalDiv().is(':visible')
+          @_escEnabled = false
+          _.delay (=> @_escEnabled = true), 300
+          window.origConfirm.apply(window, arguments)
+        else
+          window.origConfirm.apply(window, arguments)
+
+    _center: =>
+      # centers on the screen
+      $modal = @_modalDiv()
+      modalWidth = @width || $modal.width()
+      modalHeight = @height || $modal.height()
+      screenWidth = $(window).width()
+      $modal.width(@width) if @width
+      if @height
+        $modal.height(@height)
+        $modal.find('.content').height(@height - 110)
+      $modal.css('left', parseInt(($(window).width()-modalWidth)/2)+'px')
+      $modal.css('top', parseInt(($(window).height()-modalHeight)/2)+'px')
+      $('ul.tabs>li:first-child', @el).addClass('first-child')

@@ -1,0 +1,9 @@
+.request.row
+  %h2 POST - 2013-04-25 21:48:13 GMT-6
+  %h4 Request Headers
+  %ul
+    %li Accept: text/javscript
+    %li Accept-Charset: ISO-8859-1, utf-8;q=0.7, 8,q=0.3
+    %li Accept-Enconding:gzip,deflats, sdch
+    %li Accept Languages: en-US, en; q=0.8
+    %li Accept Connection:keep-alive

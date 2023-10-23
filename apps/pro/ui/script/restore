@@ -1,0 +1,143 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+$options = {}
+begin
+  op = OptionParser.new do |opts|
+    opts.banner = "Usage: restore [options] [backup]"
+
+    opts.on('-b BACKUP', '--backup=BACKUP', 'Name or path of backup to restore', String)
+    opts.on('-y', '--assume-yes', 'Automatic yes to prompts')
+  end
+  op.permute!(into: $options)
+  $stdout.puts "[*] Restore backup script has started, this may take a moment."
+rescue OptionParser::ParseError => e
+  warn e.message
+  warn op
+  exit 1
+end
+
+ENV['MSFRPC_SKIP'] = 'yes'
+
+APP_PATH = File.expand_path('../../config/application',  __FILE__)
+require File.expand_path('../../config/boot',  __FILE__)
+# rails/all must be required explicitly to get the railties that pro/ui/config/application.rb uses
+require 'rails/all'
+require APP_PATH
+Rails.application.require_environment!
+
+def prompt(string, assumed: 'yes')
+  $stdout.write string.chomp
+  if $options[:"assume-yes"]
+    $stdout.puts assumed
+    assumed
+  else
+    $stdout.flush
+    $stdin.readline.strip
+  end
+end
+
+def max_lengths(backups)
+  max_lens = []
+  max_lens <<  backups.reduce(0){ |max, backup| [backup.name.size, max].max }
+  max_lens << backups.first.date.to_s.size
+end
+
+def ellipsis(text, length)
+  text.length > length ? text[0..length].gsub(/...$/, "...") : text
+end
+
+def print_backups(backups)
+  format="[-]    %-#{max_lengths(backups)[0]}s\t\t%-60s\t\t%-#{max_lengths(backups)[1]}s\t%-7s\n"
+  printf(format, 'Name', 'Description', 'Date', 'Version')
+  printf(format, '----', '-----------', '----', '-------')
+
+  backups.sort_by(&:date).each do |archive|
+    printf(format, archive.name, ellipsis(archive.description, 60), archive.date, archive.ms_version)
+  end
+end
+
+continue = prompt <<~PROMPT
+  [-] Before you run this script, please make sure that you have a recent
+      backup of Metasploit available. The restore process may take a while to
+      complete, and it will overwrite everything in your database, including your
+      user accounts, reports, logs, and loot.
+
+      Are you sure you want to continue? [y/(N)] 
+PROMPT
+
+unless continue =~ /^y/i
+  puts '[-] Restore cancelled.'
+  exit 1
+end
+
+begin
+
+  unless backupname = $options[:backup] || ARGV[0]
+    backups = Backup.all.select &:compatible?
+
+    if backups.any?
+      puts '[-] Available backup files:'
+      print_backups(backups)
+    end
+
+    future_backups = Backup.all.reject(&:compatible?)
+    if future_backups.any?
+      puts '[-] Backups from newer versions not available for restore:'
+      print_backups(future_backups)
+    end
+
+    backupname =
+      if backups.any?
+        prompt '[*] Please enter the name of the backup you want to restore: ', assumed: ''
+      else
+        ''
+      end
+  end
+
+  backup = Backup.new(backupname, tee: $stdout)
+  unless backup.description
+    backup = Backup.new(backupname, name_as_path: true, tee: $stdout)
+  end
+
+  if backup.description && backup.compatible?
+    res = prompt "[*] Are you sure you want to restore this backup: #{backup.name} - #{backup.description} - #{backup.date}? [y/(N)] "
+    if res =~ /^y/i
+      puts '[-] Restoring. This may take a while.'
+      backup.restore_alternate
+      puts '[-] Restore is complete!'
+
+      if Rails.env == 'production'
+        restart = prompt '[-] To see the restore you will need to restart Metasploit. Do you want to restart it now? [(Y)/n] '
+        unless restart =~ /^n/i
+          puts '[-] Restarting Metasploit services. This script will close once your services have been restarted.'
+          if RUBY_PLATFORM =~ /^win|mingw/
+            `#{File.join(Backup.locations.pro_install_directory, 'servicerun.bat')} STOP`
+            `#{File.join(Backup.locations.pro_install_directory, 'servicerun.bat')} START`
+          else
+            `#{File.join(Backup.locations.pro_install_directory, 'ctlscript.sh')} restart`
+          end
+        end
+      else
+        puts '[-] Be sure run the swap script and restart Metasploit!'
+      end
+
+      exit 0
+    else
+      puts '[-] Restore cancelled.'
+    end
+  elsif backup.description && !backup.compatible?
+    puts '[-] The backup file is from a newer version of Metasploit and is not compatible with the current installation. Restore cancelled.'
+  elsif backupname == ''
+    puts '[-] No backup name given. Restore cancelled.'
+  else
+    puts '[-] The backup file does not exist. Restore cancelled.'
+  end
+
+  exit 1
+
+rescue => e
+  File.open(Backup::LOG_FILE, 'a'){|f| f.puts(e); f.puts(*e.backtrace)}
+  puts '[-] An error occured while trying to restore the backup. See backups.log for details.'
+end

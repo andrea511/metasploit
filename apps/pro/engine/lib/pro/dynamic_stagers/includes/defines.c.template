@@ -1,0 +1,275 @@
+#define IPPROTO_TCP 6
+#define AF_INET 2
+#define HTTP_QUERY_CONTENT_LENGTH 5
+#define HTTP_QUERY_FLAG_NUMBER 0x20000000
+#define INTERNET_FLAG_IGNORE_CERT_CN_INVALID 0x00001000
+#define INTERNET_FLAG_IGNORE_CERT_DATE_INVALID 0x00002000
+#define INTERNET_FLAG_SECURE 0x00800000
+#define INTERNET_FLAG_NO_CACHE_WRITE 0x04000000
+#define INTERNET_FLAG_NO_UI 0x00000200
+#define INTERNET_OPEN_TYPE_PRECONFIG 0
+#define INTERNET_OPTION_SECURITY_FLAGS 31
+#define INTERNET_SERVICE_HTTP 3
+#define INVALID_SOCKET (SOCKET)(~0)
+#define MAKEWORD(a, b) ((WORD)(((BYTE)(((DWORD_PTR)(a)) & 0xff)) | ((WORD)((BYTE)(((DWORD_PTR)(b)) & 0xff))) << 8))
+#define MEM_COMMIT 0x1000
+#define NULL ((void *)0)
+#define MEM_LARGE_PAGES 0x20000000
+#define PAGE_EXECUTE_READWRITE 0x40
+#define PAGE_READONLY 0x02
+#define PAGE_READWRITE 0x04
+#define RegisterServiceCtrlHandler RegisterServiceCtrlHandlerA
+#define RtlZeroMemory(Destination, Length) memset((Destination),0,(Length))
+#define SECURITY_FLAG_IGNORE_UNKNOWN_CA 0x00000100
+#define SECURITY_FLAG_IGNORE_CERT_CN_INVALID 0x00001000
+#define SECURITY_FLAG_IGNORE_CERT_DATE_INVALID 0x00002000
+#define SECURITY_FLAG_IGNORE_REVOCATION 0x00000080
+#define SERVICE_ACCEPT_SHUTDOWN 0x00000004
+#define SERVICE_ACCEPT_STOP 0x00000001
+#define SERVICE_CONTROL_SHUTDOWN 0x00000005
+#define SERVICE_CONTROL_STOP 0x00000001
+#define SERVICE_RUNNING 0x00000004
+#define SERVICE_START_PENDING 0x00000002
+#define SERVICE_STOPPED 0x00000001
+#define SERVICE_WIN32_SHARE_PROCESS 0x00000020
+#define SOCKET_ERROR (-1)
+#define SOCK_STREAM 1
+#define StartServiceCtrlDispatcher StartServiceCtrlDispatcherA
+#define TRUE 1
+#define FALSE 0
+#define VOID void
+#define WINAPI __stdcall
+#define _tWinMain WinMain
+#define s_addr S_un.S_addr
+#define APIENTRY WINAPI
+#define ZeroMemory RtlZeroMemory
+#define MEM_RELEASE 0x8000
+#define INTERNET_FLAG_SECURE 0x00800000
+#define INTERNET_FLAG_KEEP_CONNECTION 0x00400000
+#define INTERNET_FLAG_NO_AUTO_REDIRECT 0x00200000
+#define INTERNET_FLAG_READ_PREFETCH 0x00100000
+#define INTERNET_FLAG_NO_COOKIES 0x00080000
+#define INTERNET_FLAG_NO_AUTH 0x00040000
+#define INTERNET_FLAG_IGNORE_REDIRECT_TO_HTTP 0x00008000
+#define INTERNET_FLAG_IGNORE_REDIRECT_TO_HTTPS 0x00004000
+
+typedef int BOOL;
+typedef long LONG_PTR;
+typedef long LONG;
+typedef unsigned char BYTE;
+typedef char CHAR;
+typedef unsigned long DWORD;
+typedef DWORD* PDWORD;
+typedef __stdcall int (*FARPROC)();
+typedef const char* LPCTSTR;
+typedef void* HWND;
+
+typedef void *LPVOID;
+typedef void *LPCVOID;
+
+struct HINSTANCE__ {
+	int unused;
+};
+typedef void *LPVOID;
+
+struct SERVICE_STATUS_HANDLE__ {
+	int unused;
+};
+typedef unsigned char UCHAR;
+typedef unsigned int UINT;
+typedef unsigned int UINT_PTR;
+typedef unsigned long ULONG;
+typedef unsigned long ULONG_PTR;
+typedef unsigned short USHORT;
+typedef unsigned short WORD;
+typedef UINT_PTR WPARAM;
+typedef LONG_PTR LPARAM;
+__noreturn __cdecl void exit(int _Code);
+int atoi(const char *str);
+
+struct hostent {
+	char *h_name;
+	char **h_aliases;
+	short h_addrtype;
+	short h_length;
+	char **h_addr_list;
+};
+typedef unsigned int size_t;
+typedef unsigned short u_short;
+typedef ULONG_PTR DWORD_PTR;
+
+__noreturn __stdcall void ExitProcess __attribute__((dllimport))(UINT uExitCode);
+__stdcall DWORD GetLastError __attribute__((dllimport))(void);
+typedef struct HINSTANCE__ *HINSTANCE;
+typedef LPVOID HINTERNET;
+
+typedef WORD INTERNET_PORT;
+typedef const CHAR *LPCSTR;
+typedef DWORD *LPDWORD;
+typedef __stdcall void (*LPHANDLER_FUNCTION)(DWORD dwControl);
+typedef CHAR *LPSTR;
+typedef struct SERVICE_STATUS_HANDLE__ *SERVICE_STATUS_HANDLE;
+typedef UINT_PTR SOCKET;
+__stdcall void Sleep __attribute__((dllimport))(DWORD dwMilliseconds);
+typedef BOOL* PBOOL;
+typedef void * HANDLE;
+typedef HANDLE HMENU;
+
+#ifdef UNICODE
+ typedef LPWSTR LPTSTR;
+#else
+ typedef LPSTR LPTSTR;
+#endif
+
+typedef BYTE *LPBYTE;
+
+typedef struct _LPTHREAD_START_ROUTINE {
+  LPVOID lpThreadParameter;
+} LPTHREAD_START_ROUTINE, *LPTHREAD_START_ROUTINE;
+
+typedef struct _SECURITY_ATTRIBUTES {
+	DWORD nLength;
+	LPVOID lpSecurityDescriptor;
+	BOOL bInheritHandle;
+} SECURITY_ATTRIBUTES , *LPSECURITY_ATTRIBUTES;
+
+typedef struct _STARTUPINFO {
+  DWORD  cb;
+  LPTSTR lpReserved;
+  LPTSTR lpDesktop;
+  LPTSTR lpTitle;
+  DWORD  dwX;
+  DWORD  dwY;
+  DWORD  dwXSize;
+  DWORD  dwYSize;
+  DWORD  dwXCountChars;
+  DWORD  dwYCountChars;
+  DWORD  dwFillAttribute;
+  DWORD  dwFlags;
+  WORD   wShowWindow;
+  WORD   cbReserved2;
+  LPBYTE lpReserved2;
+  HANDLE hStdInput;
+  HANDLE hStdOutput;
+  HANDLE hStdError;
+} STARTUPINFO, *LPSTARTUPINFO;
+
+typedef struct _PROCESS_INFORMATION {
+  HANDLE hProcess;
+  HANDLE hThread;
+  DWORD  dwProcessId;
+  DWORD  dwThreadId;
+} PROCESS_INFORMATION, *LPPROCESS_INFORMATION;
+
+struct WSAData {
+	WORD wVersion;
+	WORD wHighVersion;
+	char szDescription[257];
+	char szSystemStatus[129];
+	unsigned short iMaxSockets;
+	unsigned short iMaxUdpDg;
+	char *lpVendorInfo;
+};
+
+struct _SERVICE_STATUS {
+	DWORD dwServiceType;
+	DWORD dwCurrentState;
+	DWORD dwControlsAccepted;
+	DWORD dwWin32ExitCode;
+	DWORD dwServiceSpecificExitCode;
+	DWORD dwCheckPoint;
+	DWORD dwWaitHint;
+};
+
+struct in_addr {
+
+	union {
+
+		struct {
+			UCHAR s_b1;
+			UCHAR s_b2;
+			UCHAR s_b3;
+			UCHAR s_b4;
+		} S_un_b;
+
+		struct {
+			USHORT s_w1;
+			USHORT s_w2;
+		} S_un_w;
+		ULONG S_addr;
+	} S_un;
+};
+__cdecl void *memset(void *_Dst, int _Val, size_t _Size);
+
+const struct sockaddr {
+	u_short sa_family;
+	CHAR sa_data[14];
+};
+
+typedef __stdcall void (*LPSERVICE_MAIN_FUNCTIONA)(DWORD dwNumServicesArgs, LPSTR *lpServiceArgVectors);
+
+struct _SERVICE_TABLE_ENTRYA {
+	LPSTR lpServiceName;
+	LPSERVICE_MAIN_FUNCTIONA lpServiceProc;
+};
+
+typedef struct _SERVICE_TABLE_ENTRYA SERVICE_TABLE_ENTRYA;
+typedef struct _SERVICE_STATUS *LPSERVICE_STATUS;
+typedef struct _SERVICE_STATUS SERVICE_STATUS;
+
+
+typedef HINSTANCE HMODULE;
+typedef struct in_addr IN_ADDR;
+typedef struct _SERVICE_STATUS *LPSERVICE_STATUS;
+typedef struct WSAData *LPWSADATA;
+__stdcall SERVICE_STATUS_HANDLE RegisterServiceCtrlHandlerA __attribute__((dllimport))(LPCSTR lpServiceName, LPHANDLER_FUNCTION lpHandlerProc);
+typedef struct _SERVICE_STATUS SERVICE_STATUS;
+typedef const struct sockaddr SOCKADDR;
+typedef struct WSAData WSADATA;
+
+typedef LPVOID HINTERNET;
+typedef HINTERNET* LPHINTERNET;
+typedef WORD INTERNET_PORT;
+typedef INTERNET_PORT* LPINTERNET_PORT;
+
+
+struct sockaddr_in {
+	short sin_family;
+	USHORT sin_port;
+	IN_ADDR sin_addr;
+	CHAR sin_zero[8];
+};
+
+__stdcall VOID PostQuitMessage __attribute__((dllimport))(int nExitCode);
+
+//VSDEFS
+#ifndef _METASPLOIT_PAYLOAD_COMMON_COMMON_H
+#define _METASPLOIT_PAYLOAD_COMMON_COMMON_H
+
+__stdcall DWORD GetLastError();
+
+__stdcall FARPROC GetProcAddress __attribute__((dllimport))(HMODULE hModule, LPCSTR lpProcName);
+__stdcall HMODULE LoadLibraryA __attribute__((dllimport))(LPCSTR lpLibFileName);
+__stdcall BOOL SetServiceStatus __attribute__((dllimport))(SERVICE_STATUS_HANDLE hServiceStatus, LPSERVICE_STATUS lpServiceStatus);
+__stdcall BOOL StartServiceCtrlDispatcher __attribute__((dllimport))(const SERVICE_TABLE_ENTRYA *lpServiceStartTable __attribute__((in)));
+__stdcall HANDLE CreateThread(LPSECURITY_ATTRIBUTES lpThreadattributes, size_t dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId);
+__stdcall HWND CreateWindowEx(DWORD dwExStyle, LPCTSTR lpClassName, LPCTSTR lpWindowName, DWORD dwStyle, int x, int y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam);
+
+__stdcall int WSAStartup(WORD wVersionRequested, LPWSADATA lpWSAData);
+__stdcall LPVOID VirtualAlloc(LPVOID lpAddress, size_t dwSize, DWORD flAllocationType, DWORD flProtect);
+__stdcall int recv(SOCKET s, char* buf, int len, int flags);
+__stdcall SOCKET socket(int af, int type, int protocol);
+__stdcall struct hostent* gethostbyname(const char* name);
+__stdcall char* inet_ntoa(struct in_addr);
+__stdcall char* inet_nota(struct in_addr);
+__stdcall unsigned long inet_addr(const char* cp);
+__stdcall u_short htons(u_short hostshort);
+__stdcall int socket(SOCKET s, const struct sockaddr* name, int namelen);
+__stdcall int connect(SOCKET s, const struct sockaddr* name, int namelen);
+__stdcall int bind(SOCKET s, const struct sockaddr* name, int namelen);
+__stdcall int listen(SOCKET s, int backlog);
+__stdcall SOCKET accept(SOCKET s, struct sockaddr* addr, int* addrlen);
+__stdcall int closesocket(SOCKET s);
+
+#endif
+

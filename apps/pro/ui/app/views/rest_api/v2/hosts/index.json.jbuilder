@@ -1,0 +1,1 @@
+json.array! @hosts, partial: 'host', as: :host

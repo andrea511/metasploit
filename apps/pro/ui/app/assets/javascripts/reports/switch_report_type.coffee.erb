@@ -1,0 +1,94 @@
+jQuery ($) ->
+  $(document).ready ->
+    # For Reports -> Std/Custom, as well as for Wizards' report tab.
+    # Would also be applied for MetaModules, but currently they each
+    # only have a single report type allowed.
+    containerSelector = '#report_container, .generate_report'
+    reportTypeSelector = '#report_report_type'
+    dependencySelector = '.dependency'
+    flashSelector = '#flash_messages'
+    $container = $(containerSelector)
+
+    # When a report type is selected, add loading overlay, reload
+    # partials for new type via AJAX, render help links:
+    $('body').on "change", "select#report_report_type", (e) ->
+      loading = ".tab-loading"
+      rtype = $(e.currentTarget).find("option:selected").val()
+      $container = $(containerSelector)
+
+      $container.find(loading).show()
+      $container.addClass "disabled"
+
+      # Preserve the contents of the Report Type select menu, so that we
+      # still only show the allowed report types for this report.
+      reportTypesSelectHTML = $container.find(reportTypeSelector).html()
+
+      $.ajax
+        # This link is inserted (hidden) into the new report view,
+        # as well as in the report_tab partial:
+        url: $('#form-for-report-path').attr 'href'
+        data:
+          report:
+            report_type: rtype
+
+
+        success: (data) ->
+          $container.find(loading).hide()
+          # Wizards need this exact hidden input to know if the report
+          # tab is enabled:
+          $enabled = $container.children('li').first()
+          $container.html data
+          $dependency = $container.find(dependencySelector)
+          $flash = $(document).find(flashSelector)
+          # depedency warning exists
+          if $dependency.length
+            # set flash container to dependency and hide dependency container
+            $flash.empty()
+            $flash.append($dependency.children())
+            $dependency.remove()
+          else
+            # remove any previous flash messages
+            $flash.empty()
+          # Replace with the old hidden input having the contextually
+          # appropriate ID:
+          $container.find('.generate_report').children('li').first().replaceWith($enabled)
+
+          # Replace contents of report type selector, but ensure
+          # new report type is selected
+          $reportType = $container.find(reportTypeSelector)
+          oldReportTypeVal = $reportType.val()
+          $(reportTypeSelector).html(reportTypesSelectHTML)
+          $reportType.val oldReportTypeVal
+
+          $container.removeClass("disabled")
+
+          # Re-render the help links
+          window.Forms.renderHelpLinks containerSelector
+
+          # Fire Complete Event
+          $(document).trigger('report.loaded')
+
+        error: (data) ->
+          console.log data
+
+
+    # For new std/custom report area,
+    # when the new report form is submitted, add loading overlay,
+    # disable submit button, redirect to index:
+    $container.on "submit", "#new_report", (e) ->
+      e.preventDefault()
+      loading = ".tab-loading"
+      $container = $(containerSelector)
+      $container.find(loading).show()
+      $container.addClass "disabled"
+      $.ajax
+        url: $(e.target).attr("action")
+        data: $(e.target).serialize()
+        type: "POST"
+        error: (xhr) ->
+          $container.find(loading).hide()
+          $container.removeClass("disabled").html xhr.responseText
+
+        success: (data) ->
+          # This link is inserted hidden into the new report view:
+          window.location = $('#report-redirect-path').attr 'href'

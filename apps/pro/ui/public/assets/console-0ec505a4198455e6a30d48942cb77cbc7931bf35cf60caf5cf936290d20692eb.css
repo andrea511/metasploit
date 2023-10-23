@@ -1,0 +1,253 @@
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+html, body {
+  height: 100%;
+  max-height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-family: fixedsys, courier new, helvetica, verdana, monospace, console, terminal;
+  font-size: 10px;
+  overflow: hidden;
+  color: white;
+}
+
+/* line 14, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body {
+  background-color: #222222;
+}
+
+/* line 18, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_header {
+  background: #222222;
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 2px solid #333333;
+}
+
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_header_inner {
+  margin: 12px;
+}
+
+/* line 28, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_window {
+  height: 85%;
+  max-height: 85%;
+  overflow: auto;
+}
+
+/* line 34, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_output {
+  color: white;
+  white-space: pre-wrap;
+  /* css-3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+  padding: 12px;
+  font-weight: bold;
+}
+
+/* line 46, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+.output_line {
+  background: #222222;
+  font-size: 13px;
+  white-space: pre-wrap;
+  /* css-3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+  padding-left: 20px;
+  font-weight: bold;
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+}
+
+/* line 61, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+.command_line {
+  background: #222222;
+  font-size: 13px;
+  white-space: pre-wrap;
+  /* css-3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+  padding-left: 20px;
+  color: yellow;
+  font-weight: bold;
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+}
+
+/* line 77, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+.input_line {
+  background: #222222;
+  font-size: 13px;
+  color: yellow;
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+  padding: 0 10px;
+}
+
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_prompt {
+  color: yellow;
+  text-align: right;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_command_bar {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  background: #222222;
+  border-top: 2px solid #333333;
+  z-index: 10;
+}
+
+/* line 104, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_command_bar_inner {
+  margin: 10px;
+}
+
+/* line 108, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_command_bar_inner input {
+  font-family: fixedsys, courier new, helvetica, verdana, monospace, console, terminal;
+  width: 600px;
+  background: #222222;
+  border: 0;
+  color: white;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+/* line 118, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_input {
+  font-size: 12px;
+}
+
+/* line 122, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_status {
+  font-size: 12px;
+  text-transform: smallcaps;
+}
+
+/* line 127, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+#console_spinner {
+  visibility: hidden;
+  color: yellow;
+  font-size: 12px;
+  text-transform: smallcaps;
+}
+
+/* line 135, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed {
+  position: relative;
+  background: transparent;
+}
+/* line 138, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_window {
+  height: auto;
+  max-height: none;
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+}
+/* line 146, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_window #console_output {
+  padding-top: 0;
+}
+/* line 148, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_window #console_output .input_line, body.embed #console_window #console_output .output_line {
+  background: transparent;
+}
+/* line 152, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_window:-webkit-scrollbar-track {
+  padding-right: 15px;
+}
+/* line 156, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_header {
+  background: transparent;
+}
+/* line 158, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_header #console_header_inner {
+  margin: 0;
+  font-size: 11px;
+  height: 20px;
+  padding-left: 10px;
+  line-height: 20px;
+}
+/* line 166, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_command_bar {
+  background: transparent;
+}
+/* line 168, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_command_bar #console_command_bar_inner {
+  margin: 0;
+  height: 20px;
+  display: table;
+  width: 100%;
+}
+/* line 173, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_command_bar #console_command_bar_inner #console_prompt {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  line-height: 20px;
+  display: table-cell;
+  padding-left: 10px;
+  text-align: right;
+  width: 20px;
+}
+/* line 181, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_command_bar #console_command_bar_inner input#console_input {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  line-height: 20px;
+  padding: 0 22px 0 5px;
+  margin: 0;
+  display: table-cell;
+  background: transparent;
+  width: 100%;
+}
+/* line 189, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_command_bar #console_command_bar_inner input#console_input:focus {
+  outline: none;
+}
+/* line 193, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_command_bar #console_command_bar_inner a#console_close {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 20px;
+  line-height: 20px;
+  cursor: pointer;
+}
+/* line 200, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_command_bar #console_command_bar_inner a#console_close:hover {
+  color: #ccc;
+}
+/* line 203, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/console.scss */
+body.embed #console_command_bar #console_command_bar_inner a#console_close:active {
+  color: #aaa;
+}

@@ -1,0 +1,28 @@
+[Unit]
+Description=Metasploit Pro engine service
+Requires=metasploit-env.service metasploit-config-swapper.service
+BindsTo=metasploit-postgresql.service
+
+# Can start in parallel with proui
+After=network.target metasploit-postgresql.service metasploit-env.service metasploit-config-swapper.service
+
+PartOf=metasploit.target
+
+[Service]
+Type=simple
+TimeoutStartSec=600
+User=root
+Group=root
+
+Environment=PORT=50505
+EnvironmentFile=@@BITROCK_INSTALLDIR@@/scripts/.env.txt
+
+SyslogIdentifier=prosvc
+PIDFile=@@BITROCK_INSTALLDIR@@/apps/pro/engine/tmp/prosvc.pid
+WorkingDirectory=@@BITROCK_INSTALLDIR@@/apps/pro/engine
+
+ExecStartPre=@@BITROCK_INSTALLDIR@@/ruby/bin/bundle exec rake db:migrate
+ExecStart=@@BITROCK_INSTALLDIR@@/ruby/bin/ruby ./prosvc.rb -E production
+ExecStartPost=@@BITROCK_INSTALLDIR@@/scripts/wait_for_port ${PORT}
+KillMode=mixed
+KillSignal=SIGINT

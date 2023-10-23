@@ -1,0 +1,36 @@
+/* line 1, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/stars.scss */
+.rating-stars {
+  background-image: url(/assets/stars-4e8e9ccae76118601b17b96d428733c769430c982510efc81f6ffc22c99d856e.png);
+  display: inline-block;
+  width: 66px;
+  height: 15px;
+}
+/* line 6, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/stars.scss */
+.rating-stars span {
+  float: right;
+  background-image: url(/assets/stars-4e8e9ccae76118601b17b96d428733c769430c982510efc81f6ffc22c99d856e.png);
+  display: inline-block;
+  width: 0;
+  height: 15px;
+  background-position: 0 29px;
+}
+/* line 14, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/stars.scss */
+.rating-stars.star0 span {
+  width: 66px;
+}
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/stars.scss */
+.rating-stars.star1 span {
+  width: 53px;
+}
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/stars.scss */
+.rating-stars.star2 span {
+  width: 40px;
+}
+/* line 23, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/stars.scss */
+.rating-stars.star3 span {
+  width: 26px;
+}
+/* line 26, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/stars.scss */
+.rating-stars.star4 span {
+  width: 13px;
+}

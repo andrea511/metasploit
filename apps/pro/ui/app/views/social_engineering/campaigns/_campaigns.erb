@@ -1,0 +1,29 @@
+<table id="campaigns-table" class="sortable list">
+  <thead>
+    <tr>
+      <th class="checkbox"><%= check_box_tag "all_hosts", false %></th>
+      <th>Name</th>
+      <th>Emails</th>
+      <th>Web Pages</th>
+      <th>Status</th>
+      <th>Creation Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% campaigns.each do |camp| %>
+      <tr class="<%=h row_cycle %>">
+        <td width="1">
+          <%= check_box_tag("campaign_ids[]", camp.id, false, :id => nil) %>
+        </td>
+        <td><%= link_to camp.name, workspace_social_engineering_campaign_path(@workspace.id, camp.id) %></td>
+        <td width="50px"><%= camp.emails.count %></td>
+        <td width="80px"><%= camp.web_pages.count %></td>
+        <td><%= campaign_status_for(camp).current_state %></td>
+        <td>
+          <span title="<%= camp.created_at.to_i %>"></span>
+          <%= camp.created_at ? "#{time_ago_in_words(camp.created_at)} ago" : "never" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

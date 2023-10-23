@@ -1,0 +1,35 @@
+<tr id="<%= dom_id(site) %>" class="<%= row_cycle %>">
+  <td><%= check_box_tag("site_ids[]", site.id, false, :vid => nil) %></td>
+  <td align='center' width='60'>
+    <% site_risk_tag = mdm_web_site_risk_tag(site) %>
+    <% site_web_vulns_path = web_vulns_path(@workspace, site) %>
+    <% if site.vuln_count > 0 %>
+        <%= link_to(site_risk_tag, site_web_vulns_path) %>
+    <% else %>
+        <%= site_risk_tag %>
+    <% end %>
+  </td>
+  <td>
+    <img src="<%= os_to_icon(site.service.host.os) %>" class="os_icon">
+    <%= link_to site.service.host.address, site.service.host %>
+  </td>
+  <td>
+    <% site_url = site.to_url %>
+    <% if site.vuln_count > 0 %>
+        <%= link_to(site_url, site_web_vulns_path) %>
+    <% else %>
+        <%= site_url %>
+    <% end %>
+  </td>
+  <td><%= truncate(site.service.info) %></td>
+  <td><%= site.page_count %></td>
+  <td><%= site.form_count %></td>
+  <td>
+    <% if site.vuln_count > 0 %>
+      <div class='right'><%= link_to("Show All", site_web_vulns_path) %></div>
+      <%= site.vuln_count %>
+    <% else %>
+      0
+    <% end %>
+  </td>
+</tr>

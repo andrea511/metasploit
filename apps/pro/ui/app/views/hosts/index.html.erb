@@ -1,0 +1,27 @@
+<% title "Hosts" %>
+<% breadcrumb workspace_link, hosts_link %>
+
+<div id="hosts-main-region"></div>
+
+<% include_stylesheet('backbone/pro_carpenter') %>
+<% include_stylesheet('shared/backbone/tabs') %>
+<% include_stylesheet 'hosts' -%>
+
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<%= nonced_javascript_tag do %>
+  jQuery(document).bind('requirejs-ready', function(){
+    jQuery(document).ready(function() {
+      var dependencies = [
+        'apps/hosts/hosts_app'
+      ];
+
+      initProRequire(dependencies, function() {
+
+        Pro.start({
+          environment: "<%= Rails.env %>"
+        });
+      });
+    });
+  });
+<% end %>

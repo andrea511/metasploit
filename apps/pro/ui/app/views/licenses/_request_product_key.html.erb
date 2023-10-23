@@ -1,0 +1,6 @@
+<%= link_to(product_key_link_text, "https://www.rapid7.com/register/#{product_key_path}",
+      product_key: @product_key, 'FirstName': current_user.fullname.to_s.split(/\s+/).first,
+      'LastName': current_user.fullname.to_s.split(/\s+/).last, 'EmailAddress': current_user.email,
+      'Organization': current_user.company, product_param_name => @license.current_product_type) %>
+
+<%= javascript_include_tag 'licenses' %>

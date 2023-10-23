@@ -1,0 +1,77 @@
+define [
+  'jquery',
+  'form_helpers'
+  '<%= javascript_path("templates/tasks/new_nexpose_exception_push/layouts/new_nexpose_exception_push") %>',
+  '<%= javascript_path("shared/backbone/layouts/tabs_layout")%>',
+  '<%= javascript_path("tasks/new_nexpose_exception_push/backbone/views/layouts/exception_layout") %>'
+], ($,FormHelpers, Template, TabsLayout, ExceptionLayout) ->
+
+  class NewNexposeExceptionPushLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['tasks/new_nexpose_exception_push/layouts/new_nexpose_exception_push']
+
+    initialize: (opts) ->
+      $.extend(@, opts)
+
+    events:
+      'click .push-exceptions a:not(.disabled)': '_submitForm'
+      'change select[name="console"]': '_consoleChanged'
+      'enablePushButton *' : '_enablePushButton'
+      'disablePushButton *' : '_disablePushButton'
+      'change input[name="auto_approve"]' : '_autoApproveExceptions'
+
+    regions:
+      tabs: '.tabs'
+
+    _init_nexpose_console_dropdown: ->
+      if @controller.MATCH_SET_ID?
+        $('.hide-console-field, .console-field #console', @el).css('visibility','hidden')
+
+    _disablePushButton: ->
+      $('a.nexpose' ,@el).addClass("disabled")
+
+    _enablePushButton: ->
+      $('a.nexpose' ,@el).removeClass("disabled")
+
+    onShow: =>
+      tab_model = new Backbone.Model({tabs:[
+        {name: "Vulnerability Exceptions", view: ExceptionLayout, controller: @controller}
+      ]})
+
+      tab_layout = new TabsLayout(model:tab_model, maxHeight: 'none')
+      @tabs.show(tab_layout)
+      tab_layout.set_tab(tab_model.get('tabs')[0].name)
+      @_init_nexpose_console_dropdown()
+
+    _autoApproveExceptions: (e) ->
+      if $(e.currentTarget).prop('checked')
+        $('.auto-approve',@el).val("true")
+      else
+        $('.auto-approve',@el).val("false")
+
+    _consoleChanged: ->
+      @tabs.reset()
+      @onShow()
+
+    _submitForm: ->
+      form = $('#exception-push-form',@el).serialize()
+      $.ajax({
+        type: "post"
+        url: "/workspaces/#{WORKSPACE_ID}/nexpose/result/exceptions.json"
+        data: form
+        success: (json) =>
+          $('.error').remove()
+          window.location.href = json.redirect_url
+
+        error: (e) =>
+          json = $.parseJSON(e.responseText)
+          @_renderErrors(json.errors)
+      })
+
+    _renderErrors: (errors) =>
+      $('.error').remove()
+      _.each errors, (v,k) =>
+        _.each v, (v_2,k_2) =>
+          _.each v_2, (v_3, k_3) =>
+            name = "nexpose_result_exceptions[#{k}][#{k_2}][#{k_3}]"
+            $msg = $('<div />', class: 'error').text(v_3[0])
+            $("[name='#{name}']").addClass('invalid').after($msg)

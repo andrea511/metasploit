@@ -1,0 +1,14 @@
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.sexy-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-weight: 300;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.small-caps-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-size: 11px;
+  position: relative;
+}

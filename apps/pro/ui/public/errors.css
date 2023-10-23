@@ -1,0 +1,147 @@
+html, body {
+  height: 100%;
+  font-family: Helvetica, Arial, san-serif;
+  font-size: 13px;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+}
+
+.orange-strip {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: #EA5709;
+}
+body {
+  padding: 0;
+  margin: 0;
+  background-image: url(./assets/tileable_contours.jpg);
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+.r7bottom-strip {
+  position: absolute;
+  bottom: 0;
+  height: 33%;
+  left: 0;
+  right: 0;
+  background: #f3f3f3;
+  background-image: url(./assets/tileable_contours_white.jpg);
+  background-repeat: repeat;
+}
+.seven-bg {
+  z-index: 1;
+  position: fixed;
+}
+div.dialog-row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  text-align: center;
+}
+div.dialog-row div.before {
+  display: inline-block;
+  content: '';
+  height: 100%;
+  vertical-align: middle;
+  width: 1px;
+  margin-right: -1px;
+  overflow: hidden;
+  visibility: hidden;
+}
+div.dialog-row div.center {
+  display: inline-block;
+  vertical-align: middle;
+  width: 80%;
+  max-width: 500px;
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #bbbbbb;
+  position: relative;
+  padding-top: 75px;
+  -webkit-box-shadow: 0px 0px 35px rgba(50, 50, 50, 0.15);
+  -moz-box-shadow:    0px 0px 35px rgba(50, 50, 50, 0.15);
+  box-shadow:         0px 0px 35px rgba(50, 50, 50, 0.15);
+}
+div.dialog-row div.center div.stripe {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: #e2e2e2;
+  border-top: 1px solid #f3f3f3;
+}
+div.dialog-row div.center div.content {
+  background: #ffeaea;
+  border: 1px solid #eed3d3;
+  padding: 6px;
+  color: #861818;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  -webkit-box-shadow: inset 0px 0px 12px rgba(238, 211, 211, 1);
+  -moz-box-shadow:    inset 0px 0px 12px rgba(238, 211, 211, 1);
+  box-shadow:         inset 0px 0px 12px rgba(238, 211, 211, 1);
+}
+div.dialog-row div.center div.content.status {
+  background: #f3f3f3;
+  border: 1px solid #d3d3d3;
+  padding: 6px;
+  color: #333;
+  margin: 0 auto;
+  padding-top: 20px;
+  -webkit-box-shadow: inset 0px 0px 12px rgba(50,50,50, .1);
+  -moz-box-shadow:    inset 0px 0px 12px rgba(50,50,50, .1);
+  box-shadow:         inset 0px 0px 12px rgba(50,50,50, .1);
+  padding-bottom: 12px;
+}
+div.dialog-row div.center div.content ul li {
+  margin-bottom: .7em;
+}
+div.dialog-row div.center div.content p {
+  text-align: justify;
+  margin: 0 auto;
+  padding: 10px 14px;
+  line-height: 1.3;
+}
+div.dialog-row div.center div.content a {
+  color: inherit;
+}
+div.dialog-row div.center img.header {
+  position: absolute;
+  top: 0; left: 0;
+}
+div.dialog-row div.center img.logo {
+  position: absolute;
+  top: 26px; right: 17px;
+}
+
+#restart_status {
+  margin: 10px;
+}
+#restart_status ol {
+  padding-left: 0px;
+  text-align: left;
+}
+#restart_status li {
+  font-size: 16px;
+  margin: 10px;
+  padding-left: 24px;
+  line-height: 32px;
+  list-style: none;
+}
+#restart_status li.complete {
+  background: url('./assets/icons/complete.png') left center no-repeat;
+}
+#restart_status li.running {
+  background: url('./assets/spinner.gif') left center no-repeat;
+}

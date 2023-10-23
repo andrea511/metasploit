@@ -1,0 +1,8 @@
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/ie.scss */
+.ie10 .credential-groups .lazy-list-component.nano, .ie10 .selected-targets .lazy-list-component.nano, .ie10 .options .lazy-list-component.nano, .ie9 .credential-groups .lazy-list-component.nano, .ie9 .selected-targets .lazy-list-component.nano, .ie9 .options .lazy-list-component.nano {
+  width: 254px !important;
+}
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/ie.scss */
+.ie10 .credential-groups .list, .ie10 .selected-targets .list, .ie10 .options .list, .ie9 .credential-groups .list, .ie9 .selected-targets .list, .ie9 .options .list {
+  width: 250px;
+}

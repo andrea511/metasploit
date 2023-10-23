@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE jasperTemplate
+        PUBLIC "-//JasperReports//DTD Template//EN"
+        "http://jasperreports.sourceforge.net/dtds/jaspertemplate.dtd">
+
+<jasperTemplate>
+  <template><![CDATA[common_styles.jrtx]]></template>
+
+  <style name="scope_titles" style="title2" fontSize="13">
+    <box leftPadding="12"/>
+  </style>
+  <style name="scope_metrics" style="important_item" forecolor="#000000" fontSize="12" hAlign="Left"/>
+
+  <style name="owasp_item" vAlign="Middle" isBold="true" forecolor="#FFFFFF" mode="Opaque">
+    <box rightPadding="5"/>
+  </style>
+  <style name="owasp_key" style="owasp_item" hAlign="Left">
+    <paragraph leftIndent="15"/>
+  </style>
+  <style name="owasp_pass" style="owasp_key" backcolor="#136226"/>
+  <style name="owasp_fail" style="owasp_key" backcolor="#951921"/>
+  <style name="owasp_input" style="owasp_key" backcolor="#f4c73b"/>
+  <style name="owasp_not" style="owasp_key" backcolor="#666666"/>
+  <style name="owasp_desc" style="table_text" fontSize="9">
+    <box leftPadding="7" rightPadding="5"/>
+  </style>
+
+  <style name="vuln_title" style="important_item" hAlign="Left" forecolor="#000000">
+    <paragraph leftIndent="10"/>
+  </style>
+  <style name="vuln_cat" style="important_item" hAlign="Left" forecolor="#000000">
+    <box rightPadding="5"/>
+  </style>
+  <style name="vuln_detail_text" forecolor="#a0a0a0">
+    <paragraph leftIndent="10"/>
+  </style>
+  <style name="vuln_attempt_header" style="Column header" hAlign="Center">
+    <paragraph rightIndent="0"/>
+  </style>
+  <style name="vuln_sections" style="vuln_title" hAlign="Left" forecolor="#a0a0a0"/>
+
+  <style name="last_response"  backcolor="#666666" vAlign="Middle" fontSize="9"/>
+  <style name="funnel_text" vAlign="Middle" hAlign="Center" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/> 
+
+</jasperTemplate>

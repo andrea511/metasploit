@@ -1,0 +1,7 @@
+<% title "Campaign Visits: " + @campaign.name %>
+<% breadcrumb workspace_link, social_engineering_campaigns_link, social_engineering_campaign_link, social_engineering_campaign_visits_link %>
+<% include_view_javascript -%>
+
+
+
+<%= render 'visits', :visits => @visits %>

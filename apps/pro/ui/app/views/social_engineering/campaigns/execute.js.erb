@@ -1,0 +1,4 @@
+(function ($) {
+  $('#runner span.btn').html("<%= escape_javascript(render 'execute_button')%>");
+  $('#settings').html("<%= escape_javascript(render 'settings')%>");
+})(jQuery)

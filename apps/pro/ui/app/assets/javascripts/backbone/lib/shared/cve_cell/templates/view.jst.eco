@@ -1,0 +1,6 @@
+<div>
+  <a href="javascript:void(0)">
+    <span class="ref-name"><%= @parsedRefs() %></span>
+    <span>(<%= @refCount() %> Total)</span>
+  </a>
+</div>

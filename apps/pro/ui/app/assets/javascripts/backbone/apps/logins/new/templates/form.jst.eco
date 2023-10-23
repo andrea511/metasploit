@@ -1,0 +1,24 @@
+<div style='clear:both;margin-top:10px;'>
+  <select class="host" name="host[id]">
+    <% for host in @hosts: %>
+    <option value="<%= host.id %>"><%= host.name %>/<%= host.address %></option>
+    <% end %>
+  </select>
+  <label for="host">Host</label>
+</div>
+
+
+<div class='clear-floats'>
+  <select id="service" name="service">
+    <% for service in @services: %>
+    <option value="<%= service.id %>"><%= service.name %>/<%= service.proto %>/<%=service.port%></option>
+    <% end %>
+  </select>
+  <label for="service">Service</label>
+
+</div>
+
+
+<div class="clear-floats access-level-region">
+
+</div>

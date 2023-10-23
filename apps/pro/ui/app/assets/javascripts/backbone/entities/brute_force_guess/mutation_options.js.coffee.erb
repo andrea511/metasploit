@@ -1,0 +1,23 @@
+define [
+  'base_model'
+  'base_collection'
+], ->
+  @Pro.module "Entities.BruteForceGuess", (BruteForceGuess, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+    class BruteForceGuess.MutationOptions extends App.Entities.Model
+
+    #
+    # API
+    #
+
+    API =
+    # @return [Model] of all Cred objects in a given workspace
+      getMutationOptionsSettings: (opts) ->
+        new BruteForceGuess.MutationOptions(opts)
+
+
+    App.reqres.setHandler "mutationOptions:entities", (opts={}) ->
+      API.getMutationOptionsSettings(opts)

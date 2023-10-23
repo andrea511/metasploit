@@ -1,0 +1,31 @@
+<% if inactive_services.length > 0 %>
+
+<% host_record ||= false %>
+
+<% if host_record %>
+	<h3>Inactive Services</h3>
+<% end %>
+<table class="list" id="inactive_services">
+	<% if not host_record %>
+		<caption>Inactive Services</caption>
+	<% end %>
+<thead>
+	<tr>
+		<th>Name</th>
+		<th>Port</th>
+		<th>Status</th>
+	</tr>
+</thead>
+<tbody>
+<% reset_cycle "rows" %>
+<% inactive_services.each do |svc| %>
+	<tr class="<%=h row_cycle %>">
+		<td><%=h svc.name %></td>
+		<td><%=h svc.port %>/<%=h svc.proto %></td>
+		<td><%=h svc.state %></td>
+	</tr>
+<% end %>
+</tbody>
+</table>
+<% end %>
+

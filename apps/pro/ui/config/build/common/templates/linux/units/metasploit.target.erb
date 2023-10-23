@@ -1,0 +1,9 @@
+[Unit]
+Description=Metasploit Pro services
+After=network.target
+
+Wants=metasploit.service metasploit-prosvc.service metasploit-ui.service metasploit-worker.service
+PartOf=metasploit.service
+
+[Install]
+WantedBy=multi-user.target

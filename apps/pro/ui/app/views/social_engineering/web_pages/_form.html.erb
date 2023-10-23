@@ -1,0 +1,170 @@
+<%= semantic_form_for(@web_page, :url => @web_page_path) do |f| %>
+    <div class='page row' title='<%= @title %>'>
+      <div class='cell' title='Settings' title-large="<%= @pages[0] %>">
+        <%= f.inputs do %>
+          <!-- pass current module data to JS -->
+          <meta name="module-data" content="<%= @web_page.exploit_module_config.to_json unless @web_page.exploit_module_config.blank? %>" />
+          <meta name="module-path" content="<%= @web_page.exploit_module_path unless @web_page.exploit_module_path.blank? %>" />
+          <meta name="module-title" content="<%= @web_page.exploit_module.title unless @web_page.exploit_module.blank? %>" />
+          <meta name='preview-url' content="<%= custom_content_preview_workspace_social_engineering_campaign_web_pages_path %>" />
+          <%= render "shared/error_messages", :target => @web_page %>
+
+          <%= f.input :path, :input_html => { 'data-content' => @web_page.campaign.web_host, :style => 'width: 48%' } %>
+
+          <% if params[:hide_name].present? %>
+            <div style='display:none'>
+              <%= f.input :name %>
+            </div>
+          <% else %>
+            <%= f.input :name, :label => 'Component name' %>
+          <% end %>
+          <div class='content-box attack-box'>
+            <% if @web_page.campaign.uses_wizard? %>
+              <div style='display:none'>
+                <%= f.input :attack_type, :collection => web_page_attack_type_pairs, :as => 'select', :include_blank => false %>
+              </div>
+            <% else %>
+              <%= f.input :attack_type, :collection => web_page_attack_type_pairs, :as => 'select', :input_html => { :placeholder => 'Choose an Attack Type' } %>
+            <% end %>
+          </div>
+          <div class='shadow-arrow-row'>
+            <div class='shadow-arrow'></div>
+          </div>
+          <div style=" padding:10px;" class="attack-box-options">
+            <div class="none">
+              No attack to configure.
+            </div>
+            <div class="phishing" style="display: none;">
+              <%= f.input :phishing_redirect_origin, :collection => SocialEngineering::WebPage::PHISHING_REDIRECT_ORIGINS, :as => 'radio', :label => false %>
+              
+              <% if params[:show_only_custom_redirect_page] %>
+                <%= f.input :phishing_redirect_specified_url, :label => 'After form submission, redirect to URL:', :input_html => { :placeholder => 'http://example.com/landing' } %>
+                <li class="select input optional" style='margin: 3px 0 0 0;'>
+                  <label class='campaign-redirect-page'>
+                    <input name="social_engineering_web_page[phishing_redirect_origin]" value='phishing_wizard_redirect_page' type="radio" style="width: auto; margin-right: 10px;vertical-align:baseline;" <%= 'checked' if @web_page.phishing_redirect_origin == 'phishing_wizard_redirect_page' %> >
+                    Campaign Redirect Page
+                  </label>
+                </li>
+              <% else %>
+                <%= f.input :phishing_redirect_specified_url, :label => 'Choose the Redirect Behavior', :input_html => { :placeholder => 'http://example.com/landing', :style => 'margin-bottom: 15px' } %>
+                <%= f.input :phishing_redirect_web_page_id, :label => false, :collection => SocialEngineering::WebPage.where(campaign_id: @web_page.campaign_id) - [@web_page], :class => 'phishing-web-page' %>
+              <% end %>
+              <hr />
+              <li class="select" style='margin: 3px 0 0 0;'>
+                <label class='campaign-redirect-page'>
+                  Save all user submitted data?
+                </label>
+              </li>
+              <li class="select input optional" style='margin: 3px 0 0 0;'>
+                <label class='campaign-redirect-page'>
+                  <input name="social_engineering_web_page[save_form_data]" id="social_engineering_web_page_save_form_data" value='1' type="radio" style="width: auto; margin-right: 10px;vertical-align:baseline;" <%= 'checked' if @web_page.save_form_data %> >
+                  Yes, transmit and save user provided data
+                </label>
+              </li>
+              <li class="select input optional" style='margin: 3px 0 0 0;'>
+                <label class='campaign-redirect-page'>
+                  <input name="social_engineering_web_page[save_form_data]" id="social_engineering_web_page_save_form_data" value='0' type="radio" style="width: auto; margin-right: 10px;vertical-align:baseline;" <%= 'checked' if not @web_page.save_form_data %> >
+                  No, only record the form submission
+                </label>
+              </li>
+            </div>
+            <div class="exploit">
+              <div class="selected">
+                <div class='module-path'>No exploit module chosen. Choose a module from the form below.</div>
+              </div>
+              <div class="load">
+                <div class='tab-loading'></div>
+              </div>
+            </div>
+            <div class="bap" style='display: none'></div>
+            <div class="java_signed_applet" style='display: none'></div>
+            <div class="file">
+              <%= f.input :file_generation_type, :as => 'radio', :label => 'File generation type:', :collection => web_page_file_generation_type_pairs, :required => true %>
+              <div class="user_supplied" style='display:none;'>
+                <hr />
+                <%= f.input :user_supplied_file, 
+                    :label => 'Choose a file', 
+                    :as => :select,
+                    :input_html => { :placeholder => 'Choose a file' },
+                    :collection => [SocialEngineering::UserSubmittedFile.new(:name => 'Upload a new file...')] + SocialEngineering::UserSubmittedFile.where(:workspace_id => @workspace.id).order('created_at DESC'),
+                    :required => true %>
+              </div>
+              <div class="file_format" style='display:none;'>
+                <hr style='margin-bottom: 7px;' />
+                <div class='load-modules'>
+
+                </div>
+              </div>
+            </div>
+          
+        </div>
+      <% end %>
+      </div>
+      <div class='cell' title='Content' title-large="<%= @pages[1] %>">
+        <div class='max-width' style='padding: 16px;position:relative;'>
+        <div class='content-disabled-box'>
+          Content is disabled when serving files.
+        </div>
+        <div class='content-box'>
+          <div style='display:none' id='cloneWebsite'>
+            <div class='white-box' style='padding-bottom: 0;'>
+              <h2>Origin</h2>
+
+              <%= f.input :origin_type, :label => false, :as => 'radio', :collection => web_page_origin_type_pairs %>
+              <div class='config'>
+                <%= render :partial => 'social_engineering/shared/clone_url_options', :formats => [:html],  :locals => { :f => f } %>
+              </div>
+            </div>
+          </div>
+
+          <div class='editor'>
+            <div class='row'>
+              <div class='cell' style='width: 27%;'>
+                <div class='white-box editor-box' style='padding-bottom: 0; position:relative;top:2px'>
+                  <input id='edit-buttonset' name='editor-buttonset' type="radio" value="edit" checked>
+                  <label for="edit-buttonset">
+                    Edit
+                  </label>
+                  <input id='preview-buttonset' name='editor-buttonset' type="radio" value="preview">
+                  <label for="preview-buttonset">
+                    Preview
+                  </label>
+                </div>
+              </div>
+              <div class='cell' style='width: 46%; text-align: center'>
+                <%= f.input :template_id, :collection => SocialEngineering::WebTemplate.where(workspace_id: @workspace.id), :as => 'select', :include_blank => "None" %>
+              </div>
+              <div class='cell' style='width: 27%; text-align:right'>
+                <a href='#' class='link3 clone-btn'>Clone Website</a>
+              </div>
+            </div>
+            <div class='preview' style='display: none; position: relative;'>
+              <iframe name='web-page-iframe'></iframe>
+              <div style='position:absolute;top:0;left:0;right:0;bottom:0; overflow-y:scroll;' class='blocker'>
+                <div class="spacer"></div>
+                <!-- iframe interaction blocker -->
+              </div>
+              <div style='position:absolute;bottom:-24px;left:0;right:0;text-align:center'>
+                Javascript is disabled during previews
+              </div>
+              
+            </div>
+            <%= f.input :content, :label => false, :input_html => { 'class' => 'to-code-mirror' } %>
+          </div>
+        </div>
+        <!-- for storing hidden inputs added by module config -->
+        <div class='exploit-module-config' style="display: none">
+
+        </div>
+      </div>
+    </div>
+    </div>
+<% end %>
+ <!--<label class='ui-switch' for='social_engineering_web_page_online'>
+                <input type='checkbox' name='social_engineering_web_page[online]' id='social_engineering_web_page_online' <%= @web_page.online ? 'checked' : '' %> />
+                <div class='switch'>
+                    <span class='left'>ONLINE</span>
+                    <span class='middle'></span>
+                    <span class='right'>OFFLINE</span>
+                </div>
+            </label>-->

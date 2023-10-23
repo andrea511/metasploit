@@ -1,0 +1,11 @@
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/boxes.scss */
+.shared.boxes {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 1px solid #CCCCCC;
+  background: #f9f9f9;
+}
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/boxes.scss */
+.shared.inset {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}

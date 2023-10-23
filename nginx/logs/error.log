@@ -1,0 +1,24 @@
+2023/10/16 16:09:12 [warn] 20528#5648: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/16 16:09:12 [warn] 20528#5648: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/16 16:09:12 [warn] 19208#21492: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/16 16:09:12 [warn] 19208#21492: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/17 08:37:16 [warn] 18676#20932: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/17 08:37:16 [warn] 18676#20932: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/17 08:37:16 [warn] 20776#23032: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/17 08:37:16 [warn] 20776#23032: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/17 08:48:50 [warn] 16448#11668: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/17 08:48:50 [warn] 16448#11668: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/17 08:48:50 [warn] 13560#11516: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/17 08:48:50 [warn] 13560#11516: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/18 17:31:46 [warn] 3496#9260: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/18 17:31:46 [warn] 3496#9260: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/18 17:31:46 [warn] 1600#4048: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/18 17:31:46 [warn] 1600#4048: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/19 01:24:28 [warn] 16536#16464: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/19 01:24:28 [warn] 16536#16464: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/19 01:24:29 [warn] 2480#16620: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/19 01:24:29 [warn] 2480#16620: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/20 21:01:28 [warn] 6228#4092: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/20 21:01:28 [warn] 6228#4092: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120
+2023/10/20 21:01:28 [warn] 3028#1332: "user" is not supported, ignored in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:8
+2023/10/20 21:01:28 [warn] 3028#1332: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in C:\metasploit\apps\pro\..\..\nginx\conf\nginx.conf:120

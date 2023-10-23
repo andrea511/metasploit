@@ -1,0 +1,10 @@
+json.( web_page,
+  :id,
+  :campaign_id,
+  :name,
+  :attack_type,
+  :origin_type,
+  :clone_url,
+  :created_at,
+  :updated_at,
+)

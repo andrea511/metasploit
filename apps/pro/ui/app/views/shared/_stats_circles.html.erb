@@ -1,0 +1,13 @@
+<div class='no-results' style='display:none;'>
+  No data has been collected yet.
+</div>
+
+<div class='row circles'>
+  {% _.each(statSet.objectsForDisplay(), function(stat){ %}
+    <div class='cell' style='width:{{ cellWidth }}%'>
+      <p class='circle'>{{ stat.value }}</p>
+      <div></div>
+      <p class='text'>{{ stat.display }}</p>
+    </div>
+  {% }) %}
+</div>

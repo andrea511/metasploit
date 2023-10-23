@@ -1,0 +1,61 @@
+<span id="vulns-path" class="invisible"><%= workspace_vulns_path(@workspace, :format => :json, :search => params[:search]) %></span>
+
+    <span style="<%= if @automatic_exploitation_runs.count <= 1 then "visibility:hidden;" else ""  end %>">
+      <%= label_tag :exploitation_run, 'Exploitation Run' %>
+      <%= select_tag(:exploitation_run,options_from_collection_for_select(@automatic_exploitation_runs, 'id',:updated_at))  %>
+    </span>
+
+		<% if @automatic_exploitation_runs.count > 0 %>
+      <% if License.get.supports_vuln_validation? %>
+        <div class="btns">
+          <div class="create-exception">
+            <span class="btn"><%= link_to "Push Exploited Vulnerabilities", "javascript:void(0)" ,:class => :nexpose %></span>
+          </div>
+          <div class="create-exception dropdown">
+            <div class="dropdown-list">
+              <ul>
+                <li class="non-exploited">All Not Exploited</li>
+                <li class="all">All Selected</li>
+              </ul>
+            </div>
+                <span class="btn">
+                  <%= link_to "Create Exception", "javascript:void(0)", :class=> :dropdown %>
+                </span>
+            <div class="arrow">
+                  <span class="btn">
+                    <%= link_to "&#9660;".html_safe, "javascript:void(0)", :class=> :dropdown %>
+                  </span>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="buttons" style="text-align: right;">
+        <span class="btn">
+          <%= submit_checkboxes_to "Nexpose Exceptions", new_nexpose_exception_push_path(@workspace), { :class => "nexpose" } %>
+        </span>
+        </div>
+      <% end %>
+		<% end %>
+
+<% if License.get.supports_vuln_validation? %>
+  <table id="vulns-table" class="list sortable vuln-validation">
+<% else %>
+  <table id="vulns-table" class="list sortable">
+<% end %>
+	<thead>
+		<tr>
+			<th class="checkbox"><%= check_box_tag "all_vulns", false %></th>
+			<th>Host</th>
+			<th>Service</th>
+			<th>Name</th>
+      <% if License.get.supports_vuln_validation? %>
+			  <th>Nexpose Test Status</th>
+      <% else %>
+        <th><%= image_tag('icons/silky/shield.png', title: 'Defended') %></th>
+      <% end %>
+			<th>References</th>
+		</tr>
+	</thead>
+	<tbody id="vuln_list">
+	</tbody>
+</table>

@@ -1,0 +1,1 @@
+<div class="name"><%= @name %><span class="invalid invisible"> *</span></div>

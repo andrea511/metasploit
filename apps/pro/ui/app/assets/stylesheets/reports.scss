@@ -1,0 +1,405 @@
+@import 'css3-mixins';
+@import 'components/header_bar';
+
+#reports-main-region {
+  // TODO: Use the .foundation namespace and extend from that, rather than
+  // importing all of foundation gridding into the CSS right here.
+  @import "foundation";
+  * { box-sizing: border-box; }
+
+  $primary-font-color: #010101;
+  $left-panel-size: 250px;
+  $left-panel-color: #f2f2f2;
+  $left-panel-border-color: #efefef;
+  $body-margin: 5px;
+  $info-panel-border-color: #959595;
+  $panel-height: 686px;
+  $panel-width: 100%;
+
+  // -----||--------------------------
+  //      ||         HEADER
+  // =====||==========================
+
+  #report-header-region {
+    @extend %header-bar;
+
+    h1:first-of-type {
+      line-height: 19px;
+    }
+
+    #report-name-and-type {
+      @extend .large-9;
+      @extend .columns;
+      padding-top: 9px;
+      padding-left: 0px;
+
+      box-shadow: none;
+    }
+
+    #report-created-at {
+      @extend .large-3;
+      @extend .columns;
+
+      line-height: $header-height;
+      text-align: right;
+      padding-right: $header-padding-size;
+      text-transform: uppercase;
+    }
+  }
+
+  #report-body {
+    @extend .row;
+  }
+
+  // TODO: Why am I having to do this? Where does this gap come from?
+  %body-margin-adjustment {
+    margin-top: -2px;
+  }
+
+  // -----||--------------------------
+  //      ||     LEFT PANEL
+  // =====||==========================
+
+  #report-body #report-left-panel {
+    @extend %body-margin-adjustment;
+    width: $left-panel-size;
+    height: $panel-height;
+    float: left;
+    margin-left: $body-margin;
+
+    background-color: $left-panel-color;
+    border-left: 1px solid $left-panel-border-color;
+
+    section .info-wrapper {
+      padding: 10px 3px;
+      width: 90%;
+      margin: 0 auto;
+      border-bottom: 1px solid $info-panel-border-color;
+
+      h3 {
+        @extend %header-font;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+    }
+
+    section:last-child .info-wrapper {
+      border-bottom: none;
+    }
+
+    // INFORMATION
+
+    #report-info-region {
+      user-select: none;
+
+      h3 {
+        display: inline-block;
+      }
+
+      #report-info-button {
+        width: 20px;
+        height: 20px;
+        margin-left: 15px;
+        border-radius: 3px;
+        display: inline-block;
+
+        background: #fff;
+        border: 1px solid $primary-font-color;
+        text-align: center;
+        font-weight: bold;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    // FORMATS
+
+    #report-formats-region {
+      height: 509px;
+
+      .info-wrapper { height: 100% }
+
+      user-select: none;
+
+      ul {
+        margin-top: 20px;
+      }
+
+      li {
+        position: relative;
+      }
+
+      input[type=checkbox] {
+        position: absolute;
+        top: 35px;
+        left: 35px;
+      }
+
+      .regenerate-button {
+        height: 60px;
+        width: 60px;
+        position: absolute;
+        top: 8px;
+        right: 2px;
+        background-image: image-url('reports/formats/regenerate-icon.png');
+
+        &.regenerating {
+          background-image: none
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .format-button {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
+
+        background: #fff;
+        border-radius: 5px;
+        border: 1px solid #959595;
+
+        &.displayed {
+          box-shadow: 0px 0px 1px 3px #96c0e6;
+        }
+
+        &.error {
+          box-shadow: 0px 0px 1px 3px #CB615E;
+        }
+
+        &.regenerating {
+          &:hover {
+            box-shadow: none;
+          }
+        }
+
+        &.complete {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        @mixin format-icon($format, $width: 76px, $not-generated-width: 76px) {
+          $height: 77px;
+
+          background-image: image-url('reports/formats/' + $format + '-icon.png');
+          @include image-2x(image-path('reports/formats/' + $format + '-icon@2x.png'), 75px, 77px);
+          background-repeat: no-repeat;
+          background-position: center center;
+
+          &.not-generated, &.error  {
+            background-image: image-url('reports/formats/' + $format + '-icon-not-generated.png');
+            @include image-2x(image-path('reports/formats/' + $format + '-icon-not-generated@2x.png'), 77px, 79px);
+
+          }
+
+          &.regenerating {
+            background-image: image-url('reports/formats/' + $format + '-icon-regenerate.png');
+            @include image-2x(image-path('reports/formats/' + $format + '-icon-regenerate@2x.png'), 77px, 79px);
+          }
+        }
+
+        &.pdf  { @include format-icon('pdf', 75px, 76px); }
+        &.html { @include format-icon('html'); }
+        &.rtf  { @include format-icon('rtf'); }
+        &.word { @include format-icon('word'); }
+        &.xml  { @include format-icon('xml'); }
+      }
+    }
+
+    // ACTIONS
+
+    #report-actions-region {
+      #report-actions {
+        @extend .row;
+
+        .action {
+          @extend .large-4;
+          @extend .columns;
+        }
+      }
+
+      button {
+        height: 60px;
+        width: 60px;
+        margin: 0 auto;
+
+        background: transparent;
+        background-repeat: no-repeat;
+        background-position: center center;
+        border: none;
+        box-sizing: border-box;
+        outline: none;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      @mixin action-icon($action, $width, $height) {
+        background-image: image-url('reports/actions/' + $action + '-action-icon.png');
+        @include image-2x(image-path('reports/actions/' + $action + '-action-icon@2x.png'), $width, $height);
+
+        // TODO: Needs to be preloaded.
+        &:hover {
+          background-image: image-url('reports/actions/' + $action + '-action-icon-hover.png');
+          @include image-2x(image-path('reports/actions/' + $action + '-action-icon-hover@2x.png'), $width, $height);
+        }
+      }
+
+      #email-report {
+        @include action-icon('email', 33px, 21px);
+      }
+
+      #download-report {
+        @include action-icon('download', 25px, 27px);
+      }
+
+      #destroy-report {
+        @include action-icon('destroy', 21px, 28px);
+      }
+    }
+  }
+
+  // -----||--------------------------
+  //      ||     DISPLAY PANEL
+  // =====||==========================
+
+  #report-body #report-display-region {
+    margin-left: $left-panel-size + $body-margin;
+    margin-right: $body-margin;
+    height: $panel-height;
+
+    & > div:first-child { height: 100%; }
+
+    #report-display-panel {
+      object { @extend %body-margin-adjustment; }
+
+      height: 100%;
+    }
+
+    iframe {
+      width: 100%;
+      height: $panel-height;
+    }
+
+    .report-display-panel-message {
+      display: none;
+      height: 100%;
+      width: 100%;
+
+      span {
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 30px;
+        padding: 15px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+      }
+    }
+
+    #report-pdf-embed-error-message {
+      display: table;
+      margin-top: 5px; // Fix layout error in FF.
+    }
+  }
+}
+
+// -----||--------------------------
+//      ||        DIALOGS
+// =====||==========================
+
+// REPORT INFO
+
+.report-info-dialog {
+  .content {
+    padding: 20px !important;
+    overflow-y: scroll;
+  }
+
+  .row {
+    font-size: 120%;
+    margin-bottom: 10px;
+
+    .label {
+      float: left;
+      width: 40%;
+
+      font-weight: bold;
+    }
+
+    .value {
+      float: left;
+      width: 60%;
+
+      .col {
+        width: 50%;
+        float: left;
+
+        .col-header {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+// EMAIL FORM
+
+.report-email-dialog {
+  textarea {
+    margin-top: 15px;
+    width: 420px;
+  }
+
+  label {
+    vertical-align: top;
+    margin-top: 20px;
+    margin-right: 15px;
+    display: inline-block;
+  }
+}
+
+// -----||--------------------------
+//      ||     LEGACY STYLES
+// =====||==========================
+
+#report_container {
+  .tab-loading {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-position: center center;
+    height: auto;
+    z-index: 1;
+  }
+  &.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  li.check_boxes {
+    ol.choices-group {
+      padding-right: 20%;
+    }
+  }
+
+  li.check_boxes {
+    li.choice {
+      display: block;
+      margin-bottom: 5px;
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<% installation_pathname = "@@BITROCK_INSTALLDIR@@" %>
+<%
+  bin_parents = [
+    'ruby',
+    'postgresql',
+    'java'
+  ]
+  bin_pathnames = bin_parents.collect { |parent|
+    "#{installation_pathname}\\#{parent}\\bin"
+  }
+  path_components = bin_pathnames + ['%PATH%']
+  path = path_components.join(';')
+%>
+set PATH=<%= path %>
+
+rem #### Force 'West European Latin' locale on Windows #####
+chcp 1252 >NUL
+
+rem #### RUBY ENV ####
+set RUBYOPT=-rbundler/setup -rrubygems
+
+set NMAPDIR="<%= installation_pathname %>\common\share\nmap\"
+set RAILS_ENV=production

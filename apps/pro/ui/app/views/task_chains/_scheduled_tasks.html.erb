@@ -1,0 +1,25 @@
+<div id="scheduled_tasks">
+<table width="100%" class="list">
+  <caption>Chained Tasks (<%= scheduled_tasks.size %>)</caption>
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Type</th>
+      <th>State</th>
+      <th>Last run</th>
+      <th>Last run status</th>
+    </tr>
+  </thead>
+  <tbody>
+<% scheduled_tasks.each do |task| %>
+    <tr class="<%= row_cycle %>">
+      <td><%= task.position %></td>
+      <td><%= task.kind.humanize %></td>
+      <td><%= task.state %></td>
+      <td><%= printable_date(task.last_run_at) %></td>
+      <td><%= task.last_run_status %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+</div>

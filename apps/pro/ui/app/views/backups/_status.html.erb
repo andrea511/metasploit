@@ -1,0 +1,113 @@
+<% if @backup.present? && @backup.status == '0/6: Queuing restore' %>
+    <p class="justify"><b>We are restoring your backup. This can take a while, we appreciate your patience.</b></p>
+    <p><i>Need something to do while you're waiting? Check out our Whiteboard Wednesday videos. Every week we tackle timely security events and topics that we think are important to you.</i>
+      <br/><br/><a href="http://www.rapid7.com/resources/videos/" target="_blank">http://www.rapid7.com/resources/videos/</a></p>
+    <ol>
+      <li class="running">Queuing restore...</li>
+      <li>Restore loots</li>
+      <li>Restore reports</li>
+      <li>Restore logs</li>
+      <li>Restore tasks</li>
+      <li>Restore the database</li>
+      <li>Restart Metasploit</li>
+    </ol>
+<% elsif @backup.present? && @backup.status =~ /1\/6/ %>
+    <p class="justify"><b>We are restoring your backup. This can take a while, we appreciate your patience.</b></p>
+    <p><i>Need something to do while you're waiting? Check out our Whiteboard Wednesday videos. Every week we tackle timely security events and topics that we think are important to you.</i>
+      <br/><br/><a href="http://www.rapid7.com/resources/videos/" target="_blank">http://www.rapid7.com/resources/videos/</a></p>
+    <ol>
+      <li class="complete">Restore queued</li>
+      <li class="running">Restoring loots...</li>
+      <li>Restore reports</li>
+      <li>Restore logs</li>
+      <li>Restore tasks</li>
+      <li>Restore the database</li>
+      <li>Restart Metasploit</li>
+    </ol>
+<% elsif @backup.present? && @backup.status =~ /2\/6/ %>
+    <p class="justify"><b>We are restoring your backup. This can take a while, we appreciate your patience.</b></p>
+    <p><i>Need something to do while you're waiting? Check out our Whiteboard Wednesday videos. Every week we tackle timely security events and topics that we think are important to you.</i>
+      <br/><br/><a href="http://www.rapid7.com/resources/videos/" target="_blank">http://www.rapid7.com/resources/videos/</a></p>
+    <ol>
+      <li class="complete">Restore queued</li>
+      <li class="complete">Loots restored</li>
+      <li class="running">Restoring reports...</li>
+      <li>Restore logs</li>
+      <li>Restore tasks</li>
+      <li>Restore the database</li>
+      <li>Restart Metasploit</li>
+    </ol>
+<% elsif @backup.present? && @backup.status =~ /3\/6/ %>
+    <p class="justify"><b>We are restoring your backup. This can take a while, we appreciate your patience.</b></p>
+    <p><i>Need something to do while you're waiting? Check out our Whiteboard Wednesday videos. Every week we tackle timely security events and topics that we think are important to you.</i>
+      <br/><br/><a href="http://www.rapid7.com/resources/videos/" target="_blank">http://www.rapid7.com/resources/videos/</a></p>
+    <ol>
+      <li class="complete">Restore queued</li>
+      <li class="complete">Loots restored</li>
+      <li class="complete">Reports restored</li>
+      <li class="running">Restoring logs...</li>
+      <li>Restore tasks</li>
+      <li>Restore the database</li>
+      <li>Restart Metasploit</li>
+    </ol>
+<% elsif @backup.present? && @backup.status =~ /4\/6/ %>
+    <p class="justify"><b>We are restoring your backup. This can take a while, we appreciate your patience.</b></p>
+    <p><i>Need something to do while you're waiting? Check out our Whiteboard Wednesday videos. Every week we tackle timely security events and topics that we think are important to you.</i>
+      <br/><br/><a href="http://www.rapid7.com/resources/videos/" target="_blank">http://www.rapid7.com/resources/videos/</a></p>
+    <ol>
+      <li class="complete">Restore queued</li>
+      <li class="complete">Loots restored</li>
+      <li class="complete">Reports restored</li>
+      <li class="complete" class="complete">Logs restored</li>
+      <li class="running">Restoring tasks...</li>
+      <li>Restore the database</li>
+      <li>Restart Metasploit</li>
+    </ol>
+<% elsif @backup.present? && @backup.status =~ /5\/6/ %>
+    <p class="justify"><b>We are restoring your backup. This can take a while, we appreciate your patience.</b></p>
+    <p><i>Need something to do while you're waiting? Check out our Whiteboard Wednesday videos. Every week we tackle timely security events and topics that we think are important to you.</i>
+      <br/><br/><a href="http://www.rapid7.com/resources/videos/" target="_blank">http://www.rapid7.com/resources/videos/</a></p>
+    <ol>
+      <li class="complete">Restore queued</li>
+      <li class="complete">Loots restored</li>
+      <li class="complete">Reports restored</li>
+      <li class="complete">Logs restored</li>
+      <li class="complete">Tasks restored</li>
+      <li class="running">Restoring the database...</li>
+      <li>Restart Metasploit</li>
+    </ol>
+<% elsif @backup.present? && @backup.status =~ /complete/i && @status.restarting? %>
+    <p class="justify"><b>We are restoring your backup. This can take a while, we appreciate your patience.</b></p>
+    <p><i>Need something to do while you're waiting? Check out our Whiteboard Wednesday videos. Every week we tackle timely security events and topics that we think are important to you.</i>
+      <br/><br/><a href="http://www.rapid7.com/resources/videos/" target="_blank">http://www.rapid7.com/resources/videos/</a></p>
+    <ol>
+      <li class="complete">Restore queued</li>
+      <li class="complete">Loots restored</li>
+      <li class="complete">Reports restored</li>
+      <li class="complete">Logs restored</li>
+      <li class="complete">Tasks restored</li>
+      <li class="complete">Database restored</li>
+      <li class="running">Waiting for services to restart...</li>
+    </ol>
+<% elsif @status.error? %>
+    <p>
+      Restarting Failed: <%= h @status.error %>
+    </p>
+    <span class="btn">
+      <%= link_to "Back to Projects List", root_path, :class => "back" %>
+	</span>
+<% else %>
+    <p class="justify"><b>Your backup has been restored.</b></p>
+    <ol>
+      <li class="complete">Restore queued</li>
+      <li class="complete">Loots restored</li>
+      <li class="complete">Reports restored</li>
+      <li class="complete">Logs restored</li>
+      <li class="complete">Tasks restored</li>
+      <li class="complete">Database restored</li>
+      <li class="complete">Restore Complete</li>
+    </ol>
+    <span class="btn">
+      <%= link_to "Back to Projects List", root_path, :class => "back" %>
+    </span>
+<% end %>

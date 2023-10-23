@@ -1,0 +1,61 @@
+<% title "File Search: #{h(@session.host.address)}" %>
+<% breadcrumb workspace_link, sessions_link, session_link %>
+
+<%= form_for :session, :url => { :action => 'search' }, :html => { :class => "searchform", :method => "GET", :autocomplete => 'off' } do |f| %>
+	<%= label_tag :query, "Search Files" %>
+	<%= text_field_tag :query, @query, :size => 70, :id => "query" %> <span class="hint">( *.doc )</span>
+<% end %>
+<br>
+
+<%
+	loots = @host.loots || []
+	loots.to_a.reject! { |loot| loot.ltype !~ /download/ }
+
+	if loots.length > 0
+%>
+Downloaded <%=h loots.length%> file(s) (<%= show_hide_link "host_loot" %>)<br/>
+<div id="host_loot" style="display: none;">
+<%= render 'hosts/loots', :loots => loots %>
+</div>
+<br/>
+
+<% end %>
+
+<table class="list" id="files">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Size</th>
+			<th>Available Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+
+		<% @entries.sort{|a,b| a['path'].to_s <=> b['path'].to_s}.each do |ent|
+
+			ifs = h(ent['path'].index("/") ? "/" : "\\")
+
+			fpath = ent['path'] + "#{ifs}" + ent['name']
+			fpath.gsub!("#{ifs}#{ifs}", "#{ifs}")
+
+			ent_icon = icon_for_filename(fpath)
+			ent_name = fpath
+			cls      = "icon_" + ent_icon
+		%>
+		<tr class=<%=h row_cycle %>>
+			<td>
+				<%= link_to(h(ent_name), session_download_path(@session, :path => fpath, :return => 'search', :query => @query), :data => { :confirm => "Download #{fpath}?", :class => cls}) %>
+			</td>
+			<td>
+				<%=h ent['size'] %>
+			</td>
+			<td>
+
+				<%= link_to("( BROWSE FOLDER )", session_files_path(@session, :path => ent['path'])) %> |
+				<%= link_to "( &times; DELETE &times; )".html_safe, session_delete_path(@session, :path => fpath, :return => 'search', :query => @query), :data => { :confirm => "Delete #{ent['name']}?", :method => :delete } %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+

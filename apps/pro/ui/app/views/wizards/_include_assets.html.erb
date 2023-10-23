@@ -1,0 +1,10 @@
+<%###
+  Rendering this partial includes the wizard's Backbone
+    class into the browser's global JS namespace.
+
+  Locals:
+    :symbol => the Wizard's symbol (see https://github.com/rapid7/pro/wiki/Sorcery-101:-Creating-a-wizard)
+ ###%>
+
+<%= include_stylesheet "wizards/#{symbol}" %>
+<%= javascript_include_tag "wizards/#{symbol}/index" %>

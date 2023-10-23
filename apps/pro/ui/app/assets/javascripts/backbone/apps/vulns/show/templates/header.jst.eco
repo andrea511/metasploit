@@ -1,0 +1,58 @@
+<div id="banner-region" class="foundation">
+  <div id="single-vuln-header">
+    <div class="row">
+      <div class="columns small-6 vuln-name">
+        <h5>
+          Name
+          <a class="pencil" href="javascript:void(0)"></a>
+        </h5>
+        <div class='strong'>
+          <%= @name %>
+        </div>
+      </div>
+
+      <div class="columns small-3 host">
+        <h5>
+          Host
+        </h5>
+
+        <div>
+          <a href='/hosts/<%= @host.id %>'><%= @host.address %></a>
+          <% if @service: %>
+            <span class='strong'>(<%= @service.name %>)</span>
+          <% end %>
+        </div>
+
+        <div>
+          <span class='light'><%= @host.name %></span>
+        </div>
+
+        <ul class="os-icons">
+          <% if @host.is_vm_guest: %>
+            <li><span class="vm-badge">VM</span></li>
+          <% end %>
+          <li><%- @host.os_icon_html %></li>
+        </ul>
+
+      </div>
+
+      <div class="columns small-3 vuln-refs">
+        <h5>
+          References
+          <a class="pencil" href="javascript:void(0)"></a>
+        </h5>
+
+        <div class='refs'>
+          <%# The dash below means this is NOT escaped before putting it in the HTML %>
+          <%# This is fine since it's a derived field that is rendered safely by a Ruby helper %>
+          <%- @refs.map((ref) -> ref. html_link).join('') %>
+          <a class='more'>More…</a>
+        </div>
+
+      </div>
+
+     </div>
+  </div>
+
+</div>
+

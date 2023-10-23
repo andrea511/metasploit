@@ -1,0 +1,42 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/notification_center/composite_views/notification_composite_view') %>',
+  '<%= javascript_path('shared/notification-center/backbone/views/item_views/notification_item_view') %>',
+  '<%= javascript_path('shared/notification-center/backbone/event_aggregators/event_aggregator') %>'
+], ($,template, NotificationItemView, EventAggregator) -> 
+ class NotificationCollectionView extends Backbone.Marionette.CollectionView
+  childView: NotificationItemView
+  emptyView: NotificationItemView
+
+  template: HandlebarsTemplates['notification_center/composite_views/notification_composite_view']
+
+  redraw_with_sort_preserved: ->
+    #Manually trigger collection reset event to redraw collection view
+    @collection.trigger('reset')
+
+  #Triggers don't work right b/c  scroller plugin initialized on its own
+  onRender: ->
+    #Debounce the scrollend event
+    debounced_function = _.debounce(@_load_more_notifications,500)
+    #Outside the scope of this view
+    #Clear any bindings in case close isn't called
+    $(".nano").off("scrollend")
+    $(".nano").on("scrollend",debounced_function)
+  onBeforeDestroy: ->
+    #Outside the scope of this view so we cleanup on close
+    $(".nano").off("scrollend")
+  reset_scroll_bar: (limit, el, heightRatio) =>
+    ratioHeight = $(window).height()*heightRatio
+    containerHeight = $(@el).height()
+
+    height = if ratioHeight < containerHeight  then ratioHeight else containerHeight
+
+    if @collection.length > limit
+      $('.nano', el).css('height', height)
+      $('.nano', el).nanoScroller({preventPageScrolling: true})
+    else
+      $('.nano', el).nanoScroller({stop:true})
+      $('.nano', el).css('height', containerHeight)
+    
+  _load_more_notifications: ->
+    EventAggregator.trigger('notification-center:load:more')

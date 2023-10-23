@@ -1,0 +1,25 @@
+.nexpose_console_form
+  {{#form "/" class="form formtastic nexpose_console"}}
+  {{hidden "_method" "CREATE"}}
+  %li.console_name
+    {{label "nexpose_console[name]" "Name"}}
+    {{input "nexpose_console[name]" name}}
+  %li.console_address
+    {{label "nexpose_console[address]" "Address"}}
+    {{input "nexpose_console[address]" address}}
+  %li.console_port
+    {{label "nexpose_console[port]" "Port"}}
+    {{input "nexpose_console[port]" port}}
+  %li.console_username
+    {{label "nexpose_console[username]" "Username"}}
+    {{input "nexpose_console[username]" username}}
+  %li.console_password
+    {{label "nexpose_console[password]" "Password"}}
+    {{password "nexpose_console[password]" password}}
+  {{/form}}
+
+  .connectivity
+    .connection_success
+      Connected successfully.
+    .connection_error
+      Connection failed.

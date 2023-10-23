@@ -1,0 +1,21 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/cleanup_task') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+], ($, Template, TaskConfigView) ->
+  class CleanupTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/cleanup_task']
+
+    onShow:() ->
+      @loadPartial("/workspaces/#{WORKSPACE_ID}/tasks/new_cleanup?_nl=1", @_afterLoad, @)
+
+    #No Validation Needed so we simulate it
+    onBeforeClose: =>
+      @errors = null
+      #Can't bind to @el b/c no longer in the Dom at this point
+      $(document).trigger('validated',@)
+
+    _afterLoad: (args) =>
+      @delegateEvents()
+      @bindUIElements()
+      $("#cleanup_all_sessions",@el).checkAll $("#cleanup_sessions")

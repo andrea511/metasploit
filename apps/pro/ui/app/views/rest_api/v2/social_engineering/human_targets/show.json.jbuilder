@@ -1,0 +1,1 @@
+json.partial! 'human_target', human_target: @human_target

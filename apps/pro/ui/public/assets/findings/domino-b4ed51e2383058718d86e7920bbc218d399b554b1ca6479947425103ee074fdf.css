@@ -1,0 +1,420 @@
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.sexy-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-weight: 300;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.small-caps-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-size: 11px;
+  position: relative;
+}
+
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/spinner.scss */
+.spinner {
+  background-image: url(/assets/spinner-e008bc0bca2fa6f9b9c113fad73551230961baec88c06b20997ec50171bb2b6b.gif);
+  width: 16px;
+  height: 16px;
+  display: none;
+  margin-left: 10px;
+}
+
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/spinner.scss */
+.spinner.retina {
+  background-image: url(/assets/spinners/retina-spinner-6224558e17a0a3b81882db9c9b2d8c49267029f61254dcdd02e659e87b57f157.gif);
+  background-repeat: no-repeat;
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/spinner.scss */
+  .spinner.retina {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/spinners/retina-spinner@2x-e0613c810129f5bb095b5cdcc1ffce77ee17e758f81c9c2580de0f3ef858e081.gif);
+    background-size: 16px 16px;
+  }
+}
+
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.node-info {
+  position: absolute;
+  width: 220px;
+  margin-left: -110px;
+  top: 0;
+  left: 0;
+  padding: 14px;
+  border: 1px solid #aaa;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  color: #999;
+  font-weight: normal;
+}
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.node-info label {
+  color: #000;
+  font-weight: 600;
+}
+/* line 22, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.node-info label.no-margin {
+  margin-top: 0;
+}
+/* line 26, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.node-info hr {
+  width: 0;
+  color: white;
+  margin: 10px 0 0 0;
+  border: 0;
+}
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.node-info div.table {
+  margin: 0;
+}
+/* line 34, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.node-info div.table .left, .node-info div.table .right {
+  margin-top: 2px;
+  display: inline-block;
+  width: 40%;
+  margin: 0;
+  font-weight: normal;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.node-info div.table .right {
+  width: 60%;
+  color: #000;
+  font-weight: 100;
+}
+/* line 47, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.node-info div.table .left {
+  color: #999;
+}
+
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.node-info .truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 60, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+tr.high-value .cell1, tr.high-value .cell0 a {
+  color: #ea5709;
+  font-weight: 600;
+}
+
+/* line 66, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+/* line 72, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls input[name='orientation'], .graph-controls input[name='full-screen'] {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  margin: 0;
+}
+/* line 77, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls input[name='orientation'] ~ span.icon, .graph-controls input[name='full-screen'] ~ span.icon {
+  position: relative;
+}
+/* line 79, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls input[name='orientation'] ~ span.icon:hover:before, .graph-controls input[name='full-screen'] ~ span.icon:hover:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #ddd;
+  background-color: #eee;
+  background-image: -moz-linear-gradient(#fff, #eee);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(1, #eee));
+  background-image: -webkit-linear-gradient(#fff, #eee);
+  background-image: -o-linear-gradient(#fff, #eee);
+  background-image: -ms-linear-gradient(top, #fff, #eee);
+  background-image: linear-gradient(top, #fff, #eee);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls input[name='orientation'] ~ span.icon:active:before, .graph-controls input[name='full-screen'] ~ span.icon:active:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #ddd;
+  background: #eee;
+  border-radius: 2px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+/* line 97, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls input[name='orientation'] ~ span.icon:after, .graph-controls input[name='full-screen'] ~ span.icon:after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+}
+/* line 104, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls input[name='orientation']:checked ~ span.icon, .graph-controls input[name='full-screen']:checked ~ span.icon {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+/* line 107, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls input[name='orientation']:checked ~ span.icon:before, .graph-controls input[name='full-screen']:checked ~ span.icon:before {
+  content: none;
+}
+/* line 112, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls input[name='full-screen'] ~ span.icon:after {
+  background-image: url(/assets/metamodules/domino/fullscreen_enter-5a68002e8e9b3ef1e5ca6056051271f4fc36416cd8b4880c5f49d87353e2eff1.svg);
+}
+/* line 115, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls input[name='full-screen']:checked ~ span.icon:after {
+  background-image: url(/assets/metamodules/domino/fullscreen_exit-cf2c466f175d31d8c84754f9422f8abfa42d15317dfe713ed4ce52a91a8b7766.svg);
+}
+/* line 119, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls span.icon {
+  background: #fff;
+  float: none;
+  border-radius: 2px;
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+}
+/* line 126, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls span.icon:after {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+}
+/* line 133, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls label {
+  cursor: pointer;
+}
+/* line 135, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls label.vertical span.icon:after {
+  background-image: url(/assets/metamodules/domino/layout_vertical-a3108a372e38415962a51a1eaac5f7162f6c8e562e172088576d2768bc839e3b.svg);
+}
+/* line 138, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls label.horizontal span.icon:after {
+  background-image: url(/assets/metamodules/domino/layout_horizontal-fea3c674c272a38591033446e3b3cffe11027692565607e0efab19ff59f08c38.svg);
+}
+/* line 141, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.graph-controls label.radial span.icon:after {
+  background-image: url(/assets/metamodules/domino/layout_radial-1a2d19ff5fd65c7eee514376c024508e0f8880e1ed8900d37db5acb42d2b5345.svg);
+}
+
+/* line 148, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization {
+  overflow: hidden;
+}
+/* line 159, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .please-wait {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  border: 0;
+}
+/* line 166, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .please-wait .middle {
+  margin: 0 auto;
+  text-align: center;
+  padding: 15px;
+  border: 1px solid #ccc;
+  background: #fff;
+  width: 250px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+/* line 174, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .please-wait .middle img {
+  vertical-align: bottom;
+  margin-right: 2px;
+}
+/* line 181, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node {
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+/* line 189, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node circle.outer-circle {
+  fill: #fff;
+  stroke: #bdbdbd;
+  stroke-width: 3px;
+  -moz-transition: stroke 0.2s ease-in-out;
+  -o-transition: stroke 0.2s ease-in-out;
+  -webkit-transition: stroke 0.2s ease-in-out;
+  -ms-transition: stroke 0.2s ease-in-out;
+  transition: stroke 0.2s ease-in-out;
+}
+/* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.tiny circle.outer-circle {
+  stroke-width: 2px;
+}
+/* line 200, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node circle.inner-circle {
+  fill: #bdbdbd;
+  -moz-transition: fill 0.2s ease-in-out;
+  -o-transition: fill 0.2s ease-in-out;
+  -webkit-transition: fill 0.2s ease-in-out;
+  -ms-transition: fill 0.2s ease-in-out;
+  transition: fill 0.2s ease-in-out;
+}
+/* line 206, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.important circle.inner-circle {
+  fill: #e15d00;
+}
+/* line 209, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.important text {
+  fill: #fff;
+}
+/* line 214, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node text {
+  -moz-transition: fill 0.2s ease-in-out;
+  -o-transition: fill 0.2s ease-in-out;
+  -webkit-transition: fill 0.2s ease-in-out;
+  -ms-transition: fill 0.2s ease-in-out;
+  transition: fill 0.2s ease-in-out;
+}
+/* line 218, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node {
+  font: 10px sans-serif;
+}
+/* line 223, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.selected circle.outer-circle {
+  stroke: #666;
+}
+/* line 226, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.selected circle.inner-circle {
+  fill: #a4a4a4;
+}
+/* line 230, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.selected text {
+  fill: #000;
+}
+/* line 237, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.forward circle.outer-circle {
+  stroke: #666;
+}
+/* line 240, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.forward circle.inner-circle {
+  fill: #a4a4a4;
+}
+/* line 244, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.forward text {
+  fill: #000;
+}
+/* line 251, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.hover circle.outer-circle {
+  stroke: #414141;
+}
+/* line 254, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.hover circle.inner-circle {
+  fill: #414141;
+}
+/* line 258, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .node.hover text {
+  fill: #fff;
+}
+/* line 265, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .link {
+  fill: none;
+  stroke: #c0c0c0;
+  stroke-width: 1px;
+  -moz-transition: stroke 0.2s ease-in-out;
+  -o-transition: stroke 0.2s ease-in-out;
+  -webkit-transition: stroke 0.2s ease-in-out;
+  -ms-transition: stroke 0.2s ease-in-out;
+  transition: stroke 0.2s ease-in-out;
+}
+/* line 271, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .link.hover {
+  stroke: #414141;
+}
+/* line 275, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .link.selected {
+  stroke: #666;
+}
+/* line 279, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .link.forward {
+  stroke: #666;
+}
+/* line 284, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization text {
+  font-size: 12px;
+}
+/* line 288, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .wrapper.outer > .background {
+  fill: #fff;
+}
+/* line 291, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .wrapper.inner > .background {
+  fill: #fff;
+  cursor: move;
+}
+/* line 295, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .background {
+  fill: #fff;
+  cursor: move;
+}
+/* line 299, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .panCanvas {
+  cursor: move;
+}
+/* line 303, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .minimap {
+  stroke: #999;
+  stroke-width: 1px;
+}
+/* line 308, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .minimap .frame .background {
+  stroke: #111111;
+  stroke-width: 4px;
+  fill-opacity: 0.4;
+  fill: #000000;
+  fill: url(#minimapGradient);
+  filter: url(#minimapDropShadow);
+  cursor: move;
+}
+/* line 319, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .z-1 .link {
+  stroke-width: 1px;
+}
+/* line 323, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .z-1 circle.outer-circle {
+  stroke-width: 1px;
+}
+/* line 327, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .z-1 text {
+  display: none;
+}
+/* line 333, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .z8 text {
+  font-size: 11px;
+}
+/* line 339, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .z10 text {
+  font-size: 8px;
+}
+/* line 345, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+.d3-graph-visualization .z14 text {
+  font-size: 6px;
+}
+
+/* line 352, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/findings/domino.scss */
+label.high-value-only {
+  position: absolute;
+  top: -29px;
+  left: 87px;
+  color: #ea5709;
+}

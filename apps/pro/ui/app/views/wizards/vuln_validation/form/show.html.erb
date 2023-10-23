@@ -1,0 +1,230 @@
+<meta name='steps' content="<%= @steps.map { |s| [s, wizard_path(s)] }.to_json %>" />
+<%= semantic_form_for @form, as: :vuln_validation, url: wizard_path, :authenticity_token => false do |f| %>
+  <input type='hidden' name='_method' value='PUT' />
+  <div class='page create_project'>
+    <%= nested_semantic_fields_for @form.workspace do |workspace| %>
+      <%= workspace.input :name, label: "Project Name", required: true %>
+      <%= workspace.input :description, label: "Description", as: :text %>
+      <!--<%= workspace.input :limit_to_network, :label => "Restrict to network range", :required => false %> -->
+      <a class='advanced'>Advanced</a>
+      <div class='advanced'>
+        <%= render partial: 'workspaces/users', locals: { f: workspace, hide_boundary: true, no_js: true } %>
+      </div>
+    <% end %>
+  </div>
+  <div class='page pull_nexpose'>
+    <div class='foundation'>
+      <div class='row console'>
+        <%= f.input :nexpose_console_id, as: :select, collection: @consoles, label: 'Nexpose Console',
+          include_blank: 'Choose a Nexpose Console...' %>
+        <a class='green-add' href='javascript:void(0)'>+</a>
+        <a class='new' href='javascript:void(0)'>Configure a Nexpose Console</a>
+      </div>
+      <div class='row gather_type'>
+        <%= f.input :nexpose_gather_type, as: :radio, collection: ::Wizards::VulnValidation::Form::NEXPOSE_GATHER_TYPES.invert, label: false %>
+      </div>
+      <div class='advanced nexpose'>
+        <%= f.input :import_run_id, as: :hidden %>
+        <div class='import tab-loading'>
+          <div class='sites'>
+            <h5>Select sites to import vulnerability data from:</h5>
+            <table class="list nexpose_sites_table"></table>
+            <div class='clearfix'></div>
+          </div>
+
+          <div class='warn'>
+            <span class='message'>Connection error occurred.</span>
+          </div>
+        </div>
+        <div class='scan'>
+          <%= nested_semantic_fields_for @form.nexpose_scan_task, as: :nexpose_scan_task do |nexpose_scan_task| %>
+            <%= nexpose_scan_task.input :whitelist_string, :label => "Scan targets", :as => :text %>
+            <%= nexpose_scan_task.input :blacklist_string, :label => "Excluded Addresses", :as => :text %>
+            <%= nexpose_scan_task.input :scan_template, :label => "Scan template", :as => :select, :include_blank => false %>
+            <%= nexpose_scan_task.help_link :scan_template do -%>
+              <h3>Scan Template</h3>
+              <p>A scan template is a predefined set of Nexpose scan options. You can choose from the following Nexpose scan templates:</p>
+                  <ul>
+                    <li>Penetration Test Audit - An in-depth scan of all systems that uses only safe checks and dynamically detects assets that might not otherwise be detected.</li>
+                    <li>Full Audit - A full network audit of all systems uses only safe checks, including network-based vulnerabilities, patch/hotfix checking, and application-layer auditing. The system scans only default ports and disables policy checking.</li>
+                    <li>Exhaustive Audit - A thorough scan that uses only safe checks, including patch/hotfix inspections, policy compliance assessments, and application-layer auditing.</li>
+                    <li>Discovery - A scan that locates live assets on the network and identifies their host names and operating systems.</li>
+                    <li>Aggressive Discovery - A fast scan that locates live assets on high-speed networks and identifies their host names and operating systems.</li>
+                    <li>DoS Audit - A basic audit of all network assets uses both safe and unsafe (denial-of-service) checks.</li>
+                  </ul>
+            <% end -%>
+            <!--
+            TODO: BRING ME BACK PL0X SIRs
+            <li class="boolean optional" id="additional_creds_checkbox_input">
+              <label for="additional_creds_checkbox">
+              <input type="checkbox" id="additional_creds_checkbox"></input>
+              Specify additional scan credentials</label>
+            </li>
+            <div class="additional_creds_fields" class="appear-box">
+              <%= nexpose_scan_task.input :nexpose_creds_type, :label => "Type", :as => :select,
+                :collection => NexposeTask::CREDENTIAL_TYPES_LABELS.zip(NexposeTask::CREDENTIAL_TYPES) %>
+              <%= nexpose_scan_task.input :nexpose_creds_user, :label => "User", :input_html => { :autocomplete => :off } %>
+              <%= nexpose_scan_task.input :nexpose_creds_pass, :label => "Password", :as => :password, :input_html => { :autocomplete => :off } %>
+            </div>-->
+          <% end %>
+        </div>
+        <div class='empty_msg'>
+          Select or configure a Nexpose Console.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='page tag'>
+    <%= f.input :tagging_enabled, as: :hidden %>
+    <%= f.input :tag_by_os, as: :boolean, label: "Automatically Tag by OS" %>
+        <%= f.help_link :tag_by_os do -%>
+            <h3>Tag by OS</h3>
+            <p>If enabled, this option tags hosts based on their operating system. Windows hosts will have the os_windows tag, and Linux hosts will have the os_linux tag.</p>
+        <% end -%>
+    <%= f.input :use_custom_tag, as: :boolean, label: "Use Custom Tag" %>
+        <%= f.help_link :use_custom_tag do -%>
+            <h3>Use Custom Tag</h3>
+            <p>If enabled, this option creates a new host tag and uses it to tag all hosts with a user-defined tag. To define a custom tag, specify the tag name in the Name field.</p>
+            <p>You can also apply the following reporting options, which are only applicable to the Audit Report:</p>
+            <ul>
+              <li>Include in report summary? - Includes the tagged hosts in the Executive Summary.</li>
+              <li>Include in report details? - Displays the details for the tagged hosts in the Detailed Findings.</li>
+              <li>Critical finding? - Lists the tagged hosts under the Critically Tagged Hosts section.</li>
+            </ul>
+        <% end -%>
+    <div class='advanced custom_tag'>
+      <%= nested_semantic_fields_for @form.custom_tag, as: :custom_tag do |tag| %>
+        <%= tag.input :name, as: :string, label: "Name" %>
+        <%= tag.input :desc, as: :text, label: "Description" %>
+        <%= tag.input :report_summary, as: :boolean, label: "Include in report summary?" %>
+        <%= tag.input :report_detail, as: :boolean, label: "Include in report details?" %>
+        <%= tag.input :critical, as: :boolean, label: "Critical Finding?" %>
+      <% end %>
+    </div>
+  </div>
+  <div class='page exploit'>
+    <%= nested_semantic_fields_for @form.exploit_task do |exploit_task| %>
+      <div class='foundation'>
+        <div class='row'>
+          <%= exploit_task.input :minimum_rank, :label => 'Minimum Reliability', :include_blank => false, :as => :select, :collection => ExploitTask::RANKS %>
+          <%= exploit_task.help_link :minimum_rank do -%>
+            <h3> Minimum Reliability</h3>
+            <ul>
+              <li>
+                <b>Excellent </b> – Exploits will never crash the service. Exploits with this ranking include SQL Injection, CMD execution, and certain weak service configurations. Most web application flaws fall into this category.
+              </li>
+              <li>
+                <b>Great </b> – Exploits will have a default target and either auto-detect the appropriate target, or use an application-specific return address after running a version check. These exploits can crash the target, but are considered the mostly likely to succeed.
+              </li>
+              <li>
+                <b>Good </b> – Exploits have a default target and it is the "common case" for this type of software (English, Windows XP for a desktop app, 2003 for server, etc.).
+              </li>
+              <li>
+                <b>Normal </b> – Exploits are reliable, but depend on a specific version and cannot reliably auto-detect.
+              <li>
+                <b>Average </b> – Exploits are generally unreliable or difficult to exploit.
+              </li>
+              <li>
+                <b>Low </b> – The exploit fails more than 50% of the time for common platforms.
+              </li>
+            </ul>
+          <% end -%>
+        </div>
+
+        <div class='row advanced' style='display:block'>
+          <div class='large-6 columns'>
+            <h5 style='margin-top:0'>Dry Run</h5>
+            <%= exploit_task.input :only_match, :label => "Only show exploit information, but do not run", :as => :boolean %>
+            <%= exploit_task.help_link :only_match do -%>
+              <h3>Dry run: only show exploit information, but do not run </h3> <p>Run an exploit correlation, print a transcript of the selected exploits, and immediately quit.
+            <% end -%>
+            <h5>Evidence</h5>
+            <%= f.input :collect_evidence, as: :boolean, label: "Collect evidence" %>
+            <%= f.help_link :collect_evidence do -%>
+                <h3>Collect Evidence</h3>
+                <p>Enable this option to obtain screenshots, system files, passwords, and configuration settings from open sessions. All looted passwords and credential files will be accessible from the Credentials tab on the single host page. All other data is viewable from the Captured Data tab, which is accessible from the Analysis area or from the single host page.</p>
+            <% end -%>
+            <h5>Sessions</h5>
+            <%= f.input :cleanup_enabled, as: :boolean, label: "Clean up sessions when done" %>
+            <%= f.help_link :cleanup_enabled do -%>
+                <h3>Session Cleanup</h3>
+                <p>Enable this option to close all open sessions after the test completes.</p>
+            <% end -%>
+            <h5>Excluded Addresses</h5>
+            <%= exploit_task.input :blacklist_string, as: :text, label: false %>
+            <%= exploit_task.help_link :blacklist_string do -%>
+                <h3>Excluded Addresses</h3>
+                <p>An exclusion address list explicitly defines the hosts that you do not want to exploit. This is useful when you have specified a range of hosts and have a few hosts you want to exclude from the test. You can enter one IP address or hostname per line or you can enter a comma separated list of hosts.</p>
+            <% end -%>
+          </div>
+          <div class='large-6 columns right-cols'>
+            <%= exploit_task.input :payload_type, :label => 'Payload Type', :as => :select, :collection => ExploitTask::PAYLOAD_TYPES %>
+            <%= exploit_task.help_link :payload_type do -%>
+                <h3>Payload Type</h3>
+                <p>This option specifies the type of payload that will be delivered. Select one of the following payload types:</p>
+                <ul>
+                  <li>Command - A payload that enables you to run scripts or arbitrary commands against an exploited host.</li>
+                  <li>Meterpreter - A payload that enables you to load scripts and and plugins dynamically. It uses in-memory DLL injections and resides in the memory of the remote host.</li>
+                </ul>
+            <% end -%>
+            <%= exploit_task.input :connection, :label => "Connection Type", :as => :select, :collection => ExploitTask::CONNECTIONS %>
+             <%= exploit_task.help_link :connection do -%>
+                <h3>Connection Type</h3>
+                <p>This option specifies the type of payload connection that will be used. Select one of the following connection types:</p>
+                <ul>
+                  <li>Auto - Uses a bind connection when NAT is detected.</li>
+                  <li>Bind - Uses a bind connection.</li>
+                  <li>Reverse - Uses a reverse connection.</li>
+                </ul>
+            <% end -%>
+            <%= exploit_task.input :payload_ports, :label => 'Listener Ports' %>
+            <%= exploit_task.input :payload_lhost, :label => "Listener Host" %>
+            <% if License.get.supports_macros? %>
+              <%= exploit_task.input :macro_name, :label => "Auto Launch Macro", :as => :select,
+                  :collection => ( [""] + Mdm::Macro.all.map{|m| m.name } ) %>
+              <%= exploit_task.input :max_threads, :label => "Concurrent Exploits", :as => :select, :collection => (1..5).to_a, :include_blank => false %>
+              <%= exploit_task.help_link :max_threads do -%>
+                <h3>Concurrent Exploits</h3>
+                <p>Defines the number of exploits attempts that can occur at one time.</p>
+              <% end -%>
+            <% end %>
+            <%= exploit_task.help_link :macro_name do -%>
+                <h3>Auto Launch Macro</h3>
+                <p>This option specifies the macro, or script, that you want to run during post-exploitation. You can create a macro from the Global Settings.</p>
+            <% end -%>
+            <%= exploit_task.input :timeout, :label => "Timeout in Minutes" %>
+            <%= exploit_task.help_link :timeout do -%>
+                <h3>Timeout</h3>
+                <p>This option specifies the number of minutes an exploit will wait for a response before it times out.</p>
+            <% end -%>
+            <%= exploit_task.input :evasion_level_tcp, :label => "Transport Evasion", :as => :select,
+                :collection => ExploitTask::EVASION_LEVELS_LABELS.zip(ExploitTask::EVASION_LEVELS) %>
+            <%= exploit_task.help_link :evasion_level_tcp do -%>
+                <h3>Transport Evasion</h3>
+                <p>This option specifies the transport evasion level. Choose from the following transport evasion levels:</p>
+                <ul>
+                  <li>Low - Inserts delays between TCP packets.</li>
+                  <li>Medium - Sends small TCP packets.</li>
+                  <li>High - Sends small TCP packets and inserts delays between them.</li>
+                </ul>
+            <% end -%>
+            <%= exploit_task.input :evasion_level_app, :label => "Application Evasion", :as => :select,
+                :collection => ExploitTask::EVASION_LEVELS_LABELS.zip(ExploitTask::EVASION_LEVELS) %>
+            <%= exploit_task.help_link :evasion_level_app do -%>
+                <h3>Application Evasion</h3>
+                <p>This option adjusts application-specific evasion options for exploits involving DCERPC, SMB and HTTP. The higher the application evasion level, the more evasion techniques are applied.</p>
+            <% end -%>
+            <%= exploit_task.input :whitelist_ports, :label => "Included Ports", :as => :string %>
+            <%= exploit_task.input :blacklist_ports, :label => "Excluded Ports", :as => :string %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= render partial: 'wizards/report_tab',
+             locals: { f: f,
+                       report: @form.report,
+                       rtypes: report_types_for_vuln_validation
+             }
+  %>
+<% end %>

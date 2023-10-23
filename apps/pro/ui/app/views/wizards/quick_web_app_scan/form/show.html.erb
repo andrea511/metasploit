@@ -1,0 +1,131 @@
+<meta name='steps' content="<%= @steps.map { |s| [s, wizard_path(s)] }.to_json %>" />
+<%= semantic_form_for @form, :as => :quick_web_app_scan, :url => wizard_path, :authenticity_token => false do |f| %>
+  <input type='hidden' name='_method' value='PUT' />
+  <div class='page create_project'>
+    <%= f.input :scan_type, :as => :radio, :collection => scan_types_collection_for_web_app_scan %>
+    <%= nested_semantic_fields_for @form.workspace do |workspace| %>
+      <%= workspace.input :name, :label => "Project Name", :required => false %>
+      <!-- <%= workspace.input :limit_to_network, :label => "Restrict to network range", :required => false %> -->
+    <% end %>
+    <hr />
+    <%= nested_semantic_fields_for @form.import_task do |import_task| %>
+      <label id='import_file_big_header'>Import File</label>
+      <%= import_task.input :file, :label => 'File', :as => :file, :wrapper_html => {:style=>"display:none"} %>
+    <% end %>
+    <%= nested_semantic_fields_for @form.web_scan_task, :as => :web_scan_task do |web_scan| %>
+      <%= web_scan.input :urls, :label => "Web Application Target URLs", :as => :text %>
+    <% end %>
+    <a href='#' class='advanced'>Advanced</a>
+    <div class='advanced' style='display:block'>
+      <div class='row' id='scan_now_advanced'>
+        <%= nested_semantic_fields_for @form.web_scan_task, :as => :web_scan_task do |web_scan| %>
+          <div class='cell' style='width: 48%;margin-left: 2%;'>
+          <%= web_scan.input :exclude_path_patterns , :as=> :text, :label=> 'Path exclusion patterns' %>
+          </div>
+          <div class='cell' style='width: 45%; margin-left: 5%;'>
+            <%= web_scan.input :max_pages, :label => "Maximum pages to request per URL", :wrapper_html => { :class => "slider" }, :input_html => { 'data-min' => 100, 'data-max' => 10050, 'data-inc' => 50, 'data-infinity' => 'true' } %>
+            <%= web_scan.input :max_minutes, :label => "Time limit per URL (in minutes)", :wrapper_html => { :class => "slider" }, :input_html => { 'data-min' => 1, 'data-max' => 31, 'data-infinity' => 'true' } %>
+            <%= web_scan.input :max_threads, :label => "Concurrent requests per URL", :wrapper_html => { :class => "slider" }, :input_html => { 'data-min' => 1, 'data-max' => 10 } %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class='row' id='import_advanced' style='display:none'>
+        <%= nested_semantic_fields_for @form.import_task do |import_task| %>
+          <%= import_task.input :preserve_hosts,   :label => "Do not change existing hosts", :as => :boolean %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class='page configure_auth'>
+    <%= f.input :auth_enabled, :as => :hidden %>
+    <h3 class='enabled'>Authentication is <span class='disabled'>disabled</span></h3>
+    <%= nested_semantic_fields_for @form.web_scan_task, :as => :web_scan_task do |web_scan| %>
+      <div class='row' id='basic_auth_row'>
+        <div id='web_scan_task_auth_type_basic_input' class='cell radio' style='width:20%;position:relative;'>
+          <%= web_scan.help_link "auth_type_basic" do %>
+              <h3>HTTP Authentication</h3>
+              <p>
+                This is for HTML Protocol Based Authentication Methods.<br>
+                Supports Basic, Digest, Negotiate, and NTLM Authentication.
+              </p>
+          <% end %>
+          <label for="quick_web_app_scan_auth_type_basic">
+            <input id="quick_web_app_scan_auth_type_basic" name="quick_web_app_scan[auth_type][]" type="checkbox" value="basic">
+          HTTP Authentication
+          </label>
+        </div>
+        <div class='cell' style='width:40%'>
+          <%= web_scan.input :http_username, :label => "Username" %>
+        </div>
+        <div class='cell' style='width:40%'>
+          <div>
+            <%= web_scan.input :http_password, :label => "Password", :as => :password, :input_html => {:autocomplete => :off} %>
+          </div>
+          <label class='plaintext'>
+            <input id="show_plaintext" name="show_plaintext" type="checkbox">
+            Display password
+          </label>
+        </div>
+        <div class='cell' style='width:100%' >
+          <%= web_scan.input :http_domain, :label => "Domain" %>
+        </div>
+      </div>
+      <div class='row' id='cookie_auth_row'>
+        <div class='cell radio' style='width:20%'>
+          <label for="quick_web_app_scan_auth_type_cookie">
+            <input id="quick_web_app_scan_auth_type_cookie" name="quick_web_app_scan[auth_type][]" type="checkbox" value="cookie">
+            Cookie
+          </label>
+        </div>
+        <div class='cell' style='width:80%'>
+          <%= web_scan.input :cookie, :label => "Data", :as => :text %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class='page configure_web_audit'>
+    <%= f.input :web_audit_enabled, :as => :hidden %>
+    <h3 class='enabled'>Find vulnerabilities is <span class='enabled'>enabled</span></h3>
+    <%= nested_semantic_fields_for @form.web_audit_task, :as => :web_audit_task do |web_audit| %>
+      <div style='text-align: center;'>
+        <%= web_audit.input :max_threads, :label => "Maximum concurrent HTTP requests", :wrapper_html => { :class => "slider" }, :input_html => { 'data-min' => 1, 'data-max' => 10 } %>
+        <div></div><!-- block; -->
+        <%= web_audit.input :max_minutes, :label =>"Time limit/form in minutes", :wrapper_html => { :class => "slider" }, :input_html => { 'data-min' => 1, 'data-max' => 31, 'data-infinity' => 'true' } %>
+      </div>
+    <% end %>
+  </div>
+  <div class='page configure_web_sploit'>
+    <%= f.input :web_sploit_enabled, :as => :hidden %>
+    <h3 class='enabled'>Exploit vulnerabilities is <span class='enabled'>enabled</span></h3>
+    <%= nested_semantic_fields_for @form.web_sploit_task, :as => :web_sploit_task do |web_sploit| %>
+      <div class='row'>
+        <div class='cell' style='margin:0 160px'>
+          <%= web_sploit.input :timeout, :label => "Timeout (minutes)", :wrapper_html => { :class => "slider" }, :input_html => { 'data-min' => 1, 'data-max' => 31, 'data-infinity' => 'true' } %>
+          <%= web_sploit.input :limit_sessions, :as => :boolean, :label => "Obtain one session per target & skip targets w/session", :class => "inline" %>
+          <div class='row'>
+            <%= web_sploit.input :payload_type, :label => 'Payload type', :as => :select, :collection => ExploitTask::PAYLOAD_TYPES %>
+            <%= web_sploit.input :connection, :label => "Connection type", :as => :select, :collection => ExploitTask::CONNECTIONS %>
+          </div>
+          <div class='row'>
+            <%= web_sploit.input :payload_ports, :label => 'Listener ports' %>
+            <%= web_sploit.input :payload_lhost, :label => "Listener host" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render :partial => 'wizards/report_tab',
+             :locals => { :f => f,
+                          :report  => @form.report,
+                          :rtypes => report_types_for_quick_web_app_scan,
+             }
+  %>
+
+  <!-- option for no_files -->
+  <input type='hidden' name='no_files' value='' />
+<% end %>

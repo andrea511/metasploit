@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+
+msfbase = __FILE__
+while ::File.symlink?( msfbase )
+	msfbase = ::File.expand_path( ::File.readlink( msfbase ), ::File.dirname( msfbase ) )
+end
+
+$:.unshift( ::File.join( ::File.expand_path( ::File.dirname( msfbase ) ), '..', 'msf3', 'lib' ) )
+$:.unshift( ::File.join( ::File.expand_path( ::File.dirname( msfbase ) ), 'lib' ) )
+$:.unshift( ENV['MSF_LOCAL_LIB'] ) if ENV['MSF_LOCAL_LIB']
+
+require 'rex'
+require 'rex/post/meterpreter/extensions/pivot/tap/daemon/tapd'
+
+opts = {
+	'ServerHost' => '127.0.0.1',
+	'ServerPort' => 55552,
+	'SSL'        => true,
+	}
+
+foreground = false
+
+args = Rex::Parser::Arguments.new(
+	"-a" => [ true,  "Bind to this IP address instead of loopback" ],
+	"-p" => [ true,  "Bind to this port"                           ],
+	"-f" => [ false, "Run the daemon in the foreground"            ],
+	"-S" => [ false, "Disable SSL on the msftapd socket"           ],
+	"-h" => [ false, "Help banner"                                 ]
+	)
+
+args.parse( ARGV ) do | opt, idx, val |
+	case opt
+		when "-a"
+			opts['ServerHost'] = val
+		when "-p"
+			opts['ServerPort'] = val.to_i
+		when "-f"
+			foreground = true
+		when "-S"
+			opts['SSL'] = false
+		when "-h"
+			print( "\nUsage: #{::File.basename(__FILE__)} <options>\n" + args.usage )
+			exit( 0 )
+	end
+end
+
+$stderr.puts "[*] Initializing msftapd..."
+
+$tapd = Rex::Post::Meterpreter::Extensions::Pivot::Tap::Daemon::TapDaemon.new( opts )
+
+$stderr.puts "[*] Running msftapd..."
+
+begin
+	if( not foreground )
+		exit( 0 ) if ::Process.fork()
+	end
+rescue ::NotImplementedError
+	$stderr.puts "[-] Background mode is not available on this platform"
+end
+
+$tapd.start
+
+exit( 0 )
+

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="creds_details" language="groovy" pageWidth="538" pageHeight="752" columnWidth="538" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ce6a18ea-9323-4f01-a72b-afb65096e5ee">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<subDataset name="Creds" uuid="3f029b3f-0116-4819-b17c-8ddf7a57d795">
+		<parameter name="host_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="mask_credentials" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="app_run_id" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select
+  distinct logins.id,
+  coalesce(publics.username, '*BLANK*')  AS public,
+  coalesce(privates.data, '*BLANK*')     AS private_data,
+  logins.created_at AS login_created
+from metasploit_credential_logins logins
+inner join credential_logins_tasks ON (logins.id = credential_logins_tasks.login_id)
+inner join tasks ON (credential_logins_tasks.task_id = tasks.id)
+inner join metasploit_credential_cores cores ON (logins.core_id = cores.id)
+inner join services ON (logins.service_id = services.id)
+inner join hosts    ON (services.host_id = hosts.id)
+left outer join metasploit_credential_publics publics   ON (cores.public_id = publics.id)
+left outer join metasploit_credential_privates privates ON (cores.private_id = privates.id)
+where hosts.id = $P{host_id}
+and tasks.app_run_id = $P{app_run_id}]]>
+		</queryString>
+		<field name="public" class="java.lang.String"/>
+		<field name="private_data" class="java.lang.String"/>
+		<field name="login_created" class="java.sql.Timestamp"/>
+	</subDataset>
+	<parameter name="host_id" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mask_credentials" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[select 1]]>
+	</queryString>
+	<summary>
+		<band height="52" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="a14fa628-7060-40f2-a73c-ecb1f4ed08b9" key="table" x="0" y="0" width="538" height="52"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Creds" uuid="6d74e138-1145-4072-930f-00db16e5d2d0">
+						<datasetParameter name="host_id">
+							<datasetParameterExpression><![CDATA[$P{host_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="mask_credentials">
+							<datasetParameterExpression><![CDATA[$P{mask_credentials}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="app_run_id">
+							<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="157" uuid="69dca396-6ad1-4b94-a7c7-e91fadfc2997">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="d6212a3c-0e8c-40f2-a81b-c9526d4ab0e9" style="section_header_3" x="0" y="0" width="157" height="25"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<text><![CDATA[Username]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" stretchType="RelativeToTallestObject" x="0" y="1" width="157" height="24"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{public}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="157" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="199" uuid="4b3841a3-828f-47d1-9348-ee119672cf93">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="5dfcb782-92a9-4b7c-9072-3f99bc42ea6e" style="section_header_3" x="0" y="0" width="199" height="25"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<text><![CDATA[Password]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="18ff7a65-ecff-4340-b9c2-76d932387773" stretchType="RelativeToBandHeight" x="0" y="1" width="199" height="24" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+								<textElement verticalAlignment="Middle" markup="none">
+									<font size="9"/>
+									<paragraph spacingBefore="1" spacingAfter="2"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{mask_credentials} ? "*MASKED*" : $F{private_data})]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="199" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="182" uuid="4fb12251-fb0f-4f5e-93ab-c207841d4b2e">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="6fb0fd99-40e7-465f-93af-148f4fe25207" style="section_header_3" x="0" y="0" width="182" height="25" forecolor="#000000"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Authentication Recorded]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" stretchType="RelativeToTallestObject" x="0" y="1" width="182" height="24"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[(new SimpleDateFormat("yyyy-MM-dd HH:mm a")).format($F{login_created})]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="182" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

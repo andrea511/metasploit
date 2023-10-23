@@ -1,0 +1,3 @@
+.generic-stat-wrapper{:clickable=>'true'}
+  %canvas.scan{:height =>'80px', :width=>'78px'}
+  .task

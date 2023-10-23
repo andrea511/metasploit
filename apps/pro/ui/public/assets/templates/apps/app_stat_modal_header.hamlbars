@@ -1,0 +1,7 @@
+%h3 {{appRun/attributes/app/name}}
+%label.status{ :class => '{{appRun/attributes/status}}' }
+  {{humanize appRun/attributes/status}}
+.right.nexpose-push
+  <!-- todo: move this business somewhere better -->
+  %span.push_exceptions
+

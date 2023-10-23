@@ -1,0 +1,13 @@
+<% if @model.get('attempt_session') == 'false': %>
+  <div>No Session Possible</div>
+<% else if @model.get('attempting_session'): %>
+  <a href="javascript:void(0)" class="btn primary narrow disabled">Attempt Session</a>
+  <div class='loading'></div>
+<% else if @model.get('completed') and _.isEmpty(@model.get('session')): %>
+  <div>Attempt Failed <a href="javascript:void(0) " class="btn primary reload"></a></div>
+<% else if @model.get('completed') and not _.isEmpty(@model.get('session')): %>
+  <a href="<%= Routes.session_path(WORKSPACE_ID,@model.get('session').id) %>" class="">Session <%= @model.get('session').id %></a>
+<% else: %>
+  <a href="javascript:void(0)" class="btn primary narrow">Attempt Session</a>
+<% end %>
+

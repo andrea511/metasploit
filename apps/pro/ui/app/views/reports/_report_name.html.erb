@@ -1,0 +1,11 @@
+<%= f.inputs 'Name' do -%>
+  <%= f.input :name,
+              :required   => false
+  %>
+
+  <%= f.help_link 'name' do %>
+      <h3>Report name</h3>
+      <p>The name to use in creating the report artifacts. The file extension is added automatically based on the selected file formats, so only the base name needs to be specified.</p>
+      <p>This name can only contain alphanumeric characters, periods, hyphens, and underscores.</p>
+  <% end %>
+<% end %>

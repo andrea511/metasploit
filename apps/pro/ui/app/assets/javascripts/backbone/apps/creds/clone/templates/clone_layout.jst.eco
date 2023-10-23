@@ -1,0 +1,16 @@
+<td></td>
+<td>0</td>
+<td class="public"></td>
+<td class="private"></td>
+<td class="type"></td>
+<td class="realm"></td>
+<td>Manual</td>
+<td>Not Validated</td>
+<td>0 tags</td>
+<td>
+  <div class="spinner-content">
+    <a href="javascript:void(0)" class="save">Save</a>
+    <a href="javascript:void(0)" class="cancel">Cancel</a>
+  </div>
+  <div class="spinner"></div>
+</td>

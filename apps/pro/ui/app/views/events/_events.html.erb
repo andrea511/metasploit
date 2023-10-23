@@ -1,0 +1,45 @@
+<table id="events" class="list">
+<col></col>
+<col></col>
+<% if License.get.multi_user? %>
+	<col></col>
+<% end %>		
+<col width="100%"></col>
+<thead>
+	<tr>
+		<th>Time</th>
+<% if License.get.multi_user? %>
+		<th>User</th>
+<% end %>		
+		<th>Event</th>
+		<th>Details</th>
+	</tr>
+</thead>
+<tbody>
+<% events.each do |event| %>
+	<tr id="<%=h dom_id(event) %>" class="<%=h row_cycle %>">
+		<td class="timestamp"><%=h event.timestamp %></td>
+		<% if License.get.multi_user? %>
+		<td><%=h event.find_username || "<system>" %></td>
+		<% end %>
+		<td class="<%=h (event.critical and ! event.seen) ? "critical_event" : "normal_event" %>">
+			<%= case event.name
+				when 'module_run'
+					if event.info and event.info[:module_name].to_s !~ /^auxiliary\/pro/
+	  					link_to h(event.name), clone_module_run_path(@workspace, event.id)
+	  				else
+	  					h event.name
+	  				end
+	  			when 'session_open'
+		  			link_to h(event.name), clone_module_run_path(@workspace, event.id)
+				else
+					h event.name
+				end
+			%>
+		</td>
+		<%= render 'events/info', :event => event %>
+	</tr>
+<% end %>
+</tbody>
+</table>
+

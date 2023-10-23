@@ -1,0 +1,33 @@
+<% include_stylesheet('task_chains/index') %>
+
+<%- content_for :head do %>
+  <%= include_gon nonce: @content_security_policy_nonce %>
+<%- end %>
+
+<% title "Task Chains" %>
+<% breadcrumb workspace_link, task_chains_link %>
+
+<div id="task-chains-main-region"></div>
+
+<% if License.get.supports_campaigns? %>
+  <%= javascript_include_tag 'backbone/require_config' %>
+
+  <%# TODO: Would be really neato if we could load the base dependencies
+      in their own module, a la config/load.js %>
+  <%= nonced_javascript_tag do %>
+    jQuery(document).bind('requirejs-ready', function(){
+      jQuery(document).ready(function() {
+        initProRequire(
+          [ 'apps/task_chains/task_chains_app'],
+          function() {
+            window.Pro.start({
+              environment: "<%= Rails.env %>"
+            });
+          }
+        );
+      });
+    });
+  <% end %>
+<% end %>
+
+<%= add_disable_overlay([:pro]) unless License.get.supports_schedules? %>

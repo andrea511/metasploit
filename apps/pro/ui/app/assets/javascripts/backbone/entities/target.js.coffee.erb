@@ -1,0 +1,81 @@
+define [
+  'base_model'
+  'base_collection'
+  'lib/concerns/entities/fetch_ids'
+], ->
+  @Pro.module "Entities", (Entities, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+
+    #
+    # A single credential core.
+    #
+    class Entities.Target extends App.Entities.Model
+
+
+      url: () ->
+        if @id?
+          "/workspaces/#{WORKSPACE_ID}/metasploit/credential/logins/#{@id}.json"
+        else
+          "/workspaces/#{WORKSPACE_ID}/metasploit/credential/logins.json"
+
+    class Entities.TargetCollection extends App.Entities.Collection
+
+      @include 'FetchIDs'
+
+      model: Entities.Target
+
+      # @param opts [Object] the options hash
+      # @option opts workspace_id [Number] the id of the host to look up accessing creds on
+      initialize: (models, opts={}) ->
+        wid = if opts.workspace_id then opts.workspace_id else WORKSPACE_ID
+        @workspace_id = opts.workspace_id || WORKSPACE_ID
+
+      url: =>
+        @url = "/workspaces/#{@workspace_id}/brute_force/reuse/targets.json"
+
+
+
+    #
+    # API
+    #
+
+    API =
+    # @return [Collection] of all Cred objects in a given workspace
+      getTargets: (models,opts) ->
+        targets = new Entities.TargetCollection(models,opts)
+        targets
+
+
+      getTarget: (id) ->
+        target = new Entities.Target(id: id)
+        target.fetch()
+        target
+
+      newTarget: (attributes={}) ->
+        new Entities.Target(attributes)
+
+    #
+    # REQUEST HANDLERS
+    #
+
+    # @param opts [Object] the options hash
+    # @option opts provide_access_to_host [Number] when set, the returned collection contains all
+    #   Creds that can be used to log into a host of the given ID
+    # @option opts originating_from_host [Number] when set, the returned collection contains all
+    #   Creds that can be used to log into a host of the given ID
+    # @option opts workspace_id [Number] when set, the returned collection contains all Creds in the
+    #   workspace of the given ID
+    # @throw [Entities.CredsCollection.ScopingError] if more than one of the above options are set
+    App.reqres.setHandler "targets:entities", (models,opts={}) ->
+      wid = if opts.workspace_id then opts.workspace_id else WORKSPACE_ID
+      opts.workspace_id = wid
+      API.getTargets(models,opts)
+
+    App.reqres.setHandler "target:entity", (id) ->
+      API.getTarget id
+
+    App.reqres.setHandler "new:target:entity", (attributes={}) ->
+      API.newTarget attributes

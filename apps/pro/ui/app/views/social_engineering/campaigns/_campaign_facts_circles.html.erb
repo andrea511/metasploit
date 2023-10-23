@@ -1,0 +1,107 @@
+<div class='no-results' style='display:none;'>
+  No data has been collected yet.
+</div>
+
+<div class='row large-circles'>
+  <div class='cell {{ campaignFacts.emails_sent.cellClass }}' >
+    <!-- http://ansciath.tumblr.com/post/7347495869/css-aspect-ratio -->
+    <!-- this would not be gross at all if I could use pseudoelements!!! -->
+    <div class='circle-dummy'></div>
+    <div class='full-pie'></div>
+    <canvas class='clipped-pie' width='200px' height='200px'></canvas>
+    <div class='circle'>
+      <span>{{ campaignFacts.emails_sent.count }}</span>
+    </div>
+    <div class='rarrow'>&rarr;</div>
+    <div class='text-lower'>
+      <strong>{{ campaignFacts.emails_sent.count }}</strong> recipients were targeted
+    </div>
+  </div>
+  <div class='cell {{ campaignFacts.emails_opened.cellClass }}'>
+    <div class='circle-dummy'></div>
+    <div class='full-pie'></div>
+    <canvas class='clipped-pie' width='200px' height='200px'></canvas>
+    <div class='circle'>
+      <span>{{ campaignFacts.emails_opened.count }}</span>
+    </div>
+    <div class='rarrow'>&rarr;</div>
+    <div class='text-lower'>
+      <strong>{{ campaignFacts.emails_opened.percentage }}%</strong> of recipients opened the email
+    </div>
+  </div>
+  <div class='cell {{ campaignFacts.links_clicked.cellClass }}'>
+    <div class='circle-dummy'></div>
+    <div class='full-pie'></div>
+    <canvas class='clipped-pie' width='200px' height='200px'></canvas>
+    <div class='circle'>
+      <span>{{ campaignFacts.links_clicked.count }}</span>
+    </div>
+    <div class='rarrow'>&rarr;</div>
+    <div class='text-lower'>
+      <strong>{{ campaignFacts.links_clicked.percentage }}%</strong> of recipients clicked the link
+    </div>
+  </div>
+  <div class='cell {{ campaignFacts.forms_started.cellClass }}'>
+    <div class='circle-dummy'></div>
+    <div class='full-pie'></div>
+    <canvas class='clipped-pie' width='200px' height='200px'></canvas>
+    <div class='circle'>
+      <span>{{ campaignFacts.forms_started.count }}</span>
+    </div>
+    <div class='rarrow'>&rarr;</div>
+    <div class='text-lower'>
+      <strong>{{ campaignFacts.forms_started.percentage }}%</strong> of recipients started filling out the form
+    </div>
+  </div>
+  <div class='cell {{ campaignFacts.forms_submitted.cellClass }}'>
+    <div class='circle-dummy'></div>
+    <div class='full-pie'></div>
+    <canvas class='clipped-pie' width='200px' height='200px'></canvas>
+    <div class='circle'>
+      <span>{{ campaignFacts.forms_submitted.count }}</span>
+    </div>
+    <div class='rarrow'>&rarr;</div>
+    <div class='text-lower'>
+      <strong>{{ campaignFacts.forms_submitted.percentage }}%</strong> of recipients submitted the form
+    </div>
+  </div>
+
+  <div class='cell sessions blue {{ campaignFacts.sessions_opened.cellClass }}'>
+    <div class='circle-dummy'></div>
+    <div class='full-pie'></div>
+    <canvas class='clipped-pie' width='200px' height='200px'></canvas>
+    <div class='circle'>
+      <span>{{ campaignFacts.sessions_opened.count }}</span>
+    </div>
+    <div class='rarrow'>&rarr;</div>
+    <div class='text-lower'>
+      <strong>{{ campaignFacts.sessions_opened.count }}</strong> sessions were opened
+    </div>
+  </div>
+</div>
+{% if (!this['hideSubCircles']) { %}
+  <!-- <div class='campaign-facts-lvl2 row'>
+    <div class='sub-circles-dummy'></div>
+    <div class='sub-circles sessions {{ campaignFacts.prone_to_bap.cellClass }}'>
+      <div class='circle'>
+        <span>{{ campaignFacts.sessions_opened.count }}</span>
+      </div>
+      <div class='text-lower'>
+        sessions were opened
+      </div>
+    </div>
+    <div class='sessions bar {{ campaignFacts.prone_to_bap.cellClass }}'></div>
+ 
+    <div class='sub-circles creds'>
+      <div class='circle'>
+        <span>{{ 0 }}</span>
+      </div>
+      <div class='text-lower'>
+        credentials are captured
+      </div>
+    </div>
+    <div class='creds bar'></div>
+  </div>
+  -->
+  <div class='row' style='height: 28px;'></div>
+{% } %}

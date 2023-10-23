@@ -1,0 +1,73 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/loots/form") %>',
+  '<%= javascript_path("shared/backbone/views/modal_form") %>',
+  '<%= javascript_path("loots/backbone/models/loot") %>'
+], ($, Template, ModalForm, Loot) ->
+  class LootForm extends ModalForm
+    template: HandlebarsTemplates['loots/form']
+
+    events: _.extend({}, ModalForm.prototype.events, {
+      'submit form': 'formSubmitted',
+      'change input[type=file]': 'fileChanged'
+    })
+
+    initialize: (opts={}) =>
+      $.extend(@, opts)
+      @model ||= new Loot
+      super
+
+    postURL: => "/hosts/#{@model.get('host_id')}/add_loot"
+
+    onRender: =>
+      _.defer => $('input:visible', @el).first().focus()
+      # todo: punt this out to a library for scripting :FILE inputs
+      $('input:file', @el).each ->
+        $label = $(@).prev()
+        origText = $label.text() || 'file'
+        $(@).attr('size', '50').css(overflow: 'hidden')
+        $p = $('<p>').text('No file selected')
+        $span = $('<span>').text("Choose #{origText}...")
+        $label.html('').append($p).append($span)
+        $(@).change ->
+          path = $(@).val().replace(/.*(\\|\/)/g, '')
+          if path && path.length > 0
+            $p.text(path)
+          else
+            $p.html('&nbsp;')
+
+    fileChanged: =>
+      # user has selected a file. to be convenient, let's fill out #name for them
+      path = $('input[type=file]', @el).val()
+      if m = path.match /\\*([^\\]*)?$/
+        $('input[name*=name]', @el).val(m[1])
+
+    formSubmitted: (e) =>
+      e.preventDefault()
+      e.stopPropagation()
+      $form = $('form', @el)
+      data = $(':text, textarea', $form[0]).serializeArray()
+      data.push({
+        name: 'authenticity_token'
+        value: $('meta[name=csrf-token]').attr('content')
+      }, {
+        name: 'feature_flag' # FIXME: remove me after we kill featureflag
+        value: true
+      })
+
+      $.ajax(
+        url: @postURL()
+        type: 'POST'
+        data: data,
+        files: $(':file', $form[0]),
+        iframe: true,
+        processData: false
+      ).complete (data) =>
+        data = $.parseJSON(data.responseText)
+        if data.success == true
+          $(@el).trigger('destroy')
+          @trigger('success')
+        else
+          @setLoading(false)
+          $('.errors', @el).show().text(data.error)
+      @setLoading(true)

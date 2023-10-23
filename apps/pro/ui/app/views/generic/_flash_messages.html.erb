@@ -1,0 +1,23 @@
+
+<% if flash[:notice] %>
+  <a class="close success">&#x2716;</a>
+  <div class="success">
+    <%=h flash[:notice] %>
+  </div>
+<% end %>
+<% if flash[:error] %>
+  <a class="close failure">&#x2716;</a>
+  <div class="errors">
+    <%=h flash[:error] %>
+  </div>
+<% end %>
+<% if flash[:warning] %>
+  <a class="close warning">&#x2716;</a>
+  <div class="warnings">
+    <%=h flash[:warning] %>
+  </div>
+<% end %>
+
+
+
+

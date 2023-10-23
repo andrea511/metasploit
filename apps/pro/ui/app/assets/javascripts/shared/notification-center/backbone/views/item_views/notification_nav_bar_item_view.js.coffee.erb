@@ -1,0 +1,19 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/notification_center/item_views/notification_nav_bar/notification_nav_bar') %>' ,
+  '<%= javascript_path('shared/notification-center/backbone/event_aggregators/event_aggregator') %>'
+], ($,template, EventAggregator) ->
+  class NotificationNavBarItemView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['notification_center/item_views/notification_nav_bar/notification_nav_bar']
+
+    triggers:
+      'change .sort-options select' : 'sort:changed'
+    
+    initialize: ->
+      @_bind_triggers()
+
+    _bind_triggers: ->
+      @on('sort:changed',@_update_notification_type)
+
+    _update_notification_type: ->
+      EventAggregator.trigger('notification-center:change:type')

@@ -1,0 +1,1 @@
+json.partial! 'vuln', vuln: @vuln

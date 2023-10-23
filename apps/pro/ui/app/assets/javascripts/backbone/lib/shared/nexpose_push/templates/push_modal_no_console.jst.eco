@@ -1,0 +1,8 @@
+<div class="push-text">
+  <p><a href='/settings#nexpose_consoles' >Manage Nexpose Consoles</a></p>
+  <p class="push-warning">(This page will refresh and you will lose all applied filters.)</p>
+  <% unless @has_console: %>
+    <hr>
+    <p>Don't have Nexpose? <a href='http://www.rapid7.com/products/nexpose/nexpose-enterprise-trial.jsp?CS=metasploitinp'>Try It Now</a></p>
+  <% end %>
+</div>

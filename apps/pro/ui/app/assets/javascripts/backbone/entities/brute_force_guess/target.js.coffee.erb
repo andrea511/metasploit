@@ -1,0 +1,25 @@
+define [
+  'base_model'
+  'base_collection'
+], ->
+  @Pro.module "Entities.BruteForceGuess", (BruteForceGuess, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+    class BruteForceGuess.Target extends App.Entities.Model
+      defaults:
+        SERVICES: <%= BruteForce::Run::BRUTEFORCEABLE_SERVICES %>
+
+    #
+    # API
+    #
+
+    API =
+    # @return [Model] of all Cred objects in a given workspace
+      getTarget: (opts) ->
+        new BruteForceGuess.Target(opts)
+
+
+    App.reqres.setHandler "bruteForceGuess:target:entities", (opts={}) ->
+      API.getTarget(opts)

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export BUNDLE_GEMFILE=@@BITROCK_INSTALLDIR@@/apps/pro/Gemfile-pro
+. @@BITROCK_INSTALLDIR@@/scripts/setenv.sh
+ruby @@BITROCK_INSTALLDIR@@/apps/pro/ui/script/backup $@

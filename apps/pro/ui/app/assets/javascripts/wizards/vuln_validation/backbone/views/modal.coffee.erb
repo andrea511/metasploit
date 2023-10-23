@@ -1,0 +1,282 @@
+jQueryInWindow ($) ->
+  VULN_VALIDATION_URL = '/wizards/vuln_validation/form/'
+  NEXPOSE_SITE_URL = '/wizards/vuln_validation/form/nexpose_sites.json'
+  NEXPOSE_SITE_POLL_URL = '/wizards/vuln_validation/form/import_run.json'
+  NEXPOSE_SITE_READY_STATE = 'ready_to_import'
+  NEXPOSE_SITE_FAILED_STATE = 'failed'
+  CONSOLE_TAB_IDX = 1
+  PIE_CHART_SIZE = 80
+  TAG_PAGE = 2
+
+  class @VulnValidationModal extends @TabbedModalView
+    @WIDTH: 840
+    _url: VULN_VALIDATION_URL
+
+    _modelsToTabs: {
+      # transition map to figure out which tab a nested model is on. e.g.:
+      workspace: 0
+      nexpose: 1,
+      exploit_task: 3
+      report: 4
+    }
+    initialize: ->
+      super
+      @setTitle 'Vulnerability Validation'
+      @setDescription 'This wizard imports, exploits, and validates vulnerabilities discovered by Nexpose.'
+      @setTabs [
+        {name: 'Create Project'},
+        {name: 'Pull from Nexpose'},
+        {name: 'Tag'},
+        {name: 'Exploit'},
+        {name: 'Generate Report', checkbox: true}
+      ]
+      @setButtons [
+        {name: 'Cancel', class: 'close'},
+        {name: 'Start', class: 'btn primary'}
+      ]
+      @loadForm(VULN_VALIDATION_URL)
+
+    events: _.extend({}, TabbedModalView.prototype.events, {
+      'change input#tab_generate_report': 'toggleGenerateReport',
+      'change .tag' : 'taggingOptionChanged'
+      'click .pull_nexpose a.new, .pull_nexpose a.green-add': 'newConsoleClicked',
+      'change select#vuln_validation_nexpose_console_id': 'consoleChanged',
+      "change input[name='vuln_validation[use_custom_tag]']": 'useCustomTagChanged',
+      "change input[name='vuln_validation[nexpose_gather_type]']": 'gatherTypeChanged',
+      "change li#additional_creds_checkbox_input input[type=checkbox]": 'additionalNexposeCredsChanged',
+      "change .pull_nexpose .advanced .sites input.select-all": 'selectAllSites'
+    })
+
+    formLoadedSuccessfully: (html) =>
+      super
+      enabled = !!$("[name*='report_enabled']", @$modal).attr('value')
+      $('input#tab_generate_report', @$modal).prop('checked', enabled)
+      $('input#tab_tag', @$modal).prop('checked', enabled)
+      @_cachedSitesDiv = $('.sites', @el).html()
+      @toggleGenerateReport(true)
+      # the FORs of the labels get set ambiguously which fucks up label clicking
+      $('.report_sections,.report_options', @$modal).find('ol li label').removeAttr('for')
+
+    taggingOptionChanged: () ->
+      if($('.tag>li input:checked',@$modal).size()>0)
+        $("[name*='tagging_enabled']", @$modal).attr('value', '1')
+      else
+        $("[name*='tagging_enabled']", @$modal).removeAttr('value')
+
+    # called when the user clicks the New console icon
+    newConsoleClicked: (e) =>
+      initProRequire [
+        'base_layout',
+        'base_itemview',
+        'lib/shared/nexpose_console/nexpose_console_controller'
+        'lib/components/modal/modal_controller'
+      ], =>
+        nexposeConsole = Pro.request 'nexposeConsole:shared', {}
+        Pro.execute 'show:nexposeConsole', nexposeConsole
+        nexposeConsole.on 'consoleAdded:nexposeConsole', @nexposeConsoleAdded
+
+    selectAllSites: (e) =>
+      checked = $(e.currentTarget).is(':checked')
+      @_importDiv().find('table tbody tr input[type=checkbox]').prop('checked', checked)
+
+    # called when the user has successfully added a new nexpose console
+    nexposeConsoleAdded: (json) =>
+      @addNexposeConsoleToDropdown(json)
+
+    # add a new console to the <select> dropdown
+    # @param [Hash] opts the options hash
+    # @option opts [Number] id
+    # @option opts [String] name
+    addNexposeConsoleToDropdown: (opts) =>
+      $option = $('<option />', value: opts.id).text(opts.name)
+      @_consoleSelect().append($option)
+      $option.prop('selected', true)
+      @_consoleSelect().trigger('change')
+
+    # called when the user checks the "Specify additional scan credentials" checkbox
+    # in the Nexpose -> Scan page.
+    additionalNexposeCredsChanged: (e) =>
+      @_additionalCreds().toggle $(e.currentTarget).is(':checked')
+
+    consoleChanged: (e) =>
+      @updateNexposeAdvanced()
+
+    gatherTypeChanged: (e) =>
+      @updateNexposeAdvanced()
+
+    # looks at the current state of the DOM and hides/shows different sections
+    # of the Nexpose page's advanced area
+    updateNexposeAdvanced: =>
+      @_warnDiv().hide()
+      $page = $('.pull_nexpose.page', @el)
+      $page.find('.advanced>div').hide() # hide everything to start
+      console = @_consoleId()
+      if not console or (''+console).length == 0
+        $page.find('.empty_msg').show()
+      else
+        $page.find(".#{@_gatherType()}").show()
+        @loadSites(console)
+
+    loadSites: (consoleId) =>
+      @pageAt(CONSOLE_TAB_IDX).css(opacity: 0.4, 'pointer-events': 'none')
+      $div = if @_gatherType() == 'import'
+        @_importDiv()
+      else
+        @_scanDiv()
+      $div.addClass('tab-loading')
+        .find('.sites').hide().end()
+        .find('table>*').remove().end().find('table').css(width: '100%').end()
+        .find('*').css(opacity: 0).end()
+      if @_gatherType() == 'import'
+        load_msg = "Importing Sites..."
+      else
+        load_msg = "Importing Scan Templates..."
+      $div.prepend("<div class='tab-loading-text'>#{load_msg}</div>")
+      $('p.error-desc', @pageAt(CONSOLE_TAB_IDX)).remove()
+      @_warnDiv().hide()
+      # local fn, gets run once, can never be run again. called on ajax error/timeout.
+      loadFailed = =>
+        loadFailed = null # this feels wrong.
+        _.once(@siteLoadFailed, $div)
+
+      # enter callback hell. todo: rewrite rewrite pl0x sir
+      delay = 1000
+      xhr = $.ajax
+        url: NEXPOSE_SITE_URL
+        type: 'GET'
+        data: { nexpose_console_id: consoleId }
+        success: (importRun) =>
+          # json contains info about the Import Run. We must now poll the
+          # Import Run endpoint until we get some delicious results.
+          poll = =>
+            pollXhr = $.ajax
+              url: NEXPOSE_SITE_POLL_URL
+              type: 'GET'
+              data: { id: importRun.id, cache: new Date().getTime() }
+              success: (json) =>
+                if json.state != NEXPOSE_SITE_READY_STATE and json.state != NEXPOSE_SITE_FAILED_STATE
+                  setTimeout(poll, 1000) if loadFailed?
+                else if json.state == NEXPOSE_SITE_FAILED_STATE
+                  loadFailed(pollXhr) if loadFailed?
+                else
+                  # let's stick this in a table!
+                  loadFailed = null
+                  $div.removeClass('tab-loading').find('.sites').show()
+                  $div.find('*').css(opacity: 1)
+                  $('.tab-loading-text',$div).remove()
+                  @pageAt(CONSOLE_TAB_IDX).css(opacity: 1, 'pointer-events': 'auto')
+                  @pageAt(CONSOLE_TAB_IDX).find("[name*='import_run_id']").val(importRun.id)
+                  if @_gatherType() == 'import'
+                    @renderSites(json.sites)
+                  else
+                    json.templates ||= []
+                    $select = @_templateDropdown()
+                    $select.html('')
+                    _.each json.templates.reverse(), (template) =>
+                      $option = $('<option />', value: template.scan_template_id).text(template.name)
+                      $select.append($option)
+              error: =>
+                loadFailed(pollXhr) if loadFailed?
+          setTimeout(poll, delay)
+        error: => loadFailed(xhr) if loadFailed?
+      setTimeout((-> delay = 30*1000), 60*1000) # up poll delay after 1min of no change
+
+    siteLoadFailed: (xhr, div) =>
+      @_warnDiv().show()
+      $div.removeClass('tab-loading').show()
+      $('.tab-loading-text',$div).remove()
+      $div.find('*').css(opacity: 0)
+      @pageAt(CONSOLE_TAB_IDX).css(opacity: 1, 'pointer-events': 'auto')
+
+    renderSites: (sites) =>
+      $nexpose = $('.page.pull_nexpose .advanced.nexpose', @el)
+      $nexpose.find('.import .sites').html(@_cachedSitesDiv)
+      $table = $nexpose.find('table')
+      sites = _.map sites, (site) =>
+        [site.id, site.name, site.summary.assets_count, site.summary.vulnerabilities_count, site.last_scan_date]
+      @_warnDiv().hide()
+      $table.dataTable
+        aaData: sites
+        bPaginate: false
+        aaSorting: [[4, 'asc']]
+        aoColumns: [
+          {
+            sTitle: '<input type="checkbox" class="select-all" />',
+            sWidth: '30px',
+            bSortable: false,
+            fnRender: (row) ->
+              "<input type='checkbox' value='#{row.aData[0]}' name='vuln_validation[nexpose_sites][]' />"
+          },
+          {sTitle: 'Name'},
+          {sTitle: 'Assets'},
+          {sTitle: 'Vulns'},
+          {
+            sTitle: 'Last Scan',
+            sWidth: '150px',
+            sType: 'title-string',
+            fnRender: (row) ->
+              time = row.aData[row.aData.length-1]
+              if time?
+                "<span title='#{_.escape(time)}'>#{_.escape(moment(time).fromNow())}</span>"
+              else
+                ""
+          }
+        ]
+
+    useCustomTagChanged: (e) =>
+      $('.advanced.custom_tag', @el).toggle($(e.target).is(':checked'))
+
+    # fit MM screen to height of display
+    layout: =>
+      @$modal.width(VulnValidationModal.WIDTH)
+      @center()
+
+    # called anytime tab is changed
+    index: (idx) =>
+      super
+      @resizeNexposeAdvanced() if idx is CONSOLE_TAB_IDX
+
+    # "stretch" nexpose console conf page to height
+    resizeNexposeAdvanced: =>
+      $page = @pageAt(CONSOLE_TAB_IDX)
+      padTop = _.inject(
+        $page.find('.foundation .row'),
+        ((m, el) -> m + $(el).height()), 0
+      )
+      $page.find('div.advanced').height(
+        $page.parents('.content').first().height() - padTop - 43 # padding
+      )
+
+    # hook renderErrors to resize nexpose advanced section
+    renderErrors: (errs) =>
+      super
+      @resizeNexposeAdvanced()
+
+    # checkbox on tab for report generation
+    # @param [Boolean] true to enable report. todo: fix dry violation.
+    toggleGenerateReport: (e) =>
+      if not $(e.currentTarget).parents('li').first().hasClass('selected')
+        return unless e == true
+      checked = (e == true) or $(e.currentTarget).is(':checked')
+      $('.generate_report h3.enabled>span', @$modal).removeClass('disabled enabled')
+      if checked
+        $('.generate_report h3.enabled>span', @$modal).text("enabled").addClass('enabled').removeClass('disabled')
+        # toggle input value for report_enabled (hidden)
+        $("[name*='report_enabled']", @$modal).attr('value', '1')
+      else
+        $('.generate_report h3.enabled>span', @$modal).text("disabled").addClass('disabled').removeClass('enabled')
+        # toggle input value for report_enabled (hidden)
+        $("[name*='report_enabled']", @$modal).removeAttr('value')
+
+    #
+    # DOM helpers
+    #
+    _templateDropdown: => $('#nexpose_scan_task_scan_template', @el)
+    _warnDiv: => $('.page.pull_nexpose .advanced.nexpose .warn', @el)
+    _importDiv: => $('.page.pull_nexpose .advanced.nexpose .import', @el)
+    _scanDiv: => $('.page.pull_nexpose .advanced.nexpose .scan', @el)
+    _gatherType: => $("[name='vuln_validation[nexpose_gather_type]']:checked", @$modal).val()
+    _additionalCreds: => $('.page.pull_nexpose .additional_creds_fields', @$modal)
+    _consoleSelect: => $('.page.pull_nexpose select#vuln_validation_nexpose_console_id', @$modal)
+    _consoleId: => @_consoleSelect().find('option:selected').val()
+    _emptyMessage: => $('.page.pull_nexpose .nexpose .empty_msg', @$modal)

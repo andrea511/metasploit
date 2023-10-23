@@ -1,0 +1,11 @@
+name:
+  <%= file_name.titleize %>
+description:
+  Module Decription
+rating:
+  2
+categories:
+  - Auditing
+  - Discovery
+symbol:
+  <%= file_name %>

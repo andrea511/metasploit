@@ -1,0 +1,27 @@
+<% ui_server = @profile.ui_server_settings %>
+<% title "Web Server Settings" %>
+<div class="web_server">
+  <h2></h2>
+
+  <%= form_tag update_profile_path, :method => :put do %>
+    <%= hidden_field_tag 'profile_id', @profile.id %>
+    <%= hidden_field_tag 'anchor', 'web_server' %>
+    <p>
+      Metasploit Pro contains an embedded web server. The following web server settings can be configured. Changes to these setting require restart of services to apply.
+    </p>
+    <div id="web_server_fields" class="wide_inline_fields">
+      <p>
+        <%= label_tag :ui_server_logged_in_timeout, "Session timeout (seconds)" %>
+        <%= number_field_tag :ui_server_logged_in_timeout, ui_server.logged_in_timeout, :within => 0...259200, :maxlength => 6, :size => 6, :required => true %>
+      </p>
+      <p>
+        <%= label_tag :ui_server_consecutive_failed_logins_limit, "Failed login threshold" %>
+        <%= number_field_tag :ui_server_consecutive_failed_logins_limit, ui_server.consecutive_failed_logins_limit, :within => 0...500, :maxlength => 3, :size => 3, :required => true %>
+      </p>
+    </div>
+    <br />
+    <div class="buttons">
+      <span class="btn"><%= submit_tag 'Update Settings', :method => :put, :class => "save" %></span>
+    </div>
+  <% end %>
+</div>

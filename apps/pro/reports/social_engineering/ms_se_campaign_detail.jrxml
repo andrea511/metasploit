@@ -1,0 +1,1519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3" language="groovy" pageWidth="612" pageHeight="800" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="05705ef1-3020-40dd-9d17-b3309ec453c8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="3255"/>
+	<property name="ireport.callouts" value="##Wed Nov 21 11:25:03 CST 2012\ncallouts.1.text=shuckins 11/13/12 2\:28 PM\: One of the subreports of this report (ms_se_campaign_detail_sub_formsubs) contains a graph with some gotchas. When this parent report is previewed and that subreport is re-compiled, it removes some crucial attrs. Open it up, read/follow callout, compile just the subrep once fixed. \ncallouts.1.bounds=2,0,223,259"/>
+	<template><![CDATA[$P{reporting_dir} + "style_templates/se_styles.jrtx"]]></template>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#F3F6F8"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="FormSubmittedOS" uuid="12e96b71-f03c-422c-b6c4-11138c732570">
+		<parameter name="workspace_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<parameter name="se_campaign_id" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[/*
+   Distribution of OS among phishing form submissions
+*/
+select
+	count(os_name) as count,
+	os_name
+from
+(select
+	case
+	  when os_name != '' then os_name
+	  else 'UNKNOWN'
+	end as os_name
+from se_phishing_results spr
+inner join se_web_pages swp on (spr.web_page_id = swp.id)
+where swp.campaign_id = $P{se_campaign_id}
+) as foo
+group by os_name]]>
+		</queryString>
+		<field name="count" class="java.lang.Long"/>
+		<field name="os_name" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="FormSubmittedBrowserVersion" uuid="d02e6f20-5d0d-444d-83fa-68c574bb13c2">
+		<parameter name="se_campaign_id" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[/*
+   Distribution of browser version among phishing form submissions
+*/
+select
+	count(browser_version) as count,
+	browser_version
+from
+(select
+	-- TODO Need to only look at major/minor versions not all
+	concat(browser_name, ' ', browser_version) as browser_version
+from se_phishing_results spr
+inner join se_web_pages swp on (spr.web_page_id = swp.id)
+where swp.campaign_id = $P{se_campaign_id}
+and browser_name != ''
+) as foo
+group by browser_version]]>
+		</queryString>
+		<field name="count" class="java.lang.Long"/>
+		<field name="browser_version" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="FormSubmittedBrowserName" uuid="4a0e244f-48eb-421a-9903-d08573e7a157">
+		<parameter name="se_campaign_id" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[/*
+   Distribution of browsers among phishing form submissions
+*/
+select
+	count(browser_name) as count,
+	browser_name
+from
+(select
+	case
+  	  when browser_name != '' then browser_name
+    	  else 'UNKNOWN'
+	end as browser_name
+from se_phishing_results spr
+inner join se_web_pages swp on (spr.web_page_id = swp.id)
+where swp.campaign_id = $P{se_campaign_id}
+) as foo
+group by browser_name]]>
+		</queryString>
+		<field name="count" class="java.lang.Long"/>
+		<field name="browser_name" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="ExploitsUsed" uuid="ca9d98da-5c52-45bd-865a-817b88a47ef1">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="se_campaign_id" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[/* Exploits Used to Open Sessions
+   This is a per-exploit summary; target/host-level information available in appendix.
+   Currently sessions do not record workspace, so we access these through hosts in workspace.
+*/
+select
+	-- Some exploits lack an entry in module details, hard code for now:
+	case
+	  when module is null then
+	    case
+	      when path = 'auxiliary/server/browser_autopwn' then 'Browser Autopwn'
+	      when path = 'exploit/multi/browser/java_signed_applet' then 'Java Signed Applet'
+	      when path = 'exploit/multi/handler' then 'Generic Payload Handler'
+	      else path
+	    end
+	  else module
+	end as module,
+	path,
+	session_opened_count,
+	-- Filters out non-CVE references through array processing:
+	array_to_string((select array(	select distinct x.y
+					from unnest(refs) as x(y)
+					where x.y like 'CVE%'
+					)
+	), ', ') as CVE
+from
+( -- Adds in all references for the modules found:
+	select
+		md.name as module,
+		exploits.path,
+		exploits.session_opened_count,
+		array_agg(mr.name) as refs
+	from
+	( -- Per exploit count of sessions opened on hosts in this workspace:
+		select
+			s.via_exploit as path,
+			count(s.id) as session_opened_count
+		from sessions s
+		where s.host_id in
+			(
+			select id
+			from hosts h
+			where h.workspace_id = $P{workspace_id}
+			)
+		and s.campaign_id = $P{se_campaign_id}
+		group by s.via_exploit
+	) as exploits
+	left outer join module_details md on (exploits.path = md.fullname)
+	left outer join module_refs mr on (md.id = mr.detail_id)
+	group by md.name, exploits.path, exploits.session_opened_count
+	order by exploits.session_opened_count desc
+) as foo]]>
+		</queryString>
+		<field name="module" class="java.lang.String"/>
+		<field name="path" class="java.lang.String"/>
+		<field name="session_opened_count" class="java.lang.Long"/>
+		<field name="cve" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="ResponseRate" uuid="6b6c4bd6-4ba2-461e-a8a4-b7c6b1414449">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="se_campaign_id" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[/* Response Rate */
+select
+	case
+		when act_hts <= 0 then 'No target activity.'
+	else
+		concat(trunc(
+			(
+			act_hts / tot_hts
+			) * 100
+		, 1), '%')
+	end as response_rate
+from
+	(
+	select
+		-- Cast as decimals to allow percentage calc:
+		count(distinct activity.human_target_id)::Decimal as act_hts,
+		count(distinct all_targs.human_target_id)::Decimal as tot_hts
+	from
+		(-- Various forms of activity:
+			-- Submitted form
+			select distinct human_target_id
+			from se_phishing_results spr
+			inner join se_web_pages swp on (spr.web_page_id = swp.id)
+			inner join se_campaigns sc on (swp.campaign_id = sc.id)
+			where sc.workspace_id = $P{workspace_id}
+			and swp.campaign_id = $P{se_campaign_id}
+
+			UNION DISTINCT
+
+			-- Opened Email
+			select distinct human_target_id
+			from se_email_openings seo
+			inner join se_emails se on (seo.email_id = se.id)
+			inner join se_campaigns sc on (se.campaign_id = sc.id)
+			where sc.workspace_id = $P{workspace_id}
+			and se.campaign_id = $P{se_campaign_id}
+
+			UNION DISTINCT
+
+			-- Visited page from email
+			select distinct human_target_id
+			from se_visits sv
+			inner join se_emails se on (sv.email_id = se.id)
+			inner join se_campaigns sc on (se.campaign_id = sc.id)
+			where sc.workspace_id = $P{workspace_id}
+			and se.campaign_id = $P{se_campaign_id}
+
+			UNION DISTINCT
+
+			-- Visited page from another page
+			select distinct human_target_id
+			from se_visits sv
+			inner join se_web_pages swp on (sv.web_page_id = swp.id)
+			inner join se_campaigns sc on (swp.campaign_id = sc.id)
+			where sc.workspace_id = $P{workspace_id}
+			and swp.campaign_id = $P{se_campaign_id}
+		) as activity,
+
+		( -- All potential human targets:
+			select distinct ht.id as human_target_id
+			from se_emails se
+			inner join se_target_lists stl on (se.target_list_id = stl.id)
+			inner join se_target_list_human_targets stlht on (stl.id = stlht.target_list_id)
+			inner join se_human_targets ht on (stlht.human_target_id = ht.id)
+			inner join se_campaigns sc on (se.campaign_id = sc.id)
+			where se.campaign_id = $P{se_campaign_id}
+			and sc.workspace_id = $P{workspace_id}
+		) as all_targs
+	) as summary]]>
+		</queryString>
+		<field name="response_rate" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String"/>
+	<parameter name="report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo_path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="product_name" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[The name of the product used to generate the report]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Metasploit Pro"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usernames_reported" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="se_campaign_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_cover" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_exec_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_funnel" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_exploits" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_form_subs" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_browsers_platforms" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_appendix_hosts_hts" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_appendix_components" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_appendix_remediation" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="include_page_code" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[Toggle for displaying web page component HTML]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hide_email_addresses" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[Toggle to replace human target email addresses with their IDs]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	campaign,
+	project_name, project_created, project_updated,
+	campaign_updated,
+	campaign_created,
+	campaign_status,
+	target_address_count,
+	email_count,
+	web_page_count,
+	phishing_page_count,
+	portable_file_count,
+	attack_count,
+	email_sent_count,
+	opened_email_count,
+	case (select exclude_tracking from se_emails where campaign_id = $P{se_campaign_id} )
+		when false then
+			(
+			    case email_sent_count
+	   	 	    when 0 THEN 0
+			    else trunc((opened_email_count::Decimal / email_sent_count::Decimal ) * 100, 1)
+			    end
+			)
+		else 0
+	end as opened_email_percent,
+	clicked_link_count,
+	case email_sent_count
+			when 0 THEN 0
+			else trunc((clicked_link_count::Decimal / email_sent_count::Decimal ) * 100, 1)
+	end as clicked_link_percent,
+	session_created_count,
+        system_compromised_count,
+	trunc((system_compromised_count::Decimal / email_sent_count::Decimal ) * 100, 1) as system_compromised_percent,
+	started_form_count,
+	phishing_results,
+	trunc((started_form_count::Decimal / email_sent_count::Decimal ) * 100, 1) as started_form_percent,
+	submitted_form_count,
+	trunc((submitted_form_count::Decimal / email_sent_count::Decimal ) * 100, 1) as submitted_form_percent,
+	cred_captured_count,
+	browser_version_count,
+	(select exclude_tracking from se_emails where campaign_id = $P{se_campaign_id} ) as exclude_email_tracking
+from
+( /* Counts of targets reaching various potential stages */
+select
+	c.name as campaign,
+	w.name as project_name, w.created_at as project_created, w.updated_at as project_updated,
+	c.updated_at as campaign_updated,
+          c.created_at as campaign_created,
+          c.state as campaign_status,
+	(
+		select count(ht.id)
+		from se_emails se
+		inner join se_target_lists stl on (se.target_list_id = stl.id)
+		inner join se_target_list_human_targets stlht on (stl.id = stlht.target_list_id)
+		inner join se_human_targets ht on (stlht.human_target_id = ht.id)
+		inner join se_campaigns sc on (se.campaign_id = sc.id)
+		where se.campaign_id = c.id
+		and sc.workspace_id = c.workspace_id
+	) as target_address_count,
+	(
+		select count(sem.id)
+		from se_emails sem
+		where sem.campaign_id = c.id
+	) as email_count,
+	(
+		select count(swp.id)
+		from se_web_pages swp
+		where swp.campaign_id = c.id
+	) as web_page_count,
+	(
+		select count(swp.id)
+		from se_web_pages swp
+		where swp.campaign_id = c.id
+		and swp.attack_type = 'phishing'
+	) as phishing_page_count,
+	(
+		select count(spf.id)
+		from se_portable_files spf
+		where spf.campaign_id = c.id
+	) as portable_file_count,
+	(
+		select sum(inn.cnt) as attack_count
+		from
+		(
+		-- Pages with a non-phishing attack
+		select count(swp.id) cnt
+		from se_web_pages swp
+		where swp.campaign_id = c.id
+		and swp.attack_type not in ('none', 'phishing')
+
+		UNION
+
+		-- Emails with attachments
+		select count(se.id) cnt
+		from se_emails se
+		where se.campaign_id = c.id
+		and se.attack_type != 'none'
+
+		UNION
+
+		--  Portable files
+		select count(spf.id) cnt
+		from se_portable_files spf
+		where spf.campaign_id = c.id
+		) as inn
+	) as attack_count,
+	(
+		select coalesce(count(ses.id), 0) as email_sent_count
+		from se_email_sends ses
+		join se_emails se on (ses.email_id = se.id)
+		where se.campaign_id = c.id
+	) as email_sent_count,
+	(
+		case (select exclude_tracking from se_emails where campaign_id = c.id)
+		when false then
+		(
+			select count(distinct seo.human_target_id)
+			from se_email_openings seo
+			inner join se_emails sem on (seo.email_id = sem.id)
+			where sem.campaign_id = c.id
+		) else 0
+		end
+	) as opened_email_count,
+	(
+		select sum(vc)::Integer
+		from
+		(select count(distinct sv.human_target_id) as vc
+		from se_visits sv
+		join se_web_pages swp on (swp.id = sv.web_page_id)
+		where swp.campaign_id = c.id
+		union
+		select count(distinct sv.human_target_id) as vc
+		from se_visits sv
+		join se_emails se on (se.id = sv.email_id)
+		where se.campaign_id = c.id
+		) as email_and_pages
+	) as clicked_link_count,
+	(
+		select count(s.id)
+		from sessions s
+		inner join hosts h on (s.host_id = h.id)
+		where h.workspace_id = c.workspace_id
+		and s.campaign_id = c.id
+	) as session_created_count,
+	(
+		select count(distinct s.host_id)
+		from sessions s
+		inner join hosts h on (s.host_id = h.id)
+		where h.workspace_id = c.workspace_id
+		and s.campaign_id = c.id
+	) as system_compromised_count,
+	(
+		select 0
+		-- TODO Need keylogging in place
+	) as started_form_count,
+	(
+		select count(*)
+		from se_phishing_results spr
+		inner join se_web_pages swp on (spr.web_page_id = swp.id)
+		where swp.campaign_id = c.id
+	) as phishing_results,
+	(
+		select count(distinct spr.human_target_id)
+		from se_phishing_results spr
+		inner join se_web_pages swp on (spr.web_page_id = swp.id)
+		where swp.campaign_id = c.id
+	) as submitted_form_count,
+	(
+		select count(l.id)
+		from loots l
+		where l.workspace_id = c.workspace_id
+		-- TODO Look for username/password fields in phishing results data? All loots?
+	) as cred_captured_count,
+	( -- Convenience count to filter platform graph section:
+		select count(browser_version) as browser_version
+		from se_phishing_results spr
+		inner join se_web_pages swp on (spr.web_page_id = swp.id)
+		where swp.campaign_id = c.id
+		and browser_name != ''
+	) as browser_version_count
+from se_campaigns c
+join workspaces w on (c.workspace_id = w.id)
+where c.workspace_id = $P{workspace_id}
+and c.id = $P{se_campaign_id}
+) as inner_tab]]>
+	</queryString>
+	<field name="campaign" class="java.lang.String"/>
+	<field name="campaign_updated" class="java.sql.Timestamp"/>
+	<field name="campaign_created" class="java.sql.Timestamp"/>
+	<field name="campaign_status" class="java.lang.String"/>
+	<field name="target_address_count" class="java.lang.Long"/>
+	<field name="email_count" class="java.lang.Long"/>
+	<field name="web_page_count" class="java.lang.Long"/>
+	<field name="phishing_page_count" class="java.lang.Long"/>
+	<field name="portable_file_count" class="java.lang.Long"/>
+	<field name="attack_count" class="java.math.BigDecimal"/>
+	<field name="email_sent_count" class="java.lang.Long"/>
+	<field name="opened_email_count" class="java.lang.Long"/>
+	<field name="opened_email_percent" class="java.math.BigDecimal"/>
+	<field name="clicked_link_count" class="java.lang.Integer"/>
+	<field name="clicked_link_percent" class="java.math.BigDecimal"/>
+	<field name="session_created_count" class="java.lang.Long"/>
+	<field name="system_compromised_count" class="java.lang.Long"/>
+	<field name="system_compromised_percent" class="java.math.BigDecimal"/>
+	<field name="started_form_count" class="java.lang.Integer"/>
+	<field name="phishing_results" class="java.lang.Long"/>
+	<field name="started_form_percent" class="java.math.BigDecimal"/>
+	<field name="submitted_form_count" class="java.lang.Long"/>
+	<field name="submitted_form_percent" class="java.math.BigDecimal"/>
+	<field name="cred_captured_count" class="java.lang.Long"/>
+	<field name="browser_version_count" class="java.lang.Long"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="project_updated" class="java.sql.Timestamp"/>
+	<field name="project_created" class="java.sql.Timestamp"/>
+	<field name="exclude_email_tracking" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="687" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_cover}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="63b396ae-297f-49fe-ba32-ea5531b932e2" x="211" y="392" width="360" height="69"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Social Engineering Campaign Details]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7e080d43-14ac-4ed4-9869-eeea202d9060" mode="Transparent" x="0" y="0" width="211" height="676" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" markup="none">
+					<font size="48" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{product_name}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="2722212e-081f-460e-83b3-39015d055fca" x="252" y="667" width="320" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Pages: " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealHeight" hAlign="Left" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="7873fbb7-519f-4760-a59d-1f300ddac488" x="211" y="27" width="360" height="320"/>
+				<imageExpression><![CDATA[$P{logo_path}]]></imageExpression>
+			</image>
+			<break>
+				<reportElement uuid="7ca70afa-ae27-4697-a561-d6e5635236fd" x="0" y="686" width="100" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="c6dbda8f-64b7-4fe4-9be1-7514787adc25" style="generic_text" x="211" y="487" width="320" height="159"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[This Social Engineering Campaign Report helps you measure the effectiveness of your anti-phishing trainings and the security of your client systems. Find out which users and systems are at risk from social engineering, review step-by-step metrics to pinpoint where to focus your anti-phishing efforts, and follow recommendations on how to improve user and system security.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40">
+			<printWhenExpression><![CDATA[$P{display_exec_summ} && ($P{display_cover} ?
+    $V{PAGE_NUMBER} == 2 :
+    $V{PAGE_NUMBER} == 1)]]></printWhenExpression>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement uuid="dd98baf4-5465-4ac8-8500-adba669b4e41" style="report_generated" x="395" y="0" width="177" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="5017e23e-40a2-4fe1-80c6-1569a2235775" style="separator_line" x="0" y="34" width="572" height="1"/>
+			</line>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement uuid="357df73e-3fc3-4928-8853-270a5fc001e4" style="last_audited" x="331" y="16" width="241" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new GroovyShell(new Binding([status:$F{campaign_status},created:(new SimpleDateFormat("MMMMM dd, yyyy")).format($F{campaign_created}),updated:(new SimpleDateFormat("MMMMM dd, yyyy")).format($F{campaign_updated})])).evaluate("""
+
+switch ( status ) {
+    case ['unconfigured', 'launchable', 'preparing', 'interrupted']:
+        result = "Created on: " + created
+        break
+    case 'running':
+        result = "Running since: " + created
+        break
+    case ['cancelled', 'finished']:
+        result = "Last Audited: " + updated
+        break
+    default:
+        result = "Unknown campaign status"
+}
+return result
+""")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="20a5f16b-d0b2-4563-9fb3-444719dd55b0" style="Section Header - No BG" x="0" y="4" width="331" height="30"/>
+				<textElement/>
+				<text><![CDATA[Social Engineering Campaign Report]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="46">
+			<printWhenExpression><![CDATA[$P{display_exec_summ}]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="ed6495cd-d6cc-4900-a9d3-991233a24921" style="table_text" x="133" y="0" width="439" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="259057b6-9884-4097-a15d-c5bf319d9427" style="separator_line_lighter" x="0" y="20" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="da4b4aee-9ade-42a6-a602-29177aa9ec91" style="table_text" x="133" y="21" width="439" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="55ab5d6a-26ef-466c-ae5b-7cc9e9529a35" style="table_text" x="13" y="21" width="120" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}.toString().contains(",") ? "Users:" : "User:"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="20e23f52-4ea7-4ea1-b47c-a75fc3a2d45e" style="table_text" x="13" y="0" width="120" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Project Name:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="c52e48b9-1219-4b3a-8b68-657d7b19c773" style="separator_line_lighter" x="0" y="41" width="572" height="1"/>
+			</line>
+		</band>
+		<band height="225" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_exec_summ}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="7d092361-d13c-47c8-a34d-3edab8480614" style="Section Header - No BG" x="0" y="5" width="572" height="30"/>
+				<textElement/>
+				<text><![CDATA[Executive Summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b11db737-d6fd-4273-8992-24283e6ce247" style="table_text" x="13" y="35" width="120" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Campaign Name:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="11b6e1c2-4d82-482f-adcc-245cb9807fe7" style="separator_line" x="0" y="56" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="4aed348d-72a5-4967-b733-3995a7f2a47a" style="table_text" x="13" y="58" width="120" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Started:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="90db8ee2-0811-4957-a422-646ddec895c5" style="separator_line" x="0" y="79" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="29da728f-9ece-4884-9f81-36947a209cd6" style="table_text" x="13" y="81" width="120" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Last updated:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="8a2b58f9-de3a-476e-8094-cf3f0367116b" style="separator_line" x="0" y="102" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="3b40137e-cab0-44e0-b655-41aaee1a0df2" style="table_text" x="13" y="104" width="120" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9d865ab8-9781-4aa7-acda-94898df8b9cf" style="table_text" x="133" y="35" width="438" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{campaign}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement uuid="9392f820-9bc9-4aa0-9a52-6219dc68d52c" style="table_text" x="133" y="58" width="438" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{campaign_created}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement uuid="d6837596-4ad1-4bf1-9b2c-016d6c12eefe" style="table_text" x="133" y="81" width="438" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{campaign_updated}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="99cbf60b-aff8-4e2b-8263-405c38861732" style="table_text" x="133" y="104" width="438" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{campaign_status}.capitalize()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="24f8ee89-15af-46a5-a6a0-4b5ecc247f78" style="separator_line" x="1" y="139" width="571" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="271cc666-cb24-4a1d-94ed-c5eca64f71e4" style="separator_line" x="1" y="208" width="571" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="02f82fd0-5401-4d06-9a0b-fe5f913841b4" x="25" y="144" width="82" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Web Pages]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="25abda4e-58d9-4df5-b519-9735775c5800" x="128" y="144" width="93" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[E-mails]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9c3fd722-2d8b-4613-8b2e-dafad5c263b7" x="247" y="144" width="95" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Target Addresses]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6d3a4d22-36ea-4dd9-9efc-84bf90ab52ea" x="383" y="144" width="115" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Response Rate<sup>1</sup>]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="43c1aeb1-4249-45cb-8a5e-9e938b21e310" style="separator_line_lighter" x="117" y="140" width="1" height="68"/>
+			</line>
+			<line>
+				<reportElement uuid="fed1cb13-a66d-415a-ac8c-7cfff4326df9" style="separator_line_lighter" x="233" y="140" width="1" height="68"/>
+			</line>
+			<line>
+				<reportElement uuid="9296c7d9-6441-4bcd-87b1-7ba9ad4ef56e" style="separator_line_lighter" x="352" y="140" width="1" height="68"/>
+			</line>
+			<textField>
+				<reportElement uuid="a7b8f395-eae3-4433-a635-5787038392cd" style="exec_summ_text" x="39" y="165" width="52" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{web_page_count}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="335631f1-b0d6-4acf-b173-828b41a785d4" style="exec_summ_text" x="147" y="165" width="52" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email_count}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9e977189-ab17-4a2c-b691-b31511af2c0d" style="exec_summ_text" x="267" y="165" width="52" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{target_address_count}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="e19b8e94-dc3d-4db3-b45c-dcc8b994a77a" key="table 2" x="383" y="165" width="115" height="18">
+					<printWhenExpression><![CDATA[$F{target_address_count} > 0]]></printWhenExpression>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="ResponseRate" uuid="89dd5544-54e9-4f15-9b2e-cf6037b7293d">
+						<datasetParameter name="workspace_id">
+							<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="se_campaign_id">
+							<datasetParameterExpression><![CDATA[$P{se_campaign_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="115" uuid="4e481fc9-2620-4f37-9731-cf76b0e3d915">
+						<jr:columnHeader height="1" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="af8d5c7a-7397-4d0f-9e00-a7342291313c" mode="Transparent" x="0" y="0" width="0" height="1">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["response_rate"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="7456a188-e131-4eb7-abb1-7f0b237935ec" style="exec_summ_text" x="0" y="0" width="115" height="20"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{response_rate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="c8bc97d0-a659-48d2-a32e-b371decf69b4" style="last_response" x="353" y="188" width="79" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Last response:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement uuid="d229b456-b90b-4da1-b865-db23a1aa9122" style="last_response" x="432" y="188" width="140" height="14"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{campaign_updated}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2f2cbc16-bb55-49b0-8716-b446b91ac7a0" style="exec_summ_text" x="383" y="158" width="115" height="17">
+					<printWhenExpression><![CDATA[$F{target_address_count} <= 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["N/A"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f71e5800-62e1-4921-9c30-1ca26a9919b6" style="exec_summ_text" x="383" y="176" width="115" height="11">
+					<printWhenExpression><![CDATA[$F{target_address_count} <= 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["No emails used"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="251">
+			<printWhenExpression><![CDATA[$P{display_funnel}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="7096a67c-1ceb-46a5-a281-ec8c4b7e3831" style="Section header" x="0" y="0" width="572" height="30"/>
+				<textElement verticalAlignment="Middle" markup="html"/>
+				<text><![CDATA[Key Metrics: Social Engineering Funnel<sup>2</sup>]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="758b9b38-1782-4381-bc44-19da5bae2253" x="0" y="30" width="572" height="217"/>
+				<subreportParameter name="clicked_link_percent">
+					<subreportParameterExpression><![CDATA[$F{clicked_link_percent}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="opened_email_percent">
+					<subreportParameterExpression><![CDATA[$F{opened_email_percent}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="submitted_form_percent">
+					<subreportParameterExpression><![CDATA[$F{submitted_form_percent}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="opened_email_count">
+					<subreportParameterExpression><![CDATA[$F{opened_email_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="started_form_count">
+					<subreportParameterExpression><![CDATA[$F{started_form_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="email_sent_count">
+					<subreportParameterExpression><![CDATA[$F{email_sent_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="target_address_count">
+					<subreportParameterExpression><![CDATA[$F{target_address_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="attack_count">
+					<subreportParameterExpression><![CDATA[$F{attack_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="started_form_percent">
+					<subreportParameterExpression><![CDATA[$F{started_form_percent}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="system_compromised_count">
+					<subreportParameterExpression><![CDATA[$F{system_compromised_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="submitted_form_count">
+					<subreportParameterExpression><![CDATA[$F{submitted_form_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="clicked_link_count">
+					<subreportParameterExpression><![CDATA[$F{clicked_link_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="web_page_count">
+					<subreportParameterExpression><![CDATA[$F{web_page_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="system_compromised_percent">
+					<subreportParameterExpression><![CDATA[$F{system_compromised_percent}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="phishing_page_count">
+					<subreportParameterExpression><![CDATA[$F{phishing_page_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="email_count">
+					<subreportParameterExpression><![CDATA[$F{email_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="exclude_email_tracking">
+					<subreportParameterExpression><![CDATA[$F{exclude_email_tracking}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "ms_se_campaign_detail_sub_funnel.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement uuid="3462c47f-474a-4015-9836-d0cdd27376c7" x="0" y="248" width="572" height="1">
+					<printWhenExpression><![CDATA[$F{session_created_count} > 0 || $F{phishing_results} > 0]]></printWhenExpression>
+				</reportElement>
+			</break>
+		</band>
+		<band height="171">
+			<printWhenExpression><![CDATA[$P{display_exploits} && $F{session_created_count} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="516ae497-ea5a-4b28-b642-e84ab012ca7a" style="Section header" x="0" y="0" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Exploits Used to Open Sessions]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="2765ff74-caa1-43a0-a7c6-c8b1f4ec49a2" key="table 1" style="table 1" x="0" y="38" width="572" height="124"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="ExploitsUsed" uuid="722bdeab-3628-4268-8c34-a65d5395a78e">
+						<datasetParameter name="workspace_id">
+							<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="se_campaign_id">
+							<datasetParameterExpression><![CDATA[$P{se_campaign_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="371" uuid="5a191785-e63c-4668-a4cc-f21c6ef739ac">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="39d17ee4-53a1-453b-82e1-d81d01789e76" style="Column header" x="0" y="1" width="371" height="29"/>
+								<textElement/>
+								<text><![CDATA[Module (Path)]]></text>
+							</staticText>
+							<genericElement>
+								<reportElement uuid="26f7e8cf-7453-4a9f-9186-095205d38977" mode="Transparent" x="0" y="0" width="0" height="30">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["module"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="23" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="41" rowSpan="1">
+							<textField>
+								<reportElement uuid="80776c64-747b-40e7-9dbd-0277de743b27" style="table_text" x="0" y="0" width="371" height="41"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{module} + "\n     (" + $F{path} + ")"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="72" uuid="39799990-39a0-4f3f-8b01-0b09199a85c6">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8caf16c2-5a89-407a-8686-aec9c7bda24a" style="Column header" x="0" y="1" width="72" height="29"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Sessions Opened]]></text>
+							</staticText>
+							<genericElement>
+								<reportElement uuid="9ca2a77f-f303-4dec-aaa1-94bfb2463fc2" mode="Transparent" x="0" y="0" width="0" height="30">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["sessions_opened"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+							<genericElement>
+								<reportElement uuid="dcd28f13-5373-41ba-b780-ce540e2f018f" mode="Transparent" x="0" y="0" width="0" height="30">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["session_opened_count"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="23" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="41" rowSpan="1">
+							<textField>
+								<reportElement uuid="1ca141a8-6019-4357-a585-2383adcdf052" style="table_text" x="0" y="0" width="72" height="41"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{session_opened_count}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="128" uuid="f291e4f7-fc67-4657-a0ac-a3289f65bfbd">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="3aed998e-71f7-42d5-b3dd-22ec476d6b13" style="Column header" x="0" y="1" width="128" height="29"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[CVE]]></text>
+							</staticText>
+							<genericElement>
+								<reportElement uuid="3cba45a8-bc26-405a-91a6-6cf681c8cc28" mode="Transparent" x="0" y="0" width="0" height="30">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["cve"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+							<genericElement>
+								<reportElement uuid="9f31beb6-ac32-41a5-b025-87a8ce67fe0c" mode="Transparent" x="0" y="0" width="0" height="30">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["cve"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="23" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="41" rowSpan="1">
+							<textField textAdjust="StretchHeight" pattern="">
+								<reportElement uuid="092bcc9f-19d6-4e9b-ab5b-57d8d9cf31d6" style="table_text" x="0" y="0" width="128" height="41"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{cve}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="191">
+			<printWhenExpression><![CDATA[$P{display_form_subs} && $F{phishing_results} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="769d73ce-8ba5-4fdd-b502-1fc5b66789b8" style="Section header" x="1" y="0" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Form Submissions]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="d6e64475-3984-4a0b-bb7c-5e9d72e57096" x="-1" y="41" width="574" height="142"/>
+				<subreportParameter name="se_campaign_id">
+					<subreportParameterExpression><![CDATA[$P{se_campaign_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "ms_se_campaign_detail_sub_formsubs.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="236">
+			<printWhenExpression><![CDATA[$P{display_browsers_platforms} && $F{phishing_results} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="98e4ae8d-c8ec-45fa-9ccf-23e40a0eee55" style="Section header" x="0" y="0" width="572" height="30"/>
+				<textElement verticalAlignment="Middle" markup="html"/>
+				<text><![CDATA[Browser and Platform Information<sup>3</sup>]]></text>
+			</staticText>
+			<pieChart>
+				<chart isShowLegend="false" customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="57a77901-0566-498f-b73b-2d519debf1e1" style="chart_labels" x="1" y="34" width="285" height="200"/>
+					<chartTitle position="Top" color="#666666">
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Form Submission Frequency by OS"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend>
+						<font size="8"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="FormSubmittedOS" uuid="a73c9a69-387b-492b-acff-352091368bf9">
+							<datasetParameter name="se_campaign_id">
+								<datasetParameterExpression><![CDATA[$P{se_campaign_id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{os_name}]]></keyExpression>
+					<valueExpression><![CDATA[$F{count}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="true" isCircular="true" labelFormat="{2}  {0} ">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart isShowLegend="false" customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="bf14de2e-5313-4534-ada1-1e96f2abb344" style="chart_labels" x="286" y="34" width="285" height="200"/>
+					<chartTitle position="Top" color="#666666">
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Form Submission Frequency by Browser"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="FormSubmittedBrowserName" uuid="1518107a-13fc-48b0-bdb1-a781a7667143">
+							<datasetParameter name="se_campaign_id">
+								<datasetParameterExpression><![CDATA[$P{se_campaign_id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{browser_name}]]></keyExpression>
+					<valueExpression><![CDATA[$F{count}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="true" isCircular="true" labelFormat="{2}  {0}">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+		<band height="226">
+			<printWhenExpression><![CDATA[$P{display_browsers_platforms} && $F{browser_version_count} > 0]]></printWhenExpression>
+			<pieChart>
+				<chart isShowLegend="false" customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="e8d46e3d-13ec-461f-9e73-369a183c3a81" style="chart_labels" x="286" y="0" width="285" height="219"/>
+					<chartTitle position="Top" color="#666666">
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Form Submission Frequency by Browser Versions"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="FormSubmittedBrowserVersion" uuid="3beb4f14-4384-4e4e-ac0d-5b6b8fa63297">
+							<datasetParameter name="se_campaign_id">
+								<datasetParameterExpression><![CDATA[$P{se_campaign_id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{browser_version}]]></keyExpression>
+					<valueExpression><![CDATA[$F{count}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="true" isCircular="true" labelFormat="{2}  {0}">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+		<band height="140">
+			<printWhenExpression><![CDATA[$P{display_appendix_hosts_hts} && $F{session_created_count} > 0]]></printWhenExpression>
+			<break>
+				<reportElement uuid="47d6f7fd-4b66-47fd-9963-a87b19b1ca85" x="0" y="0" width="572" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="3d21803e-d26f-4a29-9229-7324874d164a" style="Section header" x="0" y="2" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Host Details]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="c24c2855-96a1-4295-8268-16cb0c987d23" x="0" y="32" width="573" height="98"/>
+				<subreportParameter name="se_campaign_id">
+					<subreportParameterExpression><![CDATA[$P{se_campaign_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "ms_se_campaign_detail_sub_host_details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="134">
+			<printWhenExpression><![CDATA[$P{display_appendix_hosts_hts} && $F{target_address_count} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="f8a7922b-19e7-4a7c-ad7a-f39085b20c7b" style="Section header" x="0" y="2" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Human Targets]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="c4136fe3-4108-49f1-9f68-9ce6e0d33736" x="0" y="35" width="573" height="92"/>
+				<subreportParameter name="se_campaign_id">
+					<subreportParameterExpression><![CDATA[$P{se_campaign_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="hide_email_addresses">
+					<subreportParameterExpression><![CDATA[$P{hide_email_addresses}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="exclude_email_tracking">
+					<subreportParameterExpression><![CDATA[$F{exclude_email_tracking}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "ms_se_campaign_detail_sub_target_details.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement uuid="33de39ff-e171-43a8-a695-9d9deac42961" x="0" y="0" width="572" height="1"/>
+			</break>
+		</band>
+		<band height="32">
+			<printWhenExpression><![CDATA[$P{display_appendix_components} && ($F{email_count} > 0 || $F{web_page_count} > 0 || $F{portable_file_count} > 0)]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="6bce1270-5ae7-484b-b3b8-dde71debf50d" style="Section header" x="0" y="1" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Campaign Components]]></text>
+			</staticText>
+			<break>
+				<reportElement uuid="0d2a59d3-d2cb-4a6b-8e72-35ca1f5f677d" x="0" y="0" width="572" height="1"/>
+			</break>
+		</band>
+		<band height="101">
+			<printWhenExpression><![CDATA[$P{display_appendix_components} && $F{email_count} > 0]]></printWhenExpression>
+			<subreport isUsingCache="true">
+				<reportElement uuid="ca1f3597-3801-483b-870d-27f2913387b7" x="0" y="0" width="572" height="94">
+					<printWhenExpression><![CDATA[$F{email_count} > 0]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="se_campaign_id">
+					<subreportParameterExpression><![CDATA[$P{se_campaign_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "ms_se_campaign_detail_sub_comp_email.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="108">
+			<printWhenExpression><![CDATA[$P{display_appendix_components} && $F{web_page_count} > 0]]></printWhenExpression>
+			<subreport isUsingCache="true">
+				<reportElement uuid="0f535ebc-1dda-49a5-938a-9c114a8576f6" x="1" y="0" width="572" height="100">
+					<printWhenExpression><![CDATA[$F{web_page_count} > 0]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="se_campaign_id">
+					<subreportParameterExpression><![CDATA[$P{se_campaign_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="include_page_code">
+					<subreportParameterExpression><![CDATA[$P{include_page_code}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="email_count">
+					<subreportParameterExpression><![CDATA[$F{email_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "ms_se_campaign_detail_sub_comp_web.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="657">
+			<printWhenExpression><![CDATA[$P{display_appendix_components} && $F{portable_file_count} > 0]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="fde2b43b-43d3-4f4f-920d-09d2f5c91be5" x="0" y="0" width="571" height="106"/>
+				<subreportParameter name="se_campaign_id">
+					<subreportParameterExpression><![CDATA[$P{se_campaign_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "ms_se_campaign_detail_sub_comp_portablefiles.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="657">
+			<printWhenExpression><![CDATA[$P{display_appendix_remediation}]]></printWhenExpression>
+			<break>
+				<reportElement uuid="deda6519-7ea6-40a2-b85a-11e3fa9b0bce" x="0" y="0" width="572" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="d87b552e-c5d5-4244-832f-fa132e170e33" style="Section header" x="0" y="1" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Remediation Advice]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="268eb61a-34b9-4efe-a0f4-5b7596fdec31" style="generic_text_top" stretchType="RelativeToTallestObject" x="0" y="31" width="573" height="623" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[This section discusses the metrics gathered in phishing campaigns and suggests remediation steps to reduce them.
+
+<style isBold="true">E-mail Open Rate - Low Risk</style>
+
+The e-mail open rate counts unique users who viewed the e-mail.  The open rate is not a measure of risk, because opening an e-mail is very unlikely to compromise the user’s machine.  Still, an email open event confirms to the sender that the e-mail address is valid, which may invite future attacks.  To reduce open rates, consider technical controls such as upstream spam blocking software, and junk e-mail filters.
+
+If your e-mail open rate is low, you may want to increase the sophistication of the phishing campaign in the following ways:
+
+<li>Choose a compelling subject line and sender name and e-mail.  This makes the largest difference in whether someone will open the e-mail.  Urgent requests from those with authority work well, such as the CIO urging everyone to change their password immediately.</li>
+<li>Tailor the e-mail to the recipients and make it relevant.  Create separate campaigns targeting different departments.  A phishing e-mail targeting HR might focus on unemployment insurance benefits.</li>
+<li>If you are targeting users at work, send the e-mail during normal business hours. Avoid the lunch hour, when people are more likely to read e-mails on their phones.</li>
+
+Metasploit measures the open rate by inserting a one pixel image that is hosted on the Metasploit Pro instance into each e-mail.  When a user opens an e-mail, the image is loaded. Because the image URLs for each email and user are unique, Metasploit can determine which user opened an email. However, because many e-mail clients do not load images by default to protect user privacy, the open rate often undercounts the number of users who have read the e-mail.
+
+<b>Click-through and Submit Rates – <i>High Risk</i></b>
+
+The click-through rate counts the number of unique users who click the link in an e-mail, which introduces a high risk of compromise.  The link may take the user to a webpage that exploits client-side vulnerabilities to install malicious software on their computer without their knowledge.  The webpage may gather information on the user’s browser and plug-ins, which the attacker can use to tailor an attack to known vulnerabilities.
+
+The submit rate counts the number of distinct uses who have entered information into the webpage, compromising their credentials.
+
+To reduce the numbers of click-throughs and submits, we recommend a combination of security awareness training and technical controls.
+
+]]></text>
+			</staticText>
+		</band>
+		<band height="306">
+			<printWhenExpression><![CDATA[$P{display_appendix_remediation}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="2fb08891-9336-43f1-bc6a-683c78374bbe" style="generic_text" x="-1" y="0" width="572" height="301"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[For security awareness trainings:
+
+<li>To reinforce the training and measure its effectiveness, conduct phishing exercises regularly. </li>
+<li>Use the first exercise to determine a baseline, then look for improvements in user behavior over time.</li>
+<li>Start off with phishes that are easy to recognize, then make them progressively more difficult to detect over time.  </li>
+<li>Build phishing campaigns which direct the user to a web page informing them of the dangers of phishing.  Studies have shown that presenting training materials at the moment when users are phished is more effective than classroom training alone.  We’ve included a model awareness page you can customize.  You should tailor each training page to the phishing e-mail you have sent to optimize the learning experience.</li>
+<li>Mix it up: Create phishing landing pages with and without forms.</li>
+
+For technical controls:
+
+<li>Use a robust endpoint protection platform.</li>
+<li>Consider implementing a secure web gateway.</li>]]></text>
+			</staticText>
+		</band>
+		<band height="490">
+			<break>
+				<reportElement uuid="bed685d6-72b3-4e25-af03-fc10d9eceb2c" x="0" y="0" width="572" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="b9b63c3e-42c6-4e0c-8e64-8d50b7328fde" style="Section header" x="0" y="2" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Notes]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="35de062c-b916-4652-a474-4897bc84b76d" style="generic_text" x="0" y="32" width="573" height="28"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["1. Percentage of human targets in the campaign that performed one or more of the following: opened an email, clicked a link, submitted a form. Only shown when there are human targets in the campaign."]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="a5da1334-d3f1-4868-ab17-01f76c9a3602" style="generic_text" positionType="Float" x="0" y="441" width="573" height="29"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["3. These graphs display the distribution of platform and browser information among users that submitted phishing forms (" + $F{submitted_form_count} +" total)."]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="3a8883e2-de0c-49e8-b0e4-6261e71dc36c" style="generic_text" positionType="Float" x="0" y="68" width="573" height="24"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["2. This funnel provides a visualization of the flow of a campaign. An 'open' consists of a human target that has opened an email."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1f813957-7d6f-4e68-b492-f6fc2a157689" style="generic_text" positionType="Float" x="22" y="103" width="212" height="22"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[How We Calculate Percentages]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="359d2296-6401-4e36-ab37-18b4d259105b" style="generic_text" positionType="Float" x="111" y="139" width="92" height="17"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Open rate =]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f78c1d59-df14-4f8a-9638-33760b9b398c" style="generic_text" positionType="Float" x="111" y="187" width="92" height="17"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Click rate =]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d7813cd-e32e-4e59-8da5-0047be03e5d8" style="generic_text" positionType="Float" x="110" y="235" width="92" height="17"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Submit rate =]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="617e1a7e-76bc-497b-843e-f83047d2cd0f" style="generic_text" positionType="Float" x="30" y="283" width="174" height="17"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Systems Compromised rate =]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="3ad5f010-e096-48e4-b10e-18c651d7c958" positionType="Float" x="241" y="146" width="228" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="1193ad67-814f-4931-8fca-b473ba315dbb" style="generic_text" positionType="Float" x="241" y="149" width="228" height="17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[number of emails sent]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47e55bbf-5703-425c-860a-6c87237ac2ad" style="generic_text" positionType="Float" x="241" y="128" width="229" height="17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[number of users who open the email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9f2b1391-0eff-4f22-87be-ff7a2eb58f0c" style="generic_text" positionType="Float" x="241" y="176" width="228" height="17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[number of users who click the link]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="078071dd-6d0d-4c4d-8dd9-3150518d90f2" style="generic_text" positionType="Float" x="241" y="224" width="228" height="17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[number of users who submit the form]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e713a876-4577-40ae-b6d5-7c1d40e75232" style="generic_text" positionType="Float" x="240" y="273" width="229" height="17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[number of systems compromised]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="81dd16a7-1353-41e6-9367-cd79e015faa1" positionType="Float" x="241" y="194" width="228" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="3622726e-f367-413a-91a4-27e0aa5a38c3" positionType="Float" x="241" y="242" width="228" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="3a533050-98e3-4f5b-9e4f-42389835c664" positionType="Float" x="240" y="291" width="229" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="488dfc87-d54e-4d23-9e14-084b54e4798f" style="generic_text" positionType="Float" x="22" y="332" width="550" height="35"/>
+				<textElement markup="none">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Note that the rate for clicks, submits and systems compromised is a percentage of total emails sent.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5028eddb-e23f-4db3-b721-06b4c3432391" style="generic_text" positionType="Float" x="22" y="369" width="550" height="30"/>
+				<textElement markup="none">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Opens are detected when a tracking image embedded in the email is loaded. If you select to not track user statistics (remove email tracking images), this will be displayed in the funnel.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e8d26572-4d1c-4d8b-bd79-e06a3da1c03b" style="generic_text" positionType="Float" x="22" y="406" width="550" height="30"/>
+				<textElement markup="none">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[If a user performs an action more than once, such as clicking a link, it only counts once for that user.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d5b7f592-4539-4138-9132-260a3cc630eb" style="generic_text" positionType="Float" x="241" y="196" width="228" height="17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[number of emails sent]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bdb06d43-b75d-4487-9722-ddd7a6dc5b3a" style="generic_text" positionType="Float" x="241" y="244" width="228" height="17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[number of emails sent]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c9a93efd-671b-41c4-85bb-e5d4dd3925ec" style="generic_text" positionType="Float" x="240" y="293" width="228" height="17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[number of emails sent]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}>1]]></printWhenExpression>
+			<image scaleImage="RealSize" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="0cab2d70-a1ce-4bde-95b8-64b12af6ed51" x="0" y="2" width="58" height="11"/>
+				<imageExpression><![CDATA[$P{image_dir} + "r7-logo_footer.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="4605d7a7-b440-4da6-ac6b-b816e6d60738" style="last_audited" x="331" y="0" width="188" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="a0c61bfd-7c5e-4dcf-8bbe-0e0d73083ebe" style="last_audited" x="519" y="0" width="52" height="18"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

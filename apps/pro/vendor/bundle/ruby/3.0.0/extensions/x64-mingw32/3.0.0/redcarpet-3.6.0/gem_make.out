@@ -1,0 +1,598 @@
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/redcarpet-3.6.0/ext/redcarpet
+C:/Users/vagrant/pro/pkg/w32/ruby/bin/ruby.exe -I C:/Users/vagrant/pro/pkg/w32/ruby/lib/ruby/site_ruby/3.0.0 -r ./siteconf20230522-388-5wr7aq.rb extconf.rb
+creating Makefile
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/redcarpet-3.6.0/ext/redcarpet
+make DESTDIR\= clean
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/redcarpet-3.6.0/ext/redcarpet
+make DESTDIR\=
+generating redcarpet-x64-mingw32.def
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 15638 s in the future
+compiling autolink.c
+compiling buffer.c
+buffer.c: In function 'bufcstr':
+buffer.c:111:45: warning: passing argument 1 of 'bufgrow' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  111 |  if (buf->size + 1 <= buf->asize || bufgrow(buf, buf->size + 1) == BUF_OK) {
+      |                                             ^~~
+buffer.c:60:21: note: expected 'struct buf *' but argument is of type 'const struct buf *'
+   60 | bufgrow(struct buf *buf, size_t neosz)
+      |         ~~~~~~~~~~~~^~~
+compiling houdini_href_e.c
+compiling houdini_html_e.c
+compiling html.c
+html.c: In function 'rndr_quote':
+html.c:258:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  258 |  struct html_renderopt *options = opaque;
+      |  ^~~~~~
+compiling html_smartypants.c
+html_smartypants.c: In function 'squote_len':
+html_smartypants.c:104:39: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  104 |  static char* single_quote_list[] = { "'", "&#39;", "&#x27;", "&apos;", NULL };
+      |                                       ^~~
+html_smartypants.c:104:44: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  104 |  static char* single_quote_list[] = { "'", "&#39;", "&#x27;", "&apos;", NULL };
+      |                                            ^~~~~~~
+html_smartypants.c:104:53: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  104 |  static char* single_quote_list[] = { "'", "&#39;", "&#x27;", "&apos;", NULL };
+      |                                                     ^~~~~~~~
+html_smartypants.c:104:63: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  104 |  static char* single_quote_list[] = { "'", "&#39;", "&#x27;", "&apos;", NULL };
+      |                                                               ^~~~~~~~
+html_smartypants.c: In function 'smartypants_squote':
+html_smartypants.c:149:30: warning: comparison of integer expressions of different signedness: 'size_t' {aka 'long long unsigned int'} and 'int' [-Wsign-compare]
+  149 |    uint8_t next_char = (size > 1+next_squote_len) ? text[1+next_squote_len] : 0;
+      |                              ^
+html_smartypants.c: In function 'smartypants_cb__amp':
+html_smartypants.c:250:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  250 |  int len = squote_len(text, size);
+      |  ^~~
+html_smartypants.c: In function 'smartypants_cb__ltag':
+html_smartypants.c:385:48: warning: pointer targets in passing argument 2 of 'strncmp' differ in signedness [-Wpointer-sign]
+  385 |  if (next_to_closing_a && strncmp("&#39;", text+(i+1), 5) == 0) {
+      |                                            ~~~~^~~~~~
+      |                                                |
+      |                                                const uint8_t * {aka const unsigned char *}
+In file included from html_smartypants.c:26:
+C:/tools/msys64/mingw64/x86_64-w64-mingw32/include/string.h:86:53: note: expected 'const char *' but argument is of type 'const uint8_t *' {aka 'const unsigned char *'}
+   86 |   int __cdecl strncmp(const char *_Str1,const char *_Str2,size_t _MaxCount);
+      |                                         ~~~~~~~~~~~~^~~~~
+compiling markdown.c
+markdown.c: In function 'char_link':
+markdown.c:1045:3: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+ 1045 |   struct buf id = { 0, 0, 0, 0 };
+      |   ^~~~~~
+markdown.c:1085:3: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+ 1085 |   size_t nb_p = 0;
+      |   ^~~~~~
+markdown.c:1094:5: warning: this 'else' clause does not guard... [-Wmisleading-indentation]
+ 1094 |     else nb_p--; i++;
+      |     ^~~~
+markdown.c:1094:18: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'else'
+ 1094 |     else nb_p--; i++;
+      |                  ^
+markdown.c: In function 'sd_markdown_render':
+markdown.c:2849:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+ 2849 |  int footnotes_enabled  = md->ext_flags & MKDEXT_FOOTNOTES;
+      |  ^~~
+markdown.c:2867:52: warning: passing argument 1 of 'is_codefence' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ 2867 |   if (codefences_enabled && (is_codefence(document + beg, doc_size - beg, &fence_delim, NULL) != 0))
+      |                                           ~~~~~~~~~^~~~~
+markdown.c:1402:23: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'const uint8_t *' {aka 'const unsigned char *'}
+ 1402 | is_codefence(uint8_t *data, size_t size, struct buf *curdelim, struct buf *syntax)
+      |              ~~~~~~~~~^~~~
+markdown.c: At top level:
+markdown.c:94:15: warning: 'char_underline' declared 'static' but never defined [-Wunused-function]
+   94 | static size_t char_underline(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size);
+      |               ^~~~~~~~~~~~~~
+compiling rc_markdown.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+rc_markdown.c: In function 'rb_redcarpet_md_render':
+rc_markdown.c:148:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  148 |  struct rb_redcarpet_rndr *renderer;
+      |  ^~~~~~
+compiling rc_render.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+rc_render.c: In function 'rndr_tablecell':
+rc_render.c:143:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  143 |  struct redcarpet_renderopt *opt = opaque;
+      |  ^~~~~~
+rc_render.c: In function 'rndr_link_attributes':
+rc_render.c:306:28: warning: variable 'rndr' set but not used [-Wunused-but-set-variable]
+  306 |  struct rb_redcarpet_rndr *rndr;
+      |                            ^~~~
+compiling stack.c
+linking shared-object redcarpet.so
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/redcarpet-3.6.0/ext/redcarpet
+make DESTDIR\= install
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 15632 s in the future
+compiling autolink.c
+compiling buffer.c
+buffer.c: In function 'bufcstr':
+buffer.c:111:45: warning: passing argument 1 of 'bufgrow' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  111 |  if (buf->size + 1 <= buf->asize || bufgrow(buf, buf->size + 1) == BUF_OK) {
+      |                                             ^~~
+buffer.c:60:21: note: expected 'struct buf *' but argument is of type 'const struct buf *'
+   60 | bufgrow(struct buf *buf, size_t neosz)
+      |         ~~~~~~~~~~~~^~~
+compiling houdini_href_e.c
+compiling houdini_html_e.c
+compiling html.c
+html.c: In function 'rndr_quote':
+html.c:258:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  258 |  struct html_renderopt *options = opaque;
+      |  ^~~~~~
+compiling html_smartypants.c
+html_smartypants.c: In function 'squote_len':
+html_smartypants.c:104:39: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  104 |  static char* single_quote_list[] = { "'", "&#39;", "&#x27;", "&apos;", NULL };
+      |                                       ^~~
+html_smartypants.c:104:44: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  104 |  static char* single_quote_list[] = { "'", "&#39;", "&#x27;", "&apos;", NULL };
+      |                                            ^~~~~~~
+html_smartypants.c:104:53: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  104 |  static char* single_quote_list[] = { "'", "&#39;", "&#x27;", "&apos;", NULL };
+      |                                                     ^~~~~~~~
+html_smartypants.c:104:63: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  104 |  static char* single_quote_list[] = { "'", "&#39;", "&#x27;", "&apos;", NULL };
+      |                                                               ^~~~~~~~
+html_smartypants.c: In function 'smartypants_squote':
+html_smartypants.c:149:30: warning: comparison of integer expressions of different signedness: 'size_t' {aka 'long long unsigned int'} and 'int' [-Wsign-compare]
+  149 |    uint8_t next_char = (size > 1+next_squote_len) ? text[1+next_squote_len] : 0;
+      |                              ^
+html_smartypants.c: In function 'smartypants_cb__amp':
+html_smartypants.c:250:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  250 |  int len = squote_len(text, size);
+      |  ^~~
+html_smartypants.c: In function 'smartypants_cb__ltag':
+html_smartypants.c:385:48: warning: pointer targets in passing argument 2 of 'strncmp' differ in signedness [-Wpointer-sign]
+  385 |  if (next_to_closing_a && strncmp("&#39;", text+(i+1), 5) == 0) {
+      |                                            ~~~~^~~~~~
+      |                                                |
+      |                                                const uint8_t * {aka const unsigned char *}
+In file included from html_smartypants.c:26:
+C:/tools/msys64/mingw64/x86_64-w64-mingw32/include/string.h:86:53: note: expected 'const char *' but argument is of type 'const uint8_t *' {aka 'const unsigned char *'}
+   86 |   int __cdecl strncmp(const char *_Str1,const char *_Str2,size_t _MaxCount);
+      |                                         ~~~~~~~~~~~~^~~~~
+compiling markdown.c
+markdown.c: In function 'char_link':
+markdown.c:1045:3: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+ 1045 |   struct buf id = { 0, 0, 0, 0 };
+      |   ^~~~~~
+markdown.c:1085:3: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+ 1085 |   size_t nb_p = 0;
+      |   ^~~~~~
+markdown.c:1094:5: warning: this 'else' clause does not guard... [-Wmisleading-indentation]
+ 1094 |     else nb_p--; i++;
+      |     ^~~~
+markdown.c:1094:18: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'else'
+ 1094 |     else nb_p--; i++;
+      |                  ^
+markdown.c: In function 'sd_markdown_render':
+markdown.c:2849:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+ 2849 |  int footnotes_enabled  = md->ext_flags & MKDEXT_FOOTNOTES;
+      |  ^~~
+markdown.c:2867:52: warning: passing argument 1 of 'is_codefence' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ 2867 |   if (codefences_enabled && (is_codefence(document + beg, doc_size - beg, &fence_delim, NULL) != 0))
+      |                                           ~~~~~~~~~^~~~~
+markdown.c:1402:23: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'const uint8_t *' {aka 'const unsigned char *'}
+ 1402 | is_codefence(uint8_t *data, size_t size, struct buf *curdelim, struct buf *syntax)
+      |              ~~~~~~~~~^~~~
+markdown.c: At top level:
+markdown.c:94:15: warning: 'char_underline' declared 'static' but never defined [-Wunused-function]
+   94 | static size_t char_underline(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size);
+      |               ^~~~~~~~~~~~~~
+compiling rc_markdown.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_markdown.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+rc_markdown.c: In function 'rb_redcarpet_md_render':
+rc_markdown.c:148:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  148 |  struct rb_redcarpet_rndr *renderer;
+      |  ^~~~~~
+compiling rc_render.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from redcarpet.h:27,
+                 from rc_render.c:23:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+rc_render.c: In function 'rndr_tablecell':
+rc_render.c:143:2: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  143 |  struct redcarpet_renderopt *opt = opaque;
+      |  ^~~~~~
+rc_render.c: In function 'rndr_link_attributes':
+rc_render.c:306:28: warning: variable 'rndr' set but not used [-Wunused-but-set-variable]
+  306 |  struct rb_redcarpet_rndr *rndr;
+      |                            ^~~~
+compiling stack.c
+linking shared-object redcarpet.so
+/usr/bin/install -c -m 0755 redcarpet.so ./.gem.20230522-388-pkkd5j
+make: warning:  Clock skew detected.  Your build may be incomplete.

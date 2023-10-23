@@ -1,0 +1,50 @@
+<% title "Setup and Configuration" %>
+
+<% breadcrumb link_to("New User Setup", "") -%>
+
+<% include_view_javascript -%>
+
+<%= semantic_form_for @user do |f| %>
+	<%= render "shared/error_messages", :target => @user %>
+
+	<%= required_label %>
+	<div style="clear:both; margin-top:-1.3em;"></div>
+
+	<div class="one_col_no_sidebar">
+		<%= f.inputs "Login Info" do -%>
+			<%= f.input :username, :input_html => {:autocomplete => :off, :tabindex => 1}, :required => true %>
+			<%= f.input :password, :as => :password, :input_html => { :autocomplete => :off, :tabindex => 2 }, :required => true %>
+			<%= f.input :password_confirmation, :as => :password,  :input_html => { :autocomplete => :off, :tabindex => 3 }, :required => true %>
+		<% end -%>
+
+		<%= f.inputs "Optional Info & Settings" do -%>
+			<%= f.input :fullname, :label => "Full name", :input_html => {:tabindex => 4 } %>
+			<%= f.input :email, :label => "Email address", :input_html => {:tabindex => 5 }, :required => false  %>
+			<%= f.input :company, :label => "Organization", :input_html => {:tabindex => 6}, :required => false %>
+			<%= f.input :time_zone, :as => :time_zone, :input_html => {:tabindex => 7}, :required => false %>
+		<% end -%>
+
+		<%= f.actions do -%>
+			<span class="btn"><%= f.submit 'Create Account', :class => "new" %></span>
+		<% end -%>
+
+		<%= f.help_link :password do -%>
+			<h3>Warning!</h3>
+			<p>
+				This account will be able to perform actions on the system with <u>administrator-level</u> privileges.  Choose a strong password.
+			</p>
+			<p>
+				Passwords must:
+
+				<ul>
+					<li>Contain letters, numbers, and at least one special character.</li>
+					<li>Not contain the username.</li>
+					<li>Not be common.</li>
+					<li>Not be a predictable sequence of characters.</li>
+				</ul>
+			</p>
+		<% end -%>
+	</div>
+
+<% end %>
+

@@ -1,0 +1,22 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/webscan_task') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+], ($, Template, TaskConfigView) ->
+  class WebscanTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/webscan_task']
+
+    VALIDATION_URL: "/workspaces/#{WORKSPACE_ID}/tasks/validate_webscan"
+
+    onShow:() ->
+      @loadPartial("/workspaces/#{WORKSPACE_ID}/tasks/new_webscan", @_afterLoad,@)
+
+    onBeforeClose: ->
+      super
+      @_validate(@VALIDATION_URL)
+
+    _afterLoad: (args) =>
+      @delegateEvents()
+      @bindUIElements()
+
+      $("#all_vhosts",@el).checkAll $("#vhost_list")

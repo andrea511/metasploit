@@ -1,0 +1,85 @@
+<div class="one_col_no_sidebar">
+
+  <%= semantic_form_for @macro do |f| %>
+    <%= render "shared/error_messages", :target => @macro %>
+    <%= f.inputs "Macro Settings" do %>
+      <%= render "form", :f => f %>
+    <% end -%>
+
+    <%= f.actions do -%>
+      <span class="btn"><%= f.submit 'Update Macro', :class => "save" %></span>
+    <% end -%>
+  <% end %>
+
+  <fieldset class="form" style='padding-left:0;padding-right:0;box-shadow: none;'>
+    <legend><span>Actions</span></legend>
+
+    <% actions = @macro.actions || [] %>
+    <% if actions.length == 0 %>
+      <h3>No actions have been defined</h3>
+    <% else %>
+    
+      <%= form_tag macro_delete_actions_path(@macro), :method => :delete do %>
+      <span class="btn">
+          <%= submit_tag "Delete...", :class => "delete", :id => 'action-delete-submit' %>
+      </span>
+
+      <br />
+      <br />
+
+      <table id="action_list" class="list">
+        <thead>
+          <th class="checkbox"><%= check_box_tag "all_actions", true %></th>
+          <th>Order</th>
+          <th>Module</th>
+          <th>Title</th>
+        </thead>
+        <tbody>
+      <%
+
+        actions.each_index do |acti|
+          act = actions[acti]
+      %>
+        <tr id="<%=h dom_id(macro) %>" class="<%=h row_cycle %>">
+        <td><%= check_box_tag("action_ids[]", acti, false, :id => nil) %></td>
+        <td><%= (acti +1 ).to_s %></td>
+        <td><%=h act[:module] %></td>
+        <td><%=h MsfModule.find_by_fullname(act[:module]).title rescue "Unknown" %></td>
+        </tr>
+      <%  end %>
+        </tbody>
+        </table>
+      <% end %>
+    <% end -%>
+
+    <hr style="margin:25px 0 16px 0;border:0;border-top:1px solid #ddd">
+
+    <legend><span>Modules</span></legend>
+    <p>Select a module below to add a new action.</p>
+
+    <table class="list sortable" id="modules-table">
+      <thead>
+        <th>OS</th>
+        <th>Module</th>
+        <th>Title</th>
+        <th width="50"></th>
+      </thead>
+      <tbody>
+        <% @module_list.each do |m| -%>
+          <tr>
+            <td><%= module_icons_html(m) %></td>
+            <td class="fullname"><%= m.fullname %></td>
+            <td><%= m.title %></td>
+            <td class="actions">
+              <%= link_to(icon('silky/add', alt: "Add" ), '#', :title => 'Add as action', :class => 'add') %>
+              <%= image_tag('loader.gif', :class => 'hidden spinner') %>
+            </td>
+          </tr>
+        <% end -%>
+      </tbody>
+    </table>
+
+  <span id="macro-module-options-url" class="invisible"><%= module_options_url %></span>
+  <span id="macro-id" class="invisible"><%= @macro.id %></span>
+</div>
+

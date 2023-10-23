@@ -1,0 +1,49 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/history") %>',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, Template, EventAggregator) ->
+
+  class HistoryLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/history']
+
+    initialize: ({@host_id}) ->
+
+    onShow: ->
+      EventAggregator.on("tabs_layout:change:count", @render)
+
+    onDestroy: ->
+      EventAggregator.off("tabs_layout:change:count")
+
+    hostHistoryTableURL: => "/hosts/#{@host_id}/show_history.json"
+
+    onRender: =>
+      @_loadTable()
+
+    _loadTable: =>
+      helpers.loadRemoteTable({
+        el: $('#history_table', @el)
+        tableName: 'history'
+        columns:
+          info:
+            bSortable: false
+            sClass: 'break-all info'
+            sWidth: "50%"
+            fnRender: (o) ->
+              JSON.stringify(o.aData.info)
+          created_at:
+            sTitle: "Created"
+            sWidth: "200px"
+            sClass: 'time'
+            fnRender: (o) ->
+              time = o.aData?.created_at
+              "<span title='#{_.escape(time)}'>#{_.escape(moment(time).fromNow())}</span>"
+        dataTable:
+          aaSorting: [[3, 'desc']]
+          sAjaxSource: @hostHistoryTableURL()
+          fnDrawCallback: =>
+            _.each $('#history_table', @el).find('td.info'), (td) ->
+              node = new PrettyJSON.view.Node({ el: $(td), level: 0, data: JSON.parse($(td).text()) })
+              $(td).find('.node-container').first().addClass('inline').click -> $(@).removeClass('inline')
+            $('table td.time', @el).tooltip()
+      })

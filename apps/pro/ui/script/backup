@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+$options = {}
+begin
+  op = OptionParser.new do |opts|
+    opts.banner = "Usage: backup [options]"
+
+    opts.on('-b BACKUP', '--backup=BACKUP', 'Name of backup to create', String)
+    opts.on('-y', '--assume-yes', 'Automatic yes to prompts')
+  end
+  op.permute!(into: $options)
+  $stdout.puts "[*] Backup creation script has started, this may take a moment."
+rescue OptionParser::ParseError => e
+  warn e.message
+  warn op
+  exit 1
+end
+
+$rails_rake_task = true
+
+$LOAD_PATH.unshift File.expand_path('../../lib',  __FILE__)
+$LOAD_PATH.unshift File.expand_path('../../../engine/lib',  __FILE__)
+
+# Make the namespace happy
+module Metasploit
+  module Pro
+  end
+end
+require 'msf/pro/minimal_backup'
+
+def prompt(string, assumed: 'yes')
+  $stdout.write string.chomp
+  if $options[:"assume-yes"]
+    $stdout.puts assumed
+    assumed
+  else
+    $stdout.flush
+    $stdin.readline.strip
+  end
+end
+
+continue = prompt <<~EOF
+  [-] The backup process may take a while to complete.
+      Are you sure you want to continue? [y/(N)] 
+EOF
+
+unless continue =~ /^y/i
+  puts '[-] Backup cancelled.'
+  exit 1
+end
+
+# Windows does not like colons in filenames, so strict ISO8601 it is
+default_name = "backup_from_script_#{Time.now.strftime('%Y%m%dT%H%M%S')}"
+filename = $options[:backup] || prompt("New backup name (#{default_name}): ", assumed: '')
+if filename.empty?
+  filename = default_name
+end
+
+archive = Msf::Pro::MinimalBackup.new(filename)
+if archive.valid?
+  success = Msf::Pro::MinimalBackup.generate(filename, 'Generated from the backup script', overwrite: false, tee: $stdout)
+  if success
+    puts "[+] Backup '#{filename}.zip' successfully created."
+  else
+    puts '[-] An error occured while trying to create the backup. See backups.log for details.'
+    exit 1
+  end
+else
+  archive.errors.each do |_, v|
+    puts "[-] #{v}"
+  end
+
+  exit 1
+end

@@ -1,0 +1,4 @@
+--format ParallelTests::RSpec::RuntimeLogger --out ../test_reports/tmp/parallel_runtime_rspec.log
+--format ParallelTests::RSpec::SummaryLogger --out ../test_reports/spec/reports/spec_summary.log
+--colour
+--format progress

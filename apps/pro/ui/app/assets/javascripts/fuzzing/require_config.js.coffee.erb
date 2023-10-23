@@ -1,0 +1,17 @@
+class RequireConfig 
+  constructor: ->
+    @fuzzing_require = requirejs.config(
+      context: "app"
+      paths:
+        jquery: '<%= jquery_path %>'
+    )
+
+    @fuzzing_require([
+      'jquery'
+      '<%= javascript_path('fuzzing/app')%>'
+    ], ($,App)->
+        app = new App
+        app.start()
+    )
+
+new RequireConfig()

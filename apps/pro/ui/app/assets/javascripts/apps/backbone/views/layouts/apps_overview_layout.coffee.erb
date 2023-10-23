@@ -1,0 +1,42 @@
+define [
+  '<%= javascript_path("templates/apps/layouts/apps_overview_layout") %>',
+  '<%= javascript_path("apps/backbone/views/layouts/apps_overview_collection_layout") %>',
+  'jquery',
+  '<%= javascript_path("apps/backbone/views/generic_stats_view") %>',
+  '<%= javascript_path("apps/backbone/models/app_run") %>'
+], (Template, AppsOverviewCollectionLayout, $, GenericStatsView, AppRun) ->
+  class AppsOverviewLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['apps/layouts/apps_overview_layout']
+
+    regions:
+      lastStatArea: '.last-stat'
+      appsArea:  '.apps-area'
+
+    events:
+      'click .generic-stat-wrapper': 'statClicked'
+
+    initialize: =>
+      @numAppRuns = $('meta[name=num_app_runs]').attr('content')
+      @lastAppRunId = $('meta[name=last_app_run_id]').attr('content')
+      super
+
+    # Constructs Layouts for managing the regions, and show()'s the regions
+    renderRegions: =>
+      @collectionLayout = new AppsOverviewCollectionLayout
+      @appsArea.show(@collectionLayout)
+      @collectionLayout.renderRegions()
+      @renderStats()
+
+    renderStats: =>
+      if @lastAppRunId? and @lastAppRunId.length > 0
+        @appRun = new AppRun(id: @lastAppRunId)
+        @appRun.fetch
+          success: =>
+            @statsView = new GenericStatsView(model: @appRun, showHeader: true)
+            @lastStatArea.show(@statsView)
+      $('.stats-area', @el).hide() if @numAppRuns < 1
+
+    statClicked: =>
+      window.location = "./app_runs/#{@lastAppRunId}"
+
+    serializeData: => @

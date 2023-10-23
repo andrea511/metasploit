@@ -1,0 +1,8 @@
+<ul class="overview_stats">
+  <% if License.get.supports_social_engineering? %>
+    <li><%=link_to pluralize(@workspace.social_engineering_campaigns.size, "social engineering campaign"), workspace_social_engineering_campaigns_path(@workspace) %> created</li>
+  <% else %>
+    <li><%=h pluralize(@workspace.campaigns.size, "social engineering campaign") %> created</li>
+  <% end %>
+</ul>
+

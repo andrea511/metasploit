@@ -1,0 +1,2340 @@
+// scss for SocialEngineering::Campaign#show
+@import "css3-mixins";
+@import "shared/variables";
+
+$min-width: 800px;
+$max-width: 1326px;
+$orange-color: #FF9327;
+$red-border-color: #D57474;
+$campaign-facts-max-width: 1280px;
+$status-strip-height: 40px;
+
+.max-width {
+  max-width: $max-width+40px;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.min-width {
+  min-width: $min-width;
+}
+
+.max-width-no-padding {
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.mainContent {
+  @extend .max-width-no-padding;
+}
+div#pageHeader, div#pageFooter, div#crumbHolder {
+  @extend .max-width-no-padding;
+  max-width: $max-width+24px;
+}
+
+// hovering triangle pseudo element
+.triangle {
+  position: relative;
+  $triangleSize: 18px;
+  &:before {
+    $borderSize: 3px;
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: -($triangleSize+$borderSize);
+    left: 50%;
+    margin-left: -($triangleSize+($borderSize/2))/2;
+    border: ($triangleSize+$borderSize)/2 solid transparent;
+    border-top: ($triangleSize+$borderSize)/2 solid #ccc;
+    font-size: 0;
+    line-height: 0;
+    content: '';
+  }
+  &:after { // border
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: -$triangleSize;
+    left: 50%;
+    margin-left: -$triangleSize/2;
+    border: $triangleSize/2 solid transparent;
+    border-top: $triangleSize/2 solid #e4e4e4;
+    font-size: 0;
+    line-height: 0;
+    content: '';
+  }
+}
+
+// applied to surrounding class to give it a stacked border
+div.border {
+  border: 1px solid #d6d6d6;
+  margin-bottom: 10px;
+}
+
+.ui-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+}
+
+span.btn.primary {
+  a {
+    color: white;
+    //@include text-shadow(0, 1px, 2px, rgba(0,0,0, .3));
+    background-image: none;
+    font-weight: normal;
+    font-size: 14px;
+    height: 20px;
+    padding: 5px 10px 5px 10px;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+  }
+}
+span.btn.primary {
+  cursor: pointer;
+  padding: 0;
+  @include linear-gradient(#61bcdc, #3586a4);
+  border-radius: 3px;
+  border: 1px solid #618696;
+  border-top: 1px solid #6991a2;
+  border-bottom: 1px solid lighten(#28373d, 10%);
+  margin-left: 10px;
+  font-weight: 600;
+  
+  &:hover {
+    text-decoration: none;
+    box-shadow: 0 0 3px rgba(0,0,0,.4);
+  }
+  &:active {
+    box-shadow: inset 0 0 5px rgba(0,0,0, 0.6);
+  }
+}
+
+$page-circle-height: 30px;
+.rollup-modal {
+  div.page-circles {
+    position: absolute;
+    top: 100%;
+    margin-top: -15px;
+    text-align: center;
+    left: 0;
+    right: 0;
+    text-align: center;
+    &>div.cell {
+      vertical-align: top;
+      text-align: center;
+      display: inline-block;
+      width: $page-circle-height+40px;
+      margin: 0 12px;
+      &.tab {
+        background: #f6f6f6;
+        padding: 6px 10px;
+        max-width: none !important;
+        border: 1px solid #ddd;
+        position: relative;
+        bottom: 16px;
+        margin: 0 2px;
+        cursor: pointer;
+        padding-left: 30px;
+        &:active {
+          box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+        }
+        box-shadow: inset 0 -1px 3px rgba(0,0,0,.1);
+        &.selected {
+          box-shadow: none;
+          background: #fff;
+          border-bottom: 1px solid #fff;
+          &:active {
+            box-shadow: none;
+          }
+        }
+        &.web_page {
+          background-image: image-url('campaigns/tiny_page.png');
+          background-repeat: no-repeat;
+          background-position: 5px center;
+        }
+        &.email {
+          background-image: image-url('campaigns/tiny_email.png');
+          background-repeat: no-repeat;
+          background-position: 5px center;
+        }
+      }
+      div.page-circle {
+        @extend .circle;
+        @extend .interaction;
+        //@include box-shadow(0, 10px, 20px 16px, #fff);
+        background: #aaa;
+        margin: 0 auto;
+        height: $page-circle-height;
+        line-height: $page-circle-height;
+        width: $page-circle-height;
+        color: white;
+        font-weight: 600;        
+      }
+      &.selected div.page-circle {
+        background-color: $orange-color;
+      }
+      label {
+
+      }
+    }
+  }
+}
+
+.ui-tabs-wrap {
+  padding: 0 !important;
+  overflow: hidden; // fixes drag-to-scroll bug
+  position: relative;
+  div.page.row {
+    &>div.cell {
+      padding-top: 71px;
+    }
+  }
+  fieldset.inputs {
+    margin-top: 0;
+  }
+}
+
+// label with small font underneath the current container
+div.text-lower {
+  position: absolute;
+  top: 100%;
+  padding-top: 4px;
+  font-size: 11px;
+  left: -40%;
+  width: 180%;
+  text-align: center;
+  line-height: 13px;
+}
+
+// the 3 clickable tabs at the top
+.tab-header {
+  //@include box-shadow(0, 2px, 4px, rgba(0,0,0,.1));
+  position: relative;
+  z-index: 6;
+  color: black;
+  background: transparent;
+
+  .cell {
+    background: #fff;
+    font-size: 16px;
+    height: 74px;
+    text-align: center;
+    border-right: 1px solid #ccc;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #d6d6d6;
+    cursor: pointer;
+    transition: box-shadow .2s;
+
+    label {
+      display: block;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    label.title {
+      padding-top: 8px;
+      line-height: 24px;
+      font-size: 16px;
+    }
+    &.last {
+      padding-right: 1px;
+    }
+    &:hover {
+      box-shadow: inset 0 0 8px 1px rgba(0,0,0,.1);
+    }
+    &:active {
+      background: #f9f9f9;
+    }
+    &:last-child {
+      border-right: none;
+    }
+    &.selected {
+      @include box-shadow-2(inset 0, 1px, 0, rgba(255,255,255,.8),
+        0, 0, 4px, #d4d4d4);
+      @include linear-gradient(#f0f0f0, #e4e4e4);
+      text-shadow: 0 1px 0 rgba(255,255,255,.5);
+      border: 1px solid #c0c0c0;
+      position: relative;
+      //@include box-sizing(content-box); // revert back to cbox for p:relative hax
+      bottom: 1px;
+      left: -1px;
+      height: 77px;
+      cursor: default;
+      label {
+        cursor: default;
+      }
+      // triangle at bottom of selected
+      @extend .triangle;
+    }
+
+    label.stats {
+      position: relative;
+      right: 4px; // to even out the center alignment a little
+      padding-top: 7px;
+      span {
+        font-size: 1.3em;
+        padding: 10px 36px 10px 15px;
+        background-position: right center;
+        background-repeat: no-repeat;
+        &.emails {
+          background-image: image-url('campaigns/icons_large/mail.png');
+          padding-right: 30px;
+        }
+        &.web-pages {
+          background-image: image-url('campaigns/icons_large/web_pages.png');
+          padding-right: 26px;
+        }
+        &.targets {
+          background-image: image-url('campaigns/icons_large/targets.png');
+        }
+      }
+    }
+  }
+}
+
+
+.circle {
+  behavior: asset-url('css3_pie/PIE.htc'); // I WILL LOVE YOU IE8
+  border-radius: 50%;
+  cursor: pointer;
+
+  text-align: center;
+
+  span {
+    position: absolute;
+    top: 50%;
+    margin-top: -9px;
+    font-weight: 600;
+    left: 0;
+    right: 0;
+    font-size: 18px;
+  }
+}
+
+.border-box {
+  padding: 16px;
+  border: 1px solid #ddd;
+}
+
+.animatable {
+  transition: all, 0.2s;
+}
+
+$numPages: 3;
+.slider {
+  background: white;
+  width: 100%;
+  overflow: hidden;
+  left: 0;
+  position: relative;
+  top: -3px;
+  z-index: 3;
+  margin-bottom: -3px;
+  &>div.pages {
+    position: relative;
+    width: $numPages*100%;
+    font-size: 0; // no spacing between cells (yui)
+    // cells
+    &.page1 { left: 0; }
+    &.page2 { left: -100%; }
+    &.page3 { left: -200%; }
+    &.page4 { left: -300%; }
+    &.page5 { left: -400%; }
+    &>div.cell{
+      font-size: 16px;
+      width: 100%/$numPages;
+      padding: 16px 0;
+      background: #F3F3F3;
+      &.first {
+        // PAGE 1
+        h3 {
+          margin: 6px 0;
+        }
+
+      }
+      h3 {
+        padding-left: 16px;
+        margin-bottom: 4px;
+      }
+    }
+  }
+}
+
+.campaign-findings {
+  background: #fff;
+  ul.tabs {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #d3d3d3;
+    margin-top: 0;
+    li.tab a {
+      background-image: none;
+      padding: 8px 18px 8px 18px;
+    }
+  }
+  .campaign-findings-inner-gray {
+    font-size: 16px;
+    .campaign-facts-wrapper {
+      h3 {
+        font-size: 14px;
+      }
+      div.campaign-facts-lvl2 {
+        $lvl2-padding-top: 44px;
+        padding-top: $lvl2-padding-top;
+        position: relative;
+        max-width: $campaign-facts-max-width;
+        $circle-width: 3.5%;
+        .sub-circles-dummy {
+          margin-top: $circle-width;
+        }
+        .sub-circles {
+          top: $lvl2-padding-top;
+          position: absolute;
+          bottom: 0;
+          width: $circle-width;
+          .circle {
+            //border: 4px solid #orange-color;
+          }
+        }
+        .sessions, .creds {
+          left: 50%;
+          margin-left: -($circle-width / 2);
+          .circle {
+            background: $orange-color;
+            color: #fff;
+            position: absolute;
+            top: 0; bottom: 0;
+            left: 0; right: 0;
+            font-size: 13px;
+            font-weight: 600;
+            span {
+              margin-top: -9px;
+              font-size: 14px;
+            }
+          }
+
+          .text-lower {
+            left: -150%;
+            width: 400%;
+          }
+        }
+        .bar {
+          position: absolute;
+          bottom: $lvl2-padding-top - 8px;
+          top: -12px;
+          margin: 0 auto;
+          border-left: 2px dotted $orange-color;
+        }
+        .creds {
+          left: 83%;
+        }
+      }
+      $circle-size: 30%; // vs. 70% whitespace total
+      $num-circles: 6;
+      $padding: (100% - $circle-size) / $num-circles;
+      $circle-width: $circle-size / $num-circles;
+      $circle-border-width: 4px;
+      div.campaign-facts {
+        padding: 14px 0 14px 0;
+        border: 1px solid #ddd;
+        background: image-url('campaigns/diag-stripe.png') repeat;
+        .no-results {
+          text-align: center;
+          font-size: .8em;
+          padding: 10px 0 10px 0;
+        }
+        .row {
+          max-width: $campaign-facts-max-width;
+          margin: 0 auto;
+          &.large-circles {
+            position: relative;
+          }
+        }
+        .cell {
+          width: $circle-width;
+          margin-right: $padding;
+          display: inline-block;
+          position: relative;
+          &.selected {
+            .full-pie {
+              background: lighten($orange-color, 20%);
+            }
+          }
+          &.first {
+            margin-left: $padding/2;
+          }
+          &.last {
+            margin-right: 0;
+            .rarrow {
+              display: none !important;
+            }
+          }
+          .circle-dummy {
+            // http://ansciath.tumblr.com/post/7347495869/css-aspect-ratio
+            margin-top: 100%;
+          }
+          .circle {
+            $padding-border: 6%;
+            font-size: 21px;
+            background: #ddd;
+            position: absolute;
+            top: $padding-border;
+            left: $padding-border;
+            width: 100%-(2*$padding-border);
+            height: 100%-(2*$padding-border);
+            z-index: 50000;
+            //padding: $circle-border-width;
+            //border: $circle-border-width solid #ccc;
+            @include box-sizing;
+            transition: all, .2s;
+            span {
+              font-weight: normal;
+            }
+            &:hover, &.selected {
+              border-color: $orange-color;
+              background: #ededed;
+            }
+            &.selected {
+              background: lighten($orange-color, 10%);
+              color: #fff;
+            }
+          }
+          .full-pie {
+            @extend .circle;
+            z-index: 49998;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #e8e8e8;
+            &:hover {
+              //background:;
+            }
+          }
+          .clipped-pie {
+            z-index: 49998;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          }
+          div.rarrow {
+            font-weight: 600;
+            font-size: 34px;
+            position: absolute;
+            left: 100%;
+            padding: 0 $circle-border-width;
+            top: 50%;
+            margin-top: -13px;
+            width: 220%;
+            text-align: center;
+          }
+        }
+        .lower-text-dummy {
+          position: relative;
+          left: -40%;
+          margin-right: -80%;
+          font-size: 11px;
+          visibility: hidden;
+          padding-bottom: 6px;
+        }
+        .cell.blue {
+          .circle {
+            background: #229AE4;
+            color: #fff;
+            &:hover {
+              background: lighten(#229AE4, 15%);
+            }
+          }
+        }
+        .tray {
+          height: auto;
+          border-top: 1px solid #ddd;
+          transition: height .2s;
+          background: #fff;
+          box-shadow: inset 0 0 6px rgba(0,0,0,.2);
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.shadow-arrow-row {
+  margin: 0 auto;
+  position: relative;
+  .shadow-arrow {
+    display: none;
+    width: 40px;
+    height: 23px;
+    background: transparent image-url('campaigns/triangle-shadow.png') no-repeat;
+    position: absolute;
+    left: 0;
+    top: -15px;
+    background-position: center center;
+    transition: left .2s
+  }
+}
+
+
+.campaign-list {
+  position: relative;
+  .empty-row {
+    padding: 10px;
+    text-align: center;
+    $empty-row-height: 32px;
+    $empty-row-border: 1px dotted #aab;
+    height: $empty-row-height;
+    line-height: $empty-row-height;
+    font-size: 12px;
+    border-top: $empty-row-border;
+    border-bottom: $empty-row-border;
+  }
+  .new-action {
+    position: absolute;
+    top: -7px;
+    right: 6px;
+  }
+  .row {
+    $row-bg: #9ab5cc;
+    $row-height: 90px;
+    border-top: 1px solid #ddd;
+    height: $row-height;
+    &.first {
+      border-top: none;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+    .cell {
+      padding: 10px 0;
+      text-align: center;
+      $heavy-font-size: 14px;
+      background: transparent;
+      &.title {
+        width: 25%;
+        font-weight: 600;
+        font-size: $heavy-font-size;
+        color: #000;
+        label {
+          display: block;
+          &.title {
+            @include word-break-auto;
+            height: 35px;
+            text-align: center;
+            margin: 0 auto;
+            width: 100%;
+            padding: 8px 0 4px 4px;
+            overflow: hidden;
+            span {
+              display: inline-block;
+              vertical-align: middle;
+              line-height: 18px !important;
+            }
+          }
+          &.date {
+            font-weight: normal;
+            color: #666;
+            font-size: 11px;
+          }
+        }
+      }
+      &.components {
+        width: 25%;
+        ul {
+          $item-height: 40px;
+          list-style: none;
+          display: block;
+          padding: 0;
+          margin: 0;
+          height: $item-height;
+          li {
+            display: inline-block;
+            font-size: $heavy-font-size;
+            font-weight: 600;
+            height: $item-height;
+            line-height: $item-height;
+            background-position: right center;
+            background-repeat: no-repeat;
+            margin-right: 20px;
+            color: #000;
+            &.emails {
+              padding-right: 32px;
+              background-image: image-url('campaigns/icons_large/mail.png');
+            }
+            &.web-pages {
+              padding-right: 28px;
+              background-image: image-url('campaigns/icons_large/web_pages.png');
+            }
+            &.portable-files {
+              padding-right: 30px;
+              background-image: image-url('campaigns/icons_large/portable_file.png');
+            }
+            &.empty {
+              font-weight: normal;
+              color: #666;
+            }
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+        div.updated-at {
+          padding-top: 7px;
+          font-size: 11px;
+          color: #666;
+        }
+      }
+      &.launch {
+        width: 18%;
+        a.button {
+          height: $row-height - 20px;
+          line-height: $row-height - 20px;
+        }
+      }
+      &.status {
+        width: 32%;
+        padding-right: 10px;
+        text-align: right;
+        font-size: 12px;
+        position: relative;
+
+        div.actions {
+          position: absolute;
+          right: 10px;
+          top: 57px;
+          a {
+            margin-right: 4px;
+            margin-left: 4px;
+            &.first {
+              margin-left: 0;
+            }
+            &.last {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.section {
+  position: relative;
+  margin-bottom: 5px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  p.subtext {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    color: #444;
+    line-height: .6;
+  }
+}
+
+.loading {
+  background: #fff image-url('loader-bar.gif') no-repeat scroll center center !important;
+  padding: 100px 0 100px 0;
+}
+
+.campaign-datatables {
+  font-size: 11px;
+  .dataTables_wrapper {
+    min-height: 0;
+    _height: 0;
+    margin-bottom: 16px;
+    margin-top: 20px;
+  }
+  .dataTables_filter, .dataTables_length {
+    position: relative;
+    bottom: 6px;
+  }
+  .dataTables_length {
+    bottom: 4px;
+  }
+  .dataTables_paginate {
+    margin-top: 5px;
+  }
+  table.list th {
+    border-top: 1px solid #ddd;
+  }
+}
+
+
+.targets-table-wrap {
+  padding: 15px;
+  max-width: $campaign-facts-max-width - 200px;
+  margin: 0 auto;
+  @extend .campaign-datatables;
+}
+
+.reusable-elements, .target-list-show {
+  @extend .campaign-datatables;
+  margin-top: 8px;
+  select {
+    margin-bottom: 10px;
+  }
+  .dataTables_length {
+    margin-top: 4px;
+  }
+  &>.max-width>label {
+    font-size: 14px;
+    line-height: 28px;
+    display: block;
+    input {
+      margin-left: 5px;
+    }
+  }
+  .buttons {
+    height: 32px;
+    margin-top: 10px;
+    margin-bottom: -10px;
+  }
+  .delete-span {
+    cursor: pointer;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-bottom: 0;
+    margin-right: 5px;
+    vertical-align: top;
+    .delete-btn {
+      padding-left: 24px;
+      padding-right: 4px;
+      padding-bottom: 2px;
+      background-image: image-url('icons/linkBtn.png');
+      background-repeat: no-repeat;
+      background-position: -2px -323px;
+      color: #222;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  div.status {
+    display: none;
+    margin-left: 35%;
+    margin-right: 25%;
+    position: relative;
+    bottom: 20px;
+    margin-bottom: -28px;
+    text-align: center;
+    padding: 4px;
+    font-size: 1.2em;
+    border-radius: 4px;
+    &.errors {
+      color: #B94A48;
+      border: 1px solid #EED3D7;
+      background: #F2DEDE;
+    }
+    &.success {
+      color: #468847;
+      border: 1px solid #D6E9C6;
+      background: #DFF0D8;
+    }
+  }
+}
+
+.campaign-edit-actions {
+  position: relative;
+  top: 10px;
+  margin-top: 15px;
+  text-align: right;
+  padding-right: 5px;
+  &>a {
+    line-height: 20px;
+    font-size: 12px;
+    position: relative;
+    top: -12px;
+    margin-right: 12px;
+  }
+  span.btn {
+  }
+}
+
+.campaign-details {
+  text-align: center;
+  select[name=component-dropdown] {
+    font-size: 16px;
+    width: 30%;
+    margin: 10px 0 25px 0;
+  }
+  .border-box {
+    background: #fff;
+    max-width: $campaign-facts-max-width - 200px;
+    margin: 0 auto;
+    padding: 0;
+    iframe {
+      width: 100%;
+      height: 900px;
+      border: none;
+    }
+  }
+}
+
+.campaign-configuration {
+  margin-top: $status-strip-height;
+  form fieldset.inputs {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    li.radio.input.required {
+      margin-bottom: 0;
+    }
+    fieldset.choices {
+      background: transparent;
+      margin-bottom: 0;
+      ol.choices-group {
+        float: none;
+        padding: 0;
+        display: inline-block;
+        width: 80%;
+        padding-left: 20%;
+        li.choice {
+          display: inline-block;
+          input {
+            margin-right: 4px;
+            vertical-align: baseline;
+          }
+        }
+      }
+    }
+  }
+}
+
+.campaign-components {
+  text-align: center;
+  padding-bottom: 0;
+  position: relative;
+  padding: 0;
+  margin-bottom: 0;
+  padding-top: 10px;
+  &.editing {
+    
+  }
+  a.toggle-component-edit-mode {
+    position: absolute;
+    border: 1px solid transparent;
+    top: 4px;
+    right: 5px;
+    background: image-url('campaigns/component_edit.png') no-repeat center;
+    font-size: 0;
+    height: 16px;
+    width: 16px;
+    line-height: 16px;
+    padding-top: 1px;
+    &.active {
+      font-size: 12px;
+      width: auto;
+      padding-right: 20px;
+      padding-left: 3px;
+      background-position: right center;
+      border: 1px solid #aaa;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .component-buttons {
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background: #fff;
+  }
+  .shadow-arrow-row {
+    padding-top: 17px;
+    .shadow-arrow {
+      bottom: -7px;
+      left: 50%;
+      top: auto;
+      margin-left: -18px;
+    }
+  }
+  .add-nav {
+    padding: 5px 0 0 0;
+    list-style:none;
+    margin:0;
+    font-size:11px;
+    line-height:13px;
+    display: inline-block;
+    overflow:hidden;
+    p {
+      margin-bottom: 0;
+      width: 110px;
+      margin: 0 auto;
+      font-size: 11px;
+      line-height: 15px;
+    }
+    li {
+      text-align:center;
+      width:123px;
+      float:left;
+      margin:0 1px;
+      margin-top: 10px;
+      &.component {
+        position: relative;
+        top: 3px;
+        vertical-align: top;
+        padding-bottom: 5px;
+        a {
+          width: 48px;
+          height: 48px;
+        }
+        div.delete {
+          display: none;
+          cursor: pointer;
+          position: absolute;
+          top: -6px;
+          right: 25px;
+          background: image-url('campaigns/component_delete_badge.png') no-repeat center center;
+          width: 24px;
+          height: 24px;        
+        }
+      }
+    }
+    &.editing {
+      li.component div.delete {
+        display: block;
+      }
+      li.component.unconfigured div.delete {
+        display: none;
+      }
+    }
+  }
+  .inline-add {
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 8px;
+    margin-top: 10px;
+    &.editing {
+      display: none;
+    }
+    p {
+      margin-bottom: 0;
+      width: 110px;
+      margin: 0 auto;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+  }
+  .component-buttons {
+    display: none;
+    text-align: center;
+    padding: 10px 0;
+  }
+}
+
+.add-component {
+  margin:0 auto 5px;
+  width:52px;
+  height:52px;
+  display:block;
+  text-indent:-9999px;
+  overflow:hidden;
+  background: image-url('campaigns/sprite.png') no-repeat 0 -100px;
+}
+.add-component:active {
+  background: image-url('campaigns/sprite.png') no-repeat -198px -87px;
+}
+.add-component:hover {
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  border-radius: 6px;
+}
+.add-component:hover:active {
+  box-shadow: none;
+}
+@mixin components-style {
+  margin:0 auto 5px;
+  width:30px;
+  height:30px;
+  display:block;
+  border:2px solid #7a7a7a;
+  border-radius:6px;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+}
+
+.interaction {
+  &:hover {
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  }
+  &:active {
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+  }
+}
+
+li {
+  position: relative;
+  a.add-email, a.add-web_page, a.add-portable_file {
+    @extend .interaction;
+  }
+  a.add-email {
+    @include components-style;
+    background: #fff image-url('campaigns/icons_large/mail.png') no-repeat center;
+  }
+
+  a.add-web_page {
+    @include components-style;
+    background: #fff image-url('campaigns/icons_large/web_pages.png') no-repeat center
+  }
+
+  a.add-portable_file {
+    @include components-style;
+    background: #fff image-url('campaigns/icons_large/portable_file.png') no-repeat center
+  }
+  &.unconfigured a {
+    border: 1px dashed $red-border-color;
+  }
+  .rarrow {
+    position: absolute;
+    top: 20px;
+    left: 100%;
+    font-size: 26px;
+    margin-left: -14px;
+  }
+
+}
+
+.campaign-server-config-div {
+  &.disabled {
+    h3 {
+      border-top: none;
+      border-bottom: 1px solid #DDD;
+      padding: 4px 0 4px 0;
+      color: #888;
+    }
+    div.list {
+      display: none;
+    }
+  }
+  div.list.section {
+    text-align: center;
+    position: relative;
+    padding-top: 30px;
+  }
+  .campaign-server-config-items {
+    display: inline-block;
+
+    li {
+      position:relative;
+      display: inline-block;
+      width: 120px;
+      text-align:center;
+
+      a {
+        display: inline-block; 
+        height: 25px;
+        width: 25px;
+        margin: 5px auto;
+        border-radius:6px;
+        -moz-border-radius:6px;
+        -webkit-border-radius:6px;
+        margin: 2px 0;
+      }
+      p {
+        width: 123px;
+        margin: 0;
+        font-size: 11px;
+        display: block;
+      }
+    }
+
+    
+    li {
+      a {
+        padding: 12px;
+        border: 2px solid #7A7A7A;
+      }
+      &.email-server-config-open-modal {
+        a {
+          background: #fff image-url('campaigns/icons_large/email_server_config.png') no-repeat center;
+          &:hover {
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+          }
+          &:active {
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+          }
+        }
+      }
+      &.web-server-config-open-modal {
+        a {
+          background: #fff image-url('campaigns/icons_large/web_server_config.png') no-repeat center;
+          &:hover {
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+          }
+          &:active {
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+          }
+        }
+      }
+      &.unconfigured a {
+        border: 1px dashed $red-border-color;
+      }
+    }
+  }
+}
+.campaign-notification {
+  padding-top: 6px;
+  p {
+    padding-left: 7px;
+    margin: 0;
+  }
+}
+form.formtastic.notification-dialog {
+  padding: 0;
+  font-size: 0.85em;
+  li {
+    label {
+      float: none;
+      width: 100%;
+      text-align: left;
+      font-weight: normal;
+      padding-right: 0;
+      padding-bottom: 3px;
+    }
+    input,textarea {
+      @include box-sizing;
+      width: 100%;
+    }
+    textarea {
+      font-size: 1em;
+      padding: 4px;
+    }
+  }
+}
+.phishing-chosen {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.web-server-config {
+  li#social_engineering_campaign_web_host_input {
+    margin-bottom: 0;
+    fieldset.choices {
+      margin-bottom: 0;
+      float: none;
+    }
+    p.inline-errors {
+      margin-top: 0;
+      padding-bottom: 10px;
+      position: relative;
+      top: -10px;
+    }
+    ol.choices-group {
+      padding-right: 0;
+    }
+  }
+  li#social_engineering_campaign_web_ssl_use_custom_cert_input,
+    li#social_engineering_campaign_web_ssl_cert_input {
+    margin-bottom: 5px;
+  }
+  li.boolean.input {
+    label {
+      width: auto;
+      margin-left: 190px;
+      input {
+        margin-left: 0;
+        width: auto;
+      }
+    }
+  }
+  .ssl-options {
+    padding: 20px 0 10px;
+    border-top: 1px dotted #CCC;
+    border-bottom: 1px dotted #CCC;
+    li.select {
+      .select2-container {
+        margin-top: 3px;
+      }
+    }
+  }
+  ol.choices-group {
+    width: 600px;
+    li.choice {
+      input[type=radio] {
+        margin-right: 4px;
+        vertical-align: baseline;
+      }
+      input[type=text] {
+        border: auto;
+      }
+    }
+  }
+}
+
+.email-server-config {
+  .validate-box {
+    text-align: left;
+    padding-left: 23%;
+    margin-bottom: 20px;
+    a.validate {
+
+    }
+    span.status {
+      padding-left: 20px;
+      height: 30px;
+      background-repeat: no-repeat;
+      background-position: left center;
+      position: relative;
+      top: -6px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      &.spinning {
+        background-image: image-url('spinner.gif');
+      }
+      &.ok {
+        background-image: image-url('icons/silky/tick.png');
+        color: #468847;
+      }
+      &.bad {
+        background-image: image-url('icons/silky/exclamation.png');
+        color: #B94A48;
+      }
+    }
+  }
+}
+
+.ui-dialog-titlebar-close {
+  display: none;
+}
+
+.multi-add-human-target {
+  li.columns > div {
+    margin-top: 4px;
+  }
+  input {
+    font-size: 12px;
+  }
+  .actions {
+    padding-top: 1px;
+    text-align: center;
+    a {
+      vertical-align: middle;
+      img {
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.rollup-modal.preview > div.header div.page-circles > div.cell {
+  width: auto !important;
+  max-width: 110px;
+}
+
+.preview-modal {
+  .page.row>.cell {
+    height: 1px;
+    position: relative;
+    text-align: center;
+    &.loading {
+      min-height: 500px;
+    }
+    .component-content {
+      padding: 0 60px;
+    }
+    .preview-pane {
+      position: relative;
+      margin-top: 68px;
+      max-width: 1024px;
+      margin-left: auto;
+      margin-right: auto;
+      iframe {
+        width: 100%;
+        
+        border: 1px solid #ccc;
+        //@include box-shadow(1px, -1px, 5px, rgba(0,0,0, .2))
+      }
+      .email-data {
+        text-align: left;
+      }
+    }
+  }
+}
+.preview.rollup-modal {
+  .actions {
+    div.row.action-row {
+      @extend .max-width;
+      margin: 0 auto;
+      &>.cell {
+        line-height: 44px;
+        font-weight: 600;
+        color: #000;
+        img {
+          vertical-align: middle;
+        }
+      }
+      &>.cell.left-action {
+        text-align: left;
+        width: 50%;
+        img {
+          position: relative;
+          bottom: 1px;
+          padding-right: 6px;
+        }
+      }
+      &>.cell.right-action {
+        text-align: right;
+        width: 50%;
+        color: #444;
+      }
+    }
+  }
+}
+
+.status-top {
+  background-color: #DFF0D8;
+  border-bottom: 1px solid #D6E9C6;
+  
+  font-size: 12px;
+  line-height: $status-strip-height;
+  text-align: center;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  &.persisted {
+    background-color: #ffefbf;
+    border-bottom: 1px solid #ffdc74;
+  }
+}
+
+
+// FORM STYLES GO HERE
+#campaigns-show, .rollup-modal, .target-list-new, .file-new {
+  form {
+    input[type=text], input[type=password] {
+      background: #fff;
+      margin: 0;
+      padding: 8px 6px;
+      height: 15px;
+      border: 1px solid #787878;
+      border-radius: 3px;
+      box-shadow: inset 1px 1px 1px rgba(0,0,0,0.25);
+      outline: none;
+    }
+    label {
+      font-weight: normal !important;
+      color: #000;
+    }
+    li.string label, li.password label {
+      line-height: 32px;
+      padding-top: 0 !important;
+    }
+    li.radio {
+      ol.choices-group {
+        margin-left: 6px;
+      }
+      legend.label {
+        top: 1px;
+      }
+    }
+    input[name='social_engineering_campaign[web_host_custom]'] {
+      vertical-align: baseline;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      outline: none;
+      box-shadow: none;
+      height: auto;
+      padding: 0;
+      border-bottom: 1px dotted #aaa !important;
+      width: 220px !important;
+      padding-left: 5px;
+    }
+  }
+}
+.web-server-config, .email-server-config {
+  h3 {
+    $h3-height: 38px;
+    font-size: 16px;
+    margin: 0;
+    height: $h3-height;
+    line-height: $h3-height;
+  }
+}
+
+form.formtastic fieldset.inputs {
+  box-shadow: none;
+  border-bottom: none;
+  padding-top: 20px;
+}
+
+$select-height: 28px;
+.select2-container {
+  width: 62%;
+  height: $select-height;
+}
+.content-box .row .cell li.select {
+  .select2-container {
+    width: 72%;
+  }
+}
+li.select label {
+  height: $select-height;
+  line-height: $select-height;
+}
+
+
+.webpage-edit .shadow-arrow {
+  margin-left: 49%;
+  top: -1px;
+}
+
+.select2-container a span {
+  text-align: left;
+}
+
+.white-box.origin-box {
+  &>li.select {
+    &>label {
+      padding-right: 0;
+    }
+  }
+
+}
+div.wysiwyg, .CodeMirror-scroll {
+  border: 1px solid #ddd !important;
+  width: auto;
+}
+#errorExplanation.errors {
+  display: none;
+}
+
+
+
+
+div#web-template-form {
+  .white-box>li {
+    margin-top: 0;
+  }
+}
+.placeholderspolyfill {
+  color: #aaa !important;
+}
+div#web-template-form, div.webpage-edit {
+  .phishing {
+    width: 500px;
+    margin: 0 auto;
+    li.string {
+      &>label {
+        font-size: 13px;
+        display: block;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 4px;
+        margin-left: 4px;
+      }
+    }
+    li {
+      input, select {
+      }
+      input#social_engineering_web_page_phishing_redirect_origin_campaign_web_page {
+        margin-top: 8px;
+      }
+      input#social_engineering_web_page_phishing_redirect_origin_custom_url {
+        vertical-align: top;
+        margin-top: 8px;
+      }
+      &.string.input.stringish {
+        margin-bottom: 5px;
+      }
+      &:last-child {
+        margin-bottom: 10px;
+      }
+    }
+    label.campaign-redirect-page {
+      width: 100%;
+      padding-right: 0;
+      text-align: left;
+    }
+  }
+}
+
+div.email-edit, div.webpage-edit {
+  .content-disabled-box {
+    position: absolute;
+    left: 50%;
+    top: 150px;
+    color: black;
+    z-index: 999;
+    display: block;
+    margin-left: -200px;
+    width: 400px;
+    text-align: center;
+    font-weight: 600;
+    border: 2px solid #AAA;
+    color: #333;
+    padding: 10px;
+  }
+  hr {
+    margin: 20px;
+    border: none;
+    border-bottom: 1px dotted #CCC;
+  }
+  .no-pages {
+    color: black;
+    text-align: center;
+    position: relative;
+    bottom: 9px;
+    font-size: 11px;
+    margin-bottom: -14px;
+  }
+  .narrow .left {
+    width: 62% !important;
+  }
+  .narrow .right {
+    width: 38% !important;
+  }
+  .white-box {
+    li.radio.input {
+      margin-bottom: 0;
+    }
+  }
+  .white-box-top, .white-box .template {
+    fieldset.inputs {
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+    li.string, li.select {
+      margin-bottom: 0;
+      label {
+        display: inline-block;
+        @include box-sizing;
+        width: 25% !important;
+        text-align: right;
+        padding-right: 10px;
+        font-size: .8rem;
+        line-height: 18px;
+        vertical-align: baseline;
+      }
+      input, select {
+        margin-left: 3px;
+        width: 70% !important;
+      }
+    }
+    li.boolean {
+    margin-bottom: 0;
+      label {
+        font-size: .8rem;
+      }
+    }
+    li {
+      &:last-child {
+        margin-bottom: 5px;
+      }
+    }
+  }
+  .white-box .template {
+    li.string, li.select {
+      margin-bottom: 0;
+      label {
+        height: auto;
+      }
+      input, select {
+        margin-left: 8px;
+        width: 60% !important;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  #social_engineering_email_content {
+    height: 450px;
+  }
+  .contain-2 {
+    font-size: 0; // to prevent whitespace from screwing things up
+    &>li,&>div {
+      display: inline-block !important;
+      width: 50% !important;
+      @include box-sizing;
+      font-size: .75rem;
+    }
+  }
+}
+li#social_engineering_web_page_template_id_input {
+  label {
+    width: 20%;
+    padding-right: 0;
+  }
+}
+.appear-box {
+  padding-left: 0;
+  border: 1px dotted #aaa;
+  padding-top: 50px;
+  margin-top: -45px;
+  margin-left: 25px;
+  display: none;
+}
+
+.placeholderspolyfill {
+  color: #444;
+}
+
+div.vhost-prefix {
+  display: inline;
+  margin-right: 5px;
+}
+div#email-template-form {
+  
+}
+.form-header {
+  border-bottom: 1px solid #ddd;
+  h3 {
+    $h3-height: 38px;
+    font-size: 16px;
+    margin: 0;
+    height: $h3-height;
+    line-height: $h3-height;
+  }
+}
+
+div#email-template-form, div#web-template-form {
+  position: relative;
+  top: 16px;
+  .content-box {
+    margin-top: 1.2em !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  .page {
+    padding-top: 100px;
+  }
+  .name-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    label {
+      width: auto;
+    }
+  }
+  ol {
+    margin-top: 10px !important;
+  }
+  fieldset.inputs {
+    @include box-sizing;
+    padding: 10px !important;
+  }
+  .left {
+    width: 65% !important;
+  }
+  textarea {
+    min-height: 330px !important;
+  }
+  .CodeMirror {
+    background: #fff;
+    border: 1px solid #787878;
+  }
+  #social_engineering_email_template_content-wysiwyg-iframe {
+    @include box-sizing;
+    padding: 0 10px;
+
+    p {
+      -webkit-margin-before: .5em;
+    }
+  }
+  .right {
+    input[type=radio] {
+      vertical-align: baseline;
+    }
+  }
+}
+
+label.ui-switch {
+  margin: 5px auto 0 auto;
+  overflow: hidden;
+  position: relative;
+  width: 110px !important;
+  float: none !important;
+  height: 30px;
+
+  input {
+    -webkit-appearance: none;
+    opacity: 0;
+    &:checked~div.switch {
+      left: 0;
+      & span.middle {
+        left: -3px;
+      }
+    }
+  }
+  .switch {
+    @include box-sizing;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -80px;
+    width: 200px;
+    font-size: 0; // remove gap b/t inline-block ele's
+    transition: all .3s;
+    span {
+      @include box-sizing;
+      vertical-align: top;
+      font-size: .8rem;
+      font-weight: 600;
+      display: inline-block;
+      color: #fff;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+      @include box-sizing;
+      float: none;
+      line-height: 30px;
+      height: 30px;
+      text-align: center;
+      &.left, &.right {
+        width: 80px;
+        box-shadow: inset 0 2px 2px #2a5bb3,
+          inset -3px 0 3px #2a5bb3;
+      }
+      &.left {
+        @include border-radius-separate(4px, 0, 0, 4px);
+        @include linear-gradient(#048422, #5ee55e);
+        box-shadow: inset 2px 2px 4px rgba(0,0,0,.2);
+        border: 1px solid #0b7620;
+      }
+      &.right {
+        @include border-radius-separate(0, 4px, 4px, 0);
+        @include linear-gradient(#840f04, #e35d71);
+        box-shadow: inset -2px 2px 4px rgba(0,0,0,.2);
+        border: 1px solid #841515;
+      }
+      &.middle {
+        @include box-sizing();
+        width: 30px;
+        background: #000;
+        height: 30px;
+        @include linear-gradient(#cdcdcd, #fbfbfb);
+        border-radius: 3px;
+        box-shadow: inset 0 1px 0 #f0f0f0;
+        border: 1px solid #919191;
+        position: relative;
+        left: 3px;
+        transition: all .3s;
+      }
+    }
+  }
+}
+
+#web-template-form {
+  li.radio {
+    margin-bottom: 0;
+    fieldset.choices {
+      legend {
+        top: 4px;
+      }
+      input {
+        margin-right: 5px;
+        vertical-align: baseline;
+      }
+    }
+  }
+}
+
+
+// fixes #errorExplanation width being too wide for ui-dialog box 
+//   in campaigns#new form on campaigns#index page
+.ui-dialog #new-campaign-container #errorExplanation {
+  width: auto;
+}
+.CodeMirror-scroll {
+  border: 1px solid #aaa; 
+  height: 300px;
+}
+.wysiwyg iframe {
+  @include box-sizing;
+  &.wysiwyg-input {
+    padding-top: 6px;
+  }
+}
+.wysiwyg-input {
+  width: 90%;
+  height: 600px;
+}
+
+#social_engineering_web_page_content {
+  height: 450px;
+}
+form fieldset {
+  border: none;
+}
+.campaigns, .social_engineering_email_template {
+  .ui-tabs-panel {
+    padding: 0 !important;
+
+    #errorExplanation {
+      width: 65% !important;
+      margin: 0 !important;
+    }
+  }
+  .ui-tabs-wrap {
+    padding: 1em 1.4em;
+    fieldset.inputs {
+      border: none;
+      box-shadow: none;
+    }
+
+    &>.ui-tabs-wrap {
+      padding: 0 !important;
+    }
+  }
+  div.empty {
+    padding: 10px;
+    text-align: center;
+  }
+  div.ui-tabs-panel {
+    position: relative;
+    div.btns {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      z-index: 99;
+    }
+  }
+  div.title-form {
+    fieldset.inputs {
+      display: inline;
+      padding: 0;
+      vertical-align: top;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      width: auto;
+      margin: 0;
+    }
+    div.static {
+      display: inline;
+      h1 {
+        display: inline-block;
+        margin: 0;
+        padding: 2px 8px 13px 2px;
+      }
+    }
+    form {
+      display: inline-block;
+      padding-bottom: 6px;
+      li {
+        display: inline;
+        label {
+          display: none !important;
+        }
+        input#social_engineering_campaign_name {
+          vertical-align: top;
+          width: 300px;
+          margin-right: 7px;
+        }
+      }
+      .btn {
+        input.save {
+          width: 70px;
+        }
+
+      }
+    }
+  }
+  div.add-div {
+    float: right;
+  }
+  a.cancel-edit {
+    background-position: 0 -520px;
+  }
+
+  div.webpage-edit, div#email-template-form, div.email-edit, div#web-template-form {
+
+    li#social_engineering_email_template_content_input label { 
+      padding-top: 0;
+    }
+
+    .white-box {
+      h2 {
+        display: inline-block;
+        margin: 0;
+        border-bottom: none;
+      }
+      input {
+        width: auto;
+        margin-right: 8px;
+        &[type=radio] {
+          vertical-align: baseline;
+        }
+      }
+    }
+  }
+}
+
+div.attack-box-options {
+  border: 1px solid #ddd;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 30px;
+  padding: 10px;
+
+  .file, .attached_file { padding-top: 5px; }
+  .file, .custom-file, .attached_file {
+    fieldset.choices {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    li.radio.input {
+      margin-bottom: 0;
+    }
+    li.choice {
+      margin-bottom: 8px;
+    }
+    &>div {
+      display: none;
+    }
+    hr {
+      margin: 8px 0 15px 0;
+      border: none;
+      border-top: 1px dotted #CCC;
+    }
+  }
+  .file {
+    ol.choices-group {
+      position: relative;
+      bottom: 3px;
+      label input {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+div.attack-box-options, form.social_engineering_portable_file {
+  hr {
+    margin: 8px 0 15px 0;
+    border: none;
+    border-top: 1px dotted #CCC;
+  }
+  .exploit, .bap, .java_signed_applet, .file_format {
+    .searchform label {
+      float: none;
+      width: auto;
+      display: inline;
+    }
+    .searchform input {
+      width: auto;
+    }
+    .selected {
+      margin-bottom: 20px;
+      padding: 0 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px dotted #AAA;
+      height: 34px;
+      .module-path {
+        line-height: 38px;
+        vertical-align: top;
+        height: 38px;
+        display: inline-block;
+        font-size: 0;
+        * { font-size: .8rem; }
+        span {
+          font-size: .8rem;
+          line-height: 38px;
+          height: 38px;
+          display: inline-block;
+          margin-right: 5px;
+          &.gt {
+            font-size: 18px;
+            font-weight: bold;
+            color: #090;
+          }
+          &.rest {
+            position: relative;
+            bottom: 2px;
+          }
+        }
+      }
+      &>a {
+        vertical-align: bottom;
+        margin-left: 41px;
+        line-height: 38px;
+      }
+      &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 3px;
+      }
+    }
+  }
+  .bap, .java_signed_applet {
+    .selected {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none
+    }
+  }
+}
+
+#social_engineering_web_page_insert_input {
+  text-align: right;
+}
+
+.columns {
+  font-size: 0;
+  &>div,&>li {
+    display: inline-block;
+    width: 50%;
+    font-size: 1rem;
+    vertical-align: top;
+  }
+}
+
+input#q.loading {
+  background-image: image-url('spinner.gif') !important;
+  background-repeat: no-repeat !important;
+  background-position: 97% center !important;
+  pointer-events: none;
+}
+
+.ui-dialog .ui-dialog-content {
+  padding: .5em .5em;
+}
+div.webpage-edit, div#web-template-form, .email-edit {
+  #social_engineering_web_page_attack_type, #social_engineering_email_attack_type {
+    font-size: .8rem;
+  }
+  .white-box {
+    &>h2 {
+      padding-bottom: 6px;
+    }
+    &.editor-box {
+      label {
+        float: none;
+        width: auto;
+        text-align: center;
+        display: inline-block;
+        white-space: nowrap;
+        border-radius: 0;
+        span {
+          width: auto !important;
+          border-right: none; 
+        }
+        &.ui-corner-right {
+          span {
+            border-right: 1px solid #ababab;
+          }
+        }
+      }
+    }
+  }
+}
+
+.clone-web-options {
+  font-size: 12px;
+  box-shadow: none;
+  .push {
+    padding-top: 26px;
+    position: relative;
+    div.clone-url-field {
+      position: absolute;
+      top: -2px;
+      left: 0;
+      right: 0;
+      input {
+        width: 95%;
+      }
+    }
+    span.btn {
+      position: absolute;
+      top: 1px;
+      right: 0;
+    }
+    input[type=text] {
+      width: 100%;
+    }
+    li#social_engineering_web_page_clone_url_input {
+      list-style: none;
+    }
+    label {
+      .left-input {
+        float: left;
+        width: auto;
+      }
+      .input-wrap {
+        float: none;
+        overflow: hidden;
+        padding-left: 5px;
+        @include box-sizing;
+        input {
+          width: 100%;
+        }
+      }
+      input[type=text] {
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-bottom: 1px dotted #aaa;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .error {
+    padding: 10px;
+    color: #B94A48;
+    border: 1px solid #EED3D7;
+    border-radius: 4px;
+    background: #F2DEDE;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}
+
+form.formtastic input, form.formtastic textarea, div.formtastic input, div.formtastic textarea {
+  width: 60%;
+}
+.form-fonts {
+  font-family: $base-font-stack;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+
+// MARKUP FROM SAURABH
+span.btn.primary {
+  display:inline-block;
+  color:#fff;
+  background:#1381d6;
+  border:1px solid #1178ca;
+  @include border-radius(3px);
+  text-align:center;
+  a.small {
+    @extend .form-fonts;
+    padding: 3px 6px;
+  }
+}
+span.btn.primary:hover{
+  border-color:#296ddc;
+  background:#1387e4;
+  text-decoration:none;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+}
+span.btn.primary.pressed:hover,
+span.btn.primary.pressed,
+span.btn.primary:active {
+  border-color:#0a57bc;
+  background:#1380d6;
+  box-shadow:inset 0 0 6px #0a58bc;
+  -webkit-box-shadow:inset 0 0 6px #0a58bc;
+  -moz-box-shadow:inset 0 0 6px #0a58bc;
+}
+
+
+.editor {
+  .select2-container {
+    width: 71%;
+  }
+  .row .cell {
+    li.select.input {
+      label {
+        width: auto;
+        padding-right: 14px;
+      }
+    }
+  }
+}
+.page-url {
+  @include box-sizing;
+  width: auto;
+}
+#email-template-form, #web-template-form {
+  .custom-attribute {
+    position: absolute;
+    top: 4px;
+    right: 0;
+    z-index: 99;
+    width: 320px;
+    text-align: right;
+  }
+}
+.clone-content{
+  li {
+    list-style: none;
+  }
+}
+a.select2-choice {
+  overflow: visible !important;
+}
+.web-server-config {
+  fieldset.inputs {
+    border: none;
+  }
+}
+.rollup-header {
+  border-bottom: 1px solid #DDD;
+}
+.web-server-config {
+  #errorExplanation.errors {
+    display: block;
+    margin: 0 auto;
+  }
+}
+form.formtastic fieldset ol li fieldset legend.label label {
+  padding-top: 2px;
+}
+.target-list-show {
+  padding-top: 10px;
+  .buttons {
+    position: relative;
+    top: 20px;
+  }
+}
+.target-list-show, .target-list-new {
+  .dataTables_filter {
+    input[type=text] {
+      padding: 3px 5px;
+    }
+  }
+  #errorExplanation {
+    display: block;
+    width: auto;
+    margin-bottom: 0 !important;
+  }
+  #errorExplanation ul li {
+    white-space: pre-wrap;
+  }
+  .buttons {
+    height: auto;
+    padding-right: 57px;
+  }
+  @extend .campaign-datatables;
+}
+label.multi-add-human-target-label {
+  font-size: 14px;
+}
+
+li#social_engineering_portable_file_file_generation_type_input {
+  margin-bottom: 0;
+  fieldset.choices {
+    margin-bottom: 0;
+  }
+}
+
+.module-wrapper a {
+  color: #069 !important;
+}
+
+li#social_engineering_web_page_file_generation_type_input {
+  input[type=radio] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+    margin-right: 5px;
+  }
+}
+.formtastic.social_engineering_campaign, .formtastic.social_engineering_portable_file {
+  margin-top: 50px;
+}
+
+div#target-list_wrapper.dataTables_wrapper {
+  min-height: 0;
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+
+.tab-loading.task-console {
+  width: 100%;
+}

@@ -1,0 +1,16 @@
+<% title "Nexpose Console - Configure" %>
+<% breadcrumb link_to("Global Settings", settings_path), link_to("Nexpose Consoles", nexpose_consoles_path), link_to("Configure", new_nexpose_console_path) %>
+
+
+<% content_for :header_buttons do %>
+	<span class="btn">
+		<%= link_to "Back to Nexpose Consoles", nexpose_consoles_path, :class => "back" %>
+	</span>
+<% end %>
+
+<h1>Configure a Nexpose Console</h1>
+
+<%= form_for @console do |f| %>
+	<%= render 'fields', :f => f %>
+<% end %>
+

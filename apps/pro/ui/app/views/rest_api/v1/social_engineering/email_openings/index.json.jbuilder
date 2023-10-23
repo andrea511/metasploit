@@ -1,0 +1,1 @@
+json.array! @email_openings, partial: 'email_opening', as: :email_opening

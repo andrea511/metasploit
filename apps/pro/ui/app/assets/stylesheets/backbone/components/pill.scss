@@ -1,0 +1,41 @@
+$text-color: white;
+$padding: 2px;
+$border-radius: 6px;
+
+$red: #CF3030;
+$green: #309C22;
+$black: #5E5E5E;
+$blue: #0197B8;
+$white: white;
+
+.pill{
+ padding:$padding;
+ color: $text-color;
+ text-align: center;
+
+  a, div{
+  display: inline-block;
+  color: $white;
+  width:100%;
+  text-decoration: none;
+  border-radius: $border-radius;
+  text-transform: capitalize;
+
+  &.red, &.shelled, &.exploit-attempted, &.filtered {
+    background-color: $red;
+  }
+
+  &.green, &.scanned, &.exploited, &.open {
+    background-color: $green;
+  }
+
+  &.black, &.looted, &.not-tested, &.unknown {
+    background-color: $black;
+  }
+
+  &.blue, &.cracked, &.not-exploitable, &.closed {
+    background-color: $blue;
+  }
+
+ }
+}

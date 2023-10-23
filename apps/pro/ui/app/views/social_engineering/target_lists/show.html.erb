@@ -1,0 +1,44 @@
+<%= nonced_javascript_tag do %>
+    var dependencies = [
+      'lib/shared/human_targets/human_targets_controller'
+    ];
+
+    initProRequire(dependencies, function(HumanTargets) {
+      tableRegion =  new Marionette.Region({
+        el: ".human-targets-table"
+       });
+
+      new HumanTargets.Controller({region: tableRegion, targetListId: <%= @target_list.id %>});
+    });
+<% end %>
+
+<% include_stylesheet('backbone/pro_carpenter') %>
+
+<div class='form-header'>
+  <h3 class="max-width" data-table-id="human-targets">Target List <%= @target_list.name %></h3>
+</div>
+<div class='max-width target-list-show'>
+  <div id="flash_messages">
+    <%= render :partial => "generic/flash_messages" %>
+  </div>
+  <% if @target_list.errors.any? %>
+    <div style='margin-top: 20px'>
+      <%= render "shared/error_messages", :target => @target_list %>
+    </div>
+  <% end %>
+
+  <div class='human-targets-table'></div>
+
+
+  <div style="max-width: 780px; margin: 0 auto;">
+    <%= semantic_form_for [@workspace, @target_list] do |f| %>
+      <%= render 'multi_add_human_target' %>
+      <div class='buttons' style='text-align: right; width: auto;'>
+        <span class="btn primary">
+          <a href='#' class='save-targets'>Add</a>
+        </span>
+      </div>
+      <div class='clearfix'></div>
+    <% end %>
+  </div>
+</div>

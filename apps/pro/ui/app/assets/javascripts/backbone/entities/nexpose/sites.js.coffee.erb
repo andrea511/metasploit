@@ -1,0 +1,42 @@
+define [
+  'base_model'
+  'base_collection'
+  'lib/concerns/entities/fetch_ids'
+], ->
+  @Pro.module "Entities.Nexpose", (Nexpose, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+    # Corresponds to Nexpose::Data::Site
+    class Nexpose.Site extends App.Entities.Model
+      url: ->
+        Routes.workspace_nexpose_data_sites_path(WORKSPACE_ID)
+
+    class Nexpose.SiteCollection extends App.Entities.Collection
+      @include 'FetchIDs'
+
+      initialize: (models,opts) ->
+        _.extend(@,opts)
+
+      model: Nexpose.Site
+
+      url: ->
+        root = Routes.workspace_nexpose_data_sites_path(WORKSPACE_ID)
+        if @nexpose_import_run_id?
+          root = root + "?nexpose_import_run_id=#{@nexpose_import_run_id}"
+        root
+
+    #
+    # API
+    #
+    API =
+      getSites: (models,opts = {}) ->
+        sites = new Nexpose.SiteCollection(models,opts)
+        sites
+
+    #
+    # REQUEST HANDLERS
+    #
+    App.reqres.setHandler "nexpose:sites:entities", (models,opts={}) ->
+      API.getSites(models,opts)

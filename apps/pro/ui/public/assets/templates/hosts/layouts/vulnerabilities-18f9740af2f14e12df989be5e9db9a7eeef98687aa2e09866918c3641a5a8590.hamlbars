@@ -1,0 +1,4 @@
+.vulns
+%div{ :style => 'clear:both' }
+.vuln-modal
+

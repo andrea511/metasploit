@@ -1,0 +1,87 @@
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/backbone/tabs.scss */
+.backbone-tabs {
+  background-color: #F2F2F2;
+}
+/* line 6, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/backbone/tabs.scss */
+.backbone-tabs .content {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/backbone/tabs.scss */
+.backbone-tabs .content.tab-loading {
+  width: auto;
+  height: auto;
+  margin-top: 0;
+  min-height: 150px;
+}
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/backbone/tabs.scss */
+.backbone-tabs ul.nav {
+  margin-top: 15px;
+}
+/* line 22, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/backbone/tabs.scss */
+.backbone-tabs ul.nav li {
+  position: relative;
+  top: 1px;
+  padding: 9px 14px 9px 14px;
+  display: inline-block;
+  border-top-radius: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  margin-right: 5px;
+}
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/backbone/tabs.scss */
+.backbone-tabs ul.nav li .name {
+  display: inline-block;
+}
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_badges.scss */
+.backbone-tabs ul.nav li .count, .backbone-tabs ul.nav li .badge {
+  display: inline-block;
+  border-radius: 11px;
+  height: 18px;
+  min-width: 18px;
+  line-height: 16px;
+  margin-bottom: -1px;
+  border: 1px solid #1c2324;
+  font-size: 10px;
+  font-weight: 600;
+  color: #1c2324;
+  background-color: #ffffff;
+  text-align: center;
+  padding: 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_badges.scss */
+.backbone-tabs ul.nav li .notification-dot {
+  height: 6px;
+  width: 6px;
+  background-color: #c91114;
+  border-radius: 50%;
+  border: 1px solid white;
+  display: inline-block;
+  position: relative;
+  top: -8px;
+  left: -4px;
+}
+/* line 38, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/backbone/tabs.scss */
+.backbone-tabs ul.nav li:hover {
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  border-bottom: 1px solid #ccc;
+}
+/* line 45, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/backbone/tabs.scss */
+.backbone-tabs ul.nav li.selected {
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #fff;
+  background-color: #ffffff;
+  color: #000;
+}
+/* line 51, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/backbone/tabs.scss */
+.backbone-tabs ul.nav li.selected .count {
+  border: 1px solid #1c2324;
+  color: #1c2324;
+  background-color: #ffffff;
+}

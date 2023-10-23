@@ -1,0 +1,41 @@
+[Unit]
+Description=PostgreSQL database server
+Requires=metasploit-postgresql-env.service metasploit-env.service
+After=network.target metasploit-postgresql-env.service metasploit-env.service
+PartOf=metasploit.target
+
+[Service]
+TimeoutSec=300
+User=postgres
+Group=postgres
+
+EnvironmentFile=@@BITROCK_INSTALLDIR@@/postgresql/scripts/.env.txt
+
+SyslogIdentifier=postgres
+PIDFile=@@BITROCK_INSTALLDIR@@/postgresql/data/postmaster.pid
+RuntimeDirectory=metasploit-postgresql
+RuntimeDirectoryMode=755
+
+ExecStart=@@BITROCK_INSTALLDIR@@/postgresql/bin/postgres -D ${PGDATA} -p ${PGPORT}
+ExecStartPost=@@BITROCK_INSTALLDIR@@/scripts/wait_for_port ${PGPORT}
+ExecReload=/bin/kill -HUP ${MAINPID}
+KillMode=mixed
+KillSignal=SIGINT
+
+# Due to PostgreSQL's use of shared memory, OOM killer is often overzealous in
+# killing Postgres, so adjust it downward
+OOMScoreAdjust=-200
+
+# Additional security-related features
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+NoNewPrivileges=true
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+PrivateDevices=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+SystemCallArchitectures=native

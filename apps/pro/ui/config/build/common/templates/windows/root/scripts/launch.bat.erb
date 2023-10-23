@@ -1,0 +1,7 @@
+<%= render 'root/boiler_plate' %>
+
+REM Get the calling file name
+for %%x in (%0) do set BATCHCMD=%%~nx
+
+REM Call the appropriate script
+CALL @@BITROCK_INSTALLDIR@@\ruby\bin\ruby.exe @@BITROCK_INSTALLDIR@@\apps\pro\vendor\bundle\ruby\3.0.0\bin\%BATCHCMD% %*

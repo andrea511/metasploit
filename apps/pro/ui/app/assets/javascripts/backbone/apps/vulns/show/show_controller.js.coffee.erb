@@ -1,0 +1,133 @@
+define [
+  '<%= javascript_path("hosts/backbone/views/item_views/vuln_form") %>'
+  'base_controller'
+  'apps/vulns/show/show_views'
+  'entities/vuln'
+  'lib/shared/cve_cell/cve_cell_controller'
+], (VulnForm) ->
+  @Pro.module "VulnsApp.Show", (Show, App) ->
+
+    class Show.Controller extends App.Controllers.Application
+
+      initialize: (opts={}) ->
+        @model = @_buildModel(opts)
+
+        @layout = new Show.Layout(model: @model)
+        @setMainView(@layout)
+
+        @headerView = new Show.Header(model: @model)
+
+        @listenTo @headerView, 'vuln:edit', =>
+          @_show_vuln_edit_modal(hideRefs:true, height: 200)
+
+        @listenTo @headerView, 'ref:edit', =>
+          @_show_vuln_edit_modal(hideVuln:true, height: 400)
+
+        @listenTo @headerView, 'ref:more', =>
+          @_show_refs_modal()
+
+        @listenTo @layout, 'show', =>
+          @_show_tabs()
+          @_bindPushButtonEvents()
+
+        if opts.model?
+          @show @layout
+        else
+          @model.fetch()
+          @show @layout, loading: { loadingType: 'overlay' }
+
+      # Helper creating an Entities.Vuln from an opts hash
+      _buildModel: (opts) =>
+        opts.model || new App.Entities.Vuln(opts)
+
+      _show_tabs: ->
+        @tabView = App.request "tabs:component",
+          tabs:[
+            { name: 'Overview', view: Show.OverviewTab, model:@model }
+            { name: 'Related Modules', view: Show.RelatedModulesTab, model:@model }
+            { name: 'Related Hosts', view: Show.RelatedHostsTab, model:@model }
+          ]
+          destroy:false
+        @pushButtonsView = new Show.PushButtons(model:@model)
+
+        @show @pushButtonsView, region: @layout.pushButtonsRegion
+        @show @headerView, region: @layout.headerRegion
+        @show @tabView, region: @layout.contentRegion
+
+      _bindPushButtonEvents: ->
+        @listenTo @pushButtonsView, 'nexpose:push', =>
+          if @model.get('markable')
+            view  = new Show.PushExceptionConfirmationView(model:@model)
+            description =  """
+                You are about to push this vulnerability to Nexpose as an exception. Please select the following:
+              """
+            height = 170
+            width = 400
+          else
+            view = new Show.PushValidationConfirmationView()
+            height = 170
+            width = 400
+
+          App.execute 'showModal', view,
+            modal:
+              title: 'Push To Nexpose'
+              description: description
+              width: width
+            buttons: [
+              {name: 'No', class: 'close'}
+              {name: 'Yes', class: 'btn primary'}
+            ]
+            doneCallback: =>
+              @model.fetch()
+
+        @listenTo @pushButtonsView, 'vuln:not:exploitable', (checked) =>
+          if checked
+            #TODO: Use ruby constant
+            @model.updateLastVulnStatus('Not Exploitable')
+          else
+            @model.restoreLastVulnStatus()
+
+
+      _show_refs_modal: ->
+        moduleDetail = @model
+
+        dialogView = new Pro.Shared.CveCell.ModalView(
+          model: moduleDetail
+        )
+
+        moduleDetail.fetch()
+
+        App.execute 'showModal', dialogView,
+          modal:
+            title: 'References'
+            width: 260
+            height: 300
+          buttons: [
+            { name: 'Close', class: 'close'}
+          ]
+          loading:true
+
+
+      _show_vuln_edit_modal: (opts={}) ->
+        config = {
+          action:'edit'
+          id: @model.get('id')
+          host_id: @model.get('host').id
+        }
+
+        _.extend(config,opts)
+
+        formView  = new VulnForm(config)
+
+        App.execute 'showModal', formView,
+          modal:
+            title: 'Vulnerability'
+            width: 600
+            height: config.height
+          buttons: [
+            {name: 'Close', class: 'close'}
+            {name :'OK', class: 'btn primary'}
+          ]
+          doneCallback: () =>
+            @model.fetch()
+  , VulnForm

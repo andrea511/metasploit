@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ms_se_campaign_detail_sub_components" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{reporting_dir} + "style_templates/se_styles.jrtx"]]></template>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="se_campaign_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+	se.name,
+	coalesce(se.subject, '') subject,
+	from_address,
+	from_name,
+	tl.name as target_list,
+	se.created_at,
+	case when se.attack_type = 'none' then 'None selected' else se.attack_type end as attack_type,
+	se.content
+from se_emails se
+inner join se_campaigns sc on (se.campaign_id = sc.id)
+inner join se_target_lists tl on (se.target_list_id = tl.id)
+where sc.workspace_id = $P{workspace_id}
+and se.campaign_id = $P{se_campaign_id}]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="subject" class="java.lang.String"/>
+	<field name="from_address" class="java.lang.String"/>
+	<field name="from_name" class="java.lang.String"/>
+	<field name="target_list" class="java.lang.String"/>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="attack_type" class="java.lang.String"/>
+	<field name="content" class="java.lang.String"/>
+	<title>
+		<band height="30">
+			<staticText>
+				<reportElement style="Section Header - No BG" x="0" y="0" width="572" height="27"/>
+				<textElement/>
+				<text><![CDATA[E-mail]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="186" splitType="Stretch">
+			<textField>
+				<reportElement style="table_text" x="100" y="0" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_text" x="100" y="14" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[($F{subject} == '') ? 'None specified' : $F{subject}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_text" x="100" y="84" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{attack_type}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement style="table_text" x="100" y="70" width="469" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{created_at}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table_text" x="24" y="0" width="55" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_text" x="24" y="14" width="55" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Subject:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_text" x="24" y="70" width="55" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Created:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_text" x="0" y="84" width="79" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Attack type:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_text" x="0" y="110" width="79" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Raw content:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement style="border_box" x="100" y="110" width="457" height="26"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{content}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table_text" x="0" y="28" width="79" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[From Address:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table_text" x="100" y="28" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{from_address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table_text" x="0" y="42" width="79" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[From Name:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table_text" x="100" y="42" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{from_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table_text" x="0" y="56" width="79" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Target List:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table_text" x="100" y="56" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{target_list}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

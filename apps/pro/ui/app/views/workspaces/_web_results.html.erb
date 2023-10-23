@@ -1,0 +1,11 @@
+<ul class="overview_stats">
+  <li><%= link_to h(pluralize(@workspace.web_sites.size, "web site")), web_sites_path(@workspace)%> identified</li>
+  <li><%=h pluralize(@workspace.web_pages.size, "web page") %> crawled</li>
+  <li><%=h pluralize(@workspace.web_unique_forms.size, "web forms") %> found</li>
+  <% if @workspace.web_vulns.size > 0 %>
+    <li><%= link_to h(pluralize(@workspace.web_vulns.size, "web vulnerability")), workspace_web_vulns_path(@workspace) %> found</li>
+  <% else %>
+    <li><%=h pluralize(@workspace.web_vulns.size, "web vulnerability") %> found</li>
+  <% end %>
+</ul>
+

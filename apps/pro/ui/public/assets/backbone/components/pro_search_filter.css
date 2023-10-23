@@ -1,0 +1,30 @@
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pro_search_filter.scss */
+.filter-region .filter-component.pro-search {
+  margin-top: -24px;
+  float: right;
+  padding-right: 0px;
+}
+
+/* line 12, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pro_search_filter.scss */
+.filter-component.pro-search a.cancel-search {
+  background-image: url(/assets/icons/linkBtn-30927d4171100cff6e9bf3a13adf37f5aab9dda9b70e2652cf59fecf23d4a23c.png);
+  background-repeat: no-repeat;
+  background-position: -6px -520px;
+  display: block;
+  float: left;
+  width: 13px;
+  height: 20px;
+  margin-right: 3px;
+}
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pro_search_filter.scss */
+.filter-component.pro-search a.cancel-search:hover {
+  opacity: 0.8;
+}
+/* line 28, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pro_search_filter.scss */
+.filter-component.pro-search .dataTables_filter {
+  padding: 6px 6px 6px 6px;
+}
+/* line 30, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pro_search_filter.scss */
+.filter-component.pro-search .dataTables_filter input#search {
+  margin: 0px;
+}

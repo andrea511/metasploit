@@ -1,0 +1,96 @@
+<% title "Resource Scripts" %>
+<% breadcrumb workspace_link, rc_scripts_link %>
+<% include_view_javascript %>
+
+<% include_stylesheet('backbone/pro_carpenter') %>
+<% include_stylesheet('rc_scripts/index') %>
+
+<div class="rc-scripts">
+  <!--<div>-->
+    <!--<input name="file" id="file_input" type="file"/>-->
+  <!--</div>-->
+
+  <!--<ul>-->
+    <!--<li class="data file input">-->
+      <!--<label for="file_input">-->
+        <!--<p>No file selected...</p>-->
+        <!--<span>Choose</span>-->
+      <!--</label>-->
+      <!--<input name="file" id="file_input" type="file" size="50" style="overflow: hidden;">-->
+    <!--</li>-->
+  <!--</ul>-->
+  <p>
+    Resource scripts can be used to automate repetitive tasks in Metasploit. They contain commands that are automatically and sequentially executed when you run the script. You can upload your own custom resource scripts or you can use a resource script that is available in the Metasploit Framework.
+    <!--<a href="https://help.rapid7.com/metasploit/#managing-updating-metasploit/back-up-restore.html" target="_blank">-->
+      <!--Learn more.-->
+    <!--</a>-->
+  </p>
+
+  <div class="control-bar">
+    <span class="button">
+      <a class="import">Upload</a>
+    </span>
+    <span class="button">
+      <%= button_to "Delete", "delete.json", class: 'delete' %>
+    </span>
+  </div>
+
+  <table id="rc-script-list" class="module_list list" style="width: 100%">
+    <thead>
+      <tr>
+        <th class="checkbox"><%= check_box_tag "all-rc-scripts", true %></th>
+        <td>Filename</td>
+        <td>Source</td>
+        <td>Created</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @rc_scripts.each do |rc_s| %>
+        <tr>
+          <td><%= check_box_tag("rc-script-delete", rc_s[:filename], false, :id => nil) %><div style="display:none"><%= button_to "Delete", "rc_scripts/#{rc_s[:filename]}/delete.json" %></div></td>
+          <td>
+            <%= link_to rc_s[:filename], "rc_scripts/#{rc_s[:filename]}/show", class: 'rc-script-link' %>
+          </td>
+          <td><%= rc_s[:source] %></td>
+          <td><%= rc_s[:created_date] %></td>
+        </tr>
+
+      <% end %>
+
+      <% @canned_rc_scripts.each do |rc_s| %>
+        <tr>
+          <td></td>
+          <td>
+            <%= link_to rc_s[:filename], "rc_scripts/#{rc_s[:filename]}/show?canned_script=t", class: 'rc-script-link' %>
+          </td>
+          <td><%= rc_s[:source] %></td>
+          <td><%= rc_s[:created_date] %></td>
+        </tr>
+
+    <% end %>
+    </tbody>
+  </table>
+  <br/>
+  <div style="display:none">
+    <%= form_tag({action: :upload}, multipart: true) do %>
+      <%= file_field_tag 'upload' %>
+      <%= submit_tag "Upload" %>
+    <% end %>
+  </div>
+</div>
+
+
+<div id="delete-rc-script-confirmation" style="display: none;">
+  <p>
+    Deleting these backups will permanently remove them.
+  </p>
+  <table class="list">
+    <thead>
+    <th>File</th>
+    <th>Description</th>
+    <th>Date</th>
+    <th>Metasploit Version</th>
+    </thead>
+    <tbody id="delete-rc-script-confirmation-list"></tbody>
+  </table>
+</div>

@@ -1,0 +1,34 @@
+<% title "Bruteforce" %>
+<% breadcrumb workspace_link, bruteforce_guess_link %>
+
+
+<div id="bruteforce-main-region" class='tab-loading'></div>
+
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<% if License.get.supports_bruteforce? %>
+
+  <% include_stylesheet('brute_force/guess') %>
+
+  <%= nonced_javascript_tag do %>
+    jQuery(document).bind('requirejs-ready', function(){
+      jQuery(document).ready(function() {
+        var dependencies = [
+          'apps/brute_force_guess/brute_force_guess_app'
+        ];
+
+        initProRequire(dependencies, function() {
+          Pro.addInitializer(function() {
+            jQuery('#bruteforce-main-region').removeClass('tab-loading');
+          });
+          Pro.start({
+            environment: "<%= Rails.env %>"
+          });
+        });
+      });
+    });
+  <% end %>
+
+<% end %>
+
+<%= add_disable_overlay([:pro, :express]) if not @licensed %>

@@ -1,0 +1,26 @@
+define [
+  '<%= javascript_path("templates/apps/layouts/app_runs_layout") %>',
+  '<%= javascript_path("apps/backbone/views/collection_views/app_runs_collection_view") %>',
+  '<%= javascript_path("apps/backbone/collections/app_runs_collection") %>',
+], (Template, AppRunsCollectionView, AppRunsCollection) ->
+  class AppsOverviewLayout extends Backbone.Marionette.LayoutView
+    @POLL_INTERVAL: 1000*9  # 9s
+    template: HandlebarsTemplates['apps/layouts/app_runs_layout']
+
+    regions:
+      collectionArea:  '.collection-area'
+
+    # Constructs Layouts for managing the regions, and show()'s the regions
+    renderRegions: =>
+      collection = new AppRunsCollection()
+      @collectionView = new AppRunsCollectionView(collection: collection)
+      @collectionArea.show(@collectionView)
+      @fetchForever(collection)
+
+    fetchForever: (collection) =>
+      collection.fetch
+        success: =>
+          window.setTimeout(
+            (=> @fetchForever(collection)),
+            AppsOverviewLayout.POLL_INTERVAL
+          )

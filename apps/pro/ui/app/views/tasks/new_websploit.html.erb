@@ -1,0 +1,158 @@
+<% title @title %>
+<% breadcrumb workspace_link, web_link, link_to('New Web Application Audit', '#') %>
+<% include_view_javascript %>
+
+<%= semantic_form_for(@task,
+                      :complete => 'enableSubmitButtons();',
+                      :html => {
+                              :autocomplete => 'off'
+                      },
+                      :remote => true,
+                      :url => start_websploit_path) do |f| %>
+
+    <%= f.hidden_field :workspace_id %>
+
+    <div id="popup_errors"></div>
+
+    <div class="one_col_no_sidebar">
+
+      <% if @task.vulns.length == 0 %>
+          <h1>No compatible vulnerabilities have been discovered</h1><br/>
+			<span class="btn">
+				<%= link_to "Back to Web Apps", web_sites_path, :class => "back" %>
+			</span>
+      <% else %>
+          <%= f.inputs "Web Application Exploitation Settings" do %>
+              <%= f.input :timeout, :label => "Timeout", :hint => "(minutes)" %>
+              <%= f.input :limit_sessions,
+                          :as => :boolean,
+                          :class => 'inline',
+                          :label => 'Obtain one session per target & skip targets w/session' %>
+              <%= f.input :payload_type,
+                          :as => :select,
+                          :collection => ExploitTask::PAYLOAD_TYPES,
+                          :label => 'Payload type' %>
+              <%= f.input :connection,
+                          :as => :select,
+                          :collection => ExploitTask::CONNECTIONS,
+                          :label => 'Connection type' %>
+              <%= f.input :payload_ports, :label => 'Listener ports' %>
+              <%= f.input :payload_lhost, :label => "Listener host" %>
+          <% end -%>
+
+          <%= f.inputs 'Web Application Identification Settings' do %>
+              <%= render :partial => 'web_auth_fields', :locals => {:f => f} %>
+          <% end -%>
+
+          <%= f.help_link :timeout do %>
+              <h3>Timeout</h3>
+              <p>Indicates the maximum amount of time to spend, in minutes, per specific exploit.</p>
+          <% end -%>
+          <%= f.help_link :connection do -%>
+              <h3>Connection Type</h3>
+              <p>
+                Specifies how the payload for each exploit will be chosen. Reverse will cause a connection to be
+                initiated from the target to this system, while Bind will force the target to open a listening port
+                instead. Auto will choose the best method automatically.
+              </p>
+          <% end -%>
+          <%= f.help_link :payload_type do -%>
+              <h3>Payload Type</h3>
+              <p>
+                Specify the type of payload used. Meterpreter is the default and the best choice in most scenarios but
+                in some cases Command shell is more desirable.
+              </p>
+          <% end -%>
+          <%= f.help_link :payload_ports do -%>
+              <h3>Listener Ports</h3>
+              <p>
+                Specify the port or range of ports that should be used for Reverse connect payloads. Some exploits
+                require at least two ports to be available.
+              </p>
+          <% end -%>
+          <%= f.help_link :payload_host do -%>
+              <h3>Listener Host</h3>
+              <p>
+                Specify the IP address for the payload to connect back. This is only useful when the address needs to be
+                overridden (Amazon Elastic IPs, NAT, etc)
+              </p>
+          <% end -%>
+
+          <div class='inline-help' data-field='websploit_task_targets_input'>
+            <h3>Target Web Vulnerabilities</h3>
+            <p>
+              This list indicates what specific vulnerabilities will be exploited by this task. The checkbox next to
+              each vulnerability allows it to be included or excluded from the task.
+            </p>
+          </div>
+
+
+          <%= f.inputs 'Target Web Vulnerabilities' do -%>
+              <div style='width: 95%; float: left;'>
+                <div id='targets'>
+                  <table width='100%' class='list mar-tb10'>
+                    <thead>
+                    <tr>
+                      <th width='5'><%= check_box_tag 'all_vhosts', true %></th>
+                      <th>
+                        Virtual Host
+                      </th>
+                      <th>
+                        URL
+                      </th>
+                      <th>
+                        Category
+                      </th>
+                      <th>
+                        Parameter
+                      </th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="vhost_list">
+                    <%  @task.vulns.each do |vuln|
+                      checked = true
+                    %>
+                        <tr class="<%=h row_cycle %>">
+                          <td align='left' valign='top'>
+                            <%= check_box_tag "websploit_task[targets][#{vuln[:id]}][enabled]",
+                                              vuln[:id],
+                                              checked, :id => "server-enabled-#{vuln[:id]}" %>
+                          </td>
+                          <td align='left' valign='top'>
+                            <%= vuln.web_site.vhost %>
+                          </td>
+                          <td align='left' valign='top'>
+                            <%= vuln.web_site.to_url(true) + vuln.path %>
+                          </td>
+                          <td align='left' valign='top'>
+                            <%= vuln.category_label %>
+                          </td>
+                          <td align='left' valign='top'>
+                            <%= vuln.pname %>
+                          </td>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <%= link_to(
+                          icon('silky/information'),
+                          '',
+                          :class => 'help',
+                          :'data-field' => 'websploit_task_targets_input',
+                          :style => 'padding-left: 24px; float: right;',
+                          :target => '_blank'
+                  ) %>
+          <% end -%>
+
+          <%= f.actions do -%>
+				<span class='btn'>
+					<%= f.submit 'Launch Exploits', :class => 'websploit', :id => 'popup_submit' %>
+				</span>
+          <% end -%>
+      <% end %>
+    </div>
+<% end %>
+
+<%= add_disable_overlay([:pro]) if not @licensed %>

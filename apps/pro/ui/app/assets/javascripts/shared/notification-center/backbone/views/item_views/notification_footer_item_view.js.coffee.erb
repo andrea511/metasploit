@@ -1,0 +1,19 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/notification_center/item_views/notification_footer/notification_footer_item_view') %>' ,
+  '<%= javascript_path('shared/notification-center/backbone/event_aggregators/event_aggregator') %>'
+], ($,template, EventAggregator) ->
+  class NotificationFooterItemView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['notification_center/item_views/notification_footer/notification_footer_item_view']
+
+    triggers:
+      'click .more-text' : 'notification-footer:click:more'
+      
+    onRender: =>
+      @_bind_triggers()
+
+    _bind_triggers: =>
+      @on('notification-footer:click:more',@_trigger_load_more, this)
+
+    _trigger_load_more: ->
+      EventAggregator.trigger('notification-center:load:more')

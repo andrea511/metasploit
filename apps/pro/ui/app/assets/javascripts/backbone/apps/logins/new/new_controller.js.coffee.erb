@@ -1,0 +1,116 @@
+define [
+  'base_controller'
+  'apps/logins/new/new_view'
+  'lib/components/tags/new/new_controller'
+  'apps/creds/show/show_view'
+  'entities/service'
+  'entities/host'
+], ->
+  @Pro.module "LoginsApp.New", (New, App, Backbone, Marionette, $, _) ->
+    class New.Controller extends App.Controllers.Application
+
+      # Create a new instance of the login form
+      #
+      initialize: (core_id) ->
+        @core_id = core_id
+        # Get all hosts in the current workspace.
+        @hosts = App.request "hosts:entities:limited", {}, {workspace_id: WORKSPACE_ID}
+        # Create instance of access level view
+        @access_level_view = App.request "creds:accessLevel:view", {model: new Backbone.Model({access_level:'Admin'}), save:false, showLabel:true}
+
+        @formView = new New.Form(model: new Backbone.Model({hosts:{}, services:{}}))
+
+        @setMainView(new New.Layout())
+
+        # When the hosts ajax request completes, re-render the form
+        @listenTo @hosts, "reset", =>
+          @_mainView.removeLoading()
+          @formView.model.set('hosts', @hosts.toJSON())
+          @formView.render()
+          @formView.updateService()
+          #Need to re-intialize because region gets clobbered on form re-render
+          @access_level_view  =  App.request "creds:accessLevel:view", {model: @access_level_view.model, save:false, showLabel:true}
+          @show @access_level_view, region: @formView.accessLevelRegion, preventDestroy : true
+
+
+        # When a host is selected from the drop down update the services dropdown
+        @listenTo @formView, "updateServices", (args) =>
+          @updateServices(args)
+
+        @listenTo @_mainView, 'show', ->
+          @show @formView, region: @_mainView.form, preventDestroy: true
+          @showTagging()
+          # Initial fetch request for hosts
+          @hosts.fetch(reset:true)
+
+      showTagging: () ->
+        msg = """
+            <p>
+              A tag is an identifier that you can use to group together logins.
+              You apply tags so that you can easily search for logins.
+              For example, when you search for a particular tag, any login that
+              is labelled with that tag will appear in your search results.
+            </p>
+            <p>
+              To apply a tag, start typing the name of the tag you want to use in the
+              Tag field. As you type in the search box, Metasploit automatically predicts
+              the tags that may be similar to the ones you are searching for. If the tag
+              does not exist, Metasploit creates and adds it to the project.
+            </p>
+          """
+
+        #Don't need URl since we are saving tags through a single AJAX request
+        query = ""
+        url = ""
+
+        collection = new Backbone.Collection([])
+        @tagController = App.request 'tags:new:component', collection, {q: query, url: url, content:msg}
+        @show @tagController, region: @_mainView.tags
+
+      # Update the service dropdown with services for the selected host
+      # @param [Object] args options passed in by view trigger
+      updateServices: (args) ->
+       @$viewEl = args.view.$el
+       @host_id = $('select.host',@$viewEl).val()
+       @services = App.request "services:entities", {host_id: @host_id}
+       @services.fetch(reset:true).then(@_updateServiceForm)
+
+      # Helper method to update service dropdown
+      _updateServiceForm: () =>
+        @formView.model.set('services',@services.toJSON())
+        @formView.render()
+        #Need to re-intialize because region gets clobbered on form re-render
+        @access_level_view  =  App.request "creds:accessLevel:view", {model: @access_level_view.model, save:false, showLabel:true}
+        @show @access_level_view, region: @formView.accessLevelRegion, preventDestroy: true
+        $('select.host',@$viewEl).val(@host_id)
+
+      # "Interface" Method required by Modal Component
+      onFormSubmit: () ->
+        # jQuery Deffered Object that closes modal when resolved.
+        defer = $.Deferred()
+        formSubmit = () ->
+        defer.promise(formSubmit)
+        #Serialize Form Data into Backbone Model
+        data = Backbone.Syphon.serialize(@_mainView)
+
+        #Submit Login Model
+        @loginModel = App.request "new:login:entity", data
+        @loginModel.set('tags', @tagController.getDataOptions())
+        @loginModel.unset('errors')
+        @loginModel.set('core_id',@core_id)
+        @loginModel.save {},
+          success: () ->
+            #Close the Modal and Trigger a view re-load
+            defer.resolve()
+            App.vent.trigger('login:added')
+          error: (login,response) =>
+            #Show Errors
+            errors = $.parseJSON(response.responseText).error
+            @loginModel.set('errors',errors)
+            @_mainView.updateErrors(errors)
+
+        formSubmit
+
+    # Register an Application-wide handler for a login controller
+    App.reqres.setHandler 'logins:new', (core_id)->
+      new New.Controller core_id

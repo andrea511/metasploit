@@ -1,0 +1,118 @@
+<div id="workspace_nav">
+<ul class="nav_tabs">
+  <li class="<%=h class_for_tab(:workspaces) %>">
+    <%= link_to workspace_path(@workspace) do %>
+      <span class="tab">Overview</span>
+    <% end %>
+  </li>
+  <li class="<%=h class_for_tab(:analysis) %> dropdown">
+    <%= link_to hosts_path(@workspace) do %>
+      <span class="tab">Analysis</span>
+      <%= badge_tag @workspace.hosts.flagged.size %>
+    <% end %>
+    <ul class='sub-menu'>
+      <li><%= link_to "Hosts", hosts_path(@workspace), :class => 'hosts' %></li>
+      <li><%= link_to "Notes", workspace_notes_path(@workspace), :class => 'notes' %></li>
+      <li><%= link_to "Services", workspace_services_path(@workspace), :class => 'services' %></li>
+      <li><%= link_to "Disclosed Vulnerabilities", workspace_vulns_path(@workspace), :class => 'vulnerabilities' %></li>
+      <% if @workspace.web_vulns.count > 0 %>
+      <li><%= link_to "Web Vulnerabilities", workspace_web_vulns_path(@workspace), :class => 'web-vulnerabilities' %></li>
+      <% end %>
+      <li><%= link_to "Applicable Modules", workspace_related_modules_path(@workspace), :class => 'modules' %></li>
+      <li><%= link_to "Captured Data", workspace_loots_path(@workspace), :class => 'loots' %></li>
+      <li><%= link_to "Tags", workspace_tags_path(@workspace), :class => 'tags' %></li>
+      <li><%= link_to "Credentials", workspace_credentials_path(@workspace) %></li>
+    <% if License.get.supports_map? %>
+      <li><%= link_to "Network Topology", map_host_path(@workspace), :class => 'map' %></li>
+    <% end %>
+    </ul>
+  </li>
+
+  <li class="<%=h class_for_tab(:sessions) %>">
+    <%= link_to workspace_sessions_path(@workspace) do %>
+      <span class="tab">Sessions</span>
+      <%= badge_tag @workspace.sessions.alive.size %>
+    <% end %>
+  </li>
+
+  <% if !License.get.nx_ultimate? %>
+    <li class="<%=h class_for_tab(:campaigns) %>">
+      <%= link_to workspace_social_engineering_campaigns_path(@workspace) do %>
+        <span class="tab">Campaigns</span>
+        <%= badge_tag @workspace.campaigns.running.size %>
+      <% end %>
+    </li>
+  <% end %>
+
+  <% if !License.get.nx_ultimate? %>
+    <li class="<%=h class_for_tab(:web) %>">
+    <%= link_to workspace_web_path(@workspace) do %>
+      <span class="tab">Web Apps</span>
+    <% end %>
+  </li>
+  <% end %>
+
+  <li class="<%=h class_for_tab(:modules) %> dropdown">
+    <%= link_to modules_path(@workspace) do %>
+      <span class="tab">Modules</span>
+    <% end %>
+    <ul class='sub-menu'>
+      <li><%= link_to "Search...", modules_path(@workspace) %></li>
+      <li><%= link_to "Resource Scripts", rc_scripts_path(@workspace) %></li>
+      <% if !License.get.nx_ultimate? %>
+        <li><%= link_to "MetaModules", workspace_apps_overview_path(@workspace), :class => 'new-standard-report' %></li>
+      <% end %>
+    </ul>
+  </li>
+
+  <li class="<%=h class_for_tab(:cores) %> dropdown">
+    <%= link_to workspace_credentials_path(@workspace) do %>
+      <span class="tab">Credentials</span>
+    <% end %>
+    <ul class='sub-menu' style='min-width:100px'>
+      <li><%= link_to "Manage", workspace_credentials_path(@workspace) + '#creds' %></li>
+      <% if License.get.supports_bruteforce? %>
+        <li><%= link_to "Reuse", workspace_credentials_path(@workspace) + '#reuse' %></li>
+        <li><%= link_to "Bruteforce",  workspace_brute_force_guess_index_path(@workspace) + '#quick' %></li>
+      <% end %>
+    </ul>
+  </li>
+
+  <li class="<%=h class_for_tab(:reports) %> dropdown">
+    <%= link_to workspace_reports_path(@workspace) do %>
+      <span class="tab">Reports</span>
+      <%= badge_tag Report.unaccessed(@workspace_id).size %>
+    <% end %>
+    <ul class='sub-menu'>
+      <li><%= link_to "Show Reports", workspace_reports_path(@workspace), :class => 'show-reports' %></li>
+      <li><%= link_to "Create Standard Report", new_workspace_report_path(@workspace), :class => 'new-standard-report' %></li>
+      <% if License.get.supports_custom_reporting? %>
+        <li><%= link_to "Create Custom Report", new_workspace_custom_report_path(@workspace), :class => 'new-custom-report' %></li>
+      <% end %>
+    </ul>
+  </li>
+
+  <li class="<%=h class_for_tab(:exports) %> dropdown">
+    <%= link_to workspace_exports_path(@workspace) do %>
+      <span class="tab">Exports</span>
+    <% end %>
+    <ul class='sub-menu'>
+      <li><%= link_to "Show Exports", workspace_exports_path(@workspace), :class => 'show-exports' %></li>
+      <li><%= link_to "Export Data", new_workspace_export_path(@workspace), :class => 'new-export' %></li>
+    </ul>
+  </li>
+
+  <li class="<%=h class_for_tab(:tasks) %> dropdown">
+    <%= link_to tasks_path(@workspace) do %>
+      <span class="tab">Tasks</span>
+      <%= badge_tag @workspace.tasks.running.size %>
+    <% end %>
+    <ul class="sub-menu">
+      <li><%= link_to "Show Tasks", tasks_path(@workspace), :class => "show-tasks" %></li>
+      <% if !License.get.nx_ultimate? %>
+        <li><%= link_to "Chains", workspace_task_chains_path(@workspace), :class => "chains" %></li>
+      <% end %>
+    </ul>
+  </li>
+</ul>
+</div>

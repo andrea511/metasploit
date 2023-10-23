@@ -1,0 +1,12 @@
+define [
+  'jquery',
+  '<%= javascript_path("hosts/backbone/controllers/host_view_controller") %>',
+  '<%= javascript_path("hosts/router") %>'
+], ($, HostViewController, Router) ->
+  class HostViewApp
+    start: =>
+      window.HostViewAppRouter = Router
+      app = new Backbone.Marionette.Application
+      app.addInitializer ->
+        Backbone.history.start()
+      app.start()

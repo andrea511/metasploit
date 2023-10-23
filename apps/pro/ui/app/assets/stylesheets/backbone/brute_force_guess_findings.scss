@@ -1,0 +1,84 @@
+@import "css3-mixins";
+@import "components/spinner";
+@import "backbone/pro_carpenter";
+
+.private-data, .ssh-key-fingerprint, h4.private-key {
+  display: block;
+  width:400px;
+  margin-left:auto;
+  margin-right: auto;
+}
+
+.realm-data{
+  a{
+    text-decoration: none;
+  }
+}
+
+.realm-hover{
+  padding:10px;
+  position: absolute;
+  border: 1px solid grey;
+  @include linear-gradient(#fff, #d8d8d8);
+
+  .title{
+    color: #999999;
+  }
+
+  .value{
+    color: #666;
+  }
+}
+
+
+td.service_id{
+  a{
+    text-decoration: none;
+  }
+}
+
+.hover-square {
+  background: #fff;
+  border: 1px solid #bbb;
+  padding: 10px;
+  width: 380px;
+  margin-left: -150px;
+
+
+
+  @include linear-gradient(#fff, #d8d8d8);
+  &.realm {
+    width: 200px;
+    margin-left: 0;
+  }
+  .columns {
+    font-size: 11px;
+    padding-left: 0;
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+  h5 {
+    margin-top: 0;
+  }
+  .scrollie {
+    max-height: 120px;
+    overflow-y: auto;
+  }
+  .spinner {
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: auto !important;
+    display: block !important;
+    margin: 5px 0;
+  }
+
+  &.session{
+    width:100px;
+    margin-left: -6px;
+    .spinner{
+      margin-left: 0px;
+    }
+  }
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}

@@ -1,0 +1,39 @@
+<% title "Software Updates" %>
+<% breadcrumb link_to("Software Updates", updates_path) %>
+
+<div id="license">
+	<%= render "licenses/license", :license => @license %>
+</div>
+
+<div id="updates">
+	<h2>Product Updates</h2>
+
+	<%= form_tag '/updates/apply' do %>
+		<%= render :partial => 'generic/proxy_settings', :object => @current_user %>
+
+			<% if ['metasploit'].pack('p').size == 4 %>
+        <div><%= I18n.translate('notifications.banner_messages.eol_for_32bit_systems.message').html_safe %></div>
+      <% else %>
+        <span class="btn">
+          <%= submit_tag "Check for Updates", name: "check", id: "check-for-updates" %>
+        </span>
+        <% if UpdateOffline.supported? %>
+          <p>
+            Received an <%= link_to("Offline Update File?", '/updates/offline_apply' ) %>
+          </p>
+        <% end %>
+      <% end %>
+
+		<div id="update_checking" style="display:none">
+			<h2>Checking for Updates</h2>
+			Please Wait...
+		</div>
+
+		<div id="update_info">
+		</div>
+	<% end %>
+</div>
+
+<% content_for :bottom_javascript do %>
+  <%= javascript_include_tag 'updates/check_button' %>
+<% end %>

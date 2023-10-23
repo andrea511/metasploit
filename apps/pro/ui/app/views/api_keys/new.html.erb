@@ -1,0 +1,13 @@
+<% title "API Keys - Create" %>
+<% breadcrumb link_to("Global Settings", settings_path), link_to("API Keys", api_keys_path), link_to("Create", new_api_key_path) %>
+
+<% content_for :header_buttons do %>
+	<span class="btn">
+		<%= link_to "Back to API Keys", api_keys_path, :class => "back" %>
+	</span>
+<% end %>
+
+<%= semantic_form_for @api_key do |f| %>
+	<%= render 'form', :f => f %>
+<% end %>
+

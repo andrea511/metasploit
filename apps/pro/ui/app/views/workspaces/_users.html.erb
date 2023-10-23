@@ -1,0 +1,106 @@
+<% if License.get.multi_user? %>
+  
+  <%= f.inputs "User Access", :class => 'inputs user_access' do  -%>
+
+    <%= f.input :owner, :label => "Project owner", :as => :select, :collection => ( Mdm::User.all.map { |u| [ h(u.title), h(u.id)] } ), :include_blank => false %>
+    <dl>
+      <dt>
+        <%= label_tag :members, "Project members", :style => "text-align: right; margin-right: 20px;" %>
+      </dt>
+      <dd style="margin-left: 20px;">
+      <table class="list project_members" style="width: 70%; float: left;">
+        <thead>
+          <tr>
+            <th>
+              <%= check_box_tag "all_users" %>
+            </th>
+            <th>
+              User
+            </th>
+            <th>
+              Full Name
+            </th>
+          </tr>
+        </thead>
+        <tbody id="user_checkboxes">
+          <% for user in Mdm::User.all %>
+            <tr class="<%=h row_cycle %>">
+              <td width='20px'>
+                <%= 
+                check_box_tag "workspace[user_ids][]", user.id, (@workspace.present? && (@workspace.users.include?(user) or @workspace.owner == user or user.admin)), { :disabled => (user.admin or @workspace.owner == user), :is_admin => user.admin } 
+                %>
+              </td>
+              <td>
+                <%=h user.username %>
+              </td>
+              <td>
+                <%=h dash_if_empty(user.fullname) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to(icon('silky/information'), '', :target => '_blank', :class => 'help', :'data-field' => 'workspace_members_input', :style => "float: right; margin-right: 10px;") %>
+      </dd>
+    </dl>
+
+    <%  f.help_link :owner do -%>
+      <h3>Project Owner</h3>
+
+      <p>The project owner can manage the Project's Membership and Settings.</p>
+    <% end -%>
+
+    <div class="inline-help" data-field="workspace_members_input">
+      <h3>Project Members</h3>
+
+      <p>The project member list identifies which users can view, modify, and perform tasks in the project. Administrators and project owners retain all project permissions, and have been disabled.</p>
+    </div>
+  <% end %>
+<% end -%>
+
+<%= nonced_javascript_tag do %>
+  (function() {
+    jQuery(function($) {
+      // check or uncheck all checkboxes as long as they are not disabled
+      $checkboxes = $("#user_checkboxes").find('input[type=checkbox]').not(":disabled");
+    
+      $('#all_users').click(function() {
+        if ($(this).is(':checked')) {
+          $checkboxes.prop('checked',true);                
+        } else {
+          $checkboxes.prop('checked',false);                
+        }
+      });
+
+      // auto select the owner as a "member"
+      $owners = $("#workspace_owner_id").change(function() {
+        owner = $("#workspace_owner_id").find('option:selected').text();
+        $row = $('table.list.project_members').find("tr:contains('"+owner+"')");
+        $row.find('input[type=checkbox]').prop('checked', true);
+        $row.find('input[type=checkbox]').prop('disabled', true);
+      });
+
+      previousOwner = $("#workspace_owner_id").find('option:selected')[0].getAttribute('value');
+
+      // de-select and enable previous owner if owner has changed
+      $owners = $("#workspace_owner_id").change(function() {
+        owner = $("#workspace_owner_id").find('option:selected')[0].getAttribute('value');
+
+        if (previousOwner != owner) {
+          $ownerCheckbox = $('table.list.project_members').find(":checkbox[id='workspace_user_ids_'][value=" + owner + "]");
+          $prevOwnerCheckbox = $('table.list.project_members').find(":checkbox[id='workspace_user_ids_'][value=" + previousOwner + "]");
+
+          $ownerCheckbox.prop('disabled', true);
+          $ownerCheckbox.prop('checked', true);
+
+          // set disabled to false iff previous owner is not admin
+          if ($prevOwnerCheckbox.attr('is_admin') != 'true'){
+            $prevOwnerCheckbox.prop('disabled', false);
+          }
+          previousOwner = owner
+        }
+      });
+      setTimeout(function(){ $owners.change() });
+    });
+  }).call(this);
+<% end %>

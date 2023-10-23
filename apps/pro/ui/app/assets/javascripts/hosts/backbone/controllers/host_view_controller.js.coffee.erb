@@ -1,0 +1,99 @@
+define [
+  'jquery',
+  '<%= javascript_path("hosts/backbone/views/layouts/host_view_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/item_views/host_stats_overview_item_view") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/tag_layout") %>',
+  '<%= javascript_path("shared/backbone/layouts/row_dropdown_layout") %>',
+  '<%= javascript_path("shared/backbone/layouts/tabs_layout")%>',
+  '<%= javascript_path("hosts/backbone/views/layouts/services_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/sessions_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/vulnerabilities_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/web_vulnerabilities_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/credentials_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/captured_data_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/notes_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/attempts_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/modules_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/history_layout") %>',
+  '<%= javascript_path("hosts/backbone/views/layouts/file_shares_layout") %>',
+  #TODO Move Notifiation Center Event Aggregator to Shared Dir
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>',
+  '<%= javascript_path("hosts/backbone/models/single_host_presenter") %>',
+  '<%= javascript_path("hosts/backbone/models/host") %>'
+], ($, HostViewLayout, HostStatsOverviewItemView, TagLayout, RowDropdownLayout, TabsLayout,
+    ServicesLayout, SessionsLayout, VulnerabilitiesLayout, WebVulnerabilitiesLayout, CredentialsLayout, CapturedDataLayout,
+    NotesLayout, AttemptsLayout, ModulesLayout, HistoryLayout, FileSharesLayout, EventAggregator,
+    SingleHostPresenter, Host) ->
+
+    class HostViewController extends Backbone.Marionette.Controller
+
+      @POLL_INTERVAL: 10000
+
+      initialize: ({@id}) ->
+        #Because the Host id is in the backbone route and not populated by the rails route
+        window.HOST_ID = @id
+
+      #
+      # Route Actions
+      #
+      Tab: (tab, region) =>
+        @region = if region? then region else new Backbone.Marionette.Region(el: '#host-view')
+        @tab = tab
+        @show_region(region: @region)
+        @show_host_view_layout(tab)
+        $(@region.el).addClass('tab-loading')
+
+      #Helpers
+      show_region: ({@region}) ->
+        @row_dropdown = new RowDropdownLayout(enabled: false)
+        @region.show(@row_dropdown)
+
+      show_host_view_layout: (tab) ->
+        presenter = new SingleHostPresenter(id: @id)
+        presenter.fetch(success: (presenter) =>
+          $(@region.el).removeClass('tab-loading')
+          @_show_header(new Host(presenter.get('host')))
+          @_display_tabs(presenter)
+          @_bind_events()
+          @_fetchForever(presenter)
+        )
+
+      _show_header:(host) ->
+        @row_dropdown.header.show(new HostViewLayout({}))
+        @row_dropdown.header.currentView.host_stats_overview.show(new HostStatsOverviewItemView(model:host))
+        @row_dropdown.header.currentView.tags.show(new TagLayout(host: host))
+
+      _display_tabs: (presenter) =>
+        tab_model = new Backbone.Model({tabs:[
+          { name: 'Services', view: ServicesLayout, count: presenter.get('tab_counts').services },
+          { name: 'Sessions', view: SessionsLayout, count: presenter.get('tab_counts').sessions  },
+          { name: 'Disclosed Vulnerabilities', view: VulnerabilitiesLayout, count: presenter.get('tab_counts').vulnerabilities },
+          { name: 'Web Vulnerabilities', view: WebVulnerabilitiesLayout, count: presenter.get('tab_counts').web_vulnerabilities, hideOnZero: true },
+          { name: 'Credentials', view: CredentialsLayout, count: presenter.get('tab_counts').credentials },
+          { name: 'Captured Data', view: CapturedDataLayout, count: presenter.get('tab_counts').captured_data },
+          { name: 'Notes', view: NotesLayout, count: presenter.get('tab_counts').notes },
+          { name: 'File Shares', view: FileSharesLayout, count: presenter.get('tab_counts').file_shares, hideOnZero: true },
+          { name: 'Attempts', view: AttemptsLayout, count: presenter.get('tab_counts').attempts },
+          { name: 'Modules', view: ModulesLayout, count: presenter.get('tab_counts').modules, hideOnZero: true },
+          { name: 'History', view: HistoryLayout, count: presenter.get('tab_counts').history, hideOnZero:true }
+        ]})
+        tab_layout = new TabsLayout(model: tab_model, host_id: @id, host_address: presenter.get('host').address )
+        @row_dropdown.dropdown.show(tab_layout)
+        tab_layout.set_tab(@tab || tab_model.get('tabs')[0].name)
+
+      _bind_events: ->
+        EventAggregator.on('tabs_layout:tab:changed', @_update_url_by_tab)
+
+
+      _update_url_by_tab: (last_tab) =>
+        last_tab = _.string.underscored(last_tab).toLowerCase()
+        #If in Single Host View, else in Creds View
+        if window.HostViewAppRouter?
+          window.HostViewAppRouter.navigate(last_tab,{trigger:false})
+        else
+          Pro.vent.trigger "host:tab:chose", last_tab
+
+      _fetchForever: (model) =>
+        fetchAgain = => window.setTimeout((=> @_fetchForever(model)), HostViewController.POLL_INTERVAL)
+        model.fetch(success: fetchAgain, error: fetchAgain)
+

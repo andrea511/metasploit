@@ -1,0 +1,98 @@
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.sexy-font, .stats .big-stat {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-weight: 300;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.small-caps-font, .stats label.stat, .stats label.desc {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-size: 11px;
+  position: relative;
+}
+
+/* line 8, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.row.circles {
+  width: 50%;
+  margin: 15px auto;
+}
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.row.circles .cell {
+  text-align: center;
+}
+/* line 14, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.row.circles .cell p.circle {
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  text-align: center;
+  background: #eee;
+  font-size: 1.4em;
+  font-weight: 600;
+  color: #444;
+  display: inline-block;
+  border-radius: 50%;
+  border: 4px solid #dadada;
+  margin: 0;
+  transition: all .1s;
+}
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.row.circles .cell p.text {
+  display: inline-block;
+  margin: 5px 0;
+}
+
+/* line 47, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.stats .pie-chart {
+  text-align: center;
+  width: 80px;
+  margin: 0 auto;
+}
+/* line 52, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.stats label.stat, .stats label.desc {
+  display: block;
+  font-size: 11px;
+  line-height: 1.2;
+  font-variant: none;
+  text-transform: uppercase;
+  text-shadow: 0 0 0 #666;
+  color: #777;
+}
+/* line 61, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.stats label.stat.stat, .stats label.desc.stat {
+  font-weight: 600;
+}
+/* line 71, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.stats .big-stat span.stat {
+  color: #000;
+  display: block;
+  line-height: 1.4;
+  font-size: 41px;
+}
+/* line 77, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.stats .big-stat label {
+  display: inline-block;
+  margin: 5px 5px;
+  font-size: 18px;
+}
+/* line 81, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.stats .big-stat label span {
+  line-height: 1.2;
+  display: block;
+  text-align: center;
+}
+
+/* line 91, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.partition-map {
+  width: 532px;
+  background: #ddd;
+  height: 18px;
+  clear: both;
+}
+
+/* line 98, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/stats_circles.scss */
+.columns.hide {
+  visibility: hidden;
+}

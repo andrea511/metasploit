@@ -1,0 +1,291 @@
+//colors
+$black: #000;
+$color_trinidad_approx: #ea5709;
+$color_celeste_approx: #ccc;
+$white: #fff;
+$color_red_approx: red;
+$color_silver_chalice_approx: #aaa;
+$color_iron_approx: #d8d8d8;
+$color_chestnut_approx: #b94a48;
+$color_vanilla_ice_approx: #eed3d7;
+
+// Shared styling from brute force guess, namely the .hover-square
+@import "backbone/brute_force_guess_findings";
+
+//@extend-elements
+//original selectors
+//#domino-metamodule-modal .page.settings a.help, #domino-metamodule-modal .page.scope a.help
+%extend_1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+//original selectors
+//#domino-metamodule-modal #task_config_cleanup_session_input input, #domino-metamodule-modal #task_config_dynamic_stagers_input input
+%extend_2 {
+  width: auto;
+}
+
+//original selectors
+//#domino-metamodule-modal #task_config_cleanup_session_input label, #domino-metamodule-modal #task_config_dynamic_stagers_input label
+%extend_3 {
+  width: auto;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+//original selectors
+//#domino-metamodule-modal .timeout input, #domino-metamodule-modal .timeout span
+%extend_4 {
+  width: 14% !important;
+  display: inline-block;
+}
+
+//original selectors
+//#domino-metamodule-modal li#task_config_overall_timeout_ss_input, #domino-metamodule-modal #task_config_service_timeout_input
+%extend_5 {
+  margin-bottom: 0;
+}
+
+.truncate
+{
+  overflow-x: hidden;
+}
+#domino-metamodule-modal {
+  li {
+    &.text {
+      label {
+        display: block;
+        font-weight: 600;
+        color: $black;
+      }
+      &.input {
+        position: relative;
+      }
+    }
+    label+p {
+      font-weight: 100;
+      margin: 4px 0 5px;
+      font-size: 11px;
+    }
+    &#task_config_overall_timeout_ss_input {
+      @extend %extend_5;
+    }
+  }
+  .descriptive {
+    font-weight: 100;
+    color: $black;
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .no-pad {
+    padding: 0;
+  }
+  textarea {
+    width: 100%;
+  }
+  .page {
+    &.settings {
+      .row {
+        margin-left: 0;
+        margin-right: 0;
+      }
+      label {
+        width: 46%;
+        display: inline-block;
+        font-weight: 100;
+        font-size: 11px;
+      }
+      li {
+        &.input {
+          margin: 10px 0;
+          &.timeout-sub {
+            margin: -5px 0;
+          }
+        }
+        &.dynamic_stagers_warning {
+          color: $color_red_approx;
+        }
+      }
+      a.help {
+        @extend %extend_1;
+      }
+    }
+    &.generate_report {
+      overflow-x: hidden;
+      .bottom-row .email label {
+        display: none;
+      }
+    }
+    &.scope a.help {
+      @extend %extend_1;
+    }
+  }
+  .scope-row {
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .high-value-row {
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    li label.label {
+      color: $color_trinidad_approx;
+      font-weight: 600;
+    }
+  }
+  .border {
+    position: relative;
+    border: 1px solid $color_celeste_approx;
+    padding: 15px 10px 10px;
+    margin-top: 15px;
+    margin-right: 10px;
+    li {
+      position: relative;
+    }
+    input {
+      width: 46%;
+    }
+    h5 {
+      position: absolute;
+      top: -12px;
+      left: 5px;
+      background: $white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 5px;
+      margin: 0;
+    }
+  }
+  #task_config_cleanup_session_input {
+    input {
+      @extend %extend_2;
+    }
+    label {
+      @extend %extend_3;
+    }
+  }
+  #task_config_dynamic_stagers_input {
+    input {
+      @extend %extend_2;
+    }
+    label {
+      @extend %extend_3;
+    }
+  }
+  .timeout {
+    input {
+      @extend %extend_4;
+    }
+    span {
+      @extend %extend_4;
+    }
+  }
+  #task_config_service_timeout_input {
+    @extend %extend_5;
+  }
+  #high_value_tags_string {
+    display: none;
+  }
+  #task_config_high_value_tags_string {
+    display: none;
+  }
+  .back {
+    margin: 5px 0 10px;
+    text-decoration: underline;
+  }
+  .drill-in {
+    hr {
+      margin: 15px 0 10px;
+      border-top: 1px solid #D8D8D8;
+      height: 0;
+      border-bottom: 0;
+    }
+    p {
+      font-weight: 600;
+      color: $black;
+    }
+  }
+  .pagination-region {
+    font-size: 11px;
+  }
+  #report_email_recipients_input {
+    position: static;
+  }
+  .cell0 input[type='radio'] {
+    margin-left: -2px;
+    margin-right: 7px;
+  }
+  label.label {
+    margin-bottom: 4px;
+  }
+  .last .border {
+    margin-right: 0;
+  }
+  .timeout-sub span {
+    font-size: 10px;
+    font-weight: 100;
+    color: $color_silver_chalice_approx;
+  }
+  #task_config_high_value_tags_string_input input {
+    width: 100%;
+  }
+  #tags-component a.help {
+    display: none;
+  }
+  .selected-host-table .pagination-region {
+    display: none;
+  }
+  .truncate span {
+    max-width: 120px;
+  }
+  p.error-desc {
+    padding: 2px 7px;
+    margin-bottom: 8px;
+    color: #B94A48;
+    border: 1px solid #EED3D7;
+    background: #F2DEDE;
+    width: 50%;
+    margin-top: 7px;
+  }
+  .table-component .filter-region .filter {
+    width: 100%;
+    margin: 0;
+    height: 185px;
+    margin-bottom: 10px;
+    .filter-column {
+      height: 155px;
+    }
+  }
+  .token-input-input-token-metasploit input {
+    //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+}
+.ui-tooltip {
+  z-index: 100000 !important;
+}
+#modals #domino-metamodule-modal ul.token-input-list-metasploit li input {
+  border: 0;
+  margin: 0 auto;
+  padding: 5px;
+  font-size: 12px;
+  -webkit-appearance: caret;
+  //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+#task-chain-region #domino-metamodule-modal {
+  .page.generate_report textarea {
+    min-width: 300px;
+  }
+  .email .help {
+    top: 0;
+    right: 262px !important;
+  }
+}

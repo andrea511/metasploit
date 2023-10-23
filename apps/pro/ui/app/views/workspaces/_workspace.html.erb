@@ -1,0 +1,37 @@
+<li class="workspace">
+	<div class="title">
+		<div class="actions">
+			<% if workspace.manageable_by?(current_user) %>
+			<span class="btn">
+				<%= link_to "Settings", edit_workspace_path(workspace), :class => "edit" %>
+			</span>
+			<span class="btn">
+				<%= link_to "Delete", workspace, :data => { :method => :delete, :confirm => "Delete project?" }, :class => "delete" %>
+			</span>
+			<% end %>
+		</div>
+
+		<%= link_to h(workspace.name), workspace %>
+
+		<div class="summary">
+			<% unless workspace.hosts.flagged.empty? %>
+				<% link_to hosts_path(workspace) do %>
+					<%=h pluralize workspace.hosts.flagged.size, "updated host" %>
+				<% end %>
+			<% end %>
+			<% unless workspace.sessions.alive.empty? %>
+				<% link_to workspace_sessions_path(workspace) do %>
+					<%=h pluralize workspace.sessions.alive.size, "active session" %>
+				<% end %>
+			<% end %>
+			<% unless workspace.tasks.running.empty? %>
+				<% link_to tasks_path(workspace) do %>
+					<%=h pluralize workspace.tasks.running.size, "running task" %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	<div class="desc">
+		<%=h workspace.description %>
+	</div>
+</li>

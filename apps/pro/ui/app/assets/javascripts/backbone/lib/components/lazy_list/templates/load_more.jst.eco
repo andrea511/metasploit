@@ -1,0 +1,3 @@
+<% if @collection.modelsLoaded < @collection.ids.length: %>
+  <a href='javascript:void(0)'><%= @loadMoreLabel %></a>
+<% end %>

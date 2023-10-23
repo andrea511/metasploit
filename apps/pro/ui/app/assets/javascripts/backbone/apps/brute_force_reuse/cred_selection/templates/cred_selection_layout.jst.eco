@@ -1,0 +1,26 @@
+<div class="foundation">
+  <div class="row">
+    <div class="large-9 columns">
+      <p class="reuse-title">
+        Choose the credentials that Metasploit will attempt to use to authenticate to the selected target list below.
+      </p>
+    </div>
+
+    <div class="large-3 columns"></div>
+  </div>
+
+  <div class="row">
+    <div class="large-9 columns left-side">
+      <h1 class="invisible" data-table-id="reuse-creds"></h1>
+      <div class="creds-table"></div>
+    </div>
+    <div class="large-3 columns last right-side">
+      <div class="btn-arrow add-selection">
+        <span class="icon icon-fb"><span>＋</span></span>
+        <span class="title">Add Credential(s) to this list</span>
+      </div>
+      <div class="creds-groups"></div>
+      <a href="javascript:void(0)" class="btn primary launch disabled">Next</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,2 @@
+page.replace 'hosts', :partial => 'hosts'
+page.replace 'page_links', :partial => 'page_links'

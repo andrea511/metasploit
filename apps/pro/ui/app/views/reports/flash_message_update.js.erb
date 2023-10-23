@@ -1,0 +1,5 @@
+(function($) {
+  $('#report_nav_bar').html("<%= escape_javascript(render :partial => 'reports/report_nav_bar') %>");
+  $('#saved_reports').html("<%= escape_javascript(render :partial => 'reports/saved_reports') %>");
+  $('#flash_messages').html("<%= escape_javascript(render :partial => 'generic/flash_messages') %>");
+})(jQuery);

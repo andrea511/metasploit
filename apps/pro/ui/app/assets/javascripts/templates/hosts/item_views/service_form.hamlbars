@@ -1,0 +1,24 @@
+.services-form
+  {{#form "/" class="form formtastic"}}
+  %ul
+    %li.name
+      {{label "aaData[name]" "Name"}}
+      %div
+        {{input "aaData[name]" ""}}
+    %li.port
+      {{label "aaData[port]" "Port"}}
+      %div
+        {{input "aaData[port]" ""}}
+    %li.proto
+      {{label "aaData[proto]" "Protocol"}}
+      %div
+        {{select "aaData[proto]" protocols.protocols protocols.selected}}
+    %li.state
+      {{label "aaData[state]" "State"}}
+      %div
+        {{select "aaData[state]" states.states states.selected}}
+    %li.info
+      {{label "aaData[info]" "Info"}}
+      %div
+        {{input "aaData[info]" ""}}
+  {{/form}}

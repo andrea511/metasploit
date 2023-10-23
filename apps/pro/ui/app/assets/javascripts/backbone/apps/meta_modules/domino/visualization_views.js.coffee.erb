@@ -1,0 +1,800 @@
+define [
+  'd3_min'
+  'jquery'
+  'apps/meta_modules/domino/minimap'
+  'apps/meta_modules/domino/pcb_layout'
+  'd3_transform'
+  'base_view'
+  'base_layout'
+  'apps/meta_modules/domino/templates/layout'
+  'apps/meta_modules/domino/templates/graph'
+  'apps/meta_modules/domino/templates/node_info'
+  'lib/components/table/table_view'
+  'lib/concerns/views/size_to_fit'
+], (d3, $, minimap, PcbLayout) ->
+
+  # Never update the D3 view more than once every 100ms
+  DEBOUNCE_DELAY = 100
+
+  # Maximum top-level zoom
+  MAX_ASPECT = 1
+
+  MAX_NODE_RADIUS = 100
+
+  MIN_NODE_RADIUS = 60
+
+  # This static function is passed to d3's data() calls to ensure that
+  # even when order of the nodes is changed in the DOM, the data join
+  # matches data to nodes correctly.
+  KEY_FN = (d) -> d.id
+  KEY_EDGE_FN = (d) -> d.source.id+','+d.target.id
+
+  isInViewPort = (el) ->
+    rect = el.getBoundingClientRect()
+    rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+
+  @Pro.module 'MetaModulesApp.Domino.Views', (Views, App) ->
+        
+    # The Layout is a container class used for rendering the D3 views
+    class Views.Layout extends App.Views.Layout
+
+      # Enables this layout to resize itself until the screen is not scrollable
+      @include "SizeToFit"
+
+      # @property [@Pro.Entities.Task] the running task
+      task: null
+
+      # @property [Array<Edge>] the edges in the graph
+      edges: null
+
+      # @property [Array<Node>] the nodes in the graph
+      nodes: null
+
+      template: @::templatePath('meta_modules/domino/layout')
+
+      ui:
+        controls: '.graph-controls'
+        resizeEl: '.d3-graph-visualization'
+
+      regions:
+        d3: '.d3-graph-visualization'
+        nodeInfo: '.node-info-region'
+
+      triggers:
+        'change input[name=orientation]': 'orientation:changed'
+        'change input[name=layout]': 'layout:changed'
+
+      events:
+        'change input[name="full-screen"]': 'fullscreenChanged'
+
+      selectedOrientation: =>
+        @ui.controls.find('[name=orientation]:checked').blur().val()
+
+      selectedLayout: =>
+        @ui.controls.find('[name=layout]:checked').blur().val()
+
+      selectedFullscreen: =>
+        @ui.controls.find('[name="full-screen"]').is(':checked')
+
+      fullscreenChanged: =>
+        @setResizeDisabled(@selectedFullscreen())
+        @trigger('fullscreen:changed')
+
+      onRender: =>
+        @ui.controls.tooltip()
+
+
+    class Views.NodeInfo extends Marionette.ItemView
+
+      className: 'node-info'
+
+      attributes:
+        style: 'display: none'
+
+      template: @::templatePath('meta_modules/domino/node_info')
+
+      setLoading: (loading) =>
+
+      setNodeData: ({@node, @data, mouse, graphHeight, graphWidth, graphOrientation}) =>
+        @render()
+
+        # terrible. just. terrible.
+        w = (window.innerHeight || document.documentElement.clientHeight)
+        h = (window.innerHeight || document.documentElement.clientHeight)
+        if graphOrientation is Views.D3.ORIENTATIONS.VERTICAL
+          @$el.css(top: mouse[1]-100, left: mouse[0]+170, bottom: 'auto', right: 'auto')
+          rect = @$el[0].getBoundingClientRect()
+          if rect.bottom >= h-40
+            @$el.css(top: 'auto', bottom: graphHeight - mouse[1])
+            rect = @$el[0].getBoundingClientRect()
+          if rect.right >= w
+            @$el.css(right: graphWidth-(mouse[0]-50), left: 'auto')
+
+        else
+          @$el.css(top: mouse[1]+60, left: mouse[0], bottom: 'auto', right: 'auto')
+          rect = @$el[0].getBoundingClientRect()
+          if rect.bottom >= h-40
+            @$el.css(top: 'auto', bottom: graphHeight - (mouse[1] - 60))
+            rect = @$el[0].getBoundingClientRect()
+          if rect.left <= 0
+            @$el.css(left: mouse[0]+30)
+            rect = @$el[0].getBoundingClientRect()
+          if rect.left <= 0
+            @$el.css(left: mouse[0]+60)
+            rect = @$el[0].getBoundingClientRect()
+          if rect.right >= w
+            @$el.css(left: mouse[0]+30)
+            rect = @$el[0].getBoundingClientRect()
+          if rect.right >= w
+            @$el.css(left: mouse[0])
+
+      serializeData: => @data
+
+
+    # This is the ItemView where we actually invoke D3 on the data to display a graph
+    class Views.D3 extends Marionette.ItemView
+
+      @TRANSITION_LENGTH: 300
+
+      @LAYOUTS:
+        TREE: 'tree'
+        RADIAL_TREE: 'radial_tree'
+
+      @ORIENTATIONS:
+        HORIZONTAL: 'horizontal'
+        VERTICAL:   'vertical'
+
+      orientation: 'vertical'
+
+      layout: 'tree'
+
+      width: null
+
+      height: null
+
+      base: null
+
+      wrapperBorder: 0
+
+      minimap: null
+
+      minimapPadding: 20
+
+      minimapScale: 0.2
+
+      zoomEnabled: true
+
+      dragEnabled: true
+
+      # A hash containing #data and #node references about the hovered/selected node
+      hoveredNode: null
+
+      # d3.scale.linear x scale
+      xScale: null
+
+      # d3.scale.linear y scale
+      yScale: null
+
+      circles: []
+
+      # The root Node, which contains nested Nodes under the `children` key
+      root: null
+
+      # A d3.layout.tree layout
+      treeLayout: null
+
+      # The d3.svg.diagonal, used for last-minute orientation fixups (landscape/portrait)
+      diagonal: null
+
+      template: @::templatePath('meta_modules/domino/graph')
+
+      keyMap:
+        38: 'up'
+        40: 'down'
+        39: 'right'
+        37: 'left'
+
+      ui:
+        graph: '.graph'
+        pleaseWait: '.please-wait'
+
+      initialize: (opts={}) ->
+        @task  = opts.task
+        @keys = {up: false, down: false, left: false, right: false}
+        @initialNodes = @task.get('allNodes') || []
+        @initialEdges = @task.get('allEdges') || []
+        _.each @initialNodes, (n) ->
+          delete n.children
+          delete n.childrenMap
+          delete n.hasParent
+
+      onShow: =>
+        @$el.parents('.drilldown-padding').css(padding: 0)
+        $(window).on 'keydown.domino', @keyDown
+        $(window).on 'keyup.domino', @keyUp
+
+      onDestroy: ->
+        @$el.parents('.drilldown-padding').css(padding: 10)
+        $(window).off 'keydown.domino'
+        $(window).off 'keyup.domino'
+
+      keyDown: (e) =>
+        key = @keyMap[e.which]
+        if key? then @keys[key] = true
+        @updateKey(key)
+
+      keyUp: (e) =>
+        key = @keyMap[e.which]
+        if key? then @keys[key] = false
+        @updateKey(key)
+
+      updateKey: (key) =>
+        return unless @keys[key]
+        # apply the correct pan
+        if key is 'left'
+          @minimap.x(@minimap.x() - 5)
+          d3.event = { translate: [@panX-5, @panY] }
+        if key is 'right'
+          @minimap.x(@minimap.x() + 5)
+          d3.event = { translate: [@panX+5, @panY] }
+        if key is 'down'
+          @minimap.y(@minimap.y() + 5)
+          d3.event = { translate: [@panX, @panY+5] }
+        if key is 'up'
+          @minimap.y(@minimap.y() - 5)
+          d3.event = { translate: [@panX, @panY-5] }
+        d3.event.scale = @zoom
+        d3.event.scale ?= 1
+        @zoomHandler(@zoom)
+        d3.event = null
+        # do this until keydown() sets @keys[key] to false
+        _.delay @updateKey, 200, key
+
+      # Initializes the width, height, and base structures
+      initD3: =>
+        return if @wrapSvg?
+        return if _.isEmpty @task.get('allNodes')
+        @refreshSize()
+        @_buildNestedStructure(@initialNodes, @initialEdges) unless @root?
+        @xScale = d3.scale.linear().domain([-@width/2, @width/2]).range([0, @width])
+        @yScale = d3.scale.linear().domain([-@height/2, @height/2]).range([@height, 0])
+        zoom = d3.behavior.zoom()
+          .x(@xScale)
+          .y(@yScale)
+          .scaleExtent([0.9, 10])
+          .on("zoom.canvas", @zoomHandler)
+        @wrapSvg = d3.select(@ui.graph[0])
+          .append('svg')
+          .attr("width", @width)
+          .attr("height", @height)
+
+        @svg = @wrapSvg.append("g")
+        @svgDefs = @svg.append("defs")
+        @rect = @svgDefs.append("clipPath")
+          .attr("id", "wrapperClipPathDemo01")
+          .attr("class", "wrapper clipPath")
+          .append("rect")
+          .attr("class", "background")
+          .attr("width", @width)
+          .attr("height", @height)
+        @svgDefs.append("clipPath")
+          .attr("id", "minimapClipPath")
+          .attr("width", @width)
+          .attr("height", @height)
+          .attr("transform",
+            d3.svg.transform().translate([@width+@minimapPadding, @minimapPadding/2])
+          )
+          .append("rect")
+          .attr("class", "background")
+          .attr("width", @width)
+          .attr("height", @height)
+        @filter = @svgDefs.append("svg:filter")
+          .attr("id", "minimapDropShadow")
+          .attr("x", "-20%")
+          .attr("y", "-20%")
+          .attr("width", "150%")
+          .attr("height", "150%")
+        @filter.append("svg:feOffset")
+          .attr("result", "offOut")
+          .attr("in", "SourceGraphic")
+          .attr("dx", "1")
+          .attr("dy", "1")
+        @filter.append("svg:feColorMatrix")
+          .attr("result", "matrixOut")
+          .attr("in", "offOut")
+          .attr("type", "matrix")
+          .attr("values", "0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.5 0");
+        @filter.append("svg:feGaussianBlur")
+          .attr("result", "blurOut")
+          .attr("in", "matrixOut")
+          .attr("stdDeviation", "10")
+        @filter.append("svg:feBlend")
+          .attr("in", "SourceGraphic")
+          .attr("in2", "blurOut")
+          .attr("mode", "normal")
+
+        @minimapRadialFill = @svgDefs.append("radialGradient")
+          .attr(
+            id: "minimapGradient",
+            gradientUnits: "userSpaceOnUse",
+            cx: "500",
+            cy: "500",
+            r: "400",
+            fx: "500",
+            fy: "500"
+          )
+
+        @minimapRadialFill.append("stop")
+          .attr("offset", "0%")
+          .attr("stop-color", "#FFFFFF")
+        @minimapRadialFill.append("stop")
+          .attr("offset", "40%")
+          .attr("stop-color", "#EEEEEE")
+        @minimapRadialFill.append("stop")
+          .attr("offset", "100%")
+          .attr("stop-color", "#E0E0E0")
+        @outerWrapper = @svg.append("g")
+          .attr("class", "wrapper outer")
+        @outerWrapper.append("rect")
+          .attr("class", "background")
+          .attr("width", @width)
+          .attr("height", @height)
+        @innerWrapper = @outerWrapper.append("g")
+          .attr("class", "wrapper inner")
+          .attr("clip-path", "url(#wrapperClipPathDemo01)")
+          .call(zoom)
+        @innerWrapper.append("rect")
+          .attr("class", "background")
+          .attr("width", @width)
+          .attr("height", @height)
+        @panCanvas = @innerWrapper.append("g")
+          .attr("class", "panCanvas")
+          .attr("width", @width)
+          .attr("height", @height)
+        @panCanvas.append("rect")
+          .attr("class", "background")
+          .attr("width", @width)
+          .attr("height", @height)
+
+        @minimap = minimap()
+            .zoom(zoom)
+            .target(@panCanvas)
+            .minimapScale(@minimapScale)
+
+        @svg.call(@minimap)
+        zoom.scale(1)
+        @zoomHandler(1)
+        @panLayer = @panCanvas.append("g").attr("transform", d3.svg.transform().translate([0, 0]))
+
+      zoomHandler: (newScale, evt=null) =>
+        return unless @zoomEnabled
+        scale = if d3.event then d3.event.scale else newScale
+        if @dragEnabled
+          tbound = -@height * scale
+          bbound = @height  * scale
+          lbound = -@width  * scale
+          rbound = @width   * scale
+          translation = d3.event?.translate
+          translation ?= evt
+          translation ?= [0, 0]
+          translation = [
+            Math.max(Math.min(translation[0], rbound), lbound),
+            Math.max(Math.min(translation[1], bbound), tbound)
+          ]
+
+          className = ''
+          unless _.isUndefined(@aspect)
+            z = Math.min(Math.floor(@aspect * scale*10), 18)
+            _.times Math.min(Math.floor(@aspect * scale*10), 19), (i) ->
+              if i%2==0 then className += ' z'+i
+            if _.isBlank(className)
+              className = 'z-1'
+            $(@el).attr('class', className)
+            @_fixText() if z != @oldZ
+            @oldZ = z
+
+          @panX = translation[0]
+          @panY = translation[1]
+          d3.select(".panCanvas, .panCanvas .bg")
+            .attr("transform", d3.svg.transform().translate(translation).scale(scale))
+          @minimap.scale(scale)
+          @minimap.render()
+          @zoom = scale
+
+      updateGraph: (nodes, links) =>
+        @_updateNestedStructure(nodes, links)
+        @_updateD3()
+
+      # Shells out to the helper method for rendering the current layout and whatnot.
+      updateD3: (opts) =>
+        @_updateD3Debounced ||= _.debounce(@_updateD3, DEBOUNCE_DELAY)
+        @_updateD3Debounced()
+
+      _updateD3: =>
+        @initD3() unless @root? and @wrapSvg?
+        return unless @root? and @wrapSvg?
+
+        @ui.pleaseWait.hide()
+
+        @refreshSize() unless @fullscreen
+
+        @wrapSvg.transition()
+          .duration(Views.D3.TRANSITION_LENGTH)
+          .attr('width', @width)
+          .attr('height', @height)
+
+        @rect.transition()
+          .duration(Views.D3.TRANSITION_LENGTH)
+          .attr("width", @width)
+          .attr("height", @height)
+
+        @svgDefs
+          .select(".clipPath .background")
+          .attr("width", @width)
+          .attr("height", @height);
+
+        @svg
+          .attr("width",  @width  + @minimapPadding*2 + (@width*@minimapScale))
+          .attr("height", @height)
+
+        @outerWrapper
+          .select(".background")
+          .attr("width", @width)
+          .attr("height", @height)
+
+        @innerWrapper
+          .select(".background")
+          .attr("width", @width)
+          .attr("height", @height)
+
+        @panCanvas
+          .attr("width", @width)
+          .attr("height", @height)
+          .select(".background")
+          .attr("width", @width)
+          .attr("height", @height)
+
+        if @layout is Views.D3.LAYOUTS.RADIAL_TREE
+          diagonal = d3.svg.diagonal.radial().projection (d) -> [d.y, d.x / 180 * Math.PI]
+        else if @orientation is Views.D3.ORIENTATIONS.VERTICAL
+          diagonal = d3.svg.diagonal().projection((d) -> [d.x, d.y])
+          @svg.transition().duration(Views.D3.TRANSITION_LENGTH).attr(
+            "transform", d3.svg.transform().translate([0, 0])
+          )
+        else
+          diagonal = d3.svg.diagonal().projection((d) -> [d.y, d.x])
+          @svg.transition().duration(Views.D3.TRANSITION_LENGTH).attr(
+            "transform", d3.svg.transform().translate([0, 0])
+          )
+
+        if @layout is Views.D3.LAYOUTS.TREE
+          @treeLayout = PcbLayout()
+          if @orientation == Views.D3.ORIENTATIONS.HORIZONTAL
+            @treeLayout.size([@width, @height])
+          else
+            @treeLayout.size([@height, @width])
+        else
+          @treeLayout = d3.layout.cluster()
+          @treeLayout.size([360, Math.min(@width, @height)-70])
+          @treeLayout.separation (a, b) -> (a.parent == b.parent ? 1 : 2) / a.depth
+          @treeLayout.sort(null)
+
+        @svgNodes = @treeLayout.nodes(@root)
+        @svgLinks = @treeLayout.links(@svgNodes)
+
+        # Set up the default zoom level.
+        minX = d3.min(@svgNodes, (n) -> n.x - n.radius)
+        minY = d3.min(@svgNodes, (n) -> n.y - n.radius)
+        maxX = d3.max(@svgNodes, (n) -> n.x + n.radius)
+        maxY = d3.max(@svgNodes, (n) -> n.y + n.radius)
+
+        aspect = 1
+        if @layout is Views.D3.LAYOUTS.TREE
+          if @orientation == Views.D3.ORIENTATIONS.HORIZONTAL
+            aspectX = (@height-50)/(maxX - minX)
+            aspectY = (@width-50)/(maxY - minY)
+            aspect = Math.min(aspectX, aspectY, MAX_ASPECT)
+            offY = -minX + (Math.max(@height-Math.abs(maxX-minX)*aspect, 0)/2)/aspect
+            offX = -minY + (Math.max(@width-Math.abs(maxY-minY)*aspect, 0)/2)/aspect
+          else
+            aspectX = (@height-50)/(maxY - minY)
+            aspectY = (@width-50)/(maxX - minX)
+            aspect = Math.min(aspectX, aspectY, MAX_ASPECT)
+            offX = -minX + (Math.max(@width-Math.abs(maxX-minX)*aspect, 0)/2)/aspect
+            offY = -minY + (Math.max(@height-Math.abs(maxY-minY)*aspect, 0)/2)/aspect
+        else
+          aspect = 0.5
+          offX = (@width)
+          offY = (@height)
+
+        @aspect = aspect
+
+        @panLayer
+          .transition()
+          .duration(Views.D3.TRANSITION_LENGTH)
+          .attr('transform', d3.svg.transform().scale(aspect,aspect).translate([offX, offY]))
+
+        fnD3Transform = (x, y) =>
+          if @layout is Views.D3.LAYOUTS.RADIAL_TREE
+            d3.svg.transform().rotate(x-90).translate(y)
+          else if @orientation is Views.D3.ORIENTATIONS.VERTICAL
+            d3.svg.transform().translate([x, y])
+          else
+            d3.svg.transform().translate([y, x])
+
+        links = @panLayer.selectAll(".link")
+          .data(@svgLinks, KEY_EDGE_FN)
+
+        links
+          .enter()
+          .append("path")
+          .attr("class", "link")
+
+        links
+          .transition()
+          .duration(Views.D3.TRANSITION_LENGTH)
+          .attr("d", diagonal)
+
+        nodes = @panLayer.selectAll(".node")
+          .data(@svgNodes, KEY_FN)
+
+        me = @
+        nodesEnter = nodes
+          .enter()
+          .append("g").attr("class", "node")
+          .on('mouseover', (d) -> me.nodeMouseover(d, @))
+          .on('mouseout',  (d) -> me.nodeMouseout(d, @))
+
+        nodesEnter
+          .append("circle").attr("class", "outer-circle")
+
+        nodesEnter
+          .append("circle").attr("class", "inner-circle")
+
+        nodesEnter
+          .append("text")
+
+        nodes
+          .transition()
+          .duration(Views.D3.TRANSITION_LENGTH)
+          .attr("transform", (d) -> fnD3Transform(d.x, d.y)())
+
+        _.each nodes[0], (d) ->
+          d.parentNode.appendChild(d)
+          data = d3.select(d).data()[0]
+          d3.select(d).classed(
+            tiny: (data.radius <= MIN_NODE_RADIUS),
+            node: true,
+            important: data.high_value
+          )
+
+        @d3Node = @panLayer.selectAll(".node")
+          .data(@svgNodes, KEY_FN)
+
+        @d3Link = @panLayer.selectAll(".link")
+          .data(@svgLinks, KEY_EDGE_FN)
+
+        _.each @svgNodes, (n) =>
+          if @layout is Views.D3.LAYOUTS.RADIAL_TREE
+            n.radius = 40
+
+        @panLayer.selectAll("circle.outer-circle")
+          .data(@svgNodes, KEY_FN).attr("r", (d) => d.radius)
+        @panLayer.selectAll("circle.inner-circle")
+          .data(@svgNodes, KEY_FN).attr "r", (d) => Math.max(d.radius-Math.max(9-d.depth,0), 1)
+
+        @panLayer.selectAll("text")
+          .data(@svgNodes, KEY_FN)
+          .transition()
+          .duration(Views.D3.TRANSITION_LENGTH)
+          .attr("dx", 0).attr("dy", if @oldZ? and @oldZ > 12 then 3 else 4)
+          .style("text-anchor", "middle")
+          
+        # todo: remove the need for an abitrary 500ms delay
+        unless @minimapRendered
+          _.delay((=> @minimap.render() unless @minimapRendered), 500) 
+          @minimapRendered = true
+
+        @zoomHandler(@zoom)
+        @_fixText()
+
+      toggleFullscreen: (@fullscreen) =>
+        parent = @$el.parents('.table-region')
+        parent2 = @$el.parents('.d3-graph-visualization')
+        @zoomHandler(1)
+        if @fullscreen          
+          parent.css
+            position: 'fixed'
+            left: 0
+            right: 0
+            top: 0
+            bottom: 0
+            zIndex: 999
+            background: 'white'
+          parent2.css
+            overflow: 'none'
+        else
+          parent.css position: 'static'
+          parent2.css overflow: 'hidden'
+
+        _.defer =>
+          if @fullscreen
+            @width = @$el.width()
+            @height = $(window).height()
+            @updateD3()
+          else
+            _.delay((=>
+              $(window).trigger('resize.sizeToFit')
+            ), 1000)
+
+      refreshSize: =>
+        @width = @$el.parent().width() # todo fixme xxx: WHYYYYYY?!!?!
+        @height = @$el.parent().height()
+
+      eventInsideSameParentNode: =>
+        $fromNode = $(d3.event.fromElement).parents('.node')
+        $toNode = $(d3.event.toElement).parents('.node')
+        $fromNode.length && $toNode.length && $fromNode[0] == $toNode[0]
+
+      nodeMouseout: (d, node) =>
+        return if @eventInsideSameParentNode()
+        d3.select(node).classed(hover: false)
+        # @d3Node.order()
+        # @d3Link.order()
+        # highlight the connected graph to the left
+        prev = @selectPrev(d)
+        prev.nodes.classed(selected: false)
+        prev.links.classed(selected: false)
+        next = @selectNext(d)
+        next.nodes.classed(forward: false)
+        next.links.classed(forward: false)
+        @trigger('node:mouseout', node: node, data: d, mouse: d3.mouse(@wrapSvg[0][0]))
+
+      nodeMouseover: (d, node) =>
+        return if @eventInsideSameParentNode()
+        d3.select(node).classed(hover: true)
+        node.parentNode.appendChild(node)
+        prev = @selectPrev(d)
+        prev.nodes.classed(selected: true)
+        prev.links.classed(selected: true)
+
+        next = @selectNext(d)
+        next.nodes.classed(forward: true)
+        next.links.classed(forward: true)
+        @trigger 'node:mouseover',
+          node: node
+          data: d
+          graphHeight: @ui.graph.height()
+          graphWidth: @ui.graph.width()
+          mouse: d3.mouse(@wrapSvg[0][0])
+          graphOrientation: @orientation          
+
+      selectPrev: (nodeData) =>
+        nodeIds = {}
+        nodeIds[nodeData.id] = true
+
+        while parentData = nodeData?.parent
+          nodeIds[parentData.id] = true
+          nodeData = parentData
+        {
+          nodes: @d3Node.filter (d) -> nodeIds[d.id]?
+          links: @d3Link.filter (d) -> nodeIds[d.source.id]? && nodeIds[d.target.id]?
+        }
+
+      selectNext: (nodeData, nodeIds) =>
+        top = !nodeIds?
+        if top
+          nodeIds = {}
+
+        nodeIds[nodeData.id] = true
+
+        if nodeData.children?
+          @selectNext(child, nodeIds) for child in nodeData.children
+
+        if top
+          {
+            nodes: @d3Node.filter (d) -> nodeIds[d.id]?
+            links: @d3Link.filter (d) -> nodeIds[d.source.id]? && nodeIds[d.target.id]?
+          }
+
+      _fixText: =>
+        @debouncedFixText ||= _.debounce((=>
+          me = @
+          @panLayer.selectAll("text")
+            .data(@svgNodes, KEY_FN)
+            .each (d) ->
+              rad = Math.max(d.radius-Math.max(9-d.depth,0), 1)
+              if rad * me.minimap.scale() < 40
+                d3.select(@).attr('display', 'none')
+              else
+                d3.select(@).attr('display', 'block')
+                me._trimText(@, d.host_name || d.address, (rad-9)*2)
+        ), 100)
+        @debouncedFixText()
+
+      _trimText: (textObj, textString, width) =>
+        textObj.textContent = textString
+        try
+          if textObj.getSubStringLength(0, textString.length) >= width
+            x = textString.length-1
+
+            while x > 0
+              if textObj.getSubStringLength(0, x) <= width
+                textObj.textContent=textString.substring(0,x) + "…"
+                return
+              x--
+            textObj.style.display = 'none'
+
+      # Rolls separate arrays of Nodes and Edges into one nested array
+      # This method assumes that the graph is acyclic and has ONE "root" node
+      # Every nested child will have a "hasParent=true" property set.
+      #
+      # @return [Hash] the root node, with a "children" property added
+      _buildNestedStructure: (nodes, edges) =>
+        unless nodes.length > 0 or edges.length > 0
+          return
+
+        @allEdges ||= [].concat(edges)
+        @nodesQuick ||= {}
+        _.each nodes, (node) =>
+          @nodesQuick[node.id] = node
+
+        # Populate the "children" properties here
+        bail = false
+        _.every @allEdges, (edge) =>
+          source = @nodesQuick[edge.source_node_id]
+          dest   = @nodesQuick[edge.dest_node_id]
+          dest.credInfo = edge
+          dest?.hasParent = true
+          source.children ||= []
+          source.childrenMap ||= {}
+          if dest? && !source.childrenMap[dest.id]?
+            source.childrenMap[dest.id] = 1
+            source.children.push(dest)
+          true
+
+        return if bail
+
+        # There is one parent-less starting node, find that
+        @leafNodes = 0
+        @root = null
+        roots = []
+        _.each nodes, (node) =>
+          unless node.hasParent
+            roots.push(node)
+          unless node.children
+            @leafNodes++
+        @root = _.min roots, (obj) -> obj.id
+
+      _updateNestedStructure: (nodes, edges) =>
+        if nodes.length > 0 and !@nodesQuick?
+          return @_buildNestedStructure(nodes, edges)
+
+        newNodes = []
+        _.each nodes, (node) =>
+          unless @nodesQuick[node.id]?
+            newNodes.push(node)
+            @nodesQuick[node.id] = node
+            @leafNodes++
+
+        @allEdges = @allEdges.concat(edges)
+
+        # Populate the "children" properties here
+        _.each @allEdges, (edge) =>
+          source = @nodesQuick[edge.source_node_id]
+          dest   = @nodesQuick[edge.dest_node_id]
+          return unless source? && dest?
+          return if edge.added
+          edge.added = true
+          dest.credInfo = edge
+          dest?.hasParent = true
+          source.children ||= []
+          source.childrenMap ||= {}
+          unless source.childrenMap[dest.id]?
+            source.childrenMap[dest.id] = 1
+            source.children.push(dest)
+
+        @root

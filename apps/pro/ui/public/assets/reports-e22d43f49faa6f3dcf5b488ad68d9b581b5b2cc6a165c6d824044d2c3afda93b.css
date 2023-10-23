@@ -1,0 +1,1371 @@
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#reports-main-region #report-header-region h1, #reports-main-region #report-header-region h2, #reports-main-region #report-body #report-left-panel section .info-wrapper h3 {
+  color: #010101;
+  font-weight: 100;
+  padding-left: 12px;
+}
+
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#reports-main-region #report-header-region {
+  height: 55px;
+  position: relative;
+  min-width: 1000px;
+  border: 1px solid #e7e7e7;
+  background-image: -moz-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+  background-image: -webkit-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+  background-image: -ms-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+}
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#reports-main-region #report-header-region h1 {
+  margin: 0px;
+  font-size: 24px;
+  line-height: 52px;
+}
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#reports-main-region #report-header-region h2 {
+  margin: 0px;
+  color: #a5a5a5;
+  font-size: 12px;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#reports-main-region #report-header-region:after {
+  bottom: -4px;
+  content: " ";
+  display: block;
+  height: 4px;
+  width: 99.9%;
+  left: 1px;
+  position: absolute;
+  margin: 0 auto;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.09);
+}
+/* line 68, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#reports-main-region #report-header-region > div:first-child {
+  border: 1px solid white;
+  height: 100%;
+}
+
+/* line 4, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region {
+  /* Grid HTML Classes */
+  /* Foundation Block Grids for below small breakpoint */
+}
+/* line 1, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region *,
+#reports-main-region *:before,
+#reports-main-region *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row, #reports-main-region #report-header-region, #reports-main-region #report-body, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  *zoom: 1;
+}
+/* line 16, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row:before, #reports-main-region #report-header-region:before, #reports-main-region #report-body:before, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions:before, #reports-main-region .row:after, #reports-main-region #report-header-region:after, #reports-main-region #report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions:after {
+  content: " ";
+  display: table;
+}
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row:after, #reports-main-region #report-header-region:after, #reports-main-region #report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions:after {
+  clear: both;
+}
+/* line 21, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row.collapse .column, #reports-main-region .collapse#report-header-region .column, #reports-main-region .collapse#report-body .column, #reports-main-region #report-body #report-left-panel #report-actions-region .collapse#report-actions .column,
+#reports-main-region .row.collapse .columns,
+#reports-main-region .collapse#report-header-region .columns,
+#reports-main-region .collapse#report-body .columns,
+#reports-main-region #report-body #report-left-panel #report-actions-region .collapse#report-actions .columns,
+#reports-main-region .row.collapse #report-header-region #report-name-and-type,
+#reports-main-region #report-header-region .row.collapse #report-name-and-type,
+#reports-main-region .collapse#report-header-region #report-name-and-type,
+#reports-main-region .collapse#report-body #report-header-region #report-name-and-type,
+#reports-main-region #report-header-region .collapse#report-body #report-name-and-type,
+#reports-main-region #report-body #report-left-panel #report-actions-region .collapse#report-actions #report-header-region #report-name-and-type,
+#reports-main-region #report-header-region #report-body #report-left-panel #report-actions-region .collapse#report-actions #report-name-and-type,
+#reports-main-region .row.collapse #report-header-region #report-created-at,
+#reports-main-region #report-header-region .row.collapse #report-created-at,
+#reports-main-region .collapse#report-header-region #report-created-at,
+#reports-main-region .collapse#report-body #report-header-region #report-created-at,
+#reports-main-region #report-header-region .collapse#report-body #report-created-at,
+#reports-main-region #report-body #report-left-panel #report-actions-region .collapse#report-actions #report-header-region #report-created-at,
+#reports-main-region #report-header-region #report-body #report-left-panel #report-actions-region .collapse#report-actions #report-created-at,
+#reports-main-region .row.collapse #report-body #report-left-panel #report-actions-region #report-actions .action,
+#reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .row.collapse .action,
+#reports-main-region .collapse#report-header-region #report-body #report-left-panel #report-actions-region #report-actions .action,
+#reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .collapse#report-header-region .action,
+#reports-main-region .collapse#report-body #report-left-panel #report-actions-region #report-actions .action,
+#reports-main-region #report-body #report-left-panel #report-actions-region .collapse#report-actions .action {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+  float: left;
+}
+/* line 27, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row .row, #reports-main-region #report-header-region .row, #reports-main-region #report-body .row, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .row, #reports-main-region .row #report-header-region, #reports-main-region #report-header-region #report-header-region, #reports-main-region #report-body #report-header-region, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions #report-header-region, #reports-main-region .row #report-body, #reports-main-region #report-header-region #report-body, #reports-main-region #report-body #report-body, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions #report-body, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions {
+  width: auto;
+  margin-left: -0.9375em;
+  margin-right: -0.9375em;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: none;
+  *zoom: 1;
+}
+/* line 35, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row .row:before, #reports-main-region #report-header-region .row:before, #reports-main-region #report-body .row:before, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .row:before, #reports-main-region .row #report-header-region:before, #reports-main-region #report-header-region #report-header-region:before, #reports-main-region #report-body #report-header-region:before, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions #report-header-region:before, #reports-main-region .row #report-body:before, #reports-main-region #report-header-region #report-body:before, #reports-main-region #report-body #report-body:before, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions #report-body:before, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions:before, #reports-main-region .row .row:after, #reports-main-region #report-header-region .row:after, #reports-main-region #report-body .row:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .row:after, #reports-main-region .row #report-header-region:after, #reports-main-region #report-header-region #report-header-region:after, #reports-main-region #report-body #report-header-region:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions #report-header-region:after, #reports-main-region .row #report-body:after, #reports-main-region #report-header-region #report-body:after, #reports-main-region #report-body #report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions #report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions:after {
+  content: " ";
+  display: table;
+}
+/* line 38, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row .row:after, #reports-main-region #report-header-region .row:after, #reports-main-region #report-body .row:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .row:after, #reports-main-region .row #report-header-region:after, #reports-main-region #report-header-region #report-header-region:after, #reports-main-region #report-body #report-header-region:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions #report-header-region:after, #reports-main-region .row #report-body:after, #reports-main-region #report-header-region #report-body:after, #reports-main-region #report-body #report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions #report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions:after {
+  clear: both;
+}
+/* line 40, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row .row.collapse, #reports-main-region #report-header-region .row.collapse, #reports-main-region #report-body .row.collapse, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .row.collapse, #reports-main-region .row .collapse#report-header-region, #reports-main-region #report-header-region .collapse#report-header-region, #reports-main-region #report-body .collapse#report-header-region, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .collapse#report-header-region, #reports-main-region .row .collapse#report-body, #reports-main-region #report-header-region .collapse#report-body, #reports-main-region #report-body .collapse#report-body, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .collapse#report-body, #reports-main-region #report-body #report-left-panel #report-actions-region .collapse#report-actions {
+  width: auto;
+  margin: 0;
+  max-width: none;
+  *zoom: 1;
+}
+/* line 45, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row .row.collapse:before, #reports-main-region #report-header-region .row.collapse:before, #reports-main-region #report-body .row.collapse:before, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .row.collapse:before, #reports-main-region .row .collapse#report-header-region:before, #reports-main-region #report-header-region .collapse#report-header-region:before, #reports-main-region #report-body .collapse#report-header-region:before, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .collapse#report-header-region:before, #reports-main-region .row .collapse#report-body:before, #reports-main-region #report-header-region .collapse#report-body:before, #reports-main-region #report-body .collapse#report-body:before, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .collapse#report-body:before, #reports-main-region #report-body #report-left-panel #report-actions-region .collapse#report-actions:before, #reports-main-region .row .row.collapse:after, #reports-main-region #report-header-region .row.collapse:after, #reports-main-region #report-body .row.collapse:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .row.collapse:after, #reports-main-region .row .collapse#report-header-region:after, #reports-main-region #report-header-region .collapse#report-header-region:after, #reports-main-region #report-body .collapse#report-header-region:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .collapse#report-header-region:after, #reports-main-region .row .collapse#report-body:after, #reports-main-region #report-header-region .collapse#report-body:after, #reports-main-region #report-body .collapse#report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .collapse#report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region .collapse#report-actions:after {
+  content: " ";
+  display: table;
+}
+/* line 48, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .row .row.collapse:after, #reports-main-region #report-header-region .row.collapse:after, #reports-main-region #report-body .row.collapse:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .row.collapse:after, #reports-main-region .row .collapse#report-header-region:after, #reports-main-region #report-header-region .collapse#report-header-region:after, #reports-main-region #report-body .collapse#report-header-region:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .collapse#report-header-region:after, #reports-main-region .row .collapse#report-body:after, #reports-main-region #report-header-region .collapse#report-body:after, #reports-main-region #report-body .collapse#report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .collapse#report-body:after, #reports-main-region #report-body #report-left-panel #report-actions-region .collapse#report-actions:after {
+  clear: both;
+}
+/* line 51, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+#reports-main-region .column,
+#reports-main-region .columns,
+#reports-main-region #report-header-region #report-name-and-type,
+#reports-main-region #report-header-region #report-created-at,
+#reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .action {
+  position: relative;
+  padding-left: 0.9375em;
+  padding-right: 0.9375em;
+  width: 100%;
+  float: left;
+}
+@media only screen {
+  /* line 60, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .column,
+  #reports-main-region .columns,
+  #reports-main-region #report-header-region #report-name-and-type,
+  #reports-main-region #report-header-region #report-created-at,
+  #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .action {
+    position: relative;
+    padding-left: 0.9375em;
+    padding-right: 0.9375em;
+    float: left;
+  }
+  /* line 67, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-1 {
+    position: relative;
+    width: 8.33333%;
+  }
+  /* line 71, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-2 {
+    position: relative;
+    width: 16.66667%;
+  }
+  /* line 75, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-3 {
+    position: relative;
+    width: 25%;
+  }
+  /* line 79, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-4 {
+    position: relative;
+    width: 33.33333%;
+  }
+  /* line 83, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-5 {
+    position: relative;
+    width: 41.66667%;
+  }
+  /* line 87, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-6 {
+    position: relative;
+    width: 50%;
+  }
+  /* line 91, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-7 {
+    position: relative;
+    width: 58.33333%;
+  }
+  /* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-8 {
+    position: relative;
+    width: 66.66667%;
+  }
+  /* line 99, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-9 {
+    position: relative;
+    width: 75%;
+  }
+  /* line 103, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-10 {
+    position: relative;
+    width: 83.33333%;
+  }
+  /* line 107, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-11 {
+    position: relative;
+    width: 91.66667%;
+  }
+  /* line 111, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-12 {
+    position: relative;
+    width: 100%;
+  }
+  /* line 115, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-1 {
+    position: relative;
+    margin-left: 8.33333%;
+  }
+  /* line 119, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-2 {
+    position: relative;
+    margin-left: 16.66667%;
+  }
+  /* line 123, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-3 {
+    position: relative;
+    margin-left: 25%;
+  }
+  /* line 127, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-4 {
+    position: relative;
+    margin-left: 33.33333%;
+  }
+  /* line 131, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-5 {
+    position: relative;
+    margin-left: 41.66667%;
+  }
+  /* line 135, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-6 {
+    position: relative;
+    margin-left: 50%;
+  }
+  /* line 139, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-7 {
+    position: relative;
+    margin-left: 58.33333%;
+  }
+  /* line 143, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-8 {
+    position: relative;
+    margin-left: 66.66667%;
+  }
+  /* line 147, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-9 {
+    position: relative;
+    margin-left: 75%;
+  }
+  /* line 151, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-offset-10 {
+    position: relative;
+    margin-left: 83.33333%;
+  }
+  /* line 155, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region [class*="column"] + [class*="column"]:last-child {
+    float: right;
+  }
+  /* line 158, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region [class*="column"] + [class*="column"].end {
+    float: left;
+  }
+  /* line 161, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .column.small-centered,
+  #reports-main-region .columns.small-centered,
+  #reports-main-region #report-header-region .small-centered#report-name-and-type,
+  #reports-main-region #report-header-region .small-centered#report-created-at,
+  #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .small-centered.action {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    float: none !important;
+  }
+}
+@media only screen {
+  /* line 169, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-1 {
+    position: relative;
+    width: 8.33333%;
+  }
+  /* line 173, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-2 {
+    position: relative;
+    width: 16.66667%;
+  }
+  /* line 177, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-3, #reports-main-region #report-header-region #report-created-at {
+    position: relative;
+    width: 25%;
+  }
+  /* line 181, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-4, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .action {
+    position: relative;
+    width: 33.33333%;
+  }
+  /* line 185, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-5 {
+    position: relative;
+    width: 41.66667%;
+  }
+  /* line 189, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-6 {
+    position: relative;
+    width: 50%;
+  }
+  /* line 193, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-7 {
+    position: relative;
+    width: 58.33333%;
+  }
+  /* line 197, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-8 {
+    position: relative;
+    width: 66.66667%;
+  }
+  /* line 201, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-9, #reports-main-region #report-header-region #report-name-and-type {
+    position: relative;
+    width: 75%;
+  }
+  /* line 205, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-10 {
+    position: relative;
+    width: 83.33333%;
+  }
+  /* line 209, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-11 {
+    position: relative;
+    width: 91.66667%;
+  }
+  /* line 213, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .large-12 {
+    position: relative;
+    width: 100%;
+  }
+  /* line 217, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-1, #reports-main-region #report-header-region .large-offset-1, #reports-main-region #report-body .large-offset-1, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-1 {
+    position: relative;
+    margin-left: 8.33333%;
+  }
+  /* line 221, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-2, #reports-main-region #report-header-region .large-offset-2, #reports-main-region #report-body .large-offset-2, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-2 {
+    position: relative;
+    margin-left: 16.66667%;
+  }
+  /* line 225, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-3, #reports-main-region #report-header-region .large-offset-3, #reports-main-region #report-body .large-offset-3, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-3 {
+    position: relative;
+    margin-left: 25%;
+  }
+  /* line 229, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-4, #reports-main-region #report-header-region .large-offset-4, #reports-main-region #report-body .large-offset-4, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-4 {
+    position: relative;
+    margin-left: 33.33333%;
+  }
+  /* line 233, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-5, #reports-main-region #report-header-region .large-offset-5, #reports-main-region #report-body .large-offset-5, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-5 {
+    position: relative;
+    margin-left: 41.66667%;
+  }
+  /* line 237, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-6, #reports-main-region #report-header-region .large-offset-6, #reports-main-region #report-body .large-offset-6, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-6 {
+    position: relative;
+    margin-left: 50%;
+  }
+  /* line 241, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-7, #reports-main-region #report-header-region .large-offset-7, #reports-main-region #report-body .large-offset-7, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-7 {
+    position: relative;
+    margin-left: 58.33333%;
+  }
+  /* line 245, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-8, #reports-main-region #report-header-region .large-offset-8, #reports-main-region #report-body .large-offset-8, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-8 {
+    position: relative;
+    margin-left: 66.66667%;
+  }
+  /* line 249, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-9, #reports-main-region #report-header-region .large-offset-9, #reports-main-region #report-body .large-offset-9, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-9 {
+    position: relative;
+    margin-left: 75%;
+  }
+  /* line 253, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-10, #reports-main-region #report-header-region .large-offset-10, #reports-main-region #report-body .large-offset-10, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-10 {
+    position: relative;
+    margin-left: 83.33333%;
+  }
+  /* line 257, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .row .large-offset-11, #reports-main-region #report-header-region .large-offset-11, #reports-main-region #report-body .large-offset-11, #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-offset-11 {
+    position: relative;
+    margin-left: 91.66667%;
+  }
+  /* line 261, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-1 {
+    position: relative;
+    left: 8.33333%;
+    right: auto;
+  }
+  /* line 266, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-1 {
+    position: relative;
+    right: 8.33333%;
+    left: auto;
+  }
+  /* line 271, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-2 {
+    position: relative;
+    left: 16.66667%;
+    right: auto;
+  }
+  /* line 276, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-2 {
+    position: relative;
+    right: 16.66667%;
+    left: auto;
+  }
+  /* line 281, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-3 {
+    position: relative;
+    left: 25%;
+    right: auto;
+  }
+  /* line 286, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-3 {
+    position: relative;
+    right: 25%;
+    left: auto;
+  }
+  /* line 291, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-4 {
+    position: relative;
+    left: 33.33333%;
+    right: auto;
+  }
+  /* line 296, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-4 {
+    position: relative;
+    right: 33.33333%;
+    left: auto;
+  }
+  /* line 301, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-5 {
+    position: relative;
+    left: 41.66667%;
+    right: auto;
+  }
+  /* line 306, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-5 {
+    position: relative;
+    right: 41.66667%;
+    left: auto;
+  }
+  /* line 311, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-6 {
+    position: relative;
+    left: 50%;
+    right: auto;
+  }
+  /* line 316, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-6 {
+    position: relative;
+    right: 50%;
+    left: auto;
+  }
+  /* line 321, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-7 {
+    position: relative;
+    left: 58.33333%;
+    right: auto;
+  }
+  /* line 326, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-7 {
+    position: relative;
+    right: 58.33333%;
+    left: auto;
+  }
+  /* line 331, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-8 {
+    position: relative;
+    left: 66.66667%;
+    right: auto;
+  }
+  /* line 336, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-8 {
+    position: relative;
+    right: 66.66667%;
+    left: auto;
+  }
+  /* line 341, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-9 {
+    position: relative;
+    left: 75%;
+    right: auto;
+  }
+  /* line 346, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-9 {
+    position: relative;
+    right: 75%;
+    left: auto;
+  }
+  /* line 351, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-10 {
+    position: relative;
+    left: 83.33333%;
+    right: auto;
+  }
+  /* line 356, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-10 {
+    position: relative;
+    right: 83.33333%;
+    left: auto;
+  }
+  /* line 361, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .push-11 {
+    position: relative;
+    left: 91.66667%;
+    right: auto;
+  }
+  /* line 366, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .pull-11 {
+    position: relative;
+    right: 91.66667%;
+    left: auto;
+  }
+  /* line 371, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-1 {
+    left: inherit;
+  }
+  /* line 374, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-1 {
+    right: inherit;
+  }
+  /* line 377, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-2 {
+    left: inherit;
+  }
+  /* line 380, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-2 {
+    right: inherit;
+  }
+  /* line 383, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-3 {
+    left: inherit;
+  }
+  /* line 386, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-3 {
+    right: inherit;
+  }
+  /* line 389, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-4 {
+    left: inherit;
+  }
+  /* line 392, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-4 {
+    right: inherit;
+  }
+  /* line 395, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-5 {
+    left: inherit;
+  }
+  /* line 398, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-5 {
+    right: inherit;
+  }
+  /* line 401, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-6 {
+    left: inherit;
+  }
+  /* line 404, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-6 {
+    right: inherit;
+  }
+  /* line 407, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-7 {
+    left: inherit;
+  }
+  /* line 410, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-7 {
+    right: inherit;
+  }
+  /* line 413, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-8 {
+    left: inherit;
+  }
+  /* line 416, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-8 {
+    right: inherit;
+  }
+  /* line 419, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-9 {
+    left: inherit;
+  }
+  /* line 422, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-9 {
+    right: inherit;
+  }
+  /* line 425, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-10 {
+    left: inherit;
+  }
+  /* line 428, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-10 {
+    right: inherit;
+  }
+  /* line 431, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-push-11 {
+    left: inherit;
+  }
+  /* line 434, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-pull-11 {
+    right: inherit;
+  }
+  /* line 437, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .column.large-centered,
+  #reports-main-region .columns.large-centered,
+  #reports-main-region #report-header-region .large-centered#report-name-and-type,
+  #reports-main-region #report-header-region .large-centered#report-created-at,
+  #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-centered.action {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    float: none !important;
+  }
+  /* line 444, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .column.large-uncentered,
+  #reports-main-region .columns.large-uncentered,
+  #reports-main-region #report-header-region .large-uncentered#report-name-and-type,
+  #reports-main-region #report-header-region .large-uncentered#report-created-at,
+  #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .large-uncentered.action {
+    margin-left: 0;
+    margin-right: 0;
+    float: none;
+  }
+}
+@media only screen {
+  /* line 451, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region [class*="block-grid-"] {
+    display: block;
+    padding: 0;
+    margin: 0 -10px;
+    *zoom: 1;
+  }
+  /* line 456, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region [class*="block-grid-"]:before, #reports-main-region [class*="block-grid-"]:after {
+    content: " ";
+    display: table;
+  }
+  /* line 459, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region [class*="block-grid-"]:after {
+    clear: both;
+  }
+  /* line 461, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region [class*="block-grid-"] > li {
+    display: inline;
+    height: auto;
+    float: left;
+    padding: 0 10px 10px;
+  }
+  /* line 467, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-1 > li {
+    width: 100%;
+    padding: 0 10px 10px;
+  }
+  /* line 470, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-1 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 472, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-1 > li:nth-of-type(1n+1) {
+    clear: both;
+  }
+  /* line 475, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-2 > li {
+    width: 50%;
+    padding: 0 10px 10px;
+  }
+  /* line 478, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-2 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 480, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-2 > li:nth-of-type(2n+1) {
+    clear: both;
+  }
+  /* line 483, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-3 > li {
+    width: 33.33333%;
+    padding: 0 10px 10px;
+  }
+  /* line 486, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-3 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 488, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-3 > li:nth-of-type(3n+1) {
+    clear: both;
+  }
+  /* line 491, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-4 > li {
+    width: 25%;
+    padding: 0 10px 10px;
+  }
+  /* line 494, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-4 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 496, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-4 > li:nth-of-type(4n+1) {
+    clear: both;
+  }
+  /* line 499, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-5 > li {
+    width: 20%;
+    padding: 0 10px 10px;
+  }
+  /* line 502, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-5 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 504, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-5 > li:nth-of-type(5n+1) {
+    clear: both;
+  }
+  /* line 507, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-6 > li {
+    width: 16.66667%;
+    padding: 0 10px 10px;
+  }
+  /* line 510, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-6 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 512, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-6 > li:nth-of-type(6n+1) {
+    clear: both;
+  }
+  /* line 515, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-7 > li {
+    width: 14.28571%;
+    padding: 0 10px 10px;
+  }
+  /* line 518, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-7 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 520, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-7 > li:nth-of-type(7n+1) {
+    clear: both;
+  }
+  /* line 523, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-8 > li {
+    width: 12.5%;
+    padding: 0 10px 10px;
+  }
+  /* line 526, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-8 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 528, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-8 > li:nth-of-type(8n+1) {
+    clear: both;
+  }
+  /* line 531, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-9 > li {
+    width: 11.11111%;
+    padding: 0 10px 10px;
+  }
+  /* line 534, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-9 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 536, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-9 > li:nth-of-type(9n+1) {
+    clear: both;
+  }
+  /* line 539, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-10 > li {
+    width: 10%;
+    padding: 0 10px 10px;
+  }
+  /* line 542, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-10 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 544, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-10 > li:nth-of-type(10n+1) {
+    clear: both;
+  }
+  /* line 547, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-11 > li {
+    width: 9.09091%;
+    padding: 0 10px 10px;
+  }
+  /* line 550, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-11 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 552, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-11 > li:nth-of-type(11n+1) {
+    clear: both;
+  }
+  /* line 555, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-12 > li {
+    width: 8.33333%;
+    padding: 0 10px 10px;
+  }
+  /* line 558, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-12 > li:nth-of-type(n) {
+    clear: none;
+  }
+  /* line 560, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/foundation.css */
+  #reports-main-region .small-block-grid-12 > li:nth-of-type(12n+1) {
+    clear: both;
+  }
+}
+/* line 8, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region * {
+  box-sizing: border-box;
+}
+/* line 26, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-header-region h1:first-of-type {
+  line-height: 19px;
+}
+/* line 30, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-header-region #report-name-and-type {
+  padding-top: 9px;
+  padding-left: 0px;
+  box-shadow: none;
+}
+/* line 39, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-header-region #report-created-at {
+  line-height: 55px;
+  text-align: right;
+  padding-right: 12px;
+  text-transform: uppercase;
+}
+/* line 55, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel, #reports-main-region #report-body #report-display-region #report-display-panel object {
+  margin-top: -2px;
+}
+/* line 63, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel {
+  width: 250px;
+  height: 686px;
+  float: left;
+  margin-left: 5px;
+  background-color: #f2f2f2;
+  border-left: 1px solid #efefef;
+}
+/* line 73, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel section .info-wrapper {
+  padding: 10px 3px;
+  width: 90%;
+  margin: 0 auto;
+  border-bottom: 1px solid #959595;
+}
+/* line 79, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel section .info-wrapper h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+}
+/* line 86, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel section:last-child .info-wrapper {
+  border-bottom: none;
+}
+/* line 92, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-info-region {
+  user-select: none;
+}
+/* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-info-region h3 {
+  display: inline-block;
+}
+/* line 99, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-info-region #report-info-button {
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  border-radius: 3px;
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #010101;
+  text-align: center;
+  font-weight: bold;
+}
+/* line 111, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-info-region #report-info-button:hover {
+  cursor: pointer;
+}
+/* line 119, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region {
+  height: 509px;
+  user-select: none;
+}
+/* line 122, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .info-wrapper {
+  height: 100%;
+}
+/* line 126, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region ul {
+  margin-top: 20px;
+}
+/* line 130, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region li {
+  position: relative;
+}
+/* line 134, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region input[type=checkbox] {
+  position: absolute;
+  top: 35px;
+  left: 35px;
+}
+/* line 140, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .regenerate-button {
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  top: 8px;
+  right: 2px;
+  background-image: url(/assets/reports/formats/regenerate-icon-50b74979511f9c63f5b57a0b810fb91f27d6e2b78a5b74285e3ee512ad0962de.png);
+}
+/* line 148, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .regenerate-button.regenerating {
+  background-image: none;
+}
+/* line 152, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .regenerate-button:hover {
+  cursor: pointer;
+}
+/* line 157, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #959595;
+}
+/* line 168, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.displayed {
+  box-shadow: 0px 0px 1px 3px #96c0e6;
+}
+/* line 172, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.error {
+  box-shadow: 0px 0px 1px 3px #CB615E;
+}
+/* line 177, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.regenerating:hover {
+  box-shadow: none;
+}
+/* line 183, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.complete:hover {
+  cursor: pointer;
+}
+/* line 208, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.pdf {
+  background-image: url(/assets/reports/formats/pdf-icon-9e73790736387ef8f3f871c874931e792165a20d156a92679d9c145911d4cf09.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 208, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.pdf {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/pdf-icon@2x-c7b0d4d131db3f7de2782d0aaa927fd6a89964e24e1b43e649c9919c66a02187.png);
+    background-size: 75px 77px;
+  }
+}
+/* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.pdf.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.pdf.error {
+  background-image: url(/assets/reports/formats/pdf-icon-not-generated-1b989ee6bff7039c40ec4b6cb1a26b38268cdbcc4efd405bb86ca3f7a1e0be8d.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.pdf.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.pdf.error {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/pdf-icon-not-generated@2x-9a33b878adc4b329a2386b25cb0bd6245417217970a9928ae073a38288db91f3.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.pdf.regenerating {
+  background-image: url(/assets/reports/formats/pdf-icon-regenerate-b140550721d7b14f6a3506c1479fed80dc7e505172e148d87892c45423b187c8.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.pdf.regenerating {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/pdf-icon-regenerate@2x-755b71b660398a4387947d6ba881e5553d62f861bfd8ca194f81a97c65b8d313.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 209, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.html {
+  background-image: url(/assets/reports/formats/html-icon-84921e90cb5f88b692c4637509f478a961ef4954dfa27a6a03ca003118084b5d.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 209, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.html {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/html-icon@2x-f52574940d3e393b0f0eec9cb7f312f0c90cc1d2b8e95774e7efdde9510670b3.png);
+    background-size: 75px 77px;
+  }
+}
+/* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.html.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.html.error {
+  background-image: url(/assets/reports/formats/html-icon-not-generated-ab9f11f17298ca2804a0bbbfce9e981614f5d8c9e9471209cbee9e3bf005ca16.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.html.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.html.error {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/html-icon-not-generated@2x-824132c0b40c321b24bd77e757aa62748b7eb938be466673e9f3044e907673e2.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.html.regenerating {
+  background-image: url(/assets/reports/formats/html-icon-regenerate-898abf9318ab75b2babf513b480e7cd4ea691d79258df1e7eb5ab6254548157b.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.html.regenerating {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/html-icon-regenerate@2x-965fd43d17ce2d4b97dd58b7dd6974640bb08f71fb5dd670381218dbf3c34a87.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 210, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.rtf {
+  background-image: url(/assets/reports/formats/rtf-icon-50714123dfa8ac68330425fcce610588e626df1645d6798c991f42ecd7cebcb3.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 210, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.rtf {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/rtf-icon@2x-7d95ebd6f72308214fb5034cee4b7d29ce6748b72dd4c9c0c73d7f7d7166236c.png);
+    background-size: 75px 77px;
+  }
+}
+/* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.rtf.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.rtf.error {
+  background-image: url(/assets/reports/formats/rtf-icon-not-generated-7b20f13eb028ec22e6cdd61c578ad7daccd094b13dec50aeb968db2fc3ab7ad1.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.rtf.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.rtf.error {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/rtf-icon-not-generated@2x-7ac30ac53e564eff5467e081f304d5b582be4d75fcc7a557e00047c369d52105.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.rtf.regenerating {
+  background-image: url(/assets/reports/formats/rtf-icon-regenerate-a4e97186af42b50f536babb01fc4ea0e11c08ac8cf7c406a0c6b0f6876baf0ac.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.rtf.regenerating {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/rtf-icon-regenerate@2x-aeff78c64ee4eb344a7c25f652898e24afef4f09cd0f2f09789517c5f69ac726.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 211, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.word {
+  background-image: url(/assets/reports/formats/word-icon-552d907b5e9db6ce9f43f589b80bd50ce5bcf4db90c9134490e59ab62a4073b0.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 211, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.word {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/word-icon@2x-4cd5d524d0546151880fafcba1b43217ebe9ff0519df2a7b67b1c3f3e1ac8cb9.png);
+    background-size: 75px 77px;
+  }
+}
+/* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.word.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.word.error {
+  background-image: url(/assets/reports/formats/word-icon-not-generated-bf2959a63114ecd803f33067b36859b560abc2ffaf8bc3dbc7b79299bd778de2.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.word.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.word.error {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/word-icon-not-generated@2x-d63c7250a374be226fa30b4104778b25b99a9021786edcfc0b6a716c420d1c33.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.word.regenerating {
+  background-image: url(/assets/reports/formats/word-icon-regenerate-9db024256f7c33b28a55c9b4b8674f195cbfb2f4ef93746e9d77a02cbf02132f.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.word.regenerating {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/word-icon-regenerate@2x-1dd05275533ccbf7cf6e04236cabe0492a3722ce1bef40459c754053717cff56.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 212, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.xml {
+  background-image: url(/assets/reports/formats/xml-icon-b9504557c63cf35407c00f370cfda666da825916998f1bf0d75d51666a952ef1.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 212, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.xml {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/xml-icon@2x-301df9a1507eb1e8079e9a18cc26cee41d61012efa5ef30cf2290effbe57b4e4.png);
+    background-size: 75px 77px;
+  }
+}
+/* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.xml.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.xml.error {
+  background-image: url(/assets/reports/formats/xml-icon-not-generated-9e794628ecf2db1cc577772d67e084dc45fc559e34f39ea3f4f03e89ae669fcd.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 196, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.xml.not-generated, #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.xml.error {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/xml-icon-not-generated@2x-c630ea88f940710a7ca4b4d2d646ce686d8b66df1f79efc8a8f5a80f52a6713e.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-formats-region .format-button.xml.regenerating {
+  background-image: url(/assets/reports/formats/xml-icon-regenerate-c9c8ab94229535c8e8e0bc4746fd9638968bd83e49a8e77e58e63ffac3e913a0.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-formats-region .format-button.xml.regenerating {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/formats/xml-icon-regenerate@2x-dad17e19207bbc54f8b1f5ec9c73a1503d4727e4bacc934c5e30741e8d5e92fa.png);
+    background-size: 77px 79px;
+  }
+}
+/* line 228, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-actions-region button {
+  height: 60px;
+  width: 60px;
+  margin: 0 auto;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: none;
+  box-sizing: border-box;
+  outline: none;
+}
+/* line 240, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-actions-region button:hover {
+  cursor: pointer;
+}
+/* line 256, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-actions-region #email-report {
+  background-image: url(/assets/reports/actions/email-action-icon-6bbc97d07282ba607a021b3ec7db292659c31c9d548c65226631d1eef28cb378.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 256, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-actions-region #email-report {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/actions/email-action-icon@2x-a6e53dfb60a0b68904763e1521bf60a36d5e7d12778d275a18362f4cd6523304.png);
+    background-size: 33px 21px;
+  }
+}
+/* line 250, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-actions-region #email-report:hover {
+  background-image: url(/assets/reports/actions/email-action-icon-hover-6ff36cb6b5e223d172a1730fadc269a38d22f5e3ee194eedf9ba1c1d8ded2351.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 250, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-actions-region #email-report:hover {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/actions/email-action-icon-hover@2x-4de287fe93c7497e961fb51cfbdd409118f6171ad1253864ee35def1c5e42559.png);
+    background-size: 33px 21px;
+  }
+}
+/* line 260, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-actions-region #download-report {
+  background-image: url(/assets/reports/actions/download-action-icon-fae3a947ef09eed04e227da178df9e2a9564e16208e700e34ddc8278d0842a97.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 260, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-actions-region #download-report {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/actions/download-action-icon@2x-83ade9b1312dd22823d6cc829da8113f222de0570beff1ab5f44ed8b22e43067.png);
+    background-size: 25px 27px;
+  }
+}
+/* line 250, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-actions-region #download-report:hover {
+  background-image: url(/assets/reports/actions/download-action-icon-hover-cfcbdf77ab16436453ce76bb99c40197784da6f2a8158f57516bafe777a65a6e.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 250, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-actions-region #download-report:hover {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/actions/download-action-icon-hover@2x-76a837dbdf44bfdf5c6c2948181ca6aa6382d73a7b071de097f86775bcc94429.png);
+    background-size: 25px 27px;
+  }
+}
+/* line 264, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-actions-region #destroy-report {
+  background-image: url(/assets/reports/actions/destroy-action-icon-d1aa2f79981588b0dd617e8624eecb3b0c47a6e712d88e94877eedd1784ba13f.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 264, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-actions-region #destroy-report {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/actions/destroy-action-icon@2x-b559b30dbb79447549cbb5a906687decbe341d768cb542f638cdd0c82108c69d.png);
+    background-size: 21px 28px;
+  }
+}
+/* line 250, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-left-panel #report-actions-region #destroy-report:hover {
+  background-image: url(/assets/reports/actions/destroy-action-icon-hover-43cbbe8fa8eda87d6360111b2481113d6bbe02af7957cc75a90db81e016124c8.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 250, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+  #reports-main-region #report-body #report-left-panel #report-actions-region #destroy-report:hover {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/reports/actions/destroy-action-icon-hover@2x-911b81a04fd688ae8447f026b8731f72aa849ff15f561db5b4efd9c67ab3a33b.png);
+    background-size: 21px 28px;
+  }
+}
+/* line 274, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-display-region {
+  margin-left: 255px;
+  margin-right: 5px;
+  height: 686px;
+}
+/* line 279, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-display-region > div:first-child {
+  height: 100%;
+}
+/* line 281, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-display-region #report-display-panel {
+  height: 100%;
+}
+/* line 287, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-display-region iframe {
+  width: 100%;
+  height: 686px;
+}
+/* line 292, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-display-region .report-display-panel-message {
+  display: none;
+  height: 100%;
+  width: 100%;
+}
+/* line 297, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-display-region .report-display-panel-message span {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 30px;
+  padding: 15px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+/* line 308, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#reports-main-region #report-body #report-display-region #report-pdf-embed-error-message {
+  display: table;
+  margin-top: 5px;
+}
+
+/* line 322, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+.report-info-dialog .content {
+  padding: 20px !important;
+  overflow-y: scroll;
+}
+/* line 327, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+.report-info-dialog .row, .report-info-dialog #reports-main-region #report-header-region, #reports-main-region .report-info-dialog #report-header-region, .report-info-dialog #reports-main-region #report-body, #reports-main-region .report-info-dialog #report-body, .report-info-dialog #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions, #reports-main-region #report-body #report-left-panel #report-actions-region .report-info-dialog #report-actions {
+  font-size: 120%;
+  margin-bottom: 10px;
+}
+/* line 331, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+.report-info-dialog .row .label, .report-info-dialog #reports-main-region #report-header-region .label, #reports-main-region .report-info-dialog #report-header-region .label, .report-info-dialog #reports-main-region #report-body .label, #reports-main-region .report-info-dialog #report-body .label, .report-info-dialog #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .label, #reports-main-region #report-body #report-left-panel #report-actions-region .report-info-dialog #report-actions .label {
+  float: left;
+  width: 40%;
+  font-weight: bold;
+}
+/* line 338, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+.report-info-dialog .row .value, .report-info-dialog #reports-main-region #report-header-region .value, #reports-main-region .report-info-dialog #report-header-region .value, .report-info-dialog #reports-main-region #report-body .value, #reports-main-region .report-info-dialog #report-body .value, .report-info-dialog #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .value, #reports-main-region #report-body #report-left-panel #report-actions-region .report-info-dialog #report-actions .value {
+  float: left;
+  width: 60%;
+}
+/* line 342, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+.report-info-dialog .row .value .col, .report-info-dialog #reports-main-region #report-header-region .value .col, #reports-main-region .report-info-dialog #report-header-region .value .col, .report-info-dialog #reports-main-region #report-body .value .col, #reports-main-region .report-info-dialog #report-body .value .col, .report-info-dialog #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .value .col, #reports-main-region #report-body #report-left-panel #report-actions-region .report-info-dialog #report-actions .value .col {
+  width: 50%;
+  float: left;
+}
+/* line 346, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+.report-info-dialog .row .value .col .col-header, .report-info-dialog #reports-main-region #report-header-region .value .col .col-header, #reports-main-region .report-info-dialog #report-header-region .value .col .col-header, .report-info-dialog #reports-main-region #report-body .value .col .col-header, #reports-main-region .report-info-dialog #report-body .value .col .col-header, .report-info-dialog #reports-main-region #report-body #report-left-panel #report-actions-region #report-actions .value .col .col-header, #reports-main-region #report-body #report-left-panel #report-actions-region .report-info-dialog #report-actions .value .col .col-header {
+  font-weight: bold;
+}
+
+/* line 357, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+.report-email-dialog textarea {
+  margin-top: 15px;
+  width: 420px;
+}
+/* line 362, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+.report-email-dialog label {
+  vertical-align: top;
+  margin-top: 20px;
+  margin-right: 15px;
+  display: inline-block;
+}
+
+/* line 375, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#report_container .tab-loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-position: center center;
+  height: auto;
+  z-index: 1;
+}
+/* line 385, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#report_container.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+/* line 391, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#report_container li.check_boxes ol.choices-group {
+  padding-right: 20%;
+}
+/* line 397, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#report_container li.check_boxes li.choice {
+  display: block;
+  margin-bottom: 5px;
+}
+/* line 400, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/reports.scss */
+#report_container li.check_boxes li.choice input {
+  margin-right: 5px;
+}

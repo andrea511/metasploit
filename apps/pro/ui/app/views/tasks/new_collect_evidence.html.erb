@@ -1,0 +1,163 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, sessions_link, link_to("Collect System Data", "#") %>
+
+<% if License.get.supports_collect? %>
+  <% include_view_javascript %>
+
+  <div id="popup_errors"></div>
+
+  <div class="one_col_no_sidebar">
+    <% unless @workspace.sessions.alive.empty? %>
+      <%= semantic_form_for @task, :url => start_collect_evidence_path, :complete => "enableSubmitButtons();", :remote => true do |f| %>
+        <%= f.hidden_field :workspace_id %>
+        <%=  f.inputs "Active Sessions" do %>
+          <div style="width: 91%; float: left;">
+            <div id="collect_sessions">
+              <table width="95%" class="list mar-tb10">
+                <thead>
+                  <tr>
+                    <th class="checkbox"><%= check_box_tag "collect_all_sessions", true %></th>
+                    <th>
+                      Active Sessions
+                    </th>
+                    <th>
+                      Session Type
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody id="session_list">
+                  <% @workspace.sessions.alive.each do |sess| %>
+                    <tr class="<%=h row_cycle %>">
+                      <td align="left" valign="top">
+                        <%= check_box_tag "collect_evidence_task[collect_sessions][]", sess.id, @task.collect_sessions.include?(sess.id.to_s), :id => "session-#{sess.id}" %>
+                      </td>
+                      <td align="left" valign="top">
+                        <%= label_tag "session-#{sess.id}", h(sess) %>
+                      </td>
+                      <td align="left" valign="top">
+                        <%= label_tag "session-#{sess.id}", h(sess.stype) %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+
+              <% unless @no_launch.blank? %>
+                <div style="margin-top: 10px;margin-bottom:10px">
+                  <span class="checkbox">
+                    <%= check_box_tag "collect_evidence_task[run_on_all_sessions]", true %>
+                  </span>
+                  <span>Apply to sessions opened during task chain run?</span>
+                </div>
+              <% end %>
+
+            </div>
+          </div>
+          <%= link_to(icon('silky/information'), '', :target => '_blank', :class => 'help', :'data-field' => 'collect_evidence_task_collect_sessions_input', :style => "padding-left: 24px; float: left;") %>
+        <% end -%>
+
+        <%= f.inputs "Evidence to collect" do -%>
+            <fieldset>
+              <legend> Universal </legend>
+              <%= f.input :collect_sysinfo, :label => "System information", :as => :boolean %>
+              <%= f.input :collect_passwd, :label => "System passwords", :as => :boolean %>
+              <%= f.input :crack_passwords, :label => "Crack Passwords", :as => :boolean %>
+            </fieldset>
+
+            <fieldset>
+              <legend> *Nix Shell</legend>
+              <%= f.input :collect_ssh, :label => "SSH Keys", :as => :boolean %>
+            </fieldset>
+
+            <fieldset>
+              <legend> Windows Meterpreter </legend>
+              <%= f.input :collect_screenshots, :label => "Screenshots", :as => :boolean %>
+              <%= f.input :collect_apps, :label => "Installed Applications", :as => :boolean %>
+              <%= f.input :collect_drives, :label => "Drives", :as => :boolean %>
+              <%= f.input :collect_users, :label => "Logged on Users", :as => :boolean %>
+              <%= f.input :collect_domain, :label => "Primary Domain", :as => :boolean %>
+
+              <%# if @workspace.sessions.alive.any? { |s| s.supports_collect_other_files? }%>
+              <% if true -%>
+                  <%= f.input :collect_files, :label => "Collect other files", :as => :boolean %>
+                  <%= f.input :collect_files_pattern, :label => "Filename pattern", :as => :string %>
+                  <%= f.input :collect_files_count, :label => "Maximum File Count", :as => :string %>
+                  <%= f.input :collect_files_size, :label => "Maximum File Size", :hint => "(kilobytes)", :as => :string %>
+              <% end %>
+            </fieldset>
+
+        <% end -%>
+
+        <% if @no_launch.blank? %>
+          <%= f.actions do %>
+            <span class="btn"><%= f.submit "Collect System Data", :class => "collect", :id => 'popup_submit' %></span>
+          <% end -%>
+        <% end -%>
+
+        <div class="inline-help" data-field="collect_evidence_task_collect_sessions_input">
+
+          <h3>Collect System Data</h3>
+          <p>
+          Use Collection to "loot" systems, and to obtain passwords, files, and configuration settings which will give access to further systems. Collecting hashes and ssh keys puts them into the  'known credentials' table, and allows you to automatically obtain access to more systems when a bruteforce is run with 'known credentials' included. Collected information will automatically be included in reports, and is also avialable under the individual host record.
+          </p>
+        </div>
+
+        <%= f.help_link :collect_sysinfo do %>
+          <h3>System Information</h3>
+          <p>This option includes system information for collection such as hostname, and system specifications.</p>
+        <% end -%>
+        <%= f.help_link :collect_passwd do -%>
+          <h3>System Passwords</h3>
+          <p>This option includes system passwords (nix) and system hashes during collection.</p>
+        <% end -%>
+        <%= f.help_link :crack_passwords do -%>
+          <h3>Crack Passwords</h3>
+          <p>This option preforms password cracking as a final action post collection, and can significantly extend task execution.</p>
+        <% end -%>
+        <%= f.help_link :collect_screenshots do -%>
+          <h3>Screenshots</h3>
+          <p>This option includes a screenshot on systems with a GUI during collection.</p>
+        <% end -%>
+        <%= f.help_link :collect_ssh do -%>
+          <h3>SSH Keys</h3>
+          <p>This option includes ssh keys during collection.</p>
+        <% end -%>
+        <%= f.help_link :collect_files do -%>
+          <h3>Other files</h3>
+          <p>This option enables searching for additional files on the local filesystem.</p>
+        <% end -%>
+
+        <%= f.help_link :collect_files_pattern do -%>
+          <h3>Filename Pattern</h3>
+          <p>Configure the pattern based on the files you'd like to collect. For example, use (*.doc) for documents.</p>
+        <% end -%>
+        <%= f.help_link :collect_files_count do -%>
+          <h3>Maximum File Count</h3>
+          <p>Do not automatically download more than this number of files.</p>
+        <% end -%>
+        <%= f.help_link :collect_files_size do -%>
+          <h3>Maximum File Size</h3>
+          <p>Ensure files are no larger than this size, or do not download them.</p>
+        <% end -%>
+      <% end -%>
+
+
+    <% else %>
+      <% unless @no_launch.blank? %>
+        <div class='form-inputs' style="margin-top: 10px;margin-bottom:10px">
+          <p>The Collect Evidence task will run across all active sessions when run in a chain</p>
+          <%= hidden_field_tag "collect_evidence_task[run_on_all_sessions]", "1" %>
+        </div>
+      <% else %>
+        <h2> No Active Sessions </h2>
+        <span class="btn">
+          <%= link_to "Back to Sessions", workspace_sessions_path(@workspace), :class => "back" %>
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+
+<% end %>
+
+<%= add_disable_overlay([:pro, :express]) if not @licensed %>

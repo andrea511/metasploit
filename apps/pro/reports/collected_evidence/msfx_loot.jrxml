@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0efa352d-754c-4fa5-830a-62561947e365">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="413"/>
+	<style name="Column header" forecolor="#666666" fontName="Serif" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Serif" fontSize="8">
+		<box>
+			<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
+		</box>
+	</style>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="footer_text" fontSize="8" isItalic="true"/>
+	<subDataset name="EvidenceSummaryDatastore" uuid="abd876c8-b293-4139-ba63-2de6a3fc25f7">
+		<parameter name="workspace_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String">
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+  HOST(CAST(hosts.address as inet)) as host_address,
+  COALESCE(hosts.name, HOST(CAST(hosts.address as inet))) as host_name,
+  COUNT(DISTINCT(sessions.id)) as session_count,
+  COUNT(DISTINCT(loots.id)) as loot_count
+FROM workspaces
+INNER JOIN hosts ON hosts.workspace_id = workspaces.id
+INNER JOIN sessions ON sessions.host_id = hosts.id
+LEFT OUTER JOIN loots ON loots.host_id = hosts.id
+WHERE workspaces.id = $P{workspace_id} and
+$P!{host_address_clause}
+GROUP BY hosts.address, hosts.name
+ORDER BY loot_count DESC, session_count DESC, hosts.address DESC]]>
+		</queryString>
+		<field name="host_address" class="java.lang.String"/>
+		<field name="host_name" class="java.lang.String"/>
+		<field name="session_count" class="java.lang.Long"/>
+		<field name="loot_count" class="java.lang.Long"/>
+	</subDataset>
+	<subDataset name="EvidenceListDatastore" uuid="9dc77c46-24d7-4fc6-a519-14e8bc42d264">
+		<parameter name="workspace_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String">
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+  HOST(CAST(hosts.address as inet)) as host_address,
+  COALESCE(hosts.name, HOST(CAST(hosts.address as inet))) as host_name,
+  loots.ltype as loot_ltype,
+  loots.content_type as loot_ctype,
+  COALESCE(loots.updated_at, loots.created_at, hosts.updated_at, hosts.created_at) as loot_time
+FROM workspaces
+INNER JOIN hosts ON hosts.workspace_id = workspaces.id
+INNER JOIN loots ON loots.host_id = hosts.id
+WHERE workspaces.id = $P{workspace_id} and $P!{host_address_clause}
+ORDER BY hosts.address DESC, loot_ctype ASC]]>
+		</queryString>
+		<field name="host_address" class="java.lang.String"/>
+		<field name="host_name" class="java.lang.String"/>
+		<field name="loot_ltype" class="java.lang.String"/>
+		<field name="loot_ctype" class="java.lang.String"/>
+		<field name="loot_time" class="java.sql.Timestamp"/>
+	</subDataset>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[JASPER_WORKSPACE_ID]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo_path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{image_dir} + "rapid7_logo_padded.jpg"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="product_name" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[The name of the product used to generate the report]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Metasploit Pro"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_proj_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_exec_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_evid_summ_table" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_complete_evid_table" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_collected_screenshots" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_collected_text_files" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="include_charts" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usernames_reported" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+  workspaces.name as project_name, workspaces.created_at project_created, workspaces.updated_at project_updated,
+  workspaces.id as workspace_id,
+  COUNT(DISTINCT loots.id) as loot_count,
+  COUNT(DISTINCT sessions.id) as session_count,
+  COUNT(DISTINCT hosts.id) as host_count,
+  screenshot_count, text_count
+FROM
+  workspaces
+    LEFT OUTER JOIN "hosts" ON "hosts".workspace_id = "workspaces".id
+    LEFT OUTER JOIN "loots" ON "loots".host_id = "hosts".id
+    LEFT OUTER JOIN "sessions" ON "sessions".host_id = "hosts".id
+    INNER JOIN (
+      SELECT
+        COUNT(DISTINCT loots.id) as screenshot_count FROM workspaces
+        LEFT OUTER JOIN "hosts" ON "hosts".workspace_id = "workspaces".id
+        LEFT OUTER JOIN "loots" ON "loots".host_id = "hosts".id
+      WHERE "hosts".workspace_id = $P{workspace_id} and $P!{host_address_clause}
+          and loots.ltype like 'host%screenshot'
+    ) as loot_screens ON 1=1
+    INNER JOIN (
+      SELECT
+        COUNT(DISTINCT loots.id) as text_count FROM workspaces
+        LEFT OUTER JOIN "hosts" ON "hosts".workspace_id = "workspaces".id
+        LEFT OUTER JOIN "loots" ON "loots".host_id = "hosts".id
+        WHERE "hosts".workspace_id = $P{workspace_id} and $P!{host_address_clause}
+          and loots.content_type like 'text/plain'
+    ) as loot_text ON 1=1
+WHERE "hosts".workspace_id = $P{workspace_id} and $P!{host_address_clause}
+GROUP BY workspaces.name, workspaces.id, loot_screens.screenshot_count, loot_text.text_count
+;]]>
+	</queryString>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="workspace_id" class="java.lang.Integer"/>
+	<field name="loot_count" class="java.lang.Long"/>
+	<field name="session_count" class="java.lang.Long"/>
+	<field name="host_count" class="java.lang.Long"/>
+	<field name="screenshot_count" class="java.lang.Long"/>
+	<field name="text_count" class="java.lang.Long"/>
+	<field name="project_created" class="java.sql.Timestamp"/>
+	<field name="project_updated" class="java.sql.Timestamp"/>
+	<variable name="variable1" class="java.lang.Integer" resetType="None" calculation="Highest">
+		<initialValueExpression><![CDATA[$V{PAGE_NUMBER}]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="676" splitType="Stretch">
+			<image scaleImage="RealHeight" onErrorType="Blank">
+				<reportElement uuid="97bd4a47-c386-42f9-9238-ab8efe6797f8" x="252" y="161" width="320" height="320"/>
+				<imageExpression><![CDATA[$P{logo_path}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="bbd40f78-c0f5-495c-8dc9-513b06f9bfbe" x="252" y="517" width="320" height="24"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Report generated:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7ede4f66-225c-426b-899e-7ac0e90a887b" x="252" y="481" width="320" height="36"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Collected Evidence Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7ca9df4a-50b9-47ef-b8f0-1adf5f3cc59d" mode="Transparent" x="0" y="0" width="252" height="676" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" markup="none">
+					<font fontName="SansSerif" size="48" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{product_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement uuid="df6aee9d-9db2-4687-a0f4-e0d9705a686e" x="252" y="541" width="320" height="23"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="e035eece-c393-4f14-93fc-88f64c4df4a6" x="252" y="656" width="320" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Pages: " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="125">
+			<printWhenExpression><![CDATA[$P{display_proj_summ}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="220a551a-6d24-42b4-9921-a20ba59c2183" mode="Opaque" x="0" y="0" width="572" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Project Summary]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="7ccae8b4-31f5-40c2-99cc-86e114bc67ff" x="0" y="70" width="566" height="20" backcolor="#EDEDED"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="592e68e9-0a4d-47dc-9f16-dc136323fe49" x="0" y="30" width="566" height="20" backcolor="#EDEDED"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="2ef614cc-2451-481b-a579-7ec7b67b9ee2" x="0" y="50" width="566" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="2bb01f2c-50a7-427a-8b4d-98a55489b791" x="0" y="90" width="566" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="245eb821-6aae-4e5a-989f-a4aaf8c306fe" x="120" y="30" width="446" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1630b476-3d30-4607-9e99-79c7491b82c9" x="120" y="70" width="446" height="20" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_updated}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c2e5d621-9133-4570-9c94-a7c35c11abcd" x="0" y="70" width="120" height="20" backcolor="#CCCCFF"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Completed:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ab0a1777-43c2-4ac7-9da7-83987522c35f" x="120" y="90" width="446" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph rightIndent="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="602c3b87-b9a8-4d4b-95f8-8ff2fe395645" x="0" y="50" width="120" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Started:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="98b2e741-26d0-4c35-916d-1f75b2bafa1b" x="120" y="50" width="446" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_created}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0748995a-c001-4466-a301-cf84978651e4" x="0" y="90" width="120" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $P{usernames_reported}.toString().contains(",") ? " Users:" : " User:"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f1f05a77-3d23-4ddb-abd4-804c43fa2fdd" x="0" y="30" width="120" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Project Name:]]></text>
+			</staticText>
+		</band>
+		<band height="105" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_exec_summ}]]></printWhenExpression>
+			<elementGroup>
+				<staticText>
+					<reportElement uuid="fce5a752-1697-4cb2-ad7d-de00e9d03bad" x="0" y="0" width="572" height="24"/>
+					<textElement>
+						<font size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Executive Summary]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="70ff2ce1-bb20-4182-8f17-008e3bd98293" x="0" y="24" width="572" height="35"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["This report represents a security audit performed using "+
+	$P{product_name} + " from Rapid7, Inc. It contains " +
+	"confidential information about the state of your network. " +
+	"Access to this information by unauthorized personnel may " +
+	"allow them to compromise your network."]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+					<reportElement uuid="4b9a4cba-1737-4f9d-9247-17ffedf5ee72" stretchType="RelativeToTallestObject" x="0" y="64" width="572" height="26" isPrintWhenDetailOverflows="true"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["During this test, " + $F{loot_count} +
+	" files were collected from among the " + $F{host_count} +
+	" hosts in the project as a result of " + $F{session_count} +
+	" successfully opened sessions."]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+		</band>
+		<band height="63">
+			<printWhenExpression><![CDATA[$P{display_evid_summ_table} && $F{loot_count} > 0]]></printWhenExpression>
+			<elementGroup>
+				<staticText>
+					<reportElement uuid="776ace27-a108-4105-b146-12aadf8d80d5" mode="Opaque" x="0" y="0" width="572" height="24" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Collected Evidence Summary]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement uuid="9f32941d-bc64-4796-9edf-7bd4c87c2a0b" key="table" stretchType="RelativeToTallestObject" x="0" y="24" width="572" height="37"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="EvidenceSummaryDatastore" uuid="563cc9dd-6b3c-402f-9d9c-61c6c8688168">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$F{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="92" uuid="daa03595-8f46-4ebb-92bb-c306fb156fcd">
+							<jr:columnHeader style="Column header" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="16641078-1425-42e9-96c1-2a22264dc5fb" style="Column header" x="0" y="0" width="92" height="20"/>
+									<textElement>
+										<font fontName="SansSerif"/>
+									</textElement>
+									<text><![CDATA[IP Address]]></text>
+								</staticText>
+								<genericElement>
+									<reportElement uuid="ac3e5748-09dc-481e-9a3c-9745ff67be19" mode="Transparent" x="0" y="0" width="0" height="16">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["host_address"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement uuid="f84337d1-bbdf-4a40-95d1-03a8f2ed6ad4" style="Detail" x="0" y="0" width="92" height="16"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="SansSerif"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{host_address}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="150" uuid="e6413213-4bc9-497a-91f7-6bb983468c71">
+							<jr:columnHeader style="Column header" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="652eca95-d24e-4e57-9f41-e5662bcd8097" style="Column header" x="0" y="0" width="150" height="20"/>
+									<textElement>
+										<font fontName="SansSerif"/>
+									</textElement>
+									<text><![CDATA[Hostname]]></text>
+								</staticText>
+								<genericElement>
+									<reportElement uuid="09b7bb8d-f739-4ff1-aef5-df471d9d4e09" mode="Transparent" x="0" y="0" width="0" height="30">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["host_name"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement uuid="98e339b2-ad27-471b-a9ca-6522e7a7de0b" style="Detail" x="0" y="0" width="150" height="16"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="SansSerif"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{host_name}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="126" uuid="edbfb05e-244c-43eb-bae7-1b485241ef81">
+							<jr:columnHeader style="Column header" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="6436b21a-8b39-4dcb-ae71-1ffe1b95c2d9" style="Column header" x="0" y="0" width="126" height="20"/>
+									<textElement>
+										<font fontName="SansSerif"/>
+									</textElement>
+									<text><![CDATA[Collected Files]]></text>
+								</staticText>
+								<genericElement>
+									<reportElement uuid="d456898b-3c25-4dec-8b8f-5cdf84db3ff5" mode="Transparent" x="0" y="1" width="0" height="1">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["service_port"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+								<genericElement>
+									<reportElement uuid="804138a3-5788-4b2e-be53-b660552f6eb5" mode="Transparent" x="0" y="0" width="0" height="30">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["web_site_vhost"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+								<genericElement>
+									<reportElement uuid="5cc460d8-c995-48a6-aace-75b5c637c0b5" mode="Transparent" x="0" y="0" width="0" height="30">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["loot_count"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement uuid="2c82b310-4603-4302-a2de-636759ec4802" style="Detail" x="0" y="0" width="126" height="16"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="SansSerif"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{loot_count}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="126" uuid="ba3f974a-2d92-4c23-8e2a-61d937c60bc3">
+							<jr:columnHeader style="Column header" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="ed93ba7e-a781-45fc-8129-889e0a09c698" style="Column header" x="0" y="0" width="126" height="20"/>
+									<textElement>
+										<font fontName="SansSerif"/>
+									</textElement>
+									<text><![CDATA[Sessions Opened]]></text>
+								</staticText>
+								<genericElement>
+									<reportElement uuid="439017bf-b006-4af6-b4ac-90eab39bd087" mode="Transparent" x="0" y="15" width="0" height="15">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["web_site_vhost"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+								<genericElement>
+									<reportElement uuid="72f304f0-7cf2-43af-a68c-fe4fa7254088" mode="Transparent" x="0" y="0" width="0" height="30">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["service_port"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+								<genericElement>
+									<reportElement uuid="05514107-206c-4938-b332-aa89509e2b9a" mode="Transparent" x="0" y="0" width="0" height="30">
+										<property name="controlParameter" value="true"/>
+									</reportElement>
+									<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+									<genericElementParameter name="sortColumnName">
+										<valueExpression><![CDATA["session_count"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortColumnType">
+										<valueExpression><![CDATA["Field"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerHorizontalAlign">
+										<valueExpression><![CDATA["Right"]]></valueExpression>
+									</genericElementParameter>
+									<genericElementParameter name="sortHandlerVerticalAlign">
+										<valueExpression><![CDATA["Middle"]]></valueExpression>
+									</genericElementParameter>
+								</genericElement>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement uuid="3d21892f-4a70-44f4-b7b9-08decf32dbf6" style="Detail" x="0" y="0" width="126" height="16"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="SansSerif"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{session_count}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</elementGroup>
+		</band>
+		<band height="63">
+			<printWhenExpression><![CDATA[$P{display_complete_evid_table} && $F{loot_count} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="cb9cf51e-3eec-44ef-9857-cb9ee9e050ed" mode="Opaque" x="0" y="0" width="572" height="24" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Collected Evidence List]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="c6c8050c-171e-48f7-b9b8-c71472e710f4" key="table" stretchType="RelativeToTallestObject" x="0" y="26" width="572" height="37"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="EvidenceListDatastore" uuid="26298858-f176-41e7-8786-250287eae30a">
+						<datasetParameter name="workspace_id">
+							<datasetParameterExpression><![CDATA[$F{workspace_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="host_address_clause">
+							<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="175" uuid="0ea3220c-2bb7-4ceb-acf4-d0f97e607fd9">
+						<jr:columnHeader style="Column header" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="fcb526ca-19c7-45cc-8c3f-9c8554545cf3" style="Column header" x="0" y="0" width="175" height="30"/>
+								<textElement>
+									<font fontName="SansSerif"/>
+								</textElement>
+								<text><![CDATA[Looted Host]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="b594d6a8-a975-4eaa-aea3-265885a4c61a" style="Detail" x="0" y="0" width="175" height="16"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{host_name} == $F{host_address} ? $F{host_name} : $F{host_name} + " (" + $F{host_address} + ")"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="92" uuid="49637d0a-e1fe-4e45-b63a-31af16f5a30d">
+						<jr:columnHeader style="Column header" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="1d0f84cf-743a-4d50-b759-6ad9d348aa79" style="Column header" x="0" y="0" width="92" height="30"/>
+								<textElement>
+									<font fontName="SansSerif"/>
+								</textElement>
+								<text><![CDATA[Date/Time]]></text>
+							</staticText>
+							<genericElement>
+								<reportElement uuid="079d5ec8-35f8-4d12-a767-4d403af9bfa3" mode="Transparent" x="0" y="0" width="0" height="30">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["loot_time"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:detailCell height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="cfd9116e-3af4-4b95-b30e-0c6b0d085aa0" style="Detail" x="0" y="0" width="92" height="16"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{loot_time}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="140" uuid="6d476054-422e-4f09-9cd9-8ed33b192c34">
+						<jr:columnHeader style="Column header" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="079cc7fd-b125-4cdc-8ea4-ba8abccaa557" style="Column header" x="0" y="0" width="140" height="30"/>
+								<textElement>
+									<font fontName="SansSerif"/>
+								</textElement>
+								<text><![CDATA[Evidence Type]]></text>
+							</staticText>
+							<genericElement>
+								<reportElement uuid="d38c18a8-75ba-4d8b-8c2a-10ec35f88feb" mode="Transparent" x="0" y="0" width="0" height="30">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["loot_ltype"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:detailCell height="30" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="28c0c7b7-9d7b-4fb9-9b9d-3633b0a4fed9" style="Detail" x="0" y="0" width="140" height="16" isPrintWhenDetailOverflows="true"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{loot_ltype}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="126" uuid="453e01ff-f27a-4e55-b90c-414ced744def">
+						<jr:columnHeader style="Column header" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="d29c6d35-d1b1-4213-afcb-e8d6fc9fa826" style="Column header" x="0" y="0" width="126" height="30"/>
+								<textElement>
+									<font fontName="SansSerif"/>
+								</textElement>
+								<text><![CDATA[Content Type]]></text>
+							</staticText>
+							<genericElement>
+								<reportElement uuid="ce472dd6-e8f1-4ecb-8598-d50b2f40be8e" mode="Transparent" x="0" y="0" width="0" height="30">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["loot_ctype"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:detailCell height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="8899349a-ce96-4a05-a70b-de5243090523" style="Detail" x="0" y="0" width="126" height="16"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="SansSerif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{loot_ctype}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="63" splitType="Prevent">
+			<printWhenExpression><![CDATA[$P{display_collected_screenshots} && $F{screenshot_count} > 0]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="6adc5512-1675-4343-b32d-ad338b3f6f27" x="0" y="24" width="572" height="37"/>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfx_loot_images.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="beb8cbf4-0396-4d85-a7a5-511f8d876bcd" mode="Opaque" x="0" y="0" width="572" height="24" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Collected Screenshots]]></text>
+			</staticText>
+		</band>
+		<band height="63" splitType="Prevent">
+			<printWhenExpression><![CDATA[$P{display_collected_text_files} && $F{text_count} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="717f4fbb-0a72-4f35-a51e-bb5a47328e6c" mode="Opaque" x="0" y="0" width="572" height="24" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Collected Text Files]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="7d3034f6-4392-4509-a1a3-213511749514" x="0" y="24" width="572" height="37"/>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfx_loot_texts.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="44" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}>1]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="c35ba126-c5a5-4ee5-823e-99971f3271d1" style="footer_text" x="289" y="14" width="283" height="14"/>
+				<textElement textAlignment="Right">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Project: " + $F{project_name}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="b784c9b6-09e5-4b7f-999b-468229c51e6c" x="0" y="14" width="58" height="11"/>
+				<imageExpression><![CDATA[$P{image_dir} + "r7-logo_footer.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="f2c52854-a597-4de3-8dde-f487a92c8c04" style="footer_text" mode="Transparent" x="289" y="28" width="283" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="137c61c1-01ab-4d03-ad1c-46076b52252c" style="footer_text" x="289" y="0" width="283" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

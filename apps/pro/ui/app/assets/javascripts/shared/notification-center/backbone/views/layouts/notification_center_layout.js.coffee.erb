@@ -1,0 +1,293 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/notification_center/layouts/notification_center_layout') %>',
+  '<%= javascript_path('shared/notification-center/backbone/collections/notification_message_collection') %>',
+  '<%= javascript_path('shared/notification-center/backbone/views/item_views/notification_nav_bar_item_view')%>',
+  '<%= javascript_path('shared/notification-center/backbone/views/collection_views/notification_collection_view')%>',
+  '<%= javascript_path('shared/notification-center/backbone/views/item_views/notification_footer_item_view')%>',
+  '<%= javascript_path('shared/notification-center/backbone/event_aggregators/event_aggregator')%>',
+  '<%= javascript_path('shared/notification-center/backbone/models/poll_presenter_model')%>',
+
+], ($, NotificationCenterLayout, NotificationMessageCollection, NotificationNavBarItemView,
+    NotificationCollectionView, NotificationFooterItemView, EventAggregator, PollPresenter)->
+  class NotificationCenterLayout extends Backbone.Marionette.LayoutView
+
+    @NOTIFICATION_NUMBER: 15
+    @MAX_NOTIFICATION_CENTER_HEIGHT_RATIO: .85
+
+    template: HandlebarsTemplates['notification_center/layouts/notification_center_layout']
+
+    triggers:
+      'mouseleave' : 'notification-center:closable'
+      'mouseenter' : 'notification-center:unclosable'
+
+    regions:
+      all_notifications : '.all-notifications .notifications-container .scrollable-container'
+      notification_nav_bar: '.all-notifications .notifications-nav-bar'
+      notifications_footer: '.all-notifications .notifications-footer'
+
+    initialize: ->
+      @_init_collections()
+      @_bind_triggers()
+      @last_loaded_id = @last_read_id
+
+    collection_count: 0
+
+    last_read_id: $('meta[name="last-known-message"]').attr('content')
+
+    _date_sorter: (model) ->
+      weight = 1
+
+      switch model.get('kind')
+        when 'system_notification'
+          weight = 2
+        when 'update_notification'
+          weight = 3
+
+      return -timestamp = Date.parse(model.get('created_at')) * 1000 * weight
+
+    _init_collections: ->
+      @notification_collection = new NotificationMessageCollection(comparator: @_date_sorter)
+      @notification_collection.comparator = @_date_sorter
+
+      @system_notification_collection = new NotificationMessageCollection()
+      @minion_notification_collection = new NotificationMessageCollection()
+
+      paramHash = {'limit' : NotificationCenterLayout.NOTIFICATION_NUMBER}
+
+      @notification_collection.fetch({
+        data: paramHash
+        success: @_init_collections_callback
+      })
+
+    _init_collections_callback: (collection) =>
+      @_sort_collections(collection)
+      @_init_composite_views(collection)
+      @_mark_messages_as_read(collection, false, false)
+      @_update_have_messages_state(collection)
+
+    _init_composite_views: () =>
+      @all_notifications_collection_view = new NotificationCollectionView({collection: @notification_collection})
+      @all_notifications.show(@all_notifications_collection_view)
+
+      @notification_nav_bar_item_view = new NotificationNavBarItemView({})
+      @notification_nav_bar.show(@notification_nav_bar_item_view)
+
+      @notification_footer_item_view = new NotificationFooterItemView({})
+      @_update_more_footer_option(@all_notifications_collection_view.collection)
+
+      @_poll_unread_notifications()
+
+    _update_more_footer_option: (collection) ->
+      if collection.length == NotificationCenterLayout.NOTIFICATION_NUMBER
+        if(typeof @notifications_footer.currentView == 'undefined')
+          @notification_footer_item_view.delegateEvents()
+          @notifications_footer.show(@notification_footer_item_view)
+      else
+        @notifications_footer.reset()
+
+
+    _sort_collections:(collection) =>
+
+    _mark_messages_as_read:(collection, update_local, isClosing) =>
+      if(@_is_notification_center_visible() || isClosing)
+        flattened_collection = collection.models.map(@_flatten_models)
+        unread_messages = _.where(flattened_collection,read: false)
+        unread_message_ids = unread_messages.map(@_map_message_ids)
+        @_send_read_messages(unread_message_ids)
+
+        if(update_local)
+          _.each(unread_message_ids, @_mark_local_notification_as_unread)
+      #Marionette Collection View doesnt listen to colletion change events
+      #so we trigger a collection reset to re-render
+      @all_notifications_collection_view.redraw_with_sort_preserved()
+      @_update_more_footer_option(@all_notifications_collection_view.collection)
+
+    _mark_local_notification_as_unread: (model_id) =>
+      model = @notification_collection.get(model_id)
+      model.set('read',true)
+
+    _map_message_ids: (item) ->
+      return item.id
+
+    _flatten_models: (model) ->
+      return {id: model.get('id') ,read: model.get('read')}
+
+    _send_read_messages: (unread_message_ids) ->
+
+      $.ajax(
+        type: 'POST'
+        url: Routes.mark_read_notifications_messages_path()
+        data:
+          message_ids: unread_message_ids
+      )
+
+    _update_have_messages_state: (collection) ->
+      flattened_collection = collection.models.map(@_flatten_models)
+      unread_messages = _.where(flattened_collection,read: false)
+
+      # Only because this is scoped outside the backbone app in the site nav
+      if unread_messages.length == 0
+        $('.drop-menu .notification-menu').addClass('empty')
+      else
+         $('.drop-menu .notification-menu').removeClass('empty')
+
+
+    _poll_unread_notifications: () =>
+      @collection_count = @notification_collection.length
+      @last_read_id = if @notification_collection.at(0)? then @notification_collection.at(0).id else 0
+      last_read_id = @last_read_id
+      last_read_id = if last_read_id=="" then 0 else last_read_id
+      paramHash = {since: last_read_id}
+
+      dropdown_option = $('[name="notification_type"]', @el).val()
+      paramHash['kind'] = dropdown_option if dropdown_option != ''
+      paramHash['unread'] = true
+      paramHash['limit'] = NotificationCenterLayout.NOTIFICATION_NUMBER
+      @notification_collection.fetch({
+        data: paramHash
+        remove: false
+        success: @_poll_unread_notifications_callback
+      })
+
+    _poll_unread_notifications_callback: (collection) =>
+      unless (typeof @notifications_footer.currentView != 'undefined')
+        @_update_unread_notifications(collection,false)
+      else
+        @_update_unread_notifications(collection,true)
+      setTimeout(@_poll_unread_notifications,2400)
+
+    _load_more_notifications_callback: (collection) =>
+      @_update_unread_notifications(collection,false)
+
+    _update_unread_notifications: (collection, trim) =>
+       if @collection_count != collection.length
+        # So we always have at most 6 notifications unless we click more button
+        collection_from_view = @all_notifications_collection_view.collection
+        if trim
+          while collection_from_view.length > NotificationCenterLayout.NOTIFICATION_NUMBER
+            collection_from_view.pop()
+
+        @all_notifications_collection_view.redraw_with_sort_preserved()
+        @_update_have_messages_state(collection)
+        @_update_nav_bar_counter(collection)
+        @_update_more_footer_option(collection)
+        @_reset_scroll_bar()
+
+    _update_nav_bar_counter: (collection) =>
+      poll_presenter = new PollPresenter()
+      paramHash = {'unread' : true}
+      poll_presenter.fetch(data: paramHash, success: @_update_nav_bar_counter_callback)
+
+    _update_nav_bar_counter_callback:(poll_presenter) =>
+      count_element = $('.drop-menu .notification-menu .menu-title')
+      count_from_model = poll_presenter.get('unread_message_count')
+
+      if count_element.html().replace(/\s/g,'') != count_from_model.toString() and count_from_model != 0
+        unless @_is_notification_center_visible()
+          $menu_item = $('.drop-menu .notification-menu').addClass('flash')
+          setTimeout((-> $menu_item.removeClass('flash')),200)
+      # Only because this is scoped outside the backbone app in the site nav
+      $('.drop-menu .notification-menu .menu-title').html(poll_presenter.get('unread_message_count'))
+
+    _load_more_notifications: =>
+      num_notifications = @notification_collection.length
+      before_notification_id = if @notification_collection.at(0)? then @notification_collection.at(num_notifications-1).id else 0
+      paramHash = {before: before_notification_id}
+
+      dropdown_option = $('[name="notification_type"]', @el).val()
+      paramHash['kind'] = dropdown_option if dropdown_option != ''
+      paramHash['limit'] = NotificationCenterLayout.NOTIFICATION_NUMBER
+
+      @notification_collection.fetch({
+        data: paramHash
+        remove: false
+        success: @_load_more_notifications_callback
+      })
+
+    _bind_triggers: =>
+      @on('notification-center:closable',@_bind_to_global_close_event)
+      @on('notification-center:unclosable',@_unbind_from_global_close_event)
+
+      #Cross View Events
+      EventAggregator.on('notification-message:destroy', @_message_destroyed)
+      EventAggregator.on('notification-center:change:type', @_message_type_changed)
+      EventAggregator.on('notification-center:load:more', @_load_more_notifications)
+
+      #Only because this is scoped outside the backbone app in the site nav
+      $('.drop-menu .notification-menu .menu-title').on('click',@_toggle_notification_center)
+      # jquery namespaced event for easy unbinding if we ever need it
+      $(document).on('click.notification-global-click', @_trigger_close_dropdowns)
+
+    _bind_to_global_close_event: =>
+      EventAggregator.on('close:dropdowns',@_hide_notification_center,this)
+
+    _unbind_from_global_close_event: =>
+      EventAggregator.off('close:dropdowns',@_hide_notification_center,this)
+
+    _message_type_changed: =>
+      #We always want to re-render on a type change
+      @collection_count = -1
+
+      @_mark_messages_as_read(@notification_collection, true, false)
+      last_read_id = 0
+      paramHash = {since: last_read_id}
+
+      dropdown_option = $('[name="notification_type"]', @el).val()
+      paramHash['kind'] = dropdown_option if dropdown_option != ''
+      paramHash['limit'] = NotificationCenterLayout.NOTIFICATION_NUMBER
+
+      @notification_collection.fetch({
+                                  data: paramHash
+                                  success: @_poll_unread_notifications_callback
+                                  reset: true
+                                })
+
+    _trigger_close_dropdowns: =>
+      return if not @_is_notification_center_visible()
+      EventAggregator.trigger('close:dropdowns')
+
+    _update_unread_count_on_close: =>
+        @_mark_messages_as_read(@notification_collection, true, true)
+        @_message_destroyed()
+
+    _is_notification_center_visible: ->
+      $('.notification-center-container').is(':visible')
+
+    _toggle_notification_center: (e) =>
+      e.preventDefault()
+      #We don't want to re-render all views when we toggle so we just hide/show it
+      elem = $('.notification-center-container')
+      elem.toggleClass('hidden')
+      $('.notification-menu').toggleClass('selected')
+
+      if elem.hasClass('hidden')
+        @_update_unread_count_on_close()
+      else
+        @_reset_scroll_bar()
+
+    _hide_notification_center: ->
+      #We don't want to close all the views so we just hide it
+      elem = $('.notification-center-container')
+      elem_box = $('.notification-menu').toggleClass('selected')
+
+      unless elem.hasClass('hidden')
+        @_update_unread_count_on_close()
+        elem.addClass('hidden')
+      if elem_box.hasClass('selected')
+        elem_box.removeClass('selected')
+
+      @_unbind_from_global_close_event()
+
+    _reset_scroll_bar: =>
+      containerHeight = $('.scrollable-container > div',@el).height()
+      @all_notifications_collection_view.reset_scroll_bar(NotificationCenterLayout.NOTIFICATION_NUMBER, @el, NotificationCenterLayout.MAX_NOTIFICATION_CENTER_HEIGHT_RATIO)
+
+    _message_destroyed: =>
+      @_update_have_messages_state(@notification_collection)
+      @_update_nav_bar_counter(@notification_collection)
+      @_update_more_footer_option(@notification_collection)
+      @_reset_scroll_bar()
+
+    _slide_notification_center: () ->
+      $(@el).parent('div').toggleClass('collapse-notification-center')

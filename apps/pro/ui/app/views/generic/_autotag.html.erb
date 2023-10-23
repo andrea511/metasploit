@@ -1,0 +1,38 @@
+<% supports_os_tagging ||= false -%>
+<%= f.inputs "Automatic Tagging" do -%>
+    <% if supports_os_tagging -%>
+        <%= f.input :autotag_os, :label => "Automatically tag by OS", :as => :boolean %>
+    <% end -%>
+    <table width="auto" class="list mar-bot10">
+        <thead>
+            <tr>
+                <th></th>
+                <th> Tag </th>
+                <th> Tagged Count </th>
+            </tr>
+        </thead>
+        <tbody id="tag_list">
+            <% @workspace.tags.each do |host_tag| -%>
+                <% next if host_tag.name =~ /^os_(aix|apple|beos|openbsd|freebsd|bsd|cisco|hp|ibm|linux|printer|router|solaris|sunos|windows|unknown)$/ -%>
+                <% next if host_tag.name =~ /^(discover|import|nexpose|bruteforce|exploit)_[\d]+$/ %>
+                <tr>
+                    <td align="left" valign="top"> <%= autotag_checkbox(host_tag) %></td>
+                    <td align="left" valign="top"> <%= label_tag "tag_#{host_tag.id}", host_tag.name %> </td>
+                    <td align="left" valign="top"> <%= host_tag.hosts.size %> </td>
+                </tr>
+                <% end -%>
+                <tr>
+                    <td align="left" valign="top"> <%= autotag_checkbox(-1) %></td>
+                    <td align="left" valign="top"> <%= f.input "autotag_tags_new", :label => false, :input_html => {:value => next_task, :style => "font-size:11px"} %> </td>
+                    <td align="left" valign="top"> (New) </td>
+                </tr>
+            </tbody>
+        </table>
+    <% end -%>
+    <%= f.help_link :autotag_os do -%>
+        <h3>Autotagging</h3>
+        <% if supports_os_tagging -%>
+            <p>If "Automatically tag by OS" is selected, discovered hosts will automatically be tagged with their OS type.</p>
+            <p>Tags may also be selected from a list of existing tags, or newly created and assigned based on successful conditions for this task.</p>
+        <% end -%>
+    <% end -%>

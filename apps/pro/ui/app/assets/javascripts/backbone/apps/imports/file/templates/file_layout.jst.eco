@@ -1,0 +1,35 @@
+<form>
+  <div class="columns large-12 shared boxes">
+    <div class="row">
+      <div class="columns small-12">
+        <div class="error-container"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-12">
+        <div class="row">
+          <div class="columns small-2 empty"></div>
+          <div class="columns small-10">
+            <div class="last-uploaded" style="display: none;"></div>
+            <input type='hidden' name='use_last_uploaded'>
+          </div>
+        </div>
+
+        <div class="file-input-region"></div>
+        <div>
+          <ul>
+            <li class="text input optional" id="nexpose_scan_task_blacklist_string_input" style="opacity: 1;">
+              <div class="row">
+                <div class="columns large-2"><label class="label" for="nexpose_scan_task_blacklist_string" style="opacity: 1;">Excluded Addresses</label></div>
+                <div class="columns large-10">
+                  <textarea id="nexpose_scan_task_blacklist_string" name="blacklist_string" rows="20" style="opacity: 1;"></textarea>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

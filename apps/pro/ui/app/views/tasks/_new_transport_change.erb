@@ -1,0 +1,124 @@
+<%= semantic_form_for @task, :url => start_transport_change_path ,:remote=> true do |f| %>
+
+    <div id="popup_errors"></div>
+    <%= f.hidden_field :session_id, :value => @sess %>
+    <div id="transport_items">
+    <table cellpadding=2>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :transport, "Select the Transport" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.select :transport, Rex::Post::Meterpreter::ClientCore::VALID_TRANSPORTS.keys %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :lhost, "LHOST Address" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :lhost, :value => '0.0.0.0' %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :lport, "LPORT" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :lport, :value => 4444 %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :proxy_host, "Proxy Host Address" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :proxy_host, :value => nil %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :proxy_port, "Proxy Port" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :proxy_port, :value => nil %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :proxy_user, "Proxy Username" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :proxy_user, :value => nil %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :proxy_pass, "Proxy Password" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :proxy_pass, :value => nil %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :proxy_type, "Proxy Type" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :proxy_type, :value => nil %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :retry_total, "Number of times to retry connection" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :retry_total, :value => nil %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :retry_wait, "Seconds to wait between retries" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :retry_wait, :value => nil %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :session_exp, "Session Expiration in seconds" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :session_exp, :value => nil %>
+        </td>
+      </tr>
+
+      <tr class="<%=h row_cycle %>">
+        <td align="left" valign="top" nowrap colspan="3">
+          <%= f.label :ua, "User-Agent String" %>
+        </td>
+        <td align="left" valign="top">
+          <%= f.text_field  :ua, :value => nil %>
+        </td>
+      </tr>
+
+    </table>
+    </div>
+
+    <div class="buttons">
+      <span class="btn"><%= submit_tag "Start Transport Change", :class => "transport_change", :id => 'popup_submit' %></span>
+      <span class="btn"><%= link_to "Cancel", '#', class: 'popup-cancel' %></span>
+    </div>
+
+<% end %>

@@ -1,0 +1,47 @@
+<% if @status.downloading? %>
+	<ol>
+		<li class="running">Downloading... <%=h @status.download_pcnt %>%</li>
+		<li>Install</li>
+		<li>Restart</li>
+	</ol>
+<% elsif @status.installing? %>
+	<ol>
+		<li class="complete">Download complete</li>
+		<li class="running">Installing...</li>
+		<li>Restart</li>
+	</ol>
+<% elsif @status.complete? %>
+	<ol>
+		<li class="complete">Download complete</li>
+		<li class="complete">Install complete</li>
+		<li class="complete">Ready to restart...</li>
+	</ol>
+	<span class="btn">
+		<%= link_to("Restart", {:action => "restart"},{:method => :post}) %>
+	</span>
+<% elsif @status.restarting? %>
+	<ol>
+		<li class="complete">Download complete</li>
+		<li class="complete">Install complete</li>
+		<li class="running">Waiting for services to restart...</li>
+	</ol>
+<% elsif @status.error? %>
+	<div id="flash_messages">
+		<a class="close failure">✖</a>
+		<div class="errors">
+			Installation failed: <%=h @status.error %>
+		</div>
+	</div>
+	<span class="btn">
+		<%= link_to "Back to Project list", root_path, :class => "back" %>
+	</span>
+<% else %>
+	<ol>
+		<li class="complete">Download complete</li>
+		<li class="complete">Install complete</li>
+		<li class="complete">Restart complete</li>
+	</ol>
+	<span class="btn">
+		<%= link_to "Back to Project list", root_path, :class => "back" %>
+	</span>
+<% end %>

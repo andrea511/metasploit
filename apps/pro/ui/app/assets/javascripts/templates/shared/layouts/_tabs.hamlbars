@@ -1,0 +1,7 @@
+%li{:id =>'{{#underscored}}{{name}}{{/underscored}}_tab'}
+  .name{:class => '{{#underscored}}{{name}}{{/underscored}}', :hideOnZero => '{{hideOnZero}}' }
+    {{name}}
+  {{#if count}}
+  .count
+    {{count}}
+  {{/if}}

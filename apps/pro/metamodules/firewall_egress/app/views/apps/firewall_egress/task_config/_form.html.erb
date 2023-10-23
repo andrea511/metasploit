@@ -1,0 +1,32 @@
+<style type='text/css'>
+  #modals form.metamodule .advanced li.small-inline.input.error p.inline-error {
+    margin-left: 0;
+    position: absolute;
+  }
+  #modals form.metamodule .advanced li.small-inline.input.error {
+    margin-bottom: 20px;
+  }
+</style>
+
+<%= metamodule_wizard_form_for @task_config, :engine=>:firewall_egress do |f| %>
+  <%= form_tab "Port Ranges" do %>
+    <%= f.input :scan_target_type, :collection => Apps::FirewallEgress::TaskConfig::SCAN_TARGET_TYPES.invert,
+                :as => :radio,
+                :label => "Scan Target" %>
+    <%= advanced_area "Scan Targets", :show => false do %>
+      <label class='side-label'>Custom Target</label>
+      <%= f.input :dst_host, :as => :string, :label => false, :wrapper_html => { class: 'small-inline', style: 'width: 200px' } %>
+    <% end %>
+
+    <%= f.input :port_type, :collection => Apps::FirewallEgress::TaskConfig::PORT_TYPES.invert,
+                :as => :radio,
+                :label => "Port Range" %>
+    <%= advanced_area "Port Ranges", :show => false do %>
+      <label class='side-label'>Custom Range</label>
+      <%= f.input :nmap_start_port, :as => :string, :label => false, :placeholder => 'Start port', :wrapper_html => { class: 'small-inline', style: 'width:70px' } %>
+      <span style='padding:0 15px;'>&dash;</span>
+      <%= f.input :nmap_stop_port, :as => :string, :label => false, :placeholder => 'End port', :wrapper_html => { class: 'small-inline', style: 'width:70px' } %>
+    <% end %>
+  <% end %>
+  <%= render :partial => 'wizards/report_tab', :locals => { f: f, rtypes: [Apps::FirewallEgress::TaskConfig::REPORT_TYPE] } %>
+<% end %>

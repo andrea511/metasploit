@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<!DOCTYPE jasperTemplate
+        PUBLIC "-//JasperReports//DTD Template//EN"
+        "http://jasperreports.sourceforge.net/dtds/jaspertemplate.dtd">
+
+<jasperTemplate>
+  <style name="Default" isDefault="true" fontName="LiberationSans"/>
+  <style name="left_indented">
+    <box leftPadding="5"/>
+  </style>
+  <style name="indented">
+    <box leftPadding="5" rightPadding="5" topPadding="5" bottomPadding="5"/>
+  </style>
+
+  <!-- Saner shared styles TODO: rework older ones to use -->
+  <style name="section_header_base" mode="Opaque" backcolor="#FFFFFF" fontSize="12" vAlign="Middle" isBold="true"/>
+  <style name="section_header" style="section_header_base">
+    <box leftPadding="10"/>
+  </style>
+  <style name="section_header_1" style="section_header" fontSize="14" backcolor="#DDDDDD" isBold="false"/>
+  <style name="section_header_1_no_bg" style="section_header_1" backcolor="#FFFFFF"/>
+  <style name="section_header_2" style="section_header"/> <!-- ALL CAPS, UNDERLINED -->
+  <style name="section_header_3" style="section_header" backcolor="#DDDDDD">
+    <box leftPadding="0"/>
+  </style>
+  <style name="generic_text" vAlign="Middle" fontSize="12"/>
+  <style name="generic_text_top" style="generic_text" vAlign="Top" />
+  <style name="generic_table_text" style="generic_text" fontSize="10"/>
+  <style name="table_text_underlined" style="generic_table_text">
+    <box>
+      <bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#EEEEEE"/>
+    </box>
+  </style>
+  <style name="gray_p" style="generic_text" fontSize="10" forecolor="#666666">
+    <paragraph leftIndent="10" rightIndent="10" />
+  </style>
+  <style name="separator_line" forecolor="#DDDDDD"/>
+  <style name="separator_line_darker" forecolor="#000000"/>
+  <style name="separator_line_lighter" forecolor="#EEEEEE"/>
+  <!-- END Saner shared styles -->
+
+  <style name="last_audited" forecolor="#A0A0A0" backcolor="#FFFFFF" hAlign="Right" vAlign="Middle" fontSize="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+  <style name="Column header" forecolor="#666666" vAlign="Middle" fontSize="12" isBold="true">
+    <paragraph leftIndent="5"/>
+  </style>
+  <style name="Graph title" fontSize="12" forecolor="#666666" vAlign="Middle" hAlign="Center"/>
+  <style name="Section header" mode="Opaque" backcolor="#dddddd" vAlign="Middle" fontSize="14" isBold="false">
+    <box leftPadding="10"/>
+  </style>
+  <style name="Section Header - Lighter BG" style="Section header" backcolor="#EEEEEE"/>
+  <style name="Section Header - No BG" style="Section header" backcolor="#FFFFFF"/>
+  <style name="title2" isBold="true" vAlign="Middle"/>
+  <style name="gray_text" forecolor="#CCCCCC"/>
+  <style name="report_generated" style="last_audited" fontSize="12" isBold="true"/>
+  <style name="separator_dark" forecolor="#000000"/>
+  <style name="linked_text" forecolor="#0645AD" isUnderline="true" />
+  <style name="table_text" vAlign="Middle" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+    <paragraph leftIndent="5"/>
+  </style>
+  <style name="table_text_padded" style="table_text">
+    <paragraph spacingBefore="5"/>
+  </style>
+  <style name="table_text_indented" style="table_text">
+    <box leftPadding="20"/>
+  </style>
+  <style name="tighter_table" style="table_text" hAlign="Center">
+    <paragraph leftIndent="0"/>
+  </style>
+  <style name="important_item" style="tighter_table" vAlign="Middle" isBold="true" forecolor="#a0a0a0" fontSize="13"/>
+  <style name="chart_labels" fontSize="7"/>
+  <style name="exec_summ_text" vAlign="Middle" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+  <style name="border_box" mode="Opaque">
+    <box topPadding="10" leftPadding="10" bottomPadding="10" rightPadding="10">
+      <pen lineWidth="1.0"/>
+      <topPen lineWidth="1.0"/>
+      <leftPen lineWidth="1.0"/>
+      <bottomPen lineWidth="1.0"/>
+      <rightPen lineWidth="1.0"/>
+    </box>
+  </style>
+
+  <!-- Auth Token report -->
+  <style name="Old Column header" forecolor="#666666" fontName="Serif" fontSize="12" isBold="true"/>
+  <style name="Detail" fontName="Serif" fontSize="8">
+    <box>
+      <bottomPen lineWidth="0.25" lineStyle="Dotted"/>
+    </box>
+  </style>
+  <style name="table">
+    <box>
+      <pen lineWidth="1.0" lineColor="#000000"/>
+    </box>
+  </style>
+  <style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+    <box>
+      <pen lineWidth="0.5" lineColor="#000000"/>
+    </box>
+  </style>
+  <style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+    <box>
+      <pen lineWidth="0.5" lineColor="#000000"/>
+    </box>
+  </style>
+  <style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+    <box>
+      <pen lineWidth="0.5" lineColor="#000000"/>
+    </box>
+  </style>
+  <style name="footer_text" fontSize="8" isItalic="true"/>
+  <!-- END Auth Token report -->
+
+  <!-- Appendices, glossary -->
+  <style name="important_term" vAlign="Middle" fontSize="13">
+    <paragraph leftIndent="10"/>
+  </style>
+  <style name="important_def" style="table_text" vAlign="Top" forecolor="#CCCCCC">
+    <paragraph leftIndent="5"/>
+  </style>
+  <style name="resource_title" style="important_term"/>
+  <style name="resource_text" style="important_def" vAlign="Top" forecolor="#CCCCCC">
+    <paragraph leftIndent="15" rightIndent="10" />
+  </style>
+
+  <style name="glossary_term" style="important_term" vAlign="Top" isBold="true" forecolor="#000000" fontSize="11">
+    <paragraph leftIndent="10"/>
+  </style>
+  <style name="glossary_def" style="important_def" vAlign="Top" forecolor="#666666">
+    <paragraph leftIndent="5"/>
+  </style>
+  <style name="option_no_indent" style="glossary_def">
+    <paragraph leftIndent="0"/>
+  </style>
+  <!-- END Appendices, glossary -->
+
+</jasperTemplate>

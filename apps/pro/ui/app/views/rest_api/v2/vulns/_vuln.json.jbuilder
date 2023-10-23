@@ -1,0 +1,13 @@
+json.id                         vuln.id
+json.service_id                 vuln.service_id
+json.host_id                    vuln.host_id
+json.name                       vuln.name
+json.info                       vuln.info
+json.exploited_at               vuln.exploited_at
+json.vuln_detail_count          vuln.vuln_detail_count
+json.vuln_attempt_count         vuln.vuln_attempt_count
+json.nexpose_data_vuln_def_id   vuln.nexpose_data_vuln_def_id
+json.origin_id                  vuln.origin_id
+json.origin_type                vuln.origin_type
+json.created_at                 vuln.created_at
+json.updated_at                 vuln.updated_at

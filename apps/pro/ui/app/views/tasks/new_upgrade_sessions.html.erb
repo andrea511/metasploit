@@ -1,0 +1,74 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, sessions_link, link_to("Session Upgrade", "#") %>
+<% include_view_javascript %>
+
+<div id="popup_errors"></div>
+
+<% unless @workspace.sessions.upgradeable.empty? %>
+
+	<%= semantic_form_for @task, :url => start_upgrade_sessions_path, :complete => "enableSubmitButtons();", :remote => true do |f| %>
+
+		<div class="one_col_no_sidebar">
+
+			<%= f.hidden_field :workspace_id %>
+
+			<%=  f.inputs "Upgradeable Sessions" do %>
+				<div style="width: 95%; float: left;">
+					<div id="upgrade_sessions" class="list">
+						<table width="100%" class="list mar-tb10">
+							<thead>
+								<tr>
+									<th class="checkbox"><%= check_box_tag "all_sessions", true %></th>
+									<th colspan="2">
+										<%= f.label :upgrade_sessions, "Upgradeable Sessions" %>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody id="session_list">
+							<% @workspace.sessions.upgradeable.each do |sess| %>
+								<tr class="<%=h row_cycle %>">
+									<td align="left" valign="top">
+										<%= check_box_tag "upgrade_session_task[upgrade_sessions][]", sess.id, true, :id => "session-#{sess.id}" %>
+									</td>
+									<td align="left" valign="top">
+										<%= label_tag "session-#{sess.id}", h(sess) %>
+									</td>
+								</tr>
+							<% end %>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+				<%= link_to(icon('silky/information'), '', :target => '_blank', :class => 'help', :'data-field' => 'upgrade_task_upgrade_sessions_input', :style => "padding-left: 24px; float: right;") %>
+			<% end -%>
+			
+			<% if @no_launch.blank? %>
+	          <%= f.actions do -%>
+	            <span class='btn'><%= f.submit "Upgrade Sessions", :class => "upgrade_sessions", :id => 'popup_submit' %></span>
+	          <% end -%>
+	        <% end %>
+
+
+		</div>
+
+		  <div class="inline-help" data-field="upgrade_task_upgrade_sessions_input">
+			  <h3>Session Upgrade</h3>
+			  <p>
+				  Session Upgrade attempts to upgrade a win32 command shell with a Meterpreter agent.
+			  </p>
+			  <p>	
+				  Active Upgradeable sessions are displayed on the left. Select the sessions you'd like to upgrade and press the <b>Upgrade Sessions</b> button.
+		 	  </p>
+		  </div>
+
+	<% end %>
+
+<% else %>
+	<h2> No Active Upgradeable Sessions </h2>
+	<span class="btn">
+		<%= link_to "Back to Sessions", workspace_sessions_path(@workspace), :class => "back" %>
+	</span>
+<% end %>
+</div>

@@ -1,0 +1,1 @@
+json.partial! 'host', host: @host

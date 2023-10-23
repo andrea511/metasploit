@@ -1,0 +1,5 @@
+.columns.small-12
+  .errors
+    Errors
+.columns.small-12
+  .config

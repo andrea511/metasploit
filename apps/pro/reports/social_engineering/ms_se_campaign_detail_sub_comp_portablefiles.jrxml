@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ms_se_campaign_detail_sub_comp_portablefiles" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{reporting_dir} + "style_templates/se_styles.jrtx"]]></template>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="se_campaign_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+	spf.name,
+	spf.created_at,
+	spf.file_name,
+	coalesce(spf.exploit_module_path, 'exploit/multi/handler') as module_path,
+	case
+		when spf.exploit_module_path is null then 'Exe agent'
+		else 'File format exploit'
+	end as generation_type
+from se_portable_files spf
+inner join se_campaigns sc on (spf.campaign_id = sc.id)
+where sc.workspace_id = $P{workspace_id}
+and spf.campaign_id = $P{se_campaign_id}]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="file_name" class="java.lang.String"/>
+	<field name="module_path" class="java.lang.String"/>
+	<field name="generation_type" class="java.lang.String"/>
+	<title>
+		<band height="30">
+			<staticText>
+				<reportElement style="Section Header - No BG" x="0" y="0" width="572" height="27"/>
+				<textElement/>
+				<text><![CDATA[Portable Files]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="103" splitType="Stretch">
+			<textField>
+				<reportElement style="table_text" x="100" y="0" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_text" x="100" y="14" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{file_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_text" x="100" y="42" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{generation_type}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement style="table_text" x="100" y="28" width="469" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{created_at}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table_text" x="24" y="0" width="55" height="14"/>
+				<textElement/>
+				<text><![CDATA[Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_text" x="24" y="14" width="55" height="14"/>
+				<textElement/>
+				<text><![CDATA[Filename:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_text" x="24" y="28" width="55" height="14"/>
+				<textElement/>
+				<text><![CDATA[Created:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_text" x="24" y="42" width="66" height="14"/>
+				<textElement/>
+				<text><![CDATA[Type:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table_text" x="100" y="56" width="472" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{module_path}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table_text" x="24" y="56" width="66" height="14"/>
+				<textElement/>
+				<text><![CDATA[Exploit Used:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

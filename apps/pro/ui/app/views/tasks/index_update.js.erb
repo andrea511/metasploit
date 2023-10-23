@@ -1,0 +1,4 @@
+(function($) {
+  $('#tasks').html("<%= escape_javascript(render :partial => 'tasks', :locals => { :tasks => @tasks }) %>");
+  $('#page').html("<%= escape_javascript(render :partial => 'generic/tabs') %>");
+})(jQuery);

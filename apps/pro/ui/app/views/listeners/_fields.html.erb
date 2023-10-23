@@ -1,0 +1,37 @@
+<div class="one_col_without_sidebar">
+
+	<div class="col1">
+	<br/>
+	<%= form_for @listener do |f| %>
+		<%= render "shared/error_messages", :target => @listener %>
+		<dl>
+			<dt><%= f.label :workspace, "Associated Project" %></dt>
+			<dd><%= f.select :workspace, @workspace_list, :selected => @workspace_default %></dd>
+		</dl>
+		<dl>
+			<dt><%= f.label :payload, "Listener Payload" %></dt>
+			<dd><%= f.select :payload, Mdm::Listener.supported_payloads %></dd>
+		</dl>
+		<dl>
+			<dt><%= f.label :address, "Listener Address" %></dt>
+			<dd><%= f.text_field :address, :autocomplete => :off %></dd>
+		</dl>
+		<dl>
+			<dt><%= f.label :port, "Listener Port" %></dt>
+			<dd><%= f.text_field :port, :autocomplete => :off %></dd>
+		</dl>
+		<dl>
+			<dt><%= f.label :macro, "Auto Launch Macro" %></dt>
+			<dd><%= f.select :macro, @macro_list, :selected => @macro_default  %></dd>
+		</dl>
+		<dl>
+			<dt><%= f.label :enabled, "Enabled" %></dt>
+			<dd><%= f.check_box :enabled  %></dd>
+		</dl>
+		<div class="buttons">
+			<span class="btn"><%= f.submit 'Save Listener', :class => "save" %></span>
+		</div>
+	<% end %>
+
+</div>
+

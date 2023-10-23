@@ -1,0 +1,215 @@
+define [
+  'base_view'
+  'base_itemview'
+  'base_layout'
+  'apps/creds/shared/templates/clone_cell'
+  'apps/creds/shared/templates/private_cell'
+  'apps/creds/shared/templates/private_cell_disclosure_dialog'
+  'apps/creds/shared/templates/origin_cell'
+  'apps/creds/shared/templates/origin_cell_disclosure_dialog'
+  'entities/origin'
+], ->
+  @Pro.module 'CredsApp.Shared', (Shared, App, Backbone, Marionette, $, _) ->
+    #
+    # The cell containing the 'clone' button.
+    #
+    class Shared.CoresTableCloneCell extends App.Views.ItemView
+      template: JST['backbone/apps/creds/shared/templates/clone_cell']
+
+      ui:
+        cloneButton: 'a.clone'
+
+      events:
+        'click @ui.cloneButton': 'showCloneForm'
+
+      initialize: (opts) ->
+        @credsCollection = opts.collection
+        super(opts)
+
+      showCloneForm: ->
+        $row = $("<tr id='clone-form-" + @model.id + "'></tr>")
+        @$el.closest('tr').before $row
+        App.vent.trigger 'clone:cred:clicked', @model, @credsCollection, $row
+
+
+    #
+    # The cell for the 'public' column in the creds table
+    #
+    class Shared.CoresTablePublicCell extends App.Views.ItemView
+
+      events:
+        'click' : "credClicked"
+
+      initialize: (@opts) ->
+        _.defaults @opts, disableCredLinks: false
+
+      template: =>
+        username = @model.get('public.username')
+        username = if username? then username else '*BLANK*'
+        if @opts.disableCredLinks
+          _.escape(username)
+        else
+          "<a href='/workspaces/#{_.escape @model.get('workspace_id')}/credentials#creds/#{_.escape @model.id}'>#{_.escape(username)}</a>"
+
+    #
+    # The cell for the 'private/password' column in the creds table.
+    #
+    class Shared.CoresTablePrivateCell extends App.Views.ItemView
+      template: JST['backbone/apps/creds/shared/templates/private_cell']
+
+      ui:
+        privateDisclosureLink: 'a.private-data-disclosure'
+        filterEventLink:       'a.filter.event'
+
+      events:
+        'click @ui.privateDisclosureLink': 'showPrivateDataDialog'
+        'click @ui.filterEventLink':       'navigateToIndexWithFilter'
+
+      # @param opts [Object] the options hash
+      # @param opts displayFilterLink [Boolean] whether or not to display a filter link
+      initialize: (opts) ->
+        @displayFilterLink = if @model.isSSHKey() then false else !!opts.displayFilterLink
+
+      #
+      # Display a dialog with the full text of the private data.
+      #
+      # @return [void]
+      showPrivateDataDialog: ->
+        dialogView = new Shared.CoresTablePrivateCellDisclosureDialog model: @model
+        App.execute 'showModal', dialogView,
+          modal:
+            title: 'Private Data'
+            description: ''
+            width: 600
+            height: 400
+          buttons: [
+            { name: 'Close', class: 'close'}
+          ]
+
+      #
+      # Navigate to the creds index, filtered down to creds with the same (long)
+      # private data.
+      #
+      # @return void
+      navigateToIndexWithFilter: (search) ->
+        return if @model.isSSHKey()
+
+        App.request 'navigate:creds:index',
+          search: "private.data:'#{ @model.get('private.data') }'"
+
+      #
+      # @return [Boolean] true if the private data filtering link should trigger a
+      #   direct Backbone routing transition because the private data is too long to
+      #   fit into a GET request, false otherwise
+      displayFilterEventLink: ->
+        @displayFilterLink &&
+          @model.get('private.data') &&
+          # Don't display the link for SSH keys
+          !@model.isSSHKey() &&
+          @model.get('private.data').length > 50
+
+      serializeData: =>
+        _.extend @model.attributes,
+          truncated:              @model.isTruncated()
+          displayFilterLink:      @displayFilterLink
+          displayFilterEventLink: @displayFilterEventLink()
+
+    #
+    # A dialog containing the full private data for the cred, if
+    # it was too long to fit within the cell.
+    #
+    class Shared.CoresTablePrivateCellDisclosureDialog extends App.Views.ItemView
+      template: JST['backbone/apps/creds/shared/templates/private_cell_disclosure_dialog']
+
+      ui:
+        content: '.private-data'
+
+      #
+      # Select the private credential data when the dialog opens.
+      #
+      onShow: ->
+        @selectText @ui.content[0]
+
+    #
+    # The cell for the 'origin' column in the creds table.
+    #
+    class Shared.CoresTableOriginCell extends App.Views.ItemView
+      template: JST['backbone/apps/creds/shared/templates/origin_cell']
+
+      ui:
+        originDisclosureLink: 'a.origin-disclosure'
+
+      events:
+        'click @ui.originDisclosureLink': 'showOriginDataDialog'
+
+      #
+      # Display a dialog with the full text of the origin data.
+      #
+      # @return [void]
+      showOriginDataDialog: ->
+        dialogView = new Shared.CoresTableOriginCellDisclosureDialog model: @model
+
+        App.execute 'showModal', dialogView,
+          modal:
+            title: 'Origin'
+            description: ''
+            width: 600
+            height: 200
+          buttons: [
+            { name: 'Close', class: 'close'}
+          ]
+
+    #
+    # A dialog containing the full origin data for the cred.
+    #
+    class Shared.CoresTableOriginCellDisclosureDialog extends App.Views.ItemView
+      template: JST['backbone/apps/creds/shared/templates/origin_cell_disclosure_dialog']
+
+      ui:
+        modalContent: '.origin-disclosure-modal'
+
+      #
+      # When the dialog is opened, fetch and display data about this cred's
+      # origin.
+      #
+      onShow: ->
+        origin = App.request "origin:entity", @model.id, @model.get('origin_url')
+        origin.fetch
+          success: (model) =>
+            @ui.modalContent.html model.get('pretty_origin')
+
+    App.reqres.setHandler 'creds:shared:coresTableCloneCell', (opts={},config={}) =>
+      if config.instantiate?
+        new Shared.CoresTableCloneCell(opts)
+      else
+        Shared.CoresTableCloneCell
+
+    App.reqres.setHandler 'creds:shared:coresTablePrivateCell', (opts={},config={}) =>
+      if config.instantiate?
+        new Shared.CoresTablePrivateCell(opts)
+      else
+        Shared.CoresTablePrivateCell
+
+    App.reqres.setHandler 'creds:shared:coresTablePrivateCellDisclosureDialog', (opts={}, config={}) =>
+      if config.instantiate?
+       new Shared.CoresTablePrivateCellDisclosureDialog(opts)
+      else
+        Shared.CoresTablePrivateCellDisclosureDialog
+
+    App.reqres.setHandler 'creds:shared:coresTableOriginCell', (opts={},config={}) =>
+      if config.instantiate?
+        new Shared.CoresTableOriginCell(opts)
+      else
+        Shared.CoresTableOriginCell
+
+    App.reqres.setHandler 'creds:shared:coresTablePublicCell', (opts={},config={}) =>
+      if config.instantiate?
+        new Shared.CoresTablePublicCell(opts)
+      else
+        Shared.CoresTablePublicCell
+
+    App.reqres.setHandler 'creds:shared:coresTableOriginCellDisclosureDialog', (opts={},config={}) =>
+      if config.instantiate?
+        new Shared.CoresTableOriginCellDisclosureDialog(opts)
+      else
+        Shared.CoresTableOriginCellDisclosureDialog

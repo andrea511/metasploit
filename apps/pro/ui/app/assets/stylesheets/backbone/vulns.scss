@@ -1,0 +1,336 @@
+@import 'components/header_bar';
+@import 'components/tags';
+@import 'components/ellipsis';
+@import 'shared/edit_icons';
+@import 'shared/vuln_modal';
+@import "formtastic_base";
+
+.vuln-show-container {
+  .help-icon {
+    bottom: auto;
+    top: 83px;
+    right: 26px;
+  }
+  #single-vuln-header {
+    @extend %edit-icons;
+    @extend %header-bar;
+
+    height: auto;
+
+    h5 {
+      font-weight: 400;
+      font-style: normal;
+      font-size: 13px;
+      color: #999;
+      margin: 0 0 2px 0;
+      text-transform: uppercase;
+    }
+
+    h5 ~ div {
+      font-size: 11px;
+    }
+
+
+    .strong {
+      font-weight: 500;
+      font-style: normal;
+      color: #000;
+    }
+
+    .light {
+      font-weight: 100;
+    }
+
+    >.row {
+      overflow: hidden;
+    }
+
+    // Style the container div created by Backbone.
+    & > div:first-child {
+      border: 0px solid white;
+      height: 100%;
+    }
+
+    > .row > div {
+      position: relative;
+      padding-top:10px;
+      padding-bottom: 10px;
+    }
+
+    > .row > div:after {
+      position: absolute;
+      right:0;
+      content: '';
+      height:300%;
+      min-height: 70px;
+      top:0;
+      border-right: 1px solid #e4e4e4;
+    }
+
+    > .row > div:last-child:after {
+      content: none;
+    }
+
+    .host, .refs {
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    // Header, host cell
+    .host {
+
+      // OS icons list
+      ul.os-icons {
+        vertical-align: top;
+        position: absolute;
+        bottom: 10px;
+        right: 11px;
+
+        li {
+          display: inline-block;
+
+          // OS icon
+          img {
+            margin-bottom: -5px;
+          }
+
+          span.vm-badge {
+            background-color: #fd9507;
+            display: inline-block;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 10px;
+            padding: 0 3px;
+          }
+        }
+      }
+    }
+
+    .refs {
+      position: relative;
+      height: 34px;
+      overflow: hidden;
+
+      a {
+        padding-right: 10px;
+        white-space: nowrap;
+        display: inline-block;
+
+        &.more {
+          position: absolute;
+          bottom: -2px;
+          right: 0;
+          background: #f9f9f9;
+          display: none;
+          padding-left: 8px;
+          box-shadow: -2px 0 3px 1px #f9f9f9;
+        }
+
+        img {
+          display: none;
+          margin-right: 4px;
+        }
+      }
+    }
+
+  }
+
+  .content-region {
+    @extend %header-bar-content-wrapper;
+
+    .push-options{
+      position: absolute;
+      right:6px;
+      top:18px;
+      cursor: pointer;
+
+      input,label{
+        cursor: pointer;
+      }
+
+      .disabled{
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .not-exploitable{
+        display: inline-block;
+        line-height: 22px;
+        vertical-align: top;
+        margin-right: 4px;
+      }
+
+      .create-exception{
+        display:inline-block;
+      }
+    }
+
+    .tab-component{
+      .tab-content{
+        overflow-y: visible;
+      }
+
+      padding:10px;
+    }
+
+
+    .tab-content{
+      .overview-tab{
+        textarea#comments{
+          height: 24px;
+          resize: none;
+          overflow: hidden;
+          vertical-align: middle;
+        }
+        .more-text {
+          margin-bottom: -7px;
+          width: 20px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .error{
+          color:red;
+        }
+      }
+
+      .related-hosts-tab{
+
+        .filter-spacer{
+          height:44px;
+        }
+
+        .filter-toggle{
+          display:none;
+        }
+      }
+    }
+
+  }
+
+
+  .table-container{
+    .module-description{
+      a{
+        text-decoration: underline;
+      }
+    }
+  }
+
+}
+
+
+.modal{
+  .push-validation-confirmation-view, .push-exception-confirmation-view{
+    margin-top: 3px;
+
+    .processing{
+      display:none;
+      color: #ea5709;
+    }
+
+    .error-state{
+      color:red;
+      display: none;
+    }
+
+  }
+
+  .push-exception-confirmation-view {
+
+    form.disabled{
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .columns.large-6{
+      label{
+      }
+      margin: 4px 0;
+    }
+
+    .columns.large-12{
+      &>div{
+        width: 133px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+
+  div.content{
+    border-width: 0px !important;
+    .comment-view {
+      textarea {
+        width: 250px;
+        min-height: 120px;
+        resize: vertical;
+      }
+      .error{
+        color:red;
+        display:none;
+      }
+    }
+  }
+
+  .push-view {
+    .push-row{
+      margin-bottom: 4px;
+      textarea {
+        width: 100%
+      }
+    }
+    .push-note{
+      color: #ea5709 !important;
+    }
+    .push-warning{
+      color: red !important;
+    }
+  }
+
+}
+
+#dialog-region{
+  @extend %vuln-modal;
+}
+
+.nx-push-icon{
+  height: 20px;
+}
+
+.table-component .table-region {
+  td.nexpose-status, th.nexpose-status {
+    text-align: right;
+  }
+
+  td.status, th.status {
+    width: 130px;
+  }
+
+  th.comment {
+    width: 140px;
+  }
+
+  td.comment {
+    width: 140px;
+    padding-bottom: 0px;
+
+    .more-text {
+      width: 20px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    textarea {
+      height: 21px;
+      margin-bottom: 0px;
+      width: 90px;
+      resize: none;
+    }
+  }
+}
+

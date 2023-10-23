@@ -1,0 +1,11 @@
+define [
+  'jquery',
+  '<%= javascript_path("task_chains/backbone/controller/task_chains_controller") %>'
+], ($, TaskChainsController) ->
+  class App
+    start: =>
+      app = new Backbone.Marionette.Application
+      app.addInitializer ->
+        task_chains = new TaskChainsController(legacyTasks:gon.legacy_tasks)
+        task_chains = task_chains.start()
+      app.start()

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="authenticated_details_sessions" language="groovy" pageWidth="543" pageHeight="752" columnWidth="543" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ee26ee1d-2e73-4871-9d4f-4188d6e75b83">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_name" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="app_run_id" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select ses.stype, ses.desc, ses.opened_at, ses.closed_at
+from sessions ses
+inner join task_sessions tses on (ses.id = tses.session_id)
+inner join tasks t on (tses.task_id = t.id)
+inner join app_runs ar on (t.app_run_id = ar.id)
+inner join hosts on (ses.host_id = hosts.id)
+where hosts.id = $P{host_id}
+and ar.id = $P{app_run_id}]]>
+	</queryString>
+	<field name="stype" class="java.lang.String"/>
+	<field name="desc" class="java.lang.String"/>
+	<field name="opened_at" class="java.sql.Timestamp"/>
+	<field name="closed_at" class="java.sql.Timestamp"/>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4054b169-16ec-4103-8dc8-e149746141bd" style="section_header_3" x="0" y="0" width="161" height="30"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4054b169-16ec-4103-8dc8-e149746141bd" style="section_header_3" x="161" y="0" width="185" height="30"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Opened]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4054b169-16ec-4103-8dc8-e149746141bd" style="section_header_3" x="346" y="0" width="197" height="30"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Closed]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="25">
+			<textField>
+				<reportElement uuid="15710c94-90dc-4ece-aa54-f5ca9fa8e6a5" style="table_text_underlined" x="0" y="0" width="161" height="25"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{stype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="15710c94-90dc-4ece-aa54-f5ca9fa8e6a5" style="table_text_underlined" x="161" y="0" width="185" height="25"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{opened_at} ?
+    new SimpleDateFormat("yyyy/MM/dd h:mma").format($F{opened_at})
+    : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="15710c94-90dc-4ece-aa54-f5ca9fa8e6a5" style="table_text_underlined" x="346" y="0" width="197" height="25"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{closed_at} ?
+    new SimpleDateFormat("yyyy/MM/dd h:mma").format($F{closed_at})
+    : ("<i>Still open as of " + new SimpleDateFormat("yyyy/MM/dd h:mma").format(new Date()) + "</i>")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

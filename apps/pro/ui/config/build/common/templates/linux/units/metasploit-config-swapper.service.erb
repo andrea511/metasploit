@@ -1,0 +1,21 @@
+[Unit]
+Description=Metasploit Pro restore management service
+Requires=metasploit-postgresql.service metasploit-env.service
+
+After=network.target metasploit-postgresql.service metasploit-env.service
+
+PartOf=metasploit.target
+
+[Service]
+Type=oneshot
+TimeoutSec=300
+User=root
+Group=root
+RemainAfterExit=true
+
+EnvironmentFile=@@BITROCK_INSTALLDIR@@/scripts/.env.txt
+
+SyslogIdentifier=proswapper
+WorkingDirectory=@@BITROCK_INSTALLDIR@@/apps/pro/ui
+
+ExecStart=@@BITROCK_INSTALLDIR@@/ruby/bin/ruby script/swap.rb

@@ -1,0 +1,110 @@
+// Payload Generator Wizard styles
+@import "css3-mixins";
+.tabbed-modal.payload-generator {
+  h1 {
+    display: inline-block;
+    height: 15px;
+  }
+  li#payload_class {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 12px;
+    label {
+      margin-left: 13px;
+    }
+  }
+}
+
+form#payload_generator {
+  span.span-front {
+    vertical-align: top;
+    line-height: 30px;
+    font-weight: 600;
+    text-align: right;
+    display: inline-block;
+    width: 20%;
+  }
+  li.input.file.front {
+    width: 70%;
+    margin: 0 0 10px 20px;
+    display: inline-block;
+  }
+  .advanced li p.desc {
+    text-align: right;
+    position: absolute;
+    right: 50px;
+  }
+  li.keep {
+    width: auto;
+    padding-left: 25px;
+    input {
+      width: auto;
+      display: inline-block;
+      margin-left: 20%;
+    }
+    label {
+      font-weight: normal;
+      float: none;
+      width: auto;
+      display: inline-block;
+    }
+  }
+  li.output {
+    input, label {
+      width: auto;
+    }
+  }
+  label.no-req {
+    font-weight: normal;
+  }
+  li.slider {
+    label {
+      width: 20% !important;
+      text-align: right !important;
+    }
+  }
+  h3 {
+    margin-top: 0 !important;
+  }
+  textarea#badchars { font-size: 12px; }
+  p.inline-error {
+    padding-left: 25px;
+    margin: 0 !important;
+    margin-left: 20% !important;
+  }
+  .ajax-advanced-options {
+    * { font-size: 11px; }
+    label {
+      width: 35%;
+      padding-top: 1px;
+    }
+    input,textarea,select {
+      width: 55%;
+    }
+  }
+
+  .upsell {
+    padding-top: 0;
+    .body-disabled-overlay {
+      position: static;
+      margin-right: 0;
+      .container {
+        margin-top: 0;
+        width: auto;
+        padding: 5px 10px;
+      }
+      h2 {
+        line-height: 1.35;
+        margin-top: 0;
+        margin-bottom: 15px;
+      }
+    }
+    p {
+      margin: 15px 0;
+    }
+    .upgrade {
+      margin-top: 30px;
+      padding-left: 20px;
+    }
+  }
+}

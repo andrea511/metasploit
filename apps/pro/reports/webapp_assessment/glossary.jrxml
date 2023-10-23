@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="glossary" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "webapp_styles.jrtx"]]></template>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+unnest(ARRAY[
+'Command Injection (CMDi)',
+'Cross-Site Scripting (XSS)',
+'Direct Object Reference (DOR)',
+'Local File Inclusion (LFI)',
+'Cross-site Request Forgery (CSRF)',
+'Publicly Writable Directory',
+'Remote File Inclusion (RFI)',
+'Session Fixation',
+'Sites',
+'SQL Injection (SQLi)',
+'Transport Layer Encryption',
+'Unauthorized Access',
+'Unvalidated Redirect',
+'Vulnerable Version',
+'vhost (Virtual Host)',
+'Web Audit',
+'Web Exploit',
+'Web Crawl',
+'Web Page',
+'Web Scan',
+'Web Vulnerability'
+]) as term,
+
+unnest(ARRAY[
+-- CMDi
+'An attack method that injects and runs commands in a compromised application. Most command shell attacks take advantage of unvalidated user input, which enables an attacker to append a command sequence or escape string to execute arbitrary commands. If an command inject attack is successful, the attacker can use the exploited application as a pseudo shell to execute malicious code.',
+-- XSS
+'An attack method that injects a client-side script to exploit web applications and web pages. Most cross-site scripting attacks execute malicious code when a target visits an infected web page. Typically, the infected web page redirects the victim to a spoofed web page, which injects malicious code that enables the attacker to take over the session.',
+-- DOR
+'An attack method that exploits a vulnerability in web applications that exposes an internal implementation object, such as a database record or file, to a user. Examples of common examples of direct object vulnerabilities include open redirects and direct traversals.',
+-- LFI
+'An attack method that uses an include method to inject local files from the exploited server. LFI attacks typically exploit vulnerable parameters that enable an attacker to include code that is already hosted on the server. LFI attacks enable the attacker to gather user names, gather information from the log files, and remotely execute commands on the exploited server.',
+-- CSRF
+'An attack method that uses a victim''s active session to exploit the victim''s identity and privileges. During a Cross-site Request Forgery attack, an attacker sends a victim a URL to a web page that contains a link, form button, or some Javascript that performs an action. When the action is requested, it executes malicious actions on the attacker''s behalf. For example, an attacker may force a victim to unknowingly perform tasks like make purchases, modify account information, transfer funds, or pretty much any action that the web application allows.',
+-- Public dir
+'A directory that has write permissions that grants all users the ability to modify the directory and the files that it contains, including creating, deleting, and renaming files.',
+-- RFI
+'An attack method that uses server-side scripts to exploit vulnerable web applications and enables the attacker to upload a remote file to the victim''s server. RFI attacks typically exploit vulnerable include functions to link to remote scripts. These scripts will commonly allow an attacker to execute shell commands that enable them to upload files, create directories, and modify websites.',
+-- Session Fixation
+'An attack method that enables an attacker to hijack an established user session by forcing the session identifier (ID) to a specific value. During a session fixation attack, the attacker sends a victim a URL that contains the fixed session, which forces the victims''s browser to use the selected session.When the victim clicks on the URL, the web application establishes that a session already exists for the user and does not create a new session. Therefore, when the victim logs into web application, the attacker is able to access the account using the same session ID.',
+-- Sites
+'Refers to a website, or a collection of web pages, that is defined by a fully qualified domain name or IP address. A site can also refer to a web application.',
+-- SQLi
+'An attack method that exploits user input vulnerabilities to pass SQL queries through a web application to the database.The database executes the SQL queries, which typically enables the attacker to modify or gain access to the database.',
+-- Transport Layer Encryption
+'An Internet protocol that enables the ability to securely transmit and receive encrypted data between servers and clients that support Transportation Layer Security or Secure Socket Layer (SSL). TLS/SSL prevents non-trusted devices from allowing a third party to monitor or alter communication between a server and a client.',
+-- Unauthorized Access
+'Refers to the ability to obtain entry to system and network resources without valid permissions. An attacker can exploit vulnerabilities in authentication services, FTP services, and web services to obtain unauthorized access in order to do things like modify security policies, steal user names and passwords, and escalate privileges.',
+-- Unvalidated Redirect
+'A request that accepts untrusted and unvalidated user-supplied parameters to specify the redirection of the target. If the application does not validate the input value, the victim can be redirected to a malicious URL. This attack method is typically used in phishing attacks to get victims to unknowingly visit a malicious site. To exploit an unvalidated redirect, an attacker may craft a URL that uses a domain of a trusted site, such as http://www.yoursite.com. However, the URL may include a redirect function, such as http://www.yoursite.com/redirect.aspx?url=http://www.mysite.com, that sends the victim to a malicious site designated by the attacker.',
+-- Vulnerable Version
+'Refers to a version of an application or software that has known security vulnerabilities.',
+-- vhost
+'Refers to the fully qualified domain name of a virtual host or server. Typically, vhosts are devices that can be accessed remotely by users to host data or utilize software services.',
+-- Web audit
+'A feature that performs vulnerability checks for XSS, LFI, RFI, and SQLi flaws.',
+-- Wed exploit
+'A feature that matches exploits to known web vulnerabilities to create an attack plan. Web exploit runs the attack plan after it has been created and attempts to exploit the identified vulnerabilities.',
+-- Web crawl
+'A feature that recursively parses a website or namespace for hyperlinks that point to other web pages and follows the links to those other pages.',
+-- Web page
+'Refers to an HTML document that resides on the World Wide Web.',
+-- Web scan
+'A feature that analyzes web application configurations and security. A web scan crawls websites, audits them for misconfigurations and common vulnerability types, such as XSS, LFI, RFI, and SQLi vulnerabilities, and exploits the identified vulnerabilities.',
+-- WebVuln
+'A security weakness or flaw that enables an attacker to compromise a web application. Most web vulnerabilities are caused by unvalidated user input, cross-site scripting, and injection flaws. These security flaws provide attackers with an opportunity to leverage the vulnerability to gain access to the web application to run arbitrary code.'
+]) as definition
+-- Number of terms; specified to avoid Cartesian product dupes:
+limit 21]]>
+	</queryString>
+	<field name="term" class="java.lang.String"/>
+	<field name="definition" class="java.lang.String"/>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement style="glossary_def" x="15" y="22" width="547" height="16"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{definition}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="glossary_term" x="1" y="1" width="426" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{term}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

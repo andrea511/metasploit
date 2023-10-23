@@ -1,0 +1,33 @@
+//colors
+$color_wild_sand_approx: #f5f5f5;
+$color_celeste_approx: #ccc;
+
+.module_desc pre {
+  background: $color_wild_sand_approx;
+  border: 1px solid $color_celeste_approx;
+  //Instead of the line below you could use @includeborder-radius($radius, $vertical-radius)
+  border-radius: 2px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 1px 10px;
+}
+.module_desc code {
+  background: $color_wild_sand_approx;
+  border: 1px solid $color_celeste_approx;
+  //Instead of the line below you could use @includeborder-radius($radius, $vertical-radius)
+  border-radius: 2px;
+  padding: 1px 3px;
+}
+.module_desc pre code {
+  background: transparent;
+  border: none;
+}
+.module_desc ul {
+  list-style: unset;
+  margin-left: 2em;
+}
+
+.module_desc ol {
+  list-style-type:decimal;
+  margin-left: 2em;
+}

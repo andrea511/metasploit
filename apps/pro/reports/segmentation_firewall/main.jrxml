@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="main" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ae4cde01-2c8d-4451-9d10-dcd91ea9c917">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1312"/>
+	<property name="ireport.callouts" value="##Mon Apr 22 16:14:49 CDT 2013"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="workspace_id" class="java.lang.Integer"/>
+	<parameter name="usernames_reported" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "segmentation_firewall/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="product_name" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[The name of the product used to generate the report]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Metasploit Pro"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_title" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Segmentation and Firewall Testing"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_cover" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_proj_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_egress_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_port_state_dist" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_crit_nonfilt_ports" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_reg_nonfilt_ports" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_appendix_res" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_appendix_options" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="port_states" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["not in ('filtered')"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	project_name, project_created, project_updated,
+	app_name, task_id, started_at,
+	-- MM will be running when report is generated, but other operations should be complete:
+	current_timestamp at time zone 'UTC' as stopped_at,
+	state, default_range,
+    coalesce(external_target, '** None **') external_target,
+	concat(start_port, ' - ', end_port) port_range_scanned,
+	(case
+		when default_range then 1
+		else lowest_port
+	end ) lowest_port,
+	(case
+		when default_range then 65129
+		else highest_port
+	end ) highest_port,
+	lowest_nonfiltered_port, highest_nonfiltered_port,
+	(select count(er.*) from
+	egadz_result_ranges er
+	where er.task_id = x.task_id
+	) result_count
+from
+(
+	select
+		w.name project_name, w.updated_at project_updated, w.created_at project_created,
+		a.name as app_name,
+		t.id task_id,
+		ar.started_at, ar.stopped_at, ar.state,
+		(select min(start_port) from egadz_result_ranges where task_id = t.id) lowest_port,
+		(select max(end_port) from egadz_result_ranges where task_id = t.id) highest_port,
+		(select min(start_port) from egadz_result_ranges
+		where task_id = t.id and state != 'filtered') lowest_nonfiltered_port,
+		(select max(end_port) from egadz_result_ranges
+		where task_id = t.id and state != 'filtered') highest_nonfiltered_port,
+		-- or dst_host in config:
+		(select distinct target_host from egadz_result_ranges er where er.task_id = t.id) as external_target,
+		replace(substring(ar.config, 'nmap_start_port":([^,]*),'), '"', '') as start_port,
+		replace(substring(ar.config, 'nmap_stop_port":([^,]*),'), '"', '') as end_port,
+		substring(ar.config, 'use_nmap_default_port_set":([^,]*),')::bool as default_range
+	from app_runs ar
+	inner join tasks t on (ar.id = t.app_run_id)
+	inner join apps a on (ar.app_id = a.id)
+	inner join workspaces w on (ar.workspace_id = w.id)
+	where ar.id = $P{app_run_id}
+	and w.id = $P{workspace_id}
+) x]]>
+	</queryString>
+	<field name="app_name" class="java.lang.String"/>
+	<field name="task_id" class="java.lang.Integer"/>
+	<field name="started_at" class="java.sql.Timestamp"/>
+	<field name="external_target" class="java.lang.String"/>
+	<field name="port_range_scanned" class="java.lang.String"/>
+	<field name="default_range" class="java.lang.Boolean"/>
+	<field name="lowest_port" class="java.lang.Integer"/>
+	<field name="highest_port" class="java.lang.Integer"/>
+	<field name="stopped_at" class="java.sql.Timestamp"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="result_count" class="java.lang.Integer"/>
+	<field name="highest_nonfiltered_port" class="java.lang.Integer"/>
+	<field name="lowest_nonfiltered_port" class="java.lang.Integer"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="project_updated" class="java.sql.Timestamp"/>
+	<field name="project_created" class="java.sql.Timestamp"/>
+	<variable name="titleLogo" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{image_dir} + "rapid7_logo_padded.jpg"]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="663" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_cover}]]></printWhenExpression>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="c04476dd-4fd8-406f-91fa-35e8a8677742" x="221" y="37" width="351" height="297"/>
+				<imageExpression><![CDATA[$V{titleLogo}]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement uuid="8774bd30-1526-4ff3-b700-926a667dd414" x="221" y="642" width="320" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Pages: " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5d1c0f8a-f695-452a-a4fc-ba08eb1165f9" style="generic_text" x="221" y="433" width="320" height="159"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[This report presents findings from a Segmentation and Firewall Testing MetaModule run. Overall distribution of discovered port states is shown for critical and registered ports, along with a detailed list of all unfiltered ports. Included resources clarify port states, critical ports and other topics.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3780512a-1bfd-4d3f-be1d-c03fc99de7cf" x="222" y="334" width="351" height="69"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report_title}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement uuid="8b12200e-0c2a-4731-9f09-ebae17e42674" x="0" y="662" width="571" height="1"/>
+			</break>
+			<textField>
+				<reportElement uuid="c5f3ed37-748a-4a80-bc09-839503571a02" mode="Transparent" x="1" y="1" width="220" height="661" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" markup="none">
+					<font fontName="SansSerif" size="48" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{product_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_cover} ? $V{PAGE_NUMBER} == 2 : $V{PAGE_NUMBER} == 1]]></printWhenExpression>
+			<textField pattern="">
+				<reportElement uuid="25a94393-f57b-4b62-8fdc-32bbeb9cfb61" style="last_audited" x="331" y="17" width="241" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Started " + (new SimpleDateFormat("MMMMM dd, yyyy")).format($F{started_at})]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement uuid="393e4df2-9cbf-4f9b-ad42-9de815998854" style="report_generated" x="395" y="0" width="177" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="08cd6e0e-6acd-489a-adab-4ace61c4cd22" style="section_header_1_no_bg" x="0" y="1" width="331" height="30"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{report_title}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="692d76ec-9b4e-422b-9a4b-74356395ec47" style="separator_line" x="0" y="33" width="572" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="77" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_proj_summ}]]></printWhenExpression>
+			<line>
+				<reportElement uuid="9011c730-2492-435e-8fc4-ad5690bedbe0" style="separator_line_lighter" x="0" y="51" width="573" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="f88789ad-5cdd-4eba-99a4-949cbdacc373" style="separator_line_lighter" x="0" y="73" width="573" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="1dc401d1-92d5-4442-8f4c-97fac9ac245d" style="table_text" x="142" y="53" width="418" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="485fa3fb-cc97-447b-bb34-7f2a0e1dadb6" style="table_text_indented" x="0" y="53" width="142" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}.toString().contains(",") ? "Users:" : "User:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5582783a-18d7-46ba-b4e3-c2915a8f80dc" style="table_text" x="142" y="31" width="418" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4ae508c4-4bc0-472a-a24d-15ffb5c175d1" style="table_text_indented" x="0" y="31" width="142" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Project Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f79431c0-3d8e-43d5-8b3b-1601383db97a" style="section_header_2" x="0" y="1" width="573" height="29"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[PROJECT SUMMARY]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9580d37f-ec67-494c-9995-094ec2876eb8" style="separator_line_darker" x="0" y="30" width="573" height="1"/>
+			</line>
+		</band>
+		<band height="109">
+			<printWhenExpression><![CDATA[$P{display_egress_summ}]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="ea5c6bdb-398e-4065-a513-e69d717da927" style="table_text" x="142" y="52" width="418" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{default_range} == true ?
+    "Default nmap ports (see Appendix)"
+    : $F{port_range_scanned}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="c4f5d5ff-30e2-4975-b5b0-d7f195227f3b" style="separator_line_lighter" x="0" y="72" width="573" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="64abf75e-57ea-405c-8ff1-621c169a1dd4" style="separator_line_lighter" x="0" y="50" width="573" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="5c16b3e2-04cf-478b-b6c1-be268a4fe8e5" style="table_text" x="142" y="30" width="418" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{external_target}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="14128098-9f9c-44e4-9523-d4d0ddedb7c6" style="table_text_indented" x="0" y="52" width="142" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Port range scanned:"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="674d6378-452c-4a51-8165-f8e6af0a3f7f" style="section_header_2" x="0" y="0" width="573" height="29"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[EGRESS SUMMARY]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8562fbeb-7243-4ec0-b107-4954a6cf5d85" style="table_text_indented" x="0" y="74" width="142" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Runtime:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a7b38eb3-d19b-43a9-a6e8-2fee80f73bc0" style="table_text" x="142" y="74" width="418" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new GroovyShell(new Binding([started_at:$F{started_at},stopped_at:$F{stopped_at},state:$F{state}])).evaluate("""
+
+import groovy.time.TimeDuration
+import groovy.time.TimeCategory
+
+TimeDuration duration=TimeCategory.minus(stopped_at,started_at)
+// duration is very close, but let's make it prettier:
+
+def (days,hours,minutes,seconds) = [duration.getDays(),
+                                    duration.getHours(),
+                                    duration.getMinutes(),
+                                    duration.getSeconds()]
+def (day_str,hour_str,min_str,sec_str) = [] // null init
+
+// Handle all the singular/plurals...
+if (days > 0) {
+  if (days > 1) {
+    day_str = days + " days"
+  } else {
+    day_str = days + " day"
+  }
+}
+
+if (hours > 0) {
+  if (hours > 1) {
+    hour_str = hours + " hours"
+  } else {
+    hour_str = hours + " hour"
+  }
+}
+
+if (minutes > 0) {
+  if (minutes > 1) {
+    min_str = minutes + " minutes"
+  } else {
+    min_str = minutes + " minute"
+  }
+}
+
+if (seconds > 0) {
+  if (seconds > 1) {
+    sec_str = seconds + " seconds"
+  } else {
+    sec_str = seconds + " second"
+  }
+}
+
+// Join what we calculated:
+time_str = [day_str, hour_str, min_str, sec_str]
+time_str.removeAll([null])
+time_str = time_str.join(', ')
+
+return time_str
+
+""")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="109b259a-1629-44e7-8a66-4b8a7b2a1d61" style="separator_line_lighter" x="0" y="94" width="573" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="2d717097-31a7-4141-8648-d342edc0ef59" style="table_text_indented" x="0" y="30" width="142" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["External target:"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="9580d37f-ec67-494c-9995-094ec2876eb8" style="separator_line_darker" x="0" y="29" width="573" height="1"/>
+			</line>
+		</band>
+		<band height="172">
+			<printWhenExpression><![CDATA[$P{display_port_state_dist}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="534eff16-af39-49d7-a1b9-b14d91df4285" style="section_header_1" x="0" y="1" width="571" height="30">
+					<printWhenExpression><![CDATA[$F{result_count} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Port State Distribution]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="ed14b505-e8b9-4b04-a546-71ce3ac3d6b0" x="0" y="30" width="569" height="76">
+					<printWhenExpression><![CDATA[$F{result_count} > 0]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="highest_port">
+					<subreportParameterExpression><![CDATA[$F{highest_port}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="lowest_port">
+					<subreportParameterExpression><![CDATA[$F{lowest_port}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "port-distribution.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="dd557375-3091-445a-8191-9351197d182a" style="generic_text" x="0" y="106" width="572" height="66">
+					<printWhenExpression><![CDATA[$F{result_count} <= 0]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["No results were detected. Please verify the network connectivity of your Metasploit instance and re-run the Firewall Egress Testing MetaModule."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="225">
+			<printWhenExpression><![CDATA[$P{display_crit_nonfilt_ports} && ($F{result_count} > 0) && $F{lowest_nonfiltered_port} && ($F{lowest_nonfiltered_port} <= 1024)]]></printWhenExpression>
+			<break>
+				<reportElement uuid="95be437d-e006-4f4e-8dcc-ab152cc7aa3a" x="0" y="0" width="571" height="1">
+					<printWhenExpression><![CDATA[$F{result_count} > 0]]></printWhenExpression>
+				</reportElement>
+			</break>
+			<staticText>
+				<reportElement uuid="70d0c533-4d9b-483e-a42a-872e5ace9291" style="section_header_1" x="0" y="1" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Critical Non-Filtered Ports]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="bb25319c-3f15-460b-a89e-4d657e550bec" x="0" y="89" width="571" height="121"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="port_states">
+					<subreportParameterExpression><![CDATA[$P{port_states}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="port_cutoff">
+					<subreportParameterExpression><![CDATA["<= 1024"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "port-status-table.jasper"]]></subreportExpression>
+			</subreport>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="addd6078-3728-4763-92dd-cf4c5ca24388" style="gray_p" x="2" y="31" width="569" height="49"/>
+				<textElement markup="none">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["This table shows all critical ports (at or under 1024) that were not filtered. The state and the port number are known from the egress scan, but the name and description (if shown) are inferred from the IANA assignment for each port, or from common usage. More information can be found in the Resources Appendix."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="214">
+			<printWhenExpression><![CDATA[$P{display_reg_nonfilt_ports} && ($F{result_count} > 0) && $F{highest_nonfiltered_port} && ($F{highest_nonfiltered_port} > 1024)]]></printWhenExpression>
+			<break>
+				<reportElement uuid="95be437d-e006-4f4e-8dcc-ab152cc7aa3a" x="0" y="0" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="c525248f-75d7-4eee-856d-6ecdd42c7ab3" style="section_header_1" x="0" y="1" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Registered Non-Filtered Ports]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="bb25319c-3f15-460b-a89e-4d657e550bec" x="0" y="87" width="571" height="121"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="port_states">
+					<subreportParameterExpression><![CDATA[$P{port_states}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="port_cutoff">
+					<subreportParameterExpression><![CDATA["> 1024"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "port-status-table.jasper"]]></subreportExpression>
+			</subreport>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="addd6078-3728-4763-92dd-cf4c5ca24388" style="gray_p" x="2" y="31" width="572" height="47"/>
+				<textElement markup="none">
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["This table shows all non-critical ports (over 1024) that were not filtered. The state and the port number are known from the egress scan, but the name and description (if shown) are inferred from the IANA assignment for each port, or from common usage. More information can be found in the Resources Appendix."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="133">
+			<printWhenExpression><![CDATA[$P{display_appendix_res}]]></printWhenExpression>
+			<break>
+				<reportElement uuid="95be437d-e006-4f4e-8dcc-ab152cc7aa3a" x="0" y="0" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="1c0c751e-ff34-46e6-8df2-81ea0c364912" style="section_header_1" x="2" y="1" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Resources]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="1c9597d6-eccf-4735-ae50-333c43c3c15a" x="2" y="31" width="569" height="100"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "resources.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="314">
+			<printWhenExpression><![CDATA[$P{display_appendix_options}]]></printWhenExpression>
+			<break>
+				<reportElement uuid="35da2bf0-1d60-4860-ada9-64acdb743c0b" x="0" y="0" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="11ff9738-ad11-4bbf-b77c-28514661310e" style="section_header_1" x="2" y="1" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Report Generation Options]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="503488af-bcb8-44c4-91f1-bc6dde3ec019" style="title2" x="16" y="34" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Report Sections]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="27609a19-2787-4edb-a6fa-1f18bfbc3155" style="title2" x="351" y="34" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Key]]></text>
+			</staticText>
+			<image scaleImage="RealSize">
+				<reportElement uuid="0d87e46b-21d1-438b-bb16-c7e7a6a6eb76" mode="Opaque" x="26" y="60" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_cover}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="8ffae9a2-70e3-4894-8b8e-193b91a41147" x="358" y="85" width="10" height="10"/>
+				<imageExpression><![CDATA[$P{image_dir} + "subtract.png"]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="68b5c279-f0aa-41cf-811d-7b72798afd24" x="358" y="62" width="10" height="10"/>
+				<imageExpression><![CDATA[$P{image_dir} + "add.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="ba505cd1-9245-412d-a2a8-000a898e0275" style="glossary_def" x="379" y="60" width="101" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Selected"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="97c012cd-d8f8-43c2-a172-d4d20150e34f" style="glossary_def" x="379" y="83" width="101" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Unselected"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement uuid="69cf6a63-22af-4d40-9cb1-403f87c49d0e" x="26" y="74" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_proj_summ}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="ca769de5-a017-4eca-ae63-36004c7005ed" x="26" y="89" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_egress_summ}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="105359e5-6633-48fc-842b-e9ade6fd38f4" x="26" y="132" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_reg_nonfilt_ports}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="f9de43da-4dba-4448-a14a-e482b963b1db" x="26" y="118" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_crit_nonfilt_ports}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="cc23e293-e01b-4ee6-a03f-71a2c50686f7" style="glossary_def" x="42" y="59" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Cover Page"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="97ec5fff-6577-469c-bd8c-b52852f30473" style="glossary_def" x="42" y="73" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Project Summary"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2cbdb506-b914-4148-aea8-d47508a60323" style="glossary_def" x="42" y="87" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Egress Summary"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="57dc331e-6683-4b18-a847-6a76aa841689" style="glossary_def" x="42" y="115" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Critical Non-Filtered Ports"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b7c43b71-909b-4966-8bd3-3e32a1a4a6d2" style="glossary_def" x="42" y="129" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Registered Non-Filtered Ports"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement uuid="db394349-a305-45af-b7a2-cebbce454c42" x="26" y="146" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_appendix_res}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="700ac9e0-a7ab-4c3c-a693-9e602e4f1ad8" style="glossary_def" x="42" y="143" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Appendix: Resources"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement uuid="e3c97908-05bb-4994-923a-ccc584eabb4e" x="26" y="160" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_appendix_options}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="d4aafe08-28b0-4968-a377-ea1db4ae37df" style="glossary_def" x="42" y="157" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Appendix: Report Generation Options"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2cbdb506-b914-4148-aea8-d47508a60323" style="glossary_def" x="42" y="101" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Port State Distribution"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement uuid="ca769de5-a017-4eca-ae63-36004c7005ed" x="26" y="103" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_port_state_dist}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}>1]]></printWhenExpression>
+			<image scaleImage="RealSize" vAlign="Middle" isUsingCache="false" onErrorType="Blank">
+				<reportElement uuid="60b2d4a1-3368-4d1b-8de8-a3e5ee3c09da" x="0" y="4" width="58" height="11"/>
+				<imageExpression><![CDATA[$P{image_dir} + "r7-logo_footer.jpg"]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement uuid="c5b9c62d-91fc-4434-8836-13fe93c914ea" style="last_audited" x="519" y="0" width="52" height="18"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f9807d97-01d5-4334-b600-2cfe5e84b9d9" style="last_audited" x="331" y="0" width="188" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Page " + ($V{PAGE_NUMBER} - 1) +" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,49 @@
+<% unless License.get.supports_tags? %>
+  <h1></h1>
+<% else %>
+  <h3>Tag Editor</h3>
+  <p> Use this form to add a tag to this host, or to update an existing tag. Tag names should be alphanumeric values, and descriptions may be up to 8k bytes. Tags and their descriptions will be reflected in any reports when they are specified to do so. Hosts may be searched by tags by prepending a hash (#) for all tasks which require a range of IP addresses. </p>
+	<%= render "shared/error_messages", :target => @tag %>
+  <div>
+    <fieldset class="enclosed">
+    <%= f.hidden_field :host_id, {:value => @host.id} %>
+    <%= f.hidden_field :user_id, {:value => @current_user.id} %>
+    <table class="list" id="host_tags_form">
+      <thead>
+        <tr>
+          <th class="tag-form-name">Name</th>
+          <th class="tag-form-desc">Description</th>
+          <th class="tag-form-attr">Attributes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <td valign="top">
+          <%= f.text_field :name, {:size => 25, :value => ""}%>
+        </td>
+        <td valign="top">
+          <%= f.text_area :desc, {:rows => 4, :cols => 50, :value => ""} %>
+        </td>
+        <td valign="top">
+          <table class="list mar-tb10">
+            <tr>
+              <td> <%= f.check_box :report_summary %>
+                <%= f.label :report_summary, "Include in report summary?", :class => "inline" %> </td>
+            </tr>
+            <tr>
+              <td> <%= f.check_box :report_detail %>
+                <%= f.label :report_detail, "Include in report details?", :class => "inline" %> </td>
+            </tr>
+            <tr>
+              <td> <%= f.check_box :critical %>
+                <%= f.label :critical, "Critical finding?", :class => "inline" %> </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <p>
+    <%= f.submit 'Update/Add Tag', :class => 'save' %>
+    </p>
+  </fieldset>
+  </div>
+<% end # license %>

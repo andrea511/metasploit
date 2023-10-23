@@ -1,0 +1,7 @@
+<div id="report-name-and-type">
+  <h1><%= @name %></h1>
+  <h2><%= @pretty_report_type %> Report</h2>
+</div>
+<div id="report-created-at">
+  Creation date: <%= @pretty_created_at %>
+</div>

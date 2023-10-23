@@ -1,0 +1,5 @@
+#!/bin/sh
+. @@BITROCK_INSTALLDIR@@/scripts/setenv.sh
+@@BITROCK_INSTALLDIR@@/ctlscript.sh stop
+ruby @@BITROCK_INSTALLDIR@@/apps/pro/ui/script/diagnostic_logs.rb $@
+@@BITROCK_INSTALLDIR@@/ctlscript.sh start

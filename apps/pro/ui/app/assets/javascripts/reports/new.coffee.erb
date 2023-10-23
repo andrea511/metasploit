@@ -1,0 +1,15 @@
+jQuery(document).on 'requirejs-ready', ->
+  modal = null
+  window.initRequire [
+    'jquery',
+    '<%= javascript_path("shared/backbone/layouts/modal") %>',
+    '<%= javascript_path("reports/backbone/views/report_form") %>',
+    '<%= javascript_path("reports/switch_report_type")%>'
+  ], ($, Modal, ReportsLayoutForm) ->
+      url = $('meta[name=custom_resource_create]').attr('content')
+      $('#upload_report_custom_resource').click (e) ->
+        e.preventDefault()
+        modal.close() if modal?
+        modal =  new Modal(class: 'flat', title: "New Custom Resource", width:500)
+        modal.open()
+        modal.content.show(new ReportsLayoutForm(url : url))

@@ -1,0 +1,59 @@
+<% title "Human Target" %>
+
+<h2><%= @human_target.name %></h2>
+
+<h3><%= @human_target.email_address %></h3>
+
+<hr />
+<h3>Clicks from Emails</h3>
+<table class="list">
+  <thead>
+    <tr>
+      <th>Campaign Name</th>
+      <th>From IP</th>
+      <th>Clicked at</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @visits.each do |v| %>
+    <tr>
+      <td><%= if (v.email.present?) then v.email.campaign.name else "**Email was Deleted**" end %></td>
+      <td><%= v.address %></td>
+      <td><%= v.created_at %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<hr />
+<h3>Email Openings</h3>
+<table class="list">
+  <thead>
+    <tr>
+      <th>Campaign Name</th>
+      <th>From IP</th>
+      <th>Clicked at</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @openings.each do |v| %>
+    <tr>
+      <td><%= if (v.email.present?) then v.email.campaign.name else "**Email was Deleted**" end %></td>
+      <td><%= v.address %></td>
+      <td><%= v.created_at %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<hr />
+<h3>Phishing Results</h3>
+<ul>
+<% @phishing_results.each do |pr| %>
+  <li class="se-json-result" data-content="<%=h pr.data %>"></li>
+<% end %>
+</ul>
+
+<% content_for :bottom_javascript do %>
+  <%= javascript_include_tag 'social_engineering/human_targets' %>
+<% end %>

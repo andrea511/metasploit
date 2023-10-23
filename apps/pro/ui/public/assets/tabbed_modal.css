@@ -1,0 +1,1402 @@
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.sexy-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-weight: 300;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.small-caps-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-size: 11px;
+  position: relative;
+}
+
+/* line 13, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .bg, .config .bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 800;
+  background: #000;
+  opacity: 0.4;
+}
+/* line 23, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal, .config .tabbed-modal {
+  z-index: 800;
+  zoom: 1;
+  font-size: 11px;
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  background: #fff;
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: auto;
+  bottom: auto;
+  border-radius: 13px;
+  border: 5px solid #222;
+  border: 5px solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  min-width: 600px;
+  padding: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+}
+/* line 45, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal div.advanced, .config .tabbed-modal div.advanced {
+  background: #f6f6f6;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 0;
+  /* Gecko */
+  -webkit-border-top-right-radius: 0;
+  /* Webkit */
+  -khtml-border-top-right-radius: 0;
+  /* Konqueror */
+  border-top-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 5px;
+  /* Konqueror */
+  border-bottom-right-radius: 5px;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 5px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 5px;
+  /* Konqueror */
+  border-bottom-left-radius: 5px;
+  /* CSS3 */
+  border: 1px solid #ddd;
+  padding: 10px;
+  display: none;
+}
+/* line 50, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal div.advanced h3, #modals .tabbed-modal div.advanced h4, .config .tabbed-modal div.advanced h3, .config .tabbed-modal div.advanced h4 {
+  color: #000;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal div.advanced li.input, .config .tabbed-modal div.advanced li.input {
+  padding-left: 0;
+}
+/* line 59, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal a.advanced, .config .tabbed-modal a.advanced {
+  display: inline-block;
+  width: auto;
+  padding-right: 15px;
+  font-size: 11px;
+  background: url(/assets/darrow-d391c47ad6198328abff4e48f7bb90ca91f627efe5d1570d7a534071bc7be9a2.png);
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 15px;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 71, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal a.not_advanced, .config .tabbed-modal a.not_advanced {
+  background: url(/assets/uarrow-b0b9437773a3c62e2afb2ccd9d6e881b4e5e1c838b74fe7547b1eb6e76b3d04b.png);
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+/* line 76, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal hr, .config .tabbed-modal hr {
+  border: 0;
+  margin: 0;
+  background: #f0f0f0;
+  height: 3px;
+  border-bottom: 1px solid #eee;
+  box-shadow: inset -1px 0 1px rgba(0, 0, 0, 0.1);
+}
+/* line 84, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .body-disabled-overlay, .config .tabbed-modal .body-disabled-overlay {
+  margin-right: 10px;
+}
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding, .config .tabbed-modal .padding {
+  padding: 7px 5px 10px 15px;
+}
+/* line 90, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > h1, .config .tabbed-modal .padding > h1 {
+  font-size: 1.5em;
+  font-family: "Trebuchet MS", Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: #EA5709;
+  margin: 5px 0;
+}
+/* line 96, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > a.close, .config .tabbed-modal .padding > a.close {
+  position: absolute;
+  right: 10px;
+  top: 6px;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 22px;
+  color: #777;
+}
+/* line 106, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > a.close:hover, .config .tabbed-modal .padding > a.close:hover {
+  color: #333;
+}
+/* line 110, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding ul.radio-horizontal, .config .tabbed-modal .padding ul.radio-horizontal {
+  list-style: none;
+}
+/* line 112, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding ul.radio-horizontal li, .config .tabbed-modal .padding ul.radio-horizontal li {
+  display: inline;
+}
+/* line 116, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > div.content, .config .tabbed-modal .padding > div.content {
+  float: right;
+  width: 80%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 11px;
+  background: #fff;
+  border: 2px solid #d6d6d6;
+  position: relative;
+  left: -10px;
+  padding: 5px 10px;
+  height: 445px;
+  overflow-y: auto;
+}
+/* line 129, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > div.content.top-left-square, .config .tabbed-modal .padding > div.content.top-left-square {
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 11px;
+  /* Gecko */
+  -webkit-border-top-right-radius: 11px;
+  /* Webkit */
+  -khtml-border-top-right-radius: 11px;
+  /* Konqueror */
+  border-top-right-radius: 11px;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 11px;
+  -webkit-border-bottom-right-radius: 11px;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 11px;
+  /* Konqueror */
+  border-bottom-right-radius: 11px;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 11px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 11px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 11px;
+  /* Konqueror */
+  border-bottom-left-radius: 11px;
+  /* CSS3 */
+}
+/* line 133, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > p, .config .tabbed-modal .padding > p {
+  margin: 7px 10px 10px 0;
+  color: black;
+  font-weight: 100;
+}
+/* line 138, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs, .config .tabbed-modal .padding > ul.tabs {
+  float: left;
+  width: 20%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  overflow: hidden;
+  margin-top: 0;
+}
+/* line 144, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li, .config .tabbed-modal .padding > ul.tabs li {
+  display: block;
+  line-height: 38px;
+  padding-left: 8px;
+  border: 1px solid #d5d5d5;
+  color: "#29383f";
+  font-weight: normal;
+  cursor: pointer;
+  height: auto;
+  background-image: none;
+  background-color: #f2f2f2;
+  background-image: -moz-linear-gradient(left, #fff, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 100% 0, from(#fff), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(left, #fff, #f2f2f2);
+  background-image: -o-linear-gradient(left, #fff, #f2f2f2);
+  background-image: linear-gradient(to right, #fff, #f2f2f2);
+  background-repeat: repeat-x;
+  -moz-border-radius-topleft: 11px;
+  /* Gecko */
+  -webkit-border-top-left-radius: 11px;
+  /* Webkit */
+  -khtml-border-top-left-radius: 11px;
+  /* Konqueror */
+  border-top-left-radius: 11px;
+  /* CSS3 */
+  -moz-border-radius-topright: 0;
+  /* Gecko */
+  -webkit-border-top-right-radius: 0;
+  /* Webkit */
+  -khtml-border-top-right-radius: 0;
+  /* Konqueror */
+  border-top-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 0;
+  /* Konqueror */
+  border-bottom-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 11px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 11px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 11px;
+  /* Konqueror */
+  border-bottom-left-radius: 11px;
+  /* CSS3 */
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin: 6px 0;
+}
+/* line 158, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li input, .config .tabbed-modal .padding > ul.tabs li input {
+  margin-left: 0;
+  margin-right: 1px;
+  cursor: pointer;
+}
+/* line 163, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li label, .config .tabbed-modal .padding > ul.tabs li label {
+  cursor: pointer;
+}
+/* line 166, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.tab-click-disabled, .config .tabbed-modal .padding > ul.tabs li.tab-click-disabled {
+  border-color: #e3e3e3;
+  background: #fff;
+  color: #ccc;
+  pointer-events: none;
+}
+/* line 171, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.tab-click-disabled input, .config .tabbed-modal .padding > ul.tabs li.tab-click-disabled input {
+  opacity: 0.3;
+}
+/* line 175, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.first-child, .config .tabbed-modal .padding > ul.tabs li.first-child {
+  margin-top: 0;
+}
+/* line 178, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.selected, .config .tabbed-modal .padding > ul.tabs li.selected {
+  border-width: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding: 0 0 0 7px;
+  background: #fff;
+  position: relative;
+  z-index: 801;
+  border-right: none;
+  margin-right: 8px;
+  color: #EA5709;
+  box-shadow: -3px 1px 6px rgba(0, 0, 0, 0.07);
+}
+/* line 190, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.selected.first-child, .config .tabbed-modal .padding > ul.tabs li.selected.first-child {
+  margin-top: 0;
+}
+/* line 193, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.selected:hover, #modals .tabbed-modal .padding > ul.tabs li.selected.hover, .config .tabbed-modal .padding > ul.tabs li.selected:hover, .config .tabbed-modal .padding > ul.tabs li.selected.hover {
+  color: #EA5709;
+}
+/* line 197, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li > span.hasErrors, #modals .tabbed-modal .padding > ul.tabs .ui-dialog.white .ui-dialog-buttonpane li > button.hasErrors[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal .padding > ul.tabs li > button.hasErrors[type=button]:last-child, .config .tabbed-modal .padding > ul.tabs li > span.hasErrors, .config .tabbed-modal .padding > ul.tabs .ui-dialog.white .ui-dialog-buttonpane li > button.hasErrors[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal .padding > ul.tabs li > button.hasErrors[type=button]:last-child {
+  display: none;
+  font-size: 1.5em;
+  line-height: 0;
+  position: relative;
+  right: 2px;
+  top: 2px;
+  color: #f00;
+}
+/* line 206, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li > img, .config .tabbed-modal .padding > ul.tabs li > img {
+  display: none;
+  vertical-align: middle;
+  position: relative;
+  left: 2px;
+  padding-bottom: 1px;
+}
+/* line 213, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.tab-loading, .config .tabbed-modal .padding > ul.tabs li.tab-loading {
+  width: auto;
+}
+/* line 215, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.tab-loading > img, .config .tabbed-modal .padding > ul.tabs li.tab-loading > img {
+  display: inline;
+}
+/* line 219, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li:hover, #modals .tabbed-modal .padding > ul.tabs li.hover, .config .tabbed-modal .padding > ul.tabs li:hover, .config .tabbed-modal .padding > ul.tabs li.hover {
+  color: #222;
+}
+/* line 222, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.fat, .config .tabbed-modal .padding > ul.tabs li.fat {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-weight: 600;
+  font-size: 1.2em;
+}
+/* line 227, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .padding > ul.tabs li.fat.selected, .config .tabbed-modal .padding > ul.tabs li.fat.selected {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+/* line 235, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal div.modal-actions, .config .tabbed-modal div.modal-actions {
+  height: 53px;
+  border-top: 1px solid #cecece;
+  background: #f3f3f3;
+  background-image: url(/assets/tileable_contours_white-5e4ff33e4fd154386530a83a8ea877c6f54f3b10b17187612dc7197737656d35.jpg);
+  background-repeat: repeat;
+  margin-top: 10px;
+  text-align: center;
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 0;
+  /* Gecko */
+  -webkit-border-top-right-radius: 0;
+  /* Webkit */
+  -khtml-border-top-right-radius: 0;
+  /* Konqueror */
+  border-top-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 5px;
+  /* Konqueror */
+  border-bottom-right-radius: 5px;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 5px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 5px;
+  /* Konqueror */
+  border-bottom-left-radius: 5px;
+  /* CSS3 */
+}
+/* line 246, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal div.modal-actions a, .config .tabbed-modal div.modal-actions a {
+  font-size: 1.2em;
+  line-height: 53px;
+}
+/* line 249, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal div.modal-actions a.disabled, #modals .tabbed-modal div.modal-actions a._disabled, .config .tabbed-modal div.modal-actions a.disabled, .config .tabbed-modal div.modal-actions a._disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* line 258, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white {
+  border: 1px solid #BBB;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+/* line 259, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white .ui-tabs-panel {
+  padding: 0 !important;
+}
+/* line 262, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white .ui-tabs-panel #errorExplanation {
+  width: 65% !important;
+  margin: 0 !important;
+}
+/* line 267, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white .ui-tabs-wrap {
+  padding: 1em 1.4em;
+}
+/* line 269, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white .ui-tabs-wrap fieldset.inputs {
+  border: none;
+  box-shadow: none;
+}
+/* line 274, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white .ui-tabs-wrap > .ui-tabs-wrap {
+  padding: 0 !important;
+}
+/* line 281, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white .ui-dialog-titlebar {
+  background-image: none !important;
+  background-color: white;
+  color: black;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #DDD;
+}
+/* line 289, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white .ui-dialog-buttonpane {
+  padding-bottom: 0;
+  border-top: 1px solid #DDD;
+}
+/* line 292, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white .ui-dialog-buttonpane button[type=button] {
+  padding: 2px;
+}
+/* line 302, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white .ui-dialog-titlebar-close {
+  display: none !important;
+}
+/* line 305, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+.ui-dialog.white a {
+  color: #000 !important;
+}
+
+/* line 312, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic > .page, .config .tabbed-modal form.formtastic > .page {
+  padding-top: 6px;
+}
+/* line 316, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic > .page li.select.input label, .config .tabbed-modal form.formtastic > .page li.select.input label {
+  padding-top: 2px;
+}
+/* line 321, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic > .page > li, .config .tabbed-modal form.formtastic > .page > li {
+  width: 80%;
+}
+/* line 322, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic > .page > .page-overlay, .config .tabbed-modal form.formtastic > .page > .page-overlay {
+  display: none;
+}
+/* line 324, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic > .page.page-loading > .page-overlay, .config .tabbed-modal form.formtastic > .page.page-loading > .page-overlay {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 802;
+  opacity: 0.6;
+  background: #fff url(/assets/loader-bar-8411d80c628ffbe753443d652de05d8952e41238ac8e4ab9990f3435909f5a85.gif) no-repeat scroll center center !important;
+}
+/* line 336, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic > .page > p.error-desc, .config .tabbed-modal form.formtastic > .page > p.error-desc {
+  padding: 7px;
+  margin-bottom: 8px;
+  color: #B94A48;
+  border: 1px solid #EED3D7;
+  background: #F2DEDE;
+}
+/* line 345, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project fieldset.inputs.user_access, .config .tabbed-modal .page.create_project fieldset.inputs.user_access {
+  background: transparent;
+  width: 100%;
+  margin: 15px 0 0 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  float: none;
+}
+/* line 353, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project fieldset.inputs.user_access legend, .config .tabbed-modal .page.create_project fieldset.inputs.user_access legend {
+  display: none;
+}
+/* line 356, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project fieldset.inputs.user_access:first-child, .config .tabbed-modal .page.create_project fieldset.inputs.user_access:first-child {
+  margin-top: 0;
+}
+/* line 361, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project select#workspace_owner_id, .config .tabbed-modal .page.create_project select#workspace_owner_id {
+  width: auto;
+}
+/* line 366, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic div.row.small-options, .config .tabbed-modal .page.create_project form.formtastic div.row.small-options {
+  margin-top: 2px;
+  margin-left: 19%;
+  width: 60%;
+}
+/* line 370, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic div.row.small-options #workspace_limit_to_network_input, .config .tabbed-modal .page.create_project form.formtastic div.row.small-options #workspace_limit_to_network_input {
+  display: inline-block;
+  margin: 0;
+  width: auto;
+}
+/* line 374, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic div.row.small-options #workspace_limit_to_network_input label, .config .tabbed-modal .page.create_project form.formtastic div.row.small-options #workspace_limit_to_network_input label {
+  margin: 0;
+}
+/* line 378, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic div.row.small-options div.exclude_toggle_wrap, .config .tabbed-modal .page.create_project form.formtastic div.row.small-options div.exclude_toggle_wrap {
+  margin-left: 0;
+  text-align: right;
+  display: inline-block;
+}
+/* line 382, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic div.row.small-options div.exclude_toggle_wrap a, .config .tabbed-modal .page.create_project form.formtastic div.row.small-options div.exclude_toggle_wrap a {
+  font-size: 11px;
+}
+/* line 388, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic li#workspace_name_input label, .config .tabbed-modal .page.create_project form.formtastic li#workspace_name_input label {
+  color: #000;
+}
+/* line 392, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic li#workspace_boundary_input, .config .tabbed-modal .page.create_project form.formtastic li#workspace_boundary_input {
+  margin-bottom: 0;
+}
+/* line 394, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic li#workspace_boundary_input label, .config .tabbed-modal .page.create_project form.formtastic li#workspace_boundary_input label {
+  color: #000;
+}
+/* line 399, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic li#scan_task_blacklist_string_input label, .config .tabbed-modal .page.create_project form.formtastic li#scan_task_blacklist_string_input label {
+  font-weight: normal;
+}
+/* line 401, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic li#workspace_description_input, .config .tabbed-modal .page.create_project form.formtastic li#workspace_description_input {
+  margin-bottom: 0;
+}
+/* line 403, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic li#workspace_description_input label, .config .tabbed-modal .page.create_project form.formtastic li#workspace_description_input label {
+  padding-right: 12px;
+  font-weight: normal;
+}
+/* line 407, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic li#workspace_description_input textarea, .config .tabbed-modal .page.create_project form.formtastic li#workspace_description_input textarea {
+  float: right;
+  margin-right: 33px;
+}
+/* line 412, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic a.advanced, .config .tabbed-modal .page.create_project form.formtastic a.advanced {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+/* line 417, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic div.advanced > li, #modals .tabbed-modal .page.create_project form.formtastic div.excluded_addresses, .config .tabbed-modal .page.create_project form.formtastic div.advanced > li, .config .tabbed-modal .page.create_project form.formtastic div.excluded_addresses {
+  width: 80%;
+}
+/* line 420, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic div.relativer, .config .tabbed-modal .page.create_project form.formtastic div.relativer {
+  position: relative;
+}
+/* line 422, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic div.relativer li, .config .tabbed-modal .page.create_project form.formtastic div.relativer li {
+  width: 80%;
+}
+/* line 427, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic.advanced_wide li#workspace_boundary_input, .config .tabbed-modal .page.create_project form.formtastic.advanced_wide li#workspace_boundary_input {
+  margin-bottom: 6px;
+}
+/* line 430, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic.advanced_wide a.advanced, .config .tabbed-modal .page.create_project form.formtastic.advanced_wide a.advanced {
+  margin-bottom: 4px;
+}
+/* line 435, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic li.text label, .config .tabbed-modal .page.create_project form.formtastic li.text label {
+  line-height: 1.3;
+}
+/* line 439, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.create_project form.formtastic div.excluded_addresses, .config .tabbed-modal .page.create_project form.formtastic div.excluded_addresses {
+  display: none;
+}
+/* line 444, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic, .config .tabbed-modal form.formtastic {
+  font-size: 1.15em;
+  /* generic input styles */
+}
+/* line 447, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic hr, .config .tabbed-modal form.formtastic hr {
+  border: none;
+  border-top: 1px solid #e6e6e6;
+}
+/* line 451, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic h4, .config .tabbed-modal form.formtastic h4 {
+  margin-top: 0;
+}
+/* line 454, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic textarea, .config .tabbed-modal form.formtastic textarea {
+  font-size: .85em;
+  height: 5em;
+  padding: 1px;
+}
+/* line 459, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic input, .config .tabbed-modal form.formtastic input {
+  vertical-align: baseline;
+}
+/* line 462, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic input[type=checkbox], #modals .tabbed-modal form.formtastic input[type=radio], .config .tabbed-modal form.formtastic input[type=checkbox], .config .tabbed-modal form.formtastic input[type=radio] {
+  vertical-align: baseline;
+}
+/* line 465, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic label, .config .tabbed-modal form.formtastic label {
+  line-height: 1.5;
+}
+/* line 468, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic li label, .config .tabbed-modal form.formtastic li label {
+  font-size: 1em;
+}
+/* line 472, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic li.boolean label, .config .tabbed-modal form.formtastic li.boolean label {
+  font-size: .85em;
+  width: auto;
+  font-weight: normal;
+  margin-left: 35%;
+  padding: 0;
+  margin-bottom: 8px;
+  margin-top: -2px;
+  line-height: 1.3;
+}
+/* line 484, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic li.error input, #modals .tabbed-modal form.formtastic li.error select, #modals .tabbed-modal form.formtastic li.error textarea, .config .tabbed-modal form.formtastic li.error input, .config .tabbed-modal form.formtastic li.error select, .config .tabbed-modal form.formtastic li.error textarea {
+  border: 1px solid #f00;
+}
+/* line 487, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic li.error label, .config .tabbed-modal form.formtastic li.error label {
+  color: #f00;
+}
+/* line 490, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic li.error p.inline-error, .config .tabbed-modal form.formtastic li.error p.inline-error {
+  color: #f00;
+  font-size: .9em;
+}
+/* line 495, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic li.error.text p.inline-error, .config .tabbed-modal form.formtastic li.error.text p.inline-error {
+  margin-left: 20%;
+}
+/* line 504, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report, .config .tabbed-modal form.formtastic .page.generate_report {
+  width: 633px;
+}
+/* line 509, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report h4, .config .tabbed-modal form.formtastic .page.generate_report h4 {
+  font-size: 12px;
+}
+/* line 513, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report li.hidden, .config .tabbed-modal form.formtastic .page.generate_report li.hidden {
+  display: none;
+}
+/* line 517, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report li, .config .tabbed-modal form.formtastic .page.generate_report li {
+  display: list-item;
+}
+/* line 520, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report li ol, .config .tabbed-modal form.formtastic .page.generate_report li ol {
+  padding-left: 0;
+  padding-right: 0;
+}
+/* line 526, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report ol li, .config .tabbed-modal form.formtastic .page.generate_report ol li {
+  position: static;
+}
+/* line 532, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report label abbr, .config .tabbed-modal form.formtastic .page.generate_report label abbr {
+  display: none;
+}
+/* line 539, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report #report_file_formats_input ol.choices-group li.choice, .config .tabbed-modal form.formtastic .page.generate_report #report_file_formats_input ol.choices-group li.choice {
+  width: 60px;
+  margin-right: 0px;
+}
+/* line 543, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report #report_file_formats_input ol.choices-group li.choice label, .config .tabbed-modal form.formtastic .page.generate_report #report_file_formats_input ol.choices-group li.choice label {
+  padding-right: 0px;
+}
+/* line 546, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report #report_file_formats_input ol.choices-group li.choice label input, .config .tabbed-modal form.formtastic .page.generate_report #report_file_formats_input ol.choices-group li.choice label input {
+  margin-right: 5px;
+}
+/* line 553, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report fieldset.choices, .config .tabbed-modal form.formtastic .page.generate_report fieldset.choices {
+  position: static;
+}
+/* line 557, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report fieldset, .config .tabbed-modal form.formtastic .page.generate_report fieldset {
+  box-shadow: none;
+}
+/* line 563, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row, .config .tabbed-modal form.formtastic .page.generate_report div.top-row {
+  height: 40px;
+}
+/* line 566, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.first, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.first {
+  width: 47%;
+}
+/* line 569, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.first label, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.first label {
+  width: auto;
+}
+/* line 573, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.first #report_name, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.first #report_name {
+  margin-top: 10px;
+}
+/* line 577, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.first a.help, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.first a.help {
+  display: none;
+}
+/* line 583, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type {
+  position: relative;
+  width: 53%;
+}
+/* line 587, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type label, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type label {
+  width: 25%;
+  padding-right: 0px;
+}
+/* line 592, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type #report_report_type, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type #report_report_type {
+  width: 50%;
+  display: inline-block;
+  padding-left: 2px;
+}
+/* line 598, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type ol, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type ol {
+  width: 300px;
+}
+/* line 602, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type fieldset.inputs, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type fieldset.inputs {
+  margin-top: 4px;
+  background: none;
+}
+/* line 607, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type a.help, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type a.help {
+  right: 15px;
+  top: 10px;
+}
+/* line 612, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type fieldset, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type fieldset {
+  border: none;
+  box-shadow: none;
+}
+/* line 616, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type fieldset legend, .config .tabbed-modal form.formtastic .page.generate_report div.top-row div.cell.second.report_type fieldset legend {
+  display: none;
+}
+/* line 621, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row {
+  height: 75px;
+}
+/* line 624, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row fieldset.inputs, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row fieldset.inputs {
+  margin-top: 0px;
+}
+/* line 630, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label {
+  width: auto;
+}
+/* line 634, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_included_addresses_input, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_included_addresses_input {
+  height: 0px;
+}
+/* line 637, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_included_addresses_input label, #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_included_addresses_input textarea, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_included_addresses_input label, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_included_addresses_input textarea {
+  display: none;
+}
+/* line 639, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_included_addresses_input a.help, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_included_addresses_input a.help {
+  top: 0;
+}
+/* line 644, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_excluded_addresses_input, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings #report_excluded_addresses_input {
+  margin-top: -15px;
+}
+/* line 651, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email fieldset legend, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email fieldset legend {
+  display: none;
+}
+/* line 655, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label {
+  display: block;
+}
+/* line 660, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email fieldset.inputs, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email fieldset.inputs {
+  padding-top: 0;
+}
+/* line 664, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email textarea, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email textarea {
+  margin-top: 5px;
+}
+/* line 668, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email a.help, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email a.help {
+  right: 217px;
+}
+/* line 675, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.create-project-modal, .config .tabbed-modal.create-project-modal {
+  max-width: 600px;
+}
+/* line 677, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.create-project-modal .padding > div.content, .config .tabbed-modal.create-project-modal .padding > div.content {
+  height: 260px;
+  font-weight: 100;
+}
+/* line 681, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.create-project-modal form > .page > li, .config .tabbed-modal.create-project-modal form > .page > li {
+  width: 100%;
+}
+/* line 684, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.create-project-modal a.advanced, .config .tabbed-modal.create-project-modal a.advanced {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  margin-right: 17px;
+  margin-top: 4px;
+}
+/* line 691, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.create-project-modal .page.create_project div.advanced > li, .config .tabbed-modal.create-project-modal .page.create_project div.advanced > li {
+  width: 100%;
+}
+/* line 694, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.create-project-modal li#workspace_name_input label, .config .tabbed-modal.create-project-modal li#workspace_name_input label {
+  color: #000;
+}
+/* line 698, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.create-project-modal li#workspace_boundary_input label, .config .tabbed-modal.create-project-modal li#workspace_boundary_input label {
+  color: #333;
+  font-weight: normal;
+}
+/* line 703, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.create-project-modal li#workspace_limit_to_network_input, .config .tabbed-modal.create-project-modal li#workspace_limit_to_network_input {
+  margin-left: 25%;
+  padding-top: 5px;
+  width: auto;
+}
+/* line 708, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.create-project-modal li#workspace_description_input label, .config .tabbed-modal.create-project-modal li#workspace_description_input label {
+  padding-right: 0 !important;
+  font-weight: normal;
+}
+/* line 714, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.configure_web_audit li.slider, .config .tabbed-modal .page.configure_web_audit li.slider {
+  display: inline-block;
+  width: 260px;
+  margin-top: 35px;
+}
+/* line 718, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.configure_web_audit li.slider label, .config .tabbed-modal .page.configure_web_audit li.slider label {
+  padding-left: 15px;
+}
+/* line 730, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report, #modals .tabbed-modal .page.generate_report, .config #modals .tabbed-modal form.formtastic .page.generate_report, #modals .config .tabbed-modal form.formtastic .page.generate_report, .config .tabbed-modal form.formtastic .page.generate_report, .config #modals .tabbed-modal .page.generate_report, #modals .config .tabbed-modal .page.generate_report, .config .tabbed-modal .page.generate_report {
+  padding-top: 0;
+}
+/* line 739, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .config #modals .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .config .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .email label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .config #modals .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .config .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, #modals .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config .tabbed-modal form.formtastic .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, .config .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal .page.generate_report .bottom-row legend span, #modals .config .tabbed-modal .page.generate_report .bottom-row legend span, .config .tabbed-modal .page.generate_report .bottom-row legend span, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .config #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .config .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config #modals .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, #modals .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .config .tabbed-modal .page.generate_report .bottom-row legend .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal form.formtastic .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config #modals .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, #modals .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal .page.generate_report .bottom-row legend button[type=button]:last-child, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config .tabbed-modal .page.generate_report .bottom-row .address_settings label {
+  font-weight: 600;
+  color: #000;
+  font-size: 1em;
+}
+/* line 748, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report fieldset, #modals .tabbed-modal .page.generate_report fieldset, .config .tabbed-modal form.formtastic .page.generate_report fieldset, .config #modals .tabbed-modal .page.generate_report fieldset, #modals .config .tabbed-modal .page.generate_report fieldset, .config .tabbed-modal .page.generate_report fieldset {
+  width: auto !important;
+}
+/* line 752, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report hr, #modals .tabbed-modal .page.generate_report hr, .config .tabbed-modal form.formtastic .page.generate_report hr, .config #modals .tabbed-modal .page.generate_report hr, #modals .config .tabbed-modal .page.generate_report hr, .config .tabbed-modal .page.generate_report hr {
+  margin: 10px 0;
+  height: 0;
+  background: #ddd;
+}
+/* line 758, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .right, #modals .tabbed-modal .page.generate_report .right, .config .tabbed-modal form.formtastic .page.generate_report .right, .config #modals .tabbed-modal .page.generate_report .right, #modals .config .tabbed-modal .page.generate_report .right, .config .tabbed-modal .page.generate_report .right {
+  float: right;
+  width: 49%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 764, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .left, #modals .tabbed-modal .page.generate_report .left, .config .tabbed-modal form.formtastic .page.generate_report .left, .config #modals .tabbed-modal .page.generate_report .left, #modals .config .tabbed-modal .page.generate_report .left, .config .tabbed-modal .page.generate_report .left {
+  float: left;
+  width: 49%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 770, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report h4, #modals .tabbed-modal .page.generate_report h4, .config .tabbed-modal form.formtastic .page.generate_report h4, .config #modals .tabbed-modal .page.generate_report h4, #modals .config .tabbed-modal .page.generate_report h4, .config .tabbed-modal .page.generate_report h4 {
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+/* line 776, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_formats fieldset, #modals .tabbed-modal .page.generate_report div.report_sections fieldset, #modals .tabbed-modal .page.generate_report div.report_options fieldset, #modals .tabbed-modal .page.generate_report div.report_name fieldset, .config #modals .tabbed-modal .page.generate_report div.report_formats fieldset, #modals .config .tabbed-modal .page.generate_report div.report_formats fieldset, .config .tabbed-modal .page.generate_report div.report_formats fieldset, .config #modals .tabbed-modal .page.generate_report div.report_sections fieldset, #modals .config .tabbed-modal .page.generate_report div.report_sections fieldset, .config .tabbed-modal .page.generate_report div.report_sections fieldset, .config #modals .tabbed-modal .page.generate_report div.report_options fieldset, #modals .config .tabbed-modal .page.generate_report div.report_options fieldset, .config .tabbed-modal .page.generate_report div.report_options fieldset, .config #modals .tabbed-modal .page.generate_report div.report_name fieldset, #modals .config .tabbed-modal .page.generate_report div.report_name fieldset, .config .tabbed-modal .page.generate_report div.report_name fieldset {
+  float: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+/* line 783, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_formats fieldset legend, #modals .tabbed-modal .page.generate_report div.report_sections fieldset legend, #modals .tabbed-modal .page.generate_report div.report_options fieldset legend, #modals .tabbed-modal .page.generate_report div.report_name fieldset legend, .config #modals .tabbed-modal .page.generate_report div.report_formats fieldset legend, #modals .config .tabbed-modal .page.generate_report div.report_formats fieldset legend, .config .tabbed-modal .page.generate_report div.report_formats fieldset legend, .config #modals .tabbed-modal .page.generate_report div.report_sections fieldset legend, #modals .config .tabbed-modal .page.generate_report div.report_sections fieldset legend, .config .tabbed-modal .page.generate_report div.report_sections fieldset legend, .config #modals .tabbed-modal .page.generate_report div.report_options fieldset legend, #modals .config .tabbed-modal .page.generate_report div.report_options fieldset legend, .config .tabbed-modal .page.generate_report div.report_options fieldset legend, .config #modals .tabbed-modal .page.generate_report div.report_name fieldset legend, #modals .config .tabbed-modal .page.generate_report div.report_name fieldset legend, .config .tabbed-modal .page.generate_report div.report_name fieldset legend {
+  display: none;
+}
+/* line 786, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_formats fieldset ol, #modals .tabbed-modal .page.generate_report div.report_sections fieldset ol, #modals .tabbed-modal .page.generate_report div.report_options fieldset ol, #modals .tabbed-modal .page.generate_report div.report_name fieldset ol, .config #modals .tabbed-modal .page.generate_report div.report_formats fieldset ol, #modals .config .tabbed-modal .page.generate_report div.report_formats fieldset ol, .config .tabbed-modal .page.generate_report div.report_formats fieldset ol, .config #modals .tabbed-modal .page.generate_report div.report_sections fieldset ol, #modals .config .tabbed-modal .page.generate_report div.report_sections fieldset ol, .config .tabbed-modal .page.generate_report div.report_sections fieldset ol, .config #modals .tabbed-modal .page.generate_report div.report_options fieldset ol, #modals .config .tabbed-modal .page.generate_report div.report_options fieldset ol, .config .tabbed-modal .page.generate_report div.report_options fieldset ol, .config #modals .tabbed-modal .page.generate_report div.report_name fieldset ol, #modals .config .tabbed-modal .page.generate_report div.report_name fieldset ol, .config .tabbed-modal .page.generate_report div.report_name fieldset ol {
+  max-width: none;
+}
+/* line 788, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_formats fieldset ol li, #modals .tabbed-modal .page.generate_report div.report_sections fieldset ol li, #modals .tabbed-modal .page.generate_report div.report_options fieldset ol li, #modals .tabbed-modal .page.generate_report div.report_name fieldset ol li, .config #modals .tabbed-modal .page.generate_report div.report_formats fieldset ol li, #modals .config .tabbed-modal .page.generate_report div.report_formats fieldset ol li, .config .tabbed-modal .page.generate_report div.report_formats fieldset ol li, .config #modals .tabbed-modal .page.generate_report div.report_sections fieldset ol li, #modals .config .tabbed-modal .page.generate_report div.report_sections fieldset ol li, .config .tabbed-modal .page.generate_report div.report_sections fieldset ol li, .config #modals .tabbed-modal .page.generate_report div.report_options fieldset ol li, #modals .config .tabbed-modal .page.generate_report div.report_options fieldset ol li, .config .tabbed-modal .page.generate_report div.report_options fieldset ol li, .config #modals .tabbed-modal .page.generate_report div.report_name fieldset ol li, #modals .config .tabbed-modal .page.generate_report div.report_name fieldset ol li, .config .tabbed-modal .page.generate_report div.report_name fieldset ol li {
+  font-size: 1em;
+}
+/* line 793, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_formats fieldset #report_name_input, #modals .tabbed-modal .page.generate_report div.report_sections fieldset #report_name_input, #modals .tabbed-modal .page.generate_report div.report_options fieldset #report_name_input, #modals .tabbed-modal .page.generate_report div.report_name fieldset #report_name_input, .config .tabbed-modal .page.generate_report div.report_formats fieldset #report_name_input, .config .tabbed-modal .page.generate_report div.report_sections fieldset #report_name_input, .config .tabbed-modal .page.generate_report div.report_options fieldset #report_name_input, .config .tabbed-modal .page.generate_report div.report_name fieldset #report_name_input {
+  margin: 0px;
+  position: relative;
+}
+/* line 803, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.advanced fieldset, .config #modals .tabbed-modal .page.generate_report div.advanced fieldset, #modals .config .tabbed-modal .page.generate_report div.advanced fieldset, .config .tabbed-modal .page.generate_report div.advanced fieldset {
+  background: none;
+}
+/* line 814, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol, .config #modals .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol, #modals .config .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol, .config .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol {
+  display: inline-block;
+  margin-left: 0;
+}
+/* line 817, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol li, .config #modals .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol li, #modals .config .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol li, .config .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol li {
+  margin-bottom: 0;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 1.2em;
+  position: static;
+}
+/* line 824, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol li label input, .config #modals .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol li label input, #modals .config .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol li label input, .config .tabbed-modal .page.generate_report div.report_formats fieldset.inputs ol li label input {
+  margin: 0 5px 0 0;
+  position: relative;
+  bottom: 1px;
+}
+/* line 833, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_formats a.help, .config #modals .tabbed-modal .page.generate_report div.report_formats a.help, #modals .config .tabbed-modal .page.generate_report div.report_formats a.help, .config .tabbed-modal .page.generate_report div.report_formats a.help {
+  display: none;
+}
+/* line 843, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first, .config #modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first, #modals .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first {
+  width: 50%;
+  height: 40px;
+}
+/* line 846, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first label, .config #modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first label, #modals .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first label, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first label {
+  width: 30%;
+  text-align: left;
+  line-height: 40px;
+}
+/* line 851, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first #report_name, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first #report_name {
+  margin-bottom: 9px;
+}
+/* line 854, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first a.help img, .config #modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first a.help img, #modals .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first a.help img, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first a.help img {
+  margin-bottom: -4px;
+}
+/* line 859, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width, .config #modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width, #modals .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width {
+  width: 100%;
+}
+/* line 861, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width fieldset.inputs, .config #modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width fieldset.inputs, #modals .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width fieldset.inputs, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width fieldset.inputs {
+  width: 100% !important;
+}
+/* line 864, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width #report_name, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.first.full-width #report_name {
+  width: 80%;
+}
+/* line 868, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.second, .config #modals .tabbed-modal .page.generate_report div.top-row.row div.cell.second, #modals .config .tabbed-modal .page.generate_report div.top-row.row div.cell.second, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.second {
+  width: 50%;
+}
+/* line 870, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.second label, .config #modals .tabbed-modal .page.generate_report div.top-row.row div.cell.second label, #modals .config .tabbed-modal .page.generate_report div.top-row.row div.cell.second label, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.second label {
+  width: 20%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 874, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row div.cell.second select, .config #modals .tabbed-modal .page.generate_report div.top-row.row div.cell.second select, #modals .config .tabbed-modal .page.generate_report div.top-row.row div.cell.second select, .config .tabbed-modal .page.generate_report div.top-row.row div.cell.second select {
+  width: 80%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 879, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row label, .config #modals .tabbed-modal .page.generate_report div.top-row.row label, #modals .config .tabbed-modal .page.generate_report div.top-row.row label, .config .tabbed-modal .page.generate_report div.top-row.row label {
+  padding-right: 10px;
+  padding-left: 3px;
+  text-align: center;
+  line-height: 1.5;
+  width: auto;
+}
+/* line 887, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.top-row.row input, #modals .tabbed-modal .page.generate_report div.top-row.row select, .config #modals .tabbed-modal .page.generate_report div.top-row.row input, #modals .config .tabbed-modal .page.generate_report div.top-row.row input, .config .tabbed-modal .page.generate_report div.top-row.row input, .config #modals .tabbed-modal .page.generate_report div.top-row.row select, #modals .config .tabbed-modal .page.generate_report div.top-row.row select, .config .tabbed-modal .page.generate_report div.top-row.row select {
+  width: 58%;
+  vertical-align: bottom;
+}
+/* line 897, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_sections, #modals .tabbed-modal .page.generate_report div.report_options, .config #modals .tabbed-modal .page.generate_report div.report_sections, #modals .config .tabbed-modal .page.generate_report div.report_sections, .config .tabbed-modal .page.generate_report div.report_sections, .config #modals .tabbed-modal .page.generate_report div.report_options, #modals .config .tabbed-modal .page.generate_report div.report_options, .config .tabbed-modal .page.generate_report div.report_options {
+  position: relative;
+}
+/* line 900, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_sections li, #modals .tabbed-modal .page.generate_report div.report_options li, .config #modals .tabbed-modal .page.generate_report div.report_sections li, #modals .config .tabbed-modal .page.generate_report div.report_sections li, .config .tabbed-modal .page.generate_report div.report_sections li, .config #modals .tabbed-modal .page.generate_report div.report_options li, #modals .config .tabbed-modal .page.generate_report div.report_options li, .config .tabbed-modal .page.generate_report div.report_options li {
+  margin-bottom: 7px;
+}
+/* line 902, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_sections li label, #modals .tabbed-modal .page.generate_report div.report_options li label, .config #modals .tabbed-modal .page.generate_report div.report_sections li label, #modals .config .tabbed-modal .page.generate_report div.report_sections li label, .config .tabbed-modal .page.generate_report div.report_sections li label, .config #modals .tabbed-modal .page.generate_report div.report_options li label, #modals .config .tabbed-modal .page.generate_report div.report_options li label, .config .tabbed-modal .page.generate_report div.report_options li label {
+  line-height: 1.4;
+  font-size: .9em;
+}
+/* line 905, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_sections li label input, #modals .tabbed-modal .page.generate_report div.report_options li label input, .config #modals .tabbed-modal .page.generate_report div.report_sections li label input, #modals .config .tabbed-modal .page.generate_report div.report_sections li label input, .config .tabbed-modal .page.generate_report div.report_sections li label input, .config #modals .tabbed-modal .page.generate_report div.report_options li label input, #modals .config .tabbed-modal .page.generate_report div.report_options li label input, .config .tabbed-modal .page.generate_report div.report_options li label input {
+  margin: 0;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+/* line 913, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report div.report_sections ol li a.help, #modals .tabbed-modal .page.generate_report div.report_options ol li a.help, .config #modals .tabbed-modal .page.generate_report div.report_sections ol li a.help, #modals .config .tabbed-modal .page.generate_report div.report_sections ol li a.help, .config .tabbed-modal .page.generate_report div.report_sections ol li a.help, .config #modals .tabbed-modal .page.generate_report div.report_options ol li a.help, #modals .config .tabbed-modal .page.generate_report div.report_options ol li a.help, .config .tabbed-modal .page.generate_report div.report_options ol li a.help {
+  position: absolute;
+  top: 0px;
+  left: 55px;
+}
+/* line 924, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row, #modals .tabbed-modal .page.generate_report .bottom-row, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row, .config #modals .tabbed-modal .page.generate_report .bottom-row, #modals .config .tabbed-modal .page.generate_report .bottom-row, .config .tabbed-modal .page.generate_report .bottom-row {
+  position: relative;
+}
+/* line 928, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row .email a.help, .config #modals .tabbed-modal .page.generate_report .bottom-row .email a.help, #modals .config .tabbed-modal .page.generate_report .bottom-row .email a.help, .config .tabbed-modal .page.generate_report .bottom-row .email a.help {
+  position: absolute;
+  top: 0;
+  right: 187px;
+}
+/* line 936, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row.full-width fieldset.inputs, .config #modals .tabbed-modal .page.generate_report .bottom-row.full-width fieldset.inputs, #modals .config .tabbed-modal .page.generate_report .bottom-row.full-width fieldset.inputs, .config .tabbed-modal .page.generate_report .bottom-row.full-width fieldset.inputs {
+  width: 100% !important;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+/* line 942, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row.full-width #report_email_recipients, .config .tabbed-modal .page.generate_report .bottom-row.full-width #report_email_recipients {
+  height: 45px;
+  min-height: 45px;
+  width: 100%;
+}
+/* line 948, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row.full-width a.help, .config #modals .tabbed-modal .page.generate_report .bottom-row.full-width a.help, #modals .config .tabbed-modal .page.generate_report .bottom-row.full-width a.help, .config .tabbed-modal .page.generate_report .bottom-row.full-width a.help {
+  position: absolute;
+  top: 0px;
+  left: 75px;
+}
+/* line 955, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic .page.generate_report .bottom-row *, #modals .tabbed-modal .page.generate_report .bottom-row *, .config .tabbed-modal form.formtastic .page.generate_report .bottom-row *, .config #modals .tabbed-modal .page.generate_report .bottom-row *, #modals .config .tabbed-modal .page.generate_report .bottom-row *, .config .tabbed-modal .page.generate_report .bottom-row * {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 957, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row fieldset, .config #modals .tabbed-modal .page.generate_report .bottom-row fieldset, #modals .config .tabbed-modal .page.generate_report .bottom-row fieldset, .config .tabbed-modal .page.generate_report .bottom-row fieldset {
+  border: none;
+  padding-left: 0px;
+}
+/* line 966, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row label, .config #modals .tabbed-modal .page.generate_report .bottom-row label, #modals .config .tabbed-modal .page.generate_report .bottom-row label, .config .tabbed-modal .page.generate_report .bottom-row label {
+  display: none;
+}
+/* line 970, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row li, .config #modals .tabbed-modal .page.generate_report .bottom-row li, #modals .config .tabbed-modal .page.generate_report .bottom-row li, .config .tabbed-modal .page.generate_report .bottom-row li {
+  padding: 0;
+  position: static;
+}
+/* line 975, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row textarea, .config #modals .tabbed-modal .page.generate_report .bottom-row textarea, #modals .config .tabbed-modal .page.generate_report .bottom-row textarea, .config .tabbed-modal .page.generate_report .bottom-row textarea {
+  width: 280px;
+}
+/* line 980, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row .address_settings fieldset, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings fieldset, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings fieldset, .config .tabbed-modal .page.generate_report .bottom-row .address_settings fieldset {
+  padding-top: 0px;
+}
+/* line 984, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row .address_settings legend, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings legend, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings legend, .config .tabbed-modal .page.generate_report .bottom-row .address_settings legend {
+  display: none;
+}
+/* line 988, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings label, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings label, .config .tabbed-modal .page.generate_report .bottom-row .address_settings label {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+/* line 995, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row .address_settings #report_included_addresses_input label, #modals .tabbed-modal .page.generate_report .bottom-row .address_settings #report_included_addresses_input textarea, .config .tabbed-modal .page.generate_report .bottom-row .address_settings #report_included_addresses_input label, .config .tabbed-modal .page.generate_report .bottom-row .address_settings #report_included_addresses_input textarea {
+  display: none;
+}
+/* line 998, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal .page.generate_report .bottom-row .address_settings a.help, .config #modals .tabbed-modal .page.generate_report .bottom-row .address_settings a.help, #modals .config .tabbed-modal .page.generate_report .bottom-row .address_settings a.help, .config .tabbed-modal .page.generate_report .bottom-row .address_settings a.help {
+  position: absolute;
+  left: 115px;
+}
+/* line 1008, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal input#tab_generate_report, .config .tabbed-modal input#tab_generate_report {
+  line-height: 38px;
+  vertical-align: middle;
+  font-size: 1.1em;
+}
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals .tabbed-modal li.file.input, .config .tabbed-modal li.file.input {
+  list-style: none;
+  position: relative;
+  width: 60%;
+  padding: 0;
+  margin: 10px 0;
+  margin-left: 20%;
+  cursor: pointer;
+}
+/* line 10, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals .tabbed-modal li.file.input.error, .config .tabbed-modal li.file.input.error {
+  margin-bottom: 20px;
+}
+/* line 13, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals .tabbed-modal li.file.input p.inline-error, .config .tabbed-modal li.file.input p.inline-error {
+  position: absolute;
+  margin-left: 0;
+}
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals .tabbed-modal li.file.input label, .config .tabbed-modal li.file.input label {
+  display: inline-block;
+  width: 100%;
+  padding: 6px 7px;
+  border: 1px solid #aaa;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 2px;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals .tabbed-modal li.file.input label p, .config .tabbed-modal li.file.input label p {
+  margin: 0;
+  font-weight: normal;
+  color: #666;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* line 33, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals .tabbed-modal li.file.input label span, #modals .tabbed-modal li.file.input label .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal li.file.input label button[type=button]:last-child, .config .tabbed-modal li.file.input label span, .config .tabbed-modal li.file.input label .ui-dialog.white .ui-dialog-buttonpane button[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal li.file.input label button[type=button]:last-child {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  padding: 0 5px;
+  line-height: 31px;
+  text-align: center;
+  background: #eee;
+  border: 1px solid #aaa;
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 2px;
+  /* Gecko */
+  -webkit-border-top-right-radius: 2px;
+  /* Webkit */
+  -khtml-border-top-right-radius: 2px;
+  /* Konqueror */
+  border-top-right-radius: 2px;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 0;
+  /* Konqueror */
+  border-bottom-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 2px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 2px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 2px;
+  /* Konqueror */
+  border-bottom-left-radius: 2px;
+  /* CSS3 */
+  cursor: pointer;
+}
+/* line 48, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals .tabbed-modal li.file.input input[type=file], .config .tabbed-modal li.file.input input[type=file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100% !important;
+  z-index: 55;
+  cursor: pointer;
+  opacity: 0;
+}
+/* line 56, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals .tabbed-modal li.file.input:hover, .config .tabbed-modal li.file.input:hover {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+/* line 59, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals .tabbed-modal li.file.input:active, .config .tabbed-modal li.file.input:active {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}
+/* line 1015, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal h3.enabled, .config .tabbed-modal h3.enabled {
+  margin: 5px 0;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #000;
+}
+/* line 1020, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal h3.enabled span.enabled, #modals .tabbed-modal h3.enabled .ui-dialog.white .ui-dialog-buttonpane button.enabled[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal h3.enabled button.enabled[type=button]:last-child, .config .tabbed-modal h3.enabled span.enabled, .config .tabbed-modal h3.enabled .ui-dialog.white .ui-dialog-buttonpane button.enabled[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal h3.enabled button.enabled[type=button]:last-child {
+  color: #47C26A;
+}
+/* line 1023, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal h3.enabled span.disabled, #modals .tabbed-modal h3.enabled .ui-dialog.white .ui-dialog-buttonpane button.disabled[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane #modals .tabbed-modal h3.enabled button.disabled[type=button]:last-child, .config .tabbed-modal h3.enabled span.disabled, .config .tabbed-modal h3.enabled .ui-dialog.white .ui-dialog-buttonpane button.disabled[type=button]:last-child, .ui-dialog.white .ui-dialog-buttonpane .config .tabbed-modal h3.enabled button.disabled[type=button]:last-child {
+  color: #be4848;
+}
+/* line 1027, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal li.slider.string.input, .config .tabbed-modal li.slider.string.input {
+  padding-left: 10px;
+}
+/* line 1029, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal li.slider.string.input label, .config .tabbed-modal li.slider.string.input label {
+  width: 100%;
+}
+/* line 1030, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal li.slider.string.input input, .config .tabbed-modal li.slider.string.input input {
+  width: 60px;
+}
+/* line 1032, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal li.slider, .config .tabbed-modal li.slider {
+  padding: 0;
+  margin-top: 8px;
+}
+/* line 1035, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal li.slider label, .config .tabbed-modal li.slider label {
+  padding-left: 0;
+  display: block;
+  text-align: left;
+  width: 100%;
+}
+/* line 1041, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal li.slider input, .config .tabbed-modal li.slider input {
+  width: 60px;
+}
+/* line 1044, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal li.slider div.ui-slider, .config .tabbed-modal li.slider div.ui-slider {
+  margin: 0;
+  display: inline-block;
+  margin-left: 8px;
+  top: -1px;
+  width: 150px;
+  border: 1px solid #d0d0d0;
+  border-radius: 1px;
+  height: 5px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
+}
+/* line 1054, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal li.slider div.ui-slider a.ui-slider-handle, .config .tabbed-modal li.slider div.ui-slider a.ui-slider-handle {
+  top: -.4em;
+  height: 15px;
+  width: 12px;
+}
+
+/* line 1068, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report {
+  width: 760px;
+}
+/* line 1073, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report li#report_file_formats_input fieldset.choices ol.choices-group li.choice label,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report li#report_file_formats_input fieldset.choices ol.choices-group li.choice label {
+  width: 60px;
+}
+/* line 1079, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_excluded_addresses_input textarea, #modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input textarea,
+.config #modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_excluded_addresses_input textarea,
+#modals .config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_excluded_addresses_input textarea,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_excluded_addresses_input textarea,
+.config #modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input textarea,
+#modals .config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input textarea,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input textarea {
+  width: 340px;
+}
+/* line 1084, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report #report_option_for_webapp_assessment li#report_order_vulns_by_input label,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report #report_option_for_webapp_assessment li#report_order_vulns_by_input label {
+  width: 75px;
+}
+/* line 1088, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report #report_option_for_webapp_assessment li#report_order_vulns_by_input a.help,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report #report_option_for_webapp_assessment li#report_order_vulns_by_input a.help {
+  top: -24px;
+  left: 51px;
+}
+/* line 1097, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_included_addresses_input,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_included_addresses_input {
+  padding-top: 0;
+}
+/* line 1101, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_excluded_addresses_input,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_excluded_addresses_input {
+  padding-top: 0;
+  margin-top: -20px;
+}
+/* line 1105, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_excluded_addresses_input label,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .address_settings li#report_excluded_addresses_input label {
+  padding-left: 0;
+}
+/* line 1114, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input {
+  padding-top: 0;
+}
+/* line 1117, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input label,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input label {
+  padding-left: 0;
+}
+/* line 1123, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input a.help,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report .bottom-row .email li#report_email_recipients_input a.help {
+  right: 278px;
+}
+
+/* line 1137, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tabbed_modal.scss */
+#modals .tabbed-modal form.formtastic.vuln_validation .page.generate_report .bottom-row textarea,
+.config .tabbed-modal form.formtastic.vuln_validation .page.generate_report .bottom-row textarea {
+  height: 50px;
+}

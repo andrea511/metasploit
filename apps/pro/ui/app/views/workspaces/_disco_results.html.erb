@@ -1,0 +1,12 @@
+<% if @disco_running  %>
+<%= image_tag 'spinner.gif' %> Scanning...<br/>
+<% end %>
+
+<ul class="overview_stats">
+<li><%= link_to h(pluralize(@workspace.hosts.size, "host")), hosts_path(@workspace) %> discovered</li>
+<li><%= link_to h(pluralize(@workspace.services.with_state(:open).size, "service")), workspace_services_path(@workspace) %> detected</li>
+<li><%= link_to h(pluralize(@workspace.vulns.count, "disclosed vulnerability")), workspace_vulns_path(@workspace) %> identified</li>
+<li><%= link_to h(pluralize(Mdm::Module::Detail.workspace_id(@workspace.id).uniq.size, "applicable module")), workspace_related_modules_path(@workspace)%> identified</li>
+</ul>
+
+

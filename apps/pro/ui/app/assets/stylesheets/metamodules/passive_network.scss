@@ -1,0 +1,110 @@
+.passive_network_discovery_modal_view li#task_config_bpf_string_input a.help {
+  position: absolute;
+  right: 0;
+  top: 10px;
+}
+#modals .passive_network_discovery_modal_view li#task_config_interface_input label {
+  width: 40%;
+  text-align: left;
+}
+#task-chain-region .passive_network_discovery_modal_view li#task_config_interface_input label {
+  width: 30%;
+}
+.passive_network_discovery_modal_view .configure_capture {
+  padding-top: 14%;
+  padding-left: 28%;
+}
+#task-chain-region .passive_network_discovery_modal_view .configure_capture {
+  padding-top: 10%;
+}
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input p.inline-error, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input p.inline-error {
+  color: #F00;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input.error label, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input.error label {
+  color: #F00;
+}
+#modals .passive_network_discovery_modal_view form .configure_capture p.inline-error, #task-chain-region .passive_network_discovery_modal_view form .configure_capture p.inline-error {
+  margin-left: 0 ;
+}
+.passive_network_discovery_modal_view li#task_config_interface_input label {
+  width: 43%;
+  text-align: left;
+}
+.passive_network_discovery_modal_view li#task_config_interface_input p.inline-error {
+  margin-left: 43%;
+}
+#modals .passive_network_discovery_modal_view.tabbed-modal .short li.slider.string.input label, #task-chain-region .passive_network_discovery_modal_view.tabbed-modal .short li.slider.string.input label {
+  text-align: left;
+}
+#modals .passive_network_discovery_modal_view .simple-row, #task-chain-region .passive_network_discovery_modal_view .simple-row {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  &:last-child {
+    border-bottom: 0;
+  }
+  a.advanced {
+    margin-top: 0 !important;
+    float: right;
+  }
+  div.advanced {
+    margin-top: 7px;
+    &>div {
+      display: inline-block;
+      margin-right: 30px;
+      &>label.protocols, &>label.ports {
+        font-weight: 600;
+        padding-right: 5px;
+      }
+    }
+  }
+}
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input {
+  width: 100%;
+  margin-bottom: 10px;
+  textarea {
+    min-height: 200px;
+  }
+}
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input textarea, #modals .passive_network_discovery_modal_view div.generatedView pre, #task-chain-region .passive_network_discovery_modal_view div.generatedView pre, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input textarea {
+  width: 100%;
+  font-family: monospace;
+  font-size: 11px;
+}
+#modals .passive_network_discovery_modal_view div.generatedView pre, #task-chain-region .passive_network_discovery_modal_view div.generatedView pre {
+  min-height: 20px;
+}
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input label, #modals .passive_network_discovery_modal_view div.generatedView label, #task-chain-region .passive_network_discovery_modal_view div.generatedView label, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input label {
+  padding-top: 10px;
+  display: block;
+  text-align: left;
+  padding-bottom: 7px;
+  width: auto;
+  color: #000;
+  font-weight: 600;
+}
+#modals .passive_network_discovery_modal_view div.generatedView pre, #task-chain-region .passive_network_discovery_modal_view div.generatedView pre {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background: #f3f3f3;
+  width: auto;
+  margin-bottom: 20px;
+}
+#modals .passive_network_discovery_modal_view li#task_config_filter_type_input legend.label, #task-chain-region .passive_network_discovery_modal_view li#task_config_filter_type_input legend.label {
+  width: auto ;
+}
+#modals .passive_network_discovery_modal_view li#task_config_filter_type_input li.choice, #task-chain-region .passive_network_discovery_modal_view li#task_config_filter_type_input li.choice {
+  padding: 0 0 3px 0;
+}
+#modals .passive_network_discovery_modal_view .simple-rows, #task-chain-region .passive_network_discovery_modal_view .simple-rows {
+  padding: 5px 10px;
+  background: #FFF;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+  margin: 0 10px 6px 10px;
+}
+#modals .passive_network_discovery_modal_view span.editLink, #task-chain-region .passive_network_discovery_modal_view span.editLink {
+  font-size: 11px;
+  margin-left: 6px;
+  font-weight: 300;
+}

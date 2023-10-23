@@ -1,0 +1,20 @@
+<div class='graph-controls'>
+  <label class='vertical'>
+    <input type='radio' name='orientation' value='vertical' title='Vertical' checked />
+    <span class='icon' title='Vertical' />
+  </label>
+  <label class='horizontal'>
+    <input type='radio' name='orientation' value='horizontal' title='Horizontal'  />
+    <span class='icon' title='Horizontal' />
+  </label>
+  <label class='radial' style='display:none'>
+    <input type='radio' name='orientation' value='radial_tree' title='Radial'  />
+    <span class='icon' title='Radial' />
+  </label>
+  <label class='full-screen'>
+    <input type='checkbox' name='full-screen' />
+    <span class='icon' title='Fullscreen' />
+  </label>
+</div>
+<div class='d3-graph-visualization'></div>
+<div class='node-info-region'></div>

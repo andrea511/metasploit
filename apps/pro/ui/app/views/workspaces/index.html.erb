@@ -1,0 +1,106 @@
+<% title "Projects" %>
+<% breadcrumb link_to("Projects", workspaces_path) %>
+
+<meta name='enable_news_feed' content='<%= if @enable_news_feed then "true" else "false" end %>' />
+<% include_view_javascript -%>
+<% include_stylesheet 'workspaces/index' -%>
+
+<% content_for :head do %>
+  <meta name='msp-feed-serial' content="<%= @feed_serial %>" />
+  <meta name='msp-feed-version' content="<%= @feed_version %>" />
+  <meta name='msp-feed-revision' content="<%= @feed_revision %>" />
+  <meta name='msp-feed-edition' content="<%= @feed_edition %>" />
+  <meta name='msp-feed-ts' content="<%= @feed_ts %>" />
+  <meta name='msp-feed-orig-version' content="<%= @feed_orig_version %>" />
+<% end %>
+
+<% if License.get.supports_quick_start_and_global_tools? %>
+  <%= render :partial => 'quick_start_menu' %>
+<% end %>
+
+<h3 class="orange" id="product-news-header">Project Listing</h3>
+
+<% if @enable_news_feed %>
+  <div id="product-news" class="right-col" style="width: 38%;">
+    <div class="dashboard-title" style="cursor:default"><%= icon('silky/newspaper', :style => "margin-bottom: -3px") %> Product News</div>
+    <div id="product-news-content">
+      <div class='loading'></div>
+    </div>
+  </div>
+<% end %>
+
+<div id="project-list" class="left-col" style="min-width: 580px; width:<%= if @enable_news_feed then '60' else '100' end %>%;">
+  <div class="control-bar-items">
+    <span class="button single"><%= link_to "Go to Project", '', :class => 'show' %></span>
+    <span class="button any"><%= submit_tag "Delete", :url => '', :class => "delete", :data => { :method => :delete, :confirm => "Delete selected projects and any associations?" } %></span>
+    <span class="button single"><%= link_to "Settings", '', :class => 'edit' %></span>
+    <div class="separator"></div>
+    <span class="button none"><%= link_to "New Project", new_workspace_path, :class => "new" %></span>
+    <div class="dataTables_filter" style="position: relative;">
+      <%= form_tag workspaces_search_path, :method => :get, :style => "" do %>
+        <%= text_field_tag :search, '', :title => "Search", :tabindex => 1, :style => 'float: none; margin-top: 0' %>
+      <% end %>
+    </div>
+    <style type="text/css">
+      .dataTables_filter form>span {
+        float: right;
+      }
+    </style>
+  </div>
+
+  <%= form_tag 'workspaces/destroy', :method => :delete, :id => 'workspace-delete-form' do %>
+
+    <table id="workspace-table" class="list sortable">
+      <thead>
+        <th class="checkbox"><%= check_box_tag "all_workspaces", true %></th>
+        <th>Name</th>
+        <th>Hosts</th>
+        <th>Sessions</th>
+        <th>Tasks</th>
+        <th>Owner</th>
+        <th>Updated</th>
+        <th>Description</th>
+      </thead>
+      <tbody id="workspace_checkboxes">
+        <% @workspaces.each do |workspace| %>
+          <tr id="<%=h dom_id(workspace) %>">
+            <td><%= check_box_tag("workspace_ids[]", workspace.id, false, :id => nil) %></td>
+            <% if TaskChain.interrupted.for_workspace(workspace).count > 0 %>
+              <td title="Workspace Error">
+            <% else %>
+              <td>
+            <% end %>
+              <%= link_to(h(workspace.name), workspace_path(workspace)) %>
+              <span class="hidden settings-url" style='display:none'><%= edit_workspace_path(workspace) %></span>
+              <% if TaskChain.interrupted.for_workspace(workspace).count > 0 %>
+                <span class="error-notification notification-dot"></span>
+              <% end %>
+            </td>
+            <td>
+              <%= workspace.hosts.count %>
+            </td>
+            <td>
+              <%= workspace.sessions.alive.size %>
+            </td>
+            <td>
+              <%= workspace.tasks.running.size %>
+            </td>
+            <td>
+              <%=h (workspace.owner ? workspace.owner.title : "system" ) %>
+            </td>
+            <td>
+              <span title="<%= workspace.updated_at.to_i %>"></span>
+              <%= workspace.updated_at ? "#{time_ago_in_words(workspace.updated_at)} ago" : "never" %>
+            </td>
+            <td>
+              <%=h truncate(workspace.description) %>
+            </td>
+          </tr>
+        <% end -%>
+      </tbody>
+    </table>
+
+  <% end -%>
+</div>
+
+<div class="clearfix"></div>

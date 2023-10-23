@@ -1,0 +1,223 @@
+.toggle-container
+  .toggle
+    {{#unless_eq task_chain.state compare="suspended"}}
+    %label
+      %input{:type=>'checkbox', :class=>"suspend",:name=>'schedule_suspend', :value=>'manual'}
+      Suspend
+    {{/unless_eq}}
+    {{#if_eq task_chain.state compare="suspended"}}
+    %label
+      %input{:type=>'checkbox', :class=>"suspend",:name=>'schedule_suspend', :value=>'manual', :checked=>true}
+      Suspend
+    {{/if_eq}}
+
+%form{:method => 'post', :action=>'javascript:void(0)'}
+
+  .option
+    %label{:for=>'schedule_type'}
+      Run Chain
+    %select{:id=>'schedule_type',:name=>'schedule_recurrence[frequency]'}
+      %option{:value=>'once'}
+        Once
+      %option{:value=>'hourly'}
+        Hourly
+      %option{:value=>'daily'}
+        Daily
+      %option{:value=>'weekly'}
+        Weekly
+      %option{:value=>'monthly', :selected=>true}
+        Monthly
+
+  .option
+    .interval
+      %label
+        Run Every
+      %input{:type=>'text', :name=>'schedule_recurrence[monthly][interval]', :value=>'{{task_chain.schedule_hash.monthly.interval}}'}
+      %span
+        Months
+
+  .option
+    .monthly.start-date
+      %label
+        Start on
+      %input{:type=>'text', :id => 'weekday-date', :readonly=>'readonly',
+             :name=>'schedule_recurrence[monthly][start_date]', :value=>'{{task_chain.schedule_hash.monthly.start_date}}'}
+    %span
+      @
+    .monthly.start-time
+      %input{:type=>'text', :id =>'weekday-time', :readonly=>'readonly',
+             :name=>'schedule_recurrence[monthly][start_time]', :value=>'{{task_chain.schedule_hash.monthly.start_time}}' }
+
+  .option
+    %label
+      On
+    %select{:name=>'schedule_recurrence[monthly][type]'}
+      {{#if_eq task_chain.schedule_hash.monthly.type compare="day"}}
+      %option{:value=>'day', :selected=>true}
+        Day
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.type compare="day"}}
+      %option{:value=>'day'}
+        Day
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.type compare="1"}}
+      %option{:value=>'1', :selected=>true}
+        First
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.type compare="1"}}
+      %option{:value=>'1'}
+        First
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.type compare="2"}}
+      %option{:value=>'2', :selected=>true}
+        Second
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.type compare="2"}}
+      %option{:value=>'2'}
+        Second
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.type compare="3"}}
+      %option{:value=>'3', :selected=>true}
+        Third
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.type compare="3"}}
+      %option{:value=>'3'}
+        Third
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.type compare="4"}}
+      %option{:value=>'4', :selected=>true}
+        Fourth
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.type compare="4"}}
+      %option{:value=>'4'}
+        Fourth
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.type compare="last"}}
+      %option{:value=>'last', :selected=>true}
+        Last
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.type compare="last"}}
+      %option{:value=>'last'}
+        Last
+      {{/unless_eq}}
+    {{#if_eq task_chain.schedule_hash.monthly.day_index compare=undefined}}
+    %input{:type=>'text', :name=>'schedule_recurrence[monthly][day_index]', :value=>'1'}
+    {{else}}
+    %input{:type=>'text', :name=>'schedule_recurrence[monthly][day_index]', :value=>'{{task_chain.schedule_hash.monthly.day_index}}'}
+    {{/if_eq}}
+
+
+    %select{:name=>'schedule_recurrence[monthly][day_interval]'}
+      {{#if_eq task_chain.schedule_hash.monthly.day_interval compare="sunday"}}
+      %option{:value=>'sunday', :selected=>true}
+        Sunday
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.day_interval compare="sunday"}}
+      %option{:value=>'sunday'}
+        Sunday
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.day_interval compare="monday"}}
+      %option{:value=>'monday', :selected=>true}
+        Monday
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.day_interval compare="monday"}}
+      %option{:value=>'monday'}
+        Monday
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.day_interval compare="monday"}}
+      %option{:value=>'monday', :selected=>true}
+        Monday
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.day_interval compare="monday"}}
+      %option{:value=>'monday'}
+        Monday
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.day_interval compare="tuesday"}}
+      %option{:value=>'tuesday', :selected=>true}
+        Tuesday
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.day_interval compare="tuesday"}}
+      %option{:value=>'tuesday'}
+        Tuesday
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.day_interval compare="wednesday"}}
+      %option{:value=>'wednesday', :selected=>true}
+        Wednesday
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.day_interval compare="wednesday"}}
+      %option{:value=>'wednesday'}
+        Wednesday
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.day_interval compare="thursday"}}
+      %option{:value=>'thursday', :selected=>true}
+        Thursday
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.day_interval compare="thursday"}}
+      %option{:value=>'thursday'}
+        Thursday
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.day_interval compare="friday"}}
+      %option{:value=>'friday', :selected=>true}
+        Friday
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.day_interval compare="friday"}}
+      %option{:value=>'friday'}
+        Friday
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.day_interval compare="saturday"}}
+      %option{:value=>'saturday', :selected=>true}
+        Saturday
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.day_interval compare="saturday"}}
+      %option{:value=>'saturday'}
+        Saturday
+      {{/unless_eq}}
+
+  .option
+    %label
+      Max Duration
+    %select{:name=>'schedule_recurrence[monthly][max_duration]'}
+      {{#if_eq task_chain.schedule_hash.monthly.max_duration compare="year"}}
+      %option{:value=>'year', :selected=>true}
+        1 Year
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.max_duration compare="year"}}
+      %option{:value=>'year'}
+        1 Year
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.monthly.max_duration compare="never_expire"}}
+      %option{:value=>'never_expire', :selected=>true}
+        Never Expire
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.monthly.max_duration compare="never_expire"}}
+      %option{:value=>'never_expire'}
+        Never Expire
+      {{/unless_eq}}
+
+  .option.skip-disable
+    %label.spacer
+
+    .delete-project-data
+      %input{:type=>'hidden', :name=>'task_chain[clear_workspace_before_run]', :value=>'0'}
+
+      {{#if_eq task_chain.clear_workspace_before_run compare=true}}
+      %input{:type=>'checkbox', :name=>'task_chain[clear_workspace_before_run]', :checked=>true, :value=>'1'}
+      {{else}}
+      %input{:type=>'checkbox', :name=>'task_chain[clear_workspace_before_run]', :value=>'1'}
+      {{/if_eq}}
+
+      Delete Previous project data (Recommended)
+

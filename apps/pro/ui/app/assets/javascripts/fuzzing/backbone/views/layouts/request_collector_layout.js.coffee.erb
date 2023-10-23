@@ -1,0 +1,40 @@
+define [
+  '<%= javascript_path('templates/fuzzing/layouts/request_collector_layout')%>',
+  '<%= javascript_path('fuzzing/backbone/views/item_views/request_item_view') %>',
+  '<%= javascript_path('fuzzing/backbone/views/item_views/request_input_item_view') %>',
+  '<%= javascript_path('fuzzing/backbone/views/collection_views/request_collection_view') %>',
+  '<%= javascript_path('fuzzing/backbone/collections/request_group_collection') %>'
+] , (Template, RequestItemView, RequestInputItemView, RequestCollectionView, RequestGroupCollection) ->
+  
+  #Class RequestCollection extends Backbone.Collection
+  #  model: RequestGroupModel
+
+  class RequestCollectorLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['fuzzing/layouts/request_collector_layout']
+
+    regions:
+      requests: '.requests'
+      request_input: '.request-input'
+
+    onRender: ->
+      @_initData()
+      @_showRequestInput()
+
+    _showRequestInput:->
+      @request_input_item_view = new RequestInputItemView
+      @.requests.show(@request_collection_view)
+      @.request_input.show(@request_input_item_view)
+
+    _initData: ->
+      @request_collection = RequestGroupCollection
+      
+      #Stubbed out Workspace ID and Fuzzing ID
+      @request_collection.workspace_id = 1
+      @request_collection.fuzzing_id = 3
+
+      @request_collection.fetch
+
+      @request_collection_view = new RequestCollectionView(
+        itemView: RequestItemView
+        collection: @request_collection
+      )  

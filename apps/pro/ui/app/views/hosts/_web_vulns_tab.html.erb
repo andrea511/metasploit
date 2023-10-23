@@ -1,0 +1,1 @@
+<%= render :partial => 'web_vulns', :object => @host.web_vulns.sort{|a,b| [b.risk, a.name, a.path] <=> [a.risk, b.name, b.path]} %>

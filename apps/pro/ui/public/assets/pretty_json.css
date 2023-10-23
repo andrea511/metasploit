@@ -1,0 +1,101 @@
+/*
+  https://github.com/warfares/pretty-json
+  License here,
+  I dont think too  much about licence
+  just feel free to do anything you want... :-)
+*/
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container {
+  /* common */
+  /* eof common */
+  /* node */
+  /* eof node */
+  /* leaf */
+  /* eof leaf */
+}
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .mark-water {
+  color: #bbb;
+}
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .node-content-wrapper {
+  font-size: 11px;
+}
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .node-content-wrapper ul {
+  border-left: 1px dotted #ccc;
+  list-style: none;
+  padding-left: 15px;
+  margin: 0px;
+}
+/* line 26, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .node-content-wrapper ul li {
+  list-style: none;
+  border-bottom: 0;
+  padding-bottom: 0;
+  font-size: 11px;
+}
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .node-hgl-path {
+  background-color: #fefbdf;
+}
+/* line 35, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .node-bracket {
+  font-weight: bold;
+  display: inline-block;
+  cursor: pointer;
+}
+/* line 40, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .node-bracket:hover {
+  color: #999;
+}
+/* line 46, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .leaft-container {
+  width: 100%;
+  max-width: 300px;
+  height: 100%;
+}
+/* line 52, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .title {
+  color: #ccc;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .string {
+  color: #080;
+}
+/* line 54, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .number {
+  color: #ccaa00;
+}
+/* line 55, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .boolean {
+  color: #1979d3;
+}
+/* line 56, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container .date {
+  color: #aa6655;
+}
+/* line 59, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container.inline {
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;
+  max-width: 450px;
+  overflow: hidden;
+}
+/* line 66, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container.inline > .node-content-wrapper {
+  background: transparent;
+}
+/* line 68, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container.inline > .node-content-wrapper ul.node-body {
+  border-left: 0;
+  display: inline-block;
+  padding-left: .7em;
+}
+/* line 72, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/pretty_json.scss */
+.node-container.inline > .node-content-wrapper ul.node-body li {
+  display: inline-block;
+  margin-right: .7em;
+}

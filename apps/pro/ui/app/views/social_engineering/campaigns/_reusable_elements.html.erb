@@ -1,0 +1,30 @@
+<div class='reusable-elements'>
+  <div class='max-width' style='padding:0 20px'>
+    <div style='position: absolute; top: 22px; right: 15px'>
+      <span class='link3 delete-span ui-disabled'>
+        <a class='delete-btn' href='#'>Delete</a>
+      </span>
+      <span class='btn primary'>
+        <a href='<%= workspace_social_engineering_email_templates_path(@workspace) %>/new' class='new'>New</a>
+      </span>
+    </div>
+    <label>Resource: <%= select_tag :element_type, options_for_select([
+      ['Target Lists', workspace_social_engineering_target_lists_path(@workspace)],
+      ['Email Templates', workspace_social_engineering_email_templates_path(@workspace)],
+      ['Web Templates', workspace_social_engineering_web_templates_path(@workspace)],
+      ['Malicious Files', workspace_social_engineering_files_path(@workspace)]
+    ]), :style => 'width: 250px' %></label>
+    <div class='status'>
+    </div>
+    <%= form_tag :method => :post do %>
+      <input type='hidden' name='_method' value='DELETE' />
+      <div class='table loading'>
+        <!-- datatable goes here. -->
+        <table class='list sortable'>
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

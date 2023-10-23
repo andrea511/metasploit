@@ -1,0 +1,13 @@
+window.initRequire = requirejs.config(
+  context: "app"
+  paths:
+    jquery: '<%= jquery_path %>'
+    form_helpers: '<%= js_path("shared/lib/install_form_helpers") %>'
+    pro: '<%= js_path('backbone/pro') %>'
+  waitSeconds: 0
+  shim:
+    pro:
+      exports: 'Pro'
+)
+
+jQuery(document).ready => jQuery(document).trigger('requirejs-ready')

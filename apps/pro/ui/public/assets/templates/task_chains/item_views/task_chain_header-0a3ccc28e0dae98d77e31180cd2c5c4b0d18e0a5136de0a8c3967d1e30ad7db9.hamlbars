@@ -1,0 +1,28 @@
+.name.columns.small-6
+  .container
+    %label{:for=>'name'}
+      Task Chain Name:
+    .field-container
+      %input{:type=>"text", :id=>'name', :name=>"task_chain[name]"}
+
+.columns.small-3.schedule-container
+  .schedule-wrapper
+    .schedule-state.schedule
+
+  %a{:class=>'schedule', :href=>'javascript:void(0)'}
+    Schedule Now
+
+.actions.columns.small-3
+  %ul
+    %li.cancel
+      %span{:class=>'btn cancel link'}
+        %a{:href=>'javascript:void(0)'}
+          Cancel
+    %li.save-and-run
+      %span{:class=>'btn save-run disabled'}
+        %a{:href=>'javascript:void(0)', :class=>'disabled'}
+          Save and Run Now
+    %li.save
+      %span{:class=>'btn save disabled'}
+        %a{:href=>'javascript:void(0)', :class=>'disabled'}
+          Save

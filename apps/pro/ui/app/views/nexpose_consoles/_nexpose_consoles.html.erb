@@ -1,0 +1,78 @@
+<% include_javascript 'nexpose_consoles/_index' %>
+
+<div class="nexpose_consoles">
+
+  <p>
+    This section provides the ability to configure Nexpose Consoles. Once configured, these consoles may be used to launch new scans and import data from existing sites.
+  </p>
+
+<%# TODO: For some reason, collection routes don't generate correctly. destroy_nexpose_consoles_path wants an id, but it doesn't need one.
+  Had to hardcode the route to get around this issue. %>
+<%= form_tag '/nexpose_consoles/destroy', :method => :delete do %>
+
+  <div class="control-bar">
+    <span class="button">
+      <%= link_to "Configure a Nexpose Console", new_nexpose_console_path, :class => "new" %>
+    </span>
+    <span class="button">
+      <%= submit_tag "Delete", :class => "delete", :id => "nexpose_console_delete", :data => { :confirm => "Delete selected Nexpose Consoles?" } %>
+    </span>
+  </div>
+
+  <table id="nexpose_console_list" class="list">
+    <thead>
+      <th class="checkbox"><%= check_box_tag "all_nexpose_consoles", true %></th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Status</th>
+      <th>Version</th>
+      <th>Sites</th>
+      <th>Creator</th>
+      <th>Updated</th>
+    </thead>
+    <tbody>
+    <% @consoles.each do |con| %>
+    <tr id="<%=h dom_id(con) %>" class="<%=h row_cycle %>">
+      <td><%= check_box_tag("nexpose_console_ids[]", con.id, false, :id => nil) %></td>
+      <td>
+        <%= link_to(h(con.name), edit_nexpose_console_path(con)) %>
+      </td>
+      <td>
+        <a href="https://<%=h con.address %>:<%=h con.port %>/" target="_new"><%=h con.address %>:<%=h con.port %></a>
+      </td>
+      <td>
+        <%=h "#{con.status} (#{con.enabled ? "Enabled" : "Disabled"})" %>
+      </td>
+      <td>
+        <%=h con.version %>
+      </td>
+      <td>
+        <%=h (con.cached_sites || []).length %>
+      </td>
+      <td>
+        <%=h con.owner  %>
+      </td>
+      <td>
+        <%= con.updated_at %>
+      </td>
+    </tr>
+    <% end %>
+    <% if @consoles.empty? %>
+      <td colspan=8 align=center>
+        No Nexpose Consoles
+      </td>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+</div>
+
+<%= nonced_javascript_tag do %>
+  (function() {
+    jQuery(function($) {
+      $("#all_nexpose_consoles").checkAll($("#nexpose_console_list"));
+    });
+  }).call(this);
+<% end %>
+

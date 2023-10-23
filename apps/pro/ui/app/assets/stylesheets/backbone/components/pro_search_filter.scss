@@ -1,0 +1,34 @@
+// TODO: throw-away code for legacy table search
+.filter-region {
+  .filter-component.pro-search {
+    margin-top: -24px;
+    float: right;
+    padding-right: 0px;
+  }
+}
+
+.filter-component.pro-search {
+
+  a.cancel-search {
+    background: {
+      image: image-url('icons/linkBtn.png');
+      repeat: no-repeat;
+      position: -6px -520px;
+    }
+    display: block;
+    float: left;
+    width: 13px;
+    height: 20px;
+    margin-right: 3px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  .dataTables_filter {
+    padding: 6px 6px 6px 6px;
+    input#search {
+      margin: 0px
+    }
+  }
+}

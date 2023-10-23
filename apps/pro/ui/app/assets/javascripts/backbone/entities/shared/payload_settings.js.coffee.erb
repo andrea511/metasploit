@@ -1,0 +1,33 @@
+define [
+  'base_model'
+  'base_collection'
+], ->
+  @Pro.module "Entities.Shared", (Shared, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+    class Shared.PayloadSettings extends App.Entities.Model
+      defaults:
+        PAYLOAD_TYPE: <%= ExploitTask::PAYLOAD_TYPES  %>
+        CONNECTION_TYPE: <%= ExploitTask::CONNECTIONS  %>
+        payload_settings:
+          payload_type: 'Meterpreter'
+          connection_type: 'Auto'
+          listener_ports: '1024-65535'
+
+      url: () ->
+        Routes.workspace_shared_payload_settings_path(WORKSPACE_ID)+'.json'
+
+    #
+    # API
+    #
+
+    API =
+    # @return [Model] of all Cred objects in a given workspace
+      getPayloadSettings: (opts) ->
+        new Shared.PayloadSettings(opts)
+
+
+    App.reqres.setHandler "shared:payloadSettings:entities", (opts={}) ->
+      API.getPayloadSettings(opts)

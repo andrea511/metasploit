@@ -1,0 +1,43 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/scheduler/monthly_schedule') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/scheduler/schedule') %>'
+], ($, Template, Schedule) ->
+  class MonthlySchedule extends Schedule
+    template: HandlebarsTemplates['task_chains/item_views/scheduler/monthly_schedule']
+
+
+    events: _.extend({}, Schedule.prototype.events,{
+      'change [name="schedule_recurrence[monthly][type]"]' : '_changeType'
+    })
+
+    onShow:() ->
+      super
+      $('#weekday-time',@el).timepicker(
+        timeOnly:true,
+        timeFormat: 'hh:mm tt z'
+      )
+      $('#weekday-date', @el).datepicker()
+
+
+      if $('[name="schedule_recurrence[monthly][type]"').val() == 'day'
+        $('[name="schedule_recurrence[monthly][day_interval]"').hide()
+      else
+        $('[name="schedule_recurrence[monthly][day_index]"').hide()
+
+
+    _formSubmit:(e) ->
+      $('#weekday-date', @el).datepicker('destroy')
+      $('#weekday-time', @el).timepicker('destroy')
+      super
+
+    _changeType: (e) ->
+      e.stopPropagation()
+      type = $(e.target).val()
+      switch type
+        when 'day'
+          $('[name="schedule_recurrence[monthly][day_interval]"').hide()
+          $('[name="schedule_recurrence[monthly][day_index]"').show()
+        else
+          $('[name="schedule_recurrence[monthly][day_interval]"').show()
+          $('[name="schedule_recurrence[monthly][day_index]"').hide()

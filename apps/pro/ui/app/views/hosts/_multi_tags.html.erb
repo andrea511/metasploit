@@ -1,0 +1,43 @@
+<h3>Tag Editor</h3>
+<p> Add or create new tags using the form below. Note that for existing tags, descriptions and attributes will be preserved if they are not altered here. Tag information is visible on hosts when hovering over them, or on a host's individual detail page, under the "Tags" tab.</p>
+<table class="list" id="host_tags_form">
+  <thead>
+    <tr>
+      <th class="tag-form-name">Name</th>
+      <th class="tag-form-desc">Description</th>
+      <th class="tag-form-attr">Attributes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td valign="top">
+        <input id="name" name="name" type="text" value="" size="30"/>
+      </td>
+      <td valign="top">
+        <textarea cols="60" id="desc" name="desc" rows="4"></textarea>
+      </td>
+      <td valign="top">
+        <table class="list mar-tb10">
+          <tr>
+            <td> 
+              <%= check_box_tag("tag_attributes[]", "critical", false, :id => nil) %>
+              <label for="tag_attributes[]" class="inline">Critical finding?</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= check_box_tag("tag_attributes[]", "report_detail", false, :id => nil) %>
+              <label for="tag_attributes[]" class="inline">Include in report details?</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= check_box_tag("tag_attributes[]", "report_summary", false, :id => nil) %>
+              <label for="tag_attributes[]" class="inline">Include in report summary?</label>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,15 @@
+@import "css3-mixins";
+
+.spinner {
+  background-image: image-url('spinner.gif');
+  width: 16px;
+  height: 16px;
+  display: none;
+  margin-left: 10px;
+}
+
+.spinner.retina {
+  background-image: image-url('spinners/retina-spinner.gif');
+  @include image-2x(image-path('spinners/retina-spinner@2x.gif'), 16px, 16px);
+  background-repeat: no-repeat;
+}

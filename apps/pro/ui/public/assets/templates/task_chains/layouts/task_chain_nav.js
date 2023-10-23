@@ -1,0 +1,7 @@
+(function() {
+  this.HandlebarsTemplates || (this.HandlebarsTemplates = {});
+  this.HandlebarsTemplates["task_chains/layouts/task_chain_nav"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<div class='columns small-12'>\n<div class='vertical-nav'>\n<div class='timeline'>\n<hr>\n</div>\n<div class='timeline-arrow'>\n>\n</div>\n<div class='action-container'>\n<div class='action delete' title='Delete the selected task'></div>\n<div class='action clone' title='Clone the selected task'></div>\n<div class='action reset' title='Clear the task chain'></div>\n</div>\n<div class='chain-ui chain'>\n<div class='pie-charts'></div>\n</div>\n<div class='add-task'>\n+\n<div class='add-task-options'>\n<ul>\n<li data-task-type='scan'>\nSCAN\n</li>\n<li data-task-type='import'>\nIMPORT\n</li>\n<li data-task-type='nexpose'>\nNEXPOSE\n</li>\n<li data-task-type='bruteforce'>\nBRUTEFORCE\n</li>\n<li data-task-type='exploit'>\nEXPLOIT\n</li>\n<li data-task-type='module_run'>\nMODULE RUN\n</li>\n<li data-task-type='collect'>\nCOLLECT EVIDENCE\n</li>\n<li data-task-type='cleanup'>\nCLEANUP\n</li>\n<li data-task-type='report'>\nREPORT\n</li>\n<li data-task-type='webscan'>\nWEB SCAN\n</li>\n<li data-task-type='metamodule'>\nMETAMODULE\n</li>\n<li data-task-type='rc_script'>\nRESOURCE SCRIPT\n</li>\n<li data-task-type='nexpose_push'>\nPUSH TO NEXPOSE\n</li>\n</ul>\n</div>\n</div>\n</div>\n</div>";
+},"useData":true});
+  return this.HandlebarsTemplates["task_chains/layouts/task_chain_nav"];
+}).call(this);

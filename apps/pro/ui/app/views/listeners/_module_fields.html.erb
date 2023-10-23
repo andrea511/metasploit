@@ -1,0 +1,57 @@
+<%= form_tag(listener_add_action_path(@listener.id), :method => 'post') do %>
+	<% if msf_module %>
+	<%= hidden_field_tag 'module', msf_module.fullname -%>
+	<blockindent>
+	<h3><%=h msf_module.title %></h3>
+	<p>
+		<%=h msf_module.description %>
+	</p>
+
+
+
+	<% validated = msf_module.options.reject{|x|
+		%W{
+			SESSION
+			WORKSPACE
+			PROUSER
+			VERBOSE
+			MODULE_OWNER
+			ParentUUID
+			TimestampOutput
+		}.include?(x.name)
+	}
+
+	if validated.length > 0 %>
+	<h3>Module Options</h3>
+	<%
+		validated.each do |opt|
+	%>
+			<dl class="module-form">
+				<dt>
+					<%= label_tag "options_#{opt.name}", h(opt.name), :class => required_class(opt) %>
+					(<%=h opt.type %>)
+				</dt>
+				<dd>
+					<% option_value = opt.default %>
+					<% if opt.type == 'enum' %>
+					<%= select_tag "options[#{opt.name}]", options_for_select(opt.enums, option_value) %>
+					<% elsif opt.type == 'bool' %>
+					<%= check_box_tag "options[#{opt.name}]", "true", (option_value == "true") %>
+					<% else %>
+					<%= text_field_tag "options[#{opt.name}]", option_value %>
+					<% end %>
+
+					<br/>
+
+					<span class='description'><%=h opt.desc %></span>
+				</dd>
+			</dl>
+	<%
+		end
+	end %>
+
+	</blockindent>
+
+	<% end %>
+<% end -%>
+

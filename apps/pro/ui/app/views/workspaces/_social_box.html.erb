@@ -1,0 +1,13 @@
+<div class="step">
+  <h3>Social Engineering</h3>
+  <div class="stepInfo begin" id="phishing">
+    <%= render :partial => 'social_results' %>
+  </div>
+  <div class="btns">
+    <% if License.get.supports_social_engineering? %>
+      <span class="btn"><%= link_to "New Campaign", workspace_social_engineering_campaigns_path(@workspace, :show => 0), :class => "new" %></span>
+    <% else %>
+      <span class="btn"><%= link_to "New Campaign", new_workspace_campaign_path(@workspace), :class => "new" %></span>
+    <% end %>
+  </div>
+</div>

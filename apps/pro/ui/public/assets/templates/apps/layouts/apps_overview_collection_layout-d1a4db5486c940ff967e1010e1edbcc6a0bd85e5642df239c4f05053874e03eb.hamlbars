@@ -1,0 +1,7 @@
+.row
+  .large-2.columns{ :style => 'padding-left: 0;' }
+    .filters
+  .large-1.columns
+    &nbsp;
+  .large-9.columns
+    .collection.row

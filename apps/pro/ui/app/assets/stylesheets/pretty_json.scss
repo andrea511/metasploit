@@ -1,0 +1,78 @@
+/*
+  https://github.com/warfares/pretty-json
+  License here,
+  I dont think too  much about licence
+  just feel free to do anything you want... :-)
+*/
+
+.node-container {
+/* common */
+  .mark-water{
+      color:#bbb;
+  }
+  /* eof common */
+
+  /* node */
+  .node-content-wrapper {
+      font-size: 11px;
+  }
+  .node-content-wrapper ul{
+      border-left:1px dotted #ccc;
+      list-style:none;
+      padding-left:15px;
+      margin:0px;
+  }
+  .node-content-wrapper ul li{
+      list-style:none;
+      border-bottom:0; 
+      padding-bottom:0;
+      font-size: 11px;
+  }
+  .node-hgl-path{
+      background-color:#fefbdf;
+  }
+  .node-bracket{
+      font-weight:bold;
+      display:inline-block;
+      cursor:pointer;
+  }
+  .node-bracket:hover{
+      color:#999;
+  }
+  /* eof node */
+
+  /* leaf */
+  .leaft-container{
+      width:100%;
+      max-width:300px;
+      height:100%;
+  }
+
+  .title{ color:#ccc;}
+  .string{ color:#080;}
+  .number{ color:#ccaa00;}
+  .boolean{ color:#1979d3;}
+  .date{ color:#aa6655;}
+  /* eof leaf */
+
+  &.inline {
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    max-width: 450px;
+    overflow: hidden;
+    &>.node-content-wrapper {
+      background: transparent;
+      ul.node-body {
+        border-left: 0;
+        display: inline-block;
+        padding-left: .7em;
+        li {
+          display: inline-block;
+          margin-right: .7em;
+        }
+      }
+    }
+  }
+}

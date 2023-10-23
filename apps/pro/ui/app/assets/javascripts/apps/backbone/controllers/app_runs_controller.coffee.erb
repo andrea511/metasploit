@@ -1,0 +1,8 @@
+define [
+ '<%= javascript_path("apps/backbone/views/layouts/app_runs_layout") %>'
+], (AppRunsLayout) ->
+  class AppRunsController
+    constructor: ({ @region }) ->
+      @layout = new AppRunsLayout()
+      @region.show(@layout)
+      @layout.renderRegions()

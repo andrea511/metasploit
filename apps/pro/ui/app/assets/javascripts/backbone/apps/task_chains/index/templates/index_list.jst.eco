@@ -1,0 +1,27 @@
+<div class="toolbar">
+  <a class="disabled" href="javascript:void(0);" id="delete">Delete</a>
+  <a class="disabled" href="javascript:void(0);" id="clone">Clone</a>
+  <a class="disabled" href="javascript:void(0);" id="stop">Stop</a>
+  <a class="disabled" href="javascript:void(0);" id="suspend">Suspend</a>
+  <a class="disabled" href="javascript:void(0);" id="unsuspend">Unsuspend</a>
+  <a class="disabled" href="javascript:void(0);" id="run">Run Now ▶</a>
+  <a href="javascript:void(0);" id="new">+ New Task Chain</a>
+</div>
+
+<div id="selected-indicator">
+  <span id="num-selected">0</span> of <span id="num-total"></span> task chains selected
+</div>
+
+<table>
+  <thead>
+    <th id="select-all"><input type="checkbox"></th>
+    <th class="schedule">Schedule</th>
+    <th class="sortable" data-sort-column="name">Name <div class="arrow up"></div></th>
+    <th class="sortable" data-sort-column="sortable_last_updated">Last Updated <div class="arrow"></div></th>
+    <th class="sortable" data-sort-column="created_by">Created By <div class="arrow"></div></th>
+    <th>Tasks</th>
+    <th class="sortable" data-sort-column="sortable_next_run">History <div class="arrow"></div></th>
+    <th class="sortable" data-sort-column="percent_tasks_started">Status <div class="arrow"></div></th>
+  </thead>
+  <tbody></tbody>
+</table>

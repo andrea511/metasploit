@@ -1,0 +1,7 @@
+<div>
+  <% if @private_show_modal == 'true': %>
+    <a href="javascript:void(0)" class="underline"><%= @private_type_humanized.replace('SSHKey','SSH Key') %></a>
+  <% else: %>
+    <%= @private %>
+  <% end %>
+</div>

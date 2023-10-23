@@ -1,0 +1,19 @@
+{{#if showHeader}}
+%div.center.app-runs
+  %div.overview-header
+    last launched metamodule:
+    %span.app-name
+      {{ app/name }}
+    %label.status.finished {{ status }}
+{{/if}}
+
+.stat-row{ :class => "{{app/symbol}}" }
+  .center
+    {{#each app/stats}}
+    {{> apps/views/stat_views/_stat}}
+    {{/each}}
+
+{{#if showHeader}}
+%a.show-stats{ :href => './app_runs/{{id}}' }
+  View Findings &rarr;
+{{/if}}

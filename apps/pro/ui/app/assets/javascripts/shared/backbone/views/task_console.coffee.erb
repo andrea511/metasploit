@@ -1,0 +1,90 @@
+define ['jquery', '<%= javascript_path("templates/shared/task_console") %>'], ($, Tmpl) ->
+  class TaskConsole extends Backbone.Marionette.ItemView
+    @POLL_DELAY: 2000
+    _pending: false
+    _updating: false
+    _updateInterval: null
+    _initialized: false
+    _prerendered: false
+
+    initialize: ({ @task, prerendered }) =>
+      @initializeEvents() if prerendered?
+      @_prerendered = prerendered
+
+    onRender: =>
+      @initializeEvents() if not @_initialized
+      @_initialized = true
+
+    initializeEvents: (opts={}) =>
+      $log = @_findLog()
+      $log.bind 'scrollToBottom', ->
+        $(@).scrollTop $(@).prop('scrollHeight')
+
+      $log.bind 'addLine', (event, html) ->
+        prevLine = $(@).data('prevLine')
+        # continue scrolling only if user is at the bottom
+        padding = parseInt($(@).css('padding-top')) + parseInt($(@).css('padding-bottom'))
+        innerHeight = $(@).prop('scrollHeight') - padding
+        scrolled = $(@).height() + $(@).scrollTop()
+        shouldScrollToBottom = (scrolled >= innerHeight)
+        # append log contents
+        $(@).append(html) if html != prevLine
+        $(@).trigger('scrollToBottom') if shouldScrollToBottom
+        $(@).data('prevLine', html)
+      $log.trigger 'scrollToBottom'
+
+    template: HandlebarsTemplates['shared/task_console']
+
+    #
+    # Start polling a task log that was previously paused.
+    resumeUpdating: =>
+      @_updating = false
+      @startUpdating()
+
+    startUpdating: =>
+      return if @_updating
+
+      @_updating = true
+      if !_updateInterval?
+        @_updateInterval = setInterval((=> @refreshLog()), TaskConsole.POLL_DELAY)
+
+    stopUpdating: =>
+      return unless @_updating
+      @_updating = false
+
+    #
+    # Refresh the task log.
+    #
+    # poll [Boolean] initialize polling if true
+    #
+    # @return [null]
+    refreshLog: =>
+      $log = @_findLog()
+
+      if $('.end', $log).length != 0
+        @_updating = false
+
+      if @_updating && !@_pending
+        lines = $log.children().length
+
+        @_pending = true
+        $.ajax
+          url: "/tasks/#{@task}/logs?line=#{lines}"
+          dataType: "json"
+          success: ({ header, log }) =>
+            if header? and log?
+              $log.trigger('addLine', log) if log?.length > 0
+              if @_prerendered # send the header to someone else
+                $(document).trigger('logUpdate', [log, header]) if header?.length > 0
+              else
+                $('table.list', @el).html(header)
+          complete: =>
+            @_pending = false
+
+    _findLog: =>
+      $log = $('pre.console', @$el)
+      if $log.length then $log else @$el
+
+    render: =>
+      return if $(@el).is('pre')
+      super

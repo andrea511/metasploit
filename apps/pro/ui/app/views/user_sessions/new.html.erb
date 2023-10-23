@@ -1,0 +1,65 @@
+  <div class='orange-strip'>
+  </div>
+  <div class='r7bottom-strip'>
+  </div>
+
+
+<svg class='seven-bg'  preserveAspectRatio="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 100" enable-background="new 0 0 200 100" xml:space="preserve">
+     <pattern id="img1" patternUnits="userSpaceOnUse" width="100" height="100">
+       <image preserveAspectRatio="xMinYMin" xlink:href="<%= image_path 'tileable_contours_white.jpg' %>" x="0" y="0" width="100" height="100" />
+    </pattern>
+
+
+    <g>
+      <image overflow="visible" opacity="0.2" width="954" height="517" xlink:href="<%= image_path '2274DE6EDBC7B404.png' %>"  transform="matrix(0.24 0 0 0.24 -19.0732 -11)">
+      </image>
+    </g>
+<polyline fill="url(#img1)" points="0.148,0 199.801,0 142.437,100 0.148,100 0.148,100 44.406,32.874 -2.08,32.874 -5.073,0.785   "/>
+</svg>
+
+
+<!-- need a push div since padding screws up the svgs elsewhere -->
+<div style='height: 26%;'></div>
+<div id='box-wrap'>
+
+  <div id="box">
+
+  <% if flash[:notice] %>
+    <div class="flash success" style='position:absolute;top:-60px;z-index:999;left:88px;'><%=h flash[:notice] %></div>
+  <% end %>
+  <% if flash[:error] %>
+    <div class="flash errors" style='position:absolute;top:-60px;z-index:999;left:88px;'><%=h flash[:error] %></div>
+  <% end %>
+
+    <noscript>
+      <p class="noscript_warning">Please enable Javascript before using Metasploit</p>
+    </noscript>
+    <a href='/' class="logo">
+      <span id="logo" class="<%= edition_name %>"></span>
+    </a>
+    <a href='http://www.rapid7.com' class='r7logo'>
+      by <%= image_tag "r7logo_new_dark.png", :size => '78x13', :alt => "Rapid7" %>
+    </a>
+
+    <%= form_for @user_session do |f| %>
+      <%= f.label :username, "Username", :class => 'invisible' %>
+      <%= f.text_field :username, :spellcheck => false, :autofocus => true  %>
+      <%= f.label :password, "Password", :class => 'invisible' %>
+      <%= f.password_field :password, :autocomplete => 'off' %>
+      <a href="https://help.rapid7.com/metasploit/#managing-updating-metasploit/resetting-account-password.html" class="forgot">I forgot my password</a>
+      <%= f.submit "Sign in", :class => "login" %>
+
+    <% end %>
+  </div>
+</div>
+
+<div id="footer">
+  <div class="productby">
+    <a href="http://www.rapid7.com" title="Rapid7" target="_blank">
+      <%= image_tag "r7logo_new.png", :size => "78x13" %>
+    </a>
+  </div>
+  <div class="version">
+    © 2010-<%= Time.now.utc.year %> Rapid7 Inc, Boston, MA
+  </div>
+</div>

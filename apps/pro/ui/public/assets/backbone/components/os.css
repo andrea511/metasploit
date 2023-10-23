@@ -1,0 +1,79 @@
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo span {
+  height: 18px;
+  width: 19px;
+  display: inline-block;
+}
+/* line 8, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .platform {
+  width: auto;
+  vertical-align: top;
+}
+/* line 13, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .vm-logo {
+  background-image: url(/assets/icons/os/vm_logo-93c1860595c834295429f25c8b0a3b3358790412ea9960646c9316306713d47a.png);
+}
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .aix-logo {
+  background-image: url(/assets/icons/os/aix_logo-9d79d58416d2ecf33b845f18e737f0053fa4878957d7f24ead05c11f51f0c5ba.png);
+}
+/* line 21, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .apple-logo {
+  background-image: url(/assets/icons/os/apple_logo-1af046942c147f25021c4b9208f40e86b841941e4ca08b8750b138c485270348.png);
+}
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .beos-logo {
+  background-image: url(/assets/icons/os/beos_logo-b19a67cd87f8d8e22766fc5c122719673b4c569256931979f1538cf3e0f0cc2b.png);
+}
+/* line 29, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .openbsd-logo {
+  background-image: url(/assets/icons/os/openbsd_logo-9f813d8515abe689bc3b9e3759741b529d1176a41973f02b76c7b45b1c064c98.png);
+}
+/* line 33, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .freebsd-logo {
+  background-image: url(/images/icons/os/freebsf_logo.png);
+}
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .bsd-logo {
+  background-image: url(/assets/icons/os/bsd_logo-9f813d8515abe689bc3b9e3759741b529d1176a41973f02b76c7b45b1c064c98.png);
+}
+/* line 41, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .cisco-logo {
+  background-image: url(/assets/icons/os/cisco_logo-da4db925fd34808fd55d7e71b7d6e1faa231a395a779451b323cdae7b5fa2a93.png);
+}
+/* line 45, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .hp-logo {
+  background-image: url(/assets/icons/os/hp_logo-b15b31f2fb07479470b633e76845d1bdda9161394b4deb169ca0cc243709f6fd.png);
+}
+/* line 49, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .ibm-logo {
+  background-image: url(/assets/icons/os/ibm_logo-b6843d6a73cd3d6e7b7c21fe88abb6916edc74ed4c341a58927ca3657c63770f.png);
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .linux-logo {
+  background-image: url(/assets/icons/os/linuxlogo-d581e7c323bf5476477c9ec7c477d7280fc492665c3825856b9938b491f39382.png);
+}
+/* line 57, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .printer-logo {
+  background-image: url(/assets/icons/os/printer_logo-9d3fbd24f6945bff50cf6aa9168ceeb3009856407e9561459c6289d252d7c7aa.png);
+}
+/* line 61, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .router-logo {
+  background-image: url(/assets/icons/os/router_logo-fc8b7d0a3080135b4efdad7218a85b27ac6c7e0dc793e5c4628405cc1f966f9c.png);
+}
+/* line 65, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .solaris-logo {
+  background-image: url(/assets/icons/os/solaris_logo-8548360e390f4f007b2089512e6f7d6db7a27fed8305c9e46f72b32cea3e32ba.png);
+}
+/* line 69, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .sunos-logo {
+  background-image: url(/assets/icons/os/sunos_logo-60df4b0e8e318f6abd74f23b678d7acc87e03470385122669c32495b3ad13fab.png);
+}
+/* line 73, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .win-logo {
+  background-image: url(/assets/icons/os/winlogo-a889181eb1da7f1e02a4f8a951bd873e2860a85ea8cf002575106f57f0c84363.png);
+}
+/* line 77, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/os.scss */
+.icon-logo .unknown-logo {
+  background-image: url(/assets/icons/os/unknown_logo-133fed0d3f2e39d20053d454bc7807c4542d4c74ee1217148bf2db7ce8446a38.png);
+}

@@ -1,0 +1,76 @@
+<%
+require 'pathname'
+
+format = ENV['CUCUMBER_FORMAT'] || 'pretty'
+
+root = Pathname.new(__FILE__).parent
+pro = root.parent
+features_report_path = pro.join('test_reports','features')
+
+base_tags = 'not @legacy'
+ci_tags = 'not (@legacy or @debug or @manual or @wip or @quarantine)'
+wip_tags = "#{base_tags} and @wip:65"
+quarantine_tags = "#{base_tags} and @quarantine:30"
+focus_tags = "#{ci_tags} and @focus"
+cinightly_tags = "#{ci_tags} and not @local"
+ci_external_targets_tags = "#{cinightly_tags} and (@nexpose or @scanlab or @vulntarget or @domino)"
+ci_no_externals_tags = "#{ci_tags} and not (@nexpose or @scanlab or @vulntarget or @domino or @smtp or @local)"
+ci_no_domino_tags = "#{ci_tags} and not (@domino or @local)"
+ci_no_nexpose_tags = "#{ci_tags} and not (@nexpose or @local)"
+ci_no_smtp_tags = "#{ci_tags} and not (@smtp or @local)"
+ci_nexpose_tags = "#{ci_tags} and @nexpose and not @local"
+
+flaky_tags = "#{base_tags} and @flaky"
+flaky_infrastructure_tags = "#{base_tags} and @flaky_infrastructure"
+
+nexpose_tags = "#{ci_tags} and @nexpose"
+record_tags = "#{ci_tags} and @nexpose and @record"
+scanlab_tags = "#{ci_tags} and @scanlab"
+vulntarget_tags = "#{ci_tags} and @vulntarget"
+domino_tags = "#{ci_tags} and @domino"
+external_targets_tags = "#{ci_tags} and (@nexpose or @scanlab or @vulntarget or @domino)"
+no_externals_tags = "#{ci_tags} and not (@nexpose or @scanlab or @vulntarget or @domino)"
+
+base_opts = [
+  '--publish-quiet',
+  '--require features',
+  "--format #{format}",
+  '--format rerun', "--out #{features_report_path.join('rerun.txt')}"
+]
+
+ci_opts = (base_opts +[
+  '--format html', "--out #{features_report_path.join('cucumber.html')}",
+  '--format json', "--out #{features_report_path.join('cucumber.json')}",
+  '--format ParallelTests::Cucumber::FailuresLogger', "--out #{features_report_path.join('cucumber_failures.log')}",
+  '--format ParallelTests::Gherkin::RuntimeLogger', "--out #{features_report_path.join('parallel_runtime.log')}",
+  '--strict',
+  '--retry 2',
+  '--no-strict-flaky'
+])
+
+ci_opts = ci_opts.join(' ')
+base_opts = base_opts.join(' ')
+%>
+default: <%= ci_opts %> --tags '<%= ci_tags %>' features
+wip: <%= base_opts %> --tags '<%= wip_tags %>' --wip features
+quarantine: <%= ci_opts %> --tags '<%= quarantine_tags %>' features
+focus: <%= ci_opts %> --tags '<%= focus_tags %>' features
+
+cinightly: <%= ci_opts %> --tags '<%= cinightly_tags %>' features
+ci_external_targets: <%= ci_opts %> --tags '<%= ci_external_targets_tags %>'
+ci_no_externals: <%= ci_opts %> --tags '<%= ci_no_externals_tags %>'
+ci_no_domino: <%= ci_opts %> --tags '<%= ci_no_domino_tags %>'
+ci_no_nexpose: <%= ci_opts %> --tags '<%= ci_no_nexpose_tags %>'
+ci_no_smtp: <%= ci_opts %> --tags '<%= ci_no_smtp_tags %>'
+ci_nexpose: <%= ci_opts %> --tags '<%= ci_nexpose_tags %>' features
+
+flaky: <%= base_opts %> --tags '<%= flaky_tags %>' features
+flaky_infrastructure: <%= base_opts %> --tags '<%= flaky_infrastructure_tags %>' features
+
+nexpose: <%= ci_opts %> --tags '<%= nexpose_tags %>' features
+record: <%= ci_opts %> --tags '<%= record_tags %>' features
+scanlab: <%= ci_opts %> --tags '<%= scanlab_tags %>' features
+vulntarget: <%= ci_opts %> --tags '<%= vulntarget_tags %>' features
+domino: <%= ci_opts %> --tags '<%= domino_tags %>' features
+external_targets: <%= ci_opts %> --tags '<%= external_targets_tags %>'
+no_externals: <%= ci_opts %> --tags '<%= no_externals_tags %>'

@@ -1,0 +1,8 @@
+<% if @host.tags.size.zero? %>
+  <p> This host has no assigned tags.</p>
+  <%= render "new_tag" %>
+<% else %>
+  <%= render "new_tag" %>
+  <%= render "update_tags" %>
+  <hr>
+<% end %>

@@ -1,0 +1,89 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/tag_layout") %>',
+  '<%= javascript_path("shared/backbone/layouts/modal") %>',
+  '<%= javascript_path("tags/backbone/views/form") %>'
+], ($, Template, Modal, TagForm) ->
+  NAME_SYMBOL = "$NAME"
+  DELETE_CONFIRM_MESSAGE = "Are you sure you want to remove the tag \"#{NAME_SYMBOL}\" from this host?"
+  DISPLAY_TAG_COUNT = 3
+
+  class TagLayout extends Backbone.Marionette.LayoutView
+
+    @DELETE_CONFIRM_MESSAGE: "Are you sure you want to remove the tag \"#{NAME_SYMBOL}\" from this host?"
+
+    initialize: ({@host}) ->
+      @host.on('change', @render)
+
+    template: HandlebarsTemplates['hosts/layouts/tag_layout']
+
+    serializeData: ->
+      tags = @host.get('tags') || []
+      {
+        host: @host,
+        lastTags: tags.slice(-DISPLAY_TAG_COUNT).reverse(),
+        tagCount: tags.length,
+        moreTagCount: tags.length-DISPLAY_TAG_COUNT
+        workspace_id: @host.get('workspace_id')
+        otherTags: tags.slice(0, -DISPLAY_TAG_COUNT).reverse()
+      }
+
+    events:
+      'click a.tag-close': 'deleteTagClicked'
+      'click a.green-add': 'addTagClicked'
+
+    #
+    # Marionette callbacks
+    #
+    onShow: => $(@el).tooltip()
+
+    #
+    # Event handlers
+    #
+    deleteTagClicked: (e) =>
+      e.preventDefault()
+      id = parseInt($(e.currentTarget).attr('data-id'))
+      return if !id or id < 1
+
+      # show confirmation dialog
+      tagName = _.string.trim($(e.currentTarget).prev('a.tag').text())
+      confirmMsg = DELETE_CONFIRM_MESSAGE.replace(NAME_SYMBOL, tagName)
+      return unless confirm(confirmMsg)
+
+      # remove the tag from the UI
+      $wrap = $(e.currentTarget).parents('div.wrap')
+      $(e.currentTarget).prev('a.tag').first().remove()
+      $(e.currentTarget).remove()
+      $wrap.remove()
+
+      $more = $('a.more', @el)
+      if (m=$more.text().match(/(\d+) more/))
+        x = parseInt(m[1])-1
+        if x <= 0
+          $more.remove()
+        else
+          $more.text("#{x} more…")
+
+      # submit to Hosts#remove_tag action
+      @host.removeTags(tagIds: [id], success: => @render())
+
+    addTagClicked: (e) =>
+      e.preventDefault()
+      @modal.destroy() if @modal
+      @modal = new Modal(class: 'flat', title: 'Add Tags', width: 400)
+      @modal.open()
+      form = new TagForm(hosts: [@host], modal: @modal)
+      @modal.content.show(form)
+      @modal._center()
+      form.focus()
+
+
+    render: =>
+      # ensure that dropdowns stay visible
+      data = _.map($('.under,.menu', @el), (el) -> [el, $(el).is(':visible')])
+      super
+      $newDropdowns = $('.under,.menu', @el)
+      _.each $newDropdowns, (newDropdown, i) ->
+        if data[i]? and data[i][1]
+          $(newDropdown).addClass('hover')
+      _.defer -> $newDropdowns.removeClass('hover')

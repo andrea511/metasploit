@@ -1,0 +1,54 @@
+<!--
+  Render dependencies:
+  {
+    options: an Array of datastore options to render
+    advancedOptions: an Array of advanced (hidden) options
+    optionsHashName: a name that is prepended to every rendered input
+  }
+-->
+<ul>
+  <%% for val in @options: %>
+    <%% name = val.name %>
+    <%% field = "#{@optionsHashName}[#{name}]" %>
+    <%% if val.type == 'path': %>
+      <span class='span-front'><%%= name %></span>
+      <li class='file input front'>
+    <%% else: %>
+      <li class='<%%= val.type %> <%%= _.str.underscored(name) %>' style='position:relative;'>
+    <%% end %>
+    <%% if val.type == 'path': %>
+      <label class="<%%= 'no-req' unless val.required %>" for="<%%= field %>">File<%%= '*' if val.required %></label>
+    <%% else: %>
+      <label class="<%%= 'no-req' unless val.required %>" for="<%%= field %>"><%%= name %><%%= '*' if val.required %></label>
+    <%% end %>
+    <%% if name == 'EXITFUNC': %>
+      <select id='<%%= field %>' name='<%%= @optionsHashName %>[EXITFUNC]'>
+        <option value='' <%%= 'selected' if val.default == 'none' %>>None</option>
+        <option value='seh' <%%= 'selected' if val.default == 'seh' %>>SEH</option>
+        <option value='thread' <%%= 'selected' if val.default == 'thread' %>>Thread</option>
+        <option value='process' <%%= 'selected' if val.default == 'process' %>>Process</option>
+      </select>
+    <%% else if _.contains(['raw', 'string', 'address', 'port', 'integer', 'meterpreterdebuglogging'], val.type): %>
+      <input id='<%%= field %>' name='<%%= field %>' type='text' value='<%%= val.default %>' />
+    <%% else if val.type == 'bool': %>
+      <input name='<%%= field %>' type='hidden' value='false' />
+      <input id='<%%= field %>' name='<%%= field %>' type='checkbox' <%%= if val.default then 'checked' %> value='true' />
+    <%% else if val.type == 'path': %>
+      <input id='<%%= field %>' name='<%%= field %>' type='file' />
+    <%% else: %>
+      <input type='hidden' name='<%%= field %>' value='<%%= val.default %>' />
+    <%% end %>
+    <%% unless val.type == 'path': %>
+      <div class='inline-help' data-field='<%%= field %>' >
+        <a href='javascript: void;' tabindex='-1' target='_blank' class='help' data-field='<%%= field %>'>
+          <img src='<%= image_path('icons/silky/information.png') %>' alt='Information' />
+        </a>
+        <h3><%%= _.humanize(name) %></h3>
+        <p>
+        <%%= val.desc %>
+        </p>
+      </div>
+    <%% end %>
+    </li>
+  <%% end %>
+</ul>

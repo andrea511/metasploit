@@ -1,0 +1,32 @@
+define [
+  'jquery',
+  '<%= javascript_path('tasks/new_nexpose_exception_push/backbone/views/layouts/new_nexpose_exception_push_layout') %>'
+], ($,NewNexposeExceptionPushLayout,TabsLayout) ->
+  class ExceptionPushController
+    start: () =>
+      @region = new Backbone.Marionette.Region(el: "#exception-push")
+      @exception_reasons = $('meta[name="exception_reasons"]').attr('content')
+
+      consoles = _.map(@NEXPOSE_CONSOLES, (val,key)->
+        {value: val.id, text: val.name}
+      )
+
+      @model = new Backbone.Model({
+        console: {
+          consoles: consoles,
+          console: consoles[0].value
+        }
+        date: ""
+      })
+
+      @region.show(new NewNexposeExceptionPushLayout(model: @model, controller:@))
+
+
+    EXCEPTION_REASONS: $.parseJSON($('meta[name="exception_reasons"]').attr('content'))
+    VULN_IDS: $.parseJSON($('meta[name="vuln_ids"]').attr('content'))
+    NEXPOSE_CONSOLES: $.parseJSON($('meta[name="consoles"]').attr('content'))
+    MATCH_SET_ID: $.parseJSON($('meta[name="match_set_id"]').attr('content'))
+
+
+
+

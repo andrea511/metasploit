@@ -1,0 +1,8 @@
+<% if @collection_running  %>
+<%= image_tag 'spinner.gif' %> Collecting...<br/>
+<% end %>
+
+<ul class="overview_stats">
+<li><%=h pluralize(@stats[:loot_count], "data file") %> acquired</li>
+</ul>
+

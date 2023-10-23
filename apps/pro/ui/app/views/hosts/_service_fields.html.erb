@@ -1,0 +1,10 @@
+<tr class="fields">
+	<td><%= f.text_field :name %></td>
+	<td><%= f.text_field :port, :size => 6 %></td>
+	<td><%= f.select :proto, ['tcp', 'udp'] %></td>
+	<td><%= f.select :state, Mdm::Service::STATES %></td>
+	<td>
+		<%= f.hidden_field :_destroy %>
+		<%= link_to 'remove', '#', class: 'remove-fields' %>
+	</td>
+</tr>

@@ -1,0 +1,1 @@
+json.array! @sessions, partial: 'session', as: :session

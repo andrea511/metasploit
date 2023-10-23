@@ -1,0 +1,46 @@
+define [
+  'base_model'
+  'base_collection'
+], ->
+  @Pro.module "Entities.Nexpose", (Nexpose, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+
+    class Nexpose.Exception extends App.Entities.Model
+
+      @REASON: <%= Nexpose::Result::Exception::REASON.to_json %>
+
+      defaults:
+        reasons: <%= Nexpose::Result::Exception::REASON.to_json %>
+        reasonsJSON: '<%= Nexpose::Result::Exception::REASON.to_json %>'
+
+      mutators:
+        reasons: () ->
+          JSON.parse(@.get('reasonsJSON'))
+
+      urlRoot: =>
+        Routes.workspace_nexpose_result_exceptions_path(@get('workspace_id'))
+
+    #
+    # API
+    #
+
+    API =
+      getException: (id) ->
+        new Nexpose.Exception(id: id)
+
+
+      newException: (attributes = {}) ->
+        new Nexpose.Exception(attributes)
+
+    #
+    # REQUEST HANDLERS
+    #
+
+    App.reqres.setHandler "nexpose:exception:entity", (id) ->
+      API.getException id
+
+    App.reqres.setHandler "new:nexpose:exception:entity", (attributes) ->
+      API.newException attributes

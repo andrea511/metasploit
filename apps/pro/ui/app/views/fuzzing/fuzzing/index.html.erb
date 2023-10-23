@@ -1,0 +1,16 @@
+<% include_stylesheet 'fuzzing/fuzzing' -%>
+
+<% title "Campaign Dashboard" %>
+<% breadcrumb workspace_link, social_engineering_campaigns_link %>
+<!-- FIX ME: we need a manifest index.js to do this stuff -->
+<% include_jquery_ui -%>
+<% include_stylesheet "editors" %>
+<div id="fuzzing-app-container"></div>
+
+<% if License.get.supports_campaigns? %>
+  <%= javascript_include_tag 'fuzzing' %>
+<% end %>
+
+<div id='modals' class="empty"></div>
+
+<%= add_disable_overlay([:pro]) if not License.get.supports_campaigns? %>

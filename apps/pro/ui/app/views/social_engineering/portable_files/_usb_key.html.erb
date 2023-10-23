@@ -1,0 +1,12 @@
+<div class="content-left-col">
+  <p>Name: <%= @portable_file.name %></p>
+  <p>Listener callback ip: <%= @portable_file.listener_callback_ip %></p>
+  <p>Payload type: <%= @portable_file.payload_type %></p>
+  <p>Filename: <%= @portable_file.filename %></p>
+  <span class='btn'>
+    <%= link_to "Download #{@portable_file.filename}", 
+              portable_file_download_url,
+              :method => :get, 
+              :class => 'export_data' %>
+  </span>
+</div>

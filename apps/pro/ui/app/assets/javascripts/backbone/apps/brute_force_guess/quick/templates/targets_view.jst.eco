@@ -1,0 +1,116 @@
+<fieldset>
+
+  <div class="columns large-12 count">
+    <span class="target-count">0</span> targets selected
+  </div>
+
+  <div class="columns large-12">
+    Selected Host(s):
+  </div>
+
+  <div class="columns large-12">
+    <label>
+      <input class="all-hosts" type="radio" name="quick_bruteforce[targets][type]" value="all" checked="checked" />
+      All hosts
+    </label>
+  </div>
+
+  <div class="columns large-12">
+    <label>
+      <input class="manual-hosts" type="radio" name="quick_bruteforce[targets][type]" value="manual" />
+      Enter target addresses
+    </label>
+  </div>
+
+   <div class="columns large-12 addresses" style="display: none;">
+    <div class="large-12 space">
+      <div class="row">
+        <div class="columns small-5">
+          <div>Target addresses:</div>
+        </div>
+
+        <div class="columns small-7 target-addresses-tooltip-region">
+
+        </div>
+
+
+      </div>
+
+      <div class="row">
+        <div class="columns small-12 space">
+          <textarea id="manual-target-entry" name="quick_bruteforce[targets][whitelist_hosts]"></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="large-12 space">
+      <div class="row">
+        <div class="columns small-5">
+          <div>Excluded addresses:</div>
+        </div>
+
+        <div class="columns small-7 blacklist-addresses-tooltip-region">
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="columns small-12 space">
+          <textarea id="manual-target-entry-blacklist" name="quick_bruteforce[targets][blacklist_hosts]"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="columns large-12">
+    <hr />
+  </div>
+
+  <div class="large-12 columns space services">
+    <div class="row">
+      <div class="columns large-12">
+        Select services:
+      </div>
+
+      <div class="columns large-12">
+        <label>
+          <input class="all-services" name="quick_bruteforce[targets][all_services]" type="checkbox" />
+          All services
+        </label>
+      </div>
+
+      <div class="row">
+        <div class="columns large-12">
+          <% for service, i in @SERVICES: %>
+            <% if i%3==0 and i>0: %>
+              </div></div><div class="row"><div class="columns large-12">
+            <% end %>
+
+            <div class="columns large-4 service">
+              <label>
+                <input type="checkbox" name="quick_bruteforce[targets][services][<%= service %>]"/><%= if service == "SSH_PUBKEY" then "SSH PUBKEY" else service %>
+              </label>
+            </div>
+
+
+            <% if i>= @SERVICES.length-1: %>
+              <div class="columns large-4">
+
+              </div>
+
+              <% if i>= @SERVICES.length: %>
+                <div class="columns large-4">
+
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+     </div>
+  </div>
+
+</fieldset>

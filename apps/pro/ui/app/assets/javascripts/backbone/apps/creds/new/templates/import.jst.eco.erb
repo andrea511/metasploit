@@ -1,0 +1,148 @@
+<form class="import-form">
+  <div class="file-input-region"></div>
+
+  <div class="user-pass-file-input-region">
+    Username file:
+    <div class="user-file-input-region"></div>
+    Password file:
+    <div class="pass-file-input-region"></div>
+  </div>
+
+  <div class="import-file-input">
+    <label id="import-file-input" style="position: absolute; margin-left: 4px; margin-top: 2px"></label>
+  </div>
+
+  <div class="inline-help" data-field="import-file-input">
+    <a href class="help" data-field="import-file-input" target="_blank">
+      <%= image_tag("icons/silky/information.png") %>
+    </a>
+    <h3>File Import</h3>
+    <div style="margin-top: 6px;">
+      <p>
+        The Following file types are supported:
+      </p>
+
+      <ul>
+        <li>
+          CSV - A comma separated file that contains plain text credentials or hashes. The file must contain
+          the following header row: username,private_data.
+        </li>
+        <li>
+          TXT - A text file that contains plain text credentials or hashes. Each credential must appear on a
+          separate line. Unless you are using the User/Pass option, you must include the following header row in the file:
+          username,private_data. The file can also be a PWDump file exported from Metasploit.
+        </li>
+        <li>
+          ZIP - A compressed file exported from Metasploit that contains a CSV file of credentials.
+          If the exported file also contained SSH keys, the ZIP file will contain a manifest file that maps
+          SSH keys to usernames.
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+
+  <div class="import-type">
+    <div class="radio-label">Format</div>
+    <div class="inline-radio">
+      <label>
+        <input name="import[type]" value="csv" type="radio" checked="checked">
+        CSV
+      </label>
+    </div>
+
+    <div class="inline-radio">
+      <label>
+        <input name="import[type]" value="pwdump" type="radio">
+        pwdump
+      </label>
+    </div>
+
+    <div class="inline-radio">
+      <label>
+        <input name="import[type]" value="user_pass" type="radio">
+        User/Pass
+      </label>
+    </div>
+
+    <div class="import-format">
+      <label id="import-format" style="position: absolute; margin-left: 4px; margin-top: 2px"></label>
+    </div>
+
+    <div class="inline-help" data-field="import-format">
+      <a href class="help" data-field="import-format" target="_blank">
+        <%= image_tag ("icons/silky/information.png") %>
+      </a>
+      <h3>Import Format</h3>
+      <div style="margin-top: 6px;">
+        The following file formats are supported:
+
+        <ul>
+          <li>
+            CSV - The contents of the file are comma delimited. You should always use this option
+            unless the imported file is a password dump.
+          </li>
+
+          <li>
+            PWDump - The contents of the file were exported from Metasploit as a password dump.
+            Password dumps only contain credentials that have logins.
+          </li>
+
+          <li>
+            User/Pass - This option will allow you to input separate username and password files using a text file format.
+            These inputs generate credentials for all possible permutations. To enable, input each username or password on its
+            own line without a header. NTLM hashes and plain text passwords are supported.
+          </li>
+
+
+        </ul>
+
+      </div>
+    </div>
+
+
+  </div>
+
+  <hr>
+
+  <div class="password-type">
+    <p>
+      Select the type that will be used for credentials that do not have a type defined in
+      your import file:
+    </p>
+
+
+    <div>
+      <select name="import[password_type]">
+        <option value="plaintext">Plaintext Password</option>
+        <option value="ssh">SSH Key</option>
+        <option value="ntlm">NTLM Hash</option>
+        <option value="non-replayable">Non-Replayable Hash</option>
+      </select>
+
+      <div class="password-help">
+        <div class="password-help-label">
+          <label id="password-type" style="position: absolute; margin-left: 4px; margin-top: 2px"></label>
+        </div>
+
+        <div class="inline-help" data-field="password-type">
+          <a href class="help" data-field="password-type" target="_blank">
+            <%= image_tag("icons/silky/information.png") %>
+          </a>
+          <h3>Password Type</h3>
+          <div style="margin-top: 6px;">
+            <p>
+              All credentials must have a defined type. You can set the default value for credentials
+              that do not have a type defined in the imported file. If Metasploit imports a credential
+              that has an empty type field, it will automatically assign this type to the credential.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+</form>

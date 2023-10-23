@@ -1,0 +1,13 @@
+<p style='margin-bottom:12px'>
+Click on the search field to view the search operators that are available. Select a search operator from the list and enter the keyword you want to use to filter the Sonar results. As you start typing, the search field displays the possible keywords that are available for the selected operator. You can use as many search operator and keyword combinations as you need.
+Here's a quick look at what each search operator does:
+</p>
+
+<% for k in _.keys(@model.attributes).sort(): %>
+  <% if _.contains(@whitelist, _.str.trim(k)): %>
+    <div class='filter-row'>
+      <h5><%= k %></h5>
+      <p><%= @model.get(k) %></p>
+    </div>
+  <% end %>
+<% end %>

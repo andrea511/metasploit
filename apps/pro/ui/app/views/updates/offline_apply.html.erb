@@ -1,0 +1,32 @@
+<% title "Software Updates" %>
+<% breadcrumb link_to("Software Updates", updates_path) %>
+
+<div id="updates">
+  <% if ['metasploit'].pack('p').size == 4 %>
+    <div><%= I18n.translate('notifications.banner_messages.eol_for_32bit_systems.message').html_safe %></div>
+  <% else %>
+    <h2>Product Updates</h2>
+
+      <p>
+        Please select the update file that you received from Rapid7 Customer Support.
+      </p>
+
+      <%= form_tag updates_offline_apply_post_path, :multipart => true do %>
+
+        <%= file_field_tag "update_file", :autofocus => true, :size => 60 %><br/><br/>
+    <span class="btn">
+
+      <%= submit_tag "Install Update", :class => "apply" %>
+    </span>
+
+      <% end %>
+
+      <div id="update_checking" style="display:none">
+
+      </div>
+
+      <div id="update_info">
+      </div>
+  <% end %>
+</div>
+

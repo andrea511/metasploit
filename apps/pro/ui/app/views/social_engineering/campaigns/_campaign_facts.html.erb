@@ -1,0 +1,60 @@
+<div class='campaign-findings'>
+  <div class='campaign-facts-header header rollup-header'>
+    <div class='max-width'>
+      <h3 style='display:inline-block'>{{ campaignDetails.name }}: Findings</h3>
+      <span class="btn action-btn primary">
+        <a href="<%= new_workspace_report_path(@workspace, @campaign) %>" target="_blank" class="primary">
+        {% if (campaignDetails.current_status == 'Finished') { %}
+          Generate Report
+        {% } else if (campaignDetails.current_status == 'Launchable') { %}
+          Start
+        {% } else { %}
+          Stop
+        {% } %}
+        </a>
+      </span>
+    </div>
+  </div>
+  <div class='max-width tab-container' style='padding-top: 52px'>
+    <ul class='tabs'>
+      <li class='tab'>
+        <a class='active' href='javascript:void'>Campaign Facts</a>
+      </li>
+      <li class='tab'>
+        <a href='javascript:void'>Task Log</a>
+      </li>
+    </ul>
+    <div class='tabs'>
+      <div class='tab'>
+        <div class='campaign-findings-inner-gray'>
+          <div class='campaign-circles-wrapper'>
+          </div>
+          <div class='campaign-facts-wrapper'>
+            <div class='border-box campaign-facts'>
+              <div class='circles'>
+              </div> <!-- end .circles -->
+              {% if (this['showTray']) { %}
+                <div class='row'>
+                  <div class='cell first'>
+                    <!-- invisibly clear this much text. BLAAAARRRRF -->
+                  </div>
+                </div>
+                <div class='shadow-arrow-row'>
+                  <div class='shadow-arrow'></div>
+                </div>
+                <div class='tray'></div>
+              {% } %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='tab' style='display:none'>
+        <div class='tab-loading task-console' style='min-height:250px'>
+          <table class='list header'></table>
+          <pre class='console logs'></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

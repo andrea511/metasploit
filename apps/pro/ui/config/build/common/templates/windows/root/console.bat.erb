@@ -1,0 +1,7 @@
+@echo off
+CALL @@BITROCK_INSTALLDIR@@\scripts\setenv.bat
+<%= render 'root/boiler_plate' %>
+set BUNDLE_GEMFILE=@@BITROCK_INSTALLDIR@@\apps\pro\Gemfile-pro
+set FRAMEWORK_FLAG=
+
+CALL @@BITROCK_INSTALLDIR@@\ruby\bin\ruby.exe @@BITROCK_INSTALLDIR@@\apps\pro\engine\msfpro

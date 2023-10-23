@@ -1,0 +1,10 @@
+define [
+  'jquery',
+  '<%= javascript_path("hosts/backbone/controllers/host_view_controller") %>'
+], ($, HostViewController) ->
+  class Router extends Backbone.Marionette.AppRouter
+    appRoutes:
+      ':tab' : 'Tab'
+      '' : 'Tab'
+
+  return new Router(controller: new HostViewController(id: HOST_ID))

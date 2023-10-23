@@ -1,0 +1,17 @@
+.loot_form
+  .errors{ :style => 'display: none' }
+  {{#form "/" class="form formtastic"}}
+  %ul
+    %li.data.file.input
+      {{label "loot[data]" "File"}}
+      {{file "loot[data]"}}
+    %li.name
+      {{label "loot[name]" "Name*"}}
+      {{input "loot[name]" name}}
+    %li.content_type
+      {{label "loot[content_type]" "Content type"}}
+      {{input "loot[content_type]" 'text/plain'}}
+    %li.info
+      {{label "loot[info]" "Info"}}
+      {{textarea "loot[info]" info}}
+  {{/form}}

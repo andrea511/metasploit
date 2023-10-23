@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="private_details" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6ad1585a-eb2b-4c7a-9757-487dba1f6636">
+	<property name="ireport.zoom" value="1.3310000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<subDataset name="PrivateTables" uuid="98243a89-42f5-412e-bcfa-536b2b20e031">
+		<parameter name="workspace_id" class="java.lang.Integer"/>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="mask_credentials" class="java.lang.Boolean" isForPrompting="false">
+			<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cred_type" class="java.lang.String" isForPrompting="false"/>
+		<parameter name="private_width" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[20]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_filter" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[If host_address_clause is not default value, this adds filtering of the queried cores to the specified hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA[$P{host_address_clause} != "hosts.address is not null" ?
+  "inner join host_relations ON (cores.id = host_relations.core_id)" :
+  ""]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[--
+-- This outer CTE is needed because private_type (which differentiates the several uses of this query)
+-- is a calculated field. This allows us to reference it without reparsing the base private value.
+--
+WITH all_values AS (
+
+	-- Host filtered, cores from services
+	WITH cores_with_service_origins AS (
+	  select
+	    cores.id AS core_id,
+	    services.name AS service_name,
+	    hosts.id as host_id,
+	    COALESCE(hosts.name, HOST(hosts.address)) as host_name
+	    from metasploit_credential_cores cores
+	    inner join metasploit_credential_origin_services svc_origins ON (
+	      cores.origin_id = svc_origins.id AND
+	      cores.origin_type = 'Metasploit::Credential::Origin::Service'
+	    )
+	    inner join services   ON (svc_origins.service_id = services.id)
+	    inner join hosts      ON (services.host_id = hosts.id)
+	    where hosts.workspace_id = $P{workspace_id}
+	    and $P!{host_address_clause}
+	),
+
+	-- Host filtered, cores from sessions
+	cores_with_session_origins AS (
+	  select
+	    cores.id AS core_id,
+	    sessions.via_exploit AS session_exploit,
+	    hosts.id as host_id,
+	    COALESCE(hosts.name, HOST(hosts.address)) as host_name
+	    from metasploit_credential_cores cores
+	    inner join metasploit_credential_origin_sessions session_origins ON (
+	      cores.origin_id = session_origins.id AND
+	      cores.origin_type = 'Metasploit::Credential::Origin::Session'
+	    )
+	    inner join sessions   ON (session_origins.session_id = sessions.id)
+	    inner join hosts      ON (sessions.host_id = hosts.id)
+	    where hosts.workspace_id = $P{workspace_id}
+	    and $P!{host_address_clause}
+	),
+
+	-- Host filtered, cores with logins
+	cores_with_logins AS (
+	  select
+	    cores.id AS core_id,
+	    services.name AS service_name,
+	    hosts.id as host_id,
+	    COALESCE(hosts.name, HOST(hosts.address)) as host_name
+	    from metasploit_credential_cores cores
+	    inner join metasploit_credential_logins logins ON (cores.id = logins.core_id)
+	    inner join services   ON (logins.service_id = services.id)
+	    inner join hosts      ON (services.host_id = hosts.id)
+	    where hosts.workspace_id = $P{workspace_id}
+	    and $P!{host_address_clause}
+	),
+
+	-- Core / service combinations
+	service_relations AS (
+	  select core_id, service_name
+	  from cores_with_logins
+
+	  UNION DISTINCT
+
+	  select core_id, service_name
+	  from cores_with_service_origins
+	),
+
+	-- Core / host combinations
+	host_relations AS (
+	  select core_id, host_id
+	  from cores_with_logins
+
+	  UNION DISTINCT
+
+	  select core_id, host_id
+	  from cores_with_service_origins
+
+	  UNION DISTINCT
+
+	  select core_id, host_id
+	  from cores_with_session_origins
+	)
+
+
+	--
+	-- For all credential cores within the workspace:
+	-- Public, Realm Type, Realm Value, Private (wrapped at fixed length),
+	-- friendly Private Type, friendly Origin, Login count, Service count, Host count.
+	--
+	select
+            cores.id core_id,
+            coalesce(publics.username, '*BLANK*') as public,
+            coalesce(realms.key, 'None') as realm_type,
+            coalesce(realms.value, '') as realm_value,
+	  -- Wrap long private data, e.g. SSH keys
+	  (case
+	    when length(privates.data) > $P{private_width} then
+	      wrap_string(privates.data, $P{private_width})
+	    else
+	      privates.data
+	  end) as private,
+	  -- TODO: Fragile magic number
+	  (case split_part(privates.type, '::', 3)
+	  -- TODO Manual friendly mapping
+	    when 'SSHKey' then 'SSH Key'
+	    when 'NTLMHash' then 'NTLM Hash'
+              when 'NonreplayableHash' then 'Non-replayable Hash'
+	    when 'Password' then 'Password'
+	    else privates.type
+	  end) as private_type,
+	  -- Friendly version of core origin
+	  (case
+	    when (import_origins.filename    is not null) then 'Import'
+	    when (manual_origins.user_id     is not null) then 'Manually'
+	    when (svc_origins.service_id     is not null) then 'Service'
+	    when (session_origins.session_id is not null) then 'Session'
+	    when (cracked_origins.id         is not null) then 'Cracked'
+	    else 'Unknown'
+	  end) as origin_type,
+	  (
+	    select count(*) from metasploit_credential_logins logins
+	    where logins.core_id = cores.id
+	  ) login_cnt,
+	  (
+	    select count(*) from service_relations
+	    where service_relations.core_id = cores.id
+	  ) service_cnt,
+	  (
+	    select count(*) from host_relations
+	    where host_relations.core_id = cores.id
+	  ) host_cnt
+
+	  from metasploit_credential_cores cores
+	  left outer join metasploit_credential_origin_imports import_origins ON (
+	    cores.origin_id = import_origins.id AND
+	    cores.origin_type = 'Metasploit::Credential::Origin::Import'
+	  )
+	  left outer join metasploit_credential_origin_manuals manual_origins ON (
+	    cores.origin_id = manual_origins.id AND
+	    cores.origin_type = 'Metasploit::Credential::Origin::Manual'
+	  )
+	    left outer join metasploit_credential_origin_services svc_origins ON (
+	    cores.origin_id = svc_origins.id AND
+	    cores.origin_type = 'Metasploit::Credential::Origin::Service'
+	  )
+	  left outer join metasploit_credential_origin_sessions session_origins ON (
+	    cores.origin_id = session_origins.id AND
+	    cores.origin_type = 'Metasploit::Credential::Origin::Session'
+	  )
+	  left outer join metasploit_credential_origin_cracked_passwords cracked_origins ON (
+	    cores.origin_id = cracked_origins.id AND
+	    cores.origin_type = 'Metasploit::Credential::Origin::CrackedPassword'
+	  )
+	  left outer join metasploit_credential_publics publics ON (cores.public_id = publics.id)
+	  left outer join metasploit_credential_privates privates ON (cores.private_id = privates.id)
+	  left outer join metasploit_credential_realms realms ON (cores.realm_id = realms.id)
+	  $P!{host_filter} -- Adds host filtering if needed
+
+	  where cores.workspace_id = $P{workspace_id}
+
+	  order by login_cnt desc
+)
+
+select * from all_values
+where private_type = $P{cred_type}
+order by login_cnt desc]]>
+		</queryString>
+		<field name="core_id" class="java.lang.Integer"/>
+		<field name="public" class="java.lang.String"/>
+		<field name="realm_type" class="java.lang.String"/>
+		<field name="realm_value" class="java.lang.String"/>
+		<field name="private" class="java.lang.String"/>
+		<field name="private_type" class="java.lang.String"/>
+		<field name="origin_type" class="java.lang.String"/>
+		<field name="login_cnt" class="java.lang.Integer"/>
+		<field name="service_cnt" class="java.lang.Integer"/>
+		<field name="host_cnt" class="java.lang.Integer"/>
+		<variable name="private_display" class="java.lang.String">
+			<variableExpression><![CDATA[$P{mask_credentials} ? "*MASKED*" : $F{private}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="workspace_id" class="java.lang.Integer"/>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mask_credentials" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_plaintext_passwords" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_hashes" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_ssh_keys" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ntlm_hash_cnt" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="password_cnt" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nonrep_hash_cnt" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="ssh_cnt" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[select 1]]>
+	</queryString>
+	<detail>
+		<band height="90" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_plaintext_passwords} && $P{password_cnt} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="0c89f88b-be55-4c7e-9c0c-9e155fdb83c5" style="section_header_base" x="0" y="0" width="572" height="27"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Plaintext Passwords]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="fe32db66-51d4-41d5-ab8d-dc38f55e20de" key="table" x="0" y="27" width="572" height="50"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="PrivateTables" uuid="01dce52b-4ce4-42cf-9097-8ba412445e28">
+						<datasetParameter name="workspace_id">
+							<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="host_address_clause">
+							<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cred_type">
+							<datasetParameterExpression><![CDATA["Password"]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="private_width">
+							<datasetParameterExpression><![CDATA[25]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="mask_credentials">
+							<datasetParameterExpression><![CDATA[$P{mask_credentials}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="eeb15caa-9d3b-4d7c-8bc7-af8ebb54cce9">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Left">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Public]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="29ff5049-1ba4-4833-9b9a-2e78bd518d9c" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{public}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="132" uuid="b051b4a4-cd23-4082-9081-22e821b93d0c">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="132" height="30"/>
+								<textElement textAlignment="Left">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Private]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="bb826337-e2b4-4b8f-831f-573bf7eab6f8" stretchType="RelativeToTallestObject" x="0" y="2" width="132" height="20"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle" markup="html">
+									<font size="8"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{private_display}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="132" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c763a12c-91b8-4932-8076-8a5eec9f869f">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Realm Type]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="5620a63d-b91e-4549-837f-202b4bf958fc" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{realm_type}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="369b4cbd-b42e-4646-8ddc-f6313b4a8cd7">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Realm Value]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="26049802-5163-4489-9901-2a6a02623540" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{realm_value}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="71" uuid="d17c60f9-8453-4f52-9e5b-656a3ca3eca4">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="71" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Origin]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="0f1e41f3-7a4c-4151-911e-67ee007f8f6b" stretchType="RelativeToTallestObject" x="0" y="2" width="71" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{origin_type}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="71" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="fe18ab5e-65a8-465a-b6a0-90f72b48a5a0">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Hosts]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="e4a7ab50-5d8e-4092-897a-60d765a086a9" stretchType="RelativeToTallestObject" x="0" y="2" width="50" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{host_cnt}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="50" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="57" uuid="f43daef8-f48f-4279-951f-818fb2be13f3">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="57" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Services]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="77e05472-3b65-44de-ac0b-3af24ac350aa" stretchType="RelativeToTallestObject" x="0" y="2" width="57" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{service_cnt}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="57" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="90">
+			<printWhenExpression><![CDATA[$P{display_hashes} && $P{ntlm_hash_cnt} > 0]]></printWhenExpression>
+			<componentElement>
+				<reportElement uuid="fe32db66-51d4-41d5-ab8d-dc38f55e20de" key="table" x="0" y="27" width="572" height="50"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="PrivateTables" uuid="01dce52b-4ce4-42cf-9097-8ba412445e28">
+						<datasetParameter name="workspace_id">
+							<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="host_address_clause">
+							<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cred_type">
+							<datasetParameterExpression><![CDATA["NTLM Hash"]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="private_width">
+							<datasetParameterExpression><![CDATA[25]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="mask_credentials">
+							<datasetParameterExpression><![CDATA[$P{mask_credentials}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="eeb15caa-9d3b-4d7c-8bc7-af8ebb54cce9">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Left">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Public]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="29ff5049-1ba4-4833-9b9a-2e78bd518d9c" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{public}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="132" uuid="b051b4a4-cd23-4082-9081-22e821b93d0c">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="132" height="30"/>
+								<textElement textAlignment="Left">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Private]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="bb826337-e2b4-4b8f-831f-573bf7eab6f8" stretchType="RelativeToTallestObject" x="0" y="2" width="132" height="20"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle" markup="html">
+									<font size="8"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{private_display}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="132" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c763a12c-91b8-4932-8076-8a5eec9f869f">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Realm Type]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="5620a63d-b91e-4549-837f-202b4bf958fc" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{realm_type}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="369b4cbd-b42e-4646-8ddc-f6313b4a8cd7">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Realm Value]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="26049802-5163-4489-9901-2a6a02623540" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{realm_value}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="71" uuid="d17c60f9-8453-4f52-9e5b-656a3ca3eca4">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="71" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Origin]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="0f1e41f3-7a4c-4151-911e-67ee007f8f6b" stretchType="RelativeToTallestObject" x="0" y="2" width="71" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{origin_type}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="71" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="fe18ab5e-65a8-465a-b6a0-90f72b48a5a0">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Hosts]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="e4a7ab50-5d8e-4092-897a-60d765a086a9" stretchType="RelativeToTallestObject" x="0" y="2" width="50" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{host_cnt}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="50" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="57" uuid="f43daef8-f48f-4279-951f-818fb2be13f3">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="57" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Services]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="77e05472-3b65-44de-ac0b-3af24ac350aa" stretchType="RelativeToTallestObject" x="0" y="2" width="57" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{service_cnt}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="57" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="0c89f88b-be55-4c7e-9c0c-9e155fdb83c5" style="section_header_base" x="0" y="0" width="572" height="27"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[NTLM Hashes]]></text>
+			</staticText>
+		</band>
+		<band height="92">
+			<printWhenExpression><![CDATA[$P{display_hashes} && $P{nonrep_hash_cnt} > 0]]></printWhenExpression>
+			<componentElement>
+				<reportElement uuid="fe32db66-51d4-41d5-ab8d-dc38f55e20de" key="table" x="0" y="27" width="572" height="50"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="PrivateTables" uuid="01dce52b-4ce4-42cf-9097-8ba412445e28">
+						<datasetParameter name="workspace_id">
+							<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="host_address_clause">
+							<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cred_type">
+							<datasetParameterExpression><![CDATA["Non-replayable Hash"]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="private_width">
+							<datasetParameterExpression><![CDATA[25]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="mask_credentials">
+							<datasetParameterExpression><![CDATA[$P{mask_credentials}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="eeb15caa-9d3b-4d7c-8bc7-af8ebb54cce9">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Left">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Public]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="29ff5049-1ba4-4833-9b9a-2e78bd518d9c" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{public}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="132" uuid="b051b4a4-cd23-4082-9081-22e821b93d0c">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="132" height="30"/>
+								<textElement textAlignment="Left">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Private]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="bb826337-e2b4-4b8f-831f-573bf7eab6f8" stretchType="RelativeToTallestObject" x="0" y="2" width="132" height="20"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle" markup="html">
+									<font size="8"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{private_display}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="132" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c763a12c-91b8-4932-8076-8a5eec9f869f">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Realm Type]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="5620a63d-b91e-4549-837f-202b4bf958fc" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{realm_type}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="369b4cbd-b42e-4646-8ddc-f6313b4a8cd7">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Realm Value]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="26049802-5163-4489-9901-2a6a02623540" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{realm_value}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="71" uuid="d17c60f9-8453-4f52-9e5b-656a3ca3eca4">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="71" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Origin]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="0f1e41f3-7a4c-4151-911e-67ee007f8f6b" stretchType="RelativeToTallestObject" x="0" y="2" width="71" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{origin_type}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="71" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="fe18ab5e-65a8-465a-b6a0-90f72b48a5a0">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Hosts]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="e4a7ab50-5d8e-4092-897a-60d765a086a9" stretchType="RelativeToTallestObject" x="0" y="2" width="50" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{host_cnt}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="50" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="57" uuid="f43daef8-f48f-4279-951f-818fb2be13f3">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="57" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Services]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="77e05472-3b65-44de-ac0b-3af24ac350aa" stretchType="RelativeToTallestObject" x="0" y="2" width="57" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{service_cnt}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="57" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="0c89f88b-be55-4c7e-9c0c-9e155fdb83c5" style="section_header_base" x="0" y="0" width="572" height="27"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Non-replayable Hashes]]></text>
+			</staticText>
+		</band>
+		<band height="91">
+			<printWhenExpression><![CDATA[$P{display_ssh_keys} && $P{ssh_cnt} > 0]]></printWhenExpression>
+			<componentElement>
+				<reportElement uuid="fe32db66-51d4-41d5-ab8d-dc38f55e20de" key="table" x="0" y="27" width="572" height="50"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="PrivateTables" uuid="01dce52b-4ce4-42cf-9097-8ba412445e28">
+						<datasetParameter name="workspace_id">
+							<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="host_address_clause">
+							<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cred_type">
+							<datasetParameterExpression><![CDATA["SSH Key"]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="private_width">
+							<datasetParameterExpression><![CDATA[60]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="mask_credentials">
+							<datasetParameterExpression><![CDATA[$P{mask_credentials}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="eeb15caa-9d3b-4d7c-8bc7-af8ebb54cce9">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Left">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Public]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="29ff5049-1ba4-4833-9b9a-2e78bd518d9c" stretchType="RelativeToTallestObject" x="0" y="2" width="90" height="20"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{public}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="90" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="303" uuid="b051b4a4-cd23-4082-9081-22e821b93d0c">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="303" height="30"/>
+								<textElement textAlignment="Left">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Private]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="bb826337-e2b4-4b8f-831f-573bf7eab6f8" stretchType="RelativeToTallestObject" x="0" y="2" width="303" height="20"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle" markup="html">
+									<font size="8"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{private_display}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="303" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="71" uuid="d17c60f9-8453-4f52-9e5b-656a3ca3eca4">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="71" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Origin]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="0f1e41f3-7a4c-4151-911e-67ee007f8f6b" stretchType="RelativeToTallestObject" x="0" y="2" width="71" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{origin_type}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="71" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="fe18ab5e-65a8-465a-b6a0-90f72b48a5a0">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="50" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Hosts]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="e4a7ab50-5d8e-4092-897a-60d765a086a9" stretchType="RelativeToTallestObject" x="0" y="2" width="50" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{host_cnt}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="50" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="57" uuid="f43daef8-f48f-4279-951f-818fb2be13f3">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8a5c2094-50ac-419c-96c5-bbb33afaa6ce" style="Column header" x="0" y="0" width="57" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Services]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="77e05472-3b65-44de-ac0b-3af24ac350aa" stretchType="RelativeToTallestObject" x="0" y="2" width="57" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{service_cnt}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="57" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="0c89f88b-be55-4c7e-9c0c-9e155fdb83c5" style="section_header_base" x="0" y="0" width="572" height="27"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[SSH Keys]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

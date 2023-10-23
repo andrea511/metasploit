@@ -1,0 +1,34 @@
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container {
+  position: relative;
+}
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane {
+  position: absolute;
+  width: 100%;
+  left: 100%;
+  height: auto;
+  min-height: 200px;
+  transition-property: left;
+  transition-duration: 1s;
+}
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane.tab-loading {
+  top: 200px;
+}
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane.show {
+  left: 0%;
+}
+/* line 23, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane.slideOutLeft {
+  left: -100%;
+}
+/* line 27, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane.first {
+  position: relative;
+}
+/* line 31, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane .content-region {
+  overflow-y: hidden;
+}

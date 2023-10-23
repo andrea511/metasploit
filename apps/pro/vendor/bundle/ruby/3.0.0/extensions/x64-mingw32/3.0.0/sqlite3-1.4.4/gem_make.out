@@ -1,0 +1,1379 @@
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/sqlite3-1.4.4/ext/sqlite3
+C:/Users/vagrant/pro/pkg/w32/ruby/bin/ruby.exe -I C:/Users/vagrant/pro/pkg/w32/ruby/lib/ruby/site_ruby/3.0.0 -r ./siteconf20230522-388-rntvjo.rb extconf.rb
+checking for sqlite3.h... yes
+checking for pthread_create() in -lpthread... yes
+checking for -ldl... no
+checking for sqlite3_libversion_number() in -lsqlite3... yes
+checking for rb_proc_arity()... yes
+checking for rb_integer_pack()... yes
+checking for sqlite3_initialize()... yes
+checking for sqlite3_backup_init()... yes
+checking for sqlite3_column_database_name()... no
+checking for sqlite3_enable_load_extension()... yes
+checking for sqlite3_load_extension()... yes
+checking for sqlite3_open_v2()... yes
+checking for sqlite3_prepare_v2()... yes
+checking for sqlite3_int64 in sqlite3.h... yes
+checking for sqlite3_uint64 in sqlite3.h... yes
+creating Makefile
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/sqlite3-1.4.4/ext/sqlite3
+make DESTDIR\= clean
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/sqlite3-1.4.4/ext/sqlite3
+make DESTDIR\=
+generating sqlite3_native-x64-mingw32.def
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 15559 s in the future
+compiling aggregator.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling backup.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling database.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+database.c: In function 'rb_sqlite3_open_v2':
+database.c:43:9: warning: unused variable 'flags' [-Wunused-variable]
+   43 |   VALUE flags;
+      |         ^~~~~
+database.c: In function 'exec_batch':
+database.c:748:57: warning: passing argument 3 of 'sqlite3_exec' from incompatible pointer type [-Wincompatible-pointer-types]
+  748 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), hash_callback_function, callback_ary, &errMsg);
+      |                                                         ^~~~~~~~~~~~~~~~~~~~~~
+      |                                                         |
+      |                                                         int (*)(VALUE,  int,  char **, char **) {aka int (*)(long long unsigned int,  int,  char **, char **)}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/sqlite3.h:405:9: note: expected 'int (*)(void *, int,  char **, char **)' but argument is of type 'int (*)(VALUE,  int,  char **, char **)' {aka 'int (*)(long long unsigned int,  int,  char **, char **)'}
+  405 |   int (*callback)(void*,int,char**,char**),  /* Callback function */
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+database.c:748:81: warning: passing argument 4 of 'sqlite3_exec' makes pointer from integer without a cast [-Wint-conversion]
+  748 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), hash_callback_function, callback_ary, &errMsg);
+      |                                                                                 ^~~~~~~~~~~~
+      |                                                                                 |
+      |                                                                                 VALUE {aka long long unsigned int}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/sqlite3.h:406:3: note: expected 'void *' but argument is of type 'VALUE' {aka 'long long unsigned int'}
+  406 |   void *,                                    /* 1st argument to callback */
+      |   ^~~~~~
+database.c:750:57: warning: passing argument 3 of 'sqlite3_exec' from incompatible pointer type [-Wincompatible-pointer-types]
+  750 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), regular_callback_function, callback_ary, &errMsg);
+      |                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                         |
+      |                                                         int (*)(VALUE,  int,  char **, char **) {aka int (*)(long long unsigned int,  int,  char **, char **)}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/sqlite3.h:405:9: note: expected 'int (*)(void *, int,  char **, char **)' but argument is of type 'int (*)(VALUE,  int,  char **, char **)' {aka 'int (*)(long long unsigned int,  int,  char **, char **)'}
+  405 |   int (*callback)(void*,int,char**,char**),  /* Callback function */
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+database.c:750:84: warning: passing argument 4 of 'sqlite3_exec' makes pointer from integer without a cast [-Wint-conversion]
+  750 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), regular_callback_function, callback_ary, &errMsg);
+      |                                                                                    ^~~~~~~~~~~~
+      |                                                                                    |
+      |                                                                                    VALUE {aka long long unsigned int}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/sqlite3.h:406:3: note: expected 'void *' but argument is of type 'VALUE' {aka 'long long unsigned int'}
+  406 |   void *,                                    /* 1st argument to callback */
+      |   ^~~~~~
+database.c: In function 'set_sqlite3_func_result':
+database.c:269:20: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  269 |     case T_BIGNUM: {
+      |                    ^
+database.c:279:5: note: here
+  279 |     case T_FLOAT:
+      |     ^~~~
+compiling exception.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling sqlite3.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling statement.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+statement.c: In function 'bind_param':
+statement.c:214:11: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  214 |       key = rb_funcall(key, rb_intern("to_s"), 0);
+statement.c:215:5: note: here
+  215 |     case T_STRING:
+      |     ^~~~
+statement.c:263:20: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  263 |     case T_BIGNUM: {
+      |                    ^
+statement.c:270:5: note: here
+  270 |     case T_FLOAT:
+      |     ^~~~
+linking shared-object sqlite3/sqlite3_native.so
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/sqlite3-1.4.4/ext/sqlite3
+make DESTDIR\= install
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 15550 s in the future
+compiling aggregator.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from ./aggregator.h:4,
+                 from aggregator.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling backup.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from backup.c:3:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling database.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+database.c: In function 'rb_sqlite3_open_v2':
+database.c:43:9: warning: unused variable 'flags' [-Wunused-variable]
+   43 |   VALUE flags;
+      |         ^~~~~
+database.c: In function 'exec_batch':
+database.c:748:57: warning: passing argument 3 of 'sqlite3_exec' from incompatible pointer type [-Wincompatible-pointer-types]
+  748 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), hash_callback_function, callback_ary, &errMsg);
+      |                                                         ^~~~~~~~~~~~~~~~~~~~~~
+      |                                                         |
+      |                                                         int (*)(VALUE,  int,  char **, char **) {aka int (*)(long long unsigned int,  int,  char **, char **)}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/sqlite3.h:405:9: note: expected 'int (*)(void *, int,  char **, char **)' but argument is of type 'int (*)(VALUE,  int,  char **, char **)' {aka 'int (*)(long long unsigned int,  int,  char **, char **)'}
+  405 |   int (*callback)(void*,int,char**,char**),  /* Callback function */
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+database.c:748:81: warning: passing argument 4 of 'sqlite3_exec' makes pointer from integer without a cast [-Wint-conversion]
+  748 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), hash_callback_function, callback_ary, &errMsg);
+      |                                                                                 ^~~~~~~~~~~~
+      |                                                                                 |
+      |                                                                                 VALUE {aka long long unsigned int}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/sqlite3.h:406:3: note: expected 'void *' but argument is of type 'VALUE' {aka 'long long unsigned int'}
+  406 |   void *,                                    /* 1st argument to callback */
+      |   ^~~~~~
+database.c:750:57: warning: passing argument 3 of 'sqlite3_exec' from incompatible pointer type [-Wincompatible-pointer-types]
+  750 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), regular_callback_function, callback_ary, &errMsg);
+      |                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                         |
+      |                                                         int (*)(VALUE,  int,  char **, char **) {aka int (*)(long long unsigned int,  int,  char **, char **)}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/sqlite3.h:405:9: note: expected 'int (*)(void *, int,  char **, char **)' but argument is of type 'int (*)(VALUE,  int,  char **, char **)' {aka 'int (*)(long long unsigned int,  int,  char **, char **)'}
+  405 |   int (*callback)(void*,int,char**,char**),  /* Callback function */
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+database.c:750:84: warning: passing argument 4 of 'sqlite3_exec' makes pointer from integer without a cast [-Wint-conversion]
+  750 |     status = sqlite3_exec(ctx->db, StringValuePtr(sql), regular_callback_function, callback_ary, &errMsg);
+      |                                                                                    ^~~~~~~~~~~~
+      |                                                                                    |
+      |                                                                                    VALUE {aka long long unsigned int}
+In file included from ./sqlite3_ruby.h:25,
+                 from database.c:1:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/sqlite3.h:406:3: note: expected 'void *' but argument is of type 'VALUE' {aka 'long long unsigned int'}
+  406 |   void *,                                    /* 1st argument to callback */
+      |   ^~~~~~
+database.c: In function 'set_sqlite3_func_result':
+database.c:269:20: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  269 |     case T_BIGNUM: {
+      |                    ^
+database.c:279:5: note: here
+  279 |     case T_FLOAT:
+      |     ^~~~
+compiling exception.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from exception.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling sqlite3.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from sqlite3.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+compiling statement.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from ./sqlite3_ruby.h:4,
+                 from statement.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+statement.c: In function 'bind_param':
+statement.c:214:11: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  214 |       key = rb_funcall(key, rb_intern("to_s"), 0);
+statement.c:215:5: note: here
+  215 |     case T_STRING:
+      |     ^~~~
+statement.c:263:20: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  263 |     case T_BIGNUM: {
+      |                    ^
+statement.c:270:5: note: here
+  270 |     case T_FLOAT:
+      |     ^~~~
+linking shared-object sqlite3/sqlite3_native.so
+/usr/bin/install -c -m 0755 sqlite3_native.so ./.gem.20230522-388-l03zqa/sqlite3
+make: warning:  Clock skew detected.  Your build may be incomplete.

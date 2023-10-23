@@ -1,0 +1,38 @@
+{
+  "name": "visualsearch",
+  "homepage": "http://documentcloud.github.io/visualsearch/",
+  "authors": [
+    "Samuel Clay",
+    "@samuelclay"
+  ],
+  "description": "A Rich Search Box for Real Data",
+  "main": [
+    "build/visualsearch-datauri.css",
+    "build/visualsearch.css",
+    "build/visualsearch.js"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "Rakefile",
+    "vendor",
+    "*.html",
+    "build-min",
+    "lib",
+    "docs",
+    "*.yml"
+  ],
+  "_release": "882642ada8",
+  "_resolution": {
+    "type": "branch",
+    "branch": "pro-proper",
+    "commit": "882642ada8f0ecaab5d1387cb0fde97eb936bf72"
+  },
+  "_source": "git@github.com:rapid7/visualsearch.git",
+  "_target": "pro-proper",
+  "_originalSource": "git@github.com:rapid7/visualsearch"
+}

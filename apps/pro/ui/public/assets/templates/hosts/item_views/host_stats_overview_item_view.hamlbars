@@ -1,0 +1,66 @@
+.container.hosts-stats-overview
+  %ul
+    %li.host
+      %div.inline-block
+        %div.ip
+          {{#if_present name}}
+          {{address}}
+          {{else}}
+          %div{ :style => 'line-height: 47px;' }
+            {{address}}
+          {{/if_present}}
+        {{#if_present name}}
+        %div.name
+          [{{name}}]
+        {{/if_present}}
+      %a.edit-info{ :href => 'javascript:void(0)', :title => 'View and edit host information' }
+
+    %li.state{ :class => '{{status}}' }
+      {{upcase status}}
+
+    %li.os
+      .icons
+        {{{virtual_host}}}
+        {{{os_icon}}}
+      .os_name.bottom_pin
+        {{os}}
+      .menu
+        .padding
+          %label Name
+          .value {{os_name}}
+          {{#if_present os_flavor}}
+          %label Flavor
+          .value {{os_flavor}}
+          {{/if_present}}
+          {{#if_present os_sp}}
+          %label SP
+          .value {{os_sp}}
+          {{/if_present}}
+
+    {{#if_present vpn_pivot}}
+    %li.pivot{ :title => 'VPN pivot running in Task #{{vpn_pivot/task_id}}' }
+      .bottom_pin
+        VPN Pivot
+    {{/if_present}}
+
+    {{#if_present host_details}}
+    %li.nexpose
+      .bottom_pin
+        Source
+      {{#each host_details}}
+      .menu
+        .padding
+          %label Site Name
+          .value {{nx_site_name}}
+          %label Site Importance
+          .value {{nx_site_importance}}
+          %label Scan Template
+          .value {{nx_scan_template}}
+          %label Risk Score
+          .value {{nx_risk_score}}
+          %label Console ID
+          .value {{nx_console_id}}
+          %label Device ID
+          .value {{nx_device_id}}
+      {{/each}}
+    {{/if_present}}

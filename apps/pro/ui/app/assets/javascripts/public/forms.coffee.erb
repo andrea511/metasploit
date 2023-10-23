@@ -1,0 +1,113 @@
+$ = jQuery
+
+# milliseconds to wait before actually yanking the el from the dom after fading out
+WAIT_TO_CHANGE_DOM = 350
+# UI constant to define how to pad the arrow
+ARROW_PAD_LEFT     = 103
+
+window.Forms =
+  # Auto-focus the first field of any form.
+  autoFocus: ->
+    $('form.formtastic input:visible, form.formtastic textarea:visible').first().focus()
+
+  # Transform the submit button to provide feedback on form submission.
+  disableSubmit: ->
+    $form = $('form.formtastic')
+    $form.find('input[type=submit]').click ->
+      $(@).addClass('submitting').addClass('disabled')
+
+    $form.bind "formSubmitted", ->
+      # @ could be problematic.
+      $form.find('input[type=submit]').removeClass('submitting').removeClass('disabled')
+
+  bind: ->
+    @autoFocus()
+    @disableSubmit()
+
+  renderHelpLinks: (scope=null) ->
+    # Move all inline help links inside of the appropriate li's.
+    $('.inline-help', scope).each ->
+      $helpLink    = $(@).children 'a'
+      $targetLi = $("##{$helpLink.data('field')}", scope)
+      if $targetLi.length < 1
+        $targetLi = $(@).parents('li').first()
+      $targetLi.append $helpLink.clone()
+      $newHelpLink = $targetLi.children('a')
+      $helpLink.remove()
+      # add wrapper if missing
+      if $(@).find('div.wrap').length == 0
+        $(@).wrapInner('<div class="wrap" />')
+        # after each h3, wrap the content until the next h3 or the
+        #   end of the container with a div.content
+        # @ is magical
+        $(@).find('h3').each ->
+          $(@).nextUntil('h3').wrapAll($('<div/>', { 'class': 'content' }))
+      # add arrow if missing
+      if $(@).find('div.arrow').length == 0
+        $(@).prepend("<div class='arrow' />")
+
+    hideAllHelp = (notClause) ->
+      $('.inline-help:visible').not(notClause).fadeOut().each ->
+        setTimeout((=>$(@).appendTo($(@).data('old_parent'))), ARROW_PAD_LEFT)
+
+    # Show inline help on hover.
+    inlineClick = (e) ->
+      return if $(e.currentTarget).data('showing')
+      $(e.currentTarget).data('showing', true)
+      _.defer((-> $(e.currentTarget).data('showing', false)), 300)
+      e.preventDefault() if e
+      pos      = $(@).offset()
+      width    = $(@).width()
+      $helpDiv = $(HelpLinks.helpDivSelector($(@).data('field')))
+      hideAllHelp($helpDiv)
+      $('body').unbind 'click.reset-help'
+      if $helpDiv.is(':visible')
+        $helpDiv.fadeOut()
+        setTimeout((->$helpDiv.appendTo($helpDiv.data('old_parent'))), ARROW_PAD_LEFT)
+      else
+        $helpDiv.data('old_parent', $helpDiv.parent().first())
+        $helpDiv.appendTo($('body'))
+        arrowShift = $helpDiv.width() - ARROW_PAD_LEFT
+        left = pos.left - arrowShift #static offset related to width.
+        real_left = if left < 10 then 10 else left
+        $('.arrow', $helpDiv).css(right: (78+real_left-left)+'px')
+        $helpDiv.css "left", "#{real_left}px"
+        $helpDiv.css "top", "#{pos.top+20}px"
+        $helpDiv.fadeIn()
+        window.setTimeout =>
+          $('body').bind 'click.reset-help', (e) =>
+            return if $(e.target).parents('a.help').length or $(e.target).parents('inline-help').length
+            $('body').unbind 'click.reset-help'
+            $helpDiv.fadeOut()
+            setTimeout((->$helpDiv.appendTo($helpDiv.data('old_parent'))), ARROW_PAD_LEFT)
+            e.preventDefault()
+    $('a.help', scope).click inlineClick
+    $('a.help', scope).mouseover -> $(@).find('img')
+      .attr('src', '<%= image_path 'icons/silky/information_hover.png' %>')
+    $('a.help', scope).mouseout -> $(@).find('img')
+      .attr('src', '<%= image_path 'icons/silky/information.png' %>')
+
+
+HelpLinks =
+  helpDivSelector: (fieldKey) ->
+    ".inline-help[data-field=\"#{fieldKey}\"]"
+
+$(document).ready ->
+  # Show/hide advanced controls
+  $(document).on 'click','a#advanced-options', (e) ->
+    if $(@).hasClass('show-advanced-options')
+      $(@).html("Hide Advanced Options")
+      $(@).removeClass('show-advanced-options')
+      $(@).addClass('hide-advanced-options')
+      $('.advanced').slideDown 'fast'
+    else
+      $(@).html("Show Advanced Options")
+      $(@).removeClass('hide-advanced-options')
+      $(@).addClass('show-advanced-options')
+      $('.advanced').slideUp 'fast'
+    e.stopImmediatePropagation()
+    e.preventDefault()
+
+  # Move all inline help links inside of the appropriate li's.
+  Forms.renderHelpLinks()
+  Forms.bind()

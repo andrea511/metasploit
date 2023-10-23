@@ -1,0 +1,11 @@
+<% unless params[:inline].present? %>
+  <div class='form-header'>
+    <h3 class="max-width">New Malicious File</h3>
+  </div>
+<% end %>
+
+<div class='file-new'>
+  <%= semantic_form_for(@file, :url => workspace_social_engineering_files_path(@workspace)) do |f| %>
+    <%= render 'form', :f => f %>
+  <% end %>
+</div>

@@ -1,0 +1,25 @@
+define [
+  'apps/task_chains/index/index_controller'
+  'entities/task_chain'
+], ->
+  @Pro.module 'TaskChainsApp', (TaskChainsApp, App, Backbone, Marionette, $, _) ->
+    class TaskChainsApp.Router extends Marionette.AppRouter
+
+    API =
+      index: (taskChains) ->
+        taskChains ?= App.request 'new:task_chains:collection', gon.task_chains
+        new TaskChainsApp.Index.Controller { taskChains, legacyChains: gon.legacy_chains }
+
+    App.vent.on 'index:task_chains', (taskChains) ->
+      API.show taskChains
+
+    App.addInitializer ->
+      new TaskChainsApp.Router
+        controller: API
+
+      API.index()
+
+      @module("TaskChainsApp").start()
+
+    App.addRegions
+      mainRegion:   "#task-chains-main-region"

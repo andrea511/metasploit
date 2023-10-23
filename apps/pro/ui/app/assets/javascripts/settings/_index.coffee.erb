@@ -1,0 +1,21 @@
+$ = jQuery
+
+$(document).ready ->
+  $lis = $('ul.tabs>li')
+  $lis.click (e) ->
+    $me = $(e.currentTarget)
+    idx = $me.index()
+    window.location = '#'+_.str.underscored($me.text())
+    $lis.find('a').removeClass('active')
+    $me.find('a').addClass('active')
+    $('div.tabs>div').hide()
+    $('div.tabs>div').eq(idx).show()
+
+  updateTabFromUrl = ->
+    urlTab  = _.str.trim(location.hash, '#')
+    chosen = _.find $lis, (li) -> _.str.underscored($(li).text()) == urlTab
+    chosen ||= $lis[0]
+    $(chosen).click()
+
+  $(window).on('hashchange', updateTabFromUrl)
+  $(window).trigger('hashchange')

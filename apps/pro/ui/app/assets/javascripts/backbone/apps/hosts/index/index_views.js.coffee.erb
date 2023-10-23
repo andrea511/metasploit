@@ -1,0 +1,19 @@
+define [
+  'base_view'
+  'base_itemview'
+], () ->
+  @Pro.module 'HostsApp.Index', (Index, App, Backbone, Marionette, $, _) ->
+    #
+    # The table cell containing the virtual_host info
+    # Displays the VM icon if there the virtual_host attribute is not blank
+    #
+    class Index.VirtualCellView extends Pro.Views.ItemView
+      template: (data) ->
+        if data.virtual_host
+          """
+          <%= image_tag('icons/os/vm_logo.png', title: '#{data.virtual_host}') %>
+          """
+        else
+          """
+          &nbsp;
+          """

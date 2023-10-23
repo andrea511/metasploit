@@ -1,0 +1,18 @@
+[Unit]
+Description=Metasploit Pro services
+After=network.target metasploit.target
+
+Requires=metasploit.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+User=root
+Group=root
+TimeoutSec=900
+
+# TODO: load all ports from a config somewhere
+Environment=PORT=3001
+EnvironmentFile=@@BITROCK_INSTALLDIR@@/scripts/.env.txt
+
+ExecStart=@@BITROCK_INSTALLDIR@@/scripts/wait_for_port ${PORT}

@@ -1,0 +1,116 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/sessions") %>',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, Template, EventAggregator) ->
+  class SessionsLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/sessions']
+
+    initialize: ({@host_id}) ->
+
+    completedSessionsURL: => "/hosts/#{@host_id}/show_dead_sessions.json"
+    activeSessionsURL: => "/hosts/#{@host_id}/show_alive_sessions.json"
+
+    onShow: =>
+      EventAggregator.on("tabs_layout:change:count", @reRender)
+
+    onDestroy: =>
+      EventAggregator.off("tabs_layout:change:count")
+
+    onRender: =>
+      @_loadTables()
+
+    _reRender: (count) =>
+      unless $('#active_sessions_table table', @el).dataTable().fnSettings().fnRecordsTotal() + $('#completed_sessions_table table', @el).dataTable().fnSettings().fnRecordsTotal() == count.get("captured_data")
+       @render()
+
+    _sessionHistoryPath: (id) ->
+      "/workspaces/#{WORKSPACE_ID}/session_history/#{id}"
+
+    _sessionPath: (id) ->
+      "/workspaces/#{WORKSPACE_ID}/sessions/#{id}"
+
+    _shellPath: (id) ->
+      "/sessions/#{id}/shell"
+
+    _loadTables: =>
+      @_loadActiveSessionsTable()
+      @_loadCompletedSessionsTable()
+
+
+    _loadActiveSessionsTable: =>
+      helpers.loadRemoteTable({
+        el: $('#active_sessions_table', @el)
+        tableName: 'activeSessions'
+        bStateSave: true
+        columns:
+          id:
+            name: "Session"
+            fnRender: (o) =>
+              url = @_sessionPath(o.aData.id)
+              shellUrl = @_shellPath(o.aData.id)
+              o.aData.history = o.aData.id
+              "<a href='#{_.escape(url)}'>Session #{o.aData.id}</a> "+
+              "<a href='#{_.escape(shellUrl)}' class='shell_icon'></a>"
+          history:
+            name: "History"
+            bSortable: false
+            mDataProp: null
+            fnRender: (o) =>
+              url = "#{@_sessionHistoryPath(o.aData.history)}"
+              "<a href='#{_.escape(url)}'>History</a>"
+          stype:
+            name: "Type"
+            bSortable: true
+          opened_at:
+            name: "Opened at"
+          via_exploit:
+            name: "Attack Module"
+
+        dataTable:
+          sPaginationType: "r7Style"
+          oLanguage:
+            sEmptyTable: "No active sessions."
+          aaSorting: [[3, 'desc']]
+          sAjaxSource: @activeSessionsURL()
+      })
+
+
+    _loadCompletedSessionsTable: =>
+      helpers.loadRemoteTable({
+        el: $('#completed_sessions_table', @el)
+        tableName: 'completedSessions'
+        columns:
+          id:
+            name: "Session"
+            fnRender: (o) ->
+              o.aData.history = o.aData.id
+              "Session #{o.aData.id}"
+          history:
+            name: "History"
+            bSortable: false
+            mDataProp: null
+            fnRender: (o) =>
+              url = @_sessionHistoryPath(o.aData.history)
+              "<a href='#{_.escape(url)}'>History</a>"
+          stype:
+            name: "Type"
+            bSortable: true
+            fnRender: (o) ->
+              "#{o.aData.stype}"
+          opened_at:
+            name: "Opened at"
+            fnRender: (o) ->
+              "#{o.aData.opened_at}"
+          via_exploit:
+            name: "Attack Module"
+            fnRender: (o) ->
+              "#{o.aData.via_exploit}"
+
+        dataTable:
+          sPaginationType: "r7Style"
+          oLanguage:
+            sEmptyTable: "No completed sessions."
+          aaSorting: [[3, 'desc']]
+          sAjaxSource: @completedSessionsURL()
+      })

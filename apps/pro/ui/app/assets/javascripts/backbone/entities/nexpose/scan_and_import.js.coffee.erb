@@ -1,0 +1,43 @@
+define [
+  'base_model'
+  'base_collection'
+  'lib/concerns/entities/input_generator'
+], ->
+  @Pro.module "Entities.Nexpose", (Nexpose, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+    # Corresponds to Nexpose::ScanAndImport::TaskConfig
+    class Nexpose.ScanAndImport extends App.Entities.Model
+      @include "InputGenerator"
+
+      urlRoot: ->
+        Routes.start_scan_and_import_path(WORKSPACE_ID)
+
+      # We don't name the method validate because it fires before saving as
+      # a client side validation
+      validateModel: (opts)  ->
+        opts = _.extend(opts,
+          url: Routes.validate_scan_and_import_path(WORKSPACE_ID)
+        )
+        @save({},opts)
+
+      isScanAndImport: () ->
+        !@get('sites')?
+
+      isSiteImport: () ->
+        @get('sites')?
+
+    #
+    # API
+    #
+    API =
+      getScanAndImport: (opts = {}) ->
+        new Nexpose.ScanAndImport(opts)
+
+    #
+    # REQUEST HANDLERS
+    #
+    App.reqres.setHandler "nexpose:scanAndImport:entity", (opts={}) ->
+      API.getScanAndImport(opts)

@@ -1,0 +1,25 @@
+/* line 4, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/exports.scss */
+#export_container .tab-loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-position: center center;
+  height: auto;
+  z-index: 1;
+}
+/* line 14, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/exports.scss */
+#export_container.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/exports.scss */
+#export_container li.check_boxes li.choice {
+  display: block;
+  margin-bottom: 5px;
+}
+/* line 23, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/exports.scss */
+#export_container li.check_boxes li.choice input {
+  margin-right: 5px;
+}

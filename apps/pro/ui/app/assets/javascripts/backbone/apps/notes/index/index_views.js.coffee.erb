@@ -1,0 +1,47 @@
+define [
+  'base_view'
+  'base_itemview'
+], () ->
+  @Pro.module 'NotesApp.Index', (Index, App, Backbone, Marionette, $, _) ->
+    #
+    # The table cell containing the truncated note data
+    class Index.DataCellView extends Pro.Views.ItemView
+      ui:
+        noteDataDisclosureLink: 'a.note-data-view'
+
+      events:
+        'click @ui.noteDataDisclosureLink': 'displayModal'
+
+      template: (data) ->
+        data['data']
+
+      displayModal: (e) ->
+        $dialog = $("<div style='display:hidden'>#{@$el.find('.note-data').html()}</div>").appendTo('body')
+        $dialog.dialog
+          title: "Note data"
+          buttons:
+            "Close": ->
+              $(this).dialog('close')
+          # Workaround for inability to set maxHeight
+          # from http://bugs.jqueryui.com/ticket/4820
+          open: (event, ui) ->
+            $(this).css 'max-height': 400, 'overflow-y': 'auto'
+            if $(this).parent().position().top == 0
+              $('.ui-resizable').css 'top': '100px'
+        e.preventDefault()
+
+    #
+    # The table cell containing the status of note
+    # Displays red flag icon if note is critical but not seen
+    # See server side implementation: Mdm::Note::Decorator#flagged?
+    #
+    class Index.StatusCellView extends Pro.Views.ItemView
+      template: (data) ->
+        if (data.critical == "true" and (data.seen == "false" or data.seen == null) )
+          """
+          <%= image_tag('icons/flag_red.png', title: 'flagged') %>
+          """
+        else
+          """
+          &nbsp;
+          """

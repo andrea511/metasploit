@@ -1,0 +1,17 @@
+<div>
+  <div class="large-9 columns filter-spacer">
+
+  </div>
+
+
+  <div class="filter-controls large-3 columns">
+
+  </div>
+
+</div>
+
+
+<h1 data-table-id="nexpose-sites">Nexpose Sites</h1>
+
+<div class="columns small-12 site-region">
+</div>

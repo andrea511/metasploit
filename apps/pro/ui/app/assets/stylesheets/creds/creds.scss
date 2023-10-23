@@ -1,0 +1,619 @@
+@import 'css3-mixins';
+@import 'components/header_bar';
+@import 'components/tabs';
+@import 'token-input-metasploit';
+@import 'components/file_input';
+@import '../shared/variables';
+// Flash CSS temporarily moved to application.css for shockwave alert.
+//@import 'components/flash';
+@import 'components/circle_icons';
+@import 'components/tags';
+@import 'components/window_slider';
+
+// updated on $.ready and window.onresize to fit screen
+$init-height: 820px;
+
+[data-field='tags-component'] .content {
+  height: 175px !important;
+}
+
+.tabs {
+  .none, .plaintext, .ssh, .ntml-hash, .hash {
+    display:inline-block;
+  }
+}
+
+
+// Fix issues with extra scrollbars appearing in IE.
+// TODO: This is going to hide the tagging modal in the last row of the creds table
+// in IE. Need to find a better long-term solution.
+.ie10, .ie9 {
+  body.cores {
+    .mainContent {
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+  }
+}
+
+.table-region {
+  .tag-count {
+    a {
+      color: #555;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+#dialog-region {
+  .modal {
+    min-width: 0;
+  }
+  .cred-type {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    .manual, .import {
+      display: inline-block;
+      label {
+        float: none;
+        text-align: start;
+      }
+    }
+  }
+
+  .private-data, .ssh-key-fingerprint, h4.private-key {
+    display: block;
+    width:400px;
+    margin-left:auto;
+    margin-right: auto;
+  }
+
+  .private-data { padding-top: 20px; }
+
+  .delete-text {
+    margin-top: 8px;
+    width: 465px;
+    margin: 0 auto 0 auto;
+  }
+
+  #add_tags {
+    width: 246px;
+    margin: 0 auto 0 auto;
+  }
+
+  .add-cred {
+    .tags {
+      display:inline-block;
+      width: 246px;
+
+      label#tags-component{
+        right:-44px !important;
+      }
+
+      &>div {
+        margin-top: 10px;
+      }
+    }
+
+    hr {
+      height: 1px;
+      margin: 0 auto 0 auto;
+      width: 400px;
+    }
+
+    .tag-container {
+      width:300px;
+      margin: 0 auto 0 auto;
+      label {
+        padding-right:20px;
+      }
+    }
+
+    .import-type{
+      margin-bottom: 10px;
+      width:100%;
+      display:inline-block;
+      .radio-label{
+        display: inline-block;
+      }
+    }
+
+    .password-type{
+      margin-bottom: 10px;
+      display: inline-block;
+      >div{
+        text-align: center;
+
+        select{
+          width: auto;
+        }
+      }
+
+    }
+
+    .core-errors {
+      width: 70%;
+      margin: 0 auto;
+      color: red;
+    }
+  }
+
+  .tab-loading{
+    .form-container{
+      visibility: hidden;
+    }
+  }
+
+  .clear-floats {
+    clear: both;
+    margin-top: 10px;
+  }
+
+  .form-container {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 460px;
+
+    &.login {
+      .tags{
+
+        display:inline-block;
+
+        li.tags{
+          width:100%;
+        }
+
+        >div{
+          margin-top:0px;
+        }
+        #tags-component{
+          right:-44px !important;
+        }
+      }
+    }
+
+    &>div {
+      padding: 6px 0 6px 0;
+    }
+
+    label {
+      text-align: right;
+      padding-right: 20px;
+      float: left;
+      width: 22%;
+      line-height: 22px;
+    }
+
+    .tab-content {
+      label {
+        width: 33%;
+      }
+    }
+
+    input{
+      width:50%;
+    }
+
+    .error{
+      float:right;
+      width:61%;
+      color:red;
+    }
+
+    .file-input-region {
+      .error { width: 100%; }
+    }
+
+    .user-pass-file-input-region {
+      display: none;
+      .user-file-input-region {
+        .error {
+          width: 100%;
+        }
+      }
+
+      .pass-file-input-region {
+        .error {
+          width: 100%;
+        }
+      }
+    }
+
+    textarea{
+      padding: 1px;
+      width:50%;
+      resize:none;
+    }
+
+    select {
+      width:55%
+    }
+
+    .radio-label {
+      width:20%;
+      text-align: right;
+      padding-right: 4%;
+    }
+
+    .inline-radio {
+      display:inline-block;
+      width: 100px;
+      input {
+        width:auto;
+      }
+
+      label {
+        float:none;
+        text-align: start;
+      }
+    }
+
+    .import-form {
+
+      hr {
+        height: 1px;
+        margin: 0 auto 0 auto;
+        width: 450px;
+      }
+
+      .password-help {
+        display: inline-block;
+        position: relative;
+      }
+
+      .password-help-label{
+        display: inline-block;
+        height:15px;
+        label{
+          float:none;
+          position: relative;
+          width:auto;
+          top: 0;
+        }
+      }
+
+      .file {
+        label {
+          z-index: 32;
+          cursor: pointer;
+          float: left;
+          text-align: left;
+          span {
+            border-left: 0;
+          }
+
+        }
+        .error {
+          position: absolute;
+          top: 35px;
+          left: 8px;
+        }
+      }
+
+      #import-file-input{
+        top:47px;
+        right:20px;
+      }
+
+      .import-type{
+        position: relative;
+
+
+        .import-format{
+          display:inline-block;
+          label{
+            float:none;
+            position: relative;
+            width:auto;
+            top: 0;
+          }
+
+        }
+      }
+
+    }
+  }
+
+  .export-form {
+    label {
+      width: 120px;
+    }
+
+    .radio-label {
+      width: 120px;
+    }
+
+    .inline-radio {
+      label.disabled {
+        opacity: 0.5;
+      }
+    }
+
+    .inline-radio.wide {
+      width: 180px;
+    }
+
+    .pwdump-warning {
+      &:before {
+        @extend %circle-icon-red;
+        @extend %circle-icon-exclamation;
+        display: inline-block;
+        margin-right: 3px;
+      }
+
+      color: red;
+      padding-left: 144px;
+      display: none;
+    }
+  }
+
+  .origin-disclosure-modal {
+    padding-top: 30px;
+    width: 580px;
+    text-align: center;
+  }
+}
+
+
+
+.tags-region {
+  position: absolute;
+  z-index: 1;
+  right: 80px;
+  top: 88px;
+}
+
+#creds-main-region, .single-host-view-container {
+
+  .fixed {
+    #single-cred-header, .manage-creds-header {
+      @extend %header-bar;
+
+      height: auto;
+      min-height: 55px;
+
+      h1 {
+        width: 230px;
+        float: left;
+      }
+
+      #total-count {
+        $total-count-color: rgb(153, 153, 153);
+        font-size: 14px;
+        color: $total-count-color;
+        float: left;
+        margin-top: 18px;
+        border: 1px solid $total-count-color;
+        padding: 0 5px;
+        border-radius: 10px;
+      }
+
+      ul {
+        vertical-align: top;
+
+        li {
+          vertical-align: top;
+
+          height: 48px;
+          border-right: 1px solid #d3d3d3;
+          width: 180px;
+          display: inline-block;
+          padding: 7px 7px 0px 20px;
+
+          .black a.filter {
+            @include image-2x(image-path('icons/filter@2x.png'), 20px, 20px);
+            background: image-url('icons/filter.png') no-repeat;
+            padding-left: 20px;
+            display: inline-block;
+          }
+
+          .black a.private-data-disclosure {
+            font-size: 10px;
+          }
+
+          &.tags {
+            vertical-align: top;
+            color: black;
+            .count {
+              vertical-align: bottom;
+              font-size: 18px;
+            }
+          }
+
+          &.quick-reuse {
+            border-right: none;
+            padding: 7px 0px 0px 0px;
+            text-align: center;
+            a.btn.primary.launch {
+              width: 80%;
+              line-height: 22px;
+              font-size: 14px;
+              display: inline-block;
+              text-align: center;
+              margin-top: auto;
+              margin-left: 0px;
+            }
+          }
+
+          .black {
+            min-height: 18px;
+            font-weight: bold;
+            color: #000000;
+          }
+        }
+      }
+    }
+
+
+    #single-cred-header {
+      height: auto;
+      min-height: 55px;
+
+      &>ul {
+        display: table;
+        width: 100%;
+        height: 55px;
+        &>li {
+          display: table-cell;
+          width: 14%;
+        }
+      }
+    }
+
+    .manage-creds-header {
+      h1 {
+        line-height: 51px;
+      }
+    }
+  }
+
+  .validation-hover {
+    $arrow-size: 7px;
+    font-size: 11px;
+    padding: 3px;
+    padding-left: 10px;
+    border: 1px solid #d3d3d3;
+    border-bottom-color: #ccc;
+    background: #fff;
+    margin-top: $arrow-size;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    z-index: 1;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 29px;
+      width: 0;
+      height: 0;
+      border-left: $arrow-size+1 solid transparent;
+      border-right: $arrow-size+1 solid transparent;
+      border-bottom: $arrow-size+1 solid #afafaf;
+      z-index: 0;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 30px;
+      width: 0;
+      height: 0;
+      border-left: $arrow-size solid transparent;
+      border-right: $arrow-size solid transparent;
+      border-bottom: $arrow-size solid #fff;
+    }
+  }
+
+  .sub-header {
+    padding: 0px 6px 0px 2px;
+
+    &>.row {
+      position: relative;
+    }
+    .hang {
+      display: none; // Hide this, for the moment.
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
+    .grey {
+      text-align: center;
+      height:40px;
+      line-height: 40px;
+      background-color: #f0f0f0;
+      border-right: 1px solid #d3d3d3;
+      border-bottom: 1px solid #d3d3d3;
+      span.large {
+        font-size: 18px;
+        font-weight: 600;
+        padding-right: 3px;
+      }
+      span.subtext {
+        font-weight: 100;
+        vertical-align: top;
+      }
+      .instance-count{
+        vertical-align: bottom;
+        font-size: 18px;
+      }
+    }
+    .compromised-text {
+      text-align: left;
+    }
+
+    .white {
+      height:40px;
+      line-height: 40px;
+      border-right: 1px solid #d3d3d3;
+    }
+
+    canvas {
+      display: inline-block;
+      vertical-align: top;
+      line-height: 10px;
+    }
+
+    .compromised-text {
+      display: inline-block;
+      vertical-align: top;
+      line-height: 12px;
+      margin-top: 7px;
+      margin-left: 6px;
+      width:100px;
+    }
+
+  }
+
+
+  #related-logins-region, #creds-region {
+    * {
+      // TODO
+      @extend .light-font !optional;
+    }
+    .table-component {
+      @import 'creds/table_cells';
+    }
+
+    @extend %header-bar-content-wrapper;
+
+    position: static;
+
+    & > div:first-child {
+      @extend %header-bar-content;
+    }
+
+    div.table-header {
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .error {
+      color: red;
+      font-size: 80%;
+      padding-left: 2px;
+    }
+
+    .pagination-region {
+      height: 35px;
+      bottom: 0;
+      padding-top: 2px;
+    }
+
+    .filter {
+      margin-top: 20px;
+    }
+
+
+    &:after {
+      display: none;
+      content: none;
+    }
+  }
+
+}

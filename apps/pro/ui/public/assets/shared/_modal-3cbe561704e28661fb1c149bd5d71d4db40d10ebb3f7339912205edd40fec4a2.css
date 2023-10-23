@@ -1,0 +1,323 @@
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.sexy-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-weight: 300;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.small-caps-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-size: 11px;
+  position: relative;
+}
+
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#dialog-region div.padding {
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+/* line 21, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#dialog-region div.show-again-option {
+  margin-top: 4px;
+  text-align: center;
+}
+
+/* line 29, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .bg, #dialog-region .bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 800;
+  background: #000;
+  opacity: 0.4;
+}
+/* line 41, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal.no-border .content, #dialog-region .modal.no-border .content {
+  border-width: 0px;
+}
+/* line 46, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal, #dialog-region .modal {
+  z-index: 900;
+  zoom: 1;
+  font-size: 11px;
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  background: #fff;
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: auto;
+  bottom: auto;
+  border-radius: 13px;
+  border: 5px solid #222;
+  border: 5px solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+}
+/* line 67, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.header, #dialog-region .modal div.header {
+  padding: 5px 10px;
+}
+/* line 70, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.advanced, #dialog-region .modal div.advanced {
+  background: #f6f6f6;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 0;
+  /* Gecko */
+  -webkit-border-top-right-radius: 0;
+  /* Webkit */
+  -khtml-border-top-right-radius: 0;
+  /* Konqueror */
+  border-top-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 5px;
+  /* Konqueror */
+  border-bottom-right-radius: 5px;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 5px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 5px;
+  /* Konqueror */
+  border-bottom-left-radius: 5px;
+  /* CSS3 */
+  border: 1px solid #ddd;
+  padding: 10px;
+  display: none;
+}
+/* line 75, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.advanced h3, #modals .modal div.advanced h4, #dialog-region .modal div.advanced h3, #dialog-region .modal div.advanced h4 {
+  color: #000;
+}
+/* line 78, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.advanced li.input, #dialog-region .modal div.advanced li.input {
+  padding-left: 0;
+}
+/* line 84, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal a.advanced, #dialog-region .modal a.advanced {
+  display: inline-block;
+  width: auto;
+  padding-right: 15px;
+  font-size: 11px;
+  background: url(/assets/darrow-d391c47ad6198328abff4e48f7bb90ca91f627efe5d1570d7a534071bc7be9a2.png);
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 15px;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 96, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal a.not_advanced, #dialog-region .modal a.not_advanced {
+  background: url(/assets/uarrow-b0b9437773a3c62e2afb2ccd9d6e881b4e5e1c838b74fe7547b1eb6e76b3d04b.png);
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+/* line 101, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal hr, #dialog-region .modal hr {
+  border: 0;
+  margin: 0;
+  background: #f0f0f0;
+  height: 3px;
+  border-bottom: 1px solid #eee;
+  box-shadow: inset -1px 0 1px rgba(0, 0, 0, 0.1);
+}
+/* line 109, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal .body-disabled-overlay, #dialog-region .modal .body-disabled-overlay {
+  margin-right: 10px;
+}
+/* line 113, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal h1, #dialog-region .modal h1 {
+  font-size: 1.5em;
+  font-family: "Trebuchet MS", Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: #EA5709;
+  margin: 5px 0;
+}
+/* line 119, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal a.close.small, #dialog-region .modal a.close.small {
+  position: absolute;
+  right: 10px;
+  top: 6px;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 22px;
+  color: #777;
+}
+/* line 129, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal a.close.small:hover, #dialog-region .modal a.close.small:hover {
+  color: #333;
+}
+/* line 132, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal a.close.small.disabled, #dialog-region .modal a.close.small.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+/* line 136, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.content, #dialog-region .modal div.content {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 11px;
+  background: #fff;
+  border: 2px solid #d6d6d6;
+  padding: 5px 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 10px;
+}
+/* line 145, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.content.top-left-square, #dialog-region .modal div.content.top-left-square {
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 11px;
+  /* Gecko */
+  -webkit-border-top-right-radius: 11px;
+  /* Webkit */
+  -khtml-border-top-right-radius: 11px;
+  /* Konqueror */
+  border-top-right-radius: 11px;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 11px;
+  -webkit-border-bottom-right-radius: 11px;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 11px;
+  /* Konqueror */
+  border-bottom-right-radius: 11px;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 11px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 11px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 11px;
+  /* Konqueror */
+  border-bottom-left-radius: 11px;
+  /* CSS3 */
+}
+/* line 148, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.content .tab-loading, #dialog-region .modal div.content .tab-loading {
+  width: 100%;
+  height: auto;
+  min-height: 140px;
+  margin: 0;
+}
+/* line 156, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal p, #dialog-region .modal p {
+  margin: 7px 10px 10px 0;
+  color: black;
+}
+/* line 161, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal p.inline-error, #dialog-region .modal p.inline-error {
+  margin: 0;
+  margin-left: 20%;
+  color: #f00;
+  font-size: 11px;
+  padding-left: 20px;
+}
+/* line 168, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal li.error, #dialog-region .modal li.error {
+  color: #f00;
+}
+/* line 172, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.modal-actions, #dialog-region .modal div.modal-actions {
+  border-top: 1px solid #cecece;
+  background: #f3f3f3;
+  background-image: url(/assets/tileable_contours_white-5e4ff33e4fd154386530a83a8ea877c6f54f3b10b17187612dc7197737656d35.jpg);
+  background-repeat: repeat;
+  margin-top: 10px;
+  text-align: center;
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 0;
+  /* Gecko */
+  -webkit-border-top-right-radius: 0;
+  /* Webkit */
+  -khtml-border-top-right-radius: 0;
+  /* Konqueror */
+  border-top-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 5px;
+  /* Konqueror */
+  border-bottom-right-radius: 5px;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 5px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 5px;
+  /* Konqueror */
+  border-bottom-left-radius: 5px;
+  /* CSS3 */
+}
+/* line 183, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.modal-actions.disabled a, #dialog-region .modal div.modal-actions.disabled a {
+  opacity: 0.5;
+  pointer-events: none;
+}
+/* line 187, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.modal-actions a, #dialog-region .modal div.modal-actions a {
+  font-size: 1.2em;
+  line-height: 53px;
+}
+/* line 190, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal div.modal-actions a.disabled, #dialog-region .modal div.modal-actions a.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* line 199, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal.flat {
+  border-radius: 5px;
+  border: 1px solid #999;
+  min-width: 0;
+}
+/* line 203, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal.flat div.content {
+  height: auto;
+  border: none;
+  padding: 5px 0;
+}
+/* line 208, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_modal.scss */
+#modals .modal.flat div.modal-actions {
+  background-image: none;
+  padding: 0 10px;
+}

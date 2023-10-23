@@ -1,0 +1,72 @@
+<%= form_for :tag, :url => {:action => :create_or_update_tag} do |f| %>
+  <h3> Update Tags </h3>
+  <table id="tags" class="list host_tags" id="host_tags_list">
+    <thead>
+      <tr>
+        <%= sortable_th "Name", "tag-name" %>
+        <th>Description</th>
+        <%= sortable_th "Attributes", "tag-report" %>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @host.tags.empty? %>
+        <tr class="emptyset odd">
+          <td colspan="3">No tags</td>
+        </tr>
+      <% else %>
+        <% reset_cycle "rows" %>
+        <% 
+          if params[:sort_by] && %w{ tag-name tag-report }.include?(params[:sort_by])
+            host_tags = @host.tags.to_a.sort! { |x,y|
+              if params[:sort_by] == "tag-name"
+                if params[:sort_dir] == "desc"
+                  y.name.to_s <=> x.name.to_s
+                else
+                  x.name.to_s <=> y.name.to_s
+                end
+              elsif params[:sort_by] == "tag-report"
+                if params[:sort_dir] == "desc"
+                  y.importance <=> x.importance
+                else
+                  x.importance <=> y.importance
+                end
+              end
+            }
+          else
+            host_tags = @host.tags.to_a.sort! {|x,y| x.importance <=> y.importance}
+          end
+          host_tags.each do |host_tag|
+        %>
+        <tr class="<%= row_cycle %> tag-row" id="tag_<%= host_tag.id %>">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= hidden_field_tag :workspace_id, @workspace.id %>
+            <%= hidden_field_tag :tag_id, host_tag.id %>
+            <%= f.hidden_field :name, :value => h(host_tag.name) %>
+            <td><%= link_to(h(host_tag.name), (hosts_path(@workspace) << "?search=%23" << h(host_tag.name)), :class => "tag-link") %></td>
+            <td><%= f.text_area :desc, {:rows => 4, :cols => 50, :value => host_tag.desc} %>
+              <br/>
+              <span class="btn"><%= f.submit "Save ##{h(host_tag.name)}", :class => "edit" %></span>
+              <span class="btn"><%= f.submit "Remove ##{h(host_tag.name)}", :class => "delete", :confirm => "Delete ##{h(host_tag.name)} from #{h(@host.name_and_address)}?" %></span>
+            </td>
+            <td>
+              <table class="list mar-tb10" style="background-color: transparent;">
+                <tr><td>
+                    <%= f.check_box :report_summary, :checked => host_tag.report_summary%>
+                    <%= f.label :report_summary, "Include in report summary?", :class => :inline %>
+                </td></tr>
+                <tr><td>
+                    <%= f.check_box :report_detail, :checked => host_tag.report_detail%>
+                    <%= f.label :report_detail, "Include in report details?", :class => :inline %>
+                </td></tr>
+                <tr><td class="<%= host_tag.critical ? "critical_note" : ""%>">
+                    <%= f.check_box :critical, :checked => host_tag.critical%>
+                    <%= f.label :critical, "Critical Finding?", :class => :inline %>
+                </td></tr>
+              </table>
+            </td>
+          <% end %>
+        <% end %>
+    </tbody>
+  </table>
+<% end %>
+

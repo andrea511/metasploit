@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3_detail_services" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" scriptletClass="org.metasploit.datatransform.VulnRefTransformer" uuid="c391da79-54d6-4ff7-a91b-08efee4edc0e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Serif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Serif" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Serif" fontSize="12" isBold="true"/>
+	<style name="Detail" vAlign="Middle" fontName="Serif" fontSize="12"/>
+	<style name="zebra_row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{host_alternator} % 2) == 0]]></conditionExpression>
+			<style backcolor="#F2F7F9"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="workspace_id" class="java.lang.Integer"/>
+	<parameter name="host_address_clause" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	sub1.opened_at,
+	-- Show hostname (IP) if possible to resolve ambiguity:
+	CASE
+	    WHEN sub1.name != '' THEN concat(sub1.name, ' (', sub1.address, ')')
+            WHEN sub1.name is null THEN cast(host(sub1.address) as text)
+            ELSE cast(sub1.host_id as text)
+        END as address,
+	sub1.via_exploit,
+	ref_sub.ref_ids
+from
+( -- Session opened times, host address, exploit module
+select
+	array_to_string(array_agg(DISTINCT s.opened_at),',') as opened_at,
+        hosts.id as host_id,
+        hosts.name, hosts.address,
+	s.via_exploit
+from sessions s
+INNER JOIN hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+group by s.via_exploit, hosts.id
+) as sub1
+
+LEFT OUTER JOIN
+( -- Ref array per module
+select
+	md.fullname as module,
+	array_agg(distinct r.name) as refs
+from module_details md
+inner join module_refs mr on (mr.detail_id = md.id)
+inner join refs r on (mr.name = r.name)
+group by module
+) mods_refs on (mods_refs.module = sub1.via_exploit)
+
+LEFT OUTER join
+( -- Ref array per vuln_id
+select
+	v.id,
+	array_agg(distinct r.name) as ref_ids
+from refs r
+LEFT JOIN vulns_refs vr ON (vr.ref_id = r.id)
+INNER JOIN vulns v on (v.id = vr.vuln_id)
+INNER JOIN hosts on (v.host_id = hosts.id)
+and $P!{host_address_clause}
+where hosts.workspace_id = $P{workspace_id}
+group by v.id
+) ref_sub on (ref_sub.ref_ids = mods_refs.refs) -- TODO Verify]]>
+	</queryString>
+	<field name="opened_at" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="via_exploit" class="java.lang.String"/>
+	<field name="ref_ids" class="java.sql.Array"/>
+	<variable name="host_alternator" class="java.lang.Integer" resetType="Group" resetGroup="exploit_module" calculation="Count">
+		<variableExpression><![CDATA[$F{address} != null]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<group name="exploit_module">
+		<groupExpression><![CDATA[$F{via_exploit}]]></groupExpression>
+		<groupHeader>
+			<band height="39">
+				<staticText>
+					<reportElement uuid="33577e91-98df-4109-a9a9-48bc87377416" style="Column header" stretchType="RelativeToBandHeight" mode="Opaque" x="224" y="3" width="195" height="16" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" backcolor="#E0EDF1"/>
+					<textElement>
+						<font fontName="SansSerif" size="12"/>
+					</textElement>
+					<text><![CDATA[Compromised System(s)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6131bf4c-39e1-4fb6-bb40-a385c3996d5f" style="Column header" mode="Opaque" x="419" y="3" width="136" height="16" backcolor="#E0EDF1"/>
+					<textElement textAlignment="Center">
+						<font fontName="SansSerif" size="12"/>
+						<paragraph rightIndent="2"/>
+					</textElement>
+					<text><![CDATA[Compromise Time(s)]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="f2351983-b4b4-44eb-8ba2-926ea13d6f46" style="Column header" mode="Opaque" x="0" y="3" width="224" height="16" printWhenGroupChanges="exploit_module" backcolor="#E0EDF1"/>
+					<textElement markup="none">
+						<font fontName="SansSerif" size="12"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{via_exploit}.startsWith( "exploit" ) ?
+ "Exploit " :
+ $F{via_exploit}.startsWith( "auxiliary" ) ?
+ "Auxiliary " :
+ $F{via_exploit}.startsWith( "post" ) ?
+ "Post " :
+ "Other ") + "Module"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="30a0faf1-70aa-4f14-9524-a6738e2aa09a" style="Column header" stretchType="RelativeToBandHeight" mode="Opaque" x="294" y="19" width="261" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" backcolor="#E0EDF1"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight">
+					<reportElement uuid="b3aab880-bbdb-4e04-99cf-a4d75e567d86" style="Detail" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="19" width="294" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="exploit_module" backcolor="#E0EDF1"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="true"/>
+						<paragraph leftIndent="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{via_exploit}.replaceAll( "^(exploit|auxiliary|post)/", "") + " "]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="1b77997e-4a36-4ef3-be23-c111fd9e86e3" x="0" y="0" width="555" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement uuid="7dd2b9af-a9d4-46c0-a21e-b8a2f4ccf83f" style="Column header" x="2" y="1" width="93" height="16"/>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+						<paragraph leftIndent="6"/>
+					</textElement>
+					<text><![CDATA[References:]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight">
+					<reportElement uuid="bb9a21e7-2e44-4d3f-be5c-dcc39efe919a" stretchType="RelativeToBandHeight" x="96" y="2" width="459" height="16" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{ref_ids}) ?
+    ($P{REPORT_SCRIPTLET}.getVulnRefTransform($F{ref_ids})) :
+    ("Metasploit " + $F{via_exploit})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="45" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="4497c71d-fe47-4ade-88e9-0aece0d1e133" x="0" y="0" width="555" height="45"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+					<paragraph leftIndent="3" rightIndent="3" spacingBefore="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["A host is considered \"compromised\" when at least one session is opened against it via a Metasploit module. This designation is distinct from a merely \"exploited\" host, where a module may have run successfully, but no session was established. The latter is common for most privilege escalation attacks, information disclosure attacks, and the like. Most, but not all, Metasploit modules result in an active session."]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="16">
+			<frame>
+				<reportElement uuid="bc977cd4-290a-43e1-be81-15ae7c3cf044" style="zebra_row" mode="Opaque" x="3" y="0" width="552" height="15"/>
+				<textField textAdjust="StretchHeight">
+					<reportElement uuid="246d0d99-751a-4f57-8711-c103e70a5ebb" style="Detail" stretchType="RelativeToBandHeight" mode="Transparent" x="224" y="0" width="192" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" backcolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address} + " "]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement uuid="a4d4f1b9-ecb3-42e8-8e75-4aff67780aa4" style="Detail" stretchType="RelativeToTallestObject" mode="Transparent" x="416" y="0" width="136" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="8"/>
+						<paragraph rightIndent="2" spacingAfter="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{REPORT_SCRIPTLET}.verticallyFormatTimeString( $F{opened_at} )]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

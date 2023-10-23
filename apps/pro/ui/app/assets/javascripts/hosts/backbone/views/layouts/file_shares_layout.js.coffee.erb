@@ -1,0 +1,41 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/file_shares") %>',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, Template, EventAggregator) ->
+
+  class FileSharesLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/file_shares']
+
+    initialize: ({@host_id}) =>
+      EventAggregator.on("tabs_layout:change:count", @render)
+
+    onDestroy: ->
+      EventAggregator.off("tabs_layout:change:count")
+
+    onRender: =>
+      @_loadTable()
+
+    hostSharesURL: => "/hosts/#{@host_id}/shares"
+
+    _loadTable: =>
+      $.ajax
+        type: 'GET'
+        url: @hostSharesURL()
+        success: (data) =>
+          $('.shares', @el).html(data)
+          $('.shares table#shares_smb', @el).dataTable(
+            oSettings:
+              sInstance: 'smb'
+            sPaginationType: "r7Style"
+            bStateSave: true
+            aoColumns: [null, null, null, null]
+          )
+          $('.shares table#shares_nfs', @el).dataTable(
+            oSettings:
+              sInstance: 'nfsExports'
+            sPaginationType: "r7Style"
+            bStateSave: true
+            aoColumns: [null, null, null]
+          )
+          $(@el).trigger('tabload')

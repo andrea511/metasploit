@@ -1,0 +1,157 @@
+/* line 1, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+.passive_network_discovery_modal_view li#task_config_bpf_string_input a.help {
+  position: absolute;
+  right: 0;
+  top: 10px;
+}
+
+/* line 6, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view li#task_config_interface_input label {
+  width: 40%;
+  text-align: left;
+}
+
+/* line 10, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#task-chain-region .passive_network_discovery_modal_view li#task_config_interface_input label {
+  width: 30%;
+}
+
+/* line 13, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+.passive_network_discovery_modal_view .configure_capture {
+  padding-top: 14%;
+  padding-left: 28%;
+}
+
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#task-chain-region .passive_network_discovery_modal_view .configure_capture {
+  padding-top: 10%;
+}
+
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input p.inline-error, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input p.inline-error {
+  color: #F00;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input.error label, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input.error label {
+  color: #F00;
+}
+
+/* line 28, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view form .configure_capture p.inline-error, #task-chain-region .passive_network_discovery_modal_view form .configure_capture p.inline-error {
+  margin-left: 0;
+}
+
+/* line 31, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+.passive_network_discovery_modal_view li#task_config_interface_input label {
+  width: 43%;
+  text-align: left;
+}
+
+/* line 35, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+.passive_network_discovery_modal_view li#task_config_interface_input p.inline-error {
+  margin-left: 43%;
+}
+
+/* line 38, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view.tabbed-modal .short li.slider.string.input label, #task-chain-region .passive_network_discovery_modal_view.tabbed-modal .short li.slider.string.input label {
+  text-align: left;
+}
+
+/* line 41, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view .simple-row, #task-chain-region .passive_network_discovery_modal_view .simple-row {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view .simple-row:last-child, #task-chain-region .passive_network_discovery_modal_view .simple-row:last-child {
+  border-bottom: 0;
+}
+/* line 47, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view .simple-row a.advanced, #task-chain-region .passive_network_discovery_modal_view .simple-row a.advanced {
+  margin-top: 0 !important;
+  float: right;
+}
+/* line 51, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view .simple-row div.advanced, #task-chain-region .passive_network_discovery_modal_view .simple-row div.advanced {
+  margin-top: 7px;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view .simple-row div.advanced > div, #task-chain-region .passive_network_discovery_modal_view .simple-row div.advanced > div {
+  display: inline-block;
+  margin-right: 30px;
+}
+/* line 56, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view .simple-row div.advanced > div > label.protocols, #modals .passive_network_discovery_modal_view .simple-row div.advanced > div > label.ports, #task-chain-region .passive_network_discovery_modal_view .simple-row div.advanced > div > label.protocols, #task-chain-region .passive_network_discovery_modal_view .simple-row div.advanced > div > label.ports {
+  font-weight: 600;
+  padding-right: 5px;
+}
+
+/* line 63, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+/* line 66, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input textarea, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input textarea {
+  min-height: 200px;
+}
+
+/* line 70, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input textarea, #modals .passive_network_discovery_modal_view div.generatedView pre, #task-chain-region .passive_network_discovery_modal_view div.generatedView pre, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input textarea {
+  width: 100%;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+/* line 75, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view div.generatedView pre, #task-chain-region .passive_network_discovery_modal_view div.generatedView pre {
+  min-height: 20px;
+}
+
+/* line 78, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view li#task_config_bpf_string_input label, #modals .passive_network_discovery_modal_view div.generatedView label, #task-chain-region .passive_network_discovery_modal_view div.generatedView label, #task-chain-region .passive_network_discovery_modal_view li#task_config_bpf_string_input label {
+  padding-top: 10px;
+  display: block;
+  text-align: left;
+  padding-bottom: 7px;
+  width: auto;
+  color: #000;
+  font-weight: 600;
+}
+
+/* line 87, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view div.generatedView pre, #task-chain-region .passive_network_discovery_modal_view div.generatedView pre {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background: #f3f3f3;
+  width: auto;
+  margin-bottom: 20px;
+}
+
+/* line 94, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view li#task_config_filter_type_input legend.label, #task-chain-region .passive_network_discovery_modal_view li#task_config_filter_type_input legend.label {
+  width: auto;
+}
+
+/* line 97, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view li#task_config_filter_type_input li.choice, #task-chain-region .passive_network_discovery_modal_view li#task_config_filter_type_input li.choice {
+  padding: 0 0 3px 0;
+}
+
+/* line 100, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view .simple-rows, #task-chain-region .passive_network_discovery_modal_view .simple-rows {
+  padding: 5px 10px;
+  background: #FFF;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+  margin: 0 10px 6px 10px;
+}
+
+/* line 106, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodules/passive_network.scss */
+#modals .passive_network_discovery_modal_view span.editLink, #task-chain-region .passive_network_discovery_modal_view span.editLink {
+  font-size: 11px;
+  margin-left: 6px;
+  font-weight: 300;
+}

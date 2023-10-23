@@ -1,0 +1,9 @@
+<div id="report-header-region"></div>
+<div id="report-body">
+  <div id="report-left-panel">
+    <section id="report-info-region"></section>
+    <section id="report-formats-region"></section>
+    <section id="report-actions-region"></section>
+  </div>
+  <div id="report-display-region"></div>
+</div>

@@ -1,0 +1,7 @@
+define ['<%= javascript_path('fuzzing/backbone/models/request_group_model') %>'] , (RequestGroupModel) ->
+  class RequestGroupCollection extends Backbone.Collection
+    model : RequestGroupModel
+    url: () ->
+      return '/workspaces/'+this.workspace_id+'/fuzzing/fuzzing/'+this.fuzzing_id+'/request_groups'
+
+  new RequestGroupCollection

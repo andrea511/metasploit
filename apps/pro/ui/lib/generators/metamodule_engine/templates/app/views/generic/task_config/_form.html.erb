@@ -1,0 +1,18 @@
+<style type='text/css'>
+  #modals form.metamodule .advanced li.small-inline.input.error p.inline-error {
+    margin-left: 0;
+    position: absolute;
+  }
+  #modals form.metamodule .advanced li.small-inline.input.error {
+    margin-bottom: 20px;
+  }
+</style>
+
+<%%= metamodule_wizard_form_for(@task_config, :engine => :<%=file_name.to_sym %>)  do |f| %>
+  <%%= form_tab "Port Ranges" do %>
+    <!-- Form Inputs go here -->
+  <%% end %>
+  <%%= render :partial => 'wizards/report_tab', :locals => {
+          :f => f,
+          :rtypes => [<%=file_name.camelize%>::TaskConfig::REPORT_TYPE] } %>
+<%% end %>

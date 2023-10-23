@@ -1,0 +1,18 @@
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/cve_cell.scss */
+.shared.cve-cell span {
+  overflow-x: auto;
+  display: inline-block;
+  text-decoration: underline;
+}
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/cve_cell.scss */
+.shared.cve-cell span.ref-name {
+  text-overflow: ellipsis;
+  width: 64px;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/shared/cve_cell.scss */
+.shared.cve-cell.modal-content {
+  margin: 20px 0px 0px 20px;
+}

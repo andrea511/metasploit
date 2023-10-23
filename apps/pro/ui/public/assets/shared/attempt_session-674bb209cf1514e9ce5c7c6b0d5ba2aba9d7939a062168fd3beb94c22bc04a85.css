@@ -1,0 +1,14 @@
+/* line 1, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/attempt_session.scss */
+.attempt-session-container {
+  width: 155px;
+}
+/* line 4, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/attempt_session.scss */
+.attempt-session-container a {
+  display: inline-block;
+}
+/* line 8, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/attempt_session.scss */
+.attempt-session-container .loading {
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}

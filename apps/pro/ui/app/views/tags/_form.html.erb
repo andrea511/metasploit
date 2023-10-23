@@ -1,0 +1,7 @@
+<%= semantic_form_for [@workspace, @tag] do |f| %>
+	<%= f.input :name %>
+	<%= f.input :desc, :label => "Description" %>
+	<%= f.input :report_summary %>
+	<%= f.input :report_detail %>
+	<%= f.input :critical %>
+<% end -%>

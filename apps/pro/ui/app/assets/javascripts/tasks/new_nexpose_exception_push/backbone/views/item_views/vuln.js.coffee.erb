@@ -1,0 +1,104 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/tasks/new_nexpose_exception_push/item_views/vuln") %>',
+  '<%= javascript_path("moment.min.js") %>'
+], ($, Template, Moment) ->
+
+  class VulnItemView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['tasks/new_nexpose_exception_push/item_views/vuln']
+
+    initialize: (opts) ->
+      $.extend(@, opts)
+
+    events:
+      'click input[value=all]' : '_enableMassAssignment'
+      'click input[value=single]' : '_disableMassAssignment'
+      'change select[name="group_reason"]' : '_assignDropdowns'
+      'input input[name="group_comment"]' : '_assignComments'
+      'change .datetime' : '_triggerDateSet'
+
+    onBeforeRender: ()=>
+      exception_reasons = @controller.EXCEPTION_REASONS
+
+      reasons = _.map(exception_reasons, (val,key)->
+        {value: key, text: val}
+      )
+
+      @model.set('reasons', reasons)
+      @model.set('date', "")
+      @model.set('itemIndex', @itemIndex)
+
+    onShow: () ->
+      $( ".datetime",@el).each(()->$(this).datepicker({minDate:1}))
+      @_setDefaultSelections()
+
+    _triggerDateSet: (e) ->
+      $(e.target).trigger('dateSet')
+
+    _assignDropdowns: (e) ->
+      $select = $(e.target)
+      val = $select.val()
+      html = $(':selected',$select).html()
+      $('table td select',@el).each(()->
+        $(this).val(val)
+        $span = $('span',$(this).closest('td'))
+        $span.html(html)
+        $span.data('value',$(':selected',this).val() )
+      )
+
+    _assignComments: (e) ->
+      val = $(e.target).val()
+      $('table td input.comment', @el).each(()->
+        $(this).val(val)
+        $span = $('span',$(this).closest('td'))
+        $span.html(val)
+        $span.data('value', val)
+      )
+
+    _enableMassAssignment: (e) ->
+      $('table td input, table td select',@el).each(()->
+        #$(this).attr('disabled', true)
+        $('.mass-assign',@el).removeClass("invisible")
+        #Reason Input
+        $('table td select',@el).each(()->
+          $(this).hide()
+          $span = $('span',$(this).closest('td'))
+          $span.html($(':selected',this).html())
+          $span.data('value',$(':selected',this).val())
+          $span.show()
+        )
+        #Comment Input
+        $('table td input.comment', @el).each(()->
+          $(this).addClass('hide-input')
+          $span = $('span',$(this).closest('td'))
+          $span.html($(this).val())
+          $span.data('value', $(this).val())
+          $span.show()
+        )
+      )
+
+    _disableMassAssignment: (e) ->
+     $('table td input, table td select',@el).each(()->
+      $('.mass-assign', @el).addClass("invisible")
+      #Reason Input
+      $('table td select',@el).each(()->
+             $(this).show()
+             $span = $('span',$(this).closest('td'))
+             $(this).val($span.data('value'))
+             $span.hide()
+      )
+      #Comment Input
+      $('table td input.comment', @el).each(()->
+        $span = $('span',$(this).closest('td'))
+        $(this).val($span.data('value'))
+        $(this).removeClass('hide-input')
+        $span.hide()
+      )
+     )
+
+    _setDefaultSelections: () ->
+      $('.hidden-selection', @el).each(()->
+        option = $(this).data('reason')
+        $options = $(this).closest('td')
+        $("option[value='#{option}']", $options).attr('selected', true)
+      )

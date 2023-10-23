@@ -1,0 +1,169 @@
+<form class='formtastic form' id='payload_generator'>
+  <li id='payload_class'>
+    <label>
+      <input type='radio' name='payload[payload_class]' value='classic_payload'>
+      Classic Payload
+    </label>
+    <label>
+      <input type='radio' name='payload[payload_class]' value='dynamic_stager' checked>
+      Dynamic Payload (AV evasion)
+    </label>
+  </li>
+
+  <input type='hidden' name='_method' value='put' />
+  <input type='hidden' name='authenticity_token' value='' />
+  <input name='payload[options][payload]' type='hidden' />
+
+  <div class='dynamic_payload_form'>
+    <div class='page payload_options upsell'>
+      <ul>
+        <li style='display:none'>
+          <div>
+            <input name='payload[payload_class]' type='hidden' />
+            <input name='payload[options][platform]' type='hidden' value='Windows' />
+            <input name='payload[options][useStager]' type='hidden' value='true' />
+            <input name='payload[options][format]' type='hidden' value='exe' />
+          </div>
+        </li>
+        <li>
+            <label for='payload[options][arch]'>Architecture</label>
+            <select name='payload[options][arch]' id='payload[options][arch]'></select>
+        </li>
+        <li>
+          <label for='payload[options][stager]'>Stager</label>
+          <select name='payload[options][stager]' id='payload[options][stager]'></select>
+        </li>
+        <li>
+          <label for='payload[options][stage]'>Stage</label>
+          <select name='payload[options][stage]' id='payload[options][stage]'></select>
+        </li>
+
+        <div class="payload-options advanced" style='display:block'>
+          <div class='ajax'></div>
+          <div style='display:none'>
+            <div class='ajax-advanced-options'>
+              <div class='render' style='display:none;'></div>
+              <div style='clear:both'></div>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+
+  <div class='page payload_options'>
+    <ul>
+      <li>
+        <label for='payload[options][platform]'>Platform</label>
+        <select name='payload[options][platform]' id='payload[options][platform]'></select>
+      </li>
+      <li>
+        <label for='payload[options][arch]'>Architecture</label>
+        <select name='payload[options][arch]' id='payload[options][arch]'></select>
+      </li>
+      <li>
+        <label for='payload[options][useStager]'>
+          <input name='payload[options][useStager]' id='payload[options][useStager]' type='checkbox' />
+          Stager
+        </label>
+        <select name='payload[options][stager]'></select>
+      </li>
+      <li>
+        <label for='payload[options][stage]'>Stage</label>
+        <select name='payload[options][stage]' id='payload[options][stage]'></select>
+      </li>
+      <li>
+        <label for='payload[options][single]'>Payload</label>
+        <select name='payload[options][single]' id='payload[options][single]'></select>
+      </li>
+
+      <div class="payload-options advanced" style='display:block'>
+      <div class='ajax'></div>
+        <span class='span-front'>Added Shellcode</span>
+        <li class='file input front'>
+          <label for='payload[options][add_code]'>File</label>
+          <input name='payload[options][add_code]' id='payload[options][add_code]' type='file' />
+        </li>
+        <li>
+          <label for='payload[options][nops]'>Size of NOP sled</label>
+          <input name='payload[options][nops]' id='payload[options][nops]' type='text' placeholder='(bytes)' />
+        </li>
+        <div class='ajax-advanced-options'>
+          <div class='' style='text-align:right;padding-right:20px;padding-bottom:8px;'>
+            <a href='#' class='advanced' data-toggle-selector='.ajax-advanced-options .render'>Advanced</a>
+          </div>
+          <div class='render' style='display:none'></div>
+        </div>
+      </div>
+    </ul>
+
+  </div>
+
+  <div class='page encoding'>
+    <h3 class='enabled'>Encoding is <span class='enabled'>enabled</span></h3>
+    <ul>
+      <li>
+        <label for='payload[options][encoder]'>Encoder</label>
+        <select name='payload[options][encoder]' id='payload[options][encoder]'></select>
+      </li>
+    </ul>
+
+    <ul>
+      <li class='slider'>
+        <label for='payload[options][iterations]'>Number of iterations</label>
+        <input type='text' name='payload[options][iterations]' id='payload[options][iterations]' data-min='1' data-max='10' value='1'></input>
+      </li>
+
+      <li>
+        <label for='payload[options][space]'>Maximum size of payload</label>
+        <input type='text' name='payload[options][space]' id='payload[options][space]' placeholder='(bytes)'></input>
+      </li>
+
+      <li>
+        <label for='payload[options][badchars]'>Bad characters</label>
+        <textarea name='payload[options][badchars]' id='payload[options][badchars]' id='badchars'></textarea>
+      </li>
+    </ul>
+
+    <div class='encoder-options advanced' style='display:block'>
+      <div class='ajax'></div>
+    </div>
+  </div>
+
+  <div class='page output_options'>
+    <ul>
+      <li class='output'>
+        <label style='width:20%;'>Output type</label>
+        <label style='font-weight: normal'>
+          <input type='radio' name='payload[options][outputType]' value='exe' />
+          Executable file
+        </label>
+        <label style='font-weight: normal'>
+          <input type='radio' name='payload[options][outputType]' value='raw' />
+          Raw bytes
+        </label>
+        <label style='font-weight: normal'>
+          <input type='radio' name='payload[options][outputType]' value='buffer' />
+          Shellcode buffer
+        </label>
+      </li>
+      <li class='not-raw'>
+        <label for='payload[options][format]'>Format</label>
+        <select name='payload[options][format]' id='payload[options][format]'></select>
+      </li>
+      <span class='exe span-front'>Template file</span>
+      <li class='exe file input front'>
+        <label>File</label>
+        <input type='file' name='payload[options][template]' id='payload[options][template]' />
+      </li>
+      <li class='exe keep'>
+        <input type='hidden' name='payload[options][keep]' value='false' />
+        <input type='checkbox' name='payload[options][keep]' id='payload[options][keep]' value='true' />
+        <label for='payload[options][keep]'>
+          Preserve original functionality of the executable
+        </label>
+      </li>
+    </ul>
+  </div>
+
+</form>

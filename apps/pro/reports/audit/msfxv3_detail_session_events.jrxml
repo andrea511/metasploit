@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3_detail_session_events" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4ea2dfbe-5076-4c87-9e72-15bfe8f45271">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Serif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Serif" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Serif" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Serif" fontSize="12"/>
+	<parameter name="session_id" class="java.lang.Integer"/>
+	<parameter name="host_address" class="java.lang.String"/>
+	<parameter name="exploit" class="java.lang.String"/>
+	<parameter name="opened" class="java.sql.Timestamp"/>
+	<parameter name="closed" class="java.sql.Timestamp"/>
+	<parameter name="session_event_count" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+  session_events.etype as etype,
+  encode(session_events.command, 'escape') as command,
+  encode(session_events.output, 'escape') as output,
+  session_events.local_path as local_path,
+  session_events.remote_path as remote_path,
+  length(session_events.command) as csize,
+  length(session_events.output) as osize
+FROM
+  session_events
+WHERE session_id = $P{session_id}
+ORDER BY session_events.created_at ASC
+;]]>
+	</queryString>
+	<field name="etype" class="java.lang.String"/>
+	<field name="command" class="java.lang.String"/>
+	<field name="output" class="java.lang.String"/>
+	<field name="csize" class="java.lang.Integer"/>
+	<field name="osize" class="java.lang.Integer"/>
+	<field name="local_path" class="java.lang.String"/>
+	<field name="remote_path" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="48">
+			<line>
+				<reportElement uuid="73469f49-7b43-4e9f-a6ea-d7ecbdc547f5" positionType="FixRelativeToBottom" x="20" y="45" width="522" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="a35eed88-d688-42cc-a061-7fb50d0b84d6" style="Column header" x="0" y="21" width="555" height="20"/>
+				<textElement markup="none">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Opened: " +
+$P{opened} +
+" | Closed: " +
+$P{closed}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c108cd00-be0e-4f2f-8b37-1c90fabe737e" style="Column header" x="0" y="1" width="555" height="20"/>
+				<textElement markup="none">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Session #" + $P{session_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{command} || $F{output} || $F{local_path}]]></printWhenExpression>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="fccb12a8-c2ad-49f1-b5bc-81c34b3269ff" style="Detail" mode="Transparent" x="142" y="0" width="400" height="16" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{output} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{output} == null ? "" : $F{output}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="d90fc693-df90-4c82-8a9b-78b1222f2ae0" style="Detail" mode="Transparent" x="20" y="0" width="122" height="16" backcolor="#E6E6E6">
+					<printWhenExpression><![CDATA[$F{command} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{command} == null ? "" : " > " + $F{command}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="4ad148e6-7f32-42d0-b918-45814e7d6749" style="Detail" mode="Transparent" x="142" y="0" width="410" height="16" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{etype} == "module_run" || $F{etype} == "script_run" || $F{etype} == "download"]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{local_path}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="e573de03-4d56-4b5a-bde7-e0e912ad20ef" style="Detail" mode="Transparent" x="20" y="0" width="122" height="16" backcolor="#E6E6E6">
+					<printWhenExpression><![CDATA[$F{etype} == "module_run" || $F{etype} == "script_run" || $F{etype} == "download" || $F{etype} == "upload"]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["> " + $F{etype}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="e455a14b-1dee-4c24-941e-8436ffd321d2" style="Detail" mode="Transparent" x="142" y="0" width="410" height="16" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{etype} == "upload" || $F{etype} == "filedelete"]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remote_path}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

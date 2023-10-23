@@ -1,0 +1,59 @@
+define [
+  'apps/hosts/index/index_controller'
+  'apps/hosts/delete/delete_controller'
+  'lib/utilities/navigation'
+  'lib/components/flash/flash_controller'
+], ->
+
+  @Pro.module 'HostsApp', (HostsApp, App) ->
+
+    class HostsApp.Router extends Marionette.AppRouter
+
+      appRoutes:
+        "":                    "index"
+        "hosts":               "index"
+        "hosts/:host_id":      "show"
+        "hosts/:host_id/:tab": "show"
+
+    API =
+      index: ->
+        loading = true
+        _.delay((=> if loading then App.execute 'loadingOverlay:show'), 50)
+        initProRequire ['apps/hosts/index/index_controller'], ->
+          loading = false
+          App.execute 'loadingOverlay:hide'
+          indexController = new HostsApp.Index.Controller
+
+      show: (host_id, tab) ->
+        loading = true
+        _.delay((=> if loading then App.execute 'loadingOverlay:show'), 50)
+        initProRequire [
+          '<%= javascript_path("hosts/backbone/controllers/host_view_controller") %>'
+        ], (HostViewController) ->
+          loading = false
+          App.execute 'loadingOverlay:hide'
+          hostController = new HostViewController(id: host_id)
+          hostController.Tab(tab ? 'services', App.mainRegion)
+
+      # @see {Delete.Controller#initialize} options
+      delete: (options) ->
+        new HostsApp.Delete.Controller options
+
+    App.addInitializer =>
+      new HostsApp.Router(controller: API)
+
+    # Sets the mainRegion, which is used by default when #show if called
+    # without explicitly setting a region.
+    App.addRegions
+      mainRegion: "#hosts-main-region"
+
+    # When a host tag is added, display a flash message
+    #
+    App.vent.on "host:tag:added",  ->
+      App.execute 'flash:display',
+        title:   'Host(s) Tagged '
+        message: 'The host(s) were successfully tagged.'
+
+    # @see {Delete.Controller#initialize} options
+    App.reqres.setHandler 'hosts:delete', (options = {}) ->
+      API.delete options

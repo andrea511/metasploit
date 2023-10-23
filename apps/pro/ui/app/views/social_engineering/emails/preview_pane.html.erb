@@ -1,0 +1,24 @@
+<div class='preview-pane email'>
+  <div class='row action-row'>
+    <div class='cell left-action'><%= image_tag('campaigns/icons_large/mail.png') %> <%= @email.name %></div>
+    <div class='cell right-action'>Subject: <%= @email.subject %></div>
+  </div>
+  <div class='rows'>
+    <div class='cell' style='width:30%; text-align:left'>
+      <ul class='round'>
+        <li><label>Name:</label> <%= @email.name %></li>
+        <li><label>Subject:</label> <%= @email.subject %></li>
+        <li><label>From Address:</label> <%= @email.from_address %></li>
+        <li><label>From Name:</label> <%= @email.from_name %></li>
+        <li><label>Target List:</label> <%= @email.target_list.name %></li>
+      </ul>
+    </div>
+    <div class='cell' style='width:70%; position: relative'>
+      <iframe src="<%= workspace_social_engineering_campaign_email_preview_path(@workspace, @email.campaign, @email) %>" sandbox='allow-same-origin'></iframe>
+      <div style='position:absolute;top:0;left:0;right:0;bottom:0;'>
+        <!-- iframe interaction blocker -->
+      </div>
+    </div>
+  </div>
+  <div style='clear:both;'></div>
+</div>

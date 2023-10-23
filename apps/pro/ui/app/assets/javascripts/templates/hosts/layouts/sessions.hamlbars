@@ -1,0 +1,5 @@
+.sessions
+  %h4 Active Sessions
+  %div#active_sessions_table
+  %h4{:style => 'margin-top: 35px'} Completed Sessions
+  %div#completed_sessions_table

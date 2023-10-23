@@ -1,0 +1,11 @@
+<% options = @report.rtype.options_labeled %>
+<% unless options.empty? %>
+  <%= f.inputs 'Options' do -%>
+    <%= f.input :options,
+                :as            => :check_boxes,
+                :required      => false,
+                :collection    => options.collect { |c| [c[0], c[1].to_s] }
+    %>
+
+  <% end %>
+<% end %>

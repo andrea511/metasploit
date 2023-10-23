@@ -1,0 +1,11 @@
+<% title "Applying Software Update" %>
+
+<div id="update_status">
+	<%= render :partial => 'status' %>
+</div>
+<div id="error" style="display:none">
+</div>
+
+<% content_for :bottom_javascript do %>
+  <%= javascript_include_tag 'updates/poll' %>
+<% end %>

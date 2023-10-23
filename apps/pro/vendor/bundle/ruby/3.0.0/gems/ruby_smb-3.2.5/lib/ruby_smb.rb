@@ -1,0 +1,35 @@
+require 'bindata'
+require 'net/ntlm'
+require 'net/ntlm/client'
+require 'openssl'
+require 'openssl/ccm'
+require 'openssl/cmac'
+require 'windows_error'
+require 'windows_error/nt_status'
+require 'ruby_smb/ntlm/custom/string_encoder'
+# A packet parsing and manipulation library for the SMB1 and SMB2 protocols
+#
+# [[MS-SMB] Server Message Block (SMB) Protocol Version 1](https://msdn.microsoft.com/en-us/library/cc246482.aspx)
+# [[MS-SMB2] Server Message Block (SMB) Protocol Versions 2 and 3](https://msdn.microsoft.com/en-us/library/cc246482.aspx)
+module RubySMB
+  require 'ruby_smb/utils'
+  require 'ruby_smb/error'
+  require 'ruby_smb/create_actions'
+  require 'ruby_smb/dispositions'
+  require 'ruby_smb/impersonation_levels'
+  require 'ruby_smb/gss'
+  require 'ruby_smb/field'
+  require 'ruby_smb/nbss'
+  require 'ruby_smb/fscc'
+  require 'ruby_smb/generic_packet'
+  require 'ruby_smb/dispatcher'
+  require 'ruby_smb/version'
+  require 'ruby_smb/smb2'
+  require 'ruby_smb/smb1'
+  require 'ruby_smb/client'
+  require 'ruby_smb/crypto'
+  require 'ruby_smb/compression'
+  require 'ruby_smb/server'
+  require 'ruby_smb/dialect'
+  require 'ruby_smb/smb_error'
+end

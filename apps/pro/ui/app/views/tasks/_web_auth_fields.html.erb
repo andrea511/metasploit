@@ -1,0 +1,26 @@
+<%= f.input :http_username, :label => "HTTP username" %>
+<%= f.input :http_password, :label => "HTTP password", :as => :password, :input_html => {:autocomplete => :off} %>
+<%= f.input :http_domain, :label => "HTTP domain" %>
+<%= f.input :cookie, :label => "HTTP cookie data" %>
+<%= f.input :user_agent, :label => "HTTP user agent" %>
+
+<%= f.help_link :http_username do -%>
+	<h3>HTTP Username</h3>
+	<p>Determines what username is sent via basic authentication in each request.</p>
+<% end -%>
+<%= f.help_link :http_password do -%>
+	<h3>HTTP Password</h3>
+	<p>Determines what password is sent via basic authentication in each request.</p>
+<% end -%>
+<%= f.help_link :cookie do-%>
+	<h3>HTTP Cookie Data</h3>
+	<p>Seeds the initial cookie value of each request.</p>
+<% end -%>
+<%= f.help_link :user_agent do -%>
+	<h3>HTTP User Agent</h3>
+	<p>Sets the user agent header on the outgoing request. Define this option to specify a targeted version of a website or browser.</p>
+	<% if false %>
+		The <b>Additional HTTP Headers</b> setting allows arbitrary HTTP headers to be sent in each request.
+	<% end %>
+<% end -%>
+

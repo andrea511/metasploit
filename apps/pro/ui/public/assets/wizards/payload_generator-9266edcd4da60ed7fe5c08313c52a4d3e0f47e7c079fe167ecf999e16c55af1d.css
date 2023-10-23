@@ -1,0 +1,125 @@
+/* line 4, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+.tabbed-modal.payload-generator h1 {
+  display: inline-block;
+  height: 15px;
+}
+/* line 8, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+.tabbed-modal.payload-generator li#payload_class {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 12px;
+}
+/* line 12, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+.tabbed-modal.payload-generator li#payload_class label {
+  margin-left: 13px;
+}
+
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator span.span-front {
+  vertical-align: top;
+  line-height: 30px;
+  font-weight: 600;
+  text-align: right;
+  display: inline-block;
+  width: 20%;
+}
+/* line 27, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator li.input.file.front {
+  width: 70%;
+  margin: 0 0 10px 20px;
+  display: inline-block;
+}
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .advanced li p.desc {
+  text-align: right;
+  position: absolute;
+  right: 50px;
+}
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator li.keep {
+  width: auto;
+  padding-left: 25px;
+}
+/* line 40, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator li.keep input {
+  width: auto;
+  display: inline-block;
+  margin-left: 20%;
+}
+/* line 45, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator li.keep label {
+  font-weight: normal;
+  float: none;
+  width: auto;
+  display: inline-block;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator li.output input, form#payload_generator li.output label {
+  width: auto;
+}
+/* line 57, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator label.no-req {
+  font-weight: normal;
+}
+/* line 61, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator li.slider label {
+  width: 20% !important;
+  text-align: right !important;
+}
+/* line 66, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator h3 {
+  margin-top: 0 !important;
+}
+/* line 69, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator textarea#badchars {
+  font-size: 12px;
+}
+/* line 70, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator p.inline-error {
+  padding-left: 25px;
+  margin: 0 !important;
+  margin-left: 20% !important;
+}
+/* line 76, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .ajax-advanced-options * {
+  font-size: 11px;
+}
+/* line 77, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .ajax-advanced-options label {
+  width: 35%;
+  padding-top: 1px;
+}
+/* line 81, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .ajax-advanced-options input, form#payload_generator .ajax-advanced-options textarea, form#payload_generator .ajax-advanced-options select {
+  width: 55%;
+}
+/* line 86, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .upsell {
+  padding-top: 0;
+}
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .upsell .body-disabled-overlay {
+  position: static;
+  margin-right: 0;
+}
+/* line 91, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .upsell .body-disabled-overlay .container {
+  margin-top: 0;
+  width: auto;
+  padding: 5px 10px;
+}
+/* line 96, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .upsell .body-disabled-overlay h2 {
+  line-height: 1.35;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+/* line 102, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .upsell p {
+  margin: 15px 0;
+}
+/* line 105, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/wizards/payload_generator.scss */
+form#payload_generator .upsell .upgrade {
+  margin-top: 30px;
+  padding-left: 20px;
+}

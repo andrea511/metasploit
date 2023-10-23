@@ -1,0 +1,89 @@
+<form>
+  <div>
+    <div class="row">
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="mutation_options[1337_speak]" />
+          1337 speak
+        </label>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="mutation_options[append_special]" />
+          Append special chars (!#*)
+        </label>
+       </div>
+    </div>
+
+
+    <div class="row">
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="mutation_options[prepend_special]" />
+          Prepend special chars (!#*)
+        </label>
+       </div>
+    </div>
+
+    <div class="row">
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="mutation_options[append_single_digit]" />
+          Append single digit
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns large-12">
+        <div class="columns large-12">
+          <label>
+            <input type="checkbox" name="mutation_options[prepend_single_digit]" />
+            Prepend single digit
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="mutation_options[prepend_multiple_digits]" />
+          Prepend digits
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="mutation_options[append_multiple_digits]" />
+          Append digits
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="mutation_options[prepend_current_year]" />
+          Prepend current year
+        </label>
+       </div>
+    </div>
+
+    <div class="row">
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="mutation_options[append_current_year]" />
+          Append current year
+        </label>
+      </div>
+    </div>
+
+  </div>
+</form>

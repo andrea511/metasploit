@@ -1,0 +1,11 @@
+// render :update do |page|
+// 	page.replace_html :popup_title, title
+// 	page.replace_html :popup_content, :partial => content_partial
+// 	page.show :popup
+// end
+
+(function($) {
+  $('#popup_title').html('<%= escape_javascript(title) %>');
+  $('#popup_content').html('<%= escape_javascript(render(:partial => content_partial)) %>');
+  $('#popup').show();
+})(jQuery);

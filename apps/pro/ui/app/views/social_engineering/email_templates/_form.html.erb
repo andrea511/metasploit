@@ -1,0 +1,16 @@
+<div class='max-width'>
+  <div id="email-template-form">
+    <%= f.inputs :style => "margin-top: 0;padding-top: 0 !important;" do %>
+      <%= render "shared/error_messages", :target => @email_template %>
+        <%= f.input :name, :required => true %>
+      <div class='content-box' style='position: relative; padding-top: 50px'>
+        <div class='custom-attribute'>
+          <%= f.input :insert,  :collection => @email_template.custom_attributes, :input_html => { 'class' => 'dropdown-menu', :placeholder => 'Insert custom attribute:' }, :label => false %>
+        </div>
+        <%= f.input :content, :label => false, :required => true, :as => 'text', :input_html => { 'class' => 'to-code-mirror' } %>
+        <div class='clearfix'></div>
+      </div>
+    <% end -%>
+      
+  </div>
+</div>

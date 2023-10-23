@@ -1,0 +1,56 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, link_to("New Automated Attack Replay", "#") %>
+
+
+<div id="popup_errors">
+<% unless @task.valid? %>
+	<div class="errors">
+		<p>
+			<%=h @task.error %>
+		</p>
+	</div>
+<% end %>
+</div>
+
+<%= required_label %>
+
+<div class="one_col_no_sidebar">
+	<%= semantic_form_for @task, :url => start_replay_path do |f| %>
+
+		<%= f.hidden_field :workspace_id %>
+
+		<%= f.inputs "Automated Attack Replay Settings" do %>
+
+			<%= f.input :payload_type, :label => 'Payload Type', :as => :select, :collection => ExploitTask::PAYLOAD_TYPES %>
+			<%= f.input :connection, :label => "Connection Type", :as => :select, :collection => ExploitTask::CONNECTIONS %>
+			<%= f.input :payload_ports, :label => 'Listener Ports', :required => true %>
+			<%= f.input :payload_lhost, :label => "Listener Host" %>
+		<% end -%>
+
+    <% if @no_launch.blank? %>
+      <%= f.actions do -%>
+        <span class="btn">
+          <%= f.submit "Replay Attacks", :class => "exploit", :id => 'popup_submit' %>
+        </span>
+      <% end -%>
+		<% end -%>
+
+ 		<%= f.help_link :connection do -%>
+			<h3>Connection Type</h3>
+			<p>Specify the type of payload connection. Automatic is the default, and chooses 'bind' payloads when NAT is detected and all available ports on the target system are not filtered. Otherwise, reverse payloads are chosen.</p>
+		<% end -%>
+		<%= f.help_link :payload_type do -%>
+ 			<h3>Payload Type</h3>
+			<p>Specify the type of payload used. Meterpreter is the default and the best choice in most scenarios but in some cases Command shell is more desirable.</p>
+		<% end -%>
+ 		<%= f.help_link :payload_ports do -%>
+			<h3>Listener Ports</h3>
+			<p>Specify the port or range of ports that should be used for Reverse connect payloads. Some exploits require at least two ports to be available.</p>
+		<% end -%>
+		<%= f.help_link :payload_lhost do -%>
+ 			<b>Listener Host</b> - Specify the IP address for the payload to connect back. This is only useful when the address needs to be overridden (Amazon Elastic IPs, NAT, etc)
+		<% end -%>
+	<% end %>
+</div>
+
+<%= add_disable_overlay([:pro, :express]) if not @licensed %>

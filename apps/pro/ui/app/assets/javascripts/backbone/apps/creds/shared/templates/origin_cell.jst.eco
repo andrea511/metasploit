@@ -1,0 +1,1 @@
+<a href="javascript:void(0)" class="origin-disclosure"><%= @origin %></a>

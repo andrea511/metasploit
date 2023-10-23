@@ -1,0 +1,24 @@
+<% title "Activate Metasploit" %>
+
+<h1><%= product_key_title %></h1>
+
+<%= rapid7_purchase_form(h @license.product_key) %>
+
+<h2>1. <%= product_key_header %></h2>
+
+<p><%= registration_message %> If you already have a community, trial or full license product key, you can skip this step.</p>
+<%= render "licenses/request_product_key" %>
+
+<h2>2. Enter Product Key You've Received by Email</h2>
+
+<p>Paste in the product key that was sent to the email address you registered with and click the ACTIVATE LICENSE button.</p>
+<%= render "licenses/activate_product_key" %>
+
+<% if @license.revertable? %>
+	<h3>Revert to Previous License</h3>
+	<p>
+	A previous license has been found. If you would like to switch to the old license, simply click the Revert License button below.</p>
+  <%= render "licenses/revert_product_key" %>
+<% end %>
+
+

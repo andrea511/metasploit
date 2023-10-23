@@ -1,0 +1,121 @@
+<div class="foundation">
+
+    <div class="row">
+        <div class="large-4 columns">
+            <div class="row">
+                <h1>Options:</h1>
+            </div>
+        </div>
+        <div class="large-3 columns"><h1>Review selections:</h1></div>
+        <div class="large-4 columns"></div>
+    </div>
+
+
+    <div class="row">
+        <div class="large-4 columns options review-options">
+            <form>
+              <div class="row">
+
+                <div class='header'>
+                    reuse options
+                </div>
+
+                <div class='border'>
+                    <div class='padder'>
+                      <div class="columns">
+                          <div class="container columns">
+                              <h3>Timeout Options</h3>
+
+                              <div class="row">
+                                  <div class="timeout-label large-offset-1 large-3 columns">Service Timeout</div>
+                                  <div class="large-8 columns">
+                                    <div class="timeout-field">
+                                       <input id="options-timeout" name="service_seconds" type="text">
+                                       <label for="options-timeout">Seconds</label>
+                                    </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                   <div class="timeout-label large-offset-1 large-3 columns">Overall Timeout</div>
+                                   <div class="large-8 columns">
+                                     <div class="timeout-field">
+                                          <input id="options-hour" type="text" name="overall_hours">
+                                          <label for="options-hour">Hours</label>
+                                     </div>
+                                      <div class="timeout-field">
+                                          <input type="text" id="options-minutes" name="overall_minutes">
+                                          <label for="options-minutes">Minutes</label>
+                                      </div>
+
+                                      <div class="timeout-field">
+                                          <input type="text" id="options-seconds" name="overall_seconds">
+                                          <label for="options-seconds">Seconds</label>
+                                      </div>
+                                   </div>
+                              </div>
+
+                          </div>
+                      </div>
+
+                      <div class="columns">
+                          <div class="container columns">
+                              <h3>Limitations</h3>
+
+                              <div class="row">
+                                  <div class="large-11 large-offset-1 columns">
+                                      <input id='limitation' type="checkbox" name="limit"/>
+                                      <label for="limitation">Validate only one credential per service</label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+
+                    </div>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <div class="large-3 columns">
+            <div class="large-12 target-region">
+
+            </div>
+
+            <div class="large-12 back-edit">
+                <div class="large-12 columns">
+                    <a href="javascript:void(0)" class="back-targets">Go back and edit</a>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="large-3 columns">
+            <div class="large-12 creds-region">
+
+            </div>
+
+            <div class="large-12 back-edit">
+                <div class="large-12 columns">
+                    <a href="javascript:void(0)" class="back-creds">Go back and edit</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="large-2 columns">
+            <div class="row">
+                <div class="launch-container large-12 columns">
+                    <a href="javascript:void(0)" class="btn primary launch">LAUNCH</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+  </div>

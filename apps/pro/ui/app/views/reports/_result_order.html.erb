@@ -1,0 +1,15 @@
+<% if @report.report_type == :webapp_assessment %>
+    <%= f.inputs "Result ordering" do -%>
+        <%= f.input :order_vulns_by,
+                    :label => "Order vulns by",
+                    :include_blank => false,
+                    :required => true,
+                    :as => "select",
+                    :collection => Metasploit::Pro::Report::Type::WebappAssessment::ORDERING_OPTIONS
+        %>
+        <%= f.help_link :order_vulns_by do %>
+            <h3>Result ordering</h3>
+            <p>The selected attribute will be used to order the results in the report.</p>
+        <% end %>
+    <% end %>
+<% end %>

@@ -1,0 +1,9 @@
+2023-10-17 08:45:51.047 +07 [7660] LOG:  database system was shut down at 2023-10-17 08:45:05 +07
+2023-10-17 08:45:51.164 +07 [6760] LOG:  database system is ready to accept connections
+2023-10-17 08:48:50.216 +07 [8232] FATAL:  password authentication failed for user "SYSTEM"
+2023-10-17 08:48:50.216 +07 [8232] DETAIL:  Role "SYSTEM" does not exist.
+	Connection matched pg_hba.conf line 90: "host    all             all             ::1/128                 md5"
+2023-10-17 10:43:06.375 +07 [20476] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 10:43:06.376 +07 [3404] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	

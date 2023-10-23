@@ -1,0 +1,32 @@
+<div class="nexpose_console_form">
+  <form action="/" method="POST" class="form formtastic nexpose_console">
+    <li class="console_name">
+      <label for="nexpose_console[name]">Name</label>
+      <input name="nexpose_console[name]" id="nexpose_console[name]" type="text">
+    </li>
+    <li class="console_address">
+      <label for="nexpose_console[address]">Address</label>
+      <input name="nexpose_console[address]" id="nexpose_console[address]" type="text">
+    </li>
+    <li class="console_port">
+      <label for="nexpose_console[port]">Port</label>
+      <input name="nexpose_console[port]" id="nexpose_console[port]" type="text">
+    </li>
+    <li class="console_username">
+      <label for="nexpose_console[username]">Username</label>
+      <input name="nexpose_console[username]" id="nexpose_console[username]" type="text">
+    </li>
+    <li class="console_password">
+      <label for="nexpose_console[password]">Password</label>
+      <input name="nexpose_console[password]" id="nexpose_console[password]" type="password">
+    </li>
+  </form>
+  <div class="connectivity">
+    <div class="connection_success">
+      Connected successfully.
+    </div>
+    <div class="connection_error">
+      Connection failed.
+    </div>
+  </div>
+</div>

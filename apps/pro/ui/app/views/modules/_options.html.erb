@@ -1,0 +1,98 @@
+<% options.each do |opt| %>
+  <tr>
+
+    <%
+        case opt.name
+    when 'SESSION'
+  %>
+
+<td colspan=3>
+  <% @compatible_sessions = @module.compatible_sessions %>
+  <% if @compatible_sessions.length == 0 %>
+    <h3>Warning: No active sessions are compatible with this module</h3>
+    <br/>
+  <% else %>
+    <table width="100%" class="list mar-tb10">
+      <thead>
+        <tr>
+          <th class="checkbox"><%= check_box_tag "module_run_task[all_sessions]", true %></th>
+          <th>Session Information</th>
+          <th>Session Type</th>
+        </tr>
+      </thead>
+      <tbody id="session_list">
+        <% @compatible_sessions.each do |sid| %>
+          <%
+          sess = ::Mdm::Session.alive.find_by_local_id(sid) # This should work every time
+          next unless sess and sess.host.workspace == @workspace
+          is_selected = (@task.sessions.length == 0 or @task.sessions.include?(sid.to_s))
+        %>
+      <tr class="<%=h row_cycle %>">
+        <td>
+          <%= check_box_tag "module_run_task[sessions][]", sess.local_id.to_s, is_selected, :id => "session-#{sess.local_id}" %>
+        </td>
+        <td>
+          <%= label_tag "session-#{sess.local_id}", h(sess) %>
+        </td>
+        <td>
+          <%=h sess.stype %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+    <% end %>
+  </td>
+  <%
+      when 'MACRO_NAME'
+    %>
+  <td>
+    <%= label_tag "module_run_task_options_#{h opt.name}", h(opt.name), :class => required_class(opt) %>
+  </td>
+  <td>
+    <% option_value = @task.options[opt.name] %>
+    <%= select_tag "module_run_task[options][#{h opt.name}]", options_for_select([""] + ::Mdm::Macro.all.map{|m| m.name }, option_value) %>
+  </td>
+  <td>
+    <%=h opt.desc %> (<%=h opt.type %>)
+  </td>
+
+<% else %>
+
+  <td>
+    <%= label_tag "module_run_task_options_#{h opt.name}", h(opt.name), :class => required_class(opt) %>
+  </td>
+  <td>
+    <% option_value = @task.options[opt.name] %>
+    <% if opt.type == 'enum' %>
+      <%= select_tag "module_run_task[options][#{h opt.name}]", options_for_select(opt.enums, option_value) %>
+    <% elsif opt.type == 'bool' %>
+      <%= check_box_tag "module_run_task[options][#{h opt.name}]", "true", option_value == true %>
+    <% else %>
+      <%
+          case opt.name
+      when 'LHOST'
+        if @module.post?
+          option_value = Rex::Socket.source_address("50.50.50.50")
+        end
+      end
+    %>
+  <%= text_field_tag "module_run_task[options][#{h opt.name}]", option_value %>
+<% end %>
+  </td>
+  <td>
+    <%=h opt.desc %> (<%=h opt.type %>)
+  </td>
+
+<% end %>
+</tr>
+<% end %>
+
+<%= nonced_javascript_tag do %>
+  (function() {
+  jQuery(function($) {
+  $("#module_run_task_all_sessions").checkAll($("#session_list"));
+  });
+  }).call(this);
+<% end %>
+

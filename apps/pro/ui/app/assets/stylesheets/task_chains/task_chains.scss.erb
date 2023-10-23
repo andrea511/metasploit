@@ -1,0 +1,726 @@
+
+@import 'components/header_bar';
+@import 'components/circle_icons';
+
+// Ensure white gutter remains in FF.
+body#edit.task_chains {
+  #main {
+    background-color: #ffffff;
+  }
+
+  #task-chain-region > div > div.foundation > div.row {
+    float: none;
+  }
+}
+
+/*
+  CSS FOR MODAL
+*/
+
+
+.stashed-form-region{
+  display:none;
+  input{
+    display:none;
+  }
+}
+
+
+.spacer{
+  min-height: 15px;
+}
+
+#modals .modal div.header {
+  padding: 10px 10px;
+}
+
+
+.ui-front{
+  z-index: 5;
+}
+
+.modal{
+  .header{
+    .close{
+      display:none;
+    }
+  }
+
+  .toggle-container{
+    width:100px;
+    font-size: 15px;
+    position:absolute;
+    top: 16px;
+    right: -10px;
+    display: inline-block;
+
+    input{
+      float:left;
+    }
+
+    label{
+      font-size: 12px;
+    }
+  }
+
+
+  .schedule-info{
+    margin-left: 30px;
+    margin-top: 40px;
+    min-height: 40px;
+    display: inline-block;
+  }
+
+  .schedule-options {
+     margin-top:50px;
+    .option{
+      margin-top:15px;
+      margin-left: 30px;
+
+      label{
+        display:inline-block;
+        float:left;
+        clear:left;
+        width:100px;
+        text-align: right;
+        &.spacer{
+          visibility: hidden;
+        }
+        &.spacer:before{
+          content: '*'
+        }
+      }
+
+      input, select{
+        display: inline-block;
+        float:left;
+        margin-left: 10px;
+      }
+
+
+      span{
+        float:left;
+        margin-left: 10px;
+      }
+
+      &.skip-disable{
+        margin-top: 30px;
+      }
+
+
+      .error~input{
+        border-color: red;
+        border-style: solid;
+        border-width: thin;
+      }
+
+      .hourly{
+        margin-bottom:20px;
+        position: relative;
+        &.minute .error{
+          position: absolute;
+          color:red;
+          top:20px;
+          left: 234px;
+        }
+      }
+
+
+
+      .interval{
+        position:relative;
+        .error{
+          position: absolute;
+          top:20px;
+          left:110px;
+          color:red;
+        }
+      }
+
+      .once, .weekly{
+        &.start-time{
+          display:inline-block;
+        }
+
+        .start-time-label{
+          float: none;
+          text-align: left;
+          width:auto;
+        }
+      }
+
+      .once, .daily, .weekly, .monthly{
+        position: relative;
+
+        &.start-date .error{
+          position: absolute;
+          top:20px;
+          left: 110px;
+          color: red;
+          margin-bottom:20px;
+        }
+
+        &.start-time .error{
+          position: absolute;
+          top:20px;
+          left: 372px;
+          color: red;
+          margin-bottom:20px;
+        }
+      }
+
+      .once, .weekly{
+        &.start-time .error{
+          left: 31px;
+        }
+      }
+
+      .weekdays{
+        position: relative;
+        display:inline-block;
+        margin-left: 10px;
+
+        .error{
+          position: absolute;
+          top:20px;
+          color:red;
+          width:300px;
+          text-align: left;
+        }
+
+        label{
+          clear: left;
+          float: none;
+          width: auto;
+          text-align: center;
+        }
+
+
+        input{
+          display:none;
+        }
+
+      }
+
+      .toggle-button{
+        display:inline-block;
+      }
+
+        padding-top: 20px;
+
+      .disable-project-data{
+        display:none;
+      }
+    }
+  }
+
+}
+
+.content.row{
+
+  .hidden-inputs{
+    display:none;
+  }
+
+  .errors{
+    margin-bottom: 0px;
+    display:none;
+  }
+
+  .vertical-spacer{
+    min-height: 600px;
+  }
+
+  #modules{
+    margin:20px;
+  }
+
+
+
+  .control-bar{
+    display:none;
+  }
+
+  .advanced-options-container{
+    display:none;
+  }
+  .formtastic{
+    fieldset{
+
+      &.inputs{
+        border:0px;
+        box-shadow: none;
+        float:none;
+        margin-top:0px;
+        margin-bottom: 0px;
+        padding-top:0px;
+        padding-bottom:0px;
+
+        .collapse{
+          display:none;
+        }
+
+        ol{
+          padding-top: 15px;
+        }
+
+        legend:not(.label){
+          height:40px;
+          width:100%;
+          font-weight:normal;
+          font-size: 13px;
+          line-height: 40px;
+          border-top: 1px #dcdcdc solid;
+          border-bottom: 1px #dcdcdc solid;
+
+          span {
+            user-select: none;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+    }
+   }
+
+    &.buttons{
+      visibility:hidden;
+    }
+
+  }
+
+  .hide-advanced-options,.show-advanced-options{
+    display:none;
+  }
+
+  .advanced{
+    display:block;
+  }
+
+  #cred-delete-form, h3.authentication-token-details{
+    width:95%;
+    margin: 0 auto;
+  }
+
+}
+
+
+#task-chain-region{
+  padding-bottom: 20px;
+
+  .white{
+    background-color: white;
+  }
+
+  .columns.small-12.container{
+    background-color: #f2f2f2;
+  }
+
+  .header{
+    @extend %header-bar;
+
+    &:after {
+      visibility: visible;
+    }
+
+    height: 62px;
+
+    .name.columns .error{
+      line-height: 18px;
+      color:red;
+    }
+
+
+    ul{
+      text-align: right;
+      li{
+        display:inline-block;
+      }
+    }
+  }
+
+  #task-chain-content {
+    position: relative;
+    @extend %header-bar-content-wrapper;
+  }
+
+  .content{
+
+    .mm-select-container{
+      text-align: right;
+    }
+
+    .config{
+      background-color: white;
+      min-height: 400px;
+      padding-top:30px;
+      padding-bottom:20px;
+      @extend %header-bar-content;
+      margin: 0 0 25px 0;
+
+      &>.tab-loading{
+        min-height: 400px;
+      }
+
+      .tabbed-modal{
+        .tabs li{
+          &.tab-loading{
+            width:240px;
+          }
+          z-index: 1;
+        }
+      }
+
+
+      .metamodule{
+        h3{
+          margin-left:10px;
+        }
+
+        .file_upload_path{
+          display: inline;
+        }
+
+
+        #report_name_input{
+          margin-left: 10px;
+        }
+
+        .advanced{
+          margin-top: 20px;
+        }
+
+
+        .selectable-by-parent{
+          margin-left: 12px;
+        }
+
+        .address_settings .help{
+          left:126px;
+        }
+
+        .configure_capture label{
+          text-align: left;
+        }
+
+        .email .help{
+          right: 372px;
+        }
+
+        [for=report_excluded_addresses]{
+          width:100%;
+        }
+      }
+
+
+      .empty-message{
+        text-align: center;
+      }
+
+      &.container>*:not(.btn){
+        width:95%;
+        margin: 0 auto;
+      }
+      &.container>.btn{
+        margin-left:30px;
+      }
+
+      .tabbed-modal{
+        width: auto !important;
+
+        .modal-actions, .close{
+          display:none;
+        }
+
+      }
+
+
+    }
+  }
+
+
+  .name.columns {
+    height: 54px;
+
+    .container{
+      height:54px;
+      line-height: 54px;
+      &>label{
+        @extend %header-font;
+        font-size: 24px;
+        display:inline-block;
+      }
+
+      .field-container{
+        display: inline-block;
+        height:28px;
+        vertical-align: middle;
+        display:inline-block;
+        input{
+          width:250px;
+        }
+      }
+    }
+
+    .cancel{
+      line-height: 54px;
+    }
+
+  }
+
+  .schedule-container{
+    display:table;
+    height:54px;
+  }
+
+  .schedule-wrapper {
+    .schedule-state{
+      height:51px;
+      width:60px;
+      margin-top:2px;
+      background-size:80%;
+      background-image: image-url('task_chains/clock@2x.png');
+      background-repeat: no-repeat;
+    }
+
+    div::after {
+      position: relative;
+      top: 33px;
+      left: 34px;
+    }
+
+    .schedule::after {
+      @extend %circle-icon-grey;
+      @extend %circle-icon-plus;
+      @extend %icon-large;
+      font-size: 18px;
+      padding-top: 3.5px;
+    }
+
+    .suspended::after {
+      @extend %circle-icon-yellow;
+      @extend %circle-icon-minus;
+      @extend %icon-large;
+      font-size: 18px;
+      padding-top: 3.5px;
+    }
+
+    .recurring::after {
+      @extend %circle-icon-blue;
+      @extend %circle-icon-reload;
+      @extend %icon-large;
+      font-size: 18px;
+      padding-top: 2px;
+    }
+
+    .scheduled::after {
+      @extend %circle-icon-green;
+      @extend %circle-icon-check;
+      @extend %icon-large;
+      font-size: 18px;
+      padding-top: 3.5px;
+    }
+  }
+
+  a.schedule{
+    /* Not using Line Height Approach b/c height is variable with text */
+    display: table-cell;
+    vertical-align: middle;
+    margin-left:4px;
+    width:220px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .actions{
+    ul{
+     margin-top: 16px;
+     span.btn{
+       border: none;
+       background-image: linear-gradient(#5FBBDB,#3787A5);
+       /* IE 9 */
+       filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#5FBBDB', endColorstr='#3787A5');/*For IE7-8-9*/;
+
+       &:hover:not(.disabled):not(.link){
+         background-image: linear-gradient(darken(#5FBBDB,10),darken(#3787A5,10));
+         filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#35a9d2', endColorstr='#2a687f');/*For IE7-8-9*/;
+         cursor: pointer;
+       }
+
+       &.disabled{
+         opacity: 0.5;
+         pointer-events: all;
+
+         a{
+           pointer-events: none;
+         }
+       }
+
+       a{
+         color:white;
+         padding:0px;
+         margin:5px 6px 5px 6px;
+         background-image: none;
+       }
+
+       &.link{
+         background: white;
+         filter: none;
+         background-image: none;
+         a{
+           color: #666666;
+           &:hover{
+             text-decoration: underline;
+           }
+         }
+       }
+     }
+    }
+  }
+
+  .vertical-nav{
+    font-size:40px;
+    background-color: white;
+    background-image: linear-gradient(white, rgba(255,255,255,1) ,rgba(229,229,229,1));
+    /* IE 9 */
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr="#{rgba(255,255,255,1)}", endColorstr="#{rgba(229,229,229,1)}");/*For IE7-8-9*/;
+
+    .timeline{
+      position:absolute;
+      width:95%;
+      margin-top: 30px;
+      z-index: 2;
+    }
+
+    .timeline-arrow{
+      font-weight: 300;
+      text-align: right;
+      position: absolute;
+      width:97%;
+      margin-top:37px;
+      z-index: 2
+    }
+
+    .add-task{
+      position:relative;
+      z-index: 5;
+      background-color: #ffffff;
+      line-height: 34px;
+      text-align: center;
+      display: inline-block;
+      margin-top: 31px;
+      vertical-align: top;
+      font-size: 20px;
+      border: dotted 3px;
+      width:40px;
+      height:40px;
+      border-radius: 25px;
+
+      &:hover{
+        cursor: pointer;
+        color: #4682b4;
+      }
+
+      .add-task-options{
+        display:none;
+        left: -54px;
+        margin-top:10px;
+        color: grey;
+        position: absolute;
+        width: 150px;
+        text-align: left;
+        background-color: white;
+        border: 1px solid grey;
+        ul{
+          text-align: left;
+          li{
+            margin-left:4px;
+            display: block;
+            &:hover{
+              color: #4682b4;
+              cursor: pointer;
+            }
+          }
+        }
+
+      }
+    }
+
+    .action-container{
+      box-shadow: #cccccc 5px 0px 5px 0px;
+      width:38px;
+      display:inline-block;
+      position: relative;
+      z-index: 2;
+      .action{
+        height:40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #959595;
+        width:38px;
+
+        background-image: url(<%= image_path 'task_chains/sprite.png' %>);
+        background-repeat: no-repeat;
+
+        &:hover{
+          background-color: dimgrey;
+          cursor: pointer;
+        }
+
+        &.delete{
+          background-position: 8px 8px;
+        }
+
+        &.clone{
+          background-position: 8px -38px;
+        }
+
+        &.reset{
+          background-position: 8px -82px;
+        }
+
+      }
+    }
+
+  }
+
+  .nav.row{
+    .chain{
+      font-size:12px;
+      margin-left:20px;
+      margin-bottom: 10px;
+      display:inline-block;
+      .pie-charts{
+        float:left;
+        .container{
+          display: inline-block;
+          .generic-stat-wrapper{
+            z-index:  5;
+            position: relative;
+            width:80px;
+            display: inline-block;
+            margin-right:30px;
+            .task{
+              text-align: center;
+              width:80px;
+            }
+            canvas{
+              vertical-align: middle;
+              float:left;
+            }
+            //Because Canvas elements default to 300px * 150px
+            .ui-sortable-placeholder{
+              width: 80px;
+            }
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+}

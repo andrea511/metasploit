@@ -1,0 +1,17 @@
+<% breadcrumb link_to("New Project", new_workspace_path) %>
+<% title "New Project" %>
+
+
+<div class="one_col_no_sidebar">
+	<%= required_label %>
+
+	<%= semantic_form_for @workspace do |f| %>
+		<%= render 'form', :f => f %>
+
+		<%= f.actions do -%>
+			<span class="btn">
+				<%= f.submit "Create Project", :class => "save" %>
+			</span>
+		<% end -%>
+	<% end %>
+</div>

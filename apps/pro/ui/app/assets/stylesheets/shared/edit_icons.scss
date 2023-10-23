@@ -1,0 +1,27 @@
+@import "css3-mixins";
+
+%edit-icons{
+  a.garbage, a.pencil {
+    display: inline-block;
+    width: 25px;
+    height: 18px;
+    background-image: image-url('icons/linkBtn.png');
+    vertical-align: middle;
+    opacity: 0.7;
+    &:hover {
+      opacity: 1.0;
+    }
+  }
+
+  .garbage {
+    background-position: 0 -360px;
+  }
+
+  .pencil {
+    background-position: 0 -1162px;
+  }
+}
+
+
+
+

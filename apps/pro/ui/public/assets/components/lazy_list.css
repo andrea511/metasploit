@@ -1,0 +1,37 @@
+/* line 4, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/lazy_list.scss */
+.lazy-list-component .lazy-list.collection-loading {
+  pointer-events: none;
+  background-image: url(/assets/spinner-e008bc0bca2fa6f9b9c113fad73551230961baec88c06b20997ec50171bb2b6b.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+/* line 10, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/lazy_list.scss */
+.lazy-list-component .lazy-list.collection-loading * {
+  opacity: 0.7;
+}
+/* line 13, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/lazy_list.scss */
+.lazy-list-component .lazy-list.collection-loading .empty-view {
+  color: #fff;
+}
+/* line 18, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/lazy_list.scss */
+.lazy-list-component .lazy-list .empty-view {
+  padding: 12px 0;
+  text-align: center;
+}
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/lazy_list.scss */
+.lazy-list-component div.load-more a {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  padding: 12px 0;
+}
+/* line 31, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/lazy_list.scss */
+.lazy-list-component div.load-more a:hover {
+  background: #f0f0f0;
+}
+/* line 34, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/lazy_list.scss */
+.lazy-list-component div.load-more a:active {
+  background: #d0d0d0;
+}

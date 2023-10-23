@@ -1,0 +1,51 @@
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container .error {
+  position: absolute;
+}
+/* line 7, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container .table-component {
+  margin-top: 28px;
+}
+/* line 10, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container .table-component .filter-region {
+  position: absolute;
+  top: 56px;
+  right: 9px;
+}
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container .table-component .filter-region .help-icon {
+  bottom: auto;
+  right: 9px !important;
+  top: 18px !important;
+}
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container #sonar-domain-input-region .last-seen, #sonar-import-container #sonar-domain-input-region .domain, #sonar-import-container #sonar-domain-input-region .query {
+  vertical-align: top;
+}
+/* line 28, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container #sonar-domain-input-region .query {
+  padding: 1px 0px 0px 8px;
+}
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container #sonar-domain-input-region #sonar-domain-input-textbox, #sonar-import-container #sonar-domain-input-region #sonar-last-seen-input {
+  height: 28px;
+  width: 330px;
+  padding-left: 10px;
+  margin-right: 6px;
+  vertical-align: top;
+}
+/* line 40, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container #sonar-domain-input-region #sonar-last-seen-input {
+  width: 50px;
+  margin-right: 3px;
+  vertical-align: initial;
+}
+/* line 46, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container #sonar-domain-input-region #sonar-domain-query-button {
+  height: 26px;
+  vertical-align: top;
+}
+/* line 51, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/imports/sonar.scss */
+#sonar-import-container #sonar-results-region {
+  margin-top: 12px;
+}

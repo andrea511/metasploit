@@ -1,0 +1,25 @@
+#
+# This file adds some patches to datatables to add a class to the table
+# wrapper when it finishes loading. This is very helpful for cucumber
+# scenarios, but the only way to do this globally in Datatables 1.8.0
+# (afaict) is to straight up wrap $.fn.dataTables, which is terrible,
+# so we make sure NOT to do this in production.
+#
+
+<% unless Rails.env.production? %>
+
+$ = jQuery
+
+# Sigh. Wrap #dataTable, since no #defaults in 1.8.0
+$.fn.dataTable = _.wrap $.fn.dataTable, (dataTable, opts) ->
+  opts ||= {}
+  opts.fnDrawCallback ||= (->)
+
+  # wrap the fnServerData callback
+  opts.fnDrawCallback = _.wrap opts.fnDrawCallback, (func) ->
+    $(@).addClass('loaded')
+    func.apply(@, _.toArray(arguments).slice(1))
+
+  dataTable.apply(@, _.toArray(arguments).slice(1))
+
+<% end %>

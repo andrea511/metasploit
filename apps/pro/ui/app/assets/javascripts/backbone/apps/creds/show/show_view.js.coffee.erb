@@ -1,0 +1,286 @@
+define [
+  'jquery'
+  'rainbow_bar'
+  'base_layout'
+  'base_view'
+  'base_itemview'
+  'apps/creds/show/templates/show_layout'
+  'apps/creds/show/templates/access_level'
+  'apps/creds/show/templates/validate_authentication'
+  'apps/creds/show/templates/validation_hover'
+  'entities/login'
+  'lib/concerns/pollable'
+], ($, RainbowProgressBar) ->
+  @Pro.module "CredsApp.Show", (Show, App) ->
+
+    class Show.Layout extends App.Views.Layout
+      template: @::templatePath('creds/show/show_layout')
+
+      ui:
+        compromised_progress: '.compromised-progress'
+        reuse: 'li.quick-reuse a'
+
+      regions:
+        bannerRegion:        "#banner-region"
+        relatedLoginsRegion: "#related-logins-region"
+        bannerRegion:        "#banner-region"
+        privateRegion:       ".private-region"
+        tags:                ".tags"
+        originRegion:        ".origin-region"
+
+      triggers:
+        'click @ui.reuse': 'reuse:show'
+
+      _innerFill: '#FFFFFF'
+      _innerFillHover: '#FFFFFF'
+      _textFill: '#A0A0A0'
+      _fontStyle: '20px Arial'
+      _percentFill: '#A0A0A0'
+
+      ###onShow: ->
+          Not using this, at the moment
+          @chart = new RainbowProgressBar(
+          canvas: @ui.compromised_progress[0]
+          textFill: @_textFill
+          innerFill: @_innerFill
+          innerFillHover: @_innerFillHover
+          fontStyle: @_fontStyle
+          percentFill: @_percentFill
+        )
+      @chart.setPercentage(0)
+
+      animatePercent: () =>
+        @chart.setPercentage(80)###
+
+      templateHelpers:
+
+        #
+        # Render a private type link for the header. Filter link code has been excised until
+        # work on MSP-12664 is completed.
+        #
+        # @return [String] the markup for the private type link
+        privateTypeLink: ->
+          return unless @private.class
+
+          linkUrl = "#creds?search=private.type:'#{@['pretty_type']}'"
+          """
+          <a class='filter' href="#{linkUrl}">
+            #{ @['pretty_type'] }
+          </a>
+          """
+
+        publicUsernameLink: ->
+          return "*BLANK*" unless (@public.username? and @public.username != "")
+          safe_username = _.escapeHTML(_.unescapeHTML(@public.username))
+          linkUrl = "#creds?search=public.username:'#{safe_username}'"
+          """
+          <a class='filter' href="#{linkUrl}">
+            #{ safe_username }
+          </a>
+          """
+
+        realmKeyLink: ->
+          return "None" unless (@realm?.key? and @realm?.key? != "None")
+          linkUrl = "#creds?search=realm.key:'#{@realm.key}'%20realm.value:'#{@realm.value}'"
+          """
+          <a class='filter' href="#{linkUrl}">
+            #{ @realm.key }
+          </a>
+          """
+
+
+    class Show.RelatedLogins extends App.Views.ItemView
+
+    class Show.Validation extends App.Views.ItemView
+      modelEvents:
+        'change:attempting_login': 'render'
+
+      initialize: ({@model, @column}) ->
+
+      serializeData: -> @
+
+      template: =>
+        if @model.get('attempting_login')
+          'Validating…'
+        else if @model.get(@column.attribute) is App.Entities.Login.Status.SUCCESSFUL
+          'Validated'
+        else
+          'Not Validated'
+
+    class Show.FilterLink extends App.Views.ItemView
+      initialize: ({@model, @column}) ->
+      serializeData: -> @
+      template: => "<a href='javascript:void(0)'>#{_.escape(@model.get(@column.attribute))}</a>"
+
+    class Show.SingleHostFilterLink extends App.Views.ItemView
+      initialize: ({@model, @column}) ->
+      serializeData: -> @
+      template: =>
+        "<a href='#creds/#{_.escape(@model.get('core_id'))}/hosts/#{_.escape(@model.get('service.host.id'))}'>#{_.escape(@model.get(@column.attribute))}</a>"
+
+
+
+    class Show.ValidationHover extends App.Views.ItemView
+      attributes:
+        class: 'validation-hover'
+      initialize: ({@model, @column}) ->
+      serializeData: -> @
+      template: @::templatePath 'creds/show/validation_hover'
+
+
+    class Show.ValidateAuthentication extends App.Views.ItemView
+
+      @include 'Pollable'
+
+      template: @::templatePath "creds/show/validate_authentication"
+
+      ui:
+        'icon': 'div'
+
+      events:
+        'click @ui.icon': 'imageClicked'
+
+      modelEvents:
+        'change:attempting_login': 'attemptingLoginChanged'
+
+      # @property [Pro.Entities.Task] the task that is being polled to check validation status
+      task: null
+
+      # @property [Number] the rate (in ms) to poll for the task status
+      pollInterval: 3000
+
+      imageClicked: =>
+        @model.set(attempting_login: true)
+
+      attemptingLoginChanged: =>
+        @render() # show the spinner
+        if @model.get('attempting_login')
+          @model.validateAuthentication().done (task) =>
+            @setTask(task)
+            @startPolling()
+
+      poll: =>
+        if @task.isCompleted() or @task.isFailed() or @task.isInterrupted() or @task.isStopped()
+          @stopPolling()
+          @model.fetch().done => @model.set(attempting_login: false)
+        else
+          @task.fetch()
+
+      setTask: (@task) =>
+
+      serializeData: => @
+
+
+    # The AccessLevel view implements a dropdown/text input dynamic
+    #   selector for setting a Cred's #access_level. A user can choose
+    #   from a set list of values with a `<select>` dropdown, but can
+    #   also choose "Custom..." and enter a new value in a text field.
+    class Show.AccessLevel extends App.Views.ItemView
+      template: @::templatePath "creds/show/access_level"
+
+      ui:
+        'select': 'select'
+        'input':  'input'
+
+      events:
+        'change @ui.select': 'optionChanged'
+        'keydown @ui.input': 'inputActivity'
+        'change @ui.input': 'updateInput'
+
+      collectionEvents:
+        levelsChanged: 'updateLevels'
+
+      # @property accessLevels [Array<String>] list of options for the access levels
+      accessLevels: []
+
+      # @property showInput [Boolean] render the input field instead of the select
+      showInput: false
+
+
+      onShow:() ->
+        @delegateEvents()
+
+      # @params opts [Object] the options hash
+      # @option opts accessLevels [Array<String>] list of choices in the dropdown
+      initialize: (opts={}) =>
+        unless _.isUndefined(opts.accessLevels)
+          @accessLevels = opts.accessLevels
+
+        _.defaults opts,
+          save: true
+          showLabel: false
+
+        {@save,@showLabel} = opts
+
+      # Called when levels are changed
+      updateLevels: (@accessLevels) =>
+        @render()
+
+      # Called when the user changes the selected `<option>` in the
+      #   `<select>` dropdown.
+      optionChanged: =>
+        if @ui.select.val()?.match(/Other.../)
+          @showInput = true
+          @render()
+          @ui.input.val(@model.get('access_level'))
+          @ui.input.focus()[0]?.select()
+        else
+          @showInput = false
+          @model.set('access_level', @ui.select.val())
+          @disableSelect()
+          if @save
+            @model.save().then(@enableSelect)
+          else
+            @enableSelect()
+
+      # Called when any activity (onchange/onkeydown) occurs in the
+      #   input field. Unless enter or escape is pressed, all changes
+      #   made as a result of this method is "debounced" 1s, to prevent
+      #   the input from auto-saving before the user is done typing.
+      # @params e [Event] the input event
+      inputActivity: (e) =>
+        if e.keyCode == 13 # enter key is pressed
+          @updateInput()
+        else if e.keyCode == 27 # esc key is pressed
+          @showInput = false
+          @render()
+        else
+          @debouncedUpdateInput ||= _.debounce(@updateInput, 1000)
+          @debouncedUpdateInput()
+
+      # Called when the view should respond to the user's input.
+      # If a change has actually occurred, we save the model,
+      #   which triggers an event in the collection to recalculate
+      #   the levels, which then broadcasts again to all ItemViews.
+      updateInput: =>
+        # Bail when the input should not be processed
+        return if _.isEmpty(@ui.input) or _.isEmpty(@ui.input.val())
+        newVal = @ui.input.val().trim()
+
+        # Ensure that an actual change has occurred
+        if newVal isnt /Other.../ and not _.isEmpty(newVal)
+           # Update the model and propagate new value across collection
+          @showInput = false
+          @model.set('access_level', newVal)
+          @render()
+          @disableSelect()
+          if @save
+            @model.save().then(@enableSelect)
+          else
+            @enableSelect()
+
+      disableSelect: =>
+        @ui.select.attr('disabled', 'disabled')
+
+      enableSelect: =>
+        @ui.select.removeAttr('disabled')
+
+      serializeData: =>
+        _.extend {}, @model.attributes,
+          showInput: @showInput
+          accessLevels: @accessLevels
+          showLabel: @showLabel
+
+
+    App.reqres.setHandler 'creds:accessLevel:view', (options={})->
+      new Show.AccessLevel options

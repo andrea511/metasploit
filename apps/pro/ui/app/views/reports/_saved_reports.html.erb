@@ -1,0 +1,21 @@
+<% include_javascript 'moment.min' %>
+
+
+<div id="saved_reports">
+	<h1>Saved Reports</h1>
+
+	<table id="reports" class="list sortable">
+		<thead>
+			<tr>
+				<th class="checkbox"><%= check_box_tag "all_reports" %></th>
+				<th>Name</th>
+                <th>Report Type</th>
+                <th>File Formats</th>
+                <th>Creator</th>
+				<th>Created</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+			</tr>
+		</thead>
+	</table>
+</div>

@@ -1,0 +1,11 @@
+<tr id="<%= dom_id(vuln) %>" class="<% row_cycle %>">
+  <td><%= check_box_tag("vuln_ids[]", vuln.id, false, :id => nil) %></td>
+  <td><%= vuln.risk_label %></td>
+  <td><%= vuln.category_label %></td>
+  <td><%= vuln.name %></td>
+  <td><%= link_to("#{vuln.web_site.to_url}#{vuln.path}", web_vuln_path(@workspace, vuln[:id])) %></td>
+  <td><%= vuln.confidence %></td>
+  <td><%= vuln.method %></td>
+  <td><%= truncate(vuln.pname) %></td>
+  <td><%= truncate(vuln.proof) %></td>
+</tr>

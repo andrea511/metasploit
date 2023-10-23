@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="host_distribution_graphs" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a2a96e05-75e8-417c-b523-0e4dfed30476">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<subDataset name="HostsbyActiveSvcs" uuid="d9bb5de5-b8ce-421c-8300-059fe3f4e659">
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="app_run_id" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[-- Top 5 Hosts by Active Services
+select
+	count(s.id) active_svc_count,
+	coalesce(hosts.name, host(hosts.address)) address
+from services s
+inner join task_services ts on (s.id = ts.service_id)
+inner join tasks t on (ts.task_id = t.id)
+inner join app_runs ar on (t.app_run_id = ar.id)
+inner join hosts on (s.host_id = hosts.id)
+where ar.id = $P{app_run_id}
+and s.state = 'open'
+and $P!{host_address_clause}
+group by hosts.id
+order by active_svc_count desc
+limit 5]]>
+		</queryString>
+		<field name="address" class="java.lang.String"/>
+		<field name="active_svc_count" class="java.lang.Long"/>
+	</subDataset>
+	<subDataset name="SvcInstances" uuid="195f4178-e2af-4bb0-ae91-5491ae36b52f">
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="port_states" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["('open','closed','unknown','filtered')"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="app_run_id" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[-- Top 5 Active Services by Port
+select
+	s.port,
+	count(s.id) svc_count
+from services s
+inner join task_services ts on (s.id = ts.service_id)
+inner join tasks t on (ts.task_id = t.id)
+inner join app_runs ar on (t.app_run_id = ar.id)
+inner join hosts on (s.host_id = hosts.id)
+where ar.id = $P{app_run_id}
+and s.state = 'open'
+and $P!{host_address_clause}
+group by s.port
+order by svc_count desc
+limit 5]]>
+		</queryString>
+		<field name="port" class="java.lang.Integer"/>
+		<field name="svc_count" class="java.lang.Long"/>
+	</subDataset>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="port_states" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["('open','closed','unknown','filtered')"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[select 1]]>
+	</queryString>
+	<detail>
+		<band height="232" splitType="Stretch">
+			<pieChart>
+				<chart customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="669d6fa3-cf4c-4aad-86fc-cee4e5d07d92" x="0" y="35" width="572" height="190"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="HostsbyActiveSvcs" uuid="736ed59e-af1c-4563-9b0e-6c5717c5343a">
+							<datasetParameter name="app_run_id">
+								<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{address}]]></keyExpression>
+					<valueExpression><![CDATA[$F{active_svc_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{0} ({1}): {2}">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement uuid="b2094e44-b833-41f4-9b06-c35e2dceb65d" style="Graph title" x="0" y="4" width="572" height="31"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Top 5 Hosts by Active Services]]></text>
+			</staticText>
+			<break>
+				<reportElement uuid="80ce427c-fec2-454f-a62f-2023deae64d8" x="0" y="225" width="572" height="1"/>
+			</break>
+		</band>
+		<band height="229">
+			<pieChart>
+				<chart customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="77871b57-7c24-4e09-86c1-f671cebcc8cf" x="0" y="31" width="572" height="190"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="SvcInstances" uuid="9a8f90a2-c3de-442b-baa3-4af568c64c9c">
+							<datasetParameter name="app_run_id">
+								<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{port}]]></keyExpression>
+					<valueExpression><![CDATA[$F{svc_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{0} ({1}): {2}">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement uuid="8f7bf1d0-d234-4cf7-8c42-7126b6fd3d90" style="Graph title" x="0" y="0" width="572" height="31"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Top 5 Active Services by Port]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

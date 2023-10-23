@@ -1,0 +1,9 @@
+<%= f.actions do %>
+    <span class="btn">
+      <% if @custom %>
+    	<%= f.submit "Generate Custom Report", :class => "new" %>
+      <% else %>
+		<%= f.submit "Generate Report", :class => "new" %>
+      <% end %>
+    </span>
+<% end -%>

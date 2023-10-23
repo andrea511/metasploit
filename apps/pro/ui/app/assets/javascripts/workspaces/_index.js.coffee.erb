@@ -1,0 +1,95 @@
+jQuery ($) ->
+  toggleNewsPane = (e) ->
+    # disable click to prevent rapid clicking from screwing things up
+    $a = $(e.target).unbind('click')
+    # add animation effect
+    Effect.toggle('product-news', 'blind', {duration:0.2})
+    # show/hide news feed and replace title and save choice in cookie
+    if (document.getElementById('project-list').style.width == "60%") # show
+      $a.html $a.html().replace('Hide', 'Show')
+      $('#project-list').css 'width', '100%'
+
+      document.cookie = 'ui-workspace-index-hide-product-news=false'
+    else # hide
+      $a.html $a.html().replace('Show', 'Hide')
+      $('#project-list').css 'width', '60%'
+      document.cookie = 'ui-workspace-index-hide-product-news=true'
+    # reenable clicks after animation
+    window.setTimeout (-> $a.bind('click', toggleNewsPane)), 300
+    return false
+
+  loadNews = ->
+
+    # load in product news through script tag
+    pid = encodeURIComponent $('meta[name=msp-feed-serial]').attr('content')
+    feedVersion = encodeURIComponent $('meta[name=msp-feed-version]').attr('content')
+    feedRevision = encodeURIComponent $('meta[name=msp-feed-revision]').attr('content')
+    feedEdition = encodeURIComponent $('meta[name=msp-feed-edition]').attr('content')
+    feedTs = encodeURIComponent $('meta[name=msp-feed-ts]').attr('content')
+    feedOrigVersion = encodeURIComponent $('meta[name=msp-feed-orig-version]').attr('content')
+    feedURL = "https://dev.metasploit.com/news.json" #?
+    data = "pid="+pid+"&ver="+feedVersion+"&rev="+feedRevision+"&ed="+feedEdition+"&over="+feedOrigVersion+"&ts="+feedTs
+
+    # the window.setTimeout here is necessary to fix an IE9 bug.
+    window.setTimeout((->
+      $.getJSON feedURL+"?"+data, (json) ->
+        buildFeedItem = (item) ->
+          content = "<div class='feeditem'><h3><a href='#{item.link}' target='_blank'>#{item.title}</a></h3><p class='blurb'>#{item.blurb}</p></div>"
+          $("#product-news-content").append content
+        if !json || json.feed.items.length is 0
+          $("#product-news-content").html '<p>Unable to retrieve the product news from the server.</p>'
+        else
+          $("#product-news-content").html ''
+          buildFeedItem(item) for item in json.feed.items
+    ), 1)
+
+    # Add the show/hide news feed link, default to show
+    newsHidden = document.cookie.match(/ui-workspace-index-hide-product-news=false/)
+    currTitle = if newsHidden then 'Show News Panel' else 'Hide News Panel'
+    $("#product-news-header").before('<a style="float: right; background-image:none;' +
+        '  cursor: pointer;" class="showhide"' +
+        ' href="#">'+currTitle+'</a>')
+    $('a.showhide').prepend('<img alt="Newspaper" ' +
+        ' src="<%= image_path('icons/silky/newspaper.png') %>" style="margin-bottom: -3px; ' +
+        ' margin-right: 3px;">').click(toggleNewsPane)
+
+    # show / hide product news based on cookie
+    if newsHidden
+      $("#product-news").hide()
+      $('#project-list').css 'width', '100%'
+    else
+      $("#product-news").show()
+      $('#project-list').css 'width', '60%'
+
+  $(document).ready ->
+    $("#all_workspaces").checkAll($("#workspace_checkboxes"))
+    loadNews() if $('[name=enable_news_feed]').attr('content') == 'true'
+
+    # Modules table should be sortable and searchable.
+    $("#workspace-table").table
+      searchable:         false
+      datatableOptions:
+        aaSorting:      [[7, 'desc']]
+        aoColumns: [
+          {bSortable: false}
+          {}
+          {}
+          {}
+          {}
+          {}
+          {sType: "title-numeric" }
+          {}
+        ]
+
+    # Add an input hint to the search input
+    $('#search').inputHint
+      fadeOutSpeed: 300
+      padding: '2px'
+      paddingLeft: '5px'
+
+    # quick start menu
+    $('#quick-start-menu li, #global-tools-menu li').click (e) ->
+      return if $(e.currentTarget).is('.egadz') # Egadz script is a regular link
+      e.preventDefault()
+      className = _.chain($(e.currentTarget).attr('name')).camelize().capitalize().value()
+      new window[className+'Modal']({el: $("#modals")}).open()

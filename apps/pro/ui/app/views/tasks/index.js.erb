@@ -1,0 +1,10 @@
+$(document).ready(
+  function(){
+    setInterval(function(){
+      $.ajax({
+          url: "<%= tasks_path(@workspace) %>",
+          type: "POST",
+          dataType: "script"
+      });
+    }, 10000 );
+  });

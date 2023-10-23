@@ -1,0 +1,39 @@
+define [
+  'jquery',
+  '<%= javascript_path('shared/banner_message/banner_message_collection') %>'
+], ($, BannerMessageCollection) ->
+  class BannerMessageController extends Backbone.Marionette.Controller
+
+    initialize: ->
+      collection = new BannerMessageCollection()
+      self = @
+      collection.fetch({
+        reset: true,
+        success: (data) ->
+          self.displayBannerMessages(data)
+      })
+
+    displayBannerMessages: (collection) ->
+      collection.each((model, index) =>
+        $.growl
+          title:    model.get('title')
+          location: 'br'
+          style:    'warning'
+          static:   true
+          size:     'large'
+          message:  """
+                    <div class='banner-message'>
+                      <p>#{model.get('message')}</p>
+                    </div>
+                    """
+        @bind(model)
+      )
+
+    bind: (model) ->
+      # Listen to the close button for this growl message, only.
+      $('.banner-message').parent().siblings('.growl-close').on 'click', =>
+        jQuery.ajax
+          url: "/banner_messages/read"
+          type: 'POST'
+          data:
+            banner_id: model.get('id')

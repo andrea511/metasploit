@@ -1,0 +1,53 @@
+define [
+  'jquery',
+  '<%= javascript_path("shared/backbone/views/modal_form") %>',
+  '<%= javascript_path("templates/hosts/item_views/cred_form") %>',
+  #TODO Move Notifiation Center Event Aggregator to Shared Dir
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, ModalForm, Template, EventAggregator) ->
+  class CredForm extends ModalForm
+    template: HandlebarsTemplates['hosts/item_views/cred_form']
+
+    events: _.extend({}, ModalForm.prototype.events, {
+      'submit form': '_formSubmitted',
+      'change li.ptype select': '_typeChanged'
+    })
+
+    initialize: ({@host_id}) ->
+
+    _typeChanged: (e) =>
+      words = $(e.currentTarget).find('option:selected').text().split(/\s+/)
+      type = _.str.capitalize(words[words.length-1])
+      $('li.port label', @el).text(type)
+      # $('li.user', @el).toggle(type != 'Key')
+
+    _postForm: =>
+      data = $('form', @el).serialize()
+      @setLoading(true)
+      $.ajax
+        url: @submitURL()
+        method: 'post'
+        data: data
+        success: =>
+          @setLoading(false)
+          @_updateTable()
+          @$el.trigger('close')
+        error: (data) =>
+          @setLoading(false)
+          # TODO: add valiations to Mdm::Cred, wtfm8
+          @_clearErrors()
+          @_renderErrors($.parseJSON(data))
+
+    _updateTable: =>
+      EventAggregator.trigger('redrawTable')
+      $(@el).trigger('close')
+
+
+    _formSubmitted: (e) =>
+      e.preventDefault()
+      @_postForm()
+
+    onRender: =>
+      _.defer => $(':input:visible', @el).first().focus()
+
+    submitURL: => "/hosts/#{@host_id}/create_cred.json"

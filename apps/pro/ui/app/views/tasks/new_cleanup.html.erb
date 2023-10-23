@@ -1,0 +1,89 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, sessions_link, link_to("Session Cleanup", "#") %>
+<% include_view_javascript %>
+
+<div id="popup_errors"></div>
+
+<% unless @workspace.sessions.alive.empty? %>
+
+	<%= semantic_form_for @task, :url => start_cleanup_path, :complete => "enableSubmitButtons();", :remote => true do |f| %>
+
+		<div class="one_col_no_sidebar">
+
+			<%= f.hidden_field :workspace_id %>
+
+			<%=  f.inputs "Active Sessions" do %>
+				<div style="width: 95%; float: left;">
+					<div id="cleanup_sessions" class="list">
+						<table width="100%" class="list mar-tb10">
+							<thead>
+								<tr>
+									<th class="checkbox"><%= check_box_tag "cleanup_all_sessions", true %></th>
+									<th colspan="2">
+										<%= f.label :cleanup_sessions, "Active Sessions" %>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody id="session_list">
+							<% @workspace.sessions.alive.each do |sess| %>
+								<tr class="<%=h row_cycle %>">
+									<td align="left" valign="top">
+										<%= check_box_tag "cleanup_task[cleanup_sessions][]", sess.id, true, :id => "session-#{sess.id}" %>
+									</td>
+									<td align="left" valign="top">
+										<%= label_tag "session-#{sess.id}", h(sess) %>
+									</td>
+								</tr>
+							<% end %>
+							</tbody>
+						</table>
+
+						<% unless @no_launch.blank? %>
+							<div style="margin-top: 10px;margin-bottom:10px">
+								<span class="checkbox">
+									<%= check_box_tag "cleanup_task[run_on_all_sessions]", "1", true %>
+								</span>
+								<span>Apply to sessions opened during task chain run?</span>
+							</div>
+						<% end %>
+
+					</div>
+				</div>
+				<%= link_to(icon('silky/information'), '', :target => '_blank', :class => 'help', :'data-field' => 'cleanup_task_cleanup_sessions_input', :style => "padding-left: 24px; float: right;") %>
+			<% end -%>
+
+      <% if @no_launch.blank? %>
+        <%= f.actions do -%>
+          <span class='btn'><%= f.submit "Cleanup Sessions", :class => "cleanup", :id => 'popup_submit' %></span>
+        <% end -%>
+			<% end -%>
+
+		</div>
+
+		  <div class="inline-help" data-field="cleanup_task_cleanup_sessions_input">
+			  <h3>Session Cleanup</h3>
+			  <p>
+				  Session Cleanup closes the project's opened sessions. Meterpreter sessions operate entirely in memory, and will not require any manual cleanup on the targets unless files have been uploaded / downloaded or another permanent action has been completed.
+			  </p>
+			  <p>	
+				  Active sessions are displayed on the left. Select the sessions you'd like to close and press the <b>Cleanup Sessions</b> button.
+		 	  </p>
+		  </div>
+
+	<% end %>
+
+<% else %>
+	<% unless @no_launch.blank? %>
+		<div class="form-inputs" style="margin-top: 10px;margin-bottom:10px">
+      <p>The Cleanup task will run across all active sessions when run in a chain</p>
+			<%= hidden_field_tag "cleanup_task[run_on_all_sessions]", "1" %></span>
+		</div>
+	<% else %>
+		<h2> No Active Sessions </h2>
+		<span class="btn">
+			<%= link_to "Back to Sessions", workspace_sessions_path(@workspace), :class => "back" %>
+		</span>
+	<% end %>
+<% end %>
+</div>

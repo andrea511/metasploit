@@ -1,0 +1,18 @@
+<% if License.get.supports_custom_reporting? %>
+  <%= f.inputs 'Cover Logo' do %>
+    <% if @report_custom_logos.blank? %>
+        <p style='text-align:center;'>To use an image other than the Rapid7 logo, <%= link_to 'upload one here.', new_workspace_custom_report_path(@workspace), {:class => :custom_report} %></p>
+    <% else %>
+        <%= f.input :logo_path,
+                    :label => 'Custom report logo',
+                    :as => :select,
+                    :collection => @report_custom_logos,
+                    :member_value => Proc.new {|r| r.file_path  }
+        %>
+        <%= f.help_link :logo_path do %>
+            <h3>Custom Report Logo</h3>
+            <p>If selected, the named logo will be used in place of the standard Rapid7 logo. Custom logos may be uploaded via the 'Custom Reports' page.</p>
+        <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,59 @@
+<% title "User Administration" %>
+<% breadcrumb admin_users_link %>
+<% include_javascript "admin_users" %>
+<% include_javascript 'admin/users/_index.js' -%>
+
+<%= form_tag mass_delete_admin_users_path do %>
+  <div class="control-bar-items">
+    <span class="button any">
+      <%= submit_tag "Delete", :id => "user-delete-submit", :class => "delete", :method => :delete %>
+    </span>
+    <span class="button single"><%= link_to "Settings", '', :class => 'edit' %></span>
+    <div class="separator"></div>
+    <% unless user_limit_reached? %>
+      <span class="button none">
+        <%= link_to "New User", new_admin_user_path, :class => "new" %>
+      </span>
+    <% end %>
+  </div>
+
+  <table id="users" class="list sortable">
+    <thead>
+      <th class="checkbox"><%= check_box_tag "all_users", true %></th>
+      <th>Username</th>
+      <th>Project Access</th>
+      <th>Role</th>
+      <th>Full Name</th>
+      <th>Email</th>
+    </thead>
+    <tbody id="user_checkboxes">
+    <% @users.each do |user| %>
+    <tr id="<%=h dom_id(user) %>" class="<%=h row_cycle %>">
+      <td>
+        <%= check_box_tag("user_ids[]", user.id, false, :id => nil) %>
+      </td>
+      <td>
+        <%= link_to h(user.username), edit_admin_user_path(user), :class => "edit" %>
+        <span class="hidden settings-url" style='display:none'><%= edit_admin_user_path(user) %></span>
+      </td>
+      <td>
+        <%=h dash_if_empty(user_workspace_list(user.accessible_workspaces)) %>
+      </td>
+      <td>
+        <% if user.admin %>
+          Admin
+        <% else %>
+          User
+        <% end %>
+      </td>
+      <td>
+        <%=h dash_if_empty(user.fullname) %>
+      </td>
+      <td>
+        <%=h dash_if_empty(user.email) %>
+      </td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

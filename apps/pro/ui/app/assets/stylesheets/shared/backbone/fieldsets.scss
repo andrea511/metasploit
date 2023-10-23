@@ -1,0 +1,18 @@
+$border-color: #ddd;
+$border-width: 1px;
+$padding-height: 5px;
+$padding-width: 30px;
+$font-size: 16px;
+$font-weight: bold;
+$font-color:black;
+
+fieldset.shared{
+  margin: 15px auto;
+  border: $border-width solid $border-color;
+  padding: $padding-height $padding-width;
+  legend{
+    font-size: $font-size;
+    font-weight: $font-weight;
+    color: $font-color;
+  }
+}

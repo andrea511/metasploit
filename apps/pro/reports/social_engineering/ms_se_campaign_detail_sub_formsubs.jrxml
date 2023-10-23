@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ms_se_campaign_detail_sub_formsubs" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d1bb45c2-8af2-4ea6-8f84-009cb1374d7d">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Fri Jan 25 12:47:33 CST 2013\ncallouts.1.text=shuckins\: This chart has some gotchas\:\n * time axis tick label mask\: this should be set to &quot;MMM-dd HHa&quot;. This is not preserved in the jrxml file, but will be preserved in the jasper file when compiled. Once done with all edits to this file, set that attr, save, compile.\n * value axis tick label mask\: Needs to be &quot;\#&quot;, seems to get dropped\ncallouts.1.bounds=24,271,537,119"/>
+	<parameter name="se_campaign_id" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[-- Form submissions
+select
+	count(id),
+	sub_datetime_hour
+from
+	(
+	select
+		spr.id,
+		date_trunc('hour', spr.created_at) as sub_datetime_hour
+	from se_phishing_results spr
+	inner join se_web_pages swp on (spr.web_page_id = swp.id)
+	where swp.campaign_id = $P{se_campaign_id}
+	order by date_trunc('hour', spr.created_at)
+	) as inn
+group by sub_datetime_hour
+order by sub_datetime_hour]]>
+	</queryString>
+	<field name="count" class="java.lang.Long"/>
+	<field name="sub_datetime_hour" class="java.sql.Timestamp"/>
+	<variable name="first_date" class="java.sql.Timestamp" calculation="Lowest">
+		<variableExpression><![CDATA[$F{sub_datetime_hour}]]></variableExpression>
+	</variable>
+	<variable name="last_date" class="java.sql.Timestamp" calculation="Highest">
+		<variableExpression><![CDATA[$F{sub_datetime_hour}]]></variableExpression>
+	</variable>
+	<variable name="highest_sub_count" class="java.lang.Long" calculation="Highest">
+		<variableExpression><![CDATA[$F{count}]]></variableExpression>
+	</variable>
+	<summary>
+		<band height="254" splitType="Stretch">
+			<timeSeriesChart>
+				<chart isShowLegend="false" theme="se_charts">
+					<reportElement uuid="a40e0ddc-847e-471e-8a01-38ba776f0ed3" x="0" y="23" width="551" height="228">
+						<property name="net.sf.jasperreports.chart.range.axis.tick.interval" value="1"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Hour">
+					<timeSeries>
+						<seriesExpression><![CDATA[""]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{sub_datetime_hour}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{count}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot isShowShapes="true">
+					<plot/>
+					<timeAxisLabelExpression><![CDATA["Form submission date"]]></timeAxisLabelExpression>
+                                        <timeAxisFormat>
+                                          <axisFormat tickLabelMask="MMM-dd HHa"/>
+                                        </timeAxisFormat>
+					<valueAxisLabelExpression><![CDATA["Form submission count"]]></valueAxisLabelExpression>
+					<rangeAxisMinValueExpression><![CDATA[0]]></rangeAxisMinValueExpression>
+					<rangeAxisMaxValueExpression><![CDATA[$V{highest_sub_count} * 1.1]]></rangeAxisMaxValueExpression>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,128 @@
+<%= semantic_form_for(@email, :url => @email_path) do |f| %>
+    <div class='page row' title='Configure E-mail'>
+      <div class='cell' title='General' title-large='Configure E-mail Settings'>
+        <%= f.inputs do %>
+          <div class='max-width'>
+            <!-- for storing hidden inputs added by module config -->
+            <div class='exploit-module-config' style="display: none">
+
+            </div>
+            <!-- pass current module data to JS --> 
+            <meta name="module-data" content="<%= @email.exploit_module_config.to_json unless @email.exploit_module_config.blank? %>" />
+            <meta name="module-path" content="<%= @email.exploit_module_path unless @email.exploit_module_path.blank? %>" />
+            <meta name="module-title" content="<%= @email.exploit_module.title unless @email.exploit_module.blank? %>" />
+            <meta name='preview-url' content="<%= custom_content_preview_workspace_social_engineering_campaign_emails_path %>" />
+            <%= render "shared/error_messages", :target => @email %>
+              <h4 style='text-align: center; font-size: 1.2em; margin-bottom: 15px;'>Configure E-mail Header</h4>
+
+                <% if @email.campaign.uses_wizard? %>
+                  <div style='display:none'>
+                    <%= f.input :name %>
+                  </div>
+                <% else %>
+                  <%= f.input :name, :label => "Component name" %>
+                <% end %>
+                <%= f.input :subject %>
+                <%= f.input :from_address %>
+                <%= f.input :from_name %>
+                <%= f.input :exclude_tracking, :as => :boolean, :label => "Do not add a tracking image to the e-mail (email opens will not be tracked)", :required => false %>
+
+                <hr />
+
+                <% if @email.campaign.state == 'unconfigured' || @email.campaign.state == 'launchable' %>
+                    <%= f.input :target_list, :label => 'Choose a Target List', :collection => [SocialEngineering::TargetList.new(:name => 'Create a new Target List...')] + SocialEngineering::TargetList.where(workspace_id: @workspace.id), :input_html => {:placeholder => "Choose a Target List"} %>
+                <% else %>
+                    <%= f.input :target_list, :label => 'Target List', :required => false, :collection => [SocialEngineering::TargetList.new(:name => 'Create a new Target List...')] + SocialEngineering::TargetList.where(workspace_id: @workspace.id), :input_html => {:disabled => true}, :wrapper_html => {:disabled => true} %>
+                    <p class="center">The Target List cannot be changed after a campaign has started. Reset the campaign to change the Target List.</p>
+                <% end %>
+              
+            <% if @email.campaign.uses_wizard? %>
+              <div style='display: none'>
+            <% end %>
+              <div class='content-box attack-box'>
+                <%= f.input :attack_type, :collection => email_attack_type_pairs, :include_blank => false, :as => 'select' %>
+              </div>
+              <div class='shadow-arrow-row'>
+                <div class='shadow-arrow'></div>
+              </div>
+              <div class="attack-box-options">
+                <div class="none">
+                    No attack to configure.
+                </div>
+                <div class="file">
+                  <%= f.input :attachment_file_name, :as => 'string', :required => true %>
+                  <%= f.input :zip_attachment, :as => 'boolean'%>
+                  <hr />
+                  <%= f.input :file_generation_type, :as => 'radio', :label => 'File generation type:', :collection => web_page_file_generation_type_pairs, :required => true %>
+                  <div class="user_supplied" style='display:none;'>
+                    <hr />
+                    <%= f.input :user_supplied_file, 
+                      :label => 'Choose a file', 
+                      :as => :select,
+                      :input_html => { :placeholder => 'Choose a file' },
+                      :collection => [SocialEngineering::UserSubmittedFile.new(:name => 'Upload a new file...')] + SocialEngineering::UserSubmittedFile.where(:workspace_id => @workspace.id).order('created_at DESC'),
+                      :required => true %>
+                  </div>
+                  <div class="file_format" style='display:none;'>
+                    <hr style='margin-bottom: 7px;' />
+                    <div class='load-modules'>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% if @email.campaign.uses_wizard? %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      
+      <div class='cell' title='Content' title-large='Create E-mail Content'>
+        <div class='max-width' style='padding-top: 15px'>
+          <div class='content-box'>
+            <div class='row'>
+              <div class='cell' style='width: 30%;'>
+                <div class='white-box editor-box' style='padding-bottom: 0;'>
+                  <input checked="checked" id="social_engineering_email_editor_type_rich_text" name="social_engineering_email[editor_type]" type="radio" value="rich_text">
+                  <label for="social_engineering_email_editor_type_rich_text">
+                    Rich text
+                  </label>
+                  <input id="social_engineering_email_editor_type_plain_text" name="social_engineering_email[editor_type]" type="radio" value="plain_text">
+                  <label for="social_engineering_email_editor_type_plain_text">
+                    Plain text
+                  </label>
+                  <input id="social_engineering_email_editor_type_preview" name="social_engineering_email[editor_type]" type="radio" value="preview">
+                  <label for="social_engineering_email_editor_type_preview">
+                    Preview
+                  </label>
+                </div>
+              </div>
+              <div class='cell white-box origin-box' style='width: 40%;text-align:center;'>
+                <%= f.input :template, :collection => SocialEngineering::EmailTemplate.where(workspace_id: @workspace.id), :input_html => {'placeholder' => 'None'}, :as => 'select', :include_blank => 'None' %>
+              </div>
+              <div class='cell' style='width: 30%;text-align:right;'>
+                <div class='custom-attribute'>
+                  <%= f.input :insert,  :collection => @email.custom_attributes, :input_html => { 'class' => 'dropdown-menu', :placeholder => 'Insert custom attribute:'}, :label => false %>
+
+                </div>
+              </div>
+            </div>
+
+            <div class='preview' style='display: none; position: relative;'>
+              <iframe sandbox='allow-same-origin' name='email-preview-iframe'></iframe>
+              <div style='position:absolute;top:0;left:0;right:0;bottom:0;' class='blocker'>
+                <!-- iframe interaction blocker -->
+              </div>
+            </div>
+            <%= f.input :content, :label => false, :input_html => { 'class' => 'to-code-mirror' } %>
+          </div>
+          
+        </div>
+      </div>
+      <%= render :partial => 'social_engineering/shared/campaign_link_form', :locals => { :object => @email } %>
+      <%= render :partial => 'social_engineering/shared/campaign_landing_link_form' %>
+      <%= render :partial => 'social_engineering/shared/modify_link_form', :locals => { :object => @email } %>
+    </div>
+  </div>
+<% end %>

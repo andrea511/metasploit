@@ -1,0 +1,26 @@
+# Logfile created on 2023-10-16 16:09:49 +0700 by logger.rb/v1.4.3
+[2023-10-16 09:10:04 UTC  APPLICATION  ] Metasploit Pro UI started.
+[2023-10-16 09:19:04 UTC  APPLICATION  ] Metasploit Pro Worker started.
+[2023-10-17 01:20:46 UTC      USER     ] 127.0.0.1 - andrea - Creating initial admin user: {"username"=>"andrea", "email"=>"andreaforworking@gmail.com"}.
+[2023-10-17 01:33:54 UTC AUTHENTICATION] 127.0.0.1 - andrea - Successful logout.
+[2023-10-17 01:34:33 UTC  APPLICATION  ] Metasploit Pro UI stopped.
+[2023-10-17 01:34:34 UTC  APPLICATION  ] Metasploit Pro Worker stopped.
+[2023-10-17 01:36:13 UTC  APPLICATION  ] Metasploit Pro UI started.
+[2023-10-17 01:45:05 UTC  APPLICATION  ] Metasploit Pro UI stopped.
+[2023-10-17 01:47:50 UTC  APPLICATION  ] Metasploit Pro UI started.
+[2023-10-17 01:51:28 UTC AUTHENTICATION] 127.0.0.1 - andrea - Successful login.
+[2023-10-17 01:56:50 UTC  APPLICATION  ] Metasploit Pro Worker started.
+[2023-10-17 02:22:32 UTC AUTHENTICATION] 127.0.0.1 - andrea - Session timeout.
+[2023-10-18 10:30:48 UTC  APPLICATION  ] Metasploit Pro UI started.
+[2023-10-18 10:40:37 UTC  APPLICATION  ] Metasploit Pro Worker started.
+[2023-10-18 13:49:00 UTC AUTHENTICATION] 127.0.0.1 - [NONE] - Failed login. Invalid username or password.
+[2023-10-18 13:49:07 UTC AUTHENTICATION] 127.0.0.1 - andrea - Successful login.
+[2023-10-18 16:55:48 UTC AUTHENTICATION] 127.0.0.1 - andrea - Session timeout.
+[2023-10-18 16:55:56 UTC AUTHENTICATION] 127.0.0.1 - andrea - Successful login.
+[2023-10-18 17:27:16 UTC AUTHENTICATION] 127.0.0.1 - andrea - Session timeout.
+[2023-10-18 17:33:49 UTC AUTHENTICATION] 127.0.0.1 - andrea - Successful login.
+[2023-10-18 18:04:20 UTC AUTHENTICATION] 127.0.0.1 - andrea - Session timeout.
+[2023-10-18 18:21:22 UTC  APPLICATION  ] Metasploit Pro Worker stopped.
+[2023-10-18 18:21:22 UTC  APPLICATION  ] Metasploit Pro UI stopped.
+[2023-10-18 18:23:31 UTC  APPLICATION  ] Metasploit Pro UI started.
+[2023-10-18 18:33:10 UTC  APPLICATION  ] Metasploit Pro Worker started.

@@ -1,0 +1,77 @@
+//TODO: Dynamically load these
+@import "shared/payload_settings";
+@import "shared/attempt_session";
+@import "css3-mixins";
+
+// FIX ME: We should find a good dynamically-laoded CSS solution
+@import "findings/domino";
+
+@import "components/spinner";
+@import "components/buttons";
+
+.drilldown-area {
+  .table-component {
+    .header-region {
+      h3 {
+        text-align: center;
+        margin-top: 0;
+      }
+    }
+    .buttons-region {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+  }
+}
+
+.console.logs {
+  min-height: 421px;
+}
+
+#tasks-app {
+  min-height: 300px;
+}
+
+// STATUS/CONTROL HEADER
+
+.task-status {
+  width: 240px;
+  float: left;
+
+  label.status {
+    width: 75px;
+    text-align: center;
+  }
+}
+
+.control-buttons {
+  padding-top: 12px;
+  width: 200px;
+  float: left;
+
+  .spinner {
+    position: absolute;
+    top: 13px;
+    left: 375px;
+  }
+}
+
+.control-button {
+  position: relative;
+  top: -2px;
+
+  &#pause {
+    @extend %pause-button;
+    margin-left: 5px;
+  }
+
+  &#resume {
+    @extend %resume-button;
+    margin-left: 5px;
+  }
+
+  &#stop {
+    @extend %stop-button;
+  }
+}

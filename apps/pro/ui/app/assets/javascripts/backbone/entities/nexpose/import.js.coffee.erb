@@ -1,0 +1,25 @@
+define [
+  'base_model'
+  'base_collection'
+], ->
+  @Pro.module "Entities.Nexpose", (Nexpose, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+    class Nexpose.Import extends App.Entities.Model
+      url: '/nexpose_consoles.json'
+
+
+    #
+    # API
+    #
+    API =
+      newImport: (attributes = {}) ->
+        new Nexpose.Import(attributes)
+
+    #
+    # REQUEST HANDLERS
+    #
+    App.reqres.setHandler "new:nexpose:import:entity", (attributes) ->
+      API.newImport attributes

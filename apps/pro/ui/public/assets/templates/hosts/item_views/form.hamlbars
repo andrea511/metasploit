@@ -1,0 +1,87 @@
+.host_form
+  {{#form "/" class="form toggle-edit"}}
+  %h5 Name & Address
+  %ul
+    %li.address
+      {{label "host[address]" "Address"}}
+      {{input "host[address]" address}}
+      %a.edit{ :href => 'javascript:void(0)', :for => 'host[address]' } {{address}}
+      .btns
+        %a.pencil.edit{ :href => 'javascript:void(0)', :for => 'host[address]' }
+        .actions
+          %a.save{ :href => 'javascript:void(0)', :for => 'host[address]' } Save
+          %a.cancel{ :href => 'javascript:void(0)', :for => 'host[address]' } Cancel
+    %li.name
+      {{label "host[name]" "Name"}}
+      {{input "host[name]" name}}
+      %a.edit{ :href => 'javascript:void(0)', :for => 'host[name]' } {{name}}
+      .btns
+        %a.pencil.edit{ :href => 'javascript:void(0)', :for => 'host[name]' }
+        .actions
+          %a.save{ :href => 'javascript:void(0)', :for => 'host[name]' } Save
+          %a.cancel{ :href => 'javascript:void(0)', :for => 'host[name]' } Cancel
+    %li.mac
+      {{label "host[mac]" "MAC Address"}}
+      {{input "host[mac]" mac}}
+      %a.edit{ :href => 'javascript:void(0)', :for => 'host[mac]' } {{mac}}
+      .btns
+        %a.pencil.edit{ :href => 'javascript:void(0)', :for => 'host[mac]' }
+        .actions
+          %a.save{ :href => 'javascript:void(0)', :for => 'host[mac]' } Save
+          %a.cancel{ :href => 'javascript:void(0)', :for => 'host[mac]' } Cancel
+  %h5 Operating System
+  %ul
+    %li.os_name
+      {{label "host[os_name]" "Name"}}
+      {{input "host[os_name]" os_name}}
+      %a.edit{ :href => 'javascript:void(0)', :for => 'host[os_name]' } {{os_name}}
+      .btns
+        %a.pencil.edit{ :href => 'javascript:void(0)', :for => 'host[os_name]' }
+        .actions
+          %a.save{ :href => 'javascript:void(0)', :for => 'host[os_name]' } Save
+          %a.cancel{ :href => 'javascript:void(0)', :for => 'host[os_name]' } Cancel
+    %li.os_flavor
+      {{label "host[os_flavor]" "Flavor"}}
+      {{input "host[os_flavor]" os_flavor}}
+      %a.edit{ :href => 'javascript:void(0)', :for => 'host[os_flavor]' } {{os_flavor}}
+      .btns
+        %a.pencil.edit{ :href => 'javascript:void(0)', :for => 'host[os_flavor]' }
+        .actions
+          %a.save{ :href => 'javascript:void(0)', :for => 'host[os_flavor]' } Save
+          %a.cancel{ :href => 'javascript:void(0)', :for => 'host[os_flavor]' } Cancel
+    %li.os_version
+      {{label "host[os_sp]" "SP"}}
+      {{input "host[os_sp]" os_sp}}
+      %a.edit{ :href => 'javascript:void(0)', :for => 'host[os_sp]' } {{os_sp}}
+      .btns
+        %a.pencil.edit{ :href => 'javascript:void(0)', :for => 'host[os_sp]' }
+        .actions
+          %a.save{ :href => 'javascript:void(0)', :for => 'host[os_sp]' } Save
+          %a.cancel{ :href => 'javascript:void(0)', :for => 'host[os_sp]' } Cancel
+    %li.purpose
+      {{label "host[purpose]" "Purpose"}}
+      {{input "host[purpose]" purpose}}
+      %a.edit{ :href => 'javascript:void(0)', :for => 'host[purpose]' } {{purpose}}
+      .btns
+        %a.pencil.edit{ :href => 'javascript:void(0)', :for => 'host[purpose]' }
+        .actions
+          %a.save{ :href => 'javascript:void(0)', :for => 'host[purpose]' } Save
+          %a.cancel{ :href => 'javascript:void(0)', :for => 'host[purpose]' } Cancel
+  %h5
+    Comments
+    {{#if_present comments}}
+    %a.edit.comments{ :href => 'javascript:void(0)', :for => 'host[comments]' } Edit Comments
+    {{else}}
+    %a.edit.comments{ :href => 'javascript:void(0)', :for => 'host[comments]' } Add Comments
+    {{/if_present}}
+  %textarea{ :name => 'host[comments]' }
+  .actions.comments
+    %a.save{ :href => 'javascript:void(0)', :for => 'host[comments]' } Save
+    %a.cancel{ :href => 'javascript:void(0)', :for => 'host[comments]' } Cancel
+  %p.comments
+    {{#if_present comments}}
+    %span {{comments}}
+    {{else}}
+    No Comments
+    {{/if_present}}
+  {{/form}}

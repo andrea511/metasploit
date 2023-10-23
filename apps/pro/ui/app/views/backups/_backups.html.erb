@@ -1,0 +1,124 @@
+<div class="backups">
+
+  <p>
+    Backups can help prevent data loss and enable you to easily migrate data between Metasploit servers. A backup of Metasploit includes your application settings, all of your projects, and everything you need to restore your server to a specific state.
+      <a href="https://help.rapid7.com/metasploit/#managing-updating-metasploit/back-up-restore.html" target="_blank">
+        Learn more.
+      </a>
+  </p>
+
+<%= form_tag restore_backup_path, :id => 'restore' %></form>
+
+<%= form_tag delete_backups_path, :method => :delete do %>
+  <div class="control-bar">
+    <span class="button">
+      <%= link_to "New Backup", new_backup_path, :class => "new" %>
+    </span>
+    <span class="button">
+      <%= submit_tag "Delete", :class => "delete", :id => 'backup-delete-submit' %>
+    </span>
+    <span class="button">
+      <%= link_to "Upload", add_backup_path, :class => "new" %>
+    </span>
+  </div>
+
+  <table id="backup-list" class="list">
+    <thead>
+      <th class="checkbox"><%= check_box_tag "all-backups", true %></th>
+      <th>File</th>
+      <th>Description</th>
+      <th>Date</th>
+      <th>Metasploit Version</th>
+      <th>Compressed Size</th>
+      <th>Restored Size</th>
+      <th>Status</th>
+      <th>Restore</th>
+    </thead>
+    <tbody>
+    <% if @backups %>
+    <% @backups.each do |backup| %>
+    <tr class="<%=h row_cycle %>">
+      <td><%= check_box_tag("delete_backups[]", backup.name, false, :id => nil) %></td>
+      <td class="backup-data">
+        <% if backup.status =~ /Complete/i %>
+          <%= link_to backup.name, download_backup_path(:backup_name => backup.name), :id => "#{backup.name.gsub(" ", "_")}_download" %>
+        <% else%>
+          <%=h backup.name %>
+        <% end %>
+      </td>
+      <td class="backup-data">
+        <%=h backup.description %>
+      </td>
+      <td class="backup-data">
+        <%=h backup.date %>
+      </td>
+      <td class="backup-data">
+        <%=h backup.ms_version_revision %>
+      </td>
+      <td>
+        <%=h (backup.zip_size / (1024.0 * 1024.0)).round 2  %> MB
+      </td>
+      <td>
+        <%=h (backup.size / (1024.0 * 1024.0)).round 2  %> MB
+      </td>
+      <td class="backup-status">
+        <% if backup.status =~ /Complete/i %>
+          <%=h backup.status %>
+        <% else%>
+          <%=h "Preparing" %>
+        <% end %>
+      </td>
+      <% if backup.compatible? %>
+        <td>
+        <span class="btn">
+          <%= submit_tag 'Restore', :type => 'button', :class => "restore", :form => 'restore', :data => {:backup_name => backup.name} %>
+        </span>
+        </td>
+      <% else %>
+        <td title="Backup version is newer than the current Metasploit release version. You cannot restore this backup.">
+        <span class="btn disabled">
+          <%= submit_tag 'Restore', :type => 'button', :class => "restore" %>
+        </span>
+        </td>
+      <% end %>
+    </tr>
+    <% end %>
+    <% else %>
+      <td colspan=9 align=center>
+        No Persistent Backups
+      </td>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+</div>
+
+<div id="restore-backup-confirmation" style="display: none;">
+  <p>
+    Restoring "<span id="backup-name"></span>" will overwrite everything in your database, including your user accounts, reports, logs, and loot. <br><br>Before you restore this backup, you should check if there are any tasks currently running. These tasks will be stopped during a restore and any data that you have not backed up will be lost. <br><br>The process may take a while to complete.
+  </p>
+</div>
+
+<div id="delete-backup-confirmation" style="display: none;">
+  <p>
+    Deleting these backups will permanently remove them.
+  </p>
+  <table class="list">
+    <thead>
+      <th>File</th>
+      <th>Description</th>
+      <th>Date</th>
+      <th>Metasploit Version</th>
+    </thead>
+    <tbody id="delete-backup-confirmation-list"></tbody>
+  </table>
+</div>
+
+<%= nonced_javascript_tag do %>
+  (function() {
+    jQuery(function($) {
+      $("#all-backups").checkAll($("#backup-list"));
+    });
+  }).call(this);
+<% end %>

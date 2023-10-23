@@ -1,0 +1,10 @@
+$(document).ready(
+  function(){
+    setInterval(function(){
+      $.ajax({
+        url: "<%= workspace_sessions_path(@workspace) %>",
+        type: "GET",
+        dataType: "script"
+      });
+    }, 10000 );
+  });

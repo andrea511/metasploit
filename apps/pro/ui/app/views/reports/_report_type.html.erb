@@ -1,0 +1,37 @@
+<% not_licensed = [(:pci unless License.get.supports_pci?),
+                   (:fisma unless License.get.supports_fisma?),
+                   (:webapp_assessment unless License.get.supports_webapp_exploitation?),
+                   (:social_engineering unless License.get.supports_campaigns?)
+]
+-%>
+<% disallowed_types = [Report::METAMODULE_TYPES, not_licensed, :custom].flatten %>
+<% @report_type_map = if defined? report_types # Passed in for Wizards
+                        Report::REPORT_TYPE_MAP.select { |k,v| k.to_sym.in? report_types }
+                      else
+                        Report::REPORT_TYPE_MAP.except(*disallowed_types)
+                      end
+%>
+<% @report_types_sorted = @report_type_map.keys.sort %>
+<% @report_types_collection = []
+   @report_types_sorted.each do |key|
+     @report_types_collection << [ @report_type_map[key].name, key ]
+   end
+%>
+
+<%= f.inputs 'Report Type' do %>
+    <%= f.input :report_type,
+                :include_blank => false,
+                :collection => @report_types_collection,
+                :as => 'select' %>
+
+    <%= f.help_link :report_type do %>
+        <h3>Available Report Types</h3>
+        <ul>
+          <% @report_types_sorted.each do |report_type| %>
+              <% rtype = @report_type_map[report_type] %>
+              <% help_line = "#{rtype.name}: #{rtype.description}" %>
+              <%= content_tag(:li, help_line) %>
+          <% end %>
+        </ul>
+    <% end %>
+<% end %>

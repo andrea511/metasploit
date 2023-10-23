@@ -1,0 +1,58 @@
+define [
+  'jquery',
+  '<%= javascript_path('shared/lib/pie_chart') %>',
+  '<%= javascript_path('templates/task_chains/item_views/task_chain_item') %>'
+], ($, PieChart, Template) ->
+  class TaskChainItem extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['task_chains/item_views/task_chain_item']
+
+    events:
+      'click canvas': 'pieSelected'
+
+    className: 'container'
+
+    ui:
+      scan: '.scan'
+
+    modelEvents:
+      'change:selected': '_selectedChanged'
+
+    _hoverColor: '#2C69A0'
+    _innerFill: 'grey'
+    _textFill: '#fff'
+    _textFillHover: '#fff'
+    _errorColor: '#A22B2E'
+
+    onRender: =>
+      @_initPie()
+      #So we can search the collection view by collection view item id
+      @model.set('cid', @model.cid)
+
+    _initPie: ->
+      @chart = new PieChart(
+        canvas: @ui.scan[0]
+        innerFillHover: @_hoverColor,textFill: @_textFill
+        textFillHover: @_textFillHover
+        innerFill: @_innerFill
+      )
+
+    _selectedChanged: (model, val)  ->
+      unless val
+        @chart.setInnerFill(@_innerFill, true)
+      else
+        @chart.setInnerFill(@_hoverColor, true)
+
+    flag:() ->
+      @chart.setInnerFill(@_errorColor, true)
+
+    unflag:() ->
+      if @chart.getInnerFill() == @_hoverColor
+        @chart.setInnerFill(@_hoverColor, true)
+      else
+        @chart.setInnerFill(@_innerFill, true)
+
+    active: () ->
+      @chart.setInnerFill(@_hoverColor, true)
+
+    pieSelected: () =>
+      $(@el).trigger('pieClicked', @)

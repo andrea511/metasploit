@@ -1,0 +1,193 @@
+jQueryInWindow ($) ->
+  class @EmailFormView extends PaginatedFormView
+    initialize: (opts) ->
+      _.bindAll(this, 'targetListChanged', 'bindForm')
+      @configuring = false
+      @campaignSummary = opts['campaignSummary']
+      @dontRenderSelect2 = true
+      @loadingModal = $('<div class="loading">').dialog(
+        modal: true
+        maxHeight: 480
+        title: 'Loading... '
+        autoOpen: false
+        width: '430px'
+        closeOnEscape: false
+        close: =>
+          # wait 300ms in case they pressed escape
+          # this is not a very good solution.
+          _.delay((=>@configuring = false), 300)
+        buttons:
+          "Cancel": ->
+            $(this).dialog("close")
+          "Upload": @uploadFile
+      )
+      super
+
+    uploadFile: =>
+      $.ajax
+        url: $('form', @loadingModal).attr('action')
+        type: 'POST'
+        files: $('form :file', @loadingModal)
+        data: $('form input,select,textarea', @loadingModal).not(':file').serializeArray()
+        iframe: true
+        processData: false
+        success: (data, status) =>
+          @loadingModal.html(data)
+          saveStatus = $('meta[name=save-status]', @loadingModal).attr('content')
+          if saveStatus == 'false' || !saveStatus
+            @showFileConfig() # render error in dialog
+          else # success!
+            jsonData = $.parseJSON(saveStatus)
+            @loadingModal.dialog('close')
+            @configuring = false
+            file = jsonData['user_submitted_file']
+            # add the <option> to our overlying <select>
+            $select = $("select[name='social_engineering_email[user_supplied_file]']", @el)
+            $newOption = $("<option>").val(file.id).html(_.escape(file.name))
+            $select.append($newOption)
+            $select.select2('val', file.id)
+        error: =>
+      @showLoading()
+
+    beginFileSetup: ->
+      @configuring = true
+      url = @fileUrl()
+      @showLoading()
+      $(@loadingModal).load url, =>
+        @showFileConfig()
+
+    fileUrl: ->
+      "/workspaces/#{WORKSPACE_ID}/social_engineering/files/new?inline=true"
+
+    fileChanged: (e) =>
+      $selOption = $('option:selected', e.target)
+      if $selOption.index() == 1 # the "Create new target list... option"
+        @beginFileSetup() # deselect all
+        $selOption.parents('select').select2("val", "")
+        #$('option:first-child', e.target).attr('selected', 'selected')
+
+    showFileConfig: ->
+      @loadingModal.dialog('close')
+      @loadingModal.dialog(title: 'Upload a new file', width: '700px')
+      @loadingModal.css('max-height': '450px')
+      @loadingModal.removeClass('loading')
+      $('.ui-dialog-titlebar-close', @loadingModal.parents('.ui-dialog')).show()
+      @loadingModal.dialog('open')
+      $('.ui-dialog-buttonpane', @loadingModal.parents('.ui-dialog')).show()
+    
+
+    targetListUrl: ->
+      "/workspaces/#{WORKSPACE_ID}/social_engineering/target_lists/new.html?inline=true"
+
+    targetListChanged: (e) ->
+      $selOption = $('option:selected', e.target)
+      if $selOption.index() == 1 # the "Create new target list... option"
+        @beginTargetListSetup() # deselect all
+        $selOption.parents('select').select2("val", "")
+        #$('option:first-child', e.target).attr('selected', 'selected')
+  
+    showLoading: ->
+      @loadingModal.dialog('close')
+      @loadingModal.dialog(width: '430px', title: 'Loading...')
+      $('.ui-dialog-titlebar-close', @loadingModal.parents('.ui-dialog')).hide()
+      @loadingModal.html('<div class="loading"></div>')
+      @loadingModal.dialog('open')
+      $('.ui-dialog-buttonpane', @loadingModal.parents('.ui-dialog')).hide()
+
+    showTargetListConfig: (dontBind=false) ->
+      @loadingModal.dialog('close')
+      @loadingModal.dialog(title: 'New Target List', width: '700px')
+      @loadingModal.css('max-height': '450px')
+      @loadingModal.removeClass('loading')
+      $('.ui-dialog-titlebar-close', @loadingModal.parents('.ui-dialog')).show()
+      @loadingModal.dialog('open')
+      $('.ui-dialog-buttonpane', @loadingModal.parents('.ui-dialog')).hide()
+      _.delay((=>@bindForm()), 0) unless dontBind # wait for re-render (fixes ie9 bug)
+
+    beginTargetListSetup: ->
+      @configuring = true
+      url = @targetListUrl()
+      @showLoading()
+      $(@loadingModal).load url, =>
+        @showTargetListConfig()
+
+    bindForm: ->
+      window.renderTargets()
+      $('a.save-targets').click (e) =>
+        $('form', @loadingModal).first().submit()
+        e.preventDefault()
+      $('form', @loadingModal).first().submit (e) =>
+        e.preventDefault()
+        $('form', @loadingModal).hide()
+        $('.target-list-new>div.full_errors', @loadingModal).remove()
+        $.ajax
+          url: $(e.target).attr('action')
+          type: 'POST'
+          files: $('form :file', @loadingModal)
+          data: $('form input,select,textarea', @loadingModal).not(':file').serializeArray()
+          iframe: true
+          processData: false
+          success: (data, status) =>
+            $sandbox = $('<div style="display:none">').appendTo($('body'))
+            $sandbox.html(data)
+            saveStatus = $('meta[name=save-status]', $sandbox).attr('content')
+            if saveStatus == 'false' || !saveStatus
+              $('.loading', @loadingModal).remove()
+              $('form', @loadingModal).show()
+              $('#errorExplanation', $sandbox).parent().addClass('full_errors')
+                .prependTo($('.target-list-new', @loadingModal))
+              @showTargetListConfig(true) # render error in dialog
+            else # success!
+              jsonData = $.parseJSON(saveStatus)
+              @loadingModal.dialog('close')
+              @configuring = false
+              targetList = jsonData['target_list']
+              # add the <option> to our overlying <select>
+              $select = $("select[name='social_engineering_email[target_list_id]']")
+              $newOption = $("<option>").val(targetList.id).html(_.escape(targetList.name))
+              $select.append($newOption)
+              $select.select2('val', targetList.id)
+          error: =>
+        # hide modal, hide form inside modal, add & show Loading div
+        @loadingModal.dialog('close')
+        @loadingModal.dialog(width: '430px', title: 'Loading...')
+        @loadingModal.append($('<div class="loading"></div>'))
+        @loadingModal.dialog('open')
+
+    close: ->
+      return if @configuring
+      super
+
+    page: (idx) ->
+      super
+      if idx == 1
+        $('.editor-box input[type=radio]', @el).change()
+
+    onLoad: ->
+      super
+      $('fieldset.inputs', @el).css('float', 'none')
+      $('input[type=checkbox],input[type=radio]', @el).css('vertical-align', 'baseline')
+      $("select[name='social_engineering_email[target_list_id]']", @el).change(@targetListChanged)
+      $('.white-box.editor-box', @el).buttonset()
+      $('select', @el).select2($.extend({
+        escapeMarkup: (markup) -> markup #disable so we dont double encode
+        formatSelection: (state) ->
+          return _.escape state['text'] # must escape
+        formatResult: (state, container) ->
+          unless state['id'] == 'Create a new Target List...' || state['id'] == 'Upload a new file...'
+            return _.escape state['text'] # must escape
+
+          img = '<%= image_tag('icons/silky/add.png', style:'vertical-align: middle; position: relative;bottom: 2px; right: 1px;', alt:'+') %>'
+          # setting these properties as a single hash doesnt work for some reason
+          $(container).css('border-bottom': '1px dotted #ccc')
+          $(container).css('border-top': '1px dotted #ccc') 
+          $(container).css('margin-bottom': '4px')
+          $(container).css('padding-bottom': '8px')
+          $(container).css('padding-top': '8px')
+          return img + state['text']
+      }, DEFAULT_SELECT2_OPTS))
+      $("select[name='social_engineering_email[user_supplied_file]']", @el).change(@fileChanged)
+
+      window.renderAttributeDropdown()
+      window.renderCodeMirror()
+      window.renderEmailEdit()

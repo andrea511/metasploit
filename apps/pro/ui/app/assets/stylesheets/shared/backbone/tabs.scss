@@ -1,0 +1,59 @@
+
+.backbone-tabs {
+  $border-color: #ccc;
+  background-color: #F2F2F2;
+
+  .content {
+    background-color: #ffffff;
+    border: 1px solid $border-color;
+    padding: 10px;
+    margin-bottom: 10px;
+    &.tab-loading {
+      width: auto;
+      height: auto;
+      margin-top: 0;
+      min-height: 150px;
+    }
+  }
+
+  ul.nav {
+    margin-top: 15px;    
+
+    li {
+      position: relative;
+      top: 1px;
+      padding: 9px 14px 9px 14px;
+      display: inline-block;
+      border-top-radius: 5px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      margin-right: 5px;
+
+      .name {
+        display: inline-block;
+      }
+
+      @import "shared/_badges.scss";
+
+      &:hover {
+        $hover-color: #e8e8e8;
+        background: $hover-color;
+        border: 1px solid $hover-color;
+        border-bottom: 1px solid $border-color;
+      }
+
+      &.selected {
+        border: 1px solid $border-color;
+        border-bottom: 1px solid #fff;
+        background-color: #ffffff;
+        color: #000;
+
+        .count {
+          border: 1px solid #1c2324;
+          color: #1c2324;
+          background-color: #ffffff;
+        }
+      }
+    }
+  }
+}

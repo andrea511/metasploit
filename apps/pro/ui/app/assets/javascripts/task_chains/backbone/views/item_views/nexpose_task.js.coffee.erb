@@ -1,0 +1,255 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/nexpose_task') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+  'apps/imports/index/index_controller'
+  'css!css/imports'
+], ($, Template, TaskConfigView) ->
+  class NexposeTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/nexpose_task']
+
+    id: 'imports-main-region'
+
+    VALIDATION_URL: "/workspaces/#{WORKSPACE_ID}/tasks/validate_nexpose"
+
+    onShow:() ->
+      if @isExistingTask()
+        @showExistingTask()
+      else
+        if @isCachedExistingTask()
+          @showCachedExistingTask()
+        else
+          if @isClonedTask()
+            @showClonedTask()
+          else
+            @showNewTask()
+
+      @_bindTableListener()
+
+    _bindTableListener: =>
+      @controller.nexposeController.once('nexposeSites:initialized',()=>
+        @listenToOnce @controller.nexposeController.nexposeSites._mainView.table.tableCollection,'sync', =>
+          @trigger('loaded')
+          @_storeView()
+        @controller.nexposeController._mainView.nexposeSitesRegion.currentView.table.carpenterRadio.on('table:rows:selected',@_triggerRowsSelected)
+        @controller.nexposeController._mainView.nexposeSitesRegion.currentView.table.carpenterRadio.on('table:rows:deselected',@_triggerRowsSelected)
+        @controller.nexposeController._mainView.nexposeSitesRegion.currentView.table.carpenterRadio.on('table:row:selected',@_triggerRowsSelected)
+        @controller.nexposeController._mainView.nexposeSitesRegion.currentView.table.carpenterRadio.on('table:row:deselected',@_triggerRowsSelected)
+      )
+
+    _triggerRowsSelected: =>
+      @_storeView()
+
+
+    showNewTask: () ->
+      @controller = new Pro.ImportsApp.Index.Controller(
+        type: Pro.ImportsApp.Index.Type.Nexpose
+        showTypeSelection: false
+        region: @configRegion
+      )
+      @trigger('loaded')
+
+    showExistingTask:() ->
+      @controller = new Pro.ImportsApp.Index.Controller(
+        type: Pro.ImportsApp.Index.Type.Nexpose
+        showTypeSelection: false
+        region: @configRegion
+      )
+      @_initErrorMessages()
+
+      @storedForm = new Pro.Entities.Nexpose.ScanAndImport(@model.get('task').form_hash)
+
+      if @storedForm?.isSiteImport()
+        @_restoreSiteImport()
+        @_restoreLayout()
+
+      if @storedForm?.isScanAndImport()
+        @_restoreScanAndImport()
+        @_restoreLayout()
+
+
+    showClonedTask: () ->
+      @controller = new Pro.ImportsApp.Index.Controller(
+        type: Pro.ImportsApp.Index.Type.Nexpose
+        showTypeSelection: false
+        region: @configRegion
+      )
+      @_initErrorMessages()
+
+      @storedForm = @model.get('clonedModel')
+
+      if @storedForm?.isSiteImport()
+        @_restoreSiteImport()
+        @_restoreLayout()
+
+      if @storedForm?.isScanAndImport()
+        @_restoreScanAndImport()
+        @_restoreLayout()
+
+      @model.set('cloned',null)
+
+    showCachedExistingTask: () ->
+      @controller = new Pro.ImportsApp.Index.Controller(
+        type: Pro.ImportsApp.Index.Type.Nexpose
+        showTypeSelection: false
+        region: @configRegion
+      )
+
+      if @storedForm?.isSiteImport()
+        @_restoreSiteImport()
+        @_restoreLayout()
+      else
+        @_restoreScanAndImport()
+        @_restoreLayout()
+
+      @_initErrorMessages()
+
+
+    _restoreLayout: ->
+      if @storedForm
+        @controller._mainView.ui.autoTagOs.prop('checked',@storedForm.get('autotag_os')==true||@storedForm.get('autotag_os')=='true')
+        @controller._mainView.ui.preserveHosts.prop('checked',@storedForm.get('preserve_hosts')==true||@storedForm.get('preserve_hosts')=='true')
+
+
+        # Restore Tagging Tokens
+        if @storedForm.get('tagTokens')?.length > 0
+          @controller.tagController.restoreTokens(@storedForm.get('tagTokens'))
+          @controller._mainView.expandTagSection()
+
+        @listenTo @controller.tagController.tagForm, 'token:changed', =>
+          @_storeView()
+
+    _restoreScanAndImport: ->
+      if @storedForm
+        @controller.nexposeController._mainView.setConsole(@storedForm.get('consoleId')) if @storedForm.get('consoleId')
+        Pro.execute "loadingOverlay:show" if @storedForm.get('consoleId')
+        @controller.nexposeController._mainView.setScanAndImport()
+
+        @listenTo @controller.nexposeController, 'scanAndImport:rendered', =>
+          @_initErrorMessages()
+          Pro.execute "loadingOverlay:hide"
+          @controller.nexposeController.scanAndImport.ui.whitelistHosts.val(@storedForm.get('whitelist_string'))
+          @controller.nexposeController.scanAndImport.ui.blacklistHosts.val(@storedForm.get('blacklist_string'))
+          @controller.nexposeController.scanAndImport.ui.scanTemplate.val(@storedForm.get('scan_template'))
+
+          # Restore Tagging Tokens
+          if @storedForm.get('tagTokens')?.length > 0
+            @controller.tagController.restoreTokens(@storedForm.get('tagTokens'))
+            @controller._mainView.expandTagSection()
+
+          @trigger('loaded')
+
+
+    _restoreSiteImport: ->
+      if @storedForm
+        @controller.nexposeController.once('nexposeSites:initialized',@_setTable)
+        @controller.nexposeController._mainView.setConsole(@storedForm.get('consoleId')) if @storedForm.get('consoleId')
+        @controller.nexposeController._mainView.setSiteImport()
+        Pro.execute "loadingOverlay:show" if @storedForm.get('consoleId')
+
+
+    _setTable: () =>
+      @_initErrorMessages()
+      @controller.nexposeController.setTableSelections(@storedForm.get('siteNames'),@storedForm.get('tableSelections'))
+
+
+    isExistingTask: () =>
+      @model.get('task')? && !@form_cache? && !@model.get('task').form_hash.migrated
+
+    isCachedExistingTask: () =>
+      @form_cache? and !@model.get('cloned')?
+
+    isClonedTask: () =>
+      @model.get('cloned')?
+
+    formModel: () ->
+      @storedForm
+
+    _initErrorMessages: ->
+      if @errors
+        if typeof @errors == 'object'
+          if @controller.nexposeController.isScanAndImport()
+            @controller.nexposeController.scanAndImport?.showErrors(@errors)
+        else
+          @controller.nexposeController._mainView.showErrors(@errors)
+
+    _storeForm: (opts={callSuper:true}) ->
+      super if opts.callSuper
+      @_storeView()
+
+    _storeView: ->
+      if @controller.nexposeController.isSiteImport()
+        table = @controller.nexposeController._mainView.nexposeSitesRegion.currentView.table
+        if table
+          table.collection.fetchIDs(
+                  @controller.nexposeController._mainView.nexposeSitesRegion.currentView.table.tableSelections,
+            ignore_if_no_selections: ''
+          )
+          .done (ids) =>
+            @storedForm = @controller.getSiteImportEntity(ids)
+            @storedForm.set('consoleId',parseInt(@controller.nexposeController._mainView.ui.nexposeConsole.val()))
+            @storedForm.set('tableSelections',@controller.nexposeController._mainView.nexposeSitesRegion.currentView.table.tableSelections)
+            @storedForm.set('siteNames',@_getTableSiteNames())
+            @storedForm.set(tagTokens: @controller.tagController.getTokens())
+            @_validate()
+        else
+          @storedForm = @controller.getSiteImportEntity()
+          @storedForm.set(tagTokens: @controller.tagController.getTokens())
+
+      if @controller.nexposeController.isScanAndImport()
+        @storedForm = @controller.getScanAndImportEntity()
+        @storedForm.set('consoleId',parseInt(@controller.nexposeController._mainView.ui.nexposeConsole.val()))
+        @storedForm.set(tagTokens: @controller.tagController.getTokens())
+
+      @storedForm
+
+    _getTableSiteNames: ->
+      $el = @controller.nexposeController._mainView.nexposeSitesRegion.currentView.table._mainView.$el
+      siteNames= []
+
+      _.each($('tr td input:checked',$el),(elem)=>
+        siteName = $('td.name span',$(elem).closest('tr')).html()
+        siteNames.push(siteName)
+      )
+      siteNames
+
+    _setCache: ->
+      super
+
+    onBeforeClose: ->
+      super
+      unless @controller.nexposeController.isSiteImport() and @controller.nexposeController._mainView.nexposeSitesRegion.currentView.table?
+        @_validate()
+
+
+    _triggerValidated: (model,response,options) =>
+     if response.errors
+       @errors = response.errors
+       $(document).trigger('showErrorPie',@)
+     else
+       @errors = null
+
+     if response.responseJSON?.errors
+       $(document).trigger('showErrorPie',@)
+       @errors = response.responseJSON.errors
+     else
+       @errors=null
+
+     $(document).trigger('validated',@)
+
+    _validate: =>
+      $(document).trigger('before:validated',@)
+
+      unless @controller.nexposeController.importRun?
+        @errors = "Must Select a Nexpose Console"
+        $(document).trigger('showErrorPie',@)
+        $(document).trigger('validated',@)
+        @_setCache()
+        @_storeForm()
+      else
+        if @storedForm?
+          @controller.validate(@_triggerValidated,@storedForm)
+      @bindUIElements()
+
+
+

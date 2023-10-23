@@ -1,0 +1,5 @@
+<p>The selected vulnerabilities are being pushed to Nexpose.</p>
+
+<a href="<%=@linkToTask()%>">
+  See the task logs.
+</a>

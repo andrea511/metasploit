@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3_detail_services" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="90926abd-4318-4cbc-8f1e-eb09ae9029b6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Serif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Serif" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Serif" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Serif" fontSize="12"/>
+	<parameter name="host_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+  tags.id AS tag_id,
+  tags.name AS tag_name,
+  tags.desc AS tag_desc,
+  tags.report_detail AS tag_detail,
+  hosts.id AS host_id,
+  HOST(CAST(hosts.address as inet)) AS host_address,
+  COALESCE(hosts.name, HOST(CAST(hosts.address as inet))) AS host_name
+FROM tags
+  LEFT OUTER JOIN hosts_tags ON hosts_tags.tag_id = tags.id
+  LEFT OUTER JOIN hosts ON hosts.id = hosts_tags.host_id
+WHERE
+    tags.report_detail is true and
+    hosts.id = $P{host_id}
+ORDER BY host_id, tag_id
+;]]>
+	</queryString>
+	<field name="tag_id" class="java.lang.Integer"/>
+	<field name="tag_name" class="java.lang.String"/>
+	<field name="tag_desc" class="java.lang.String"/>
+	<field name="tag_detail" class="java.lang.Boolean"/>
+	<field name="host_id" class="java.lang.Integer"/>
+	<field name="host_address" class="java.lang.String"/>
+	<field name="host_name" class="java.lang.String"/>
+	<pageHeader>
+		<band height="21">
+			<line>
+				<reportElement uuid="6aa6f56b-e67a-4f18-9582-c53d8cdbb794" positionType="FixRelativeToBottom" x="0" y="20" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="24100e75-bb90-4d40-8b91-bfab6a5d88f6" style="Column header" x="0" y="0" width="90" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Tag]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6431a417-7d17-4dcc-b6d0-cf84c25f5ec8" style="Column header" x="93" y="0" width="462" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement uuid="3acd7f7c-a1ea-42cf-a06b-0b9f07f0a674" positionType="FixRelativeToBottom" x="3" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="28cd44d4-275c-4854-953b-82fd15cfcd6d" style="Detail" x="88" y="2" width="464" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[null == $F{tag_desc} ? "<None>" : $F{tag_desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6ae1411d-d44e-4d24-83b3-51a3e1a1c5ce" style="Detail" x="0" y="0" width="90" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tag_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

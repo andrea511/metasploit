@@ -1,0 +1,35 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/report') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+], ($, Template, TaskConfigView) ->
+  class Report extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/report']
+
+    VALIDATION_URL: "/workspaces/#{WORKSPACE_ID}/reports/validate_report"
+
+
+    onShow:() ->
+      $(document).on('report.loaded', @_report_type_changed)
+      @loadPartial("/workspaces/#{WORKSPACE_ID}/reports/new?_nl=0", @_afterLoad, @)
+
+    onBeforeClose: ->
+      super
+      $(document).off('report.loaded', @_report_type_changed)
+      @_validate(@VALIDATION_URL)
+
+    _afterLoad:(args)=>
+      $($('.inputs ol',@el)[0]).show()
+      $('fieldset.buttons',@el).remove()
+      $('.text_link_row',@el).remove()
+
+
+    _report_type_changed: () =>
+      @delegateEvents()
+      @bindUIElements()
+
+      @errors = null
+      $(document).trigger('clearErrorPie',@)
+      @_initErrorMessages()
+      $(document).trigger('validated',@)
+      @_afterLoad(null)

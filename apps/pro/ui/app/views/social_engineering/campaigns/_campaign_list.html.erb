@@ -1,0 +1,82 @@
+<div class='campaign-list'>
+  {% if (this.collection.models.length) { %}
+    {% _.each(this.collection.models, function(campaign) { %}
+      {% campaignDetails = campaign.get('campaign_details') %}
+      <div class='row' campaign-id='{{ campaign.id }}'>
+        <div class='cell title'>
+          <label class='title'>
+            <span>Campaign: {{ Helpers.truncate(campaignDetails.name, 65) }}</span>
+          </label>
+          <label class='date'>Started: {{ campaignDetails.started_at }}</label>
+        </div>
+        <div class='cell components'>
+          <ul>
+            {% if (campaignDetails.email_count + 
+                   campaignDetails.web_page_count + 
+                   campaignDetails.portable_files_count == 0) { %}
+                <li class='empty'>No components</li>
+            {% } else { %}
+              {% if (campaignDetails.email_count > 0) { %}
+                <li class='emails'>{{ campaignDetails.email_count }}</li>
+              {% } %}
+              {% if (campaignDetails.web_page_count > 0) { %}
+                <li class='web-pages'>{{ campaignDetails.web_page_count }}</li>
+              {% } %}
+              {% if (campaignDetails.portable_files_count > 0) { %}
+                <li class='portable-files'>{{ campaignDetails.portable_files_count }}</li>
+              {% } %}
+            {% } %}
+
+          </ul>
+          <div class='updated-at'>
+            Updated: {{ campaignDetails.updated_at }}
+          </div>
+        </div>
+        <div class='cell launch' style='padding-top:27px'>
+            {% if (campaign.launchable()) { %}
+              <a href='campaigns/{{ campaign.id }}/to_task' target='_blank' class='link3 big start'>Start</a>
+            {% } %}
+            {% if (campaign.running() || campaign.preparing()) { %}
+              <a href='#' class='link3 big stop-campaign'>Stop</a>
+            {% } %}
+        </div>
+        <div class='cell status'>
+          <div>
+            <label class='status {{ campaignDetails.current_status.toLowerCase() }}'>
+              {{ campaignDetails.current_status }}
+            </label>
+          </div>
+          <div class='actions'>            
+            <!-- <a class='test first' href='#'>Test</a>
+            | -->
+            {% if (campaign.hasWebPagesOrEmails()) { %}
+              <a class='preview' href='#'>Preview</a> |
+            {% } %}
+
+            {% if (campaign.hasBeenLaunched()) { %}
+              <a class='findings' href='#'>Findings</a>
+            | 
+              {% if (campaign.running() || campaign.preparing()) { %}
+                <a class='reset ui-disabled' href='#'>Reset</a>
+              {% } else { %}
+                <a class='reset' href='#'>Reset</a>
+              {% } %}
+            |
+            {% } %}
+            {% if (campaign.running() || campaign.preparing()) { %}
+              <a class='edit ui-disabled' href='#'>Edit</a>
+            {% } else { %}
+              <a class='edit' href='#'>Edit</a>
+            {% } %}
+            |
+            <a class='delete last {{ (campaign.running() || campaign.preparing()) ? "ui-disabled" : "" }}' href='#'>Delete</a>
+          </div>
+        </div>
+      </div>
+    {% }); %}
+  {% } else { %}
+    <div class='empty-row'>
+      No campaigns have been created. Click the "Configure a Campaign" tab to start setting one up.
+    </div>
+  {% } %}
+</div>

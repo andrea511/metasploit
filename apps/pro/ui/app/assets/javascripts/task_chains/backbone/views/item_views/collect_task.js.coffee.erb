@@ -1,0 +1,41 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/collect_task') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+], ($, Template, TaskConfigView) ->
+  class CollectTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/collect_task']
+
+    onShow:() ->
+      @loadPartial("/workspaces/#{WORKSPACE_ID}/tasks/new_collect?_nl=1", @_afterLoad,@)
+
+    #No Validation Needed so we simulate it
+    onBeforeClose: =>
+      @errors = null
+      #Can't bind to @el b/c no longer in the Dom at this point
+      $(document).trigger('validated',@)
+
+
+    _afterLoad: (args) =>
+      @delegateEvents()
+      @bindUIElements()
+
+      $('#collect_evidence_task_collect_files',@el).on 'click', (e) =>
+        @setFileFieldState()
+
+      $("#collect_all_sessions",@el).checkAll $("#collect_sessions")
+      $('#collect_all_sessions', @el).trigger('click')
+
+      @setFileFieldState()
+
+
+    # On Collect Evidence page, disable subfields when "Collect other files" is unchecked
+    setFileFieldState: ->
+      if $('#collect_evidence_task_collect_files',@el).attr 'checked'
+        $('#collect_evidence_task_collect_files_pattern',@el).removeAttr "disabled"
+        $('#collect_evidence_task_collect_files_count', @el).removeAttr "disabled"
+        $('#collect_evidence_task_collect_files_size', @el).removeAttr "disabled"
+      else
+        $('#collect_evidence_task_collect_files_pattern', @el).attr "disabled", "disabled"
+        $('#collect_evidence_task_collect_files_count', @el).attr "disabled", "disabled"
+        $('#collect_evidence_task_collect_files_size', @el).attr "disabled", "disabled"

@@ -1,0 +1,39 @@
+  <style>
+    .header li{
+      color: black;
+      margin-left:40px;
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+    }
+  </style>
+
+  <div class='header'>
+    <h2>Get Free Upgrade to Try Social Engineering</h2>
+
+    <p>When it comes to phishing, you are only as secure as your most naïve user. With Metasploit Pro, you can find out whether your security awareness, vulnerability and patch management programs are hitting the spot. Send out phishing emails to your users to measure how many users:</p>
+
+    <ul>
+      <li>Opened the email</li>
+      <li>Clicked on the link </li>
+      <li>Submitted a web form </li>
+      <li>Used an exploitable browser </li>
+    </ul>
+
+    <p>
+      Then use the results to tweak your awareness trainings and technical controls.
+    </p>
+
+  </div>
+  
+  <div class="right-content">
+    <div class="table-cell-container" style="width:400px;">
+      <div class="table-cell" style="height:300px;">
+        <%= image_tag image_path('upsell/campaigns.jpg') %>
+      </div>
+    </div>
+  </div>
+
+  <p>
+    <a href="<%= get_upgrade_url %>" class="mainBtn downloadBtn" title="Download"><em></em>GET YOUR FREE UPGRADE TRIAL NOW</a>
+  </p>
+
+  <%= render :partial => 'generic/upsell/footer' %>

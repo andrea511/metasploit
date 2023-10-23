@@ -1,0 +1,156 @@
+define [
+  'apps/creds/clone/clone_controller'
+  'apps/creds/new/new_controller'
+  'apps/creds/export/export_controller'
+  'apps/creds/delete/delete_controller'
+  'lib/utilities/navigation'
+  'entities/cred'
+  'lib/components/window_slider/window_slider_controller'
+  'entities/origin'
+  'backbone_queryparams'
+], (HostViewController) ->
+
+  @Pro.module 'CredsApp', (CredsApp, App) ->
+
+    class CredsApp.Router extends Marionette.AppRouter
+
+      appRoutes:
+        "": "index"
+        "creds": "index"
+        "creds/:id": "show"
+        "creds/:id/hosts/:host_id": "tab"
+        "creds/:id/hosts/:host_id/:tab": "tab"
+
+    API =
+      show: (id, cred) ->
+        loading = true
+        _.delay((=> if loading then App.execute 'loadingOverlay:show'), 50)
+        initProRequire ['apps/creds/show/show_controller'], ->
+          loading = false
+          App.execute 'loadingOverlay:hide'
+          showController = new CredsApp.Show.Controller id: id, cred: cred
+
+      tab: (id, host_id, tab) ->
+        loading = true
+        _.delay((=> if loading then App.execute 'loadingOverlay:show'), 50)
+        initProRequire [
+          '<%= javascript_path("hosts/backbone/controllers/host_view_controller") %>'
+        ], (HostViewController) ->
+          loading = false
+          App.execute 'loadingOverlay:hide'
+          hostController = new HostViewController(id: host_id)
+          App.execute 'sliderRegion:show', { show: true }, hostController.Tab, tab
+
+
+      index: (params) ->
+        # if we want to include checking for pre-filter associations in params, can we do as mixin?
+        loading = true
+        _.delay((=> if loading then App.execute 'loadingOverlay:show'), 50)
+        initProRequire ['apps/creds/index/index_controller'], ->
+          loading = false
+          App.execute 'loadingOverlay:hide'
+          indexController = new CredsApp.Index.Controller search: params?.search
+
+      # @see {Delete.Controller#initialize} options
+      delete: (options) ->
+        new CredsApp.Delete.Controller options
+
+      #
+      # Clone a cred and open it in an editing form within the creds index table.
+      #
+      # @param model [Entities.Cred] the original cred to be cloned and edited
+      # @param credsCollection [Entities.CredsCollection] the collection of creds
+      #   currently displayed in the table
+      # @param $row [HTMLElement] the table row in which the editing form should
+      #   be placed
+      #
+      # @return [CredsApp.Clone.Controller] the controller for the new clone form
+      clone: (cred, credsCollection, $row) ->
+        cloneRegion = {}
+        cloneRegionName = "cloneRegion#{cred.id}"
+        cloneRegion[cloneRegionName] = '#' + $row.attr('id')
+        App.addRegions cloneRegion
+
+        new CredsApp.Clone.Controller
+          cred:            cred.clone()
+          credsCollection: credsCollection
+          regionName:      cloneRegionName
+
+    App.addInitializer =>
+      new CredsApp.Router(controller: API)
+
+    App.vent.on "host:tab:chose", (last_tab) ->
+      #TODO Remove hard coded cred ID
+      App.navigate("1/hosts/1/#{last_tab}", {trigger:false})
+
+    # @see {Delete.Controller#initialize} options
+    App.reqres.setHandler 'creds:delete', (options = {}) ->
+      API.delete options
+
+    App.reqres.setHandler 'navigate:creds:index', (options = {}) ->
+      API.index options
+
+    App.vent.on 'clone:cred:clicked', (model, credsCollection, row) ->
+      API.clone model, credsCollection, row
+
+    # Sets the mainRegion, which is used by default when #show if called
+    # without explicitly setting a region.
+    App.addRegions
+      mainRegion: "#creds-main-region"
+
+    # When a credential tag is added, display a flash message and reload the creds table.
+    #
+    # @param credsCollection [Entities.CredsCollection] the collection of creds
+    #   currently displayed in the table
+    App.vent.on "core:tag:added", (credsCollection) ->
+      App.execute 'flash:display',
+        title:   'Credential(s) Tagged '
+        message: 'The credential(s) were successfully tagged.'
+      credsCollection?.fetch reset: true
+
+    # When a credential tag is removed, display a flash message and reload the creds table.
+    #
+    # @param credsCollection [Entities.CredsCollection] the collection of creds
+    #   currently displayed in the table
+    App.vent.on "core:tag:removed", (credsCollection) ->
+      App.execute 'flash:display',
+        title:   'Credential Tag Removed '
+        message: 'The tag was successfully removed.'
+      credsCollection?.fetch reset: true
+
+    # When a credential tag is added, display a flash message and reload the creds table.
+    #
+    # @param credsCollection [Entities.CredsCollection] the collection of creds
+    #   currently displayed in the table
+    App.vent.on "login:tag:added", (credsCollection) ->
+      App.execute 'flash:display',
+        title:   'Logins(s) Tagged '
+        message: 'The login(s) were successfully tagged.'
+      credsCollection.fetch reset: true
+
+    App.vent.on "login:added", () ->
+      Backbone.history.loadUrl(Backbone.history.fragment)
+
+    # When a credential is added, display a flash message and reload the creds table.
+    #
+    # @param credsCollection [Entities.CredsCollection] the collection of creds
+    #   currently displayed in the table
+    App.vent.on "cred:added", (credsCollection) ->
+      App.execute 'flash:display',
+        title:   'Credential created'
+        message: 'The credential was successfully saved.'
+      credsCollection.fetch reset: true
+
+    # When credentials are imported, display a flash message and reload the creds table.
+    #
+    # @param credsCollection [Entities.CredsCollection] the collection of creds
+    #   currently displayed in the table
+    App.vent.on "creds:imported", (credsCollection) ->
+      App.execute 'flash:display',
+        title:   'Credentials importing'
+        message: "Your credentials are importing, this may take a while. A notification will appear when done."
+      credsCollection.fetch reset: true
+
+    App.vent.on "cred:clicked", (cred_id) ->
+      API.show(cred_id)
+      App.navigate("creds/#{cred_id}", trigger:false)

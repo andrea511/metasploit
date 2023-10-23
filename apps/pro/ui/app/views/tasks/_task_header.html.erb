@@ -1,0 +1,7 @@
+<table width="100%" class="list" id="tasks">
+	<tbody>
+		<tr class="<%= row_cycle %>" id="<%= dom_id(@task) %>">
+			<%= render :partial => 'tasks/task', :object => @task %>
+		</tr>
+	</tbody>
+</table>

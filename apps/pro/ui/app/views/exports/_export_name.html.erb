@@ -1,0 +1,10 @@
+<%= f.inputs 'Name' do -%>
+    <%= f.input :name,
+                :required => true
+    %>
+<% end %>
+
+<%= f.help_link 'name' do %>
+    <h3>Export name</h3>
+    <p>The name to use in creating the export file. The file extension is added automatically based on the selected export type, so only the base name needs to be specified (e.g. an XML export named 'Engagement1' will result in INSTALL_PATH/pro/exports/Engagement1.xml)</p>
+<% end %>

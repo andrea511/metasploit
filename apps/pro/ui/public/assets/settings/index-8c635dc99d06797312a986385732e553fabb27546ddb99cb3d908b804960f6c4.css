@@ -1,0 +1,15 @@
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/settings/index.css.scss.erb */
+ul.tabs {
+  border-bottom: 1px solid #ccc;
+}
+/* line 6, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/settings/index.css.scss.erb */
+ul.tabs li.tab a {
+  background-image: none;
+  padding-left: 18px;
+}
+
+/* line 13, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/settings/index.css.scss.erb */
+div.tabs > div {
+  display: none;
+  min-height: 500px;
+}

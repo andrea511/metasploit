@@ -1,0 +1,208 @@
+digraph flood {
+  graph [
+    concentrate = true
+    label = "Electro to GREAT #1 metasploit_data_model changes"
+    rankdir = "LR"
+  ]
+  node [
+    shape = "record"
+  ]
+
+  /*
+   *  Nodes
+   */
+
+  subgraph cluster_electro {
+    label = "Electro"
+
+    subgraph cluster_electro_metasploit_data_models {
+      label = "metasploit_data_models"
+
+      "Mdm::Module::Action (Electro)" [
+        label = "<title> Mdm::Module::Action"
+      ]
+      "Mdm::Module::Arch (Electro)" [
+        label = "<title> Mdm::Module::Arch | " +
+                "<name> name"
+      ]
+      "Mdm::Module::Author (Electro)" [
+        label = "<title> Mdm::Module::Author | " +
+                "<email> email | " +
+                "<name> name"
+      ]
+      "Mdm::Module::Detail (Electro)" [
+        label = "<title> Mdm::Module::Detail | " +
+                "<default_action> default_action | " +
+                "<default_target> default_target | " +
+                "<description> description | " +
+                "<disclosure_date> disclosure_date | " +
+                "<file> file | " +
+                "<fullname> fullname | " +
+                "<license> license | " +
+                "<mtime> mtime | " +
+                "<mtype> mtype | " +
+                "<name> name | " +
+                "<privileged> privileged | " +
+                "<rank> rank | " +
+                "<refname> refname | " +
+                "<stance> stance"
+      ]
+      "Mdm::Module::Platform (Electro)" [
+        label = "<title> Mdm::Module::Platform | " +
+                "<name> name"
+      ]
+      "Mdm::Module::Ref (Electro)" [
+        label = "<title> Mdm::Module::Ref | " +
+                "<name> name"
+      ]
+    }
+  }
+
+  subgraph cluster_great_one {
+    label = "GREAT #1"
+
+    subgraph cluster_great_one_metasploit_data_models {
+      label = "metasploit_data_models"
+
+      "Mdm::Architecture (GREAT #1)" [
+        label = "<title> Mdm::Architecture | " +
+                "<abbreviation> abbreviation"
+      ]
+      "Mdm::Author (GREAT #1)" [
+        label = "<title> Mdm::Author | " +
+                "<name> name"
+      ]
+      "Mdm::Authority (GREAT #1)" [
+        label = "<title> Mdm::Authority | " +
+                "<abbreviation> abbreviation"
+      ]
+      "Mdm::EmailAddress (GREAT #1)" [
+        label = "<title> Mdm::EmailAddress | " +
+                "<domain> domain | " +
+                "<full> full | " +
+                "<local> local"
+      ]
+      "Mdm::Module::Action (GREAT #1)" [
+        label = "<title> Mdm::Module::Action"
+      ]
+      "Mdm::Module::Ancestor (GREAT #1)" [
+        label = "<title> Mdm::Module::Ancestor | " +
+                "<real_path> real_path | " +
+                "<real_path_modified_at> real_path_modified_at"
+      ]
+      "Mdm::Module::Class (GREAT #1)" [
+        label = "<title> Mdm::Module::Class | " +
+                "<full_name> full_name | " +
+                "<reference_name> reference_name"
+      ]
+      "Mdm::Module::Instance (GREAT #1)" [
+        label = "<title> Mdm::Module::Instance | " +
+                "<default_action_id> default_action_id | " +
+                "<default_target_id> default_target_id | " +
+                "<description> description | " +
+                "<disclosed_on> disclosed_on | " +
+                "<license> license | " +
+                "<module_type> module_type | " +
+                "<name> name | " +
+                "<privileged> privileged | " +
+                "<stance> stance"
+      ]
+      "Mdm::Module::Path (GREAT #1)" [
+        label = "<title> Mdm::Module::Path"
+      ]
+      "Mdm::Module::Rank (GREAT #1)" [
+        label = "<title> Mdm::Module::Rank | " +
+                "<number> number"
+      ]
+      "Mdm::Platform (GREAT #1)" [
+        label = "<title> Mdm::Platform | " +
+                "<fully_qualified_name> fully_qualified_name"
+      ]
+      "Mdm::Reference (GREAT #1)" [
+        label = "<title> Mdm::Reference | " +
+                "<designation> designation | " +
+                "<url> url "
+      ]
+    }
+  }
+
+  /*
+   *  Edges
+   */
+
+  "Mdm::Module::Action (Electro)" -> "Mdm::Module::Action (GREAT #1)"
+  "Mdm::Module::Arch (Electro)":name -> "Mdm::Architecture (GREAT #1)":abbreviation
+
+  "Mdm::Module::Author (Electro)":email -> "Mdm::EmailAddress (GREAT #1)":full [
+    color = "green"
+  ]
+
+  "Mdm::Module::Author (Electro)":name -> "Mdm::Author (GREAT #1)":name [
+    color = "orange"
+  ]
+
+  "Mdm::Module::Detail (Electro)":default_action -> "Mdm::Module::Instance (GREAT #1)":default_action_id [
+    color = "goldenrod"
+    fontcolor = "goldenrod"
+    label = "Change denormalized Mdm::Module::Action#name to foreign key"
+  ]
+
+  "Mdm::Module::Detail (Electro)":default_target -> "Mdm::Module::Instance (GREAT #1)":default_target_id [
+    color = "red"
+    fontcolor = "red"
+    label = "Change denormalized Mdm::Module::Target#index to foreign key"
+  ]
+
+  "Mdm::Module::Detail (Electro)":description -> "Mdm::Module::Instance (GREAT #1)":description
+
+  "Mdm::Module::Detail (Electro)":disclosure_date -> "Mdm::Module::Instance (GREAT #1)":disclosed_on [
+    label = "Change datetime treated as date to true date column"
+  ]
+
+  "Mdm::Module::Detail (Electro)":file -> "Mdm::Module::Ancestor (GREAT #1)":real_path [
+    color = "blue"
+    fontcolor = "blue"
+    label = "Handles multiple Mdm::Module::Ancestors for staged payloads"
+  ]
+
+  "Mdm::Module::Detail (Electro)":fullname -> "Mdm::Module::Class (GREAT #1)":full_name [
+    color = "orange"
+  ]
+
+  "Mdm::Module::Detail (Electro)":license -> "Mdm::Module::Instance (GREAT #1)":license
+
+  "Mdm::Module::Detail (Electro)":mtime -> "Mdm::Module::Ancestor (GREAT #1)":real_path_modified_at [
+    // color so it stands out from overlapping edges
+    color = "green"
+    fontcolor = "green"
+    label = "Handles multiple Mdm::Module::Ancestors for staged payloads"
+  ]
+
+  "Mdm::Module::Detail (Electro)":mtype -> "Mdm::Module::Instance (GREAT #1)":module_type
+  "Mdm::Module::Detail (Electro)":name -> "Mdm::Module::Instance (GREAT #1)":name
+
+  "Mdm::Module::Detail (Electro)":rank -> "Mdm::Module::Rank (GREAT #1)":number [
+    color="red"
+  ]
+
+
+  "Mdm::Module::Detail (Electro)":privileged -> "Mdm::Module::Instance (GREAT #1)":privileged
+
+  "Mdm::Module::Detail (Electro)":refname -> "Mdm::Module::Class (GREAT #1)":reference_name [
+    color="purple"
+  ]
+
+  "Mdm::Module::Detail (Electro)":stance -> "Mdm::Module::Instance (GREAT #1)":stance
+
+  "Mdm::Module::Platform (Electro)":name -> "Mdm::Platform (GREAT #1)":fully_qualified_name
+
+  "Mdm::Module::Ref (Electro)":name -> "Mdm::Authority (GREAT #1)":abbreviation [
+    color = "red"
+  ]
+  "Mdm::Module::Ref (Electro)":name -> "Mdm::Reference (GREAT #1)":designation [
+    color = "green"
+  ]
+  "Mdm::Module::Ref (Electro)":name -> "Mdm::Reference (GREAT #1)":url [
+    color = "blue"
+  ]
+}

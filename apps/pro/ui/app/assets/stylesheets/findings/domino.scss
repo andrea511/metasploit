@@ -1,0 +1,357 @@
+@import "shared/variables";
+@import "components/spinner";
+@import "css3-mixins";
+
+.node-info {
+  $gray: #999;
+  $width: 220px;
+  position: absolute;
+  width: $width;
+  margin-left: -$width/2;
+  top: 0;
+  left: 0;
+  padding: 14px;
+  border: 1px solid #aaa;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  color: $gray;
+  font-weight: normal;
+  label {
+    color: #000;
+    font-weight: 600;
+    &.no-margin {
+      margin-top: 0;
+    }
+  }
+  hr {
+    width: 0;
+    color: white;
+    margin: 10px 0 0 0;
+    border: 0;
+  }
+  div.table {
+    margin: 0;
+    .left, .right {
+      margin-top: 2px;
+      display: inline-block;
+      width: 40%;
+      margin: 0;
+      font-weight: normal;
+      @include box-sizing(border-box);
+    }
+    .right {
+      width: 60%;
+      color: #000;
+      font-weight: 100;
+    }
+    .left {
+      color: $gray;
+    }
+  }
+}
+
+.node-info .truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tr.high-value {
+  .cell1, .cell0 a {
+    color: $orange;
+    font-weight: 600;
+  }
+}
+
+.graph-controls {
+  $btn-width: 34px;
+  $btn-height: 34px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  input[name='orientation'], input[name='full-screen'] {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    margin: 0;
+    &~span.icon{
+      position: relative;
+      &:hover:before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        border: 1px solid #ddd;
+        @include linear-gradient(#fff, #eee);
+        border-radius: 2px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      }
+      &:active:before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        border: 1px solid #ddd;
+        background: #eee;
+        border-radius: 2px;
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+      }
+      &:after {
+        $pad: 5px;
+        content: '';
+        position: absolute;
+        top: $pad; left: $pad; right: $pad; bottom: $pad;
+      }
+    }
+    &:checked~span.icon {
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    }
+    &:checked~span.icon:before {
+      content: none;
+    }
+  }
+  input[name='full-screen'] {
+    &~span.icon:after {
+      background-image: url(image-path('metamodules/domino/fullscreen_enter.svg'));
+    }
+    &:checked~span.icon:after {
+      background-image: url(image-path('metamodules/domino/fullscreen_exit.svg'));
+    }
+  }
+  span.icon {
+    background: #fff;
+    float: none;
+    border-radius: 2px;
+    display: inline-block;
+    width: $btn-width;
+    height: $btn-height;
+    &:after {
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center center;
+    }
+  }
+
+  label {
+    cursor: pointer;
+    &.vertical span.icon:after {
+      background-image: url(image-path('metamodules/domino/layout_vertical.svg'));
+    }
+    &.horizontal span.icon:after {
+      background-image: url(image-path('metamodules/domino/layout_horizontal.svg'));
+    }
+    &.radial span.icon:after {
+      background-image: url(image-path('metamodules/domino/layout_radial.svg'));
+    }
+  }
+
+}
+
+.d3-graph-visualization {
+  $node-color: #bdbdbd;
+  $high-value-color: #e15d00;
+  $hover-color: #414141;
+  $selected-color: #666;
+  $forward-color: #666;
+  $selected-text: #000;
+  $forward-text: #000;
+  $hover-text: #fff;
+  overflow: hidden;
+
+  .please-wait {
+    position: absolute;
+    top: 200px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    border: 0;
+    .middle {
+      margin: 0 auto;
+      text-align: center;
+      padding: 15px;
+      border: 1px solid #ccc;
+      background: #fff;
+      width: 250px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      img {
+        vertical-align: bottom;
+        margin-right: 2px;
+      }
+    }
+  }
+
+  .node {
+    // for faster hardware-accelerated translate3d() transforms
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    backface-visibility: hidden;
+    perspective: 1000;
+  }
+
+  .node circle.outer-circle {
+    fill: #fff;
+    stroke: $node-color;
+    stroke-width: 3px;
+    @include transition(stroke, .2s);
+  }
+
+  .node.tiny circle.outer-circle {
+    stroke-width: 2px;
+  }
+
+  .node circle.inner-circle {
+    fill: $node-color;
+    @include transition(fill, .2s);
+  }
+
+  .node.important {
+    circle.inner-circle {
+      fill: $high-value-color;
+    }
+    text {
+      fill: #fff;
+    }
+  }
+
+  .node text {
+    @include transition(fill, .2s);
+  }
+
+  .node {
+    font: 10px sans-serif;
+
+    &.selected {
+      circle {
+        &.outer-circle {
+          stroke: $selected-color;
+        }
+        &.inner-circle {
+          fill: darken($node-color, 10%);
+        }
+      }
+      text {
+        fill: $selected-text;
+      }
+    }
+
+    &.forward {
+      circle {
+        &.outer-circle {
+          stroke: $forward-color;
+        }
+        &.inner-circle {
+          fill: darken($node-color, 10%);
+        }
+      }
+      text {
+        fill: $forward-text;
+      }
+    }
+
+    &.hover {
+      circle {
+        &.outer-circle {
+          stroke: $hover-color;
+        }
+        &.inner-circle {
+          fill: $hover-color;
+        }
+      }
+      text {
+        fill: $hover-text;
+      }
+    }
+
+  }
+
+  .link {
+    fill: none;
+    stroke: #c0c0c0;
+    // stroke-width: 2px;
+    stroke-width: 1px;
+    @include transition(stroke, .2s);
+    &.hover {
+      stroke: $hover-color;
+    }
+
+    &.selected {
+      stroke: $selected-color;
+    }
+
+    &.forward {
+      stroke: $forward-color;
+    }
+  }
+
+  text {
+    font-size: 12px;
+  }
+
+  .wrapper.outer > .background {
+    fill: #fff;
+  }
+  .wrapper.inner > .background {
+    fill: #fff;
+    cursor: move;
+  }
+  .background {
+    fill: #fff;
+    cursor: move;
+  }
+  .panCanvas {
+    cursor: move;
+  }
+
+  .minimap {
+    stroke: #999;
+    stroke-width: 1px;
+  }
+
+  .minimap .frame .background {
+    stroke: #111111;
+    stroke-width: 4px;
+    fill-opacity: 0.4;
+    fill: #000000;
+    fill: url(#minimapGradient);
+    filter: url(#minimapDropShadow);
+    cursor: move;
+  }
+
+  .z-1 {
+    .link {
+      stroke-width: 1px;
+    }
+
+    circle.outer-circle {
+      stroke-width: 1px;
+    }
+
+    text {
+      display: none;
+    }
+  }
+
+  .z8 {
+    text {
+      font-size: 11px;
+    }
+  }
+
+  .z10 {
+    text {
+      font-size: 8px;
+    }
+  }
+
+  .z14 {
+    text {
+      font-size: 6px;
+    }
+  }
+
+}
+
+label.high-value-only {
+  position: absolute;
+  top: -29px;
+  left: 87px;
+  color: $orange;
+}

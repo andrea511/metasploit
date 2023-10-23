@@ -1,0 +1,1 @@
+json.partial! 'phishing_result', phishing_result: @phishing_result

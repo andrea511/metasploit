@@ -1,0 +1,88 @@
+<%#  Short partial for rendering the Report form within a Wizard.
+  #  Pass the following locals into this partial:
+  #    f      => the FormBuilder object to render the form in
+  #    rtypes => an array of strings containing available report types, or
+  #              a hash of report_type => display_name
+  %>
+
+<%-
+   # DISPLAY CONDITIONS
+   # MetaModules only have one:
+   show_report_types = rtypes.any? && rtypes.length > 1
+   show_options = @report.rtype.options.any? || @report.report_type == :webapp_assessment
+   show_address_settings = @report.rtype.addresses_included?
+%>
+
+<%# These links are here to provide the workspace-scoped path in contexts that
+ lack dynamic path helpers: -%>
+<%- if show_report_types %>
+  <a href='<%= wizard_report_tab_form_path %>' id='form-for-report-path' class='hidden'></a>
+<%- end %>
+
+<div class='page generate_report'>
+  <%= f.input :report_enabled, :as => :hidden %>
+  <%= semantic_fields_for @report do |report| %>
+    <div class='row'>
+      <div class='cell' style='width: 50%'>
+        <h3 class='enabled'>Report is <span class='enabled'>enabled</span></h3>
+      </div>
+      <div class='cell' style='width: 50%; text-align: right; vertical-align: middle; margin-top: 10px;'>
+        <div class='report_formats'>
+          <%= render partial: 'reports/report_format', locals: { f: report } %>
+        </div>
+      </div>
+    </div>
+    <div class='row top-row'>
+      <div class='cell first report_name <%= 'full-width' unless show_report_types %>'>
+        <%= render partial: 'reports/report_name', locals: { f: report } %>
+      </div>
+      <% if show_report_types %>
+        <div class='cell second report_type'>
+          <%= render :partial => 'reports/report_type', :locals =>
+                  {f: report, report_types: rtypes}
+          %>
+        </div>
+      <% end %>
+    </div>
+    <div class='advanced' style='display:block; margin-bottom: 0'>
+      <div class='clearfix'></div>
+      <%- if show_options %>
+        <div class='right'>
+          <h4>Options</h4>
+          <div class='report_options'>
+            <div id="report_option_for_<%= @report.report_type %>">
+              <%= render partial: 'reports/report_options',  locals: { f: report } %>
+              <%= render partial: 'reports/result_order',    locals: { f: report } %>
+            </div>
+          </div>
+        </div>
+        <div class='left'>
+      <%- end %>
+      <div class='report_sections'>
+        <h4>Sections</h4>
+          <div id="report_section_for_<%= @report.report_type %>">
+            <%= render partial: 'reports/report_sections', locals: { f: report } %>
+          </div>
+      </div>
+      <%- if show_options %>
+          <div class='clearfix'></div>
+        </div><!-- div.left -->
+      <%- end %>
+      <div class='clearfix'></div>
+      <hr/>
+      <div class='bottom-row <%= 'full-width' unless show_address_settings %>'>
+        <%- if show_address_settings %>
+          <div class='left address_settings'>
+            <%= render partial: 'reports/address_settings', locals: { f: report } %>
+          </div>
+          <div class='right email'>
+        <%- end %>
+        <%= render partial: 'reports/report_email', locals: { f: report } %>
+        <%- if show_address_settings %>
+          </div> <!-- div.right -->
+        <%- end %>
+        <div class='clearfix'></div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,23 @@
+@echo off
+rem START or STOP Services
+rem ----------------------------------
+rem Check if argument is STOP or START
+
+if not ""%1"" == ""START"" goto stop
+
+CALL "@@BITROCK_INSTALLDIR@@\scripts\setenv.bat"
+
+if exist "@@BITROCK_INSTALLDIR@@\postgresql\scripts\servicerun.bat" (start /MIN cmd.exe /c "@@BITROCK_INSTALLDIR@@\postgresql\scripts\servicerun.bat" START)
+if exist "@@BITROCK_INSTALLDIR@@\apps\pro\engine\scripts\servicerun.bat" (start /MIN cmd.exe /c "@@BITROCK_INSTALLDIR@@\apps\pro\engine\scripts\servicerun.bat" START)
+if exist "@@BITROCK_INSTALLDIR@@\apps\pro\ui\scripts\servicerun.bat" (start /MIN cmd.exe /c "@@BITROCK_INSTALLDIR@@\apps\pro\ui\scripts\servicerun.bat" START)
+if exist "@@BITROCK_INSTALLDIR@@\apps\pro\ui\scripts\worker_servicerun.bat" (start /MIN cmd.exe /c "@@BITROCK_INSTALLDIR@@\apps\pro\ui\scripts\worker_servicerun.bat" START)
+goto end
+
+:stop
+
+if exist "@@BITROCK_INSTALLDIR@@\apps\pro\ui\scripts\worker_servicerun.bat" (start /MIN cmd.exe /c "@@BITROCK_INSTALLDIR@@\apps\pro\ui\scripts\worker_servicerun.bat" STOP)
+if exist "@@BITROCK_INSTALLDIR@@\apps\pro\ui\scripts\servicerun.bat" (start /MIN cmd.exe /c "@@BITROCK_INSTALLDIR@@\apps\pro\ui\scripts\servicerun.bat" STOP)
+if exist "@@BITROCK_INSTALLDIR@@\apps\pro\engine\scripts\servicerun.bat" (start /MIN cmd.exe /c "@@BITROCK_INSTALLDIR@@\apps\pro\engine\scripts\servicerun.bat" STOP)
+if exist "@@BITROCK_INSTALLDIR@@\postgresql\scripts\servicerun.bat" (start /MIN cmd.exe /c "@@BITROCK_INSTALLDIR@@\postgresql\scripts\servicerun.bat" STOP)
+
+:end

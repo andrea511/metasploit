@@ -1,0 +1,37 @@
+<%= meta_module_form_for @task_config do |f| %>
+
+  <%= form_tab "Configure Exploits" do %>
+    <%= f.input :whitelist_string, :label => "Address Range", :as =>:text %>
+    <%= advanced_link 'create_project_advanced' %>
+    <%= advanced_area 'create_project_advanced' do %>
+      <%= f.input :blacklist_string, :as => :text, :label => "Excluded Addresses" %>
+    <% end %>
+  <% end %>
+
+  <%= form_tab "Credentials" do %>
+    <%= hidden_field_tag "password", @task_config.core.try(:private).try(:data) %>
+    <%= hidden_field_tag "task_config[core_id]", @task_config.core.try(:id) %>
+    <%= f.input :cred_type, :collection => Apps::SshKey::TaskConfig::CRED_TYPES.invert,
+                            :as => :radio,
+                            :label => 'Credentials' %>
+    <%= advanced_area 'user_supplied', :open => true do %>
+      <%= f.input :ssh_username, :label => "User name" %>
+      <% unless @file_upload.nil? or @file_upload.file.nil? %>
+        <li class="input">
+          <%= label_tag 'task_config[use_last_uploaded]','Last uploaded file', class: 'label' %>
+          <%= hidden_field_tag "task_config[core_id]", @task_config.core.id %>
+          <%= hidden_field_tag "task_config[use_last_uploaded]", @file_upload.file.identifier %>
+          <div class="file_upload_path"><%= @file_upload.file.identifier %></div>
+        </li>
+      <% end %>
+
+      <%= f.input :key_file, :as => :file %>
+    <% end %>
+    <%= advanced_area 'stored', :open => false do %>
+    <% end %>
+  <% end %>
+
+  <%= render :partial => 'wizards/report_tab', :locals => {
+             :f => f,
+             :rtypes => [Apps::SshKey::TaskConfig::REPORT_TYPE] } %>
+<% end %>

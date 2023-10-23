@@ -1,0 +1,93 @@
+<% include_javascript 'settings/_profile' %>
+
+<div class="profile_settings">
+
+  <%= form_tag update_profile_path, :method => :patch do %>
+
+  <%= hidden_field_tag 'profile_id', @profile.id %>
+  <%= hidden_field_tag 'anchor', 'global_settings' %>
+
+    <table id="profile_settings_list" class="list">
+      <thead>
+        <th>Value</th>
+        <th>Category</th>
+        <th>Setting</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+
+      <% @profile.settings_list.each do |s|
+        val = @profile.settings.has_key?(s[:name]) ? @profile.settings[s[:name]] : s[:default]
+      %>
+      <% if License.get.supports_global?(s[:name]) %>
+      <tr class="<%=h row_cycle %>">
+        <td width="20">
+          <%  case s[:type]
+            when :boolean
+                  # Ensure possibility of toggling setting state. See http://apidock.com/rails/ActionView/Helpers/FormHelper/check_box %>
+              <%= hidden_field_tag h(s[:name]), 0 %>
+              <%= check_box_tag h(s[:name]), true, val %>
+            <%
+            when :text
+            %>
+              <%= text_field_tag h(s[:name]), true, h(val) %>
+            <%
+            end
+          %>
+        </td>
+        <td width="20">
+          <b><%= s[:category] %></b>
+        </td>
+        <td width="30">
+          <b><%=h s[:name] %></b>
+        </td>
+        <td>
+          <%=h s[:desc] %>
+        </td>
+      </tr>
+      <% end %>
+      <% end %>
+
+      </tbody>
+    </table>
+
+    <div class="proxy_settings">
+      <div id="proxy_fields" style="<%= display_none_if !@profile.settings["use_http_proxy"] %>" class="inline_fields">
+        <h3>HTTP Proxy Settings</h3>
+        <p>
+          <%= label_tag :http_proxy_host, "Proxy IP" %>
+          <%= text_field_tag :http_proxy_host, @profile.settings["http_proxy_host"] %>
+        </p>
+
+        <p>
+          <%= label_tag :http_proxy_port, "Port" %>
+          <%= text_field_tag :http_proxy_port, @profile.settings["http_proxy_port"], :size => 5 %>
+        </p>
+
+        <p>
+          <%= label_tag :http_proxy_user, "Username" %>
+          <%= text_field_tag :http_proxy_user, @profile.settings["http_proxy_user"], :autocomplete => "off" %>
+        </p>
+
+        <p>
+          <%= label_tag :http_proxy_pass, "Password" %>
+          <%= password_field_tag :http_proxy_pass, @profile.settings["http_proxy_pass"], :autocomplete => "off" %>
+        </p>
+      </div>
+    </div>
+    <br />
+    <div class="buttons">
+      <span class="btn"><%= submit_tag 'Update Settings', :method => :patch, :class => "save" %></span>
+    </div>
+
+  <% end %>
+
+  <% nonced_javascript_tag do %>
+    (function() {
+      jQuery(function($) {
+        $("#use_proxy").toggleVisibility($("#proxy_fields"));
+      });
+    }).call(this);
+  <% end %>
+
+</div>

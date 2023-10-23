@@ -1,0 +1,22 @@
+<% title "User Administration - New User" %>
+<% breadcrumb admin_users_link, link_to("New User", new_admin_user_path) %>
+
+<% include_javascript "admin_users" %>
+
+<% content_for :header_buttons do %>
+	<span class="btn">
+		<%= link_to "Back to User List", admin_users_path, :class => "back" %>
+	</span>
+<% end %>
+
+<%= semantic_form_for [:admin, @user] do |f| %>
+	<%= render 'fields', :f => f %>
+<% end %> <!-- form -->
+
+<%= nonced_javascript_tag do %>
+  (function() {
+    jQuery(function($) {
+      $("#all_workspaces").checkAll($("#workspace_checkboxes"));
+    });
+  }).call(this);
+<% end %>

@@ -1,0 +1,56 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/web_vulnerabilities") %>',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, Template, EventAggregator) ->
+  class WebVulnerabilitiesLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/web_vulnerabilities']
+
+    initialize: ({@host_id}) ->
+
+    hostWebVulnsURL: => "/hosts/#{@host_id}/web_vulns"
+
+    # events:
+
+    onShow: () ->
+      EventAggregator.on("redrawTable", @render)
+      EventAggregator.on("tabs_layout:change:count", @_reRender)
+
+    _reRender: (count) =>
+      settings = $('#web-vulns-table table', @el).dataTable().fnSettings()
+      @render()
+
+    isEditMode: () ->
+      $('.edit-table-row .save',@el).length > 0
+
+    onDestroy: ->
+      EventAggregator.off("redrawTable",@render)
+
+    onRender: ->
+      @_loadTable()
+
+    _loadTable: ->
+      $.get(@hostWebVulnsURL(), (data) =>
+        $('.web-vulns', @el).html(data)
+        @_initDataTable()
+      )
+    _initDataTable: =>
+      $('.control-bar', @el).remove()
+
+      $table = $('#web-vulns-table', @el).dataTable({
+        oSettings:
+          sInstance: "web-vulns"
+        sDom: 'ft<"list-table-footer clearfix"ip <"sel" l>>r'
+        aoColumns: [
+          # Figure out what should be sortable
+          {},
+          {},
+          {},
+          {},
+          {},
+          {bSortable:false},
+          {bSortable:false},
+        ],
+        sPaginationType: "r7Style"
+      })
+      $(@el).trigger('tabload')

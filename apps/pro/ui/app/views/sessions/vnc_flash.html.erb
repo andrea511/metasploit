@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>Remote Desktop (<%=h @session.host.address %>)</title>
+    </head>
+    <body>
+		<object id='Flashlight' width="95%" height="95%" type='application/x-shockwave-flash' data='/flash/Flashlight.swf'>
+			<param name='movie' value='Flashlight.swf'/>
+            <param name='allowScriptAccess' value='always'/>
+            <param name='wmode' value='opaque'/>
+			<param name='FlashVars' value='autoConnect=true&securityPort=843&host=<%=h @self_host %>&port=<%=h @port %>'>
+		</object>
+	</body>
+</html>
+

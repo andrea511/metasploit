@@ -1,0 +1,9 @@
+<div class="push-options">
+  <div class="not-exploitable" <%= "title='#{@not_pushable_reason}'" unless @markable %> >
+    <input id ="not_exploitable" name="not_exploitable" class="<%= 'disabled' unless @markable %>" type="checkbox" <%= "checked" if @not_exploitable  %>>
+    <label for="not_exploitable" class="<%= 'disabled' unless @markable %>">Mark as Not Exploitable</label>
+  </div>
+  <div class="create-exception" <%= "title='#{@not_pushable_reason}'" unless @pushable %>>
+    <span class="btn <%= 'disabled' unless @pushable %>"><a href="javascript:void(0)" class="nexpose">Push to Nexpose</a></span>
+  </div>
+</div>

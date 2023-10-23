@@ -1,0 +1,11 @@
+<div class="module-description">
+  <% if @runModuleText:%>
+    Run Module
+  <% end %>
+
+  <% param = "?target_host=#{@vuln.get('host').address}" %>
+
+  <a href='<%= "#{Routes.new_module_run_path(WORKSPACE_ID)}/#{@module}#{param}"%>'>
+    <%= @description%>
+  </a>
+</div>

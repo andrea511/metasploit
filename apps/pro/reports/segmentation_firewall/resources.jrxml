@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="remediation" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6526e0ea-8e41-49e0-9991-561fcbd958e0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="2"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 1]]>
+	</queryString>
+	<detail>
+		<band height="398" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a66282ea-2b15-40ea-a9e0-5672203a6782" style="section_header_2" x="0" y="10" width="400" height="20"/>
+				<textElement markup="none"/>
+				<text><![CDATA[General Segmentation and Firewall Testing Notes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d4727ea1-86c8-44c4-b6c7-e08aef35eb49" style="gray_p" x="0" y="30" width="572" height="368" backcolor="#666666"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="styled">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[When performing a Segmentation and Firewall test, Metasploit sends traffic over your network, through any firewalls and on to an egress testing server (hosted by Rapid7 or by you). The egress testing server will be configured with all 65,535 ports in an open state. The goal is to determine the state of selected ports in your firewall configuration based on test traffic received by the egress testing server. If the traffic makes it to the testing server, then the port is open. If it is dropped by the firewall or other network components, then the port is filtered. Closed ports won't be found in this test since all ports on the testing server will be open. Verifying what traffic can leave your network and reach an external target illustrates your risk for data exfiltration, attacks from reverse shells, and other vectors of data and system compromise.
+
+While the basic configuration of this testing is fairly simple, real-world networking scenarios add a number of potential complexities:
+
+<li>Multiple layers of firewalls between your Metasploit server and the egress testing server could mask whether your internal security goals are actually being met. There might be network segments that are allowing traffic through them before reaching the network perimeter that should be closed off. Be sure to know your network topology well in correlation with your security policy. You might need to run additional egress tests from various locations on your network to verify compliance.</li>
+<li>Intrusion Detection Systems and other security appliances may filter certain traffic. This may be intentional, but be sure to verify what network components are stopping what traffic to ensure you are in compliance with your security policy.</li>
+
+In addition, there are methods attackers can use to send data out of your network that won't be detected by this sort of test:
+
+<li>Unless you are inspecting SSL traffic, a proxy over HTTPS, such as <style forecolor="#0645AD"><a href="https://community.rapid7.com/community/metasploit/blog/2011/06/29/meterpreter-httphttps-communication">Metasploit's reverse_https stagers</a></style></li>
+<li>DNS lookups may be crafted to send arbitrary data out of your network</li>
+
+By default firewall egress testing scans use the default port list provided by nmap. These correspond to the top 1000 most common ports, as determined by statistics collected by nmap, out of the 65,535 possible ports.
+
+For additional general information on firewall egress testing, see the <style forecolor="#0645AD"><a href="http://www.sans.org/reading_room/whitepapers/firewalls/egress-filtering-faq_1059">SANS' Egress Filtering FAQ</a></style>.]]></text>
+			</staticText>
+		</band>
+		<band height="209">
+			<staticText>
+				<reportElement uuid="8a82953c-c3b2-4cc6-94aa-994bd7048150" style="section_header_2" x="0" y="15" width="400" height="20"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Port States]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c5bcb2a-1939-4d70-a204-e5fa9af93ef1" style="gray_p" x="0" y="35" width="572" height="174" backcolor="#666666"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="styled">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Results from a firewall egress test include each port number that was checked along with the port's discovered state:
+
+<li><b>Open</b>: the test traffic was allowed out of the network and was received by the egress testing server. In a more general sense outside of testing, there is a service actively responding to connections on the port. A SYN-ACK (acknowledge) packet will be sent in response to a SYN.</li>
+<li><b>Filtered</b>: the test traffic was dropped before reaching the desired port on the test server, i.e. no response was received. This can be due to a firewall but potentially by other sources as well, e.g. switches, routers, IDSes and other devices.</li>
+<li>Closed: traffic is allowed through to the port but there is no application responding to connections. An RST (reset) packet will be sent in response to a SYN. While all ports on the test server will be configured as open, there are cases such as intermediate network devices that can result in a closed port state result.</li>
+<li>Unfiltered: traffic is allowed to the port, but the it cannot be determined whether the port is open or closed.</li>
+<li>Open|Filtered, Closed|Filtered: N/A for this test.</li>]]></text>
+			</staticText>
+		</band>
+		<band height="205">
+			<staticText>
+				<reportElement uuid="8a82953c-c3b2-4cc6-94aa-994bd7048150" style="section_header_2" x="0" y="15" width="400" height="20"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Port Groups]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c5bcb2a-1939-4d70-a204-e5fa9af93ef1" style="gray_p" x="0" y="35" width="572" height="48" backcolor="#666666"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="styled">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Of the 65,535 available networking ports, the first 1024 have a special significance. Most of them have been assigned to a specific official use by IANA (Internet Assigned Numbers Authority, <style forecolor="#0645AD"><a href="http://www.iana.org/">http://www.iana.org/</a></style>), and running a service on one of these ports on *nix systems requires root privileges. Ports within this range are called <b>critical</b> since a number of common and essential services use them.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c5bcb2a-1939-4d70-a204-e5fa9af93ef1" style="gray_p" x="0" y="83" width="572" height="120" backcolor="#666666"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="styled">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ports greater than 1024 are known as <b>registered</b> ports. Their use can be registered with IANA for various applications, but few of them have an official status. In addition, running a service listening on them does not necessarily require superuser privileges. While they are presented separately from the critical range of ports, they should be examined closely since in actuality a service can be configured to listen on any port, not necessarily the most common or the one assigned by IANA.
+
+Additional resources:
+
+<li><style forecolor="#0645AD"><a href="http://www.iana.org/protocols">IANA Protocal Registry</a></style></li>
+<li><style forecolor="#0645AD"><a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">List of more common TCP and UDP ports along with presumed service information</a></style></li>]]></text>
+			</staticText>
+		</band>
+		<band height="226">
+			<staticText>
+				<reportElement uuid="8a82953c-c3b2-4cc6-94aa-994bd7048150" style="section_header_2" x="0" y="15" width="400" height="20"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Service Information]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c5bcb2a-1939-4d70-a204-e5fa9af93ef1" style="gray_p" x="0" y="35" width="572" height="190" backcolor="#666666"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="styled">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[After a discovery scan that finds hosts with services running on them, you see detailed service information associated with the parent hosts. However, Metasploit's firewall egress testing involves sending traffic to a special test server, not a standard application server. There are no actual production services listening for connections on their usual ports to be discovered, merely the service listening on all ports for the test. The only data collected are each tested port number and its discovered state.
+
+To provide more context for these findings, we also show what each port is commonly used for in production environments, whether it is an official IANA assignment (see Port Groups section) or an unofficial use. Please note that this information is based on statistical commonality, so there is no guarantee that each port will be used by the listed service when found on an application server. Network administrators may purposely configure services to listen on alternate ports to provide a modicum of extra security.
+
+The majority of the data comes from the <style forecolor="#0645AD"><a href="http://nmap.org/book/nmap-services.html">nmap-services list</a></style> provided by nmap. This is based on the frequency of use of various ports by a given service as discovered by internet scans. For information on potentially suspicious port use on production systems, see SANS' <style forecolor="#0645AD"><a href="http://www.sans.org/security-resources/idfaq/oddports.php">list of ports commonly used by malware</a></style>. This information is not sufficiently constant or reliable to be included in the report. ]]></text>
+			</staticText>
+		</band>
+		<band height="177">
+			<staticText>
+				<reportElement uuid="8a82953c-c3b2-4cc6-94aa-994bd7048150" style="section_header_2" x="0" y="15" width="400" height="20"/>
+				<textElement markup="none"/>
+				<text><![CDATA[Reviewing Test Results]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c5bcb2a-1939-4d70-a204-e5fa9af93ef1" style="gray_p" x="0" y="35" width="572" height="142" backcolor="#666666"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="styled">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[After collecting egress test data, hopefully through multiple MetaModule runs to ensure your data are accurate in the face of various potential network setup complexities, you need to compare the results with your network security policy.
+
+<li>Examine all port findings not in a filtered state. This means that traffic was allowed out of your network perimeter and on to the egress test server. If outbound connections on ports in this state are not required for your organization's needs, they should be filtered by your firewall or other network security devices.</li>
+<li>Simply configuring your server's to not listen on an unneeded port is not as effective as blocking traffic to that port before it reaches the server. Closed ports still tell an attacker that a server is on the network, and might encourage later scans to see if the port is listening for connections.</li>
+<li>After adjusting your security configuration as needed, be sure to run another series of egress tests to verify your changes are in place.</li>]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

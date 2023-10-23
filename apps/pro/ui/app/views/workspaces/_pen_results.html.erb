@@ -1,0 +1,16 @@
+<% if @penetration_running  %>
+<%= image_tag 'spinner.gif' %> Penetrating...<br/>
+<% end %>
+
+<ul class="overview_stats">
+	<li><%= link_to h(pluralize(@stats[:sess_count], "session")), workspace_sessions_path(@workspace) %> opened</li>
+  <li>
+    <%=h pluralize(@stats[:credential_cores_count], "credential pair")%> stolen:
+    <ul style="padding-left: 2em">
+      <li><%=h pluralize(@stats[:pass_count], "password") %> cracked or stolen</li>
+      <li><%=h pluralize(@stats[:hash_count], "NTLM hash") %> stolen</li>
+      <li><%=h pluralize(@stats[:key_count], "SSH key") %> stolen</li>
+      <li><%=h pluralize(@stats[:credential_non_replayable_hashes_count], "non-replayable hash") %> stolen</li>
+    </ul>
+  </li>
+</ul>

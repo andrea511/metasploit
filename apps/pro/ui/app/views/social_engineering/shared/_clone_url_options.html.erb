@@ -1,0 +1,51 @@
+<div class='clone clone-web-options webpage-options' style='display: <%= display || 'none' %>; padding-top: 10px; margin-bottom: 10px;'>
+  <div class='clone-content'>
+  <p class='error' style="display: none;"></p>
+  <div class='push'>
+    <div class='clone-url-field'>
+      <%= f.input :clone_url, :as => :string, :label => false, :placeholder => 'URL to clone' %>
+    </div>
+    <div style='margin-bottom: 1px'><label style='margin-top: 5px;'>
+      <input type='checkbox' name='suppress-javascript'> Strip JavaScript
+    </label></div>
+    <div class='checkbox-and-text'>
+      <label for='referer-enabled'>
+        <div>
+          <div class='left-input'>
+            <label>
+              <input class='check-with-text' data-enabled-text='#referer-text' type='checkbox' id='referer-enabled' name='referrer-enabled'>
+              Set referer
+            </label>
+          </div>
+          <div class='input-wrap'>
+            <input id='referer-text' class type='text' name='referer' disabled>
+          </div>
+        </div>
+      </label>
+    </div>
+    <div style='clear:both'></div>
+    <div class='checkbox-and-text'>
+      <label for='user-agent-enabled'>
+        <div class='left-input'>
+          <label>
+            <input class='check-with-text' data-enabled-text='#useragent-text' type='checkbox' id='user-agent-enabled' name='user-agent-enabled'>
+            Set user agent
+          </label>
+        </div>
+        <div class='input-wrap'>
+          <input id='useragent-text' type='text' name='user-agent' placeholder="<%= SocialEngineering::WebPage::DEFAULT_USER_AGENT %>" disabled>
+        </div>
+      </label>
+    </div>
+    <div style='clear:both'></div>
+    <div>
+      <label for='resolve-relative-urls'>
+        <input type='checkbox' id='resolve-relative-urls' name='resolve-relative-urls' checked>
+        Resolve relative URLs
+      </label>
+    </div>
+  </div>
+
+  </div>
+  <div class='loading' style='display:none'></div>
+</div>

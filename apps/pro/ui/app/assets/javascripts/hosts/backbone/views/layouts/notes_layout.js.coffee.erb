@@ -1,0 +1,89 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/notes") %>',
+  '<%= javascript_path("moment.min.js") %>',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, Template, m, EventAggregator) ->
+  class NotesLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/notes']
+
+    initialize: ({@host_id}) ->
+
+    hostNotesURL: => "/hosts/#{@host_id}/show_notes.json"
+
+    onShow: ->
+      EventAggregator.on("tabs_layout:change:count", @render)
+
+    onDestroy: ->
+      EventAggregator.off("tabs_layout:change:count")
+
+    onRender: ->
+      @_loadTable()
+
+    _fixJSON: (json) =>
+      if json && _.size(json) > 0 and not _.isString(json) and not _.isNumber(json)
+        hash = {}
+        _.map(json, (v, k) =>
+          hash[k] = @_fixJSON(v)
+        )
+        hash
+      else
+        try
+          if _.isString(json)
+            return $.parseJSON(json|| "null")
+          else
+            return json
+        catch e
+          return json
+        
+
+    _loadTable: =>
+      helpers.loadRemoteTable({
+        el: $('#notes_table', @el)
+        tableName: 'notes'
+        columns:
+          ntype:
+            sTitle: 'Name'
+            fnRender: (o) ->
+              _.escapeHTML(o.aData.ntype)
+          data:
+            bSortable: false
+            sClass: 'break-all info'
+            sWidth: "50%"
+            fnRender: (o) ->
+              unless _.isString(o.aData.data)
+                d = JSON.stringify(o.aData.data)
+              else
+                d = o.aData.data
+              _.escapeHTML(d)
+          updated_at:
+            sTitle: "Updated"
+            sWidth: "200px"
+            sClass: 'time'
+            fnRender: (o) ->
+              time = o.aData?.updated_at
+              "<span title='#{_.escape(time)}'>#{_.escape(moment(time).fromNow())}</span>"
+        dataTable:
+          bFilter: true
+          oLanguage:
+            sEmptyTable: "No Notes were found for this host."
+          aaSorting: [[2, 'desc']]
+          sAjaxSource: @hostNotesURL()
+          sPaginationType: "r7Style"
+          fnDrawCallback: =>
+            $('table td.time', @el).tooltip()
+            $(@el).trigger('tabload')
+            _.each $('#notes_table', @el).find('td.info'), (td) =>
+              try
+                d = $.parseJSON(_.unescapeHTML($(td).text()))
+                try
+                  d = @_fixJSON(d)
+
+                  node = new PrettyJSON.view.Node({ el: $(td), level: 0, data: d })
+                  $data = $(td).find('.node-container').first()
+                  $data.addClass('inline').click ->
+                      if $(@).hasClass('inline')
+                          node.expandAll()
+                          $(@).removeClass('inline')
+                  $data.css('max-width': 'none', width: $(td).width()+'px', 'box-sizing': 'border-box')
+      })

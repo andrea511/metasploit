@@ -1,0 +1,6 @@
+<div class='filter-component pro-search'>
+  <div id="hosts-table_filter" class="dataTables_filter">
+    <a class="cancel-search" href="javascript:void(0);" style="display: none;"></a>
+    <input type="text" id="search" placeholder="<%= @placeHolderText %>">
+  </div>
+</div>

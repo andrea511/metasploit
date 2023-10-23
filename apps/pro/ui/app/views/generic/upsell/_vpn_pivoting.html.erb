@@ -1,0 +1,22 @@
+  <div class='header'>
+   <h2>Get Free Upgrade to Try VPN Pivoting</h2>
+
+    <p>
+      Metasploit’s regular proxy pivoting is useful to exploit another host once you have gained a first session in an organization through social engineering or exploiting an Internet-facing server. However, its proxy-based interface makes it very challenging to run reconnaissance on the network.
+
+      By contrast, VPN pivoting lets you run any network-based tools through a compromised host, such as vulnerability scanners or even your own custom tools. It creates an encrypted layer 2 tunnel into the compromised machine and routes any network traffic through that target machine. This grants you full network access as if you were on the local network – without a perimeter firewall to block your traffic.
+    </p>
+
+  </div>
+  
+  <div class="right-content">
+    <%= image_tag image_path('upsell/vpn.jpg') %>
+  </div>
+
+  <p>
+    <a href="<%= get_upgrade_url %>" class="mainBtn downloadBtn" title="Download"><em></em>GET YOUR FREE UPGRADE TRIAL NOW</a>
+  </p>
+
+  <%= render :partial => 'generic/upsell/footer' %>
+
+  <%= nonced_javascript_tag "jQuery('#popup .body-disabled-overlay').removeClass('invisible')" %>

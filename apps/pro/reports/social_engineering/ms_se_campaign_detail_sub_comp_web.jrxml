@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ms_se_campaign_detail_sub_components" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="45"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{reporting_dir} + "style_templates/se_styles.jrtx"]]></template>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="se_campaign_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String"/>
+	<parameter name="include_page_code" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Toggle for displaying web page component HTML]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="email_count" class="java.lang.Long" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select
+          row_number() OVER(ORDER BY swp.id) as page_num,
+	swp.name,
+	swp.id,
+	swp.created_at,
+	swp.attack_type,
+	swp.content
+from se_web_pages swp
+inner join se_campaigns sc on (swp.campaign_id = sc.id)
+where sc.workspace_id = $P{workspace_id}
+and swp.campaign_id = $P{se_campaign_id}]]>
+	</queryString>
+	<field name="page_num" class="java.lang.Long"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="attack_type" class="java.lang.String"/>
+	<field name="content" class="java.lang.String"/>
+	<title>
+		<band height="30">
+			<break>
+				<reportElement x="0" y="0" width="572" height="1">
+					<printWhenExpression><![CDATA[$P{email_count} > 0]]></printWhenExpression>
+				</reportElement>
+			</break>
+			<staticText>
+				<reportElement style="Section Header - No BG" x="0" y="1" width="572" height="27"/>
+				<textElement/>
+				<text><![CDATA[Web Pages]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="145" splitType="Stretch">
+			<break>
+				<reportElement x="0" y="1" width="572" height="1">
+					<printWhenExpression><![CDATA[$F{page_num} > 1]]></printWhenExpression>
+				</reportElement>
+			</break>
+			<staticText>
+				<reportElement style="table_text" x="35" y="2" width="55" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Page:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table_text" x="100" y="2" width="460" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table_text" x="35" y="16" width="55" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Created:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement style="table_text" x="100" y="16" width="460" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{created_at}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table_text" x="24" y="30" width="66" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Attack type:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table_text" x="100" y="30" width="460" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[($F{attack_type} == 'none') ?
+    "None selected" :
+    $F{attack_type}.capitalize()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table_text" x="0" y="63" width="90" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Image preview:]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="100" y="53" width="460" height="36"/>
+				<textField>
+					<reportElement x="0" y="0" width="460" height="36">
+						<printWhenExpression><![CDATA[$F{attack_type} != 'none' && $F{attack_type} != 'phishing']]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["This webpage contains an attack, therefore an image preview was not generated."]]></textFieldExpression>
+				</textField>
+				<image scaleImage="RealSize" onErrorType="Blank">
+					<reportElement style="generic_text" x="0" y="0" width="460" height="36">
+						<printWhenExpression><![CDATA[$F{attack_type} == 'none' || $F{attack_type} == 'phishing']]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{reporting_dir} + "social_engineering/se_webpage_previews/" + $P{se_campaign_id} + "-" + $F{id} + ".png"]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="24" y="100" width="536" height="31">
+					<printWhenExpression><![CDATA[$P{include_page_code}]]></printWhenExpression>
+				</reportElement>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="border_box" positionType="Float" x="76" y="0" width="460" height="31">
+						<printWhenExpression><![CDATA[$P{include_page_code}]]></printWhenExpression>
+					</reportElement>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{content}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="table_text" positionType="Float" x="0" y="0" width="66" height="14">
+						<printWhenExpression><![CDATA[$P{include_page_code}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Raw content:]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

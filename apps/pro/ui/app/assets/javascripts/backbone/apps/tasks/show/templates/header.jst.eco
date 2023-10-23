@@ -1,0 +1,36 @@
+<div class="max-width clear">
+  <div class="task-status">
+    <h3><%= @description %></h3>
+    <% if @app_run_status?: %>
+      <label class="status <%= _.str.underscored @app_run_status %>">
+        <%= _.str.humanize @app_run_status %>
+      </label>
+    <% else: %>
+      <label class="status <%= @state %>">
+        <%= @state.capitalize() %>
+      </label>
+    <% end %>
+</div>
+
+  <div class="control-buttons">
+    <% if @running: %>
+
+      <% if @pausable: %>
+        <div class="control-button" id="pause"><label>Pause</label></div>
+      <% end %>
+
+      <div class="control-button" id="stop">Stop</div>
+
+    <% else if @paused: %>
+
+      <div class="control-button" id="resume"><label>Resume</label></div>
+
+      <div class="control-button" id="stop">Stop</div>
+
+    <% end %>
+
+    <div class="retina spinner"></div>
+  </div>
+
+  <div class="clearfix"></div>
+</div>

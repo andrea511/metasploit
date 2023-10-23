@@ -1,0 +1,27 @@
+modalViewPaths = <%= metamodule_dir_map.to_json %>
+
+define [
+  'jquery',
+  '<%= javascript_path("templates/apps/views/card_view") %>'
+], ($, Template) ->
+  class CardView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['apps/views/card_view']
+
+    events:
+      'click .primary.btn': 'launchClicked'
+      'click a.title': 'launchClicked'
+
+    launchClicked: (e) =>
+      e.preventDefault()
+      path = modalViewPaths[@model.get('symbol')]
+      @loadAssets(path)
+
+    #Dynamically Load App Modal Assets
+    loadAssets: (pathToLoad) ->
+      rjs = requirejs.config(context: "app")
+      rjs([
+        pathToLoad
+      ], (ModalView) ->
+        new ModalView({el: $('#modals')}).open()
+      )
+

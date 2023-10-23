@@ -1,0 +1,4 @@
+<form>
+    <label for="username">Public</label>
+    <input type="text" id="username" name="public[username]">
+</form>

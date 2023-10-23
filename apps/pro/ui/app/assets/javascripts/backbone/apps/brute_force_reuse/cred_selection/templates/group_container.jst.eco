@@ -1,0 +1,28 @@
+<div class='header'>
+  <span class='title'>selected credentials</span>
+  <span class='badge' style='display:none'>0</span>
+  <a class='clear' style='display:none' title='Clear all selected items.' href='javascript:void(0)'>&times;</a>
+</div>
+
+<div class='border'>
+  <div class='padder'>
+    <% if @groupsFetched: %>
+
+      <% if @groups?.models?.length > 0: %>
+        <div style='display: none' class='dropdown-container'>
+          <div class='dropdown'>
+          </div>
+        </div>
+      <% end %>
+
+    <% else: %>
+
+      <div style='display: none' class='dropdown-container'>
+        <div class='loading'></div>
+      </div>
+
+    <% end %>
+    <ul class='groups'></ul>
+  </div>
+  <%# <a href='javascript:void(0)' class='save'>Save this group</a> %>
+</div>

@@ -1,0 +1,10 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/shared/item_views/input_fields") %>'
+], ($, Template) ->
+  class InputFields extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['shared/item_views/input_fields']
+
+    initialize: (opts={}) =>
+      @class = ''
+      $.extend(@, opts)

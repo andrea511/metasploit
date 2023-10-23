@@ -1,0 +1,10 @@
+define [
+  '<%= javascript_path("apps/backbone/models/app_run") %>',
+  'jquery'
+], (AppRun, $) ->
+  class AppRunsCollection extends Backbone.Collection
+    url: -> "/workspaces/#{WORKSPACE_ID}/apps/app_runs.json"
+    model: AppRun
+
+    comparator: (model) ->
+      -model.get('id')

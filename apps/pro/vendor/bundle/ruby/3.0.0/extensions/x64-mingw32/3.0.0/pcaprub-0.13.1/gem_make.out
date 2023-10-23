@@ -1,0 +1,131 @@
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/pcaprub-0.13.1/ext/pcaprub_c
+C:/Users/vagrant/pro/pkg/w32/ruby/bin/ruby.exe -I C:/Users/vagrant/pro/pkg/w32/ruby/lib/ruby/site_ruby/3.0.0 -r ./siteconf20230522-388-5ayyci.rb extconf.rb
+
+[*] Running checks for pcaprub_c code...
+platform is x64-mingw32
+checking for -lws2_32... yes
+checking for -liphlpapi... yes
+checking for windows.h... yes
+checking for winsock2.h... yes
+checking for iphlpapi.h... yes
+checking for ruby/thread.h... yes
+checking for rb_thread_blocking_region()... no
+checking for rb_thread_call_without_gvl()... yes
+checking for pcap_open_live() in -lwpcap... yes
+checking for pcap_setnonblock() in -lwpcap... yes
+creating Makefile
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/pcaprub-0.13.1/ext/pcaprub_c
+make DESTDIR\= clean
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/pcaprub-0.13.1/ext/pcaprub_c
+make DESTDIR\=
+generating pcaprub_c-x64-mingw32.def
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 15707 s in the future
+compiling pcaprub.c
+In file included from C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap/pcap.h:41,
+                 from C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap.h:45,
+                 from pcaprub.c:11:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap-stdinc.h:64: warning: "snprintf" redefined
+   64 | #define snprintf _snprintf
+      | 
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:144,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from pcaprub.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/subst.h:14: note: this is the location of the previous definition
+   14 | #define snprintf ruby_snprintf
+      | 
+In file included from C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap/pcap.h:41,
+                 from C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap.h:45,
+                 from pcaprub.c:11:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap-stdinc.h:65: warning: "vsnprintf" redefined
+   65 | #define vsnprintf _vsnprintf
+      | 
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:144,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from pcaprub.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/subst.h:15: note: this is the location of the previous definition
+   15 | #define vsnprintf ruby_vsnprintf
+      | 
+pcaprub.c: In function 'rbpcap_each_data':
+pcaprub.c:992:9: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  992 |   fno = (int)pcap_getevent(rbp->pd);
+      |         ^
+pcaprub.c:992:7: warning: assignment to 'HANDLE' {aka 'void *'} from 'int' makes pointer from integer without a cast [-Wint-conversion]
+  992 |   fno = (int)pcap_getevent(rbp->pd);
+      |       ^
+pcaprub.c: In function 'rbpcap_each_packet':
+pcaprub.c:1034:9: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+ 1034 |   fno = (int)pcap_getevent(rbp->pd);
+      |         ^
+pcaprub.c:1034:7: warning: assignment to 'HANDLE' {aka 'void *'} from 'int' makes pointer from integer without a cast [-Wint-conversion]
+ 1034 |   fno = (int)pcap_getevent(rbp->pd);
+      |       ^
+pcaprub.c: In function 'rbpcap_thread_wait_handle':
+pcaprub.c:1274:7: warning: passing argument 1 of 'rb_thread_call_without_gvl' from incompatible pointer type [-Wincompatible-pointer-types]
+ 1274 |       rbpcap_thread_wait_handle_blocking,
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |       |
+      |       VALUE (*)(void *) {aka long long unsigned int (*)(void *)}
+In file included from pcaprub.c:4:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/thread.h:24:42: note: expected 'void * (*)(void *)' but argument is of type 'VALUE (*)(void *)' {aka 'long long unsigned int (*)(void *)'}
+   24 | void *rb_thread_call_without_gvl(void *(*func)(void *), void *data1,
+      |                                  ~~~~~~~~^~~~~~~~~~~~~
+linking shared-object pcaprub_c.so
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/pcaprub-0.13.1/ext/pcaprub_c
+make DESTDIR\= install
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 15706 s in the future
+compiling pcaprub.c
+In file included from C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap/pcap.h:41,
+                 from C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap.h:45,
+                 from pcaprub.c:11:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap-stdinc.h:64: warning: "snprintf" redefined
+   64 | #define snprintf _snprintf
+      | 
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:144,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from pcaprub.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/subst.h:14: note: this is the location of the previous definition
+   14 | #define snprintf ruby_snprintf
+      | 
+In file included from C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap/pcap.h:41,
+                 from C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap.h:45,
+                 from pcaprub.c:11:
+C:/Users/vagrant/pro/pkg/w32/devkit/include/pcap-stdinc.h:65: warning: "vsnprintf" redefined
+   65 | #define vsnprintf _vsnprintf
+      | 
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:144,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from pcaprub.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/subst.h:15: note: this is the location of the previous definition
+   15 | #define vsnprintf ruby_vsnprintf
+      | 
+pcaprub.c: In function 'rbpcap_each_data':
+pcaprub.c:992:9: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  992 |   fno = (int)pcap_getevent(rbp->pd);
+      |         ^
+pcaprub.c:992:7: warning: assignment to 'HANDLE' {aka 'void *'} from 'int' makes pointer from integer without a cast [-Wint-conversion]
+  992 |   fno = (int)pcap_getevent(rbp->pd);
+      |       ^
+pcaprub.c: In function 'rbpcap_each_packet':
+pcaprub.c:1034:9: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+ 1034 |   fno = (int)pcap_getevent(rbp->pd);
+      |         ^
+pcaprub.c:1034:7: warning: assignment to 'HANDLE' {aka 'void *'} from 'int' makes pointer from integer without a cast [-Wint-conversion]
+ 1034 |   fno = (int)pcap_getevent(rbp->pd);
+      |       ^
+pcaprub.c: In function 'rbpcap_thread_wait_handle':
+pcaprub.c:1274:7: warning: passing argument 1 of 'rb_thread_call_without_gvl' from incompatible pointer type [-Wincompatible-pointer-types]
+ 1274 |       rbpcap_thread_wait_handle_blocking,
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |       |
+      |       VALUE (*)(void *) {aka long long unsigned int (*)(void *)}
+In file included from pcaprub.c:4:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/thread.h:24:42: note: expected 'void * (*)(void *)' but argument is of type 'VALUE (*)(void *)' {aka 'long long unsigned int (*)(void *)'}
+   24 | void *rb_thread_call_without_gvl(void *(*func)(void *), void *data1,
+      |                                  ~~~~~~~~^~~~~~~~~~~~~
+linking shared-object pcaprub_c.so
+/usr/bin/install -c -m 0755 pcaprub_c.so ./.gem.20230522-388-j4c7gm
+make: warning:  Clock skew detected.  Your build may be incomplete.

@@ -1,0 +1,39 @@
+<div class="one_col_without_sidebar">
+  <div class="col1">
+
+    <%= form_tag create_backup_path, class: "formtastic" do %>
+      <%= render "shared/error_messages_general", :errors => @errors %>
+
+      <fieldset class="inputs">
+        <legend><span>Backup Information</span></legend>
+          <ol>
+            <li class="string input error required stringish">
+              <%= label_tag :name, nil, class: 'label' do%>Name<abbr title="required">*</abbr>
+              <% end %>
+              <%= text_field_tag :name, '', size: 30, maxlength: 64 %>
+              <% if @errors %>
+                <p class="inline-errors"><%= @errors[:name_error] %></p>
+              <% end %>
+            </li>
+
+            <li class="string input error required stringish">
+              <%= label_tag :description, 'Description', class: 'label'%>
+              <%= text_field_tag :description, '', size: 30, maxlength: 255 %>
+              <% if @errors %>
+                <p class="inline-errors"><%= @errors[:description_error] %></p>
+              <% end %>
+            </li>
+
+            <li class="string input error required stringish">
+              <%= label_tag :sumbit, ' ', class: 'label'%>
+              <div class="buttons">
+                <span class="btn"><%= submit_tag 'Create Backup', :class => "save" %></span>
+              </div>
+            </li>
+          </ol>
+      </fieldset>
+    <% end %>
+  </div>
+
+</div>
+

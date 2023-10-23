@@ -1,0 +1,19 @@
+<div class='fixed'>
+    <div id="banner-region" class="foundation">
+        <div class="manage-creds-header">
+          <h1 data-table-id='manage-creds'>Manage Credentials</h1>
+
+          <div id="total-count">0</div>
+
+          <div class="filter-region"></div>
+
+          <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tags-region"></div>
+
+<div id="creds-region"></div>
+

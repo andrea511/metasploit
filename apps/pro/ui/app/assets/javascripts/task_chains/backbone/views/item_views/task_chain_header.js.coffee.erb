@@ -1,0 +1,158 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/task_chain_header') %>',
+  '<%= javascript_path("shared/backbone/layouts/modal") %>',
+  '<%= javascript_path('task_chains/backbone/views/layouts/scheduler_layout')%>'
+], ($, Template, Modal, SchedulerLayout) ->
+
+
+  class TaskChainHeader extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['task_chains/item_views/task_chain_header']
+
+    ui:
+      save_buttons: '.btn.save-run, .btn.save'
+      save_links: '.btn.save-run a, .btn.save a'
+      save_list_items: '.save-and-run, .save'
+      task_chain_name: '#name'
+      schedule: 'a.schedule'
+      schedule_state: '.schedule-state'
+
+    events:
+      'click .btn.cancel' : '_cancel'
+      'click .btn.save a' : '_saveChain'
+      'click .btn.save-run a' : '_saveChainAndRun'
+      'click a.schedule' : '_scheduleTask'
+
+    onShow: () ->
+      @schedule_has_been_opened = false
+      @_bindTriggers()
+
+      unless @cachedSchedule?
+        @cachedSchedule = new SchedulerLayout(model: @model)
+
+    onDestroy: () ->
+      @_unbindTriggers()
+      gon.unwatch('taskChainRunning', @preventDoubleStart)
+
+    _bindTriggers: () ->
+      $(document).on('closeSchedule', @_closeSchedule)
+      $(document).on('modal.button.close', @_cancelSchedule)
+
+    _unbindTriggers: () ->
+      $(document).off('closeSchedule', @_closeSchedule)
+      $(document).off('modal.button.close', @_cancelSchedule)
+
+    _saveChain: () ->
+      $(@el).trigger('saveChain')
+
+    _cancel: () ->
+      window.location = "/workspaces/#{WORKSPACE_ID}/task_chains"
+
+    _saveChainAndRun: () ->
+      $(@el).trigger('saveChainAndRun')
+
+    _scheduleTask: () ->
+      if @schedule_has_been_opened
+        @cachedSchedule = new SchedulerLayout(model: @model)
+
+      @schedule_has_been_opened = true
+      @modal = new Modal(
+        title: 'Schedule a Task Chain'
+        width: 710
+        buttons: [
+          {name: 'Close', class: 'close'}
+          {name: 'Save', class: 'btn primary'}
+        ]
+      )
+      @modal.open()
+      @model.currentView?.close()
+      @modal.content.show(@cachedSchedule, preventDestroy: true, forceShow:true)
+
+    _renderToolTip: (toolTipMsg) ->
+      if toolTipMsg?
+        @ui.save_list_items.each(
+          () ->
+            $(@).tooltip(
+              items:'span'
+              content: _.escape(toolTipMsg)
+              disabled: false
+            )
+        )
+      else
+        @ui.save_list_items.each(() -> $(@).tooltip(items: 'span', disabled:true))
+
+
+    setName: (name) ->
+      @ui.task_chain_name.val(name)
+
+    disableSave: (opts={}) ->
+      {toolTipMsg} = opts
+
+      @_renderToolTip(toolTipMsg)
+      @ui.save_buttons.addClass('disabled')
+      @ui.save_links.addClass('disabled')
+
+    enableSave: (opts={}) ->
+      {toolTipMsg} = opts
+
+      @_renderToolTip(toolTipMsg)
+      @ui.save_buttons.removeClass('disabled')
+      @ui.save_links.removeClass('disabled')
+
+    setScheduleInfo: (run_info)->
+      if run_info == ""
+        run_info = "Schedule Now"
+      @ui.schedule.html(run_info)
+
+    setState: (task_chain) ->
+      if task_chain.schedule_info.indexOf("Invalid") == -1 and task_chain.schedule_info != "" and task_chain.state != 'suspended'
+        if task_chain.schedule_info.indexOf("at") == -1
+          @setRecurringState()
+        else
+          @setScheduledState()
+      else
+        if task_chain.state == 'suspended'
+          @setSuspendedState()
+        else
+          @setUnscheduledState()
+
+    setRecurringState: () ->
+      @_clearState()
+      @ui.schedule_state.addClass('recurring')
+
+    setScheduledState: () ->
+      @_clearState()
+      @ui.schedule_state.addClass('scheduled')
+
+    setSuspendedState: () ->
+      @_clearState()
+      @ui.schedule_state.addClass('suspended')
+
+    setUnscheduledState: ()->
+      @_clearState()
+      @ui.schedule_state.addClass('schedule')
+
+    _clearState: ->
+      @ui.schedule_state.removeClass('recurring')
+      @ui.schedule_state.removeClass('scheduled')
+      @ui.schedule_state.removeClass('schedule')
+      @ui.schedule_state.removeClass('suspended')
+
+
+    _closeSchedule: ()=>
+      @cachedSchedule.restoreSchedule = @cachedSchedule.cachedView
+
+      run_info = $('.run-info',@modal.el).html()
+      suspended  = $('.schedule-options input[name="schedule_suspend"]:checked', @modal.el).length > 0;
+
+      if run_info.indexOf("Invalid") == -1 and not suspended
+        @setScheduleInfo(run_info)
+        if run_info.indexOf("at") == -1
+          @setRecurringState()
+        else
+          @setScheduledState()
+      else
+        @setScheduleInfo('Schedule')
+        @setSuspendedState()
+
+      @modal._close()

@@ -1,0 +1,30 @@
+<% title "Host Tags" %>
+<% breadcrumb workspace_link, tags_link %>
+
+
+<% include_view_javascript -%>
+
+<h1>Host Tags</h1>
+
+<%# This seems to be a bug in rails w/ destroy method route generation.  -%>
+<%= form_tag do %>
+	<div class='control-bar-items'>
+    <span class='button any'>
+      <%= submit_delete(destroy_workspace_tags_path(@workspace), 'Delete selected tags?') %>
+    </span>
+		<span class="button single"><%= link_to "Settings", '', :class => 'edit-notable' %></span>
+		
+		<% if Mdm::NexposeConsole.where('enabled = ?', true).count > 0 %>		
+		<span class="button single">
+			<%= submit_checkboxes_to "Nexpose Push", new_nexpose_asset_group_push_path(@workspace), { :class => "nexpose" } %>
+		</span>
+		<% end %>
+	</div>
+
+  <%= content_tag :div, :id => "tags_table" do -%>
+    <%= render :partial => "tags", :locals => {:tags => @tags }%>
+  <% end %>
+<% end -%>
+
+<div class='dialog' id='tag-dialog'></div>
+

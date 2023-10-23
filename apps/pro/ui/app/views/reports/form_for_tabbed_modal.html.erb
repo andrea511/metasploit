@@ -1,0 +1,8 @@
+<%= semantic_fields_for TaskConfig.new({}) do |report_form| %>
+    <%= render partial: 'wizards/report_tab',
+               locals: {:report => @report,
+                        :rtypes => report_types_for_quick_pentest,
+                        :f      => report_form
+               }
+    %>
+<% end %>

@@ -1,0 +1,41 @@
+<% title "Email Templates" -%>
+<% include_javascript 'social_engineering/email_templates/_index' -%>
+
+<% breadcrumb workspace_link,
+  social_engineering_campaigns_link,
+  social_engineering_email_templates_link
+%>
+
+<%= form_tag do %>
+  <div class="analysis-control-bar">
+    <div class="control-bar-items">
+      <span class="button"><%= link_to "New Email Template", new_workspace_social_engineering_email_template_path(@workspace), :class => "new" %></span>
+      <span class="button any">
+        <%= submit_delete(delete_workspace_social_engineering_email_templates_path(@workspace), 'Delete selected Email Templates?') %>
+      </span>
+    </div>
+  </div>
+
+  <table class="sortable list" id="email-templates-table">
+    <thead>
+    <tr>
+      <th class="checkbox"><%= check_box_tag "all_hosts", false %></th>
+      <%= sortable_th "Name", "name" %>
+      <%= sortable_th "Creation Date", "created_at" %>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @email_templates.each do |email_template| %>
+    <tr class="<%=h row_cycle %>">
+      <td width="1"><%= check_box_tag("email_template_ids[]", email_template.id, false, :id => nil) %></td>
+      <td><%= link_to(email_template.name, edit_workspace_social_engineering_email_template_path(@workspace, email_template)) %></td>
+      <td><%= email_template.created_at %></td>
+    </tr>
+    <% end %>
+
+    </tbody>
+  </table>
+
+<% end %>
+

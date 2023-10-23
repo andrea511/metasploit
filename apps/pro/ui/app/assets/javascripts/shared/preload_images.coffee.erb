@@ -1,0 +1,12 @@
+# This coffeescript is compiled into application.js and ensures that
+# certain frequent images are in the browser cache before they are
+# ever dynamically inserted into the DOM
+
+# add images to this array to preload them
+PRELOADED_IMAGES = [
+  "<%= image_path 'icons/silky/information_hover.png' %>",
+  "<%= image_path 'spinner.gif' %>",
+  "<%= image_path 'loader-bar.gif' %>"
+]
+
+_.each PRELOADED_IMAGES, (src) -> (new Image).src = src

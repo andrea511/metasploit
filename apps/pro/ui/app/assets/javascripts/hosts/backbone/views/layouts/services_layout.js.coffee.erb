@@ -1,0 +1,167 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/services") %>',
+  '<%= javascript_path("shared/lib/jquery.dataTables.editable") %>',
+  '<%= javascript_path("shared/backbone/layouts/modal") %>',
+  '<%= javascript_path("moment.min.js") %>',
+  '<%= javascript_path("hosts/backbone/views/item_views/service_form") %>',
+  #TODO Move Notifiation Center Event Aggregator to Shared Dir
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, Template, EditablePlugin, Modal, m, ServiceForm, EventAggregator) ->
+
+  class ServicesLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/services']
+
+    initialize: ({@host_id, @host_address}) ->
+
+    hostServicesURL: => "/hosts/#{@host_id}"
+    hostServicesDeleteURL: => "#{@hostServicesURL()}/delete_service"
+    hostServicesUpdateURL: => "#{@hostServicesURL()}/update_service.json"
+    hostServicesTableURL: =>  "#{@hostServicesURL()}/show_services.json"
+
+    onShow: =>
+      EventAggregator.on("redrawTable", @render)
+      EventAggregator.on("tabs_layout:change:count", @_reRender)
+      EventAggregator.on("serviceForm:rowAdded", @_rowAdded)
+
+    onDestroy: ->
+      EventAggregator.off("redrawTable")
+      EventAggregator.off("tabs_layout:change:count")
+      EventAggregator.off("serviceForm:rowAdded")
+
+    events:
+      'click .btn .new': '_addService'
+      'rowDeleted table' : '_countChanged'
+      'rowAdded table' : '_countChanged'
+
+    _rowAdded: =>
+      $table = $('#services_table table', @el).dataTable()
+      #Proxy Event since we want tabs layout to be re-usable
+      records_total = $table.fnSettings().fnRecordsTotal()
+      count =  records_total+1
+      $table.trigger('rowAdded',count)
+
+    _countChanged: (e, count) =>
+      #Proxy Event since we want tabs layout to be re-usable
+      $(@el).trigger('tabcountUpdated', {count:count, name:'Services'})
+
+    _reRender: (count) =>
+      if !@modal? && !@isEditMode() && $('#services_table table', @el).dataTable().fnSettings().fnRecordsTotal() != count.get("services")
+        @render()
+
+    isEditMode: =>
+      $('.edit-table-row .save',@el).length > 0
+
+    onRender: =>
+      @_loadTable()
+
+    _showModal: (opts={}) =>
+      @modal.destroy() if @modal
+      @modal = new Modal(class: 'flat', title: "New Service", width: 300)
+      @modal.open()
+      services = @_getServices()
+      parsedStates = $.parseJSON('<%= Mdm::Service::STATES.map{|item|{:value=>item, :text=>item}}.to_json %>')
+      model = new Backbone.Model
+        protocols:
+          protocols: [
+            {
+              value: 'tcp',
+              text: 'tcp'
+            },
+            {
+              value: 'udp'
+              text: 'udp'
+            }
+          ],
+          title: 'tcp'
+        states:
+          states:
+            parsedStates
+          selected: 'open'
+      @modal.content.show(new ServiceForm({model: model, host_id: @host_id}))
+
+    _addService: =>
+      @_showModal()
+
+    _getServices: ->
+      $('meta[name=services]').attr("content")
+
+    _linkForServiceName: (name, port, state) ->
+      stateIsOpen = (state == 'open')
+      UriScheme = switch name
+        when 'http', 'https', 'ftp', 'telnet', 'ssh', 'vnc', 'smb' then name
+        when 'rlogin', 'login' then 'rlogin'
+        when 'msrdp' then 'rdp'
+        else null
+      linkText = "<a href='#{UriScheme}://#{@host_address}:#{port}/' target='_blank'>#{name}</a>"
+      if (UriScheme && stateIsOpen) then linkText else name
+
+    _loadTable: () ->
+      helpers.loadRemoteTable
+        sAjaxDestination: @hostServicesUpdateURL()
+        sAjaxDelete: @hostServicesDeleteURL()
+        editableOpts: [
+                        {type:"field", id: "name"},
+                        {type:"field", id: "port"},
+                        {type:"select",options:[{value:"udp",content:"udp"},{value:"tcp",content:"tcp"}]},
+                        {type:"select",options:<%= Mdm::Service::STATES.map{|item|{:value=>item, :content=>item}}.to_json %>},
+                        {type:"none"},
+                        {type:"none"},
+                        {type:"control"},
+                        {type:"none"}
+                      ]
+        el: $('#services_table', @el)
+        tableName: 'services'
+        columns:
+          name:
+            name: "Name"
+            bSortable: true
+            fnRender: (o) =>
+              sname = _.escapeHTML(_.unescapeHTML(o.aData.name))
+              unless sname?
+                ""
+              else
+                name  = sname
+                port  = o.aData.port
+                state = o.aData.state
+                @_linkForServiceName(name, port, state)
+          port:
+            name: "Port"
+          protocol:
+            name: "Protocol"
+          state:
+            name: "State"
+          info:
+            name: "Service Information"
+            fnRender: (o) ->
+              unless o.aData.info?
+                ""
+              else
+                _.escapeHTML(_.unescapeHTML(o.aData.info))
+
+          created_at:
+            bSortable: true
+            sTitle: "Created"
+            sWidth: "200px"
+            sClass: 'time'
+            fnRender: (o) ->
+              time = o.aData?.created_at
+              "<span title='#{_.escape(time)}'>#{_.escape(moment(time).fromNow())}</span>"
+          edit:
+            sWidth: "120px"
+            name: ""
+            bSortable: false
+            mDataProp: null
+            fnRender: (o) -> ""
+          id:
+            bVisible: false
+        dataTable:
+          bStateSave: true
+          oLanguage:
+            sEmptyTable: "No Services were found on this host."
+          bFilter: true
+          aaSorting: [[ 5, "desc" ]]
+          sPaginationType: "r7Style"
+          sAjaxSource: @hostServicesTableURL()
+          fnDrawCallback: =>
+            $('table td.time', @el).tooltip()

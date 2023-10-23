@@ -1,0 +1,15 @@
+2023-10-18 17:29:07.941 +07 [7392] LOG:  database system was interrupted; last known up at 2023-10-17 10:35:51 +07
+2023-10-18 17:29:10.819 +07 [7392] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-10-18 17:29:10.828 +07 [7392] LOG:  redo starts at 0/33603E8
+2023-10-18 17:29:10.828 +07 [7392] LOG:  invalid record length at 0/33604D0: wanted 24, got 0
+2023-10-18 17:29:10.828 +07 [7392] LOG:  redo done at 0/3360498
+2023-10-18 17:29:10.906 +07 [6500] LOG:  database system is ready to accept connections
+2023-10-18 17:31:46.186 +07 [6436] FATAL:  password authentication failed for user "SYSTEM"
+2023-10-18 17:31:46.186 +07 [6436] DETAIL:  Role "SYSTEM" does not exist.
+	Connection matched pg_hba.conf line 90: "host    all             all             ::1/128                 md5"
+2023-10-18 18:45:42.202 +07 [6500] LOG:  could not reserve shared memory region (addr=00000223ab720000) for child 00000000000013d8: error code 487
+2023-10-19 01:21:19.565 +07 [8592] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-19 01:21:19.575 +07 [20564] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-19 01:21:21.521 +07 [6500] LOG:  received fast shutdown request

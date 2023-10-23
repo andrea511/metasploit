@@ -1,0 +1,169 @@
+@import 'css3-mixins';
+@import 'shared/variables';
+
+$input-width: 100%;
+$border-color: #ccc;
+$font-size: 12px;
+$sel-bg-color: #ccc;
+$sel-text-color: #000;
+$tag-color: #d9d9d9;
+$tag-height: 18px;
+
+#add_tags, body {
+
+  ul.token-input-list-metasploit {
+    overflow: hidden; 
+    height: auto !important; 
+    height: 1%;
+    width: $input-width;
+    border: 1px solid $border-color;
+    cursor: text;
+    font-size: 12px;
+    min-height: 1px;
+    margin: 0 auto;
+    padding: 0;
+    background-color: #fff;
+    list-style-type: none;
+    clear: left;
+    @include box-sizing;
+    @include border-radius(2px);
+  }
+
+  ul.token-input-list-metasploit li input {
+    border: 0;
+    width: $input-width;
+    margin: 0 auto;
+    padding: 5px;
+    font-size: 12px;
+    -webkit-appearance: caret;
+  }
+
+  li.token-input-token-metasploit {
+    margin: 3px;
+    background-color: $tag-color;
+    cursor: default;
+    font-size: 11px;
+    float: left;
+    white-space: nowrap;
+    position: relative;
+    margin-left: 10px;
+    padding-left: 8px;
+    &:before {
+      width: 0;
+      height: 0;
+      content: '';
+      position: absolute;
+      left: -9px;
+      top: 0;
+      bottom: 1px;
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent; 
+      border-right: 9px solid $tag-color;
+    }
+    &:after {
+      position: absolute;
+      content: '\2022';
+      top: 0;
+      left: -3px;
+      bottom: 0;
+      color: #fff;
+    }
+  }
+
+  div.token-input-dropdown-metasploit {
+    position: absolute;
+    background-color: #fff;
+    overflow: hidden;
+    width: $input-width;
+    border: 1px solid $border-color;
+    border-top: 0;
+    margin: 0 auto;
+    cursor: default;
+    font-size: 11px;
+    z-index: 1005;
+  }
+
+  /// start new styles
+  li.token-input-token-metasploit p, li.token-input-token-metasploit span {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  li.token-input-token-metasploit p {
+    color: #444;
+    padding: 0 5px 0 1px;
+    margin: 0;
+    line-height: $tag-height;
+    font-size: 11px;
+  }
+
+  li.token-input-token-metasploit span {
+    font-size: 16px;
+    color: #b3b3b3;
+    border-left: 1px solid darken($tag-color, 5%);
+    cursor: pointer;
+    line-height: $tag-height;
+    padding: 0 5px;
+    &:hover {
+      text-decoration: none;
+      @include linear-gradient(lighten($tag-color, 3%), $tag-color);
+    }
+  }
+
+  li.token-input-selected-token-metasploit {
+    background-color: $sel-bg-color;
+    border-color: $sel-bg-color;
+    color: $sel-text-color;
+    &:before {
+      border-right-color: $sel-bg-color;
+    }
+    span.token-input-delete-token-metasploit {
+      border-left-color: darken($tag-color, 10%);
+    }
+  }
+
+  li.token-input-input-token-metasploit {
+    float: left;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  div.token-input-dropdown-metasploit p {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    color: #777;
+  }
+
+  div.token-input-dropdown-metasploit ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  div.token-input-dropdown-metasploit ul li {
+    background-color: #fff;
+    padding: 3px;
+    margin: 0;
+    list-style-type: none;
+    font-size: 11px;
+  }
+
+  div.token-input-dropdown-metasploit ul li.token-input-dropdown-item-metasploit {
+    background-color: #fff;
+  }
+
+  div.token-input-dropdown-metasploit ul li.token-input-dropdown-item2-metasploit {
+    background-color: #fff;
+  }
+
+  div.token-input-dropdown-metasploit ul li em {
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  div.token-input-dropdown-metasploit ul li.token-input-selected-dropdown-item-metasploit {
+    background-color: $sel-bg-color;
+    color: $sel-text-color;
+  }
+}

@@ -1,0 +1,32 @@
+<% include_stylesheet('reports') %>
+<%- content_for :head do %>
+  <%= include_gon nonce: @content_security_policy_nonce %>
+<%- end %>
+
+<% title "Report: #{@report.name}" %>
+<% breadcrumb workspace_link, reports_link, link_to("#{@report.name}", "#") %>
+
+<div id="reports-main-region"></div>
+
+<% if License.get.supports_reports? %>
+  <%= javascript_include_tag 'backbone/require_config' %>
+
+  <%# TODO: Would be really neato if we could load the base dependencies
+      in their own module, a la config/load.js %>
+  <%= nonced_javascript_tag do %>
+    jQuery(document).bind('requirejs-ready', function(){
+      jQuery(document).ready(function() {
+        initProRequire(
+          [ 'apps/reports/reports_app' ],
+          function() {
+            window.Pro.start({
+              environment: "<%= Rails.env %>"
+            });
+          }
+        );
+      });
+    });
+  <% end %>
+<% end %>
+
+<%= add_disable_overlay([:pro, :express]) if not @licensed %>

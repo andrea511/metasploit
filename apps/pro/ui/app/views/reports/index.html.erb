@@ -1,0 +1,14 @@
+<% title "Reports" %>
+<% breadcrumb workspace_link, reports_link %>
+
+<% include_view_javascript -%>
+
+<% if @licensed %>
+  <%= form_tag do %>
+    <%= render :partial => "report_nav_bar" %>
+    <%= render :partial => "saved_reports" %>
+  <% end %>
+<%= render :partial => "reports/report_footer" %>
+<% end %>
+
+<%= add_disable_overlay([:pro, :express]) if not @licensed %>

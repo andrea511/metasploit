@@ -1,0 +1,11 @@
+<meta name='save-status' content='false' />
+<%= f.inputs do -%>
+  <div class='max-width user-file-errors' style='position:relative; bottom:15px'>
+    <%= render "shared/error_messages", :target => @file %>
+  </div>
+  <%= f.input :name, :label => "File name", :required => true %>
+  <%= f.input :attachment, :as => :file, :required => true %>
+<% end -%>
+<% if params[:inline].present? %>
+  <input type='hidden' name='inline' value='true' />
+<% end %>

@@ -1,0 +1,27 @@
+.table-container
+  .status-bar
+    .status-block
+
+  .content-cell
+    .message
+      %b
+        {{title}}
+      {{#if_eq kind compare='system_notification'}}
+      %span{:class=>'system-badge'}
+        System
+      {{/if_eq}}
+      {{#if_eq kind compare='update_notification'}}
+      %span{:class=>'system-badge'}
+        System
+      {{/if_eq}}
+    .details
+      .text
+        {{content}}
+      .humanized
+        %b
+          {{humanized_created_at}}
+        ago
+
+.action-bar
+  %span{:class=>'close'}
+    &times;

@@ -1,0 +1,101 @@
+<div class='fixed'>
+  <div id="banner-region" class="foundation">
+    <div id="single-cred-header">
+      <ul>
+        <li>
+          <div>
+            PUBLIC
+          </div>
+          <div class="black">
+            <%- @publicUsernameLink() %>
+          </div>
+        </li>
+
+        <li>
+          <div>
+            PRIVATE
+          </div>
+          <div class="black private-region" >
+
+          </div>
+        </li>
+
+        <li>
+          <div>
+            PRIVATE TYPE
+          </div>
+          <div class="black">
+            <%- @privateTypeLink() %>
+          </div>
+        </li>
+
+        <li>
+          <div>
+            REALM
+          </div>
+          <div class="black">
+            <%- @realmKeyLink() %>
+          </div>
+        </li>
+
+        <li>
+          <div>
+            ORIGIN
+          </div>
+          <div class="origin-region">
+          </div>
+        </li>
+
+        <li class="tags">
+          <div>
+            <span class="count">4</span> Tags
+          </div>
+        </li>
+
+        <li class="quick-reuse">
+          <a href="javascript:void(0)" class="btn primary launch">Reuse</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+
+
+  <div class='sub-header foundation'>
+    <div class="row">
+      <div class='hang'>
+        <div class="columns small-5 white">
+        </div>
+
+        <div class="columns small-7 grey"></div>
+
+        <!--
+        <div class="columns small-2 grey">
+          <span class='large display-none'>&#10003;</span> <span class='subtext display-none'>validated</span>
+        </div>
+
+        <div class="columns small-2 grey">
+          <span class="instance-count display-none">457</span> <span class='subtext display-none'>logins</span>
+        </div>
+
+        <div class="columns small-3 grey">
+          <div class="rainbow-progress-wrapper display-none" clickable="true">
+            <canvas class="compromised-progress" height="40px" width="84px"></canvas>
+            <div class="compromised-text">network compromised</div>
+          </div>
+        </div>
+        -->
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id='related-logins-region'>
+</div>
+
+
+

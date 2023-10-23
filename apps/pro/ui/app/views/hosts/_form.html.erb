@@ -1,0 +1,41 @@
+<%= required_label %>
+
+<%= render "shared/error_messages", :target => @host %>
+
+<%= f.hidden_field :workspace_id %>
+
+<%= f.inputs "Name & Address" do -%>
+	<%= f.input :name, :required => true %>
+	<%= f.input :address, :as => :string, :label => 'IP address', :required => true %>
+	<%= f.input :mac, :label => 'Ethernet address' %>
+<% end -%>
+
+<%= f.inputs"Operating System" do -%>
+	<%= f.input :os_name, :label => "OS name" %>
+	<%= f.input :os_sp, :label => "OS version" %>
+	<%= f.input :os_flavor, :label => "OS flavor" %> 
+	<%= f.input :purpose, :as => :string %>
+	<%= f.input :lock_attrs, :as => :boolean, :label => "Lock edited host attributes" %>
+<% end -%>
+
+<%= f.inputs "Services" do -%>
+	<table class="list" id="services">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Port</th>
+				<th>Proto</th>
+				<th>State</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<%= f.fields_for :services do |builder| %>
+				<%= render 'service_fields', :f => builder %>
+			<% end %>
+		</tbody>
+	</table>
+	<br/>
+	<%= link_to_add_service(f) %>
+
+<% end -%>

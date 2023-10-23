@@ -1,0 +1,19 @@
+<% include_javascript 'moment.min' %>
+
+<div id="saved_exports">
+	<h1>Saved Exports</h1>
+
+	<table id="exports" class="list sortable">
+		<thead>
+			<tr>
+				<th class="checkbox"><%= check_box_tag "all_exports" %></th>
+				<th>File</th>
+                <th>Export Type</th>
+                <th>Creator</th>
+                <th>Status</th>
+                <th>Create Date</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+	</table>
+</div>

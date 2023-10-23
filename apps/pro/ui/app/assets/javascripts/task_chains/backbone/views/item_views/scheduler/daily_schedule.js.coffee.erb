@@ -1,0 +1,23 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/scheduler/daily_schedule') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/scheduler/schedule') %>'
+], ($, Template, Schedule) ->
+  class DailySchedule extends Schedule
+    template: HandlebarsTemplates['task_chains/item_views/scheduler/daily_schedule']
+
+
+    onShow:() ->
+      super
+      $('#weekday-time',@el).timepicker(
+        timeOnly:true,
+        timeFormat: 'hh:mm tt z'
+      )
+      $('#weekday-date', @el).datepicker()
+
+
+    _formSubmit:(e) ->
+      $('#weekday-date', @el).datepicker('destroy')
+      $('#weekday-time', @el).timepicker('destroy')
+      super
+

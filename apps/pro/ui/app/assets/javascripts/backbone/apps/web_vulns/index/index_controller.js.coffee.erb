@@ -1,0 +1,176 @@
+define [
+  'base_controller'
+  'apps/web_vulns/web_vulns_app'
+  'css!css/components/pill'
+  'apps/web_vulns/index/index_views'
+  'entities/web_vuln'
+  'lib/components/analysis_tab/analysis_tab_controller'
+
+], ->
+  @Pro.module "WebVulnsApp.Index", (Index, App, Backbone, Marionette, $, _) ->
+    class Index.Controller extends App.Controllers.Application
+
+      # Create a new instance of the IndexController and adds it to the region if show is true
+      #
+      # @param opts [Object] the options hash
+      # @options options show        [Boolean] show view on initialization
+      #
+      initialize: (options) ->
+        _.defaults options,
+          show: true
+
+        { show } = options
+
+        webvulns = App.request 'web_vulns:entities', fetch: false
+
+
+        defaultSort = 'risk'
+
+        columns = [
+          {
+            attribute: 'risk'
+            label:     'Risk'
+            class:     'truncate'
+          }
+          {
+            attribute: 'category'
+            label:     'Category'
+            class:     'truncate'
+          }
+          {
+            attribute: 'name'
+            label:     'Name'
+            class:     'truncate'
+          }
+          {
+            attribute: 'blame'
+            label:     'Blame'
+            class:     'truncate'
+          }
+          {
+            attribute: 'host.name'
+            idattribute: 'host.id'
+            label:     'Host Name'
+            escape:    false
+            sortable:  false
+          }
+          {
+            attribute:             'url'
+            label:                 'URL'
+            escape:    false
+            sortable:  false
+          }
+          {
+            attribute:             'pname'
+            label:                 'Parameter'
+            defaultDirection:      'asc'
+          }
+          {
+            attribute:             'proof'
+            label:                 'Proof'
+            sortable:  false
+          }
+        ]
+        actionButtons = [
+          {
+            label: 'Scan'
+            class: 'scan'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) ->
+              newScanPath = Routes.new_scan_path workspace_id: WORKSPACE_ID
+              App.execute 'analysis_tab:post', 'web_vuln', newScanPath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+          }
+          {
+            label: 'Import...'
+            class: 'import'
+            click: ->
+              window.location = Routes.new_workspace_import_path(workspace_id: WORKSPACE_ID) + '#file'
+          }
+          {
+            label: 'Nexpose Scan'
+            class: 'nexpose'
+            click: ->
+              window.location = Routes.new_workspace_import_path workspace_id: WORKSPACE_ID
+          }
+          {
+            label: 'WebScan'
+            class: 'webscan'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) ->
+              newWebScanPath = Routes.new_webscan_path workspace_id: WORKSPACE_ID
+              App.execute 'analysis_tab:post', 'web_vuln', newWebScanPath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+          }
+          {
+            label: 'Modules'
+            class: 'exploit'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) =>
+              modulesPath = Routes.modules_path workspace_id: WORKSPACE_ID
+              App.execute 'analysis_tab:post', 'web_vuln', modulesPath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+            containerClass: 'action-button-separator'
+          }
+          {
+            label: 'Bruteforce'
+            class: 'brute'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) ->
+              newQuickBruteforcePath = Routes.workspace_brute_force_guess_index_path(workspace_id: WORKSPACE_ID) + '#quick'
+              App.execute 'analysis_tab:post', 'web_vuln', newQuickBruteforcePath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+          }
+          {
+            label: 'Exploit'
+            class: 'exploit'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) ->
+              newExploitPath = Routes.new_exploit_path(workspace_id: WORKSPACE_ID) + '#quick'
+              App.execute 'analysis_tab:post', 'web_vuln', newExploitPath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+            containerClass: 'action-button-right-separator'
+          }
+        ]
+
+        filterOpts =
+          searchType: 'pro'
+          placeHolderText: 'Search Web Vulns'
+
+        emptyView = App.request 'analysis_tab:empty_view',
+          emptyText: "No vulnerabilities are associated with this project"
+
+        _.extend options,
+          filterOpts: filterOpts
+          collection: webvulns
+          columns: columns
+          defaultSort: defaultSort
+          actionButtons: actionButtons
+          emptyView: emptyView
+
+
+        @analysisTabController = App.request('analysis_tab:component', options)
+        @layout = @analysisTabController.layout
+
+        @setMainView @layout
+
+        @show @layout, region: @region if show
+
+      getPushButtonViewStatus: =>
+        if @_mainView._currentPushButtonView
+          @_mainView._currentPushButtonView.getStatus()
+        else
+          false
+
+
+

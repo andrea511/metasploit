@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+options = {}
+begin
+  op = OptionParser.new do |opts|
+    opts.banner = "Usage: deleteuser"
+    opts.separator ""
+    opts.separator "Delete all users"
+  end
+  op.permute!(into: options)
+  if ARGV.any?
+    warn 'This script takes no arguments'
+    warn op
+    exit 1
+  end
+  $stdout.puts "[*] Delete user script has started, this may take a moment."
+rescue OptionParser::ParseError => e
+  warn e.message
+  warn op
+  exit 1
+end
+
+def prompt(string)
+  $stdout.write string.chomp
+  $stdout.flush
+  $stdin.readline.strip
+end
+
+continue = prompt <<~EOF
+  [-] This script will delete all users in Metasploit Pro.
+      Are you sure you want to continue? [y/(N)] 
+EOF
+
+unless continue =~ /^y/i
+  puts 'User deletion cancelled.'
+  exit 1
+end
+
+ENV['MSFRPC_SKIP'] = 'yes'
+
+APP_PATH = File.expand_path('../../config/application',  __FILE__)
+require File.expand_path('../../config/boot',  __FILE__)
+# rails/all must be required explicitly to get the railties that pro/ui/config/application.rb uses
+require 'rails/all'
+require APP_PATH
+Rails.application.require_environment!
+
+user = Mdm::User.first
+
+while user != nil
+  $stdout.puts "[*] Removing user: " + user.username
+  Mdm::User.destroy(user.id)
+  user = Mdm::User.first
+end
+
+$stdout.puts "[*] All users have been deleted."

@@ -1,0 +1,3 @@
+.container.foundation.row
+  .host-stats-overview.foundation.large-6.columns
+  .tags.foundation.large-6.columns

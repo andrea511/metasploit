@@ -1,0 +1,1 @@
+json.partial! 'email_opening', email_opening: @email_opening

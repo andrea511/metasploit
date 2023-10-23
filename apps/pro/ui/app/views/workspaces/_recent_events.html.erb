@@ -1,0 +1,9 @@
+<table class="list">
+	<% @workspace.recent_events.each do |event| %>
+	<tr>
+        <td class="timestamp"><%=h event.timestamp %></td>
+		<td><%=h event.name %></td>
+        <td><%= render "events/_info"h(event.summary)%></td>
+	</tr>
+	<% end %>
+</table>

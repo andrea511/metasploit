@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>Remote Desktop (<%=h @session.host.address %>)</title>
+    </head>
+    <body>
+		<h2>Warning: Closing this page will exit the VNC session!</h2>
+        <applet
+        	code="VncViewer.class"
+	        archive="/flash/VncViewer.jar"
+    	    width="1024" height="768">
+    	    <param name="port" value="<%=h @port %>">
+    	    <param name="host" value="<%=h @self_host %>">
+    	    <param name="Open New Window" value="Yes">
+    	    <param name="Restricted Colors" value="Yes">
+    	</applet>
+    </body>
+</html>
+

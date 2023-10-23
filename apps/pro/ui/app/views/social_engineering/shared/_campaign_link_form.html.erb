@@ -1,0 +1,20 @@
+<!-- this partial requires a local variable named 'object' 
+     object must respond to .other_web_pages method -->
+<div class='dialog formtastic link-popup' style='display: none;'>
+  <li class="string input required stringish" style="margin-top: 15px;">
+    <label class="label" for="campaign-link-name">
+      Text<abbr title="required">*</abbr>
+    </label>
+    <input maxlength="255" name="campaign-link-name" type="text">
+  </li>
+  <li class="select input required">
+    <label class="label" for="webpage">
+      Web Page<abbr title="required">*</abbr>
+    </label>
+    <select name="webpage">
+      <% object.other_web_pages.each do |page| %>
+        <option value="<%= page.id %>"><%= page.name %></option>
+      <% end %>
+    </select>
+  </li>
+</div>

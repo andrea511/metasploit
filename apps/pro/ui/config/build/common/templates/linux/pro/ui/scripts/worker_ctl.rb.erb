@@ -1,0 +1,198 @@
+#!/usr/bin/env ruby
+
+UI_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
+def get_boot_time
+  Time.at(Time.now.to_i - File.read('/proc/uptime').split(/\s+/).first.to_i)
+end
+
+def worker_pidfile
+  File.join(UI_ROOT, 'tmp', 'pids', 'delayed_job.pid')
+end
+
+def monitor_pidfile
+  File.join(UI_ROOT, 'tmp', 'pids', 'delayed_job_monitor.pid')
+end
+
+def worker_log
+  File.join(UI_ROOT, 'log', 'delayed_job.log')
+end
+
+def ctl_pidfile
+  # Pidfile *cannot start* with delayed_job because it
+  # will be considered a delayed job application by the
+  # daemons gem.
+  File.join(UI_ROOT, 'tmp', 'pids', 'ctl_delayed_job.pid')
+end
+
+def pidfile_for(service)
+  send("#{service}_pidfile")
+end
+
+def pid_for(service)
+  pidfile = pidfile_for(service)
+  return nil unless File.exist?(pidfile)
+  pid = File.read(pidfile).strip.to_i
+  return nil unless pid > 0
+  # Ignore+remove pid files which predate the system's boot time...
+  if File.stat(pidfile).mtime < get_boot_time
+    File.delete(pidfile)
+    return nil
+  end
+  pid
+end
+
+def status_for(service_or_pid)
+  if service_or_pid.nil?
+    return :stopped
+  elsif service_or_pid.is_a?(Integer)
+    pid = service_or_pid
+  else
+    pid = pid_for(service_or_pid)
+  end
+
+  if pid
+    if (Process.kill(0, pid).to_i rescue 0) == 1
+      return :running
+    end
+  end
+
+  return :stopped
+end
+
+# Attempts a TERM (soft) kill first, waits #timeout
+# seconds, then does a hard kill -9.  Deletes pidfile
+# if service was killed.
+# @return [Boolean] was process killed
+def kill(service, timeout=10)
+  result = false
+
+  pid = pid_for(service)
+  if status_for(pid) == :running
+    Process.kill('TERM', pid) rescue nil
+
+    while timeout > 0
+      break if status_for(pid) == :stopped
+      sleep 1
+      timeout -= 1
+    end
+
+    if status_for(pid) == :running
+      Process.kill('KILL', pid)
+      sleep 1
+    end
+  end
+
+  if status_for(pid) == :stopped
+    result = true
+    pidfile = pidfile_for(service)
+    File.delete(pidfile) if File.exist?(pidfile)
+  end
+
+  result
+end
+
+
+def wait_for_thin
+  require 'timeout'
+  require 'socket'
+  timeout = 600
+  start_time = Time.now.to_i
+  prosvc_ready = false
+  thin_ready = false
+  while(Time.now.to_i < (start_time + timeout)) do
+    begin
+      unless prosvc_ready
+        Timeout::timeout(1) do
+          TCPSocket.new('localhost', 50505).close
+          prosvc_ready = true
+        end
+      end
+      unless thin_ready
+        Timeout::timeout(1) do
+          TCPSocket.new('localhost', @@BITROCK_THIN_PORT@@).close
+          thin_ready = true
+        end
+      end
+    rescue SystemCallError, Timeout::Error
+      # Some systems can raise weird errors with the sockets like
+      # Errno::EADDRNOTAVAIL, just roll with it
+    rescue => e
+      File.open(worker_log, 'a') do |f|
+        f.puts "[#{Time.now}] Exception while waiting for Metasploit: #{e.to_s} (#{e.class})"
+        f.puts e.backtrace.join "\n"
+      end
+      raise
+    end
+    break if prosvc_ready && thin_ready
+    sleep 1
+  end
+  prosvc_ready && thin_ready
+end
+
+def start_delayed_job
+  [:monitor, :worker].each do |service|
+    pidfile = pidfile_for(service)
+    File.delete(pidfile) if File.exist?(pidfile)
+  end
+  ENV['MSFRPC_SKIP'] = 'yes'
+  cmd = File.join(UI_ROOT, 'script', 'delayed_job')
+  ARGV.push("--monitor", "--prefix", "@@BITROCK_WORKER_PREFIX@@", "start")
+  load cmd
+  File.delete(ctl_pidfile) if File.exist?(ctl_pidfile)
+end
+
+def is_running
+  running = false
+  [:monitor, :worker, :ctl].each do |service|
+    if status_for(service) == :running
+      running = true
+    end
+  end
+  running
+end
+
+command = ARGV.shift
+case command
+when "start", "startwait"
+  if is_running
+    puts 'worker already running'
+    exit(2)
+  end
+  # Delayed job will replace the pidfile once it runs, but
+  # we need to be able to kill the process while waiting for
+  # it to start
+  File.open(ctl_pidfile, 'w') { |f| f.print Process.pid }
+  wait_for_thin
+  start_delayed_job
+
+when "startnowait"
+  if is_running
+    puts 'worker already running'
+    exit(2)
+  end
+  File.open(ctl_pidfile, 'w') { |f| f.print Process.pid }
+  start_delayed_job
+
+when "stop"
+  # Don't use the delayed job script to stop as it starts the
+  # entire rails environment (which may complain about database migrations)
+  kill(:monitor)
+  kill(:worker)
+  kill(:ctl)
+  puts "worker is stopped"
+
+when "status"
+  # Don't use the delayed job script to stop as it starts the
+  # entire rails environment (which may complain about database migrations)
+  if is_running
+    puts 'worker is running'
+  else
+    puts 'worker is stopped'
+    exit(1)
+  end
+
+else
+  $stderr.puts "Unknown command: #{command}"
+  exit(3)
+end

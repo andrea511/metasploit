@@ -1,0 +1,3 @@
+<div>
+  <a href="<%= @ref_link %>" target="_blank" class="ref-name"><%= @parsedRefs() %></span>
+</div>

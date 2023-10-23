@@ -1,0 +1,19 @@
+{{#if bg}}
+.bg
+{{/if}}
+%div{ :class => 'modal {{class}}' }
+  .header
+    %a.close.small{ :href => 'javascript:void 0' } &times;
+    {{#if_present title}}
+    %h1 {{./title}}
+    {{/if_present}}
+    {{#if_present description}}
+    %p {{description}}
+    {{/if_present}}
+  .padding
+    .content
+    .clearfix
+    .modal-actions
+      {{#each buttons}}
+      %a{ :href => 'javascript:void(0)', :class => '{{./class}}'} {{./name}}
+      {{/each}}

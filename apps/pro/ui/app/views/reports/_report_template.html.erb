@@ -1,0 +1,16 @@
+<% if @report_custom_templates.blank? %>
+  <p style='text-align: center; font-weight: bold; color:red;'><em>Please upload a custom report template above to enable custom report generation.</em></p>
+<% else %>
+    <%= f.input :report_type, :value => 'custom', :as => :hidden %>
+    <%= f.inputs 'Custom Report Template' do %>
+        <%= f.input :report_template,
+                    :include_blank => false,
+                    :collection => @report_custom_templates.pluck(:name, :file_path),
+                    :as => 'select'%>
+
+        <%= f.help_link :report_template do %>
+            <h3>Custom report template</h3>
+            <p>Select an uploaded custom template for generation.</p>
+        <% end %>
+    <% end %>
+<% end %>

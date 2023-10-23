@@ -1,0 +1,26 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+
+ *  TODO: kill this tree require from application.css! It bloats
+ *  the ruleset by at least 20kb
+
+ *= require_tree ../../../vendor/assets/stylesheets
+ *= require ./shared/notification-center
+ *= require ./shared/variables
+ *= require ./shared/buttons
+ *= require ./shared/_status_labels
+ *= require ./shared/datatables_overrides
+ *= require ./shared/_modal
+ *= require ./shared/nagware
+ *= require ./components/flash
+ *= require ./components/modules
+ *= require nanoscroller
+ *= require ./pretty_json
+ *= require ./shared/tags
+ *= require app
+ *= require app-scss
+ *= require app_test
+*/

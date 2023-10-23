@@ -1,0 +1,24 @@
+%label.tags Tags
+
+{{#each lastTags}}
+%a.tag{ :href => '/workspaces/{{../workspace_id}}/hosts?search=%23{{encodeURIComponent name}}' }
+  %span.name {{name}}
+%a.tag-close{ :href => 'javascript:void(0)', :'data-id' => '{{id}}' }
+  &times;
+{{/each}}
+
+{{#if_gt tagCount compare=3}}
+%a.more{ :href => 'javascript:void(0)' }
+  {{moreTagCount}} more…
+.under
+  .white
+    {{#each otherTags}}
+    .wrap
+      %a.tag{ :href => '/workspaces/{{../workspace_id}}/hosts?search=%23{{encodeURIComponent name}}' }
+        %span.name {{name}}
+      %a.tag-close{ :href => 'javascript:void(0)', :'data-id' => '{{id}}' }
+        &times;
+    {{/each}}
+{{/if_gt}}
+
+%a.green-add{ :href => 'javascript:void(0);', :title => "Add tags to this host" } +

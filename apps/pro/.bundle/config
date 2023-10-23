@@ -1,0 +1,8 @@
+---
+BUNDLE_BUILD__NOKOGIRI: "--use-system-libraries"
+BUNDLE_FORCE_RUBY_PLATFORM: "true"
+BUNDLE_PATH: "vendor/bundle"
+BUNDLE_CLEAN: "true"
+BUNDLE_DEPLOYMENT: "true"
+BUNDLE_JOBS: "1"
+BUNDLE_WITHOUT: "development:test"

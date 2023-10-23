@@ -1,0 +1,29 @@
+.rating-stars {
+  background-image: image-url('stars.png');
+  display: inline-block;
+  width: 66px;
+  height: 15px;
+  span {
+    float: right;
+    background-image: image-url('stars.png');
+    display: inline-block;
+    width: 0;
+    height: 15px;
+    background-position: 0 29px;
+  }
+  &.star0 span {
+    width: 66px;
+  }
+  &.star1 span {
+    width: 53px;
+  }
+  &.star2 span {
+    width: 40px;
+  }
+  &.star3 span {
+    width: 26px;
+  }
+  &.star4 span {
+    width: 13px;
+  }
+}

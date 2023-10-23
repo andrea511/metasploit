@@ -1,0 +1,232 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, link_to("New Nexpose Exception Push", "#") %>
+<% include_view_javascript %>
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<% include_stylesheet "tasks/tasks" %>
+
+<% if License.get.supports_vuln_validation? %>
+  <% include_stylesheet "shared/backbone/tabs" %>
+  <%= init_require("tasks/new_nexpose_exception_push/backbone/app") %>
+
+  <meta name="vuln_ids" content='<%= @vuln_ids.to_json %>' />
+  <meta name="match_set_id" content='<%= @match_set_id.to_json %>' />
+  <meta name="exception_reasons" content='<%= ::Nexpose::Result::Exception::REASON.to_json %>' />
+  <meta name="consoles" content='<%= @nexpose_consoles.to_json %>' />
+<% end %>
+
+
+<style type='text/css'>
+	tr.even td:first-child { border-right-color: #fff; }
+	td table td { border-right: none !important; }
+	td table td h3 { margin-top: 6px; margin-bottom: 6px; }
+	.checkbox_exception { margin-top: 1.05em; vertical-align: top; }
+	.exp-td { width: 90px; text-align: right; }
+	.addr-td { font-family: monospace; }
+	div#exceptions .ctrls {
+		text-align: right;
+		height: 20px;
+	}
+	#popup_errors .errors {
+		width: 100% !important;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+	}
+</style>
+
+
+<%if License.get.supports_vuln_validation? %>
+  <h1 id="exception-push-header" class="center">Create Nexpose Exceptions</h1>
+  <div id="exception-push" class="foundation"></div>
+  <form class="exception-push-form" />
+<% else %>
+  <% if @task.consoles.length == 0 %>
+
+    <div class="errors">
+    <% if current_user and current_user.admin? %>
+      <p>No <a href="<%= nexpose_consoles_path %>" target="nexpose_consoles">Nexpose Consoles</a> are available.</p>
+    <% else %>
+      <p>No Nexpose Consoles have been defined. Please login as an administrator to configure Nexpose Consoles</p>
+    <% end %>
+    </div>
+
+    <span class="btn"><%= link_to "Back", :back, :class => "back" %></span>
+
+  <% elsif @task.no_valid_vulns %>
+
+    <div class='errors'><p>The selected vulnerabilities were not sourced from a Nexpose Scan or Import.</p></div>
+
+    <span class="btn"><%= link_to "Back", :back, :class => "back" %></span>
+
+  <% else %>
+
+  <%= required_label %>
+
+  <%= semantic_form_for @task, :url => start_nexpose_exception_push_path, :remote => true, :complete => "enableSubmitButtons();" do |f| %>
+    <%= f.hidden_field :workspace_id %>
+    <%= f.hidden_field :vuln_ids %>
+
+    <div id="popup_errors">
+      <% unless @task.valid? %>
+        <div class="errors">
+          <p>
+          <%=h @task.error %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="one_col_no_sidebar">
+
+      <%= f.inputs "Exception Settings" do -%>
+
+
+        <%= f.input :nexpose_console, {:label => "Nexpose Console", :as => :select, :required => true}.merge(nexpose_console_select_options(@task.consoles)) %>
+
+        <%= f.input :approve, :label => "Automatically Approve", :as => :boolean, :required => true %>
+
+        <%= f.input :expiration_set, :label => "Automatically Expire", :as => :boolean, :required => true %>
+        <%= f.input :expiration_date, :label => "Expiration Date", :as => :string, :required => true , :input_html => { :size => 5 } %>
+
+      <% end-%>
+
+      <%= f.inputs "Vulnerability Exceptions" do -%>
+
+
+        <div id="exceptions" style="width: 100%;">
+          <div class='ctrls'>
+            <span class='btn'>
+              <a href='#' class='reset-form'>Reset form values</a>
+            </span>
+          </div>
+          <table width="100%" class="list mar-tb10">
+            <thead>
+              <tr>
+                <th width="5"><%= check_box_tag "all_exceptions", true %></th>
+                <th>Vulnerability Information</th>
+
+              </tr>
+            </thead>
+
+            <tbody id="exception_list">
+              <%  @task.vuln_map.keys.sort{|a,b|
+                  [
+                    @task.vuln_map[a][:test_result],
+                    @task.vuln_map[a][:nx_vuln_title],
+                  ] <=> [
+                    @task.vuln_map[b][:test_result],
+                    @task.vuln_map[b][:nx_vuln_title],
+                  ]
+                }.each do |vk|
+                vuln = @task.vuln_map[vk]
+                checked = (vuln[:test_result] == "Not Exploited")
+              -%>
+                <tr class="<%=h row_cycle %>">
+                  <td align="left" valign="top">
+                    <%= check_box_tag "nexpose_exception_push_task[exceptions][#{vk}][enabled]", vk.to_s, checked, :id => "vuln-enabled-#{vk}", :class => 'checkbox_exception' %>
+                    <%= hidden_field_tag "nexpose_exception_push_task[exceptions][#{vk}][nx_vuln_id]", vuln[:nx_vuln_id] %>
+                  </td>
+                  <td align="right" valign="top">
+
+
+                  <table width="100%" style="border: 0;">
+                  <tbody id="exception_info_<%=vk%>">
+                    <tr>
+                      <td width="100px" class='addr-td'>
+                        <h3><%= vuln[:address] %></h3>
+                        <%= hidden_field_tag "nexpose_exception_push_task[exceptions][#{vk}][nx_device_id]", vuln[:nx_device_id] %>
+                      </td><td align="center">
+                        <h3><%= vuln[:nx_vuln_title] %></h3>
+                      </td><td class='exp-td'>
+                        <h3><%= vuln[:test_result] %></h3>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td align="right"><h3>Reason:</h3></td>
+                      <td align="left" colspan="2">
+                        <%= select_tag "nexpose_exception_push_task[exceptions][#{vk}][reason]", options_for_select(NexposeExceptionPushTask::REASONS) %>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td valign="center" align="right">
+                        <h3>Comment:</h3>
+                      </td>
+                      <td align="left" colspan="2">
+                        <%
+                          comment_string = case vuln[:test_result]
+                          when "Exploited"
+                            "Successfully exploited at "+ vuln[:test_date].to_s
+                          when "Not Exploited"
+                            "Unable to exploit: #{vuln[:test_detail]} (#{vuln[:test_reason]})"
+                          else
+                            "Not tested"
+                          end
+
+                        -%>
+                        <%= text_area_tag "nexpose_exception_push_task[exceptions][#{vk}][comment]", comment_string, { :rows => 2, :cols => 40, :style => 'height: 2.5em; overflow-y: auto; font-size: 1.2em; padding: 3px;' } %>
+                      </td>
+                    </tr>
+                  </tbody>
+                  </table>
+
+                  </td>
+                </tr>
+
+              <% end -%>
+            </tbody>
+          </table>
+        </div>
+      <% end -%>
+
+      <%= f.help_link :nexpose_console do -%>
+        <h3>Nexpose Console</h3>
+        <p> Specify the Nexpose Console where the asset group should be created.</p>
+      <% end -%>
+
+      <%= f.help_link :approve do -%>
+        <h3>Automatically Approve</h3>
+        <p> Specify whether to mark all new exceptions as approved automatically.</p>
+      <% end -%>
+
+      <%= f.help_link :expiration_set do -%>
+        <h3>Automatically Expire</h3>
+        <p> Specify whether to automatically remove the exceptions after a certain date.</p>
+      <% end -%>
+
+      <%= f.help_link :nexpose_exception_push_task_exceptions_input do -%>
+        <h3>Exceptions</h3>
+        <p> Select whether to create an exception, the reason, and the comment for each vulnerability.</p>
+      <% end -%>
+
+      <% if @no_launch.blank? %>
+        <%= f.actions do -%>
+          <span class="btn">
+            <%= f.submit "Create Exceptions", :class => "nexpose", :id => 'popup_submit' %>
+          </span>
+        <% end -%>
+      <% end -%>
+
+    </div> <!-- end div.one_col_with_sidebar -->
+
+  <% end %>
+
+  <%= add_disable_overlay([:pro]) if not @licensed %>
+
+  <% end %>
+  <div id="reset-form" class="dialog">
+    <div class='formtastic'>
+      <li class="string input required stringish" style='margin-top: 10px;'>
+        <label class=" label" for="reason">Reason</label>
+        <%= select_tag "reason", options_for_select([''] + NexposeExceptionPushTask::REASONS) %>
+      </li>
+
+      <li class="string input required stringish">
+        <label class=" label" for="reason">Comment</label>
+        <%= text_area_tag "comment", '', { :rows => 2, :cols => 40, :style => 'height: 2.5em; overflow-y: auto; font-size: .9em; padding: 3px;' } %>
+      </li>
+    </div>
+  </div>
+<% end %>

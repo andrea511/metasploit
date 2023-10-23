@@ -1,0 +1,65 @@
+define [
+  'jquery',
+  'form_helpers'
+  '<%= javascript_path("templates/tasks/new_nexpose_exception_push/layouts/exception") %>',
+  '<%= javascript_path("tasks/new_nexpose_exception_push/backbone/views/collections/vulns_collection") %>',
+  '<%= javascript_path("tasks/new_nexpose_exception_push/backbone/models/result_exception") %>',
+  '<%= javascript_path("shared/backbone/views/empty_view")%>'
+], ($ ,FormHelpers, Template, VulnsCollectionView, ResultException, EmptyView) ->
+
+  class ExceptionLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['tasks/new_nexpose_exception_push/layouts/exception']
+
+    initialize: (opts) ->
+      $.extend(@, opts)
+
+    events:
+      'change input[name="select_hosts"]': '_selectAllHosts'
+      'change input[name="global_datepicker"]': '_setGlobalDate'
+      'change input[name="expire"]' : '_setExpireMode'
+      'dateSet': '_dateSet'
+
+    _dateSet: (e) ->
+      $('input[name="global_datepicker"]',@el).val('')
+      $('input[name="expire"]:checked').prop("checked", false)
+
+    _selectAllHosts:(e) ->
+      if $(e.target).prop("checked")
+        $('.host_checkbox',@el).prop("checked", true)
+      else
+        $('.host_checkbox',@el).prop("checked", false)
+
+    _setGlobalDate: (e) ->
+      val = $(e.target).val()
+      $('.datetime',@el).val(val)
+      $('input[value="all"][name="expire"]',@el).prop('checked', true)
+
+    _setExpireMode: (e) ->
+      if $(e.target).prop('value') == 'never'
+        $('.global-datepicker',@el).val('')
+        $('.datetime',@el).val('')
+      else
+        val = $('.global-datepicker',@el).val()
+        $('.datetime',@el).val(val)
+
+    regions:
+      vulns : '.vulns'
+
+    onShow: () =>
+      $( ".global-datepicker",@el).datepicker(minDate:1);
+      result_exceptions= new ResultException.collection()
+      console_id = $('select[name="console"]').val()
+      result_exceptions.fetch({data:{vuln_ids: @controller.VULN_IDS, console_id: console_id, match_set_id: @controller.MATCH_SET_ID},success:(collection)=>
+
+        if collection.length<1
+          $(@el).trigger("disablePushButton")
+          @vulns.show(new EmptyView(model:new Backbone.Model(message:"The selected vulnerabilities were not sourced from a Nexpose Scan or Import.")))
+        else
+          $(@el).trigger("enablePushButton")
+          $('a.nexpose' ,@el).removeClass("disabled")
+          @vulns.show(new VulnsCollectionView(collection: collection,controller: @controller))
+          $('.header',@el).removeClass("invisible")
+        $(@vulns.el).trigger('tabload')
+
+      })
+

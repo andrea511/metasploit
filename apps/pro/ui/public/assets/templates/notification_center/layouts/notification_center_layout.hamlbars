@@ -1,0 +1,6 @@
+.all-notifications.notification-list
+  .notifications-nav-bar
+  .notifications-container.nano
+    .antiscroll-inner.content
+      .scrollable-container
+  .notifications-footer

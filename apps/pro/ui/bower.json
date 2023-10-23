@@ -1,0 +1,8 @@
+{
+  "vendor": {
+    "name": "bower-rails generated vendor assets",
+    "dependencies": {
+      "visualsearch" : "git@github.com:rapid7/visualsearch#pro-proper"
+    }
+  }
+}

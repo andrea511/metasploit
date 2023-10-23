@@ -1,0 +1,70 @@
+<% hide_change_key ||= false %>
+<div class="license_file">
+
+	<h2>License Details</h2>
+
+	<div class="field">
+		<div class="label">Product Key</div>
+		<div class="value">
+			<%=h license.product_key_obscured %>
+		</div>
+		<% unless hide_change_key %>
+			<%= link_to "Change Key", licenses_path, :style => "margin-left: 10px" %>
+		<% end %>
+	</div>
+
+	<div class="field">
+		<div class="label">Product Edition</div>
+		<div class="value">
+			<%=h license.product_type %>
+			<% if license.multi_user? %>
+				(<%=h pluralize(license.users, "user") %>)
+			<% end %>
+			<% if license.hardware? %>
+				Hardware License
+			<% end %>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="label">Registered To</div>
+		<div class="value">
+			<%=h license.email %>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="label"><%= @license.perpetual? ? 'Updates' : 'Licensed' %> Until</div>
+		<div class="value">
+			<%=h @license.expiration.in_time_zone.strftime("%b %d, %Y %X %Z") %>
+			<br/>
+			<% if not @license.activated? or @license.updates_expired? or not @license.registered? %>
+				<span style="color: red">
+				<% if @license.expired? %>
+					Expired
+				<% elsif not @license.registered? %>
+					Not Registered
+				<% elsif not @license.activated? %>
+					Not Activated
+				<% end %>
+				</span>
+
+				<p>
+					<%= rapid7_contact_link %> to renew your license.
+				</p>
+				<%= rapid7_purchase_form(@license.product_key) %>
+
+				<%= form_tag activate_path do %>
+					<span class="btn">
+						<%= submit_tag "Re-Activate License", :class => "register" %>
+					</span>
+				<% end %>
+
+			<% elsif @license.days_until_expired > 0 %>
+				<%=h pluralize(@license.days_until_expired, "day") %> remaining
+			<% end %>
+		</div>
+	</div>
+
+</div>
+

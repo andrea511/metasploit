@@ -1,0 +1,150 @@
+#!/usr/bin/env ruby
+# -*- coding: binary -*-
+#
+# $Id$
+#
+# This keeps the framework up-to-date
+#
+# $Revision$
+#
+
+msfbase = __FILE__
+while File.symlink?(msfbase)
+  msfbase = File.expand_path(File.readlink(msfbase), File.dirname(msfbase))
+end
+
+class Msfupdate
+  attr_reader :stdin
+  attr_reader :stdout
+  attr_reader :stderr
+
+  def initialize(msfbase_dir, stdin=$stdin, stdout=$stdout, stderr=$stderr)
+    @msfbase_dir = msfbase_dir
+    @stdin = stdin
+    @stdout = stdout
+    @stderr = stderr
+  end
+
+  def usage(io=stdout)
+    help = "usage: msfupdate [options...]\n"
+    help << "Options:\n"
+    help << "-h, --help               show help\n"
+    help << "    --offline-file FILE  offline update file to use\n"
+    io.print help
+  end
+
+  def parse_args(args)
+    begin
+      # GetoptLong uses ARGV, but we want to use the args parameter
+      # Copy args into ARGV, then restore ARGV after GetoptLong
+      real_args = ARGV.clone
+      ARGV.clear
+      args.each {|arg| ARGV << arg}
+
+      require 'getoptlong'
+      opts = GetoptLong.new(
+        ['--help', '-h', GetoptLong::NO_ARGUMENT],
+        ['--offline-file', GetoptLong::REQUIRED_ARGUMENT],
+      )
+
+      begin
+        opts.each do |opt, arg|
+          case opt
+          when '--help'
+            usage
+            maybe_wait_and_exit
+          when '--offline-file'
+            @offline_file = File.expand_path(arg)
+          end
+        end
+      rescue GetoptLong::Error
+        stderr.puts "#{$0}: try 'msfupdate --help' for more information"
+        maybe_wait_and_exit 0x20
+      end
+
+      # Handle the old wait/nowait argument behavior
+      if ARGV[0] == 'wait' || ARGV[0] == 'nowait'
+        @actually_wait = (ARGV.shift == 'wait')
+      end
+
+    ensure
+      # Restore the original ARGV value
+      ARGV.clear
+      real_args.each {|arg| ARGV << arg}
+    end
+  end
+
+  def run!
+    stderr.puts "[*]"
+    stderr.puts "[*] Attempting to update the Metasploit Framework..."
+    stderr.puts "[*]"
+    stderr.puts ""
+
+    #Do not allow 32-bit updating
+    if ['metasploit'].pack('p').size == 4
+      stderr.puts "32-bit installations of Metasploit on all platforms will no longer receive updates."
+    end
+
+    # Bail right away, no waiting around for consoles.
+    if not (Process.uid == 0 or File.stat(@msfbase_dir).owned?)
+      stderr.puts "[-] ERROR: User running msfupdate does not own the Metasploit installation"
+      stderr.puts "[-] Please run msfupdate as the same user who installed Metasploit."
+      maybe_wait_and_exit 0x10
+    end
+
+    Dir.chdir(@msfbase_dir) do
+      update_binary_install!
+    end
+  end
+
+  def update_binary_install!
+    update_script = File.expand_path(File.join(@msfbase_dir, "..", "engine", "update.rb"))
+    product_key =   File.expand_path(File.join(@msfbase_dir, "..", "engine", "license", "product.key"))
+    if File.exist? product_key
+      if File.readable? product_key
+        if (@offline_file)
+          system("ruby", update_script, @offline_file)
+        else
+          system("ruby", update_script)
+        end
+      else
+        stdout.puts "[-] ERROR: Failed to update Metasploit installation"
+        stdout.puts ""
+        stdout.puts "[-] You must be able to read the product key for the"
+        stdout.puts "[-]	Metasploit installation in order to run msfupdate."
+        stdout.puts "[-] Usually, this means you must be root (EUID 0)."
+        maybe_wait_and_exit 10
+      end
+    else
+      stdout.puts "[-] ERROR: Failed to update Metasploit installation"
+      stdout.puts ""
+      stdout.puts "[-] In order to update your Metasploit installation,"
+      stdout.puts "[-] you must first register it through the UI, here:"
+      stderr.puts "[-] https://localhost:3790"
+      stderr.puts "[-] (Note: Metasploit Community Edition is totally"
+      stderr.puts "[-] free and takes just a few seconds to register!)"
+      maybe_wait_and_exit 11
+    end
+  end
+
+  # This only exits if you actually pass a wait option, otherwise
+  # just returns nil. This is likely unexpected, revisit this.
+  def maybe_wait_and_exit(exit_code=0)
+    if @actually_wait
+      stdout.puts ""
+      stdout.puts "[*] Please hit enter to exit"
+      stdout.puts ""
+      stdin.readline
+      exit exit_code
+    else
+      exit exit_code
+    end
+  end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  cli = Msfupdate.new(File.dirname(msfbase))
+  cli.parse_args(ARGV.dup)
+  cli.run!
+  cli.maybe_wait_and_exit
+end

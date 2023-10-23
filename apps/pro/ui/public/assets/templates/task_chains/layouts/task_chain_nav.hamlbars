@@ -1,0 +1,49 @@
+
+.columns.small-12
+  .vertical-nav
+    .timeline
+      %hr
+    .timeline-arrow
+      >
+
+    .action-container
+      .action.delete{:title=>"Delete the selected task"}
+      .action.clone{:title=>"Clone the selected task"}
+      .action.reset{:title=>"Clear the task chain"}
+
+    .chain-ui.chain
+      .pie-charts
+
+    .add-task
+      +
+      .add-task-options
+        %ul
+          %li{:data=> {:task_type => 'scan'}}
+            SCAN
+          %li{:data => {:task_type => 'import'}}
+            IMPORT
+          %li{:data => {:task_type => 'nexpose'}}
+            NEXPOSE
+          %li{:data => {:task_type => 'bruteforce'}}
+            BRUTEFORCE
+          %li{:data => {:task_type => 'exploit'}}
+            EXPLOIT
+          %li{:data => {:task_type => 'module_run'}}
+            MODULE RUN
+          %li{:data => {:task_type => 'collect'}}
+            COLLECT EVIDENCE
+          %li{:data => {:task_type => 'cleanup'}}
+            CLEANUP
+          %li{:data => {:task_type => 'report'}}
+            REPORT
+          %li{:data => {:task_type => 'webscan'}}
+            WEB SCAN
+          %li{:data => {:task_type => 'metamodule'}}
+            METAMODULE
+          %li{:data => {:task_type => 'rc_script'}}
+            RESOURCE SCRIPT
+          %li{:data => {:task_type => 'nexpose_push'}}
+            PUSH TO NEXPOSE
+
+
+

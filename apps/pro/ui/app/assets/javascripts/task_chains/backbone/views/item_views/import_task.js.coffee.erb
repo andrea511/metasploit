@@ -1,0 +1,191 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/import_task') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+  'apps/imports/index/index_controller'
+  'css!css/imports'
+], ($, Template, TaskConfigView) ->
+  class ImportTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/import_task']
+
+    id: 'imports-main-region'
+
+    ui: _.extend({}, TaskConfigView.prototype.ui,{
+
+    })
+
+    events: _.extend({}, TaskConfigView.prototype.events,{
+    })
+
+
+    _restoreFileLabel: ->
+      @controller.fileController.fileInput.resetLabel()
+
+    isExistingTask: ->
+      @model.get('task')? and !@form_cache?
+
+    isCachedExistingTask: ->
+      @form_cache? and !@model.get('cloned')?
+
+    isClonedTask: ->
+      @model.get('cloned')?
+
+    showExistingTask: ->
+      @controller = new Pro.ImportsApp.Index.Controller(
+          type: Pro.ImportsApp.Index.Type.File
+          showTypeSelection: false
+          region: @configRegion
+        )
+
+      # Show last uploaded File
+      @controller.fileController.useLastUploaded(@model.get('task').file_upload?.url || @model.get('task').form_hash.use_last_uploaded)
+
+      # Restore Form and State
+      Backbone.Syphon.deserialize(
+              @controller.fileController._mainView,
+              @model.get('task').form_hash,
+        include: [
+          "blacklist_string"
+          "use_last_uploaded"
+        ]
+      )
+
+      @controller._mainView.ui.autoTagOs.prop('checked',@model.get('task').form_hash.autotag_os=='true')
+      @controller._mainView.ui.preserveHosts.prop('checked',@model.get('task').form_hash.preserve_hosts=='true')
+
+      # Restore Tagging Tokens
+      if @model.get('task').form_hash.tagTokens?.length > 0
+        @controller.tagController.restoreTokens(@model.get('task').form_hash.tagTokens)
+        @controller._mainView.expandTagSection()
+
+      @_initErrorMessages()
+      @trigger('loaded')
+
+    showCachedExistingTask: ->
+      @controller = new Pro.ImportsApp.Index.Controller(
+        type: Pro.ImportsApp.Index.Type.File
+        showTypeSelection: false
+        region: @configRegion
+      )
+
+      # Show last uploaded File
+      @controller.fileController.useLastUploaded(@storedForm.get('use_last_uploaded')) if @storedForm.get('use_last_uploaded')?
+
+      #Restore Cached File Input
+      @_applyStashedFileInput(@$el)
+      @_restoreFileLabel()
+      @controller.fileController.fileInput.rebindFileInput()
+
+      _.defer(@_bindToFileChange, @controller.fileController.fileInput)
+
+      # Restore Form and State
+      Backbone.Syphon.deserialize(
+              @controller.fileController._mainView,
+              @storedForm.toJSON(),
+        include: [
+          "blacklist_string"
+          "use_last_uploaded"
+        ]
+      )
+
+      @controller._mainView.ui.autoTagOs.prop('checked',@storedForm.get('autotag_os'))
+      @controller._mainView.ui.preserveHosts.prop('checked',@storedForm.get('preserve_hosts'))
+
+
+      # Restore Tagging Tokens
+      if @storedForm.get('tagTokens').length > 0
+        @controller.tagController.restoreTokens(@storedForm.get('tagTokens'))
+        @controller._mainView.expandTagSection()
+
+      @_initErrorMessages()
+
+    showClonedTask: ->
+      @controller = new Pro.ImportsApp.Index.Controller(
+        type: Pro.ImportsApp.Index.Type.File
+        showTypeSelection: false
+        region: @configRegion
+      )
+
+      excludeInputs=[]
+      #Clone use_last_uploaded if file input was not changed
+      if @model.get('clonedModel').get('use_last_uploaded') == ''
+        excludeInputs << "use_last_uploaded"
+
+      # Restore Form and State
+      Backbone.Syphon.deserialize(
+              @controller.fileController._mainView,
+              @model.get('clonedModel').toJSON(),
+        exclude: excludeInputs
+      )
+
+      @controller._mainView.ui.autoTagOs.prop('checked',@model.get('clonedModel').get('autotag_os'))
+      @controller._mainView.ui.preserveHosts.prop('checked',@model.get('clonedModel').get('preserve_hosts'))
+
+      # Restore Tagging Tokens
+      if @model.get('clonedModel').get('tagTokens').length > 0
+        @controller.tagController.restoreTokens(@model.get('clonedModel').get('tagTokens'))
+        @controller._mainView.expandTagSection()
+
+      @model.set('cloned',null)
+
+    showNewTask: ->
+      @controller = new Pro.ImportsApp.Index.Controller(
+        type: Pro.ImportsApp.Index.Type.File
+        showTypeSelection: false
+        region: @configRegion
+      )
+
+    onShow:() ->
+      if @isExistingTask()
+        @showExistingTask()
+      else
+        if @isCachedExistingTask()
+          @showCachedExistingTask()
+        else
+          if @isClonedTask()
+            @showClonedTask()
+          else
+            @showNewTask()
+
+    _initErrorMessages: ->
+      if @errors
+        @controller.fileController._mainView.showErrors(@errors)
+
+    _storeForm: (opts={callSuper:true}) ->
+      super if opts.callSuper
+      @storedForm = @controller.getFileImportEntity()
+      file_path = @controller.fileController._mainView.lastUploaded
+      @storedForm.set('use_last_uploaded', file_path) if file_path? && file_path!=''
+      @storedForm.set(tagTokens: @controller.tagController.getTokens())
+
+    formModel: () ->
+      @storedForm || @controller.getFileImportEntity()
+
+    _setCache: () ->
+      super
+
+    onBeforeClose: ->
+      super
+      @_validate()
+
+    _triggerValidated: (model,response,options) =>
+      if response.errors
+        @errors = response.errors
+        $(document).trigger('showErrorPie',@)
+      else
+        @errors = null
+      $(document).trigger('validated',@)
+
+
+    _bindToFileChange:(fileInput) =>
+      @listenTo fileInput._mainView, 'file:changed', ->
+        @controller.fileController.clearLastUploaded()
+
+
+    _validate: ->
+      if @storedForm?
+        @controller.validate(@_triggerValidated, @storedForm)
+      @bindUIElements()
+      @_stashFileInput()
+
+

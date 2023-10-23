@@ -1,0 +1,302 @@
+2023-10-16 09:09:42 UTC Product Initialized
+2023-10-16 09:09:42 UTC Loaded Product Key:
+2023-10-16 09:09:42 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-16 09:09:42 UTC Product Version: 4.22.1
+2023-10-16 09:09:42 UTC Product Revision: 2023052201
+2023-10-16 09:09:42 UTC Footer Revision: 2023052201
+2023-10-16 09:09:42 UTC Product Date: 2023-05-22
+2023-10-16 09:09:42 UTC Version verified:
+2023-10-16 09:09:42 UTC Product Original Version: 4.22.1
+2023-10-16 09:09:42 UTC Install Type: monolithic
+2023-10-16 09:09:42 UTC License Status: ERROR - No license file
+2023-10-16 09:12:50 UTC Update Stopped
+2023-10-16 09:12:52 UTC Update Check: No product key specified
+2023-10-16 09:26:08 UTC Product Initialized
+2023-10-16 09:26:08 UTC Loaded Product Key:
+2023-10-16 09:26:08 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-16 09:26:08 UTC Product Version: 4.22.1
+2023-10-16 09:26:08 UTC Product Revision: 2023052201
+2023-10-16 09:26:08 UTC Footer Revision: 2023052201
+2023-10-16 09:26:08 UTC Product Date: 2023-05-22
+2023-10-16 09:26:08 UTC Version verified:
+2023-10-16 09:26:08 UTC Product Original Version: 4.22.1
+2023-10-16 09:26:08 UTC Install Type: monolithic
+2023-10-16 09:26:08 UTC License Status: ERROR - No license file
+2023-10-16 09:32:34 UTC Product Initialized
+2023-10-16 09:32:34 UTC Loaded Product Key:
+2023-10-16 09:32:34 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-16 09:32:34 UTC Product Version: 4.22.1
+2023-10-16 09:32:34 UTC Product Revision: 2023052201
+2023-10-16 09:32:34 UTC Footer Revision: 2023052201
+2023-10-16 09:32:34 UTC Product Date: 2023-05-22
+2023-10-16 09:32:34 UTC Version verified:
+2023-10-16 09:32:34 UTC Product Original Version: 4.22.1
+2023-10-16 09:32:34 UTC Install Type: monolithic
+2023-10-16 09:32:34 UTC License Status: ERROR - No license file
+2023-10-16 09:38:23 UTC Product Initialized
+2023-10-16 09:38:23 UTC Loaded Product Key:
+2023-10-16 09:38:23 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-16 09:38:23 UTC Product Version: 4.22.1
+2023-10-16 09:38:23 UTC Product Revision: 2023052201
+2023-10-16 09:38:23 UTC Footer Revision: 2023052201
+2023-10-16 09:38:23 UTC Product Date: 2023-05-22
+2023-10-16 09:38:23 UTC Version verified:
+2023-10-16 09:38:23 UTC Product Original Version: 4.22.1
+2023-10-16 09:38:23 UTC Install Type: monolithic
+2023-10-16 09:38:23 UTC License Status: ERROR - No license file
+2023-10-17 00:45:48 UTC Update Stopped
+2023-10-17 00:45:48 UTC Update Check: Failed to open TCP connection to updates.metasploit.com:443 (getaddrinfo: No such host is known. )
+2023-10-17 01:08:49 UTC Product Initialized
+2023-10-17 01:08:49 UTC Loaded Product Key:
+2023-10-17 01:08:49 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-17 01:08:49 UTC Product Version: 4.22.1
+2023-10-17 01:08:49 UTC Product Revision: 2023052201
+2023-10-17 01:08:49 UTC Footer Revision: 2023052201
+2023-10-17 01:08:49 UTC Product Date: 2023-05-22
+2023-10-17 01:08:49 UTC Version verified:
+2023-10-17 01:08:49 UTC Product Original Version: 4.22.1
+2023-10-17 01:08:49 UTC Install Type: monolithic
+2023-10-17 01:08:49 UTC License Status: ERROR - No license file
+2023-10-17 01:11:12 UTC Product Initialized
+2023-10-17 01:11:12 UTC Loaded Product Key:
+2023-10-17 01:11:12 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-17 01:11:12 UTC Product Version: 4.22.1
+2023-10-17 01:11:12 UTC Product Revision: 2023052201
+2023-10-17 01:11:12 UTC Footer Revision: 2023052201
+2023-10-17 01:11:12 UTC Product Date: 2023-05-22
+2023-10-17 01:11:12 UTC Version verified:
+2023-10-17 01:11:12 UTC Product Original Version: 4.22.1
+2023-10-17 01:11:12 UTC Install Type: monolithic
+2023-10-17 01:11:12 UTC License Status: ERROR - No license file
+2023-10-17 01:22:47 UTC Update Stopped
+2023-10-17 01:22:47 UTC Processing offline activation request from path C:/WINDOWS/Temp/activate20231017-8020-k71569 (C:/metasploit/apps/pro/updates/offline1024083)
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT]
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT] 7-Zip (a) 19.00 (x86) : Copyright (c) 1999-2018 Igor Pavlov : 2019-02-21
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT]
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT] Scanning the drive for archives:
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT] 1 file, 6435 bytes (7 KiB)
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT]
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT] Extracting archive: C:\WINDOWS\Temp\activate20231017-8020-k71569
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT]
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT] Can't open as archive: 1
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT] Files: 0
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT] Size:       0
+2023-10-17 01:22:47 UTC Offline Activation Package: [OUT] Compressed: 0
+2023-10-17 01:22:47 UTC Offline Activation Package: [ERR] ERROR: C:\WINDOWS\Temp\activate20231017-8020-k71569
+2023-10-17 01:22:47 UTC Offline Activation Package: [ERR] Can not open the file as archive
+2023-10-17 01:24:28 UTC Update Stopped
+2023-10-17 01:24:28 UTC Processing offline activation request from path C:/WINDOWS/Temp/activate20231017-8020-9vdnty (C:/metasploit/apps/pro/updates/offline983684)
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT]
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT] 7-Zip (a) 19.00 (x86) : Copyright (c) 1999-2018 Igor Pavlov : 2019-02-21
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT]
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT] Scanning the drive for archives:
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT] 1 file, 6435 bytes (7 KiB)
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT]
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT] Extracting archive: C:\WINDOWS\Temp\activate20231017-8020-9vdnty
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT]
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT] Can't open as archive: 1
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT] Files: 0
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT] Size:       0
+2023-10-17 01:24:28 UTC Offline Activation Package: [OUT] Compressed: 0
+2023-10-17 01:24:28 UTC Offline Activation Package: [ERR] ERROR: C:\WINDOWS\Temp\activate20231017-8020-9vdnty
+2023-10-17 01:24:28 UTC Offline Activation Package: [ERR] Can not open the file as archive
+2023-10-17 01:27:44 UTC Update Stopped
+2023-10-17 01:27:44 UTC Processing offline activation request from path C:/WINDOWS/Temp/activate20231017-8020-dkw83n (C:/metasploit/apps/pro/updates/offline172728)
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT]
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT] 7-Zip (a) 19.00 (x86) : Copyright (c) 1999-2018 Igor Pavlov : 2019-02-21
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT]
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT] Scanning the drive for archives:
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT] 1 file, 6435 bytes (7 KiB)
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT]
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT] Extracting archive: C:\WINDOWS\Temp\activate20231017-8020-dkw83n
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT]
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT] Can't open as archive: 1
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT] Files: 0
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT] Size:       0
+2023-10-17 01:27:44 UTC Offline Activation Package: [OUT] Compressed: 0
+2023-10-17 01:27:44 UTC Offline Activation Package: [ERR] ERROR: C:\WINDOWS\Temp\activate20231017-8020-dkw83n
+2023-10-17 01:27:44 UTC Offline Activation Package: [ERR] Can not open the file as archive
+2023-10-17 01:27:51 UTC Update Stopped
+2023-10-17 01:27:51 UTC Processing offline activation request from path C:/WINDOWS/Temp/activate20231017-8020-zrzqnf (C:/metasploit/apps/pro/updates/offline549780)
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT]
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT] 7-Zip (a) 19.00 (x86) : Copyright (c) 1999-2018 Igor Pavlov : 2019-02-21
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT]
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT] Scanning the drive for archives:
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT] 1 file, 1488 bytes (2 KiB)
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT]
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT] Extracting archive: C:\WINDOWS\Temp\activate20231017-8020-zrzqnf
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT]
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT] Can't open as archive: 1
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT] Files: 0
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT] Size:       0
+2023-10-17 01:27:51 UTC Offline Activation Package: [OUT] Compressed: 0
+2023-10-17 01:27:51 UTC Offline Activation Package: [ERR] ERROR: C:\WINDOWS\Temp\activate20231017-8020-zrzqnf
+2023-10-17 01:27:51 UTC Offline Activation Package: [ERR] Can not open the file as archive
+2023-10-17 01:32:41 UTC Register with Invalid Product Key: HGVC3-WESDF-CVGBH-NJ7YTR-3WSDX-CFGVBH
+2023-10-17 01:32:45 UTC Register with Invalid Product Key: HGVC3-WESDF-CVGBH-NJ7YTR-3WSDX-CFGVBH
+2023-10-17 01:32:53 UTC Register with Invalid Product Key: JHGF3-WSD-XCFVG-HBJN8-UYTGF-WASZ-XCFGV
+2023-10-17 01:33:00 UTC Register with Invalid Product Key: JHGVE-SEDXC-FGVBH-JNUY-HGVS-XDCFV-GBHCF
+2023-10-17 01:33:07 UTC Register with Invalid Product Key: YGTFE-DRFT-GHJ67-TRFD-3WSE-XDCFGV-HBYTF
+2023-10-17 01:38:01 UTC Product Initialized
+2023-10-17 01:38:01 UTC Loaded Product Key:
+2023-10-17 01:38:01 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-17 01:38:01 UTC Product Version: 4.22.1
+2023-10-17 01:38:01 UTC Product Revision: 2023052201
+2023-10-17 01:38:01 UTC Footer Revision: 2023052201
+2023-10-17 01:38:01 UTC Product Date: 2023-05-22
+2023-10-17 01:38:01 UTC Version verified:
+2023-10-17 01:38:01 UTC Product Original Version: 4.22.1
+2023-10-17 01:38:01 UTC Install Type: monolithic
+2023-10-17 01:38:01 UTC License Status: ERROR - No license file
+2023-10-17 01:38:04 UTC Update Stopped
+2023-10-17 01:38:05 UTC Update Check: No product key specified
+2023-10-17 01:38:14 UTC Product Initialized
+2023-10-17 01:38:14 UTC Loaded Product Key:
+2023-10-17 01:38:14 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-17 01:38:14 UTC Product Version: 4.22.1
+2023-10-17 01:38:14 UTC Product Revision: 2023052201
+2023-10-17 01:38:14 UTC Footer Revision: 2023052201
+2023-10-17 01:38:14 UTC Product Date: 2023-05-22
+2023-10-17 01:38:14 UTC Version verified:
+2023-10-17 01:38:14 UTC Product Original Version: 4.22.1
+2023-10-17 01:38:14 UTC Install Type: monolithic
+2023-10-17 01:38:14 UTC License Status: ERROR - No license file
+2023-10-17 01:40:10 UTC Product Initialized
+2023-10-17 01:40:10 UTC Loaded Product Key:
+2023-10-17 01:40:10 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-17 01:40:10 UTC Product Version: 4.22.1
+2023-10-17 01:40:10 UTC Product Revision: 2023052201
+2023-10-17 01:40:10 UTC Footer Revision: 2023052201
+2023-10-17 01:40:10 UTC Product Date: 2023-05-22
+2023-10-17 01:40:10 UTC Version verified:
+2023-10-17 01:40:10 UTC Product Original Version: 4.22.1
+2023-10-17 01:40:10 UTC Install Type: monolithic
+2023-10-17 01:40:10 UTC License Status: ERROR - No license file
+2023-10-17 01:49:40 UTC Product Initialized
+2023-10-17 01:49:40 UTC Loaded Product Key:
+2023-10-17 01:49:40 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-17 01:49:40 UTC Product Version: 4.22.1
+2023-10-17 01:49:40 UTC Product Revision: 2023052201
+2023-10-17 01:49:40 UTC Footer Revision: 2023052201
+2023-10-17 01:49:40 UTC Product Date: 2023-05-22
+2023-10-17 01:49:40 UTC Version verified:
+2023-10-17 01:49:40 UTC Product Original Version: 4.22.1
+2023-10-17 01:49:40 UTC Install Type: monolithic
+2023-10-17 01:49:40 UTC License Status: ERROR - No license file
+2023-10-17 01:49:43 UTC Update Stopped
+2023-10-17 01:49:44 UTC Update Check: No product key specified
+2023-10-17 01:51:33 UTC Revert failed due to missing backup license files
+2023-10-17 01:51:45 UTC Revert failed due to missing backup license files
+2023-10-17 01:52:20 UTC Update Status:
+2023-10-17 03:31:44 UTC Product Initialized
+2023-10-17 03:31:44 UTC Loaded Product Key:
+2023-10-17 03:31:44 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-17 03:31:44 UTC Product Version: 4.22.1
+2023-10-17 03:31:44 UTC Product Revision: 2023052201
+2023-10-17 03:31:44 UTC Footer Revision: 2023052201
+2023-10-17 03:31:44 UTC Product Date: 2023-05-22
+2023-10-17 03:31:44 UTC Version verified:
+2023-10-17 03:31:44 UTC Product Original Version: 4.22.1
+2023-10-17 03:31:44 UTC Install Type: monolithic
+2023-10-17 03:31:44 UTC License Status: ERROR - No license file
+2023-10-17 07:49:45 UTC Update Stopped
+2023-10-17 07:49:46 UTC Update Check: No product key specified
+2023-10-18 00:29:44 UTC Update Stopped
+2023-10-18 00:29:47 UTC Update Check: No product key specified
+2023-10-18 06:44:32 UTC Update Stopped
+2023-10-18 06:44:33 UTC Update Check: No product key specified
+2023-10-18 10:32:24 UTC Product Initialized
+2023-10-18 10:32:24 UTC Loaded Product Key:
+2023-10-18 10:32:24 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-18 10:32:24 UTC Product Version: 4.22.1
+2023-10-18 10:32:24 UTC Product Revision: 2023052201
+2023-10-18 10:32:24 UTC Footer Revision: 2023052201
+2023-10-18 10:32:24 UTC Product Date: 2023-05-22
+2023-10-18 10:32:24 UTC Version verified:
+2023-10-18 10:32:24 UTC Product Original Version: 4.22.1
+2023-10-18 10:32:24 UTC Install Type: monolithic
+2023-10-18 10:32:24 UTC License Status: ERROR - No license file
+2023-10-18 10:32:25 UTC Update Stopped
+2023-10-18 10:32:26 UTC Update Check: No product key specified
+2023-10-18 13:34:41 UTC Product Initialized
+2023-10-18 13:34:41 UTC Loaded Product Key:
+2023-10-18 13:34:41 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-18 13:34:41 UTC Product Version: 4.22.1
+2023-10-18 13:34:41 UTC Product Revision: 2023052201
+2023-10-18 13:34:41 UTC Footer Revision: 2023052201
+2023-10-18 13:34:41 UTC Product Date: 2023-05-22
+2023-10-18 13:34:41 UTC Version verified:
+2023-10-18 13:34:41 UTC Product Original Version: 4.22.1
+2023-10-18 13:34:41 UTC Install Type: monolithic
+2023-10-18 13:34:41 UTC License Status: ERROR - No license file
+2023-10-18 16:49:08 UTC Update Stopped
+2023-10-18 16:49:09 UTC Update Check: No product key specified
+2023-10-18 17:05:53 UTC Product Initialized
+2023-10-18 17:05:53 UTC Loaded Product Key:
+2023-10-18 17:05:53 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-18 17:05:53 UTC Product Version: 4.22.1
+2023-10-18 17:05:53 UTC Product Revision: 2023052201
+2023-10-18 17:05:53 UTC Footer Revision: 2023052201
+2023-10-18 17:05:53 UTC Product Date: 2023-05-22
+2023-10-18 17:05:53 UTC Version verified:
+2023-10-18 17:05:53 UTC Product Original Version: 4.22.1
+2023-10-18 17:05:53 UTC Install Type: monolithic
+2023-10-18 17:05:53 UTC License Status: ERROR - No license file
+2023-10-18 18:25:03 UTC Product Initialized
+2023-10-18 18:25:03 UTC Loaded Product Key:
+2023-10-18 18:25:03 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-18 18:25:03 UTC Product Version: 4.22.1
+2023-10-18 18:25:03 UTC Product Revision: 2023052201
+2023-10-18 18:25:03 UTC Footer Revision: 2023052201
+2023-10-18 18:25:03 UTC Product Date: 2023-05-22
+2023-10-18 18:25:03 UTC Version verified:
+2023-10-18 18:25:03 UTC Product Original Version: 4.22.1
+2023-10-18 18:25:03 UTC Install Type: monolithic
+2023-10-18 18:25:03 UTC License Status: ERROR - No license file
+2023-10-18 18:25:05 UTC Update Stopped
+2023-10-18 18:25:05 UTC Update Check: No product key specified
+2023-10-18 18:36:21 UTC Product Initialized
+2023-10-18 18:36:21 UTC Loaded Product Key:
+2023-10-18 18:36:21 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-18 18:36:21 UTC Product Version: 4.22.1
+2023-10-18 18:36:21 UTC Product Revision: 2023052201
+2023-10-18 18:36:21 UTC Footer Revision: 2023052201
+2023-10-18 18:36:21 UTC Product Date: 2023-05-22
+2023-10-18 18:36:21 UTC Version verified:
+2023-10-18 18:36:21 UTC Product Original Version: 4.22.1
+2023-10-18 18:36:21 UTC Install Type: monolithic
+2023-10-18 18:36:21 UTC License Status: ERROR - No license file
+2023-10-19 11:13:42 UTC Update Stopped
+2023-10-19 11:13:45 UTC Update Check: No product key specified
+2023-10-20 02:08:16 UTC Update Stopped
+2023-10-20 02:08:17 UTC Update Check: No product key specified
+2023-10-20 08:08:19 UTC Update Stopped
+2023-10-20 08:08:20 UTC Update Check: No product key specified
+2023-10-20 14:02:05 UTC Product Initialized
+2023-10-20 14:02:05 UTC Loaded Product Key:
+2023-10-20 14:02:05 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-20 14:02:05 UTC Product Version: 4.22.1
+2023-10-20 14:02:05 UTC Product Revision: 2023052201
+2023-10-20 14:02:05 UTC Footer Revision: 2023052201
+2023-10-20 14:02:05 UTC Product Date: 2023-05-22
+2023-10-20 14:02:05 UTC Version verified:
+2023-10-20 14:02:05 UTC Product Original Version: 4.22.1
+2023-10-20 14:02:05 UTC Install Type: monolithic
+2023-10-20 14:02:05 UTC License Status: ERROR - No license file
+2023-10-20 14:02:07 UTC Update Stopped
+2023-10-20 14:02:08 UTC Update Check: No product key specified
+2023-10-20 21:32:58 UTC Update Stopped
+2023-10-20 21:32:58 UTC Update Check: Failed to open TCP connection to updates.metasploit.com:443 (getaddrinfo: No such host is known. )
+2023-10-23 00:32:01 UTC Update Stopped
+2023-10-23 00:32:01 UTC Update Check: Failed to open TCP connection to updates.metasploit.com:443 (getaddrinfo: No such host is known. )
+2023-10-23 03:15:42 UTC Product Initialized
+2023-10-23 03:15:42 UTC Loaded Product Key:
+2023-10-23 03:15:42 UTC Loaded SerialNo: 652cfdd6-d4c0d43c-8c542b61
+2023-10-23 03:15:42 UTC Product Version: 4.22.1
+2023-10-23 03:15:42 UTC Product Revision: 2023052201
+2023-10-23 03:15:42 UTC Footer Revision: 2023052201
+2023-10-23 03:15:42 UTC Product Date: 2023-05-22
+2023-10-23 03:15:42 UTC Version verified:
+2023-10-23 03:15:42 UTC Product Original Version: 4.22.1
+2023-10-23 03:15:42 UTC Install Type: monolithic
+2023-10-23 03:15:42 UTC License Status: ERROR - No license file

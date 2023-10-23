@@ -1,0 +1,6 @@
+--markup markdown
+--plugin yard-metasploit-erd
+--private
+--protected
+{app,lib}/**/*.rb
+db/migrate/*.rb

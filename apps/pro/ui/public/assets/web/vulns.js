@@ -1,0 +1,22 @@
+(function() {
+
+  jQuery(function($) {
+    return $(document).ready(function() {
+      return $('#vulns-table').table({
+        datatableOptions: {
+          controlBarLocation: $('.control-bar'),
+          "oLanguage": {
+            "sEmptyTable": "No vulnerabilities are associated with this site. Try running an audit first."
+          },
+          "aoColumns": [
+            {
+              "mDataProp": "checkbox",
+              "bSortable": false
+            }, {}, {}, {}, {}, {}, {}, {}, {}
+          ]
+        }
+      });
+    });
+  });
+
+}).call(this);

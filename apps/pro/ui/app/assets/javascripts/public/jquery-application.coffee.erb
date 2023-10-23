@@ -1,0 +1,213 @@
+# pass in jQuery as $, but run in the scope of the window
+window.jQueryInWindow = (func) -> func.call(window, jQuery)
+
+# Automatically break out of iframes.
+top.location = self.location.href if (top.location isnt self.location)
+
+# match all assets in the route and pull into window-level constants
+# NB: Stop pulling your hair out, this is where WORKSPACE_ID gets set.
+re = /\/(\w+)\/(\d+)/g
+while m = re.exec(window.location.href)
+  window[m[1].toUpperCase().replace(/s$/i, '')+'_ID'] = parseInt(m[2])
+
+# ensure some constants are present
+window.HOST_ID ?= null
+window.WORKSPACE_ID ?= null
+
+jQuery ($) ->
+  # otherwise check for a <meta> tag named workspace_id
+  window.WORKSPACE_ID ||= $('meta[name=workspace_id]').attr('content')
+
+  # Add product-disabling overlay for Metasploit Community.
+  $.fn.addDisableOverlay = (supportedProducts) ->
+    $disabledOverlay = $('.body-disabled-overlay')
+    $mainContent = $('.mainContent')
+    $disabledOverlay.css height: $mainContent.height()-20 if $disabledOverlay.height() < $mainContent.height()
+    $disabledOverlay.find('span.products').html "<a href='#{$('span.registration-url').html()}'>register for the free #{supportedProducts} trial</a>"
+    $disabledOverlay.removeClass 'invisible'
+
+  $.fn.removeDisableOverlay = (supportedProducts) ->
+    $disabledOverlay = $('.body-disabled-overlay')
+    $disabledOverlay.addClass 'invisible'
+
+  # Toggles the display of the passed element based on the state of the checkbox.
+  $.fn.toggleVisibility = ($elem) ->
+    $(this).on 'click', null, (e) ->
+      if $(this).prop 'checked'
+        $elem.show()
+      else
+        $elem.hide()
+
+  # Taggles all checkboxes within the passed element when the checkbox is checked.
+  $.fn.checkAll = ($elem) ->
+    $checkboxes = $elem.find('input[type=checkbox]')
+
+    # Sets the state of the 'all' checkbox based on the checkboxes it's monitoring.
+    setAllCheckboxState = =>
+      $uncheckedCheckboxes = $elem.find('input[type=checkbox]:not(:checked)')
+      if $uncheckedCheckboxes.length > 0
+        $(this).prop 'checked', false
+      else
+        $(this).prop 'checked', true
+
+    setAllCheckboxState()
+
+    # When clicked, toggle all the checkboxes.
+    $(this).on 'click', null, (e) ->
+      if $(this).prop 'checked'
+        $checkboxes.prop 'checked', true
+      else
+        $checkboxes.prop 'checked', false
+
+    # When a monitored checkbox is checked, re-evaluate the state
+    # of the 'all' checkbox.
+    $checkboxes.on 'click', null, (e) ->
+      setAllCheckboxState()
+
+  $.expr[':'].focus ||= (elem) ->
+    elem is document.activeElement && (elem.type || elem.href)
+
+  $.fn.dataTableExt?.oPagination.r7Style = {
+    fnInit: (oSettings, nPaging, fnCallbackDraw) ->
+      $p = $(nPaging).html('')
+      $first = $('<span />', class: 'btn first').attr('title', 'First').appendTo($p)
+      $prev  = $('<span />', class: 'btn prev').attr('title', 'Previous').appendTo($p)
+      $curr  = $('<input />', class: 'curr').attr('title', 'Current page').appendTo($p)
+      $next  = $('<span />', class: 'btn next').attr('title', 'Next').appendTo($p)
+      $last  = $('<span />', class: 'btn last').attr('title', 'Last').appendTo($p)
+      btnEvent = (evtName) ->
+        (e) ->
+          return if $(e.currentTarget).hasClass('disabled')
+          oSettings.oApi._fnPageChange(oSettings, evtName)
+          fnCallbackDraw(oSettings)
+      $first.click btnEvent('first')
+      $prev.click  btnEvent('previous')
+      $next.click  btnEvent('next')
+      $last.click  btnEvent('last')
+      $curr.change ->
+        page = Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength) + 1
+        if $curr.val() != page.toString() and ($curr.val()-1)*oSettings._iDisplayLength < oSettings.fnRecordsTotal()
+           oSettings._iDisplayStart = ($curr.val()-1) * oSettings._iDisplayLength
+          oSettings.oInstance.fnDraw(false)
+      $curr.val(1)
+      $.extend oSettings.oLanguage,
+        sLengthMenu: 'Show _MENU_'
+        sInfo: "Showing _START_ - _END_ of _TOTAL_"
+
+    fnUpdate: (oSettings, fnCallbackDraw) ->
+      page = Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength) + 1
+      lastPage = oSettings.fnDisplayEnd() >= oSettings.fnRecordsTotal()
+      firstPage = page == 1
+      div = oSettings.aanFeatures.p
+      $first = $('span.first', div).toggleClass('disabled', firstPage)
+      $prev = $('span.prev', div).toggleClass('disabled', firstPage)
+      $next = $('span.next', div).toggleClass('disabled', lastPage)
+      $last = $('span.last', div).toggleClass('disabled', lastPage)
+      $('input.curr', oSettings.aanFeatures.p).val(page)
+        .toggleClass('disabled', firstPage && lastPage)
+        .prop('disabled', firstPage && lastPage)
+  }
+
+  # I don't think this actually does anything unforunately :(
+  $.extend $.fn.dataTable?.defaults,
+    sPaginationType: 'r7Style'
+
+  # set some jquery-ui#tooltip defaults:
+  $.extend $.ui.tooltip.prototype.options,
+    position:
+      using: (position, feedback) ->
+        # jquery-ui's tooltips really go out of their way to be worthless by default
+        left = feedback.target.left
+        right = 'auto'
+        winWidth = $(window).width()
+        if left > winWidth - 200
+          right = winWidth-(left + feedback.target.width)
+          left = 'auto'
+        $(@).css
+          position: 'absolute'
+          left: left
+          right: right
+          top: feedback.target.top+feedback.target.height+5
+          'z-index': 2
+
+  # update navbar badges
+  $(document).on 'updateBadges', (e, resp) ->
+    $nav = $('#workspace_nav ul.nav_tabs')
+    $lis = $nav.children('li')
+    return if $lis.length == 0 # non-workspace scoped page
+    findOrCreateBadge = ($li) ->
+      $badge = $li.find('>a>.badge').first()
+      if $badge.length > 0
+        $badge
+      else
+        $('<span />', class: 'badge').appendTo($li.find('>a'))
+    findOrCreateNotification = ($li) ->
+      $badge = $li.find('>a>.error_notification').first()
+      if $badge.length > 0
+        $badge
+      else
+        $('<span />', class: 'error_notification').appendTo($li.find('>a'))
+    # update sessions count
+    $badge = findOrCreateBadge($lis.filter('li.sessions'))
+    if resp.session_count is 0 then $badge.remove() else $badge.text(resp.session_count)
+    # update reports count
+    $badge = findOrCreateBadge($lis.filter('li.reports'))
+    if resp.report_count is 0 then $badge.remove() else $badge.text(resp.report_count)
+    # update tasks count
+    # add error indicator to tasks indicator should attach to task chains when dropdown displays
+    $tasksMenu = $lis.filter('li.tasks')
+    # figure out how to get the chains sub-menu
+    $chainsMenu = $tasksMenu.find('>ul>li>.chains').first().parent()
+    $taskNotification = findOrCreateNotification($tasksMenu)
+    $chainsNotification = findOrCreateNotification($chainsMenu)
+    if resp.task_chain_errors is 0
+      $taskNotification.removeClass('notification-dot')
+      $chainsNotification.removeClass('notification-dot')
+    else
+      $taskNotification.addClass('notification-dot')
+      $chainsNotification.addClass('notification-dot')
+    $badge = findOrCreateBadge($tasksMenu)
+
+    if resp.task_count is 0 then $badge.remove() else $badge.text(resp.task_count)
+
+    $badge = findOrCreateBadge($lis.filter('li.campaigns'))
+    if resp.campaign_count is 0 then $badge.remove() else $badge.text(resp.campaign_count)
+
+  # Close flash messages
+  $(document).on 'click', '#flash_messages > a.close', (e) ->
+    $(e.target).closest("#flash_messages").empty()
+
+  $(document).ready ->
+    # Prevent accidental navigations to #
+    $(document).on 'click', 'span.btn a', (e) ->
+      e.preventDefault() if $(@).attr('href') == '#'
+    # mixin underscore string helpers into underscore's scope
+    # this is so we can use chaining instead of the bulky _.str.helper() style
+    _.mixin(_.str.exports())
+    # Prevent clicking the top-level dropdown from navigating -> #
+    $('#top-menu>ul.drop-menu>li.menu>a').each ->
+      $(@).click (e) -> e.preventDefault()
+    # Ensure that the dropdown menus are as wide as their parent.
+    $('#top-menu ul.drop-menu.menu-left li.menu ul.sub-menu').each (index, elem) ->
+      parent_width = Math.max $(elem).parent().outerWidth(), 160
+      # -2 because .width() includes border size
+      $(elem).width(parent_width-2) if $(elem).width() < parent_width
+    $('#top-menu ul.drop-menu:not(.menu-left) li.menu ul.sub-menu').each (index, elem) ->
+      parent_width = $(elem).parent().outerWidth()
+      $(elem).width(parent_width-2) if $(elem).width() < parent_width
+    $('.mainContent').addDisableOverlay('Metasploit Pro') if $("meta[name='msp:unlicensed'][content='true']").length > 0
+    $(document).on 'click', 'a.show_hide', (e) ->
+      e.preventDefault()
+      Effect.toggle($(this).data('show-hide-element'), 'blind', {duration: 0.3})
+      return false
+    $(document).on 'click', 'input.delete.async', (e) ->
+      e.preventDefault();
+      $.ajax $(this).data('url'),
+        method: 'delete'
+        data: $(this).closest('form').serialize()
+      return false
+    $(document).on 'click', 'a.popup-cancel', (e) ->
+      e.preventDefault()
+      $('#popup').hide()
+      return false
+

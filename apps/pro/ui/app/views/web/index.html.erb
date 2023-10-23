@@ -1,0 +1,30 @@
+<% title "Web Applications" %>
+<% breadcrumb workspace_link, web_link %>
+
+<% content_for :header_buttons do %>
+<% if false %>
+    <%= form_tag url: 'web', method: :get, update: 'url_table', remote: true do %>
+    <div class="searchForm">
+      <%= text_field_tag :search, :placeholder => 'Search sites...' %>
+      <span class="btn"><%= submit_tag "Search", :class => "search" %></span>
+    </div>
+  <% end %>
+<% end %>
+<% end %>
+
+<%= form_tag do %>
+  <div class="control-bar">
+    <span class="button"><%= submit_delete(delete_web_sites_path(@workspace), 'Delete selected sites?', 'Delete...') %></span>
+    <div class="separator"></div>
+    <span class="button"><%= submit_checkboxes_to "WebScan", new_webscan_path(@workspace), { :class => "webscan" } %></span>
+    <span class="button"><%= submit_checkboxes_to "Import", new_import_path(@workspace), { :class => "import" } %></span>
+    <span class="button"><%= submit_checkboxes_to "Audit Web Apps", new_webaudit_path(@workspace), { :class => "webaudit" } %></span>
+    <span class="button"><%= submit_checkboxes_to "Exploit Web Apps", new_websploit_path(@workspace), { :class => "websploit" } %></span>
+  </div>
+
+  <div id="sites_table">
+    <%= render "sites", :sites => @sites %>
+  </div>
+<% end %>
+
+<%= add_disable_overlay([:pro]) if not @licensed %>

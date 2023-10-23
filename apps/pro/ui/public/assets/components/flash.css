@@ -1,0 +1,180 @@
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.sexy-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-weight: 300;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.small-caps-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-size: 11px;
+  position: relative;
+}
+
+/* jQuery Growl
+ * Copyright 2013 Kevin Sylvestre
+ * 1.1.8
+ */
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+#growls {
+  z-index: 50000;
+  position: fixed;
+}
+
+/* line 8, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+#growls.default {
+  top: 10px;
+  right: 10px;
+}
+
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+#growls.tl {
+  top: 10px;
+  left: 10px;
+}
+
+/* line 14, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+#growls.tr {
+  top: 10px;
+  right: 10px;
+}
+
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+#growls.bl {
+  bottom: 10px;
+  left: 10px;
+}
+
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+#growls.br {
+  bottom: 10px;
+  right: 10px;
+}
+
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  position: relative;
+  border-radius: 4px;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl.growl-incoming {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+/* line 35, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl.growl-outgoing {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+/* line 38, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl.growl-small {
+  width: 200px;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl.growl-medium {
+  width: 250px;
+  padding: 10px;
+  margin: 10px;
+}
+
+/* line 46, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl.growl-large {
+  width: 300px;
+  padding: 15px;
+  margin: 15px;
+}
+
+/* line 50, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl.growl-default {
+  color: white;
+  background: #7f8c8d;
+}
+
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl.growl-error {
+  color: white;
+  background: #c0392b;
+}
+
+/* line 56, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl.growl-notice {
+  color: white;
+  background: #2ecc71;
+}
+
+/* line 59, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl.growl-warning {
+  color: white;
+  background: #f39c12;
+}
+
+/* line 62, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl .growl-close {
+  cursor: pointer;
+  float: right;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: normal;
+  font-family: helvetica, verdana, sans-serif;
+}
+
+/* line 69, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl .growl-title {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+/* line 72, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.growl.css */
+.growl .growl-message {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+/* line 7, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/flash.scss */
+.growl {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  opacity: 1;
+}
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/flash.scss */
+.growl .growl-notice {
+  color: white;
+  background: #8FD551;
+}
+/* line 16, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/flash.scss */
+.growl .banner-message {
+  margin-top: 6px;
+  /*.shellshock-logo {
+    height: 57px;
+    width: 60px;
+    background-image: image-url(/shellshock.png);
+    @include image-2x(image-path('shellshock@2x.png'), 57px, 60px);
+    background-repeat: no-repeat;
+    background-position: center center;
+    float: left;
+    margin: 3px 10px 10px 10px;
+  }*/
+}
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/flash.scss */
+.growl .banner-message a {
+  color: #b30019;
+}
+/* line 23, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/flash.scss */
+.growl .banner-message ol {
+  list-style-type: disc;
+  padding-left: 14px;
+  clear: both;
+  font-size: 11px !important;
+}

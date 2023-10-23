@@ -1,0 +1,4 @@
+(function($) {
+  $('#popup_errors').html("<%= escape_javascript(content_tag(:div, content_tag(:p, h(task.error)), :class => "errors")) %>");
+  $('#popup_submit').removeClass('submitting').removeClass('disabled');
+})(jQuery);

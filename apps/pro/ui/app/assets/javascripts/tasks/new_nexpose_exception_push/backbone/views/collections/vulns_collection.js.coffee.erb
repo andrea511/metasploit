@@ -1,0 +1,38 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/tasks/new_nexpose_exception_push/collections/vulns") %>',
+  '<%= javascript_path("tasks/new_nexpose_exception_push/backbone/views/item_views/vuln") %>'
+], ($, Template, VulnItemView) ->
+
+  class VulnsCollection extends Backbone.Marionette.CollectionView
+    template: HandlebarsTemplates['tasks/new_nexpose_exception_push/collections/vulns']
+
+    childView: VulnItemView
+    emptyView: VulnItemView
+
+    initialize:(opts) ->
+      $.extend(@, opts)
+
+    #Override build method so we can pass through the controller and set the input model
+    buildChildView: (child, ChildViewClass, childViewOptions) =>
+
+      exception_reasons = @controller.EXCEPTION_REASONS
+
+      reasons = _.map(exception_reasons, (val,key)->
+        {value: key, text: val}
+      )
+
+      child.set('console',{
+        consoles: reasons,
+        console: 'OTHER'
+      })
+
+
+      child.set('date', "")
+      child.set('expire_date',"")
+
+      options = _.extend({model:child}, childViewOptions, {controller:@controller})
+      return new ChildViewClass(options)
+
+    childViewOptions: (child, index) ->
+      return {itemIndex: index}

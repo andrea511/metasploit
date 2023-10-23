@@ -1,0 +1,10 @@
+<% include_javascript "jquery.tokeninput" -%>
+<% include_javascript "tagging" -%>
+
+<div class="dialog invisible" id="tag-dialog">
+	<div class="error-container"></div>
+	<%= form_tag quick_multi_tag_path(@workspace), :id => 'tag-form' do -%>
+		<%= hidden_field_tag :workspace_id, @workspace.id %>
+		<input id="new_host_tags" name="new_host_tags">
+	<% end -%>
+</div>

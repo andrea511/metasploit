@@ -1,0 +1,22 @@
+define [
+  'jquery',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>',
+  '<%= javascript_path("hosts/backbone/models/host") %>'
+], ($, EventAggregator, Host) ->
+  class SingleHostPresenter extends Backbone.Model
+    defaults:
+      tab_counts: {}
+      host: {}
+
+    initialize: ({@id}) ->
+      @on("change:host", @_updateHostInfo, @)
+      @on("change:tab_counts", @_updateTabs, @)
+
+    _updateHostInfo: (model) =>
+      EventAggregator.trigger("tabs_layout:change:host", new Host(model.get("host")))
+
+    _updateTabs: (model) =>
+      EventAggregator.trigger("tabs_layout:change:count", new Backbone.Model(model.get('tab_counts')))
+
+    url: (extension='.json') =>
+      "/hosts/#{@id}/poll_presenter#{extension}"

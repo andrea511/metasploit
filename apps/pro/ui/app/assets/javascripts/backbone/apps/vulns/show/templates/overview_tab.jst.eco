@@ -1,0 +1,13 @@
+<form>
+  <div>
+    <label for="comments">Comments</label>
+  </div>
+  <div>
+
+    <textarea id="comments" type="text" name="comment"><%= @notes[0]?.comment %></textarea>
+    <%- @buttomMoreAssetTag %>
+    <div class="error" style="display:none;"></div>
+  </div>
+  <h5>Attempts History</h5>
+  <div class="overview-region"></div>
+</form>

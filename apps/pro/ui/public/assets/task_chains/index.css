@@ -1,0 +1,394 @@
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#task-chains-main-region #task-chain-header-region h1, #task-chains-main-region #task-chain-header-region h2 {
+  color: #010101;
+  font-weight: 100;
+  padding-left: 12px;
+}
+
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#task-chains-main-region #task-chain-header-region {
+  height: 55px;
+  position: relative;
+  min-width: 1000px;
+  border: 1px solid #e7e7e7;
+  background-image: -moz-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+  background-image: -webkit-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+  background-image: -ms-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+}
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#task-chains-main-region #task-chain-header-region h1 {
+  margin: 0px;
+  font-size: 24px;
+  line-height: 52px;
+}
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#task-chains-main-region #task-chain-header-region h2 {
+  margin: 0px;
+  color: #a5a5a5;
+  font-size: 12px;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#task-chains-main-region #task-chain-header-region:after {
+  bottom: -4px;
+  content: " ";
+  display: block;
+  height: 4px;
+  width: 99.9%;
+  left: 1px;
+  position: absolute;
+  margin: 0 auto;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.09);
+}
+/* line 68, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#task-chains-main-region #task-chain-header-region > div:first-child {
+  border: 1px solid white;
+  height: 100%;
+}
+
+/* line 74, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#task-chains-main-region #task-chain-list-region {
+  border: 1px solid #efefef;
+  background-color: #f2f2f2;
+  margin: 0 auto;
+  width: 98%;
+  position: relative;
+}
+/* line 82, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#task-chains-main-region #task-chain-list-region:after {
+  bottom: -2px;
+  height: 2px;
+  left: 2px;
+  display: block;
+  width: 99.7%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.07);
+  content: " ";
+}
+
+/* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#task-chains-main-region #task-chain-list-region > div:first-child {
+  margin: 0 15px 15px 15px;
+  padding: 10px 10px;
+  border-bottom-radius: 5px;
+  border: 1px solid #ddd;
+  border-top: 0px;
+  background-color: #fff;
+}
+
+/* line 21, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/buttons.scss */
+#task-chains-main-region #task-chain-list-region .toolbar a#new, #task-chains-main-region #task-chain-list-region .toolbar a {
+  display: inline-block;
+  border-radius: 5px;
+  height: 20px;
+  line-height: 18px;
+  min-width: 70px;
+  margin-right: 5px;
+  text-align: center;
+  font-size: 11px;
+  color: #4d4d4d;
+  border: 1px solid #b3b3b3;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FCFCFC), color-stop(1, #E7E7E7));
+  background-image: -o-linear-gradient(bottom, #FCFCFC 0%, #E7E7E7 100%);
+  background-image: -moz-linear-gradient(bottom, #FCFCFC 0%, #E7E7E7 100%);
+  background-image: -webkit-linear-gradient(bottom, #FCFCFC 0%, #E7E7E7 100%);
+  background-image: -ms-linear-gradient(bottom, #FCFCFC 0%, #E7E7E7 100%);
+  background-image: linear-gradient(to bottom, #FCFCFC 0%, #E7E7E7 100%);
+}
+/* line 35, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/buttons.scss */
+#task-chains-main-region #task-chain-list-region .toolbar a#new:hover, #task-chains-main-region #task-chain-list-region .toolbar a:hover {
+  text-decoration: none;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #F0F0F0), color-stop(1, #E6E6E6));
+  background-image: -o-linear-gradient(bottom, #F0F0F0 0%, #E6E6E6 100%);
+  background-image: -moz-linear-gradient(bottom, #F0F0F0 0%, #E6E6E6 100%);
+  background-image: -webkit-linear-gradient(bottom, #F0F0F0 0%, #E6E6E6 100%);
+  background-image: -ms-linear-gradient(bottom, #F0F0F0 0%, #E6E6E6 100%);
+  background-image: linear-gradient(to bottom, #F0F0F0 0%, #E6E6E6 100%);
+  cursor: pointer;
+}
+/* line 41, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/buttons.scss */
+#task-chains-main-region #task-chain-list-region .toolbar a.disabled#new, #task-chains-main-region #task-chain-list-region .toolbar a.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+/* line 46, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/buttons.scss */
+#task-chains-main-region #task-chain-list-region .toolbar a.disabled#new:hover, #task-chains-main-region #task-chain-list-region .toolbar a.disabled:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FCFCFC), color-stop(1, #E7E7E7));
+  background-image: -o-linear-gradient(bottom, #FCFCFC 0%, #E7E7E7 100%);
+  background-image: -moz-linear-gradient(bottom, #FCFCFC 0%, #E7E7E7 100%);
+  background-image: -webkit-linear-gradient(bottom, #FCFCFC 0%, #E7E7E7 100%);
+  background-image: -ms-linear-gradient(bottom, #FCFCFC 0%, #E7E7E7 100%);
+  background-image: linear-gradient(to bottom, #FCFCFC 0%, #E7E7E7 100%);
+  cursor: default;
+}
+
+/* line 54, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/buttons.scss */
+#task-chains-main-region #task-chain-list-region .toolbar a#new {
+  padding: 0 10px;
+  color: #e8e8e8;
+  background-image: -moz-linear-gradient(90deg, #5d9a29 0%, #65b201 100%);
+  background-image: -webkit-linear-gradient(90deg, #5d9a29 0%, #65b201 100%);
+  background-image: -ms-linear-gradient(90deg, #5d9a29 0%, #65b201 100%);
+}
+/* line 59, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/buttons.scss */
+#task-chains-main-region #task-chain-list-region .toolbar a#new:hover {
+  color: #4d4d4d;
+}
+
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .unscheduled::after, #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .running::after, #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .once::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .success-state::after, #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .failed::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .failed-state::after, #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .scheduled::after, #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .suspended::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .stopped-state::after {
+  display: block;
+  height: 10px;
+  line-height: 10px;
+  width: 10px;
+  text-align: center;
+  border-radius: 20px;
+}
+
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .unscheduled::after, #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .running::after {
+  background-color: #cdcdcd;
+  border: 1px solid #b1b1b1;
+}
+
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .once::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .success-state::after {
+  background-color: #97cc55;
+  border: 1px solid #7ba645;
+  color: #fff;
+}
+
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .failed::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .failed-state::after {
+  background-color: #c91114;
+  border: 1px solid #9f0b12;
+  color: #fff;
+}
+
+/* line 39, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .scheduled::after {
+  background-color: #1278cc;
+  border: 1px solid #216397;
+  color: #fff;
+}
+
+/* line 46, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .suspended::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .stopped-state::after {
+  background-color: #FFC000;
+  border: 1px solid #FFBF00;
+  color: #fff;
+}
+
+/* line 57, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .unscheduled::after, #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .running::after {
+  content: '+';
+}
+
+/* line 61, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .failed::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .failed-state::after {
+  content: '!';
+  font-size: 9px;
+  font-weight: bold;
+}
+
+/* line 73, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .suspended::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .stopped-state::after {
+  content: '\2014';
+  font-size: 9px;
+}
+
+/* line 78, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .once::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .success-state::after {
+  content: '\2713';
+  font-size: 9px;
+}
+
+/* line 83, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .scheduled::after {
+  content: '\27F3';
+  font-size: 9px;
+  padding-left: 1px;
+}
+
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+.modal .content ul {
+  margin-left: 16px;
+  list-style-type: initial;
+}
+
+/* line 23, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region {
+  color: #010101;
+}
+/* line 33, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-header-region h1 {
+  line-height: 55px;
+}
+/* line 50, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region .toolbar {
+  position: relative;
+}
+/* line 62, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region #selected-indicator {
+  color: #8e8e8e;
+  font-size: 11px;
+  margin: 5px 28px;
+}
+/* line 68, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table {
+  width: 100%;
+}
+/* line 71, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table td.checkbox, #task-chains-main-region #task-chain-list-region table th#select-all {
+  padding: 0 0 0 25px;
+  width: 20px;
+}
+/* line 76, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table td.schedule, #task-chains-main-region #task-chain-list-region table th.schedule {
+  width: 110px;
+  text-align: center;
+}
+/* line 81, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table td.tasks, #task-chains-main-region #task-chain-list-region table th.tasks {
+  width: 260px;
+}
+/* line 86, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table td.history a.error {
+  color: red;
+}
+/* line 91, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table td.status {
+  width: 150px;
+}
+/* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table thead {
+  background-color: #e1e1e1;
+  text-transform: uppercase;
+}
+/* line 99, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table thead tr {
+  height: 30px;
+}
+/* line 102, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table thead tr th {
+  font-size: 13px;
+  color: #010101;
+  user-select: none;
+}
+/* line 107, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table thead tr th.sortable:hover {
+  cursor: pointer;
+}
+/* line 111, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table thead tr th .arrow {
+  display: inline-block;
+  margin-left: 5px;
+  margin-bottom: 3px;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+/* line 124, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table thead tr th .arrow.up {
+  width: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid #ea5709;
+  border-top: none;
+}
+/* line 132, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table thead tr th .arrow.down {
+  width: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #ea5709;
+  border-bottom: none;
+}
+/* line 145, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr {
+  border-top: 10px solid #ffffff;
+}
+/* line 148, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td {
+  height: 55px;
+  background-color: #f2f2f2;
+}
+/* line 154, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper {
+  position: relative;
+}
+/* line 157, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .no-schedule, #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .schedule {
+  height: 33px;
+  width: 32px;
+  margin: 0 auto;
+  background-image: url(/assets/task_chains/clock-a8b2f5ef7f93250d5d289daf9fda0d34e5007f07e2973154809fe5f828d77e87.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 157, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+  #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .no-schedule, #task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .schedule {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/task_chains/clock@2x-8456b29459cca3ac01cbe4631544cac7e2c1203983076b749a8dbb356c214434.png);
+    background-size: 32px 33px;
+  }
+}
+/* line 165, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper .no-schedule {
+  opacity: 0.5;
+}
+/* line 169, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.schedule .schedule-wrapper div::after {
+  position: absolute;
+  top: 26px;
+  right: 39px;
+}
+/* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.name {
+  font-size: 18px;
+  font-weight: 100;
+  padding-right: 5px;
+}
+/* line 207, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.name a {
+  color: #010101;
+  text-decoration: none;
+}
+/* line 211, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.name a:hover {
+  text-decoration: underline;
+}
+/* line 217, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.tasks {
+  text-transform: uppercase;
+}
+/* line 222, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.status .common-state, #task-chains-main-region #task-chain-list-region table tbody tr td.status .failed-state::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .success-state::after, #task-chains-main-region #task-chain-list-region table tbody tr td.status .stopped-state::after {
+  float: left;
+  margin-left: 10px;
+  scale: 3;
+  transform: translate(50%, 50%);
+}
+/* line 229, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.status div::after {
+  position: absolute;
+}
+/* line 245, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.status .stopped-state::after {
+  margin-top: -5px;
+}
+/* line 253, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.status canvas {
+  float: left;
+  margin-left: 15px;
+}
+/* line 258, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.status .task-info {
+  float: right;
+  width: 50%;
+  margin-top: 3px;
+}
+/* line 264, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/task_chains/index.scss */
+#task-chains-main-region #task-chain-list-region table tbody tr td.status a[href='javascript:void(0)'] {
+  text-decoration: none;
+}

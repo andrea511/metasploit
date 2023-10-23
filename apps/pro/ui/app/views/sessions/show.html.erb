@@ -1,0 +1,123 @@
+<% title "Session #{@session.id}" %>
+<% breadcrumb workspace_link, sessions_link, session_link %>
+
+<% include_javascript 'livepipe' %>
+<% include_javascript 'tabs' %>
+<% include_javascript 'sessions' %>
+
+<div class="screenshot">
+  <% if @host and @host.screenshot %>
+    <% link_to loot_path(@host.screenshot) do %>
+      <%= image_tag loot_path(@host.screenshot), :width => 320, :height => 200 %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= render 'sessions/props' %>
+
+<h2>Available Actions</h2>
+
+<div class="btnCol">
+  <% if @session.upgradeable? %>
+    <span class="btn"><%= submit_checkboxes_to "Upgrade Session", new_upgrade_sessions_path(@session.workspace, :sess_ids => [@session.id]), {:class => 'upgrade_sessions', :width => 80} %></span>
+      Upgrade this session to a Meterpreter Session.
+    <br/>
+  <% end %>
+  <% if @session.supports_collect? %>
+    <span class="btn"><%= submit_checkboxes_to "Collect System Data", new_collect_evidence_path(@session.workspace, :sess_ids => [@session.id]), {:class => 'collect', :width => 80} %></span>
+    Collect system evidence and sensitive data (screenshots, passwords, system information)
+    <br/>
+  <% end %>
+
+    <% if @session.supports_vnc? and @session.routes.empty? %>
+        <span class="btn"><%= link_to "Virtual Desktop", session_vnc_path(@session), :class => 'exploit', :data => { :confirm => "Access Virtual Desktop?" }%></span>
+        Interact with the running desktop on the target system, will notify the active user
+        <br/>
+    <% end %>
+
+  <% if @session.supports_files? %>
+    <span class="btn"><%= link_to "Access Filesystem", session_files_path(@session), :class => 'import' %></span>
+    Browse the remote filesystem and upload, download, and delete files
+    <br/>
+  <% end %>
+
+  <% if @session.supports_search? %>
+    <span class="btn"><%= link_to "Search Filesystem", session_search_path(@session), :class => 'search' %></span>
+    Search the remote filesystem for a specific pattern
+    <br/>
+  <% end %>
+
+  <% if @session.supports_shell? %>
+    <span class="btn"><%= link_to "Command Shell", session_shell_path(@session), :class => 'exploit shell', :target => 'about:blank' %></span>
+    Interact with a remote command shell on the target (advanced users)
+    <br/>
+  <% end %>
+
+  <% if @session.supports_pivot_point? and current_user.admin? %>
+      <% if @session.active_pivot_point? %>
+        <span class="btn"><%= link_to "Delete Pivot Point", session_route_path(@session), :class => 'cancel', :data => { :confirm => "Delete Pivot Point?", :method => :post } %></span>
+          Stop pivoting attacks through the remote host (TCP/UDP)
+      <% else %>
+        <span class="btn"><%= link_to "Create Proxy Pivot", session_route_path(@session), :class => 'tunnel', :data => { :confirm => "Create Proxy Pivot?", :method => :post } %></span>
+          Pivot attacks using the remote host as a gateway (TCP/UDP)
+        <% end %>
+        <br/>
+  <% end %>
+
+  <% if @session.supports_vpn_pivot? && current_user.admin? %>
+    <% if !License.get.nx_ultimate? %>
+         <span class="btn"><%= link_to "Create VPN Pivot", new_tunnel_path(@workspace, :sess_id => @session.local_id), :remote => true, :html => { :class => "tunnel" } %></span>
+      Pivot traffic through the remote host (Ethernet/IP)
+      <br/>
+    <% end %>
+  <% end %>
+
+  <% if @session.supports_transport_change? %>
+      <span class="btn"><%= link_to "Change Transport", new_transport_change_path(@workspace, :sess_id => @session.local_id), :remote => true, :html => { :class => "transport_change" } %></span>
+      Change the transport mechanism of the session
+      <br/>
+  <% end %>
+
+  <span class="btn"><%= link_to "Terminate Session", delete_session_path(@session), :class => 'cancel', :data => { :confirm => "Terminate Session?", :method => :delete } %></span>
+  Close this session. Further interaction requires exploitation
+  <br/>
+</div>
+
+<ul class="tabs" style="margin-top: 20px;">
+  <% if @host and not @host.loots.empty? %>
+    <li class="tab loot"><a href="#loot" class="loot">Stored Data &amp; Files</a></li>
+  <% end %>
+  <li class="tab"><a href="#history" class="history">Session History</a></li>
+  <li class="tab"><a href="#post_modules" class="post">Post-Exploitation Modules</a></li>
+</ul>
+
+<% if @host and not @host.loots.empty? %>
+  <div id="loot" class="tab_panel">
+    <%= render :partial => 'hosts/loots', :object => @host.loots, :locals => { :title => false } %>
+  </div>
+<% end %>
+
+<div id="history" class="tab_panel">
+  <%= render 'sessions/history_table', :events => @events %>
+</div>
+
+<div id="post_modules" class="tab_panel">
+  <table class="module_list list">
+    <thead>
+      <tr>
+        <th>OS</th>
+        <th>Module Name</th>
+        <th>Module Title</th>
+      </tr>
+    </thead>
+  <% MsfModule.post.sort{|a,b| a.fullname <=> b.fullname}.each do |m|
+    next if not @compatible_module_names.include?(m.fullname)
+  %>
+    <tr class="<%= row_cycle %>">
+      <td><%= module_icons_html(m) %></td>
+      <td><%=h m.fullname %></td>
+      <td><%= link_to h(m.title), new_module_run_path(@workspace, m.fullname,  :sessions => @session.id) %></td>
+    </tr>
+  <% end %>
+  </table>
+</div>

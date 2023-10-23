@@ -1,0 +1,180 @@
+#!/bin/sh
+
+INSTALLDIR=@@BITROCK_INSTALLDIR@@
+
+if [ -r "$INSTALLDIR/scripts/setenv.sh" ]; then
+    . "$INSTALLDIR/scripts/setenv.sh"
+fi
+
+ERROR=0
+
+POSTGRESQL_SCRIPT=$INSTALLDIR/postgresql/scripts/ctl.sh
+PROSVC_SCRIPT=$INSTALLDIR/apps/pro/engine/scripts/ctl.sh
+METASPLOIT_SCRIPT=$INSTALLDIR/apps/pro/ui/scripts/ctl.sh
+WORKER_SCRIPT=$INSTALLDIR/apps/pro/ui/scripts/worker_ctl.sh
+
+help() {
+  echo "usage: $0 help"
+  echo "       $0 (start|stop|restart|status)"
+
+  if test -x $POSTGRESQL_SCRIPT; then
+    echo "       $0 (start|stop|restart|status) postgresql"
+  fi
+
+  if test -x $PROSVC_SCRIPT; then
+    echo "       $0 (start|stop|restart|status) prosvc"
+  fi
+
+  if test -x $METASPLOIT_SCRIPT; then
+    echo "       $0 (start|stop|restart|status) metasploit"
+  fi
+
+  if test -x $WORKER_SCRIPT; then
+    echo "       $0 (start|stop|restart|status) worker"
+  fi
+
+
+  cat <<EOF
+
+help       - this screen
+start      - start the service(s)
+stop       - stop  the service(s)
+restart    - restart or start the service(s)
+status     - show the status of the service(s)
+
+EOF
+}
+
+# Check if user wants 'help' and validate args
+if [ "x$1" = "xhelp" ]; then
+    help
+    exit 0
+elif [ "x$1" != "xstart" -a "x$1" != "xstop" -a "x$1" != "xrestart" -a "x$1" != "xstatus" ]; then
+    help
+    exit 1
+else
+    if [ ${#} -eq 2 ]; then
+        if [ "x$2" != "xpostgresql" -a "x$2" != "xprosvc" -a "x$2" != "xmetasploit" -a "x$2" != "xworker" ]; then
+            help
+            exit 1
+        fi
+    fi
+fi
+
+# Defer to systemd when installed
+if [ -f "${INSTALLDIR}/.systemd_enabled" ]; then
+  if [ ${#} -eq 1 ]; then
+    systemctl $1 metasploit.target
+  elif [ "x$2" = "xmetasploit" ]; then
+    systemctl $1 metasploit-ui.service
+  else
+    systemctl $1 metasploit-$2.service
+  fi
+  exit $?
+fi
+
+# Disabling SELinux if enabled
+if [ -x "/usr/sbin/getenforce" ] && [ `id -u` = 0 ] ; then
+    selinux_status=`/usr/sbin/getenforce`
+    /usr/sbin/setenforce 0 2> /dev/null
+fi
+
+# Stop
+if [ "x$1" = "xstop" -o "x$1" = "xrestart" ]; then
+    if [ ${#} -eq 1 -o "x$2" = "xworker" ]; then
+        if test -x $WORKER_SCRIPT; then
+            $WORKER_SCRIPT stop
+            WORKER_ERROR=$?
+        fi
+    fi
+    if [ ${#} -eq 1 -o "x$2" = "xmetasploit" ]; then
+        if test -x $METASPLOIT_SCRIPT; then
+            $METASPLOIT_SCRIPT stop
+            METASPLOIT_ERROR=$?
+        fi
+    fi
+    if [ ${#} -eq 1 -o "x$2" = "xprosvc" ]; then
+        if test -x $PROSVC_SCRIPT; then
+            $PROSVC_SCRIPT stop
+            PROSVC_ERROR=$?
+        fi
+    fi
+    if [ ${#} -eq 1 -o "x$2" = "xpostgresql" ]; then
+        if test -x $POSTGRESQL_SCRIPT; then
+            $POSTGRESQL_SCRIPT stop
+            POSTGRESQL_ERROR=$?
+            sleep 5
+        fi
+    fi
+fi
+
+# Start
+if [ "x$1" = "xstart" -o "x$1" = "xrestart" ]; then
+    if [ ${#} -eq 1 -o "x$2" = "xpostgresql" ]; then
+        if test -x $POSTGRESQL_SCRIPT; then
+            $POSTGRESQL_SCRIPT start
+            swap=`cat $INSTALLDIR/apps/pro/engine/tmp/swap_config 2>/dev/null`
+            if [ "$swap" = "1" ] ; then
+                ./$INSTALLDIR/ruby/bin/ruby $INSTALLDIR/apps/pro/ui/script/swap.rb
+            fi
+            POSTGRESQL_ERROR=$?
+            sleep 5
+        fi
+    fi
+    if [ ${#} -eq 1 -o "x$2" = "xprosvc" ]; then
+        if test -x $PROSVC_SCRIPT; then
+            $PROSVC_SCRIPT start
+            PROSVC_ERROR=$?
+        fi
+    fi
+    if [ ${#} -eq 1 -o "x$2" = "xmetasploit" ]; then
+        if test -x $METASPLOIT_SCRIPT; then
+            $METASPLOIT_SCRIPT start
+            METASPLOIT_ERROR=$?
+        fi
+    fi
+    if [ ${#} -eq 1 -o "x$2" = "xworker" ]; then
+        if test -x $WORKER_SCRIPT; then
+            $WORKER_SCRIPT start
+            WORKER_ERROR=$?
+        fi
+    fi
+fi
+
+# Status
+if [ "x$1" = "xstatus" ]; then
+    if [ ${#} -eq 1 -o "x$2" = "xpostgresql" ]; then
+        if test -x $POSTGRESQL_SCRIPT; then
+            $POSTGRESQL_SCRIPT status
+            sleep 2
+        fi
+    fi
+    if [ ${#} -eq 1 -o "x$2" = "xprosvc" ]; then
+        if test -x $PROSVC_SCRIPT; then
+            $PROSVC_SCRIPT status
+        fi
+    fi
+    if [ ${#} -eq 1 -o "x$2" = "xmetasploit" ]; then
+        if test -x $METASPLOIT_SCRIPT; then
+            $METASPLOIT_SCRIPT status
+        fi
+    fi
+    if [ ${#} -eq 1 -o "x$2" = "xworker" ]; then
+        if test -x $WORKER_SCRIPT; then
+            $WORKER_SCRIPT status
+        fi
+    fi
+fi
+
+# Checking for errors
+for e in $POSTGRESQL_ERROR $PROSVC_ERROR $METASPLOIT_ERROR $WORKER_ERROR; do
+    if [ $e -gt 0 ]; then
+        ERROR=$e
+    fi
+done
+# Restoring SELinux
+if [ -f "/usr/sbin/getenforce" ] && [ `id -u` = 0 ] ; then
+    /usr/sbin/setenforce $selinux_status 2> /dev/null
+fi
+
+exit $ERROR

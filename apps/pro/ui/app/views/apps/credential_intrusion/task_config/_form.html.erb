@@ -1,0 +1,21 @@
+<%= meta_module_form_for @task_config do |f| %>
+  <%= form_tab "Create Project" do %>
+    <%= f.input :whitelist_string, :label => "Address Range", :as =>:text %>
+    <%= advanced_link "Address Range Advanced" %>
+    <%= advanced_area "Address Range Advanced" do %>
+      <%= f.input :blacklist_string, :as => :text, :label => "Excluded Addresses" %>
+    <% end %>
+  <% end %>
+
+  <%= form_tab "Configure Exploits" do %>
+    <%= f.input :payload_type, :as => :select, :collection => ExploitTask::PAYLOAD_TYPES, :include_blank => false %>
+    <%= f.input :connection, :as => :select, :collection => ExploitTask::CONNECTIONS, :include_blank => false %>
+    <%= f.input :payload_ports, :label => 'Listener Ports' %>
+    <%= f.input :payload_lhost, :label => 'Listener Host' %>
+    <%= f.input :limit_sessions, :label => 'Only obtain one session per target', :as => :boolean %>
+  <% end %>
+
+  <%= render :partial => 'wizards/report_tab', :locals => {
+             :f => f,
+             :rtypes => [Apps::CredentialIntrusion::TaskConfig::REPORT_TYPE] } %>
+<% end %>

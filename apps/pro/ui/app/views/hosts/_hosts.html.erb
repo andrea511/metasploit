@@ -1,0 +1,22 @@
+<span id="hosts-path" class="invisible"><%= hosts_path(@workspace, :format => :json) %></span>
+
+<table id="hosts-table" class="list sortable">
+	<thead>
+		<tr>
+			<th class="checkbox"><%= check_box_tag "all_hosts", false %></th>
+			<th>IP Address</th>
+			<th>Hostname</th>
+			<th>Operating System</th>
+			<th>VM</th>
+			<th>Purpose</th>
+			<th>Svcs</th>
+			<th>Vlns</th>
+			<th title="Attempts">Att</th>
+            <th>Tags</th>
+			<th>Updated</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody id="host_list">
+	</tbody>
+</table>

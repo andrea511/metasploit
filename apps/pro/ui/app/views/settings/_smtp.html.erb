@@ -1,0 +1,48 @@
+<% smtp = @profile.smtp_settings %>
+<div class="smtp_settings">
+  <h2></h2>
+
+  <%= form_tag update_profile_path, :method => :put do %>
+    <%= hidden_field_tag 'profile_id', @profile.id %>
+    <%= hidden_field_tag 'anchor', 'smtp_settings' %>
+    <div id="smtp_fields" class="inline_fields">      
+      <p>
+        <%= label_tag :smtp_address, "Address" %>
+        <%= text_field_tag :smtp_address, smtp.address %>
+      </p>
+      <p>
+        <%= label_tag :smtp_port, "Port" %>
+        <%= number_field_tag :smtp_port, smtp.port, :within => 1...65536, :maxlength => 5, :size => 5, :required => true %>
+      </p>
+      <p>
+        <%= label_tag :smtp_ssl, "Use SSL?" %>
+        <%= check_box_tag :smtp_ssl, true, smtp.ssl%>
+      <p>
+        <%= label_tag :smtp_domain, "Domain" %>
+        <%= text_field_tag :smtp_domain, smtp.domain %>
+      </p>
+      <p>
+        <%= label_tag :smtp_username, "Username" %>
+        <%= text_field_tag :smtp_username, smtp.username, :autocomplete => "off" %>
+      </p>
+      <p>
+        <%= label_tag :smtp_password, "Password" %>
+                <% safe_password = nil
+
+                   unless smtp.password.blank?
+                     safe_password = SmtpSettings::PASSWORD_UNCHANGED
+                   end %>
+        <%= password_field_tag :smtp_password, safe_password, :autocomplete => "off" %>
+      </p>
+      <p>
+        <%= label_tag :smtp_authentication, "Authentication" %>
+        <%= select_tag :smtp_authentication, 
+            options_for_select(['plain', 'login', 'cram_md5'], smtp.authentication) %>
+      </p>
+    </div>
+    <br />
+    <div class="buttons">
+      <span class="btn"><%= submit_tag 'Update Settings', :method => :put, :class => "save" %></span>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,138 @@
+@charset "UTF-8";
+/* line 6, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+.toggle-button label .button {
+  float: left;
+  width: 1.65em;
+  height: 1.65em;
+  margin: -.1em;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  border-radius: inherit;
+  background: white;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), transparent);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr=#33000000,GradientType=0 );
+  /* IE6-9 */
+  box-shadow: 0 0.1em 0.1em 0.1em rgba(255, 255, 255, 0.8) inset, 0 0 0.5em rgba(0, 0, 0, 0.3);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+.toggle-button label .button:hover {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), transparent);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr=#66000000,GradientType=0 );
+  /* IE6-9 */
+}
+/* line 26, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+.toggle-button label input[type="checkbox"]:checked + .button {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), transparent);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr=#99000000,GradientType=0 );
+  /* IE6-9 */
+}
+
+/* line 89, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.primary, input.btn.primary, span.btn.primary {
+  cursor: pointer;
+  border-radius: 3px;
+  color: #ffffff;
+  background-color: #3586a4;
+  background-image: -moz-linear-gradient(#61bcdc, #3586a4);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #61bcdc), color-stop(1, #3586a4));
+  background-image: -webkit-linear-gradient(#61bcdc, #3586a4);
+  background-image: -o-linear-gradient(#61bcdc, #3586a4);
+  background-image: -ms-linear-gradient(top, #61bcdc, #3586a4);
+  background-image: linear-gradient(top, #61bcdc, #3586a4);
+  border: 1px solid #618696;
+  border-top: 1px solid #618696;
+  border-bottom: 1px solid #3c535c;
+  padding: 7px;
+  margin-left: 10px;
+  font-weight: 600;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+/* line 62, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.primary:hover, input.btn.primary:hover, span.btn.primary:hover {
+  text-decoration: none;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+}
+/* line 66, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.primary:active, input.btn.primary:active, span.btn.primary:active {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
+}
+/* line 70, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.primary.disabled, input.btn.primary.disabled, span.btn.primary.disabled {
+  background-color: #6d6d6d;
+  background-image: -moz-linear-gradient(#9f9f9f, #6d6d6d);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #9f9f9f), color-stop(1, #6d6d6d));
+  background-image: -webkit-linear-gradient(#9f9f9f, #6d6d6d);
+  background-image: -o-linear-gradient(#9f9f9f, #6d6d6d);
+  background-image: -ms-linear-gradient(top, #9f9f9f, #6d6d6d);
+  background-image: linear-gradient(top, #9f9f9f, #6d6d6d);
+  border: 1px solid #7c7c7c;
+  border-top: 1px solid #7c7c7c;
+  border-bottom: 1px solid #4c4c4c;
+  pointer-events: none;
+}
+/* line 78, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.primary.reload, input.btn.primary.reload, span.btn.primary.reload {
+  vertical-align: middle;
+  background-position: 2px 2px;
+  background-size: 10px 10px;
+  background-image: url(/assets/btnReload-50b2a4895d9cf6a57c154c27c3c6075a75f07331acdbd6f23837ae95ee5823f8.png);
+  background-repeat: no-repeat;
+}
+
+/* line 93, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.ellipses, input.btn.ellipses, span.btn.ellipses {
+  cursor: pointer;
+  border-radius: 3px;
+  color: #666666;
+  background-color: #e5e5e5;
+  background-image: -moz-linear-gradient(#ffffff, #e5e5e5);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #e5e5e5));
+  background-image: -webkit-linear-gradient(#ffffff, #e5e5e5);
+  background-image: -o-linear-gradient(#ffffff, #e5e5e5);
+  background-image: -ms-linear-gradient(top, #ffffff, #e5e5e5);
+  background-image: linear-gradient(top, #ffffff, #e5e5e5);
+  border: 1px solid #e2e2e2;
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #d2d2d2;
+  padding: 7px;
+  margin-left: 10px;
+  font-weight: 600;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+  font-size: 5px;
+}
+/* line 62, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.ellipses:hover, input.btn.ellipses:hover, span.btn.ellipses:hover {
+  text-decoration: none;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+}
+/* line 66, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.ellipses:active, input.btn.ellipses:active, span.btn.ellipses:active {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
+}
+/* line 70, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.ellipses.disabled, input.btn.ellipses.disabled, span.btn.ellipses.disabled {
+  background-color: #e5e5e5;
+  background-image: -moz-linear-gradient(white, #e5e5e5);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, white), color-stop(1, #e5e5e5));
+  background-image: -webkit-linear-gradient(white, #e5e5e5);
+  background-image: -o-linear-gradient(white, #e5e5e5);
+  background-image: -ms-linear-gradient(top, white, #e5e5e5);
+  background-image: linear-gradient(top, white, #e5e5e5);
+  border: 1px solid #e2e2e2;
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #d2d2d2;
+  pointer-events: none;
+}
+/* line 78, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.ellipses.reload, input.btn.ellipses.reload, span.btn.ellipses.reload {
+  vertical-align: middle;
+  background-position: 2px 2px;
+  background-size: 10px 10px;
+  background-image: url(/assets/btnReload-50b2a4895d9cf6a57c154c27c3c6075a75f07331acdbd6f23837ae95ee5823f8.png);
+  background-repeat: no-repeat;
+}
+/* line 102, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/buttons.scss */
+a.btn.ellipses:after, input.btn.ellipses:after, span.btn.ellipses:after {
+  content: "● ● ●";
+}

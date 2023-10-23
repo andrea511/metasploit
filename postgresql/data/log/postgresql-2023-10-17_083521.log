@@ -1,0 +1,21 @@
+2023-10-17 08:35:21.819 +07 [2280] LOG:  database system was shut down at 2023-10-17 08:34:37 +07
+2023-10-17 08:35:21.875 +07 [19356] LOG:  database system is ready to accept connections
+2023-10-17 08:37:16.384 +07 [26180] FATAL:  password authentication failed for user "SYSTEM"
+2023-10-17 08:37:16.384 +07 [26180] DETAIL:  Role "SYSTEM" does not exist.
+	Connection matched pg_hba.conf line 90: "host    all             all             ::1/128                 md5"
+2023-10-17 08:44:46.099 +07 [7984] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:44:46.120 +07 [22896] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:44:47.022 +07 [26720] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:44:47.022 +07 [14668] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:45:05.314 +07 [19356] LOG:  received fast shutdown request
+2023-10-17 08:45:05.314 +07 [19604] ERROR:  canceling statement due to user request
+2023-10-17 08:45:05.317 +07 [19356] LOG:  aborting any active transactions
+2023-10-17 08:45:05.317 +07 [23928] FATAL:  terminating connection due to administrator command
+2023-10-17 08:45:05.317 +07 [16560] FATAL:  terminating connection due to administrator command
+2023-10-17 08:45:05.320 +07 [19356] LOG:  background worker "logical replication launcher" (PID 19604) exited with exit code 1
+2023-10-17 08:45:05.328 +07 [19868] LOG:  shutting down
+2023-10-17 08:45:05.356 +07 [19356] LOG:  database system is shut down

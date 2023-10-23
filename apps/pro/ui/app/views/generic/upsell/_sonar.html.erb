@@ -1,0 +1,37 @@
+<div class='header'>
+  <h2>Get Free Upgrade to Try Sonar</h2>
+
+  <p>
+    Project Sonar is an initiative by Rapid7 to actively analyze public networks, archive its findings,
+    and make its data available to the security community.
+  </p>
+
+  <p>You can use the data from Project Sonar to: </p>
+
+  <ul>
+    <li>Discover assets without scanning.</li>
+    <li>Gain an outsider's perspective of your environment.</li>
+    <li>Identify public facing assets that belong to your organization.</li>
+    <li>Expand your view of your exposure surface area.</li>
+    <li>Validate your assessment scope.</li>
+  </ul>
+
+  <p>Upgrade to Metasploit Pro to access Project Sonar today!</p>
+
+</div>
+
+<div class="right-content">
+  <div class="table-cell-container" style="width:400px;">
+    <div class="table-cell" style="height:300px;">
+      <%= image_tag image_path('upsell/sonar.jpg') %>
+    </div>
+  </div>
+</div>
+
+<p>
+  <a href="<%= get_upgrade_url %>" class="mainBtn downloadBtn" title="Download"><em></em>GET YOUR FREE UPGRADE TRIAL NOW</a>
+</p>
+
+<p>
+  <span><%= link_to('Learn about', get_learn_url) %></span> other great Metasploit <%= License.get.community?  ? 'Express' : 'Pro' %> features
+</p>

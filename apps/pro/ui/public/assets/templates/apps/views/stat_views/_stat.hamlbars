@@ -1,0 +1,22 @@
+%div.generic-stat-wrapper{ :clickable => '{{clickable}}' }
+  {{#if_eq type compare="percentage"}}
+  .pie-chart-wrapper.load-table{ :name => '{{name}}', :clickable => '{{clickable}}', :label => '{{label}}' }
+    .pie-chart{ :name => '{{num}}', :total => '{{total}}' }
+    %label.stat.run-stat{ :name => '{{num}}', :total => '{{total}}' }
+    %label.desc
+      {{#if_present label}}
+      {{label}}
+      {{else}}
+      {{humanize name}}
+      {{/if_present}}
+  {{else}}
+  .big-stat.center.load-table{ :name => '{{name}}', :clickable => '{{clickable}}', :label => '{{label}}' }
+    %span.run-stat.stat{ :name => '{{num}}', :format => '{{format}}' }
+    %label
+      {{#if_present label}}
+      %span {{label}}
+      {{else}}
+      %span {{humanize name}}
+      {{/if_present}}
+  {{/if_eq}}
+  .lil-nubster

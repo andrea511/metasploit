@@ -1,0 +1,21 @@
+<% include_javascript('reports/new') %>
+<% include_stylesheet('reports') %>
+
+<% title 'Create a new report' %>
+<% breadcrumb workspace_link, reports_link, link_to('New Report', '#') %>
+
+<%# These links are here to provide the workspace-scoped path in contexts that
+ lack dynamic path helpers: -%>
+<a href='<%= form_for_type_workspace_reports_path(@workspace) %>' id='form-for-report-path' class='hidden'></a>
+<a href='<%= workspace_reports_path(@workspace) %>' id='report-redirect-path' class='hidden'></a>
+
+<% if License.get.supports_reports? %>
+    <div id='report_container'>
+      <div class='tab-loading' style='display:none;'></div>
+        <%= render :partial => 'reports/report_wrapper_form' %>
+    </div>
+
+    <%= render :partial => 'reports/report_footer' %>
+<% end %>
+
+<%= add_disable_overlay([:pro, :express]) if (!@custom && !@licensed) || (@custom && !@custom_licensed) %>

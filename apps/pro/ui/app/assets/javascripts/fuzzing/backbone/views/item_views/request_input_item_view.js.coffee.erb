@@ -1,0 +1,37 @@
+define [
+  'jquery'
+  '<%= javascript_path('templates/fuzzing/item_views/request_input_item_view') %>',
+  '<%= javascript_path('fuzzing/backbone/collections/request_group_collection') %>',
+  '<%= javascript_path('fuzzing/backbone/models/request_group_model') %>',
+  '<%= javascript_path('fuzzing/backbone/event_aggregator') %>'
+] , ($,Template, RequestGroupCollection, RequestGroupModel, EventAggregator) ->
+  class RequestInputView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['fuzzing/item_views/request_input_item_view']
+
+    triggers:
+      'click .row button' : 'iframe:request'
+
+    initialize: ->
+      @.on('iframe:request',@.iframeRequest)
+      @request_group_collection = RequestGroupCollection
+
+    iframeRequest: =>
+      proxy_url = $('textarea',@el).val()
+
+      @request_group = new RequestGroupModel(proxy_url: proxy_url)
+
+      #Stubbed out Workspace ID and Fuzzing ID
+      attrs =
+        workspace_id : 1
+        fuzzing_id : 3
+
+      @request_group.save attrs,
+        success: (model,response,options) =>
+          @_save_collection()
+        error: (model,response,options) =>
+          console.log e
+
+
+    _save_collection: =>
+      @request_group_collection.add(@request_group)
+      EventAggregator.trigger('iframe:update:url')

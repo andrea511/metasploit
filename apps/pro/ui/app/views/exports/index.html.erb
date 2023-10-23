@@ -1,0 +1,9 @@
+<% title "Exports" %>
+<% breadcrumb workspace_link, exports_link %>
+
+<% include_view_javascript -%>
+
+<%= form_tag do %>
+  <%= render :partial => "export_nav_bar" %>
+  <%= render :partial => "saved_exports" %>
+<% end %>

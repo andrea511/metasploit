@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="details" language="groovy" pageWidth="563" pageHeight="752" columnWidth="563" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ae081a83-0358-41f3-bb9e-ba8463bba76a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<subDataset name="HostsSansSvcsLogins" uuid="a1fd42f6-b389-4877-9525-cb1d0bc25036">
+		<parameter name="app_run_id" class="java.lang.Integer"/>
+		<parameter name="host_address_clause" class="java.lang.String">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[WITH unfiltered_results AS
+(SELECT
+    hosts.id, host(hosts.address) address, hosts.name, hosts.created_at,
+    COALESCE(hosts.os_name,'Unknown') os_name,
+    COALESCE(hosts.os_flavor,'') os_flavor,
+    (
+	    select count(s.*) from
+	    services s
+	    inner join task_services ts on (s.id = ts.service_id)
+	    inner join tasks t on (ts.task_id = t.id)
+	    inner join app_runs ar on (t.app_run_id = ar.id)
+	    where s.host_id = hosts.id
+	    and ar.id = $P{app_run_id}
+    ) service_count,
+    (
+      select count(distinct clt.login_id)
+      from metasploit_credential_logins logins
+      inner join credential_logins_tasks clt ON (logins.id = clt.login_id)
+      inner join tasks ON (clt.task_id = tasks.id)
+      inner join services ON (logins.service_id = services.id)
+      inner join hosts inner_hosts ON (services.host_id = inner_hosts.id)
+      where inner_hosts.id = hosts.id
+      and tasks.app_run_id = $P{app_run_id}
+    ) as login_count
+	FROM hosts
+	inner join task_hosts th on (hosts.id = th.host_id)
+	inner join tasks t on (th.task_id = t.id)
+	inner join app_runs ar on (t.app_run_id = ar.id)
+WHERE
+	ar.id = $P{app_run_id}
+	and $P!{host_address_clause}
+GROUP BY
+	hosts.id
+ORDER BY
+	login_count desc, service_count desc, hosts.os_name ASC
+)
+
+select * from unfiltered_results
+where (service_count = 0 AND login_count = 0)
+order by created_at desc]]>
+		</queryString>
+		<field name="address" class="java.lang.String"/>
+		<field name="name" class="java.lang.String"/>
+		<field name="created_at" class="java.sql.Timestamp"/>
+		<field name="os_name" class="java.lang.String"/>
+		<field name="os_flavor" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_address_clause" class="java.lang.String">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subreport_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer"/>
+	<parameter name="mask_credentials" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[WITH unfiltered_results AS
+(SELECT
+    hosts.id, host(hosts.address) address, hosts.name, hosts.created_at,
+    COALESCE(hosts.os_name,'Unknown') os_name,
+    COALESCE(hosts.os_flavor,'') os_flavor,
+    (
+	    select count(s.*) from
+	    services s
+	    inner join task_services ts on (s.id = ts.service_id)
+	    inner join tasks t on (ts.task_id = t.id)
+	    inner join app_runs ar on (t.app_run_id = ar.id)
+	    where s.host_id = hosts.id
+	    and ar.id = $P{app_run_id}
+    ) service_count,
+    (
+      select count(distinct clt.login_id)
+      from metasploit_credential_logins logins
+      inner join credential_logins_tasks clt ON (logins.id = clt.login_id)
+      inner join tasks ON (clt.task_id = tasks.id)
+      inner join services ON (logins.service_id = services.id)
+      inner join hosts inner_hosts ON (services.host_id = inner_hosts.id)
+      where inner_hosts.id = hosts.id
+      and tasks.app_run_id = $P{app_run_id}
+    ) as login_count
+	FROM hosts
+	inner join task_hosts th on (hosts.id = th.host_id)
+	inner join tasks t on (th.task_id = t.id)
+	inner join app_runs ar on (t.app_run_id = ar.id)
+WHERE
+	ar.id = $P{app_run_id}
+	and $P!{host_address_clause}
+GROUP BY
+	hosts.id
+ORDER BY
+	login_count desc, service_count desc, hosts.os_name ASC
+)
+
+select
+(
+  select count(*) from unfiltered_results
+  where (service_count = 0 AND login_count = 0)
+) as other_host_count,
+unfiltered_results.*
+from unfiltered_results
+where (service_count > 0 OR login_count > 0)]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="os_name" class="java.lang.String"/>
+	<field name="os_flavor" class="java.lang.String"/>
+	<field name="service_count" class="java.lang.Long"/>
+	<field name="login_count" class="java.lang.Long"/>
+	<field name="other_host_count" class="java.lang.Integer"/>
+	<detail>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4a39edf8-4503-4ee9-8ae6-1801a5b10d78" style="section_header_2" x="0" y="4" width="352" height="25"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[(
+    ($F{name} == $F{address} || !$F{name}) ?
+    $F{address} :
+    ($F{name} + ", " + $F{address})
+) +
+(
+    (!$F{os_name}) ?
+    "" :
+    " - " + $F{os_name} + ($F{os_flavor} ? (" " + $F{os_flavor}) : "")
+)]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="4a39edf8-4503-4ee9-8ae6-1801a5b10d78" style="table_text_indented" x="352" y="4" width="211" height="25"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Added: " + new SimpleDateFormat("yyyy/MM/dd h:mma").format($F{created_at})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="65438213-2b26-4b25-a841-4de69ab1bba7" style="separator_line_darker" x="0" y="29" width="563" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="2b498c91-6334-4fca-a360-53ad0f5dfa86" style="table_text_indented" x="0" y="30" width="88" height="20"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["Services:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a7e5f6ce-5dcb-434c-9917-134844f25775" style="table_text_indented" x="88" y="30" width="437" height="20">
+					<printWhenExpression><![CDATA[$F{service_count} == 0]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["None found"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="60">
+			<printWhenExpression><![CDATA[$F{service_count} > 0]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="68f289a7-4ce8-4eed-b081-e8e315b68eba" x="25" y="0" width="538" height="52"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "services_details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="85">
+			<printWhenExpression><![CDATA[$F{login_count} > 0]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="2b498c91-6334-4fca-a360-53ad0f5dfa86" style="table_text_indented" x="0" y="0" width="364" height="20"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["Basic Authentication credentials:"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="e6fd34b5-4834-4c37-83d4-e843e7fa1d50" x="25" y="20" width="538" height="60"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_id">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mask_credentials">
+					<subreportParameterExpression><![CDATA[$P{mask_credentials}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "creds_details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="90">
+			<printWhenExpression><![CDATA[$F{other_host_count} > 0]]></printWhenExpression>
+			<break>
+				<reportElement uuid="f813e755-de16-4db4-885c-c97ff3229af1" x="0" y="1" width="563" height="1"/>
+			</break>
+			<componentElement>
+				<reportElement uuid="a14fa628-7060-40f2-a73c-ecb1f4ed08b9" key="table" x="25" y="37" width="451" height="52"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="HostsSansSvcsLogins" uuid="6d74e138-1145-4072-930f-00db16e5d2d0">
+						<datasetParameter name="app_run_id">
+							<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="host_address_clause">
+							<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="143" uuid="7de6f4f4-f920-486f-896b-737fbd0b48af">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="174bddf4-ca0f-4550-80da-adb50c8eaa35" style="section_header_3" x="0" y="0" width="143" height="25"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Address]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" x="0" y="1" width="143" height="24"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="143" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="139" uuid="69dca396-6ad1-4b94-a7c7-e91fadfc2997">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="d6212a3c-0e8c-40f2-a81b-c9526d4ab0e9" style="section_header_3" x="0" y="0" width="139" height="25"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<text><![CDATA[Added]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" x="0" y="1" width="139" height="24"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd h:mma").format($F{created_at})]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="139" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="169" uuid="4fb12251-fb0f-4f5e-93ab-c207841d4b2e">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="6fb0fd99-40e7-465f-93af-148f4fe25207" style="section_header_3" x="0" y="0" width="169" height="25" forecolor="#000000"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[OS]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="25" rowSpan="1">
+							<line>
+								<reportElement uuid="de11f51c-c798-4a74-b913-8c1bdf917191" x="0" y="0" width="169" height="1" forecolor="#CCCCCC">
+									<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() != 1]]></printWhenExpression>
+								</reportElement>
+							</line>
+							<textField>
+								<reportElement uuid="6de21c92-2704-4454-989f-6bc69471bfbe" x="0" y="1" width="169" height="24"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{os_name} + " " + $F{os_flavor}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="d70fce7a-4ef1-4b8b-a288-4d22658c2955" style="section_header_1_no_bg" x="0" y="7" width="563" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Other hosts]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

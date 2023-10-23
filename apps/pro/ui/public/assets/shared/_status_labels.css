@@ -1,0 +1,32 @@
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_status_labels.scss */
+label.status {
+  display: inline-block;
+  color: #fff;
+  border-radius: 5px;
+  padding: 2px 6px;
+  background: #999;
+}
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_status_labels.scss */
+label.status.finished, label.status.completed {
+  background: #666;
+}
+/* line 12, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_status_labels.scss */
+label.status.unconfigured {
+  background: #cacaca;
+}
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_status_labels.scss */
+label.status.launchable, label.status.ready {
+  background: #ff9900;
+}
+/* line 18, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_status_labels.scss */
+label.status.running, label.status.importing, label.status.scanning, label.status.building_matches, label.status.collecting_evidence, label.status.exploiting, label.status.cleaning_up, label.status.reporting {
+  background: #990000;
+}
+/* line 22, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_status_labels.scss */
+label.status.preparing, label.status.paused {
+  background: #ff6200;
+}
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_status_labels.scss */
+label.status.interrupted, label.status.cancelled, label.status.failed, label.status.aborted, label.status.stopped {
+  background: #550000;
+}

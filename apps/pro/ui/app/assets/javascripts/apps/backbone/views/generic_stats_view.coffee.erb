@@ -1,0 +1,144 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/apps/views/generic_stats_view") %>',
+  '<%= javascript_path("templates/apps/views/stat_views/_stat") %>',
+  '<%= javascript_path("shared/lib/pie_chart") %>'
+], ($, Template, StatTemplate, PieChart) ->
+
+  class GenericStatsView extends Backbone.Marionette.ItemView
+    @POLL_DELAY = 3000
+
+    _polling: false
+    _rendered: false
+    _selected: false
+    _showHeader: false
+
+    template: HandlebarsTemplates['apps/views/generic_stats_view']
+
+    initialize: (args) =>
+      presenter = @model.get('tasks')?[0]?.presenter
+
+
+      if presenter?
+        initProRequire ["apps/tasks/findings/#{presenter}"], (Findings) =>
+          stats = Findings.stats
+          _.each stats, (v, k) -> v.name ?= v.title
+          @model.get('app').stats = stats
+          @model.bind('change', @update)
+          @_showHeader = args.showHeader
+          @render()
+          @update()
+      else
+        @model.bind('change', @update)
+
+        @_showHeader = args.showHeader
+
+    events:
+      'click .generic-stat-wrapper[clickable="true"]': 'setSelectedStat'
+
+    setSelectedStat: (e) =>
+      $('.generic-stat-wrapper', @el).removeClass('selected')
+      $(e.currentTarget).addClass('selected')
+
+    # Starts polling. If already polling, noop.
+    poll: =>
+      return if @_polling
+      @_polling = true
+      fetchMe = =>
+        return unless @_polling
+        # stop polling if AppRun is finished.
+        if (@model.get('status') || '').toLowerCase() == 'finished'
+          return @stopPoll()
+        else
+          @model.fetch(success: =>
+            @_pollTimeout = setTimeout((=> fetchMe()), GenericStatsView.POLL_DELAY)
+          )
+      fetchMe()
+
+    stopPoll: =>
+      @_polling = false
+      clearTimeout(@_pollTimeout)
+
+    onClose: => @stopPoll()
+
+    onRender: =>
+      @poll() unless @_rendered
+      @_rendered = true
+      @update()
+
+    setSelected: (@_selected) => @update()
+
+    serializeData: =>
+      _.extend(super, showHeader: @_showHeader)
+
+    # performs dom manipulation and calls to PieChart instances,
+    # can be called independently of @render() for better perf.
+    update: =>
+      # perform some black magic based on the dom
+      statData = @model.runStatHash()
+      @_selected = $(@_canvas).hasClass('selected')
+      @_updateStats(statData)
+      @_updatePies(statData)
+      @_updateWidths(statData)
+
+    _updateWidths: (statData) =>
+      $genericStats = $('.generic-stat-wrapper', @el)
+      width = 100 / ($genericStats.length || 1)
+      $genericStats.css(width: "#{width}%")
+
+    # updates the stat labels
+    _updateStats: (statData) =>
+      _.each $('.run-stat', @el), (el) =>
+        data = statData[$(el).attr('name')] || '0'
+        total = statData[$(el).attr('total')]
+        format = $(el).attr('format')
+        if data? and total?
+          $(el).text("#{data}/#{total}")
+        else if data?
+          if format? and format.length > 0
+            # add custom formats to this if statement
+            if format == 'bytes'
+              $(el).text helpers.formatBytes(data).toUpperCase().replace(/\.0/, '')
+              $(el).attr('title', "#{data} bytes")
+          else
+            # add 1.xk shortener :)
+            origData = data
+            if "#{data}".match(/^\d+$/) and parseInt(data) > 1000
+              num = (parseInt(data)/1000).toFixed(1)
+              data = "#{num}k".replace(/\.0/, '')
+            data ||= '0'
+            $(el).attr('title', origData)
+            $(el).text(data)
+
+    # updates the PieChart instances
+    _updatePies: (statData) =>
+      @_pies = @_buildPies(80) if not @_pies
+      # update PieCharts
+      _.each @_pies, (pie, statName) ->
+        pie.chart.setText(statData[statName] || '0', shouldUpdate: false)
+        pie.chart.setPercentage(statData[pie.stat]/statData[pie.total]*100)
+        pie.chart.update()
+
+    _buildPies: (width) =>
+      pies = {}
+      _.each $('.pie-chart', @el), (pieDiv) =>
+        statName = $(pieDiv).attr('name')
+        totalName = $(pieDiv).attr('total')
+        $canvas = $('<canvas />').attr(width: "#{width}px", height: "#{width+10}px")
+        $canvas.prependTo(pieDiv)
+        pies[statName] = {
+          stat: statName
+          total: totalName
+          chart: new PieChart(
+            canvas: $canvas[0]
+            innerFill: '#fff'
+            innerFillHover: '#fff'
+            outerFill: '#c5c5c5'
+            outerFillHover: '#c5c5c5'
+            percentFill: '#ea5709'
+            percentFillHover: '#ea5709'
+            textFill: '#2b2b2b'
+            textFillHover: '#2b2b2b'
+          )
+        }
+      pies

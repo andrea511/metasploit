@@ -1,0 +1,253 @@
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag, div.tags .tag-close, div.tags-wrap .tag, div.tags-wrap .tag-close {
+  font-weight: normal;
+  color: #666;
+  background: #d9d9d9;
+  font-size: 11px;
+  padding: 0px 5px;
+  display: inline-block;
+  height: 18px;
+  vertical-align: top;
+}
+/* line 18, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag a, div.tags .tag-close a, div.tags-wrap .tag a, div.tags-wrap .tag-close a {
+  color: #444;
+}
+/* line 22, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag, div.tags-wrap .tag {
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 0;
+  /* Gecko */
+  -webkit-border-top-right-radius: 0;
+  /* Webkit */
+  -khtml-border-top-right-radius: 0;
+  /* Konqueror */
+  border-top-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 0;
+  /* Konqueror */
+  border-bottom-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 0;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 0;
+  /* Konqueror */
+  border-bottom-left-radius: 0;
+  /* CSS3 */
+  position: relative;
+  margin-left: 10px;
+  padding-left: 8px;
+}
+/* line 27, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag:before, div.tags-wrap .tag:before {
+  width: 0;
+  height: 0;
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 0;
+  bottom: 1px;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-right: 9px solid #d9d9d9;
+}
+/* line 39, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag:after, div.tags-wrap .tag:after {
+  position: absolute;
+  content: '\2022';
+  top: 0;
+  left: -3px;
+  bottom: 0;
+  color: #fff;
+}
+/* line 47, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag:hover, div.tags-wrap .tag:hover {
+  background-color: #d9d9d9;
+  background-image: -moz-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e1e1e1), color-stop(1, #d9d9d9));
+  background-image: -webkit-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -o-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -ms-linear-gradient(top, #e1e1e1, #d9d9d9);
+  background-image: linear-gradient(top, #e1e1e1, #d9d9d9);
+}
+/* line 50, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag > a, div.tags .tag > span.name, div.tags-wrap .tag > a, div.tags-wrap .tag > span.name {
+  display: inline-block;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* line 55, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag > a:hover, div.tags .tag > span.name:hover, div.tags-wrap .tag > a:hover, div.tags-wrap .tag > span.name:hover {
+  max-width: none;
+  text-decoration: underline;
+}
+/* line 62, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag-close, div.tags-wrap .tag-close {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #b3b3b3;
+  border-left: 1px solid #cccccc;
+}
+/* line 67, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag-close:hover, div.tags-wrap .tag-close:hover {
+  text-decoration: none;
+  background-color: #d9d9d9;
+  background-image: -moz-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e1e1e1), color-stop(1, #d9d9d9));
+  background-image: -webkit-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -o-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -ms-linear-gradient(top, #e1e1e1, #d9d9d9);
+  background-image: linear-gradient(top, #e1e1e1, #d9d9d9);
+}
+/* line 71, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag-close:active, div.tags-wrap .tag-close:active {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+/* line 81, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag, div.tags-wrap .tag a, div.tags-wrap .tag-close {
+  background: #333;
+  color: #fff;
+}
+/* line 85, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag {
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 5px;
+  /* Gecko */
+  -webkit-border-top-right-radius: 5px;
+  /* Webkit */
+  -khtml-border-top-right-radius: 5px;
+  /* Konqueror */
+  border-top-right-radius: 5px;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 5px;
+  /* Konqueror */
+  border-bottom-right-radius: 5px;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 0;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 0;
+  /* Konqueror */
+  border-bottom-left-radius: 0;
+  /* CSS3 */
+  padding-right: 8px;
+}
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag:before {
+  border-right: 9px solid #333;
+}
+/* line 91, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag > a {
+  max-width: 80px;
+}
+/* line 94, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag:hover {
+  background: #333;
+  max-width: 80px;
+}
+
+/* line 30, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region {
+  position: relative;
+}
+/* line 33, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .nub-spacer {
+  z-index: 10;
+  position: absolute;
+  height: 18px;
+  background: red;
+  width: 100%;
+  left: 0px;
+  top: -31px;
+  opacity: 0;
+}
+/* line 45, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region > div {
+  width: 164px;
+  left: -59px;
+  display: none;
+  position: absolute;
+  border: 1px solid grey;
+  padding: 4px;
+  background: #ffffff;
+}
+/* line 55, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags {
+  z-index: 10;
+  margin-top: 1px;
+  text-align: center;
+  height: inherit;
+  top: 10px;
+}
+/* line 4, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags:after {
+  position: absolute;
+  z-index: 2;
+  border-style: solid;
+  border-width: 0 14px 14px 14px;
+  border-color: transparent transparent grey transparent;
+  content: '';
+  top: -14px;
+  right: 73px;
+  margin-left: -7px;
+}
+/* line 16, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags:before {
+  position: absolute;
+  z-index: 3;
+  border-style: solid;
+  border-width: 0 12px 12px 12px;
+  border-color: transparent transparent #fff transparent;
+  content: '';
+  top: -12px;
+  right: 75px;
+  margin-left: -6px;
+}
+/* line 63, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags > div {
+  padding-right: 0px;
+}
+/* line 68, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags .no-whitespace {
+  font-size: 0;
+}
+/* line 72, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags .tag, .tag-hover-region .tags .tag-close {
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+/* line 80, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region span.name:hover, .tag-hover-region span.name {
+  white-space: nowrap;
+  max-width: 100px !important;
+}
+/* line 85, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .row.add-tags {
+  text-align: center;
+  margin-top: 4px;
+}

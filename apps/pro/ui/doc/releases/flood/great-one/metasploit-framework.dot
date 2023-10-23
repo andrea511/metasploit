@@ -1,0 +1,239 @@
+digraph great_one {
+  graph [
+    concentrate = true
+    rankdir = "LR"
+  ]
+  node [
+    shape = "record"
+  ]
+
+  subgraph cluster_great_one {
+    label = "GREAT #1"
+
+    subgraph cluster_great_one_metasploit_framework {
+      label = "metasploit-framework"
+
+      "Metasploit::Framework" [
+        label = "<title> Metasploit::Framework | " +
+                "<setup> Metasploit::Framework.setup | " +
+                "<configuration> Metasploit::Framework::Configuration::*"
+      ]
+
+      "Metasploit::Framework::Creation"
+      "Metasploit::Framework::Creation::Service"
+      "Metasploit::Framework::Deprecation"
+      "Metasploit::Framework::Error"
+
+      "Metasploit::Framework::Session::*" [
+        label = "Metasploit::Framework::Session::* | " +
+                "<creation> Metasploit::Framework::Session::Creation | " +
+                "<open_creation> Metasploit::Framework::Session::Open::Creation | " +
+                "<synchronization_host> Metasploit::Framework::Session::Synchronization::Host"
+      ]
+
+      "Exploit and Vuln attempt recording" [
+        label = "<title> Exploit and Vuln attempt recording | " +
+                "<attempt> Metasploit::Framework::Attempt::* "
+      ]
+
+      "Intermodule compatibility" [
+        label = "<title> Intermodule compatibility | " +
+                "<compatibility_payload> Metasploit::Framework::Compatibility::Payload | " +
+                "<module_instance_payload> Metasploit::Framework::Module::Instance::Payload::* | " +
+                "<module_target_compatibility_payload> Metasploit::Framework::Module::Target::Compatibility::* "
+      ]
+
+      "Improved error reporting" [
+        label = "Improved error reporting | " +
+                "Metasploit::Framework::Module::Class::Logging | " +
+                "Metasploit::Framework::Module::Instance::Logging | " +
+                "Metasploit::Framework::Scoped::Logging"
+      ]
+
+      "Msf::Framework cleanup" [
+        label = "Msf::Framework cleanup | " +
+                "Msf::Logging"
+      ]
+
+      "Msf::Config deglobalization" [
+        label = "<title> Msf::Config deglobalization | " +
+                "<framework_pathnames> Metasploit::Framework::Framework::Pathnames | " +
+                "<local_file> Metasploit::Framework::LocalFile"
+      ]
+
+      subgraph cluster_great_one_metasploit_framework_msf_module {
+        label = "Msf::Module break-up"
+
+        "Metasploit::Framework::Module::Instance::Hosts"
+
+        "Msf::Module::*"
+
+        "Metasploit::Framework::Module::Ancestor::Handler" [
+          label = "handler DSL | " +
+                  "Metasploit::Framework::Module::Ancestor::Handler | " +
+                  "Metasploit::Framework::Module::Ancestor::Payload::Stage::Handler | " +
+                  "Metasploit::Framework::Module::Class::Handler"
+        ]
+      }
+
+      "Payload cache" [
+        label = "<title> Payload caching (to replace Msf::PayloadSet blob cache) | " +
+                "<payload_assemble> Metasploit::Framework::Payload::Assemble | " +
+                "<payload_assembled> Metasploit::Framework::Payload::Assembled"
+      ]
+
+      subgraph cluster_great_one_metasploit_framework_database {
+        label = "database"
+
+        "Metasploit::Framework::DatabaseConnection"
+
+        "transactions" [
+          label = "transactions | " +
+                  "Metasploit::Framework::Transaction | " +
+                  "Metasploit::Framework::Transactional"
+        ]
+
+        "Metasploit::Framework::Synchronization" [
+          label = "Synchronization | " +
+                  "<base> Metasploit::Framework::Synchronization::Base | " +
+                  "<destination> Metasploit::Framework::Synchronization::Destination | " +
+                  "<vuln> Metasploit::Framework::Vuln::Synchronization"
+        ]
+
+        "Msf::DBManager reorganization" [
+          label = "Msf::DBManager*"
+        ]
+      }
+
+      subgraph cluster_great_one_metasploit_framework_cache {
+        label = "Cache"
+
+        "Metapsloit::Framework::Module::Cache"
+        "Metasploit::Framework::Module::Path"
+        "Metasploit::Framework::Module::PathSet"
+        "Metasploit::Framework::Statistics"
+
+        "In-memory" [
+          label = "In-memory | " +
+                  "Metasploit::Framework::Module::PathSet | " +
+                  "<platform> Metasploit::Framework::Platform"
+        ]
+
+        subgraph cluster_great_one_metasploit_framework_load {
+          label = "Module loading"
+
+          "Metasploit::Framework::Module::Path::Load"
+          "Metasploit::Framework::ProxiedValidation"
+          "Metasploit::Framework::ResurrectingAttribute"
+
+          "Metasploit::Framework::Module::Ancestor loading (GREAT #1)" [
+            label = "<title> Metasploit::Framework::Module::Ancestor loading | " +
+                    "<module_ancestor_load> Metasploit::Framework::Module::Ancestor::Load | " +
+                    "Metasploit::Framework::Module::Ancestor::Load::NamespaceModule | " +
+                    "Metasploit::Framework::Module::Ancestor::MetasploitModule | " +
+                    "<module_ancestor_metasploit_module_validation_proxy> Metasploit::Framework::Module::Ancestor::MetasploitModule::ValidationProxy | " +
+                    "Metasploit::Framework::Module::Ancestor::Namespace | " +
+                    "<module_ancestor_namespace_validation_proxy> Metasploit::Framework::Module::Ancestor::Namespace::ValidationProxy"
+          ]
+
+          "Metasploit::Framework::Module::Class loading" [
+            label = "<title> Metasploit::Framework::Module::Class loading | " +
+                    "<module_class_load> Metasploit::Framework::Module::Class::Load::* | " +
+                    "Metasploit::Framework::Module::Class::MetasploitClass"
+          ]
+
+          "Metasploit::Framework::Module::Class loading":module_class_load -> "Metasploit::Framework":setup [
+            label = "subscribes to notifications to log load times"
+          ]
+        }
+
+        subgraph cluster_great_one_metasploit_framework_cache_synchronization {
+          label = "Synchronization"
+
+          "Metasploit::Framework::Synchronizes"
+
+          "Metasploit::Framework::Module::Ancestor synchronization" [
+            label = "Metasploit::Framework::Module::Ancestor synchronization | " +
+                    "<metasploit_module_cache> Metasploit::Framework::Module::Ancestor::MetasploitModule::Cache"
+          ]
+
+          "Metasploit::Framework::Module::Instance synchronization" [
+            label = "Metasploit::Framework::Module::Instance::Synchronization | " +
+                    "Metasploit::Framework::Module::Instance::MetasploitInstance* | " +
+                    "<actions> Metapsloit::Framework::Module::Instance::Synchronization::Actions | " +
+                    "<base> Metasploit::Framework::Module::Instance::Synchronization::Base | " +
+                    "<module_architectures> Metasploit::Framework::Module::Instance::Synchronization::ModuleArchitectures | " +
+                    "<module_authors> Metasploit::Framework::Module::Instance::Synchronization::ModuleAuthors | " +
+                    "<module_platforms> Metasploit::Framework::Module::Instance::Synchronization::ModulePlatforms | " +
+                    "<module_references> Metasploit::Framework::Module::Instance::Synchronization::ModuleReferences | " +
+                    "<stance> Metasploit::Framework::Module::Instance::Synchronization::Stance | " +
+                    "<targets> Metasploit::Framework::Module::Instance::Synchronization::Targets | " +
+                    "<target_architectures> Metasploit::Framework::Module::Target::Synchronization::TargetArchitectures | " +
+                    "<target_platforms> Metasploit::Framework::Module::Target::Synchronization::TargetPlatforms | " +
+                    "Metasploit::Framework::Scoped::Synchronization::*"
+          ]
+
+          "Metasploit::Framework::Synchronization::Base"
+          "Metasploit::Framework::Synchronization::Destination"
+        }
+      }
+
+      "Msf::Module instantiation" [
+         label = "<title> Msf::Module instantiation | " +
+                 "{ <module_instance_creator_type> Metasploit::Framework::Module::Instance::Creator::Type | " +
+                 "  <module_instance_creator_universal> Metasploit::Framework::Module::Instance::Creator::Universal } | " +
+                 "<module_instance_enumerator> Metasploit::Framework::Module:Instance::Enumerator"
+      ]
+
+      "Thread-safe Thread Manager" [
+        label = "<title> Thread-safe Thread Manager | " +
+                "<thread> Metasploit::Framework::Thread | " +
+                "<thread_manager> Metasploit::Framework::Thread::Manager | " +
+                "Metasploit::Framework::Thread::Manager::AlreadyRegistered"
+      ]
+
+      subgraph cluster_great_one_metasploit_framework_ui {
+        label = "UI"
+
+        subgraph cluster_great_one_metasploit_framework_ui_command {
+          label = "Commands"
+
+          "Metasploit::Framework::UI::Command::*"
+          "Metasploit::Framework::UI::CommandLineInterface::*"
+
+          "Console" [
+            label = "<title> Console | " +
+                    "FangedValidator | " +
+                    "Metasploit::Framework::UI::Console::Command::Check* | " +
+                    "Metasploit::Framework::UI::Console::Command::Search* | " +
+                    "Metasploit::Framework::UI::Console::Command::Use* | " +
+                    "Metasploit::Framework::UI::Console::Command::* | " +
+                    "Metasploit::Framework::UI::Driver | " +
+                    "Metasploit::Framework::UI::Text::* | " +
+                    "Msf::Ui::Console::CommandDispatcher::* | " +
+                    "Msf::Ui::Console::Driver::* | " +
+                    "reload all command | " +
+                    "Metasploit::Framework::NullProgressBar"
+          ]
+
+          "Metasploit::Framework::UI::Meterpreter"
+        }
+      }
+
+      "spec_helper break-up" [
+        label = "spec_helper break-up | " +
+                "Metasploit::Framework::Spec*"
+      ]
+
+      "Metasploit::Framework::ValidationProxy"
+
+      /*
+       *  Edges
+       */
+
+      "Metasploit::Framework::Module::Ancestor::Handler" -> "Metasploit::Framework::Module::Ancestor synchronization":metasploit_module_cache [
+        label = "Uses DSL registered handler when writing to cache"
+      ]
+    }
+  }
+}

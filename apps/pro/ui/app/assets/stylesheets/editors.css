@@ -1,0 +1,8 @@
+/*
+ * CSS file that includes necessary styles for Codemirror 
+ * and jquery.wysiwyg editors.
+ *
+ *= require codemirror2/codemirror2
+ *= require codemirror2/elegant
+ *= require jquery.wysiwyg
+ */

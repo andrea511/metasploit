@@ -1,0 +1,205 @@
+[10/16/2023 16:09:12] [d(0)] core: Created user based module store
+[10/16/2023 16:09:17] [e(0)] core: Dependency for windows/x64/encrypted_shell_reverse_tcp is not supported
+[10/16/2023 16:09:17] [e(0)] core: Dependency for windows/encrypted_shell_reverse_tcp is not supported
+[10/16/2023 16:09:21] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:22] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:24] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:25] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:26] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:28] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:29] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:30] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:32] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:33] [e(0)] core: LoadError cannot load such file -- pty
+[10/16/2023 16:09:34] [e(0)] core: Dependency for windows/x64/encrypted_reverse_tcp is not supported
+[10/16/2023 16:09:36] [e(0)] core: Dependency for windows/encrypted_reverse_tcp is not supported
+[10/16/2023 16:09:42] [d(0)] core: Already established connection to postgresql, so reusing active connection.
+[10/16/2023 16:11:53] [e(0)] core: C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb failed to load - Msf::Modules::Error Failed to load module (dos/smb/smb_loris from C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb) due to invalid module class name (must be MetasploitModule)
+[10/16/2023 16:12:28] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 07:45:48] [e(0)] core: [BG Daemon] Sonar License: Faraday::ConnectionFailed Failed to open TCP connection to sonar.labs.rapid7.com:443 (getaddrinfo: No such host is known. ):
+C:/metasploit/ruby/lib/ruby/3.0.0/net/http.rb:987:in `initialize'
+C:/metasploit/ruby/lib/ruby/3.0.0/net/http.rb:987:in `open'
+C:/metasploit/ruby/lib/ruby/3.0.0/net/http.rb:987:in `block in connect'
+C:/metasploit/ruby/lib/ruby/3.0.0/timeout.rb:97:in `block in timeout'
+C:/metasploit/ruby/lib/ruby/3.0.0/timeout.rb:107:in `timeout'
+C:/metasploit/ruby/lib/ruby/3.0.0/net/http.rb:985:in `connect'
+C:/metasploit/ruby/lib/ruby/3.0.0/net/http.rb:970:in `do_start'
+C:/metasploit/ruby/lib/ruby/3.0.0/net/http.rb:959:in `start'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-net_http-3.0.2/lib/faraday/adapter/net_http.rb:112:in `request_with_wrapped_block'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-net_http-3.0.2/lib/faraday/adapter/net_http.rb:102:in `perform_request'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-net_http-3.0.2/lib/faraday/adapter/net_http.rb:66:in `block in call'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-2.7.4/lib/faraday/adapter.rb:45:in `connection'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-net_http-3.0.2/lib/faraday/adapter/net_http.rb:65:in `call'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-2.7.4/lib/faraday/middleware.rb:17:in `call'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-2.7.4/lib/faraday/middleware.rb:17:in `call'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-2.7.4/lib/faraday/middleware.rb:17:in `call'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-follow_redirects-0.3.0/lib/faraday/follow_redirects/middleware.rb:77:in `perform_with_redirection'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-follow_redirects-0.3.0/lib/faraday/follow_redirects/middleware.rb:65:in `call'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-2.7.4/lib/faraday/rack_builder.rb:153:in `build_response'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-2.7.4/lib/faraday/connection.rb:444:in `run_request'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/faraday-2.7.4/lib/faraday/connection.rb:280:in `post'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/sonar-client-0.2.0/lib/sonar/request.rb:24:in `request'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/sonar-client-0.2.0/lib/sonar/request.rb:16:in `post'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/sonar-client-0.2.0/lib/sonar/client.rb:75:in `post_to_sonar'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/sonar-client-0.2.0/lib/sonar/registration.rb:9:in `register_metasploit'
+C:/metasploit/apps/pro/engine/lib/metasploit/pro/engine/sonar/enroller.rb:18:in `enroll'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:187:in `check_sonar_license'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:65:in `block in maintenance_tasks'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:43:in `loop'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:43:in `maintenance_tasks'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:33:in `block (2 levels) in initialize'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:32:in `loop'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:32:in `block in initialize'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/lib/msf/core/thread_manager.rb:105:in `block in spawn'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/logging-2.3.1/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'
+[10/17/2023 08:37:28] [e(0)] core: Dependency for windows/x64/encrypted_shell_reverse_tcp is not supported
+[10/17/2023 08:37:28] [e(0)] core: Dependency for windows/encrypted_shell_reverse_tcp is not supported
+[10/17/2023 08:37:33] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:35] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:36] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:38] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:39] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:41] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:43] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:45] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:47] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:48] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:37:50] [e(0)] core: Dependency for windows/x64/encrypted_reverse_tcp is not supported
+[10/17/2023 08:37:53] [e(0)] core: Dependency for windows/encrypted_reverse_tcp is not supported
+[10/17/2023 08:38:01] [d(0)] core: Already established connection to postgresql, so reusing active connection.
+[10/17/2023 08:38:04] [e(0)] core: C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb failed to load - Msf::Modules::Error Failed to load module (dos/smb/smb_loris from C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb) due to invalid module class name (must be MetasploitModule)
+[10/17/2023 08:49:05] [e(0)] core: Dependency for windows/x64/encrypted_shell_reverse_tcp is not supported
+[10/17/2023 08:49:05] [e(0)] core: Dependency for windows/encrypted_shell_reverse_tcp is not supported
+[10/17/2023 08:49:12] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:13] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:15] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:17] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:19] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:20] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:22] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:24] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:26] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:28] [e(0)] core: LoadError cannot load such file -- pty
+[10/17/2023 08:49:30] [e(0)] core: Dependency for windows/x64/encrypted_reverse_tcp is not supported
+[10/17/2023 08:49:33] [e(0)] core: Dependency for windows/encrypted_reverse_tcp is not supported
+[10/17/2023 08:49:40] [d(0)] core: Already established connection to postgresql, so reusing active connection.
+[10/17/2023 08:49:42] [e(0)] core: C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb failed to load - Msf::Modules::Error Failed to load module (dos/smb/smb_loris from C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb) due to invalid module class name (must be MetasploitModule)
+[10/18/2023 17:31:57] [e(0)] core: Dependency for windows/x64/encrypted_shell_reverse_tcp is not supported
+[10/18/2023 17:31:57] [e(0)] core: Dependency for windows/encrypted_shell_reverse_tcp is not supported
+[10/18/2023 17:32:02] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:03] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:04] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:06] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:07] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:08] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:10] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:11] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:12] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:14] [e(0)] core: LoadError cannot load such file -- pty
+[10/18/2023 17:32:15] [e(0)] core: Dependency for windows/x64/encrypted_reverse_tcp is not supported
+[10/18/2023 17:32:17] [e(0)] core: Dependency for windows/encrypted_reverse_tcp is not supported
+[10/18/2023 17:32:24] [d(0)] core: Already established connection to postgresql, so reusing active connection.
+[10/18/2023 17:32:25] [e(0)] core: C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb failed to load - Msf::Modules::Error Failed to load module (dos/smb/smb_loris from C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb) due to invalid module class name (must be MetasploitModule)
+[10/18/2023 20:49:26] [e(0)] core: RPC Exception - ArgumentError Invalid Request Verb: '"GET"'
+[10/18/2023 20:51:41] [e(0)] core: RPC Exception - ArgumentError Invalid Request Verb: '"GET"'
+[10/18/2023 20:51:59] [e(0)] core: RPC Exception - ArgumentError Invalid Request Verb: '"GET"'
+[10/18/2023 20:52:09] [e(0)] core: RPC Exception - ArgumentError Invalid Request Verb: '"GET"'
+[10/19/2023 01:14:10] [e(0)] core: RPC Exception - ArgumentError Invalid Request Verb: '"GET"'
+[10/19/2023 01:21:22] [e(0)] core: [BG Daemon] Product Updates: ActiveRecord::StatementInvalid PG::ConnectionBad: WSAEventSelect socket error: 10038:
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:783:in `exec_prepared'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:783:in `block (2 levels) in exec_cache'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/concurrency/share_lock.rb:187:in `yield_shares'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/dependencies/interlock.rb:41:in `permit_concurrent_loads'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:782:in `block in exec_cache'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract_adapter.rb:765:in `block in log'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract_adapter.rb:756:in `log'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:781:in `exec_cache'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:747:in `execute_and_clear'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql/database_statements.rb:54:in `exec_query'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract/database_statements.rb:560:in `select'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract/database_statements.rb:66:in `select_all'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract/query_cache.rb:110:in `select_all'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/querying.rb:54:in `_query_by_sql'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/querying.rb:50:in `find_by_sql'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/statement_cache.rb:150:in `execute'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/core.rb:323:in `find_by'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/dynamic_matchers.rb:66:in `find_by_active'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:99:in `block in check_for_updates'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:215:in `with_connection'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:98:in `check_for_updates'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:56:in `block in maintenance_tasks'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:43:in `loop'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:43:in `maintenance_tasks'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:33:in `block (2 levels) in initialize'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:32:in `loop'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:32:in `block in initialize'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/lib/msf/core/thread_manager.rb:105:in `block in spawn'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/logging-2.3.1/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'
+[10/19/2023 01:21:22] [e(0)] core: [BG Daemon] Scheduled Chains: IOError closed stream:
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:837:in `prepare'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:837:in `block in prepare_statement'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activesupport-7.0.4.3/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:832:in `prepare_statement'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:778:in `exec_cache'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql_adapter.rb:747:in `execute_and_clear'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/postgresql/database_statements.rb:54:in `exec_query'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract/database_statements.rb:560:in `select'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract/database_statements.rb:66:in `select_all'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract/query_cache.rb:110:in `select_all'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/querying.rb:54:in `_query_by_sql'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation.rb:942:in `block in exec_main_query'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation.rb:962:in `skip_query_cache_if_necessary'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation.rb:928:in `exec_main_query'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation.rb:914:in `block in exec_queries'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation.rb:962:in `skip_query_cache_if_necessary'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation.rb:908:in `exec_queries'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation.rb:695:in `load'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation.rb:250:in `records'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation/delegation.rb:88:in `each'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation/query_methods.rb:310:in `select'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/relation/query_methods.rb:310:in `select'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:232:in `block in exec_scheduled_chains'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/activerecord-7.0.4.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:215:in `with_connection'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:225:in `exec_scheduled_chains'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:74:in `block in maintenance_tasks'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:43:in `loop'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:43:in `maintenance_tasks'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:33:in `block (2 levels) in initialize'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:32:in `loop'
+C:/metasploit/apps/pro/engine/lib/pro/background_daemon.rb:32:in `block in initialize'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/lib/msf/core/thread_manager.rb:105:in `block in spawn'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/logging-2.3.1/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'
+[10/19/2023 01:21:22] [e(0)] core: Error in stream server server monitor: stream closed in another thread
+
+Call stack:
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/rex-socket-0.1.51/lib/rex/socket/tcp_server.rb:46:in `accept'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/rex-socket-0.1.51/lib/rex/socket/tcp_server.rb:46:in `accept'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/rex-core-0.1.31/lib/rex/io/stream_server.rb:142:in `monitor_listener'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/rex-core-0.1.31/lib/rex/io/stream_server.rb:61:in `block in start'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/lib/rex/thread_factory.rb:22:in `block in spawn'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/lib/msf/core/thread_manager.rb:105:in `block in spawn'
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/logging-2.3.1/lib/logging/diagnostic_context.rb:474:in `block in create_with_logging_context'
+[10/19/2023 01:24:37] [e(0)] core: Dependency for windows/x64/encrypted_shell_reverse_tcp is not supported
+[10/19/2023 01:24:38] [e(0)] core: Dependency for windows/encrypted_shell_reverse_tcp is not supported
+[10/19/2023 01:24:42] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:43] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:44] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:46] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:47] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:48] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:50] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:51] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:52] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:54] [e(0)] core: LoadError cannot load such file -- pty
+[10/19/2023 01:24:55] [e(0)] core: Dependency for windows/x64/encrypted_reverse_tcp is not supported
+[10/19/2023 01:24:57] [e(0)] core: Dependency for windows/encrypted_reverse_tcp is not supported
+[10/19/2023 01:25:03] [d(0)] core: Already established connection to postgresql, so reusing active connection.
+[10/19/2023 01:25:04] [e(0)] core: C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb failed to load - Msf::Modules::Error Failed to load module (dos/smb/smb_loris from C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/metasploit-framework-6.3.17/modules/auxiliary/dos/smb/smb_loris.rb) due to invalid module class name (must be MetasploitModule)

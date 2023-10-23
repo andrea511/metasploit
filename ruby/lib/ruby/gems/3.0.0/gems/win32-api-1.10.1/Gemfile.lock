@@ -1,0 +1,23 @@
+PATH
+  remote: .
+  specs:
+    win32-api (1.10.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    power_assert (2.0.0)
+    rake (13.0.3)
+    test-unit (3.4.1)
+      power_assert
+
+PLATFORMS
+  x64-mingw32
+
+DEPENDENCIES
+  rake
+  test-unit (>= 2.5.0)
+  win32-api!
+
+BUNDLED WITH
+   2.2.15

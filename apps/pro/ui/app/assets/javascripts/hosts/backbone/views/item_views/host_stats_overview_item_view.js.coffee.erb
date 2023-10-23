@@ -1,0 +1,46 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/item_views/host_stats_overview_item_view") %>',
+  #TODO Move Notifiation Center Event Aggregator to Shared Dir
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>',
+  '<%= javascript_path("shared/backbone/layouts/modal") %>',
+  '<%= javascript_path("hosts/backbone/views/item_views/form") %>'
+], ($, Template, EventAggregator, Modal, HostForm) ->
+  class HostStatsOverviewItemView extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/item_views/host_stats_overview_item_view']
+
+    onShow: =>
+      EventAggregator.on("tabs_layout:change:host", @_updateStatus)
+
+    onDestroy: =>
+      EventAggregator.off("tabs_layout:change:host")
+
+    modelEvents:
+      'change': 'render'
+
+    _updateStatus: (model) =>
+      @model = model
+      @render()
+
+    events:
+      'click a.edit-info': 'editClicked'
+
+    onRender: =>
+      # install jquery-ui tooltips
+      $(@el).tooltip()
+
+    #
+    # Events Handlers
+    #
+    editClicked: (e) =>
+      e.preventDefault()
+      @modal.destroy() if @modal
+      @modal = new Modal
+        class: 'flat'
+        width: 400
+        buttons: [
+          {name: 'Done', class: 'close btn primary'}
+        ]
+      @modal.open()
+      @modal.content.show(new HostForm(model: @model))
+      @modal._center()

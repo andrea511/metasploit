@@ -1,0 +1,22 @@
+<%= render "shared/error_messages", :target => @api_key %>
+
+<div class="one_col_no_sidebar">
+	<%= required_label %>
+
+	<%= f.inputs "Token" do -%>
+    <%= f.input :name, :as => :string, :label => "Key name", :required => true %>
+    <%= f.input :token, :as => :string, :label => "Authentication token", :required => true, :autofocus => true, :input_html => { :autocomplete => :off, :size => 80 } %>
+	<% end -%>
+
+	<%= f.help_link :token do -%>
+		<h3>Authentication Token</h3>
+		<p>
+			This token provide remote access to the Metasploit product with administrative privileges and should be treated as passwords.
+		</p>
+	<% end -%>
+
+	<%= f.actions do %>
+		<%= f.commit_button :label => "Create", :button_html => { :class => "save" } %>
+	<% end %>
+
+</div>

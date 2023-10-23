@@ -1,0 +1,311 @@
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+.kill-whitespace, #modals form.metamodule, .config form.metamodule, #modals form.metamodule > li.input, #modals form.metamodule > div > li.input, #modals form.metamodule .advanced > li.input, .config form.metamodule > li.input, .config form.metamodule > div > li.input, .config form.metamodule .advanced > li.input {
+  /* the below allows us to use inline-block elements inside of .page   *
+   * with percentage-based widths; otherwise the whitespace between the *
+   * elements would force rows to add up to >100% and force a wrap.     */
+}
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+.kill-whitespace > div.page, #modals form.metamodule > div.page, .config form.metamodule > div.page, #modals form.metamodule > li.input > div.page, #modals form.metamodule > div > li.input > div.page, #modals form.metamodule .advanced > li.input > div.page, .config form.metamodule > li.input > div.page, .config form.metamodule > div > li.input > div.page, .config form.metamodule .advanced > li.input > div.page {
+  font-size: 0;
+}
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+.kill-whitespace > div.page > *, #modals form.metamodule > div.page > *, .config form.metamodule > div.page > *, #modals form.metamodule > li.input > div.page > *, #modals form.metamodule .advanced > li.input > div.page > *, .config form.metamodule > li.input > div.page > *, .config form.metamodule .advanced > li.input > div.page > * {
+  font-size: 12px;
+}
+
+/* line 22, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+.tab-loading-bar, .ui-dialog .loading, #modals .content.loading, .config .content.loading {
+  background-image: url(/assets/loader-bar-8411d80c628ffbe753443d652de05d8952e41238ac8e4ab9990f3435909f5a85.gif) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+
+/* line 36, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule p.inline-error, .config form.metamodule p.inline-error {
+  color: #f00;
+  margin: 0;
+  font-size: .9em;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule .dataTables_wrapper, .config form.metamodule .dataTables_wrapper {
+  min-height: 0;
+}
+/* line 49, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule .advanced table th.key_file_stored, #modals form.metamodule .advanced table th.pass, #modals form.metamodule .advanced table td.key_file_stored, #modals form.metamodule .advanced table td.pass, .config form.metamodule .advanced table th.key_file_stored, .config form.metamodule .advanced table th.pass, .config form.metamodule .advanced table td.key_file_stored, .config form.metamodule .advanced table td.pass {
+  max-width: 150px;
+}
+/* line 54, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule label.side-label, .config form.metamodule label.side-label {
+  width: 20%;
+  text-align: right;
+  display: inline-block;
+  padding-right: 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 61, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule li.input, .config form.metamodule li.input {
+  list-style: none;
+}
+/* line 63, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule li.input textarea, .config form.metamodule li.input textarea {
+  height: 7em;
+}
+/* line 66, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule li.input.hidden, .config form.metamodule li.input.hidden {
+  display: none;
+}
+/* line 67, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule li.input.radio, .config form.metamodule li.input.radio {
+  width: 100%;
+}
+/* line 69, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule li.input.password ~ label.plaintext, .config form.metamodule li.input.password ~ label.plaintext {
+  display: block;
+  width: auto;
+  font-size: .9em;
+  margin-left: 20%;
+  position: relative;
+  top: -5px;
+  padding-left: 5px;
+}
+/* line 80, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule li.input.error textarea, #modals form.metamodule li.input.error input, .config form.metamodule li.input.error textarea, .config form.metamodule li.input.error input {
+  border-color: #f00;
+}
+/* line 81, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule li.input.error label, #modals form.metamodule li.input.error .label, .config form.metamodule li.input.error label, .config form.metamodule li.input.error .label {
+  color: #f00;
+}
+/* line 83, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule li.input [disabled], .config form.metamodule li.input [disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input, #modals form.metamodule > div > li.input, #modals form.metamodule .advanced > li.input, .config form.metamodule > li.input, .config form.metamodule > div > li.input, .config form.metamodule .advanced > li.input {
+  padding: 10px;
+  width: 80%;
+  display: inline-block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input.full-width, #modals form.metamodule > div > li.input.full-width, #modals form.metamodule .advanced > li.input.full-width, .config form.metamodule > li.input.full-width, .config form.metamodule > div > li.input.full-width, .config form.metamodule .advanced > li.input.full-width {
+  width: 100%;
+}
+/* line 98, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input.small-inline, #modals form.metamodule > div > li.input.small-inline, #modals form.metamodule .advanced > li.input.small-inline, .config form.metamodule > li.input.small-inline, .config form.metamodule > div > li.input.small-inline, .config form.metamodule .advanced > li.input.small-inline {
+  width: auto;
+  padding: 0;
+}
+/* line 101, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input.small-inline > input, #modals form.metamodule > div > li.input.small-inline > input, #modals form.metamodule .advanced > li.input.small-inline > input, .config form.metamodule > li.input.small-inline > input, .config form.metamodule > div > li.input.small-inline > input, .config form.metamodule .advanced > li.input.small-inline > input {
+  width: 100%;
+}
+/* line 105, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input > label, #modals form.metamodule > div > li.input > label, #modals form.metamodule .advanced > li.input > label, .config form.metamodule > li.input > label, .config form.metamodule > div > li.input > label, .config form.metamodule .advanced > li.input > label {
+  display: inline-block;
+  width: 25%;
+  text-align: right;
+  font-size: 1em;
+  font-weight: 600;
+  padding-right: 15px;
+  color: #000;
+  vertical-align: top;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 116, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input > textarea, #modals form.metamodule > li.input > input, #modals form.metamodule > div > li.input > textarea, #modals form.metamodule > div > li.input > input, #modals form.metamodule .advanced > li.input > textarea, #modals form.metamodule .advanced > li.input > input, .config form.metamodule > li.input > textarea, .config form.metamodule > li.input > input, .config form.metamodule > div > li.input > textarea, .config form.metamodule > div > li.input > input, .config form.metamodule .advanced > li.input > textarea, .config form.metamodule .advanced > li.input > input {
+  display: inline-block;
+  width: 75%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 122, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input.text ~ a.advanced, #modals form.metamodule > div > li.input.text ~ a.advanced, #modals form.metamodule .advanced > li.input.text ~ a.advanced, .config form.metamodule > li.input.text ~ a.advanced, .config form.metamodule > div > li.input.text ~ a.advanced, .config form.metamodule .advanced > li.input.text ~ a.advanced {
+  line-height: 7em;
+}
+/* line 124, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input ~ a.advanced, #modals form.metamodule > div > li.input ~ a.advanced, #modals form.metamodule .advanced > li.input ~ a.advanced, .config form.metamodule > li.input ~ a.advanced, .config form.metamodule > div > li.input ~ a.advanced, .config form.metamodule .advanced > li.input ~ a.advanced {
+  vertical-align: top;
+  padding: 10px 15px 10px 20px;
+  font-size: 11px;
+}
+/* line 130, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input p.inline-error, #modals form.metamodule > div > li.input p.inline-error, #modals form.metamodule .advanced > li.input p.inline-error, .config form.metamodule > li.input p.inline-error, .config form.metamodule > div > li.input p.inline-error, .config form.metamodule .advanced > li.input p.inline-error {
+  color: #f00;
+  margin: 0;
+  margin-left: 25%;
+  font-size: .9em;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 138, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input fieldset.choices, #modals form.metamodule > div > li.input fieldset.choices, #modals form.metamodule .advanced > li.input fieldset.choices, .config form.metamodule > li.input fieldset.choices, .config form.metamodule > div > li.input fieldset.choices, .config form.metamodule .advanced > li.input fieldset.choices {
+  border: none;
+  float: none;
+  padding: 0;
+  width: 100%;
+}
+/* line 143, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input fieldset.choices legend.label, #modals form.metamodule > div > li.input fieldset.choices legend.label, #modals form.metamodule .advanced > li.input fieldset.choices legend.label, .config form.metamodule > li.input fieldset.choices legend.label, .config form.metamodule > div > li.input fieldset.choices legend.label, .config form.metamodule .advanced > li.input fieldset.choices legend.label {
+  float: left;
+  text-align: right;
+  font-weight: 600;
+  color: #000;
+  width: 20%;
+  padding-right: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 152, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input fieldset.choices ol.choices-group, #modals form.metamodule > div > li.input fieldset.choices ol.choices-group, #modals form.metamodule .advanced > li.input fieldset.choices ol.choices-group, .config form.metamodule > li.input fieldset.choices ol.choices-group, .config form.metamodule > div > li.input fieldset.choices ol.choices-group, .config form.metamodule .advanced > li.input fieldset.choices ol.choices-group {
+  display: inline-block;
+  width: 80%;
+}
+/* line 155, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule > li.input fieldset.choices ol.choices-group p.inline-error, #modals form.metamodule > div > li.input fieldset.choices ol.choices-group p.inline-error, #modals form.metamodule .advanced > li.input fieldset.choices ol.choices-group p.inline-error, .config form.metamodule > li.input fieldset.choices ol.choices-group p.inline-error, .config form.metamodule > div > li.input fieldset.choices ol.choices-group p.inline-error, .config form.metamodule .advanced > li.input fieldset.choices ol.choices-group p.inline-error {
+  margin-left: 0;
+  padding-top: 3px;
+}
+/* line 163, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule input[type=checkbox], .config form.metamodule input[type=checkbox] {
+  margin-top: 0;
+}
+/* line 165, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule textarea, .config form.metamodule textarea {
+  padding: 4px 6px;
+  min-height: 64px;
+  margin-bottom: 3px;
+  overflow: auto;
+}
+/* line 172, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule input[type=text], #modals form.metamodule input[type=password], .config form.metamodule input[type=text], .config form.metamodule input[type=password] {
+  padding: 3px 6px;
+}
+/* line 176, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/metamodule_form.scss.erb */
+#modals form.metamodule input[type=text], #modals form.metamodule input[type=password], #modals form.metamodule textarea, .config form.metamodule input[type=text], .config form.metamodule input[type=password], .config form.metamodule textarea {
+  border-radius: 2px;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+  outline: none;
+  border: 1px solid #aaa;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals form.metamodule li.file.input, .config form.metamodule li.file.input {
+  list-style: none;
+  position: relative;
+  width: 60%;
+  padding: 0;
+  margin: 10px 0;
+  margin-left: 20%;
+  cursor: pointer;
+}
+/* line 10, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals form.metamodule li.file.input.error, .config form.metamodule li.file.input.error {
+  margin-bottom: 20px;
+}
+/* line 13, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals form.metamodule li.file.input p.inline-error, .config form.metamodule li.file.input p.inline-error {
+  position: absolute;
+  margin-left: 0;
+}
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals form.metamodule li.file.input label, .config form.metamodule li.file.input label {
+  display: inline-block;
+  width: 100%;
+  padding: 6px 7px;
+  border: 1px solid #aaa;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 2px;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals form.metamodule li.file.input label p, .config form.metamodule li.file.input label p {
+  margin: 0;
+  font-weight: normal;
+  color: #666;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* line 33, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals form.metamodule li.file.input label span, .config form.metamodule li.file.input label span {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  padding: 0 5px;
+  line-height: 31px;
+  text-align: center;
+  background: #eee;
+  border: 1px solid #aaa;
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 2px;
+  /* Gecko */
+  -webkit-border-top-right-radius: 2px;
+  /* Webkit */
+  -khtml-border-top-right-radius: 2px;
+  /* Konqueror */
+  border-top-right-radius: 2px;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 0;
+  /* Konqueror */
+  border-bottom-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 2px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 2px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 2px;
+  /* Konqueror */
+  border-bottom-left-radius: 2px;
+  /* CSS3 */
+  cursor: pointer;
+}
+/* line 48, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals form.metamodule li.file.input input[type=file], .config form.metamodule li.file.input input[type=file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100% !important;
+  z-index: 55;
+  cursor: pointer;
+  opacity: 0;
+}
+/* line 56, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals form.metamodule li.file.input:hover, .config form.metamodule li.file.input:hover {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+/* line 59, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_pretty_file_inputs.scss */
+#modals form.metamodule li.file.input:active, .config form.metamodule li.file.input:active {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}

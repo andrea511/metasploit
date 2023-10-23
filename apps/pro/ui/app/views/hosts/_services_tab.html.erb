@@ -1,0 +1,3 @@
+<%= render :partial => 'services', :locals => {:host_record => true }, :object => @host.services %>
+<br/>
+<%= render :partial => 'inactive_services', :locals => {:host_record => true }, :object => @host.services.inactive %>

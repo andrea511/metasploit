@@ -1,0 +1,19 @@
+@echo off
+rem -- Check if argument is INSTALL or REMOVE
+
+if not ""%1"" == ""INSTALL"" goto remove
+
+"@@BITROCK_POSTGRESQL_ROOTDIR@@\bin\pg_ctl.exe" register -N "@@BITROCK_POSTGRESQL_SERVICE_NAME@@" -D "@@BITROCK_POSTGRESQL_DATADIR@@"
+
+net start @@BITROCK_POSTGRESQL_SERVICE_NAME@@ >NUL
+goto end
+
+:remove
+rem -- STOP SERVICE BEFORE REMOVING
+
+net stop @@BITROCK_POSTGRESQL_SERVICE_NAME@@ >NUL
+"@@BITROCK_POSTGRESQL_ROOTDIR@@\bin\pg_ctl.exe" unregister -N "@@BITROCK_POSTGRESQL_SERVICE_NAME@@"
+
+
+:end
+exit

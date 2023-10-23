@@ -1,0 +1,4 @@
+<label for="<%= if @id then "#{@id}_file_input" else "file_input" %>">
+</label>
+
+<input name="<%= @name %>" id="<%= if @id then "#{@id}_file_input" else "file_input" %>" type="file" size="50" style="overflow: hidden;" />

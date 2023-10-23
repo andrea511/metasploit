@@ -1,0 +1,104 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/shared/item_views/modal_form") %>',
+  '<%= javascript_path("templates/shared/item_views/inline_edit") %>',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, Template, EditTemplate, EventAggregator) ->
+  class ModalForm extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['shared/item_views/modal_form']
+
+    initialize: (opts={}) =>
+      @class = ''
+      @options = opts
+      $.extend(@, opts)
+
+
+    events:
+      'submit form' : '_formSubmit'
+
+    loadForm: (url) =>
+      $.ajax
+        url: url
+        method: 'get'
+        success: @formLoadedSuccessfully
+
+    formLoadedSuccessfully: (html) =>
+      @setLoading(false)
+      $('.form-content', @el).html(html)
+      @_initInlineEdit($('input.inline-edit', @el))
+
+    initEditInput: ($input) =>
+      #Rename helper since Marionette 2.0 now defines this method. Don't want to override.
+      @_renderTemplateHelper($input)
+
+    setLoading: (loading) =>
+      $(@el).toggleClass('tab-loading', loading)
+      # hide the other elements
+      if loading
+        $('>*', @el).css(opacity: 0.2, 'pointer-events': 'none')
+      else
+        $('>*', @el).css(opacity: 1, 'pointer-events': 'auto')
+      # disable the submit/close buttons TODO: MOVE TO A EVENT
+      $(':input', @el).prop('disabled', loading)
+      @$el.parents('.modal').find('.content ~ .modal-actions, .header a.close').toggleClass('disabled', loading)
+
+    _initInlineEdit: ($inputs) =>
+      vals = $.map($inputs,(val, i) => @_renderTemplateHelper($($inputs[i])))
+      $(@el).on('click','.pencil', @_toggle)
+      $(@el).on('click','.garbage', @_remove)
+
+    _remove: (e) =>
+      $container = $(e.target).closest('.container')
+      $container.remove()
+
+    _toggle: (e) =>
+      $container = $(e.target).closest('.container')
+      $fieldText = $('.field-text', $container).toggle()
+      $input = $('input', $container).toggle()
+      $fieldText.html($input.val())
+
+    _renderTemplateHelper: ($input) ->
+      template = HandlebarsTemplates['shared/item_views/inline_edit']
+      context = {ref: $input.val()}
+      $fragment = $(template(context)).insertAfter($input)
+      $input.prependTo($('.input-container',$fragment))
+      unless $input.val() == ""
+        $input.hide()
+      else
+        $('.field-text',$input.closest('.container')).hide()
+
+    _postForm: =>
+      data = $('form',@el).serialize()
+      switch @options.action
+        when "new"
+          $.ajax
+            url: @URL
+            type: 'POST'
+            data: data
+        when "edit"
+          $.ajax
+            url: "#{@URL}#{@options.id}.json"
+            type: 'PUT'
+            data: data
+
+    # @param [Object] errors the errors Hash to render
+    # Adds .error and p.inline-errors to the offending form elements
+    _renderErrors: (errors) =>
+      _.each errors, (v, k) =>
+        $input = $("[name*='[#{k}]']", @el)
+        $input.parents('li').first().addClass('error')
+        $input.parent().append(@_errorDiv(v))
+
+    # Clears .error classes and p.inline-error's that were added in a previous renderErrors() call
+    _clearErrors: =>
+      $('.error', @el).removeClass('error')
+      $('p.inline-error', @el).remove()
+
+    # @return an initialized DOMElement containing a <p> with error message
+    _errorDiv: (msg) => $('<p />', class: 'inline-error').text(msg)
+
+    _formSubmit: (e) ->
+      e.preventDefault()
+      @_postForm()
+      EventAggregator.trigger('redrawTable')
+      @.$el.trigger('destroy')

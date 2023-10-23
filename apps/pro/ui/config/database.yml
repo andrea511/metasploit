@@ -1,0 +1,20 @@
+
+development:
+  adapter: "postgresql"
+  database: "msf3"
+  username: "msf3"
+  password: "5e45e17adcdbdce37e635397f22a9fd2"
+  port: 7337
+  host: "localhost"
+  pool: 256
+  timeout: 5
+
+production:
+  adapter: "postgresql"
+  database: "msf3"
+  username: "msf3"
+  password: "5e45e17adcdbdce37e635397f22a9fd2"
+  port: 7337
+  host: "localhost"
+  pool: 256
+  timeout: 5

@@ -1,0 +1,16 @@
+<form>
+  <div>
+    <label for="realm">Realm Type</label>
+    <select id="realm" name="realm[key]">
+        <option value="None">None</option>
+        <% for realm in Pro.Entities.Cred.Realms.ALL: %>
+            <option value="<%= realm %>"><%= realm %></option>
+        <% end %>
+    </select>
+  </div>
+
+  <div class='clear-floats'>
+    <label for="name">Realm Name</label>
+    <input id="name" name="realm[value]" type="text" />
+  </div>
+</form>

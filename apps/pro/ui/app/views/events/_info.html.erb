@@ -1,0 +1,15 @@
+<td>
+	<% if event.info %>
+		<%= show_hide_link "event-details-#{event.id}" %>
+	<% end %>
+	<%=h truncate(event.summary.to_s, :length => 100) %>
+
+	<% if event.info %>
+		<div id="event-details-<%=h event.id %>" style="display:none">
+			<div class="details">
+				<%= render 'generic/hash', :hash => event.info %>
+			</div>
+		</div>
+	<% end %>
+</td>
+

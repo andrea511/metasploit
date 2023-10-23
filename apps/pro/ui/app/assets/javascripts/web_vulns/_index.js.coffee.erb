@@ -1,0 +1,26 @@
+jQuery ($) ->
+  $ ->
+    vulnsPath = $('#vulns-path').html()
+    $vulnsTable = $('#vulns-table')
+
+    # Enable DataTable for the hosts list.
+    $vulnsDataTable = $vulnsTable.table
+      analysisTab: true
+      searchInputHint:   "Search Vulnerabilities"
+      datatableOptions:
+        oLanguage:
+         sEmptyTable:    "No vulnerabilities are associated with this project."
+        sAjaxSource:      vulnsPath
+        aaSorting:        [[4, 'asc'], [2, 'asc']]
+        aoColumns: cols
+        fnServerData : (sSource, aoData, fnCallback, oSettings) ->
+          aoData.push(name: 'automatic_exploitation_run', value: $('option:selected','#exploitation_run').val())
+          oSettings.jqXHR = $.ajax(
+            dataType : 'json'
+            type: "GET"
+            url: vulnsPath
+            data: aoData
+            success: fnCallback
+          )
+
+    $vulnsTable.addCollapsibleSearch()

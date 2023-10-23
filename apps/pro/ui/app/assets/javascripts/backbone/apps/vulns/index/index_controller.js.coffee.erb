@@ -1,0 +1,219 @@
+define [
+  'base_controller'
+  'apps/vulns/vulns_app'
+  'css!css/components/pill'
+  'apps/vulns/index/index_views'
+  'lib/components/analysis_tab/analysis_tab_controller'
+  'apps/vulns/index/components/custom_note_cell/custom_note_cell_view'
+  'apps/vulns/index/components/push_status_cell/push_status_cell_controller'
+
+], ->
+  @Pro.module "VulnsApp.Index", (Index, App, Backbone, Marionette, $, _) ->
+    class Index.Controller extends App.Controllers.Application
+
+      # Create a new instance of the IndexController and adds it to the region if show is true
+      #
+      # @param opts [Object] the options hash
+      # @options options show        [Boolean] show view on initialization
+      #
+      initialize: (options) ->
+        _.defaults options,
+          show: true
+
+        { show } = options
+
+        vulns = App.request 'vulns:entities', fetch: false
+
+
+        defaultSort = 'name'
+
+        columns = [
+          {
+            attribute: 'name'
+            label:     'Vulnerability'
+            view:      Index.NameCellView
+            class:     'truncate'
+          }
+          {
+            attribute:             'host.address'
+            label:                 'Address'
+            view:                  Index.AddressCellView
+            defaultDirection:      'asc'
+          }
+          {
+            attribute: 'host.name'
+            label:     'Host Name'
+            escape:    false
+          }
+          {
+            attribute: 'service.name'
+            label:     'Service'
+          }
+          {
+            attribute: 'service.port'
+            label:     'Port'
+          }
+          {
+            attribute: 'references'
+            view:      Pro.Shared.CveCell.Controller
+            sortable:  false
+          }
+          {
+            attribute: 'status_html'
+            label:     'Status'
+            escape:    false
+            sortable:  false
+            class:     'status truncate'
+          }
+          {
+            attribute:   'vuln.latest_nexpose_result.type'
+            label:       '<%= image_tag('icons/nxStatus-header.svg', class: 'nx-push-icon', title: 'Not Pushed') %>'
+            escapeLabel: false
+            sortable:    false
+            class:       'nexpose-status'
+            view:        Pro.Components.PushStatusCell.Controller
+          }
+          {
+            attribute: 'comment.data.comment'
+            label:     'Comments'
+            class:     'comment truncate'
+            view:      Pro.Components.CustomNoteCell.View
+            sortable:   false
+          }
+        ]
+        actionButtons = [
+          {
+            label: 'Delete Vulnerabilities'
+            class: 'delete'
+            activateOn: 'any'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) ->
+              controller = App.request 'vulns:delete',
+                {
+                  selectAllState
+                  selectedIDs
+                  deselectedIDs
+                  selectedVisibleCollection
+                  tableCollection
+                }
+              App.execute "showModal", controller,
+                modal:
+                  title: 'Are you sure?'
+                  description: ''
+                  height: 150
+                  width:  550
+                  hideBorder:true
+                buttons: [
+                  { name: 'Cancel', class: 'close' }
+                  { name: 'OK', class: 'btn primary' }
+                ]
+            containerClass: 'action-button-right-separator'
+          }
+          {
+            label: 'Scan'
+            class: 'scan'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) ->
+              newScanPath = Routes.new_scan_path workspace_id: WORKSPACE_ID
+              App.execute 'analysis_tab:post', 'vuln', newScanPath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+          }
+          {
+            label: 'Import...'
+            class: 'import'
+            click: ->
+              window.location = Routes.new_workspace_import_path(workspace_id: WORKSPACE_ID) + '#file'
+          }
+          {
+            label: 'Nexpose Scan'
+            class: 'nexpose'
+            click: ->
+              window.location = Routes.new_workspace_import_path workspace_id: WORKSPACE_ID
+          }
+          {
+            label: 'WebScan'
+            class: 'webscan'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) ->
+              newWebScanPath = Routes.new_webscan_path workspace_id: WORKSPACE_ID
+              App.execute 'analysis_tab:post', 'vuln', newWebScanPath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+          }
+          {
+            label: 'Modules'
+            class: 'exploit'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) =>
+              modulesPath = Routes.modules_path workspace_id: WORKSPACE_ID
+              App.execute 'analysis_tab:post', 'vuln', modulesPath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+            containerClass: 'action-button-separator'
+          }
+          {
+            label: 'Bruteforce'
+            class: 'brute'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) ->
+              newQuickBruteforcePath = Routes.workspace_brute_force_guess_index_path(workspace_id: WORKSPACE_ID) + '#quick'
+              App.execute 'analysis_tab:post', 'vuln', newQuickBruteforcePath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+          }
+          {
+            label: 'Exploit'
+            class: 'exploit'
+            click: (selectAllState, selectedIDs, deselectedIDs, selectedVisibleCollection, tableCollection) ->
+              newExploitPath = Routes.new_exploit_path(workspace_id: WORKSPACE_ID) + '#quick'
+              App.execute 'analysis_tab:post', 'vuln', newExploitPath, {
+                selectAllState
+                selectedIDs
+                deselectedIDs
+              }
+            containerClass: 'action-button-right-separator'
+          }
+        ]
+
+        #
+        # Append Nexpose Push Button Component to table's action buttons
+        #
+        buttonController = new App.Shared.NexposePush.ButtonController
+        actionButtons.push(buttonController.getButton())
+
+        filterOpts =
+          searchType: 'pro'
+          placeHolderText: 'Search Vulns'
+
+        emptyView = App.request 'analysis_tab:empty_view',
+          emptyText: "No vulnerabilities are associated with this project"
+
+        _.extend options,
+          filterOpts: filterOpts
+          enableNexposePushButton: true
+          collection: vulns
+          columns: columns
+          defaultSort: defaultSort
+          actionButtons: actionButtons
+          emptyView: emptyView
+
+
+        @analysisTabController = App.request('analysis_tab:component', options)
+        @layout = @analysisTabController.layout
+
+        @setMainView @layout
+
+        @show @layout, region: @region if show
+
+      getPushButtonViewStatus: =>
+        if @_mainView._currentPushButtonView
+          @_mainView._currentPushButtonView.getStatus()
+        else
+          false
+
+
+

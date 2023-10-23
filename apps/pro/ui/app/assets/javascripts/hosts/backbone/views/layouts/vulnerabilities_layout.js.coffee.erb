@@ -1,0 +1,109 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/vulnerabilities") %>',
+  '<%= javascript_path("hosts/backbone/views/item_views/vuln_form") %>',
+  '<%= javascript_path("shared/backbone/layouts/modal") %>',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, Template, VulnForm, Modal, EventAggregator) ->
+  class VulnerabilitiesLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/vulnerabilities']
+
+    initialize: ({@host_id}) ->
+
+    hostVulnsURL: => "/hosts/#{@host_id}/vulns"
+
+    events:
+      'click .vulns a.new': '_newVuln'
+      'click .vulns .edit-table-row .pencil' : '_editVuln'
+      'click .vulns .details' : '_editVuln'
+      'click .vulns .edit-table-row .garbage' : '_deleteVuln'
+      'rowDeleted table' : '_countChanged'
+
+    onShow: () ->
+      EventAggregator.on("redrawTable", @render)
+      EventAggregator.on("tabs_layout:change:count", @_reRender)
+
+    _reRender: (count) =>
+      settings = $('#vulns-table table', @el).dataTable().fnSettings()
+      countChanged = if settings? then settings.fnRecordsTotal() != count.get("vulnerabilities") else false
+      if !@modal? && !@isEditMode() && countChanged
+        @render()
+
+    _countChanged: (e,count) ->
+      $(@el).trigger('tabcountUpdated', {count:count, name:'Disclosed Vulnerabilities'})
+
+    isEditMode: () ->
+      $('.edit-table-row .save',@el).length > 0
+
+    onDestroy: ->
+      EventAggregator.off("tabs_layout:change:count")
+      EventAggregator.off("redrawTable",@render)
+
+    onRender: ->
+      @_loadTable()
+
+    _showModal: (opts={}) ->
+      title = "#{_.str.humanize(opts.action)} Vulnerability"
+      @modal.destroy() if @modal
+      @modal = new Modal(class: 'flat', title: title, width: 500)
+      @modal.open()
+      @modal.content.show(new VulnForm(opts))
+
+    _editVuln: (e) =>
+      vuln_id = $('.id',$(e.target).closest('tr')).html()
+      @_showModal(action:"edit", id: vuln_id )
+
+    _deleteVuln: (e) =>
+      vuln_id = $('.id',$(e.target).closest('tr')).html()
+
+      if window.confirm("Are you sure you want to delete?")
+        $.ajax
+          url: "#{@hostVulnsURL()}/#{vuln_id}.json"
+          type: 'DELETE'
+          success: =>
+            $table = $('#vulns-table', @el).dataTable()
+            $row = $(e.currentTarget).closest('tr')
+            rowId = $table.fnGetPosition($row[0])
+            $table.fnDeleteRow(rowId, 0, true)
+            #Have to reproduce delete trigger implemented in dataTables Editable Plugin :-/
+            records_total = $table.fnSettings().fnRecordsTotal()
+            count =  if records_total>0 then records_total else 0
+            $table.trigger('rowDeleted', count)
+            $row.remove()
+
+    _newVuln: (e) =>
+      e.preventDefault()
+      @_showModal(action: "new")
+
+
+    _loadTable: ->
+      $.get(@hostVulnsURL(), (data) =>
+        $('.vulns', @el).html(data)
+        @_initDataTable()
+        $('.edit-table-row').off('click')
+      )
+
+    _initDataTable: =>
+      $('.control-bar', @el).remove()
+
+      $table = $('#vulns-table', @el).dataTable({
+        oSettings:
+          sInstance: "vulns"
+        sDom: 'ft<"list-table-footer clearfix"ip <"sel" l>>r'
+        aoColumns: [
+          {bSortable:false},
+          {},
+          {bSortable:false},
+          {},
+          {},
+          {},
+          {
+            bSortable:false,
+            sWidth: '120px'
+            fnRender: -> "<div class='edit-table-row'><a class='pencil' href='javascript:void(0)'></a><a href='javascript:void(0)' class='garbage'></a></span></div>"
+          },
+        ],
+        sPaginationType: "r7Style"
+      })
+      $(@el).trigger('tabload')
+

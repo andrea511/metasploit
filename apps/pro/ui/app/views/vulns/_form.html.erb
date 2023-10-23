@@ -1,0 +1,35 @@
+<%= render "shared/error_messages", :target => @vuln %>
+
+<%= f.inputs "Vulnerability Details" do -%>
+	<%= f.input :name, :required => true, :input_html => { :size => 50 } %>
+	<%= f.input :info, :required => false, :label => "Information", :input_html => { :size => 50 } %>
+<% end -%>
+
+
+<%= f.inputs "References" do -%>
+	<div class='control-bar'>
+		<span class='button'><%= link_to "Add Reference", '#', :class => "new", :id => 'add-reference' %></span>
+	</div>
+
+	<table class="list" id="references" style="width: 100%;">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @vuln.refs.each do |ref| -%>
+			<% new_or_existing = ref.new_record? ? 'new' : 'existing' %>
+			<% prefix = h "#{new_or_existing}_ref_attributes[]" %>
+
+				<%= f.fields_for prefix, ref do |reference| %>
+					<tr class="fields">
+						<td><%= reference.text_field :name, :size => 60 %></td>
+						<td class='delete'><%= link_to(icon('delete'), '#', :title => 'Delete Reference' ) %></td>
+					</tr>
+				<% end %>
+			<% end -%>
+		</tbody>
+	</table>
+<% end -%>

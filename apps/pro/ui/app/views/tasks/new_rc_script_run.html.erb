@@ -1,0 +1,36 @@
+<% title "Resource Scripts" %>
+<% breadcrumb workspace_link, rc_scripts_link %>
+<% include_view_javascript %>
+<div class="module-wrapper">
+
+  <%= form_tag start_rc_script_run_path(path: @rc_script[:filename] ), class: 'rc_script_run_task formtastic' do %>
+    <div class="one_col_no_sidebar">
+
+      <fieldset class="inputs">
+        <legend><span>Resource Script Run</span></legend>
+        <ol>
+          <li class="text input">
+            <label class="label">Filename</label>
+            <div class="rc_script_filename"><%= @rc_script[:filename] %></div>
+          </li>
+          <li class="text input">
+            <label for="datastore_opts" class="label">Parameters</label>
+            <%= text_area_tag :datastore_opts,  params[:datastore_opts], rows: 5, cols:50, placeholder: 'PARAM=VALUE' %>
+            <% if @rc_script[:canned_script] %>
+              <%= hidden_field_tag 'canned_script', true %>
+            <% end %>
+            <%= hidden_field_tag 'path', @rc_script[:filename] %>
+          </li>
+          <li class="text input">
+            <label class="label">Contents</label>
+            <div style="overflow: auto; max-height: 600px; width: 600px; box-shadow: inset 0 0 2px #888;">
+              <pre>
+                  <%= @rc_script[:contents] %>
+              </pre>
+            </div>
+          </li>
+        </ol>
+      </fieldset>
+    </div>
+  <% end %>
+</div>

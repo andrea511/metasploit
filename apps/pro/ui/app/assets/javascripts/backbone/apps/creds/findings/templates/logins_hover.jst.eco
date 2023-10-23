@@ -1,0 +1,25 @@
+<div class="foundation">
+  <div class='row'>
+    <div class='large-3 columns'>Public</div>
+    <div class='large-4 columns'>Private</div>
+    <div class='large-5 columns'>Realm</div>
+  </div>
+  <div class='scrollie'>
+    <% unless @rowData?: %>
+    <div class='spinner'></div>
+    <% else: %>
+    <% for data in @rowData: %>
+    <div class='row'>
+      <div class='large-3 columns'><%= _.str.truncate data.public_username, 12 %></div>
+      <% if data.private_type.match(/key/i): %>
+      <% fpvt = "[#{data.private_type}]" %>
+      <div class='large-4 columns'><%= _.str.truncate fpvt, 18 %></div>
+      <% else: %>
+      <div class='large-4 columns'><%= _.str.truncate data.private_data, 18 %></div>
+      <% end %>
+      <div class='large-5 columns'><%= data.realm_key %></div>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+</div>

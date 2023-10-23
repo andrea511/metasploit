@@ -1,0 +1,18 @@
+<table id="vulns-table" class="list sortable">
+	<thead>
+		<tr>
+			<th class="checkbox"><%= check_box_tag "all_vulns", true %></th>
+			<th>Risk</th>
+			<th>Category</th>
+			<th>Name</th>
+			<th>Path</th>			
+			<th>Confidence</th>						
+			<th>Method</th>
+			<th>Parameter</th>
+			<th>Proof</th>												
+		</tr>
+	</thead>
+	<tbody id="vuln_list">
+	<%= render :partial => 'vuln', :collection => vulns %>
+	</tbody>
+</table>

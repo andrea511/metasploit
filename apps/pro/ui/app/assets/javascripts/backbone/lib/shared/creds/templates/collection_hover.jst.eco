@@ -1,0 +1,29 @@
+<% if @title?: %>
+  <h5><%= @title %></h5>
+<% end %>
+<div class="foundation">
+  <div class='row'>
+    <% for col in @columns: %>
+      <div class='large-<%= col.size ? parseInt(12/@columns.length) %> columns'>
+        <%= col.label %>
+      </div>
+    <% end %>
+  </div>
+  <div class='scrollie'>
+    <% unless @data?: %>
+      <div class='spinner'></div>
+    <% else: %>
+      <% columns = @columns %>
+      <% for row in @data: %>
+        <div class='row'>
+          <% for col in columns: %>
+            <div class='large-<%= col.size ? parseInt(12/@columns.length) %> columns'>
+              <div class='truncate'><%= row[col.attribute] %></div>
+            </div>
+
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

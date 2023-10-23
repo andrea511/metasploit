@@ -1,0 +1,126 @@
+<%= meta_module_form_for @task_config, html: { id: 'domino-metamodule-modal' } do |f| %>
+  <%= form_tab "Select Initial Host" do %>
+    <div id='domino-hosts-table'></div>
+
+    <div class='drill-in table-component' style='display:none'>
+      <div class='back'>
+        <a href='javascript:void(0)' class='underline back'>
+          &lt; Back to full list
+        </a>
+      </div>
+      <div class='selected-host-table'>
+      </div>
+      <hr />
+      <p>Choose the login or session you want to use to start the attack.</p>
+      <div class='tab-loading'></div>
+      <div class='logins-table region'></div>
+      <p class='region or'>OR</p>
+      <div class='sessions-table region'></div>
+    </div>
+    <%= f.help_link :blacklist_string do %>
+      <h3>Excluded addresses</h3>
+      <p>This option enables you to exclude hosts from an attack. You can enter a single address (192.168.1.1), a range (192.168.1.1-192.168.1.100), a CIDR notation (192.168.1.0/24), or a wildcard (192.168.1.*). Use a newline to separate each entry. </p>
+    <% end %>
+  <% end %>
+  <%= form_tab "Scope" do %>
+    <div class='foundation'>
+      <div class='row descriptive'>Enter the hosts you want to attack</div>
+      <div class='row scope-row'>
+        <div class='columns large-6 no-pad'>
+          <div style='padding-right: 30px;'>
+            <%= f.input :whitelist_string, :label => "Target addresses", :as => :text %>
+          </div>
+        </div>
+        <div class='columns large-6 no-pad'>
+          <%= f.input :blacklist_string, :label => "Excluded addresses", :as => :text %>
+        </div>
+      </div>
+      <%= advanced_area "Advanced", :show => true do %>
+        <div class='row high-value-row'>
+          <div class='columns large-6 no-pad'>
+            <div style='padding-right: 30px;'>
+              <%= f.input :high_value_hosts_string, :label => "High Value Hosts", :as => :text %>
+            </div>
+          </div>
+          <div class='columns large-6 no-pad'>
+            <%= f.input :high_value_tags_string, :label => "High Value Host Tags", :as => :string %>
+            <div id='high_value_tags_region'></div>
+          </div>
+        </div>
+        <%= f.help_link :high_value_hosts_string do %>
+          <h3>High Value Hosts</h3>
+          <p>High Value Hosts are hosts that are of special interest to you, such as domain controllers. These hosts will be highlighted in red on the Findings window.</p>
+        <% end %>
+
+        <%= f.help_link :high_value_tags_string do %>
+          <h3>High Value Host Tags</h3>
+          <p>High Value Host Tags designate hosts that are of special interest to you, such as domain controllers. Any targets labelled with these tags will be highlighted in red on the Findings window. </p>
+        <% end %>
+      <% end %>
+
+    </div>
+  <% end %>
+
+  <%= form_tab "Settings" do %>
+    <div style='display:none'>
+      <input type='hidden' name='saved_host_id' value="<%= @task_config.initial_host_id %>" />
+      <input type='hidden' name='saved_login_id' value="<%= @task_config.initial_login_id %>" />
+      <input type='hidden' name='saved_session_id' value="<%= @task_config.initial_session_id %>" />
+    </div>
+    <div class='foundation'>
+      <div class='row'>
+        <div class='columns large-6 no-pad'>
+          <div class='border'>
+            <h5>Payload Settings</h5>
+            <%= f.input :payload_type, :as => :select, :collection => ExploitTask::PAYLOAD_TYPES, :include_blank => false, :required => true %>
+            <%= f.input :connection, :as => :select, :collection => ExploitTask::CONNECTIONS, :include_blank => false, :required => true %>
+            <%= f.input :payload_ports, :label => 'Listener Ports', :required => true %>
+            <%= f.input :payload_lhost, :label => 'Listener Host' %>
+            <%= f.input :cleanup_session, :label => 'Clean up sessions', :as => :boolean %>
+            <%= f.input :dynamic_stagers, :label => 'Enable Dynamic Stagers (AV evasion)', :as => :boolean %>
+            <li class="display-none dynamic_stagers_warning">Warning: enabling this option can severely increase the running time of this MetaModule.</li>
+          </div>
+        </div>
+        <div class='columns large-6 last no-pad termination-conditions'>
+          <div class='border'>
+            <h5>Termination Conditions</h5>
+            <%= f.input :num_iterations, :label => "Number of Iterations", :as => :string %>
+            <li class="string input optional stringish timeout" id="task_config_overall_timeout_ss_input">
+              <label class=" label" for="task_config_overall_timeout">Overall Timeout</label>
+              <input id="task_config_overall_timeout_hh" name="task_config[overall_timeout_hh]" type="text" placeholder="HH" value="<%= @task_config.overall_timeout_hh.to_i %>" />
+              <input id="task_config_overall_timeout_mm" name="task_config[overall_timeout_mm]" type="text" placeholder="MM" value="<%= @task_config.overall_timeout_mm.to_i %>" />
+              <input id="task_config_overall_timeout_ss" name="task_config[overall_timeout_ss]" type="text" placeholder="SS" value="<%= @task_config.overall_timeout_ss.to_i %>" />
+            </li>
+            <li class='string input optional stringish timeout timeout-sub'>
+              <label></label>
+              <span>Hours</span>
+              <span>Minutes</span>
+              <span>Seconds</span>
+            </li>
+            <%= f.input :service_timeout, :label => "Service Timeout", :as => :string, :input_html => { :placeholder => 'SS' } %>
+            <li class='string input optional stringish timeout timeout-sub'>
+              <label></label>
+              <span>Seconds</span>
+            </li>
+            <%= f.help_link :num_iterations do %>
+              <h3>Number of Iterations</h3>
+              <p>Sets a limit on the number of iterations the MetaModule attempts.</p>
+            <% end %>
+            <%= f.help_link :service_timeout do %>
+              <h3>Service Timeout</h3>
+              <p>Sets the timeout, in seconds, for each target.</p>
+            <% end %>
+            <%= f.help_link :overall_timeout_ss do %>
+              <h3>Overall Timeout</h3>
+              <p>Sets the timeout limit for how long the Bruteforce task can run in its entirety. You can specify the timeout in the following format: HH:MM:SS. to set no timeout limit, leave the fields blank.</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render :partial => 'wizards/report_tab', :locals => { :f => f, rtypes: [
+    Apps::Domino::TaskConfig::REPORT_TYPE
+  ] } %>
+<% end %>

@@ -1,0 +1,188 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/captured_data") %>',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>',
+  '<%= javascript_path("loots/backbone/views/item_views/form") %>',
+  '<%= javascript_path("shared/backbone/layouts/modal") %>',
+  '<%= javascript_path("moment.min.js") %>',
+  '<%= javascript_path("loots/backbone/models/loot") %>',
+  '<%= javascript_path("loots/backbone/views/item_views/preview") %>'
+], ($, Template, EventAggregator, LootForm, Modal, m, Loot, LootPreview) ->
+  class CapturedDataLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/captured_data']
+
+    hostLootURL: => "/hosts/#{@host_id}/show_captured_data.json"
+
+    initialize: ({@host_id}) ->
+
+    onShow: ->
+      EventAggregator.on("tabs_layout:change:count", @_reRender)
+
+    onDestroy: ->
+      EventAggregator.off("tabs_layout:change:count")
+
+    _reRender: (count) =>
+      unless $('#loot_table table', @el).dataTable().fnSettings().fnRecordsTotal() == count.get("captured_data")
+        @render()
+
+    events: {
+      'click a.new': 'addClicked',
+      'click a.garbage': 'deleteClicked',
+      'click a.view': 'viewClicked'
+      'rowDeleted table' : '_countChanged'
+      'rowAdded table' : '_countChanged'
+    }
+
+    _countChanged: (e,count) ->
+      $(@el).trigger('tabcountUpdated', {count:count, name:'Captured Data'})
+
+
+    onRender: ->
+      @_loadTable()
+
+    addClicked: (e) =>
+      modal = new Modal(
+        class: 'flat',
+        title: 'New Captured Data',
+        width: 600
+      )
+      form = new LootForm(model: new Loot(host_id: @host_id)) # ick
+      modal.open()
+      modal.content.show(form)
+      modal._center()
+      form.on('success', @_addRow)
+
+    _addRow: =>
+      $table = $('#loot_table table', @el).dataTable()
+      #Proxy Event since we want tabs layout to be re-usable
+      records_total = $table.fnSettings().fnRecordsTotal()
+      count =  records_total+1
+      $table.trigger('rowAdded',count)
+      $table.fnDraw()
+
+    deleteClicked: (e) =>
+      return unless confirm('Are you sure you want to delete this captured data?')
+      $row = $(e.currentTarget).parents('tr').first()
+      loot = @_lootFromRow($row)
+      loot.destroy(success: @_removeRow)
+
+    _removeRow: () =>
+      $table  = $('#loot_table table', @el).dataTable()
+      #Have to reproduce delete trigger implemented in dataTables Editable Plugin :-/
+      records_total = $table.fnSettings().fnRecordsTotal()
+      count =  if records_total>0 then records_total-1 else 0
+      $table.trigger('rowDeleted', count)
+      @_loadTable()
+
+    viewClicked: (e) =>
+      modal = new Modal(
+        class: 'flat',
+        title: 'View Captured Data',
+        width: 400,
+        buttons: [
+          {name: 'Done', class: 'close btn primary'}
+        ]
+      )
+      modal.open()
+      $row = $(e.currentTarget).parents('tr').first()
+      preview = new LootPreview(
+        model: @_lootFromRow($row),
+        text: $(e.currentTarget).attr('data-text') == 'true',
+        img: $(e.currentTarget).attr('data-img') == 'true',
+        binary: $(e.currentTarget).attr('data-binary') == 'true',
+        path: $(e.currentTarget).attr('data-url')
+      )
+      modal.content.show(preview)
+      modal._center()
+
+    # returns a Loot instance
+    _lootFromRow: ($row) =>
+      rowData = (klass) -> $row.find(".#{klass}").text()
+      new Loot(
+        host_id: @host_id # FIXME: this should be passed down from parent
+        workspace_id: window.WORKSPACE_ID # FIXME: this should be passed down from parent
+        content_type: rowData('content_type')
+        name: rowData('name')
+        info: rowData('info')
+        id: $row.find('a.garbage').attr('data-id')
+      )
+
+    _loadTable: =>
+      helpers.loadRemoteTable({
+        el: $('#loot_table', @el)
+        tableName: 'capturedData'
+        columns:
+          content_type:
+            name: "Content Type"
+            sWidth: "200px"
+            sClass: 'content_type'
+            fnRender: (o) =>
+              _.escapeHTML(_.unescapeHTML(o.aData.content_type))
+          name:
+            name: "Name"
+            sClass: 'name'
+            fnRender: (o) =>
+              _.escapeHTML(_.unescapeHTML(o.aData.name))
+          ltype:
+            name: "Type"
+          info:
+            name: "Info"
+            sClass: 'info'
+            fnRender: (o) =>
+              _.escapeHTML(_.unescapeHTML(o.aData.info))
+          created_at:
+            name: "Created"
+            sClass: "time"
+            fnRender: (o) ->
+              time = o.aData?.created_at
+              "<span title='#{_.escape(time)}'>#{_.escape(moment(time).fromNow())}</span>"
+          size:
+            sWidth: '90px'
+            bSortable: false
+            sClass: 'size'
+            fnRender: (o) ->
+              size = o.aData.size
+              "<span title='#{_.escape size} bytes'>#{_.escape helpers.formatBytes(size)}</span>"
+          actions:
+            bSortable: false
+            sWidth: "130px"
+            name: ""
+            sClass: 'actions'
+            fnRender: (o) -> 
+              html = "<a href='#{_.escape(o.aData.path)}?disposition=attachment' style='margin-right: 20px;'>Download</a>"
+              a = "<a href='javascript:void(0)' data-id='#{o.aData.id}' "+
+                  "data-url='#{o.aData.path}' data-img='#{o.aData.is_binary}' "+
+                  "data-text='#{o.aData.is_text}' data-img='#{o.aData.is_img}' class='view'>"
+              if o.aData.is_text or (o.aData.is_binary and o.aData.is_img)
+                html += a + "View</a> "
+              html
+          edit:
+            sWidth: "35px"
+            name: ""
+            bSortable: false
+            mDataProp:null
+            fnRender: (o) ->
+              '<div class="edit-table-row">'+
+                '<a class="garbage" data-id="'+o.aData.id+'" href="javascript:void(0)"></a>'+
+              '</div>'
+          id:
+            bVisible: false
+          path:
+            bVisible: false
+          is_img:
+            bVisible: false
+          is_text:
+            bVisible: false
+          is_binary:
+            bVisible: false
+        dataTable:
+          bStateSave: true
+          oLanguage:
+            sEmptyTable: "No Captured Data was found for this host."
+          bFilter: true
+          sPaginationType: "r7Style"
+          sAjaxSource: @hostLootURL()
+          aaSorting: [[ 5, "desc" ]]
+          fnDrawCallback: =>
+            $('table td.time, table td.size', @el).tooltip()
+      })

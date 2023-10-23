@@ -1,0 +1,11 @@
+define [
+  'jquery',
+  '<%= javascript_path('task_chains/backbone/views/layouts/task_chains_layout') %>'
+], ($, TaskChainsLayout) ->
+  class TaskChainsController extends Marionette.Controller
+    initialize: (opts) ->
+      {@legacyTasks} = opts
+
+    start: () =>
+      @region = new Backbone.Marionette.Region(el: '#task-chain-region')
+      @region.show(new TaskChainsLayout({legacyTasks:@legacyTasks}))

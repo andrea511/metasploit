@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="findings_summary" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="90a22c40-c1c6-4956-adc9-27463d092ef3">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Tue Jul 29 14:33:19 CDT 2014\ncallouts.3.text=Known Credentials\ncallouts.2.text=Pass the Hash, SSH\ncallouts.1.text=Single Password\ncallouts.3.bounds=3,165,148,39\ncallouts.2.bounds=-2,88,152,39\ncallouts.1.bounds=-1,18,132,40"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="app_run_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="workspace_id" class="java.lang.Integer"/>
+	<parameter name="app_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+  -- Existing/open or created in the run:
+  cores_involved, logins_involved, sessions_involved,
+  -- Common to all MMs:
+  hosts_selected, services_selected,
+  -- List of service names;
+  -- add spaces, ordering to comma-sep list:
+	(select array_to_string(array_agg(inx.svc), ', ') in_svcs from
+		(select
+		unnest(regexp_split_to_array(x.svcs_selected, ',')) svc
+		order by svc) inx
+	) svcs_selected,
+  successful_auths,
+  services_tried,
+  credentials_selected,
+  hosts_tried,
+  -- Known Creds:
+  sessions_opened,
+  -- Single PW:
+  successful_login_attempts as successful_logins
+from
+(
+	WITH app_run_config as
+	(
+	select regexp_replace(conf.param, '({")', '') param, regexp_replace(conf.val, '("})', '') val
+		from
+		(
+		select
+			btrim(a[1], '\"') param,
+			case a[2]
+				when '\"\"' then null
+				when 'null' then null
+				else btrim(a[2], '\"')
+			end val
+			from
+			(
+				select
+				string_to_array(
+					unnest(string_to_array(config, ',"'))
+				, ':') a
+				from app_runs where id = $P{app_run_id}
+			) b
+		) conf
+	)
+
+	select
+		(select val from app_run_config where param = 'DS_SERVICES') svcs_selected,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Hosts Selected'
+		and ar.id = $P{app_run_id})::int, 0) hosts_selected,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Hosts Tried'
+		and ar.id = $P{app_run_id})::int, 0) hosts_tried,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Services Selected'
+		and ar.id = $P{app_run_id})::int, 0) services_selected,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Credentials Selected'
+		and ar.id = $P{app_run_id})::int, 0) credentials_selected,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Services Tried'
+		and ar.id = $P{app_run_id})::int, 0) services_tried,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Successful Auths'
+		and ar.id = $P{app_run_id})::int, 0) successful_auths,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Successful Login Attempts'
+		and ar.id = $P{app_run_id})::int, 0) successful_login_attempts,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Sessions Opened'
+		and ar.id = $P{app_run_id})::int, 0) sessions_opened,
+		(select count(login_id) from credential_logins_tasks clt
+		 where clt.task_id = t.id) logins_involved,
+		(select count(core_id) from credential_cores_tasks cct
+		 where cct.task_id = t.id) cores_involved,
+		(select count(*) from task_sessions
+		 where task_sessions.task_id = t.id) sessions_involved
+	from app_runs ar
+	inner join tasks t on (ar.id = t.app_run_id)
+	inner join apps a on (ar.app_id = a.id)
+	inner join workspaces w on (ar.workspace_id = w.id)
+	where ar.id = $P{app_run_id}
+	and w.id = $P{workspace_id}
+) x]]>
+	</queryString>
+	<field name="hosts_selected" class="java.lang.Integer"/>
+	<field name="services_selected" class="java.lang.Integer"/>
+	<field name="svcs_selected" class="java.lang.String"/>
+	<field name="successful_logins" class="java.lang.Integer"/>
+	<field name="sessions_opened" class="java.lang.Integer"/>
+	<field name="cores_involved" class="java.lang.Integer"/>
+	<field name="logins_involved" class="java.lang.Integer"/>
+	<field name="sessions_involved" class="java.lang.Integer"/>
+	<field name="successful_auths" class="java.lang.Integer"/>
+	<field name="services_tried" class="java.lang.Integer"/>
+	<field name="credentials_selected" class="java.lang.Integer"/>
+	<field name="hosts_tried" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="74">
+			<printWhenExpression><![CDATA[$P{app_name} == "Single Password Testing"]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="3f00ed21-270f-4b5b-b182-f9babd26e55f" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="125" y="5" width="99" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Services Selected"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="0" y="61" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" mode="Opaque" x="116" y="1" width="1" height="60"/>
+			</line>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="0" y="0" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="ec2b058f-84e6-41fc-a6cd-b2af84193c69" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="376" y="5" width="122" height="14">
+					<printWhenExpression><![CDATA[$F{successful_logins} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Successful Logins"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="376" y="26" width="122" height="18">
+					<printWhenExpression><![CDATA[$F{successful_logins} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{successful_logins}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="246" y="26" width="112" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{credentials_selected}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="366" y="1" width="1" height="60">
+					<printWhenExpression><![CDATA[$F{successful_logins} > 0]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" mode="Opaque" x="235" y="1" width="1" height="60"/>
+			</line>
+			<textField>
+				<reportElement uuid="3f00ed21-270f-4b5b-b182-f9babd26e55f" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="246" y="5" width="112" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Credentials Selected"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="125" y="26" width="99" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{services_selected}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="842e5fe9-0de0-42b5-a267-3e6ff66e683f" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="8" y="5" width="99" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hosts Selected"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="24" y="26" width="82" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hosts_selected}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="76">
+			<printWhenExpression><![CDATA[$P{app_name} == "Pass the Hash" ||
+$P{app_name} == "SSH Key Testing"]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="3f00ed21-270f-4b5b-b182-f9babd26e55f" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="246" y="5" width="92" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hosts Tried"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="444" y="26" width="122" height="18">
+					<printWhenExpression><![CDATA[$F{successful_auths} > 0 ]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{successful_auths}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="246" y="26" width="92" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hosts_tried}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="0" y="61" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="24" y="26" width="82" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hosts_selected}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ec2b058f-84e6-41fc-a6cd-b2af84193c69" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="444" y="5" width="122" height="14">
+					<printWhenExpression><![CDATA[$F{successful_auths} > 0 ]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Successful Logins"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="125" y="26" width="99" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{services_selected}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3f00ed21-270f-4b5b-b182-f9babd26e55f" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="125" y="5" width="99" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Services Selected"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="842e5fe9-0de0-42b5-a267-3e6ff66e683f" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="8" y="5" width="99" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hosts Selected"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" mode="Opaque" x="116" y="1" width="1" height="60"/>
+			</line>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" mode="Opaque" x="235" y="1" width="1" height="60"/>
+			</line>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="345" y="1" width="1" height="60"/>
+			</line>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="0" y="0" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="439" y="1" width="1" height="60">
+					<printWhenExpression><![CDATA[$F{successful_auths} > 0 ]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement uuid="3f00ed21-270f-4b5b-b182-f9babd26e55f" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="349" y="5" width="88" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Services Tried"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="349" y="26" width="88" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{services_tried}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="74">
+			<printWhenExpression><![CDATA[$P{app_name} == "Known Credentials Intrusion"]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="3f00ed21-270f-4b5b-b182-f9babd26e55f" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="210" y="5" width="112" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hosts Tried"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="376" y="26" width="122" height="18">
+					<printWhenExpression><![CDATA[$F{sessions_involved} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sessions_opened}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="210" y="26" width="112" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hosts_tried}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="0" y="61" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" mode="Opaque" x="173" y="1" width="1" height="60"/>
+			</line>
+			<textField>
+				<reportElement uuid="72188c7c-a6f6-400b-9fd5-4c8ade5d2270" style="exec_summ_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="42" y="26" width="82" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hosts_selected}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ec2b058f-84e6-41fc-a6cd-b2af84193c69" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="376" y="5" width="122" height="14">
+					<printWhenExpression><![CDATA[$F{sessions_involved} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sessions Opened"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="366" y="1" width="1" height="60">
+					<printWhenExpression><![CDATA[$F{sessions_involved} > 0]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement uuid="842e5fe9-0de0-42b5-a267-3e6ff66e683f" style="generic_text" positionType="Float" isPrintRepeatedValues="false" mode="Opaque" x="26" y="5" width="99" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hosts Selected"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f79c9650-a7a4-4ae7-af12-fc658793d221" style="separator_line" positionType="Float" x="0" y="0" width="572" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

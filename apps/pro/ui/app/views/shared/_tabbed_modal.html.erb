@@ -1,0 +1,49 @@
+<meta name="license" content="<%= @supports_quick_start_menu || License.get.supports_apps? %>" />
+
+<script type='text/x-tmpl' id='tabbed-modal'>
+  <div class='bg'>
+  </div>
+  <div class='tabbed-modal'>
+    <div class='padding'>
+      <a href="#" class="close">&times;</a>
+      <h1>{{this.title}}</h1>
+      <p>{{this.description}}</p>
+      {% if (this.license=='true') { %}
+        <div class='content loading'>
+        </div>
+        <ul class='tabs'>
+          {% _.each(this._tabs, function(tab){ %}
+            <li class='{{tab.class}}'>
+              {% if (tab.checkbox) { %}
+                <label style='vertical-align:middle'>
+                <span style='vertical-align:middle'>{% safeName = "tab_" + tab.name.replace(/[\s]+/, "_").toLowerCase() %}</span>
+                <input type='checkbox' name='{{ safeName }}' id='{{ safeName}}' />
+              {% } %}
+              {{tab.name}}
+              {% if (tab.checkbox) { %}
+                </label>
+              {% } %}<!-- use a comment to remove whitespace
+              --><span class='hasErrors'>*</span><!--
+              --><%= image_tag("spinner.gif") %>
+            </li>
+          {% }); %}
+        </ul>
+    {% } else { %}
+          <%= render :partial => 'generic/disabled_overlay' %>
+    {% } %}
+    </div>
+    <div class='clearfix'></div>
+    <div class='modal-actions'>
+      {% if (this.license=='true') { %}
+        {% _.each(this._btns, function(btn) { %}
+          <a href='#' class='{{btn.class}}'>{{btn.name}}</a>
+        {% }); %}
+      {% }; %}
+    </div>
+  </div>
+</script>
+
+
+
+<%= include_stylesheet 'tabbed_modal' %>
+<%= javascript_include_tag 'shared/backbone/views/tabbed-modal' %>

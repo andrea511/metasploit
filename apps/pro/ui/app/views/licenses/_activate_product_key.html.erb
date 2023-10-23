@@ -1,0 +1,24 @@
+<%= form_tag activate_path do %>
+
+	<div class='inline_fields'>
+		<p>
+			<%= text_field_tag :product_key,  params[:product_key] , :size => 30 %>
+		</p>
+	</div>
+
+	<%= render :partial => 'generic/proxy_settings', :object => @current_user %>
+
+	<%= nonced_javascript_tag do %>
+	(function() {
+		jQuery(function($) {
+			$("#use_proxy").toggleVisibility($("#proxy_fields"));
+		});
+	}).call(this);
+	<% end %>
+
+	<span class="registration-button">
+		<%= submit_tag "ACTIVATE LICENSE", :class => "register" %>
+	</span>
+<% end %>
+
+<p><%= link_to("Offline Activation", offline_activation_path) %></p>

@@ -1,0 +1,16 @@
+<% unless params[:inline].present? %>
+  <div class='form-header'>
+    <h3 class="max-width">New Target List</h3>
+  </div>
+<% end %>
+
+<div class='target-list-new'>
+  <% if @target_list.errors.any? %>
+    <div class='max-width' style='margin-top: 10px'>
+      <%= render "shared/error_messages", :target => @target_list %>
+    </div>
+  <% end %>
+  <%= semantic_form_for(@target_list, :url => workspace_social_engineering_target_lists_path(@workspace)) do |f| %>
+    <%= render 'form', :f => f %>
+  <% end %>
+</div>

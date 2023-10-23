@@ -1,0 +1,13 @@
+<div class="tooltip-button">
+  <label class="tooltip-component-<%=@cid%>" style="position: absolute; margin-left: 4px; margin-top: 2px"></label>
+</div>
+
+<div class="inline-help" data-field="tooltip-component-<%=@cid%>">
+  <a href class="help" data-field="tooltip-component-<%=@cid%>" target="_blank">
+    <%- @informationAssetTag %>
+  </a>
+  <h3><%= @title %></h3>
+  <div class="content-region" style="margin-top: 6px;">
+    <pre><%= @content %></pre>
+  </div>
+</div>

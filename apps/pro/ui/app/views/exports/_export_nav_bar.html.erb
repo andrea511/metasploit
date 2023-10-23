@@ -1,0 +1,7 @@
+<div id='export_nav_bar'>
+	<div class='control-bar-items'>
+		<span class='button any'><%= link_to 'Delete', destroy_multiple_workspace_exports_path(@workspace, :format => :json), :data => { :confirm => 'Delete selected exports?' }, :id => 'user-delete-submit' %></span>
+		<div class='separator'></div>
+		<span class='button'><%= link_to 'Export Data', new_workspace_export_path(@workspace), :class => :export_data %></span>
+	</div>
+</div>

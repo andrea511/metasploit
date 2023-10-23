@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vuln_details" language="groovy" pageWidth="570" pageHeight="752" columnWidth="570" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d50c0ad4-e33b-4db9-a998-f2b43fd69066">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "webapp_styles.jrtx"]]></template>
+	<style name="vuln_severity" mode="Opaque" forecolor="#FFFFFF" hAlign="Right" vAlign="Middle" isBold="true">
+		<paragraph leftIndent="5" rightIndent="5"/>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{risk} == "High"]]></conditionExpression>
+			<style forecolor="#FFFFFF" backcolor="#AF022D">
+				<box rightPadding="5"/>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{risk} == "Medium"]]></conditionExpression>
+			<style backcolor="#FF8100">
+				<box rightPadding="5"/>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{risk} == "Low"]]></conditionExpression>
+			<style forecolor="#000000" backcolor="#FFCC00">
+				<box rightPadding="5"/>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{risk} == "None"]]></conditionExpression>
+			<style forecolor="#000000" backcolor="#FFFFFF">
+				<box rightPadding="5"/>
+			</style>
+		</conditionalStyle>
+	</style>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String"/>
+	<parameter name="report_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "webapp_assessment/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="vuln_order" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["wv.risk desc"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	wv.id as web_vuln_id, wv.created_at,
+	COALESCE(hosts.name, HOST(CAST(hosts.address as inet))) as host_name, concat(s.name, '://', ws.vhost) vhost,
+	hosts.os_name as host_os,
+	wv.path, wv.name, wv.query as parameter, wv.method, wv.confidence, wv.blame,
+	coalesce(wvcm.name, wv.legacy_category, 'None') category,
+	coalesce(wco.summary, 'None') owasp_category,
+	proofs.text_proof_count,
+case
+  when risk = 0  then 'None'
+  when risk = 1 then 'Info'
+  when risk = 2 then 'Disclosure'
+  when risk = 3 then 'Low'
+  when risk = 4 then 'Medium'
+  when risk = 5 then 'High'
+  else 'Unknown'
+end as risk
+from web_vulns wv
+left outer join (
+	select wp.vuln_id, count(wp.text) text_proof_count
+	from web_proofs wp
+	group by wp.vuln_id
+	order by wp.vuln_id
+) proofs on (wv.id = proofs.vuln_id)
+left outer join web_vuln_category_metasploits wvcm ON (wv.category_id = wvcm.id)
+left outer join web_vuln_category_projection_metasploit_owasps wcmo on (wvcm.id = wcmo.metasploit_id)
+left outer join web_vuln_category_owasps wco on (wcmo.owasp_id = wco.id)
+inner join web_sites ws on (wv.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+and wco.version = '2013rc1'
+order by $P!{vuln_order}]]>
+	</queryString>
+	<field name="vhost" class="java.lang.String"/>
+	<field name="path" class="java.lang.String"/>
+	<field name="parameter" class="java.lang.String"/>
+	<field name="method" class="java.lang.String"/>
+	<field name="risk" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="host_name" class="java.lang.String"/>
+	<field name="confidence" class="java.lang.String"/>
+	<field name="blame" class="java.lang.String"/>
+	<field name="category" class="java.lang.String"/>
+	<field name="web_vuln_id" class="java.lang.Integer"/>
+	<field name="text_proof_count" class="java.lang.Integer"/>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="owasp_category" class="java.lang.String"/>
+	<field name="host_os" class="java.lang.String"/>
+	<detail>
+		<band height="144">
+			<textField>
+				<reportElement uuid="2959d463-9ffa-44cf-93f9-40efdfdc41e9" style="vuln_severity" x="430" y="1" width="112" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Risk: " + $F{risk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a34b8e02-fb3a-42aa-bfa9-7241905d38ef" style="vuln_detail_text" x="0" y="21" width="330" height="119"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["<ul>" +
+"<li>Added: " + (new SimpleDateFormat("yyyy/MM/dd").format($F{created_at})) + "</li>" +
+"<li>Host: " + $F{host_name} + ($F{host_os} != "Unknown" ? (" ("+ $F{host_os} + ")") : "") + "</li>" +
+(($F{vhost}) ? ("<li>Vhost: " + $F{vhost} + "</li>") : "") +
+(($F{path}) ? ("<li>Path: " + $F{path} + "</li>") : "") +
+(($F{parameter}) ? ("<li>Parameter: " + $F{parameter} + "</li>") : "") +
+(($F{method}) ? ("<li>Method: " + $F{method} + "</li>") : "") +
+(($F{confidence}) ? ("<li>Confidence: " + $F{confidence} + "%</li>") : "") +
+(($F{owasp_category} != 'None') ? ("<li>OWASP: " + $F{owasp_category} + "</li>") : "") +
+"</ul>"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bc4724f7-fe2c-49fd-8525-89b15fb06d80" style="vuln_title" x="0" y="1" width="419" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement uuid="887cbe3e-c0e6-429e-b34a-25b7e50faf94" x="0" y="140" width="570" height="1">
+					<printWhenExpression><![CDATA[$F{text_proof_count} < 1]]></printWhenExpression>
+				</reportElement>
+			</break>
+			<textField>
+				<reportElement uuid="13f93746-86e1-40b9-8fcc-0d648b863501" key="" style="vuln_cat" x="382" y="21" width="160" height="51"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font isItalic="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{category}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="157">
+			<printWhenExpression><![CDATA[0 > 1]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="85a6cabd-f8d5-43d7-a485-61e53e6de853" x="0" y="0" width="570" height="156"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="web_vuln_id">
+					<subreportParameterExpression><![CDATA[$F{web_vuln_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="image_dir">
+					<subreportParameterExpression><![CDATA[$P{image_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "vuln_details_image_proof.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="174">
+			<printWhenExpression><![CDATA[$F{text_proof_count} > 0]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="4e17ac6a-c49d-4b79-9fcc-b596ecf08f89" x="0" y="1" width="570" height="170"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="category">
+					<subreportParameterExpression><![CDATA[$F{category}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_os">
+					<subreportParameterExpression><![CDATA[$F{host_os}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="web_vuln_id">
+					<subreportParameterExpression><![CDATA[$F{web_vuln_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="image_dir">
+					<subreportParameterExpression><![CDATA[$P{image_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "vuln_details_text_proof.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement uuid="b8a9b5fb-30b3-4f96-a5d4-609ad5edadbe" x="0" y="172" width="570" height="1">
+					<printWhenExpression><![CDATA[$F{text_proof_count} > 0]]></printWhenExpression>
+				</reportElement>
+			</break>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,16 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/scan_task') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+], ($, Template, TaskConfigView) ->
+  class ScanTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/scan_task']
+
+    VALIDATION_URL: "/workspaces/#{WORKSPACE_ID}/tasks/validate_scan"
+
+    onShow:() ->
+      @loadPartial("/workspaces/#{WORKSPACE_ID}/tasks/new_scan")
+
+    onBeforeClose: ->
+      super
+      @_validate(@VALIDATION_URL)

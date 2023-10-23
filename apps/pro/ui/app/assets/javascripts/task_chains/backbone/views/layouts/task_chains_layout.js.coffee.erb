@@ -1,0 +1,487 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/layouts/task_chains') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_chain_header') %>',
+  '<%= javascript_path('task_chains/backbone/views/layouts/task_chain_nav') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/empty_task_config') %>',
+  'lib/components/modal/modal_controller',
+  '<%= javascript_path('templates/task_chains/item_views/legacy_warning') %>'
+], ($, Template, Header, Nav, TaskConfig, EmptyTaskConfig) ->
+
+  #Define custom Syphon writer because we get boolean strings in the form_hash (task chain)
+  #Also handle case where its cached form object which has true boolean values
+  Backbone.Syphon.InputWriters.register("checkbox", ($el, value) ->
+    unless typeof value == 'boolean'
+      if value == "true"
+        value = true
+      else
+        value = false
+    $el.prop("checked", value);
+  )
+
+  #Define custom Syphon writer because we get boolean strings in the form_hash (task chain)
+  #Also handle case where its cached form object which has true boolean values
+  Backbone.Syphon.InputReaders.register("hidden", ($el) ->
+    value = $el.val()
+    if $el.val() == 'true'
+      value = true
+    if $el.val() == 'false'
+      value = false
+
+    value
+  )
+
+  class LegacyWarningView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['task_chains/item_views/legacy_warning']
+
+    onFormSubmit: ->
+      # jQuery Deffered Object that closes modal when resolved.
+      defer = $.Deferred()
+      formSubmit = () ->
+      defer.promise(formSubmit)
+      defer.resolve()
+
+      formSubmit
+
+
+  class EmptyView extends Backbone.Marionette.ItemView
+    template: _.template('')
+
+
+  class TaskChainsLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['task_chains/layouts/task_chains']
+
+    TASK_CHAIN_VALIDATION_URL: "/workspaces/#{WORKSPACE_ID}/task_chains/validate"
+
+    events:
+      'showTaskConfig .nav' : '_showTaskConfig'
+      'showEmptyState .nav' : '_showEmptyState'
+      'showAddState .nav' : '_showAddState'
+      'cloneTaskConfig .nav' : '_cloneTaskConfig'
+      'saveChain .header' : '_saveChain'
+      'saveChainAndRun .header' : '_saveChainAndRun'
+      'taskConfigChanged .content' : '_configChanged'
+
+    ui:
+      hidden_inputs : '.hidden-inputs'
+      hidden_form: '#hidden-form'
+      content: '.content'
+
+    regions:
+      header: '.header'
+      nav: '.nav'
+      content: '.content'
+
+    initialize: (opts) ->
+      {@legacyTasks} = opts
+      @emptyView = new EmptyTaskConfig()
+      @view_cache = {}
+      @model = new Backbone.Model({})
+      @_initialized = false
+
+      # Register region handlers
+      @listenTo @content, 'show', =>
+        @ui.content.addClass('loaded')
+
+      @listenTo @content, 'before:swap', =>
+        @ui.content.removeClass('loaded')
+
+
+
+    onShow: =>
+      content = $('meta[name="task_chain"]').attr('content') || "null"
+      @task_chain = $.parseJSON(content)
+
+      @listenTo @header, "show", =>
+        gon.watch('taskChainRunning', interval: 3000, @_updateTaskChainRunning)
+
+      @listenTo @header, "destroy", =>
+        gon.unwatch('taskChainRunning',@_updateTaskChainRunning)
+
+      @listenTo @nav, "show", =>
+        @listenTo @nav.currentView.pies, "show", =>
+          @_updateSaveButton()
+
+
+      @header.show(new Header(model: new Backbone.Model({task_chain: @task_chain})),preventDestroy:true)
+      @nav.show(new Nav())
+      @content.show(@emptyView)
+      @_bind_events()
+
+      unless @task_chain?
+        @emptyView = new EmptyTaskConfig()
+        @view_cache = {}
+      else
+        @_initSavedConfig()
+
+    onDestroy: ->
+      @_unbind_events()
+
+    _updateTaskChainRunning: (running) =>
+      gon.taskChainRunning = running
+      @_updateSaveButton(
+        tooltipMsg:
+          disabled: 'Unable to edit a running task chain'
+      )
+
+    _bind_events: ->
+      $(document).on('clearErrorPie', @_clearErrorPie)
+      $(document).on('showErrorPie', @_showErrorPie)
+      $(document).on('showActivePie', @_showActivePie)
+      $(document).on('validated', @_updateSaveButton)
+      $(document).on('before:validated', @_disableButtonOnValidation)
+
+    _unbind_events: ->
+      $(document).off('clearErrorPie', @_clearErrorPie)
+      $(document).off('showErrorPie', @_showErrorPie)
+      $(document).off('showActivePie', @_showActivePie)
+      $(document).off('validated', @_updateSaveButton)
+      $(document).off('before:validated', @_disableButtonOnValidation)
+
+    _initSavedConfig: ->
+      @header.currentView.setName(@task_chain.name)
+      @header.currentView.setScheduleInfo(@task_chain.schedule_info)
+      @header.currentView.setState(@task_chain)
+      helpers.showLoadingDialog.call(@)
+
+
+      if @task_chain.scheduled_tasks.length > 0
+        @ui.content.hide().css('min-height', '300px')
+        @_loadIdx = 0
+        @_loadNextTask()
+
+    _loadNextTask: =>
+      if !@_initialized
+        if @task_chain?.scheduled_tasks.length > @_loadIdx
+          task = @task_chain.scheduled_tasks[@_loadIdx]
+          task.setCurrent = true
+          @nav.currentView.addExistingTask(task)
+          @_loadIdx++
+        else
+          @_initialized = true
+          @ui.content.show()
+          helpers.hideLoadingDialog.call(@)
+          @_showLegacyWarning()
+
+    _showLegacyWarning: ->
+      if @legacyTasks?.length > 0
+        view = new LegacyWarningView(model: new Backbone.Model(legacyTasks:@legacyTasks))
+
+        Pro.execute 'showModal', view,
+          modal:
+            title: 'Task Chain Warning'
+            description: ''
+            width: 600
+            height: 180
+          buttons: [
+            {name: 'OK', class: 'btn primary'}
+          ]
+
+    _cloneTaskConfig: ->
+      @content.currentView._storeForm(callSuper:false)
+      @clonedConfigNode = helpers.cloneNodeAndForm(@content.currentView.ui.config[0])
+
+    _showTaskConfig: (e,opts) ->
+      if opts.task?
+        unless @view_cache[opts.form_id]?
+          @view_cache[opts.form_id] = new opts.task_view(
+            model: new Backbone.Model({form_id:opts.form_id, task:opts.task})
+          )
+          @listenTo @view_cache[opts.form_id], 'loaded', ->
+            @_loadNextTask()
+        @content.currentView.close()
+        @content.show(@view_cache[opts.form_id],{preventDestroy:true, forceShow: true})
+      else
+        unless @view_cache[opts.form_id]?
+          options = {form_id:opts.form_id}
+          if opts.cloned? and opts.cloned
+            options = _.extend(opts, {
+              cloned: opts.cloned,
+              clonedConfigNode: @clonedConfigNode,
+              clonedModel: @content.currentView.formModel?()
+            })
+
+
+          @view_cache[opts.form_id] = new opts.task_view(
+            model: new Backbone.Model(options)
+          )
+
+          @listenTo @view_cache[opts.form_id], 'loaded', ->
+            @_loadNextTask()
+        #Note the close here is a method we define not backbone's legacy close.
+        @content.currentView.close()
+        @content.show(@view_cache[opts.form_id], preventDestroy: true, forceShow:true)
+
+    _clearErrorPie: (e,task_config_view) =>
+      @_toggleActiveTaskChainItemView(e,task_config_view,false)
+
+    _showErrorPie: (e,task_config_view) =>
+      @_toggleActiveTaskChainItemView(e,task_config_view,true)
+
+    _showActivePie: (e,task_config_view) =>
+      active_task_chain_item_model = @_getActiveTaskChainModel(task_config_view)
+      if active_task_chain_item_model
+        active_task_chain_item_view = @nav.currentView.pies.currentView.children.findByModel(active_task_chain_item_model)
+        active_task_chain_item_view.active()
+
+    _toggleActiveTaskChainItemView: (e,task_config_view, flag=true) =>
+      active_task_chain_item_model = @_getActiveTaskChainModel(task_config_view)
+      if active_task_chain_item_model
+        active_task_chain_item_view = @nav.currentView.pies.currentView.children.findByModel(active_task_chain_item_model)
+        if flag then active_task_chain_item_view.flag() else active_task_chain_item_view.unflag()
+
+    _getActiveTaskChainModel: (task_config_view)->
+      collection = @nav.currentView.pies.currentView.collection
+      active_task_chain_item_model = collection.findWhere({'cid': task_config_view.model.get('form_id')})
+
+    _showEmptyState: (e) ->
+      @content.currentView.close()
+      @content.show(@emptyView, preventDestroy: true)
+
+    _showAddState: (e,collection) =>
+      @_updateSaveButton()
+
+    _configChanged: (e,task_config) ->
+     @_updateSaveButton(ignoreTaskConfig:task_config)
+
+    _updateHeadButtons: (e) =>
+     @_updateSaveButton()
+
+    # We Enable the Button if No Errors Exist, or in the case
+    # of a config being edited where errors exist other than itself.
+    _updateSaveButton: (opts={}) =>
+
+      {ignoreTaskConfig,tooltipMsg} = opts
+
+      disableSave = false
+      collection = @nav.currentView.pies.currentView.collection
+      collection.each((task_chain_item,index) =>
+
+        task_config_view = @view_cache[task_chain_item.cid]
+        if task_config_view?
+          if !ignoreTaskConfig || (ignoreTaskConfig? and ignoreTaskConfig.cid != task_config_view.cid)
+            if task_config_view.errors?
+              disableSave = true
+              return
+      )
+
+      if (disableSave and collection.length > 1) or collection.length == 0 or gon.taskChainRunning
+        @header.currentView.disableSave(toolTipMsg:tooltipMsg?.disabled)
+      else
+        @header.currentView.enableSave(tooltipMsg:tooltipMsg?.enabled)
+
+      @header
+
+    _disableButtonOnValidation: =>
+      @header.currentView.disableSave()
+
+
+    _rewriteInputs: (form, chain_index, task_chain_item) =>
+      $inputs = $('input, textarea, select',form)
+
+      cid = task_chain_item.get('cid')
+      task = @view_cache[cid]
+      if task.mm? and task.mm.formOverrides? and $('[name="task_config[cred_type]"]:checked',form).val() == "stored"
+        $inputs = task.mm.sendAjax(form, form)
+
+      $inputs.each((index,input)=>
+        name = $(input).attr('name')
+
+        if name == "utf8" or name == "authenticity_token"
+          $(input).remove()
+        else
+          if name == 'no_files'
+            $(input).val('0')
+
+          if name
+            startIndex = name.indexOf('[')
+            reportIndex = name.indexOf('report[')
+
+            switch task_chain_item.get('type')
+              when 'nexpose', 'import'
+                name = "inputs_for_task[#{chain_index}]#{name}"
+                $(input).attr('name', name)
+              else
+                if startIndex > 1 and task_chain_item.get('type') != 'metamodule'
+                  name = "inputs_for_task[#{chain_index}]#{name.substring(startIndex)}"
+                  $(input).attr('name', name)
+                else
+                  #If Metamodule
+                  if reportIndex ==0
+                    name = "inputs_for_task[#{chain_index}][report]#{name.substring(startIndex)}"
+                    $(input).attr('name', name)
+                  else
+                    name = "inputs_for_task[#{chain_index}]#{name.substring(startIndex)}"
+                    $(input).attr('name', name)
+      )
+
+
+      $inputs
+
+    _filterInputs: (form, index) ->
+      $form = $(form)
+      $('[name="_method"]',$form).remove()
+      if index > 1
+        $('[name="authenticity_token"]',$form).remove()
+        $('[name="utf8"]', $form).remove()
+      $('input, textarea, select',form)
+
+    _construct_task_order:(collection) ->
+      task_order = ""
+      length = collection.length
+      collection.each((task_chain_item,index) ->
+        delimitter = if index+1 == length then '' else ','
+        task_order = task_order.concat("#{index+1}#{delimitter}")
+      )
+      task_order
+
+    _save: () ->
+      if $('.tab-loading:visible', @el).length < 1
+        $(document).on('validated', @_formSubmit)
+        @content.currentView.close()
+        @content.show(new EmptyView(), preventDestroy: true)
+
+    _saveChain: () =>
+      @model.set('run_now', false)
+      @_save()
+
+    _saveChainAndRun: () =>
+      @model.set('run_now', true)
+      @_save()
+
+    _formSubmit: (e,view) =>
+      @header.currentView.disableSave()
+      _.defer(@_showView,view)
+
+      @_validate_chain_before_submit(view.errors)
+
+      if !view.errors
+        $(document).off('validated', @_formSubmit)
+
+    _showView: (view) =>
+      @content.currentView.close?()
+      @content.show(view, preventDestroy: true)
+
+    _validate_chain_before_submit: (errors) ->
+
+      chain_id = if TASK_CHAIN_ID? then TASK_CHAIN_ID else ''
+
+      data = [{
+        name: 'authenticity_token'
+        value: $('meta[name=csrf-token]').attr('content')
+      },{
+        name: 'task_chain[name]'
+        value: @header.currentView.ui.task_chain_name.val()
+      },{
+        name: 'id'
+        value: chain_id
+      }
+      ]
+
+      @viewErrors = errors
+
+      $.ajax {
+        url: @TASK_CHAIN_VALIDATION_URL
+        type:"POST"
+        data: data
+        success: (data) =>
+          unless @viewErrors
+            if @content.currentView?
+              @content.currentView.hideForSubmit?()
+            else
+              @ui.content.html('<div class="tab-loading vertical-spacer></div>')
+            @_formatTaskConfigs()
+            @_appendInputs()
+            @_appendSchedule()
+            if @task_chain? then @_appendId()
+            @_appendAuthToken(@ui.hidden_form)
+            @ui.hidden_form.hide()
+            $(document).off('validated',@_formSubmit)
+            @ui.hidden_form.submit()
+          else
+            $('.field-container .error',@el).remove()
+            $(document).off('validated',@_formSubmit)
+            @header.currentView.enableSave()
+        error: (data) =>
+          $('.field-container .error',@el).remove()
+          json_response = $.parseJSON(data.responseText)
+          $(document).off('validated',@_formSubmit)
+          @_renderErrors(json_response.errors)
+          @header.currentView.enableSave()
+      }
+
+    _renderErrors: (errors) =>
+      _.each errors, (v, k) =>
+        name = "task_chain[#{k}]"
+        $msg = $('<div />', class: 'error').text(v[0])
+        $("input[name='#{name}']", @el).addClass('invalid').after($msg)
+
+    _appendAuthToken: ($form) ->
+      if $('[name="authenticity_token"]',$form).length ==0
+        @ui.hidden_form.append("<input name='authenticity_token' type='hidden' value='#{$('meta[name=csrf-token]').attr('content')}'>")
+
+    _appendId: () ->
+      @ui.hidden_form.attr('action', "#{@ui.hidden_form.attr('action')}/#{@task_chain.id}")
+      @ui.hidden_form.append('<input name="_method" type="hidden" value="put" />')
+
+    _formatTaskConfigs:() ->
+      @ui.hidden_form.attr('action',"/workspaces/#{WORKSPACE_ID}/task_chains")
+      @nav.currentView.pies.currentView.collection.each((task_chain_item,index) =>
+        task_config_view = @view_cache[task_chain_item.cid]
+
+        unless task_config_view.storedForm.get?
+          form = task_config_view.storedForm
+        else
+          form = task_config_view.storedForm.generateInputs()
+
+        task_config_view._applyStashedFileInput(form)
+        $inputs = @_rewriteInputs(form,index+1, task_chain_item)
+        $(form).empty()
+        $(form).append($inputs)
+        $inputs = @_filterInputs(form, index+1)
+        @ui.hidden_inputs.append($inputs)
+        scheduled_task_types = "<input name='scheduled_task_types[#{index+1}]' value='#{task_chain_item.get("type")}'>"
+        @ui.hidden_inputs.append(scheduled_task_types)
+      )
+
+    _appendInputs: () ->
+      collection = @nav.currentView.pies.currentView.collection
+      task_order = @_construct_task_order(collection)
+      scheduled_task_order = "<input name='scheduled_task_order' value='#{task_order}'>"
+      @ui.hidden_inputs.append(scheduled_task_order)
+      $task_chain_name = $(@header.currentView.ui.task_chain_name).clone(false)
+      $task_chain_name.val(@header.currentView.ui.task_chain_name.val())
+      @ui.hidden_inputs.append($task_chain_name)
+      @ui.hidden_inputs.append("<input name='run_now' value='#{@model.get('run_now')}'>")
+
+
+    _appendSchedule: () ->
+
+      #If user cancelled out of modal, we restore the last saved schedule
+      if @header.currentView.cachedSchedule.restoreSchedule?
+        schedule = @header.currentView.cachedSchedule.restoreSchedule
+      else
+        schedule = @header.currentView.cachedSchedule.cachedView
+
+      #If a user cancelled out of modal, we restore the last saved schedule type. (Ex. Weekly, Daily)
+      if schedule.restoreEl? || schedule.cachedEl?
+        if schedule.restoreEl?
+          $storedSchedule = schedule.restoreEl
+        else
+          $storedSchedule = schedule.cachedEl
+        #If Schedule Modal Never Opened
+      else
+        $storedSchedule = @header.currentView.cachedSchedule.cachedView.el
+
+      #If not scheduled
+      if @header.currentView.ui.schedule_state.hasClass('schedule')
+        @ui.hidden_inputs.append("<input type='hidden' name='scheduled' value='false' />")
+        $('input.suspend',$storedSchedule).val('manual')
+        $('input.suspend',$storedSchedule).prop('checked','checked')
+
+
+      $schedule = $('input, select',$storedSchedule)
+
+      @ui.hidden_inputs.append($schedule)
+

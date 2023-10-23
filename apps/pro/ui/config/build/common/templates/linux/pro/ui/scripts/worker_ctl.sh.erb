@@ -1,0 +1,30 @@
+#!/bin/sh
+
+CWD="$(readlink -f $(dirname "$0"))"
+RUBY="$( readlink -f ${CWD}/../../../../ruby/bin/ruby )"
+cd "${CWD}"
+
+if [ -f "${CWD}/../../../../.systemd_enabled" ]; then
+  systemctl $1 metasploit-worker.service
+  exit $?
+fi
+
+# Run as daemon
+if [ $(id -u) -eq 0 ]; then
+  exec su daemon -s /bin/sh -c "$0 $@"
+fi
+
+BUNDLE_GEMFILE="$( readlink -f ${CWD}/../../Gemfile-pro )"
+RAILS_ENV=production
+
+
+if [ "x$1" = "xstart" ]; then
+    if ${RUBY} ${CWD}/worker_ctl.rb status >/dev/null 2>&1 ; then
+        echo "Worker already running"
+        exit 2
+    fi
+    echo "Worker starting in background"
+    nohup "$0" startwait $2 $3 $4 $5 >/dev/null 2>&1 </dev/null &
+else
+    exec ${RUBY} ${CWD}/worker_ctl.rb $1 $2 $3 $4 $5
+fi

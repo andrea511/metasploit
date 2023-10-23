@@ -1,0 +1,142 @@
+<%= javascript_include_tag 'raphael-min' %>
+<%= javascript_include_tag 'g.raphael-min' %>
+<%= javascript_include_tag 'g.pie-min' %>
+<%= javascript_include_tag 'g.line' %>
+
+<div class="control-bar">
+	<span class="button"><%= link_to "Scan", new_scan_path(@workspace), { :class => "scan" } %></span>
+	<span class="button"><%= link_to "Import", new_workspace_import_path(@workspace, :anchor => "file"), { :class => "import" } %></span>
+	<span class="button"><%= link_to "Nexpose Scan", new_workspace_import_path(@workspace, :anchor => "nexpose"), { :class => "nexpose" } %></span>
+	<span class="button"><%= link_to "WebScan", new_webscan_path(@workspace), { :class => "webscan" } %></span>
+	<div class="separator"></div>
+	<span class="button"><%= link_to "Bruteforce",  workspace_brute_force_guess_index_path(@workspace) + '#quick', { :class => "brute" } %></span>
+	<span class="button"><%= link_to "Exploit", new_exploit_path(@workspace), { :class => "exploit" } %></span>
+	<div class="separator"></div>
+  <% if License.get.supports_social_engineering? %>
+	<span class="button"><%= link_to "Campaign", workspace_social_engineering_campaigns_path(@workspace, :show => 0), :class => "new" %></span>
+  <% else %>
+	<span class="button"><%= link_to "Campaign", workspace_campaigns_path(@workspace, :show => 0), :class => "new" %></span>
+  <% end %>
+	<div class="separator"></div>
+	<span class="button"><%= link_to 'Stop all tasks', stop_all_tasks_path, :data => {:remote => true, :method => :post, :confirm => 'Immediately stop all tasks in all projects?'}, :class => 'cancel', :title => "Stop all tasks" %></span>
+
+	<%= form_tag workspaces_search_path, :method => :get do %>
+		<%= hidden_field_tag "workspace_id", @workspace.id %>
+		<%= text_field_tag :search, '', :placeholder => "Search", :tabindex => 1 %>
+	<% end %>
+</div>
+
+<div class="dashboard-title">
+	Dashboard
+
+	<div id="dashboard-expander" class="expanded"></div>
+</div>
+
+<div class="step" id="dashboard-content">
+
+	<table align="center" width="100%">
+	<tr><td align="center">
+		<h3>Target System Status</h3>
+	</td><td align="center">
+		<h3>Operating Systems (Top 5)</h3>
+	</td></tr>
+	<tr><td align="center">
+		<div class="chartBox" id="host_chart"></div>
+	</td><td align="center">
+		<div class="chartBox" id="os_chart"></div>
+	</td></tr>
+	<tr><td align="center">
+		<br/><h3>Project Activity (24 Hours)</h3>
+	</td><td align="center">
+		<br/><h3>Network Services (Top 5)</h3>
+	</td></tr>
+	<tr><td align="center">
+		<div class="chartBox" id="activity_chart"></div>
+	</td><td align="center">
+		<div class="chartBox" id="service_chart"></div>
+	</td></tr>
+	</table>
+
+</div>
+
+<%
+  # Host states
+
+  # XXX: The status filter filter doesn't seem to work any more.
+  # Fix with a tag search later. The url that used to be generated
+  # was: workspaces/:id/hosts?n=20000&status_filter=3 for shelled, eg,
+  # but now these params aren't being used, probably due to some JSON
+  # requirement.
+	host_states = {
+		"Discovered" => 0,
+		"Cracked" =>    0,
+		"Shelled" =>    0,
+		"Looted" =>     0
+	}
+	@workspace.hosts.each do |host|
+		case host.status
+		when 1; host_states["Discovered"] += 1
+		when 2; host_states["Cracked"] += 1
+		when 3; host_states["Shelled"] += 1
+		when 4; host_states["Looted"] += 1
+		end
+	end
+	host_states.reject! {|k,v| v.zero?}
+
+  # OS data
+	os_stats = @workspace.hosts.where('hosts.os_name IS NOT NULL').group("hosts.os_name").count
+	top_names  = os_stats.keys.sort{|a,b| os_stats[b] <=> os_stats[a] }[0, 5]
+	top_values = top_names.map{|name| os_stats[name]}
+	os_hash = {}
+	top_names.each_with_index { |os,i| os_hash[h(os)] = top_values[i] }
+	os_search_url = "search?workspace_id=#{@workspace.id}&commit=Search&search="
+
+  # Service data
+	service_stats = {}
+	@workspace.services.reorder('').where('services.name is not NULL').group(["services.name", "services.port", "services.proto"]).count.each_pair do |k,v|
+		service_stats[k.first.upcase + " Services"] = v
+	end
+
+	top_names  = service_stats.keys.sort{|a,b| service_stats[b] <=> service_stats[a] }[0, 5]
+	top_values = top_names.map{|name| service_stats[name] }
+	service_hash = {}
+	top_names.each_with_index { |os,i| service_hash[os] = top_values[i] }
+	service_search_url = "search?workspace_id=#{@workspace.id}&commit=Search&search="
+
+  # Event data
+	hours = 24
+	secs  = 300
+	stime  = Time.now.to_i
+	events = @workspace.events.where('created_at > ?', Time.at(stime - (3600 * hours)).utc )
+
+	timeline = []
+	axis     = []
+
+	1.upto( (hours * 3600) / secs).each do |i|
+		timeline[i-1] = 0
+		axis[i-1]     = i
+	end
+
+	events.each do |evt|
+		age = ((stime - evt.created_at.to_i) / secs).to_i
+		timeline[age]||= 0
+		timeline[age] += 1
+	end
+
+  timeline.reverse!
+%>
+
+<meta name="msp:host_states" content='<%= JSON.dump(host_states) %>' />
+<meta name="msp:hosts_count" content='<%= @workspace.hosts.count %>' />
+<meta name="msp:hosts_path" content='<%= hosts_path(@workspace) %>' />
+
+<meta name="msp:host_oses" content='<%= JSON.dump(os_hash) %>' />
+<meta name="msp:os_search_url" content='<%= os_search_url %>' />
+
+<meta name="msp:host_services" content='<%= JSON.dump(service_hash) %>' />
+<meta name="msp:service_search_url" content='<%= service_search_url %>' />
+
+<meta name="msp:events_axis" content='<%= JSON.dump(axis) %>' />
+<meta name="msp:events_timeline" content='<%= JSON.dump(timeline) %>' />
+
+<%= javascript_include_tag 'workspaces/dashboard' %>

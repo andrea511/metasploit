@@ -1,0 +1,125 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/item_views/form") %>',
+  'form_helpers',
+  '<%= javascript_path("shared/backbone/views/modal_form") %>'
+], ($, Template, FormHelpers, ModalForm) ->
+  RETURN_KEY_CODE = 13
+
+  class HostForm extends ModalForm
+    template: HandlebarsTemplates['hosts/item_views/form']
+
+    events: _.extend({}, ModalForm.prototype.events, {
+      'click a': '_killClickWhenDisabled'
+      'click a.edit': '_toggleEditLinkClicked',
+      'click a.edit.comments': '_toggleCommentsClicked',
+      'click a.cancel': '_cancelClicked',
+      'click .actions.comments a.cancel': '_cancelCommentsClicked'
+      'click a.save': '_saveClicked',
+      'keypress input[type=text]': '_keypress'
+    })
+
+    initialize: (opts={}) =>
+      $.extend(@, opts)
+
+    onShow: =>
+      $(@el).parents('.content').css(padding: 0)
+
+    #
+    # Event Handlers
+    #
+
+    # checks for presence of a "disabled" class, and conditionally stops event propagation
+    _killClickWhenDisabled: (e) =>
+      if $(e.currentTarget).is('.disabled')
+        e.stopPropagation()
+        e.stopImmediatePropagation()
+        e.preventDefault()
+
+    _enableIfSaved: () ->
+      if $('a.save:not(:hidden)',@el).size() < 1
+        $('.modal-actions>a.close').removeClass('disabled')
+
+    _toggleEditLinkClicked: (e) =>
+      $('.modal-actions>a.close').addClass('disabled')
+      name = $(e.currentTarget).attr('for')
+      $("form li > a.edit[for='#{name}']", @el).hide()
+      $("form [name='#{name}']", @el).show().focus()
+      $btnWrap = $("form .btns a.edit[for='#{name}']", @el).hide().parent('.btns')
+      $btnWrap.find('.actions').show()
+
+    _toggleCommentsClicked: (e) =>
+      $('.modal-actions>a.close').addClass('disabled')
+      $(e.currentTarget).hide()
+      name = $(e.currentTarget).attr('for')
+      $p = $('p.comments', @el).hide()
+      $('.actions.comments', @el).show()
+      value = _.string.trim $p.text()
+      value = '' if value == 'No Comments'
+      $("form [name='#{name}']", @el).text(value)
+
+    _cancelClicked: (e) =>
+      $btns = $(e.currentTarget).parents('.btns')
+      $actions = $(e.currentTarget).parents('.actions').hide()
+      name = $(e.currentTarget).attr('for')
+      $("a[for='#{name}']", @el).show()
+      $input = $("form [name='#{name}']", @el).hide()
+      $input.val(@model.get(name.match(/\[(.*)\]/)[1]))
+      $input.removeClass('invalid')
+      $btns.siblings('.error').remove()
+      @_enableIfSaved()
+
+    _cancelCommentsClicked: (e) =>
+      $('p.comments', @el).show()
+      @_enableIfSaved()
+
+    _saveClicked: (e) =>
+      # first we "disable"
+      updateHash = {}
+      name = $(e.currentTarget).attr('for')
+      $input = $("[name='#{name}']", @el).prop('disabled', true)
+      value = $input.val()
+      $all = $("[for='#{name}'], [name='#{name}']", @el).addClass('disabled')
+      $input.siblings('.error').remove()
+      $input.removeClass('invalid')
+      updateHash[name] = value
+
+      fixDisabled = =>
+        $input.prop('disabled', false)
+        $all.removeClass('disabled')
+
+      @model.update(
+        params: updateHash
+        success: (json) =>
+          fixDisabled()
+          $all.parents('.btns').find('.actions').hide().end().find('a.pencil.edit').show()
+          $all.filter('li>a.edit').show().text(value)
+          $input.hide()
+
+          if name == 'host[comments]'
+            $('p.comments', @el).show().text(value)
+            $('.actions.comments', @el).hide()
+            $('.edit.comments', @el).show()
+
+          @model.trigger('change')
+          @_enableIfSaved()
+
+        error: (json) =>
+          fixDisabled()
+          @_renderErrors(json.errors)
+      )
+
+    # called whenever user presses key in input field
+    _keypress: (e) =>
+      if e.keyCode == RETURN_KEY_CODE
+        e.preventDefault()
+        $(e.currentTarget).siblings('div.btns').find('a.save').click()
+
+    #
+    # Helper methods
+    #
+    _renderErrors: (errors) =>
+      _.each errors, (v, k) =>
+        name = "host[#{k}]"
+        $msg = $('<div />', class: 'error').text(v)
+        $("input[name='#{name}']", @el).addClass('invalid').siblings('.btns').after($msg)

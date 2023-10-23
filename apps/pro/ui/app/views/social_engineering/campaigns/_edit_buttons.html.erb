@@ -1,0 +1,9 @@
+<div class='campaign-edit-actions'>
+  <a href='#' class='cancel-campaign'>Cancel</a>
+  {% if (this.campaign.launchable()) { %}
+    <a href='#' class='link3 launch-campaign' style='margin-bottom:0'>Launch Campaign</a>
+  {% } %}
+  <span class='btn primary' style='margin-left: 0'>
+    <a href='#' class='save-campaign'>{{ actionBtnTitle }}</a>
+  </span>
+</div>

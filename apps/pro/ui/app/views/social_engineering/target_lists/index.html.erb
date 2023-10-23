@@ -1,0 +1,23 @@
+<% title "Target Lists" %>
+<% breadcrumb workspace_link, social_engineering_campaigns_link, social_engineering_target_lists_link %>
+
+
+<% include_view_javascript -%>
+
+<%= form_tag do %>
+  <div class="analysis-control-bar">
+    <div class="control-bar-items">
+      <span class="button">
+        <%= link_to "Create Target List", new_workspace_social_engineering_target_list_path(@workspace), :class => 'new' %>
+      </span>
+      <span class="button any">
+        <%= submit_delete(delete_workspace_social_engineering_target_lists_path(@workspace), 'Delete selected Target Lists?') %>
+      </span>
+      <span class="button single">
+          <%= link_to "Export", '',
+            :class => "export_data" %>
+      </span>
+    </div>
+  </div>
+  <%= render "target_lists", :target_lists => @target_lists %>
+<% end %>

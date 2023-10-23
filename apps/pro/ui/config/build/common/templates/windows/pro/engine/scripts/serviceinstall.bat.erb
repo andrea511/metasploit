@@ -1,0 +1,19 @@
+@echo off
+rem -- Check if argument is INSTALL or REMOVE
+
+if not ""%1"" == ""INSTALL"" goto remove
+
+cd "@@BITROCK_PROSVC_ROOTDIR@@"
+"@@BITROCK_RUBY_ROOTDIR@@\bin\ruby.exe" "@@BITROCK_PROSVC_ROOTDIR@@\prosvc_service_install.rb"
+sc config @@BITROCK_PROSVC_SERVICE_NAME@@ start= auto
+net start @@BITROCK_PROSVC_SERVICE_NAME@@ >NUL
+goto end
+
+:remove
+rem -- STOP SERVICES BEFORE REMOVING
+
+net stop @@BITROCK_PROSVC_SERVICE_NAME@@ >NUL
+sc delete @@BITROCK_PROSVC_SERVICE_NAME@@
+
+:end
+exit

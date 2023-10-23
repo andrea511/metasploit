@@ -1,0 +1,145 @@
+/* line 7, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 100%;
+  visibility: hidden;
+  background: #fff;
+  transition: all, .3s;
+  z-index: 798;
+  padding-bottom: 55px;
+}
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal.up {
+  visibility: visible;
+  top: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal div.content-frame {
+  -moz-box-shadow: 0 -2px 16px 2px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 -2px 16px 2px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 -2px 16px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -2px 16px 2px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  top: 131px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  bottom: 45px;
+}
+/* line 34, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal div.content-frame div.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal > div.actions {
+  position: absolute;
+  text-align: right;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45px;
+  padding: 0 10px;
+  background: #f6f6f6;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.25);
+}
+/* line 54, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal > div.actions > span.btn {
+  margin-top: 7px;
+  margin-right: 15px;
+}
+/* line 60, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal > div.actions > a.link3 {
+  vertical-align: top;
+  margin-top: 7px;
+  margin-right: 15px;
+}
+/* line 66, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal div.row {
+  position: relative;
+  transition: left .3s;
+}
+/* line 73, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal a.close {
+  position: absolute;
+  padding: 8px;
+  top: 0;
+  right: 2px;
+  z-index: 999;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 22px;
+  color: #777;
+}
+/* line 83, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal a.close:hover {
+  color: #333;
+}
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal > div.header, .rollup-modal div.rollup-header {
+  position: absolute;
+  top: 131px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+/* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal > div.header h3, .rollup-modal div.rollup-header h3 {
+  font-size: 16px;
+  margin: 0;
+  height: 38px;
+  line-height: 38px;
+}
+/* line 102, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal > div.header .action-btn, .rollup-modal div.rollup-header .action-btn {
+  vertical-align: bottom;
+  margin: 0 0 3px 10px;
+}
+/* line 107, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal > div.header {
+  box-shadow: 0 33px 21px 10px white;
+}
+/* line 109, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal > div.header.small-shadow {
+  box-shadow: 0 9px 9px 5px white;
+}
+/* line 114, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal .max-width {
+  max-width: 1366px;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+/* line 122, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal div.rollup-header {
+  top: 0;
+}
+/* line 124, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal div.rollup-header h3 {
+  display: inline-block;
+}
+/* line 125, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal div.rollup-header a.btn {
+  position: relative;
+  bottom: 2px;
+  vertical-align: middle;
+}
+/* line 130, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/rollup_modal.scss */
+.rollup-modal div.rollup-header label.status {
+  position: relative;
+  bottom: 1px;
+  margin-left: 5px;
+}

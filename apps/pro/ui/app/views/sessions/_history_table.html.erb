@@ -1,0 +1,49 @@
+<div class="sesssion_history_container" style ="overflow-y: auto">
+  <table class="session_history list">
+  <thead>
+    <tr class=<%=h row_cycle %>>
+      <th>Event Time</th>
+      <th>Event Type</th>
+      <th>Session Data</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%
+  idx = 0
+  while events[idx]
+    etype = events[idx].etype
+  %>
+
+  <tr class=<%=h row_cycle %>>
+    <td class="timestamp" valign="top" width="80">
+      <%= events[idx].created_at %>
+    </td>
+    <td valign="top" width="120">
+       <b><%= etype %></b>
+    </td>
+    <td>
+      <pre class="<%=h etype %>"><%
+        case etype
+        when 'download'
+        %><%=h "Downloaded #{events[idx].remote_path}"%><%
+        when 'upload'
+        %><%=h "Uploaded #{events[idx].remote_path}"%><%
+        when 'filedelete'
+        %><%=h "Deleted #{events[idx].path}"%><%
+        when 'module_run', 'script_run'
+        %><%=h "#{events[idx].local_path}"%><%
+        end
+      %><%=h events[idx].command || events[idx].output || ''
+      %><%  idx += 1
+      # Stitch all of the chunked output back together
+      %><%  while (etype == "output" and events[idx] and events[idx].etype  == "output")
+      %><%=h events[idx].output %><%
+      idx += 1
+      end %></pre>
+    </td>
+  </tr>
+  <% end %>
+  </tbody>
+  </table>
+</div>
+

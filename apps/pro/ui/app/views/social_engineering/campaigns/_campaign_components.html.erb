@@ -1,0 +1,72 @@
+<div style='margin-bottom: 23px'>
+  <h3 class='max-width'>Campaign Components</h3>
+  <div class='list section campaign-components'>
+    <p class='subtext'>
+      Click on a component to open its configuration page
+    </p>
+      {% if (!this.campaignSummary.usesWizard() && this.campaignSummary.get('campaign_components').length > 0) { %}
+        <a class='toggle-component-edit-mode' href='#'>Done</a> 
+      {% } %}
+      <div style='margin: 0 auto; display: inline;'>
+        <ul class='add-nav {{ this.wrapperClass }}'>
+
+          {% if (this.campaignSummary.usesWizard()) { %}
+            {% var wizardComps = this.wizardComponents %}
+
+            {% _.each(this.wizardComponents, function(comp) { %}
+              <li class='component {{ comp.classText || "configured" }}'>
+                <a href="#" class="add-{{ comp.type }}" component-id="{{ comp.id || '' }}"></a>
+                <p>{{ comp.name }}</p>
+                
+                <div class='delete' href='#'></div>
+                {% if (comp != wizardComps[wizardComps.length-1]) { %}
+                  <!-- not last item-->
+                  <div class='rarrow'>&rarr;</div>
+                {% } %}
+
+              </li>
+            {% }) %}
+          {% } else { %}
+            {% _.each(this.campaignComponents, function(comp) { %}
+              <li class='component configured'>
+                <a href="#" class="add-{{ comp.type }}" component-id="{{ comp.id }}"></a>
+                <p>{{ comp.name }}</p>
+                {% if (comp.type == 'portable_file' && comp.download) { %}
+                  <p>
+                    <a href="{{ comp.download }}" class="download-{{ comp.type }}" component-id="{{ comp.id || '' }}"> Download</a>
+                  </p>
+                {% } %}
+                <div class='delete' href='#'></div>
+
+              </li>
+            {% }) %}
+          {% } %}
+        </ul>
+        {% if (!this.campaignSummary.usesWizard()) { %}
+          <div class='inline-add'>
+            <a href="#" class="add-component"></a>
+            <p>Add email, web page, portable file</p>
+          </div>
+        {% } %}
+      </div>
+      <div class='shadow-arrow-row'>
+        <div class='shadow-arrow'></div>
+      </div>
+      <div class='component-buttons'>
+        <ul class="add-nav">
+          <li>
+            <a href="#" class="add-email"></a>
+            <p>Email</p>
+          </li>
+          <li>
+            <a href="#" class="add-web_page"></a>
+            <p>Web Page</p>
+          </li>
+          <li>
+            <a href="#" class="add-portable_file"></a>
+            <p>Portable File</p>
+          </li>
+        </ul>
+      </div>
+  </div>
+</div>

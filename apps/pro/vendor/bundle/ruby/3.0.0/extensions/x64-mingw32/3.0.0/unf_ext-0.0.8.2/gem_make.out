@@ -1,0 +1,23 @@
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/unf_ext-0.0.8.2/ext/unf_ext
+C:/Users/vagrant/pro/pkg/w32/ruby/bin/ruby.exe -I C:/Users/vagrant/pro/pkg/w32/ruby/lib/ruby/site_ruby/3.0.0 -r ./siteconf20230522-388-rsycpx.rb extconf.rb
+checking for -lstdc++... yes
+creating Makefile
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/unf_ext-0.0.8.2/ext/unf_ext
+make DESTDIR\= clean
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/unf_ext-0.0.8.2/ext/unf_ext
+make DESTDIR\=
+generating unf_ext-x64-mingw32.def
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 16189 s in the future
+compiling unf.cc
+linking shared-object unf_ext.so
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/unf_ext-0.0.8.2/ext/unf_ext
+make DESTDIR\= install
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 16186 s in the future
+compiling unf.cc
+linking shared-object unf_ext.so
+/usr/bin/install -c -m 0755 unf_ext.so ./.gem.20230522-388-dzxcmv
+make: warning:  Clock skew detected.  Your build may be incomplete.

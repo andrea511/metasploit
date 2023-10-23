@@ -1,0 +1,96 @@
+<fieldset>
+
+
+  <div class="columns large-12 count">
+    <span class="cred-count">0</span><span class="fuzz">+</span> possible combinations
+  </div>
+
+  <div class="columns large-12">
+    <label>
+      <input type="checkbox" name="quick_bruteforce[creds][import_workspace_creds]" />
+      All credentials in this project
+    </label>
+  </div>
+
+  <div class="columns large-12">
+    <label>
+      <input type="checkbox" name="quick_bruteforce[creds][factory_defaults]" />
+      Attempt factory defaults
+    </label>
+  </div>
+
+  <div class="columns large-12">
+    <label>
+      <input type="checkbox" name="quick_bruteforce[creds][add_import_cred_pairs]"/>
+      Add/Import credential pairs
+    </label>
+  </div>
+
+  <div class="columns large-12">
+    <div class="mutation-label"><span>Mutation selected</span></div>
+    <div class="defaults-label"><span>Factory defaults selected</span></div>
+  </div>
+
+  <div class="columns large-12 space manual-cred-pair" style="display: none;">
+    <div class="row">
+      <div class="columns large-12">
+        Credentials <span class="line-max">(100 lines max)</span>
+      </div>
+
+      <div class="columns large-12">
+        <label style="display: none" for="manual-cred-pair-entry">Manual Cred Pairs</label>
+        <textarea id="manual-cred-pair-entry" name="quick_bruteforce[creds][import_cred_pairs][data]" placeholder="Enter a space and new line delimited list of credential pairs.
+
+Example:
+username pass
+username pass1 pass2
+realm\username pass
+realm\username pass1 pass2
+"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns large-12 space">
+    <div class="row manual-cred-pair" style="display: none;">
+      <div class="columns large-12">
+        <input type="hidden" name='quick_bruteforce[creds][import_cred_pairs][use_file_contents]'>
+        <input type='hidden' name='quick_bruteforce[use_last_uploaded]'>
+        <input type='hidden' name='text_area_status'>
+        <input type='hidden' name='import_pair_count'>
+        <input type="hidden" name='text_area_count'>
+        <input type="hidden" name="file_pair_count">
+        <input type="hidden" name="clone_file_warning">
+        <div class="last-uploaded" style="display: none;">
+        </div>
+      </div>
+
+      <div class="cred-file-upload-region">
+          <div class="columns large-12">
+            Import Credentials from a file:
+          </div>
+
+          <div class="columns large-12">
+            <div class="cancel file-input">&times;</div>
+            <div class="file-upload-region"></div>
+          </div>
+      </div>
+
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="quick_bruteforce[creds][import_cred_pairs][blank_as_password]"/>
+          Use &lt;BLANK&gt; as password
+        </label>
+      </div>
+
+      <div class="columns large-12">
+        <label>
+          <input type="checkbox" name="quick_bruteforce[creds][import_cred_pairs][username_as_password]"/>
+          Use username as password
+        </label>
+      </div>
+
+    </div>
+  </div>
+
+</fieldset>

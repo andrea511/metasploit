@@ -1,0 +1,85 @@
+<%
+
+slive = @host.sessions.alive
+
+sdead = @host.sessions.dead
+
+if slive.length > 0
+%>
+<h3>Active Sessions</h3>
+<table class="list mar-bot10" id="live_sessions">
+<thead>
+	<tr>
+		<th>Session</th>
+		<th>History</th>
+		<th>Type</th>
+		<th>Opened</th>
+		<th>Attack Module</th>
+	</tr>
+</thead>
+<tbody>
+<% reset_cycle "rows" %>
+<% slive.each do |session|
+%>
+	<tr class="<%=h row_cycle %>">
+		<td>
+			<%= link_to "Session #{h session.id}", session_path(session.host.workspace, session) %>
+		</td>
+		<td>
+			<%= link_to "History", session_history_path(@workspace, session) %>
+		</td>
+		<td>
+			<%=h session.stype.capitalize %>
+		</td>
+		<td>
+			<%=h session.opened_at %>
+		</td>
+		<td>
+			<%=h session.via_exploit %>
+		</td>
+	</tr>
+<% end %>
+</tbody>
+</table>
+
+<% end
+if sdead.length > 0
+%>
+<h3>Completed Sessions</h3>
+<table class="list" id="dead_sessions">
+<thead>
+	<tr>
+		<th>Session</th>
+		<th>History</th>
+		<th>Type</th>
+		<th>Opened</th>
+		<th>Attack Module</th>
+	</tr>
+</thead>
+<tbody>
+<% reset_cycle "rows" %>
+<% sdead.each do |session|
+%>
+	<tr class="<%=h row_cycle %>">
+		<td>
+			<%= "Session #{session.id}" %>
+		</td>
+		<td>
+			<%= link_to "History", session_history_path(@workspace, session.id) %>
+		</td>
+		<td>
+			<%=h session.stype.capitalize %>
+		</td>
+		<td>
+			<%=h session.opened_at %>
+		</td>
+		<td>
+			<%=h session.via_exploit %>
+		</td>
+	</tr>
+<% end %>
+</tbody>
+</table>
+
+<% end %>
+

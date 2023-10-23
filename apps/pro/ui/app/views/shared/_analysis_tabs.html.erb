@@ -1,0 +1,12 @@
+<div class='analysis-control-bar'></div>
+
+<ul class='tabs'>
+	<li class='tab'><%= link_to "Hosts", hosts_path(@workspace), :class => ((controller_name == 'hosts' and action_name != 'map') ? 'active hosts' : 'hosts') %></li>
+	<li class='tab'><%= link_to "Notes", workspace_notes_path(@workspace), :class => (controller_name == 'notes' ? 'active notes' : 'notes') %></li>
+	<li class='tab'><%= link_to "Services", workspace_services_path(@workspace), :class => (controller_name == 'services' ? 'active services' : 'services') %></li>
+	<li class='tab'><%= link_to "Vulnerabilities", workspace_vulns_path(@workspace), :class => (controller_name == 'vulns' ? 'active vulnerabilities' : 'vulnerabilities') %></li>
+	<li class='tab'><%= link_to "Captured Data", workspace_loots_path(@workspace), :class => (controller_name == 'loots' ? 'loots active' : 'loots') %></li>
+<% if License.get.supports_map? %>
+	<li class='tab'><%= link_to "Network Topology", map_host_path(@workspace), :class => ((controller_name == 'hosts' and action_name == 'map') ? 'active map' : 'map' )%></li>
+<% end %>
+</ul>

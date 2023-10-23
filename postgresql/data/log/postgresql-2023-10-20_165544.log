@@ -1,0 +1,9 @@
+2023-10-20 16:55:44.259 +07 [7332] LOG:  database system was interrupted; last known up at 2023-10-19 01:37:24 +07
+2023-10-20 16:55:48.556 +07 [7332] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-10-20 16:55:48.601 +07 [7332] LOG:  redo starts at 0/337A790
+2023-10-20 16:55:48.601 +07 [7332] LOG:  invalid record length at 0/337A878: wanted 24, got 0
+2023-10-20 16:55:48.601 +07 [7332] LOG:  redo done at 0/337A840
+2023-10-20 16:55:48.712 +07 [6648] LOG:  database system is ready to accept connections
+2023-10-20 21:01:28.866 +07 [2916] FATAL:  password authentication failed for user "SYSTEM"
+2023-10-20 21:01:28.866 +07 [2916] DETAIL:  Role "SYSTEM" does not exist.
+	Connection matched pg_hba.conf line 90: "host    all             all             ::1/128                 md5"

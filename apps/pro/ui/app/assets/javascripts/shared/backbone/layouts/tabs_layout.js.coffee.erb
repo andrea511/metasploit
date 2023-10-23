@@ -1,0 +1,104 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/shared/layouts/tabs") %>',
+  '<%= javascript_path("templates/shared/layouts/_tabs") %>',
+  #TODO Move Notifiation Center Event Aggregator to Shared Dir
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, Template, Partial, EventAggregator) ->
+  BOTTOM_MARGIN = 55
+
+  class TabsLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['shared/layouts/tabs']
+
+    events:
+      'click .nav li' : '_change_tab_event'
+      'tableload table': '_tab_loaded'
+      'tabload .content>*': '_tab_loaded'
+      'tabloading .content>*' : '_tab_loading'
+      'tabcountUpdated .content>*': '_tab_count_updated'
+
+    regions:
+      nav: '.nav'
+      content: '.content'
+
+    initialize: (@opts={}) ->
+      $.extend(@, @opts)
+      @_bind_events()
+
+    onRender: =>
+      _.defer => @_set_max_height()
+
+    _tab_count_updated:(e,opts={}) ->
+      tab_name = _.string.underscored(opts.name)
+      @_update_tab(opts.count, tab_name)
+
+    _set_max_height: =>
+      $content = $(@content.el, @el)
+      if @maxHeight?
+        $content.css('max-height', @maxHeight)
+      else
+        max = $(window).height() - $content.offset().top - BOTTOM_MARGIN
+        $content.css('max-height', parseInt(max)+'px')
+
+    _bind_events: ->
+      EventAggregator.on("tabs_layout:change:count", @_update_tab_counts)
+      $(window).bind('resize.tabs_layout', @_set_max_height)
+
+    _update_tab_counts: (model) =>
+      _.each model.attributes, @_update_tab
+
+    _update_tab: (value, key) =>
+      tab_class = key
+      $li = $(".backbone-tabs ul .#{tab_class}", @el).closest("li")
+      $count = $li.find(".count")
+      if $count.length is 0
+        $count = $('<div />', class: 'count').text(value).appendTo($li)
+      $count.text(value)
+      isZero = parseInt(value) == 0
+      $count.toggle(not isZero)
+
+    _change_tab_event: (e)->
+      $tab = $('.name',e.currentTarget)
+      tab_name = $tab.html()
+      @_change_tab(tab_name)
+      @_mark_tab_as_selected($tab.closest('li'))
+      EventAggregator.trigger('tabs_layout:tab:changed', tab_name)
+
+    _change_tab: (tab_name) =>
+      tabs = @model.get('tabs')
+      if !tab_name
+        tab_name = tabs[0].name
+      tab_name = _.string.humanize(tab_name)
+      tab_hash = $.grep(tabs, (elem)-> elem.name == _.string.titleize(tab_name))[0]
+      @_content_div().addClass('tab-loading')
+      @content.show(new tab_hash.view(_.extend({ controller: tab_hash.controller }, @opts)))
+
+    _mark_tab_as_selected: ($tab) ->
+      $('.nav li.selected',@el).removeClass('selected')
+      $tab.addClass('selected')
+
+    _get_tag_elem_by_name: (tab_name) ->
+      tab_name = _.string.underscored(tab_name)
+      $(".nav li .name.#{tab_name}",@el).closest('li')
+
+    _tab_loaded: =>
+      @_content_div().removeClass('tab-loading')
+      @_set_max_height()
+      #Delay if in a SliderWindow
+      if $(@el).closest('.window-slider-pane').length > 0
+        _.delay(@_setFocus,3000) unless $('#modals>*').length
+      else
+        @_setFocus unless $('#modals>*').length
+
+    _setFocus: () =>
+      $('.dataTables_filter input[type=text]', @el).first().focus()
+
+    _tab_loading: =>
+      @_content_div().addClass('tab-loading')
+
+    _content_div: => $(@content.el, @el)
+
+    set_tab: (tab_name) ->
+      @_change_tab(tab_name)
+      $tab = @_get_tag_elem_by_name(tab_name)
+      @_mark_tab_as_selected($tab)

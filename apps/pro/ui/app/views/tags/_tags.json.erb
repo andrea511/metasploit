@@ -1,0 +1,8 @@
+[
+  <% @tags.each_with_index do |tag_obj, index| -%>
+    {
+      "id":   <%= tag_obj.id.to_json.html_safe %>,
+      "name": <%= tag_obj.name.to_json.html_safe %>
+    }<%= ',' unless index == (@tags.size - 1) %>
+  <% end -%>
+]

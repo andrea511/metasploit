@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="port-status-table" language="groovy" pageWidth="571" pageHeight="752" columnWidth="571" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="20f6b920-02e3-4fa4-9f80-fb4204d0e946">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="port_cutoff" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="port_states" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[WITH run_results AS (select
+	er.start_port,
+	er.end_port,
+	er.state
+from egadz_result_ranges er
+inner join tasks t on (er.task_id = t.id)
+inner join app_runs ar on (t.app_run_id = ar.id)
+where ar.id = $P!{app_run_id}
+and er.state $P!{port_states}
+)
+
+
+-- Results with name/info
+select results.port, known.name service_name, known.info, results.state
+from
+	(select generate_series(rr.start_port, rr.end_port) port, rr.state
+	from run_results rr) results
+inner join known_ports known on (results.port = known.port)
+where results.port $P!{port_cutoff}
+order by port]]>
+	</queryString>
+	<field name="port" class="java.lang.String"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="service_name" class="java.lang.String"/>
+	<field name="info" class="java.lang.String"/>
+	<variable name="service_count" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{port}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="services" class="java.lang.String"/>
+	<pageHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0750feb3-287f-4bd1-8e59-32f446166261" style="Section Header - No BG" x="10" y="0" width="562" height="25"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9371e740-25e4-42e3-b956-318b96160f19" style="section_header_3" x="10" y="0" width="84" height="25"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="30"/>
+				</textElement>
+				<text><![CDATA[Port]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="71f4b1e8-ed57-408c-93a8-61040dd7f951" style="section_header_3" x="94" y="0" width="91" height="25"/>
+				<textElement textAlignment="Left">
+					<font isStrikeThrough="false"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[State]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="71f4b1e8-ed57-408c-93a8-61040dd7f951" style="section_header_3" x="185" y="0" width="120" height="25"/>
+				<textElement textAlignment="Left">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Service]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="71f4b1e8-ed57-408c-93a8-61040dd7f951" style="section_header_3" x="305" y="0" width="266" height="25"/>
+				<textElement textAlignment="Left">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b1f18c43-74cc-4452-a073-671a58623faa" style="generic_table_text" x="0" y="0" width="94" height="22"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="30"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{port}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4a39edf8-4503-4ee9-8ae6-1801a5b10d78" style="generic_table_text" x="94" y="0" width="91" height="22"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isStrikeThrough="false"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{state}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4a39edf8-4503-4ee9-8ae6-1801a5b10d78" style="generic_table_text" x="185" y="0" width="120" height="22"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{service_name}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="4a39edf8-4503-4ee9-8ae6-1801a5b10d78" style="generic_table_text" x="305" y="0" width="266" height="22"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph spacingBefore="3" spacingAfter="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{info}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="1">
+			<printWhenExpression><![CDATA[$V{service_count} > 0]]></printWhenExpression>
+			<line>
+				<reportElement uuid="25d8aecb-3053-49bd-8e28-5050fb0c9d01" style="separator_line" x="10" y="0" width="561" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

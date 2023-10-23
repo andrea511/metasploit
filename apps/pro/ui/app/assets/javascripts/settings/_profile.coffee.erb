@@ -1,0 +1,18 @@
+jQuery ($) ->
+  $(document).ready ->
+    PASSWORD_UNCHANGED = "<%= SmtpSettings::PASSWORD_UNCHANGED %>"
+    TAB_KEY_CODE = 9
+
+    input = $('#smtp_password')
+
+    # The smtp password should blank out when typing starts as the value is a placeholder,
+    # {SmtpSettings::PASSWORD_UNCHANGED} used to indicate that the user wants to keep the current password.  The
+    # placeholder is required because blank passwords (and usernames) are valid so the convention of sending a blank
+    # input to maintain the current value can't be used here.
+    if input.val() == PASSWORD_UNCHANGED
+      input.keydown((event) ->
+        # don't capture tabbing (or shift-tabbing!) between inputs in form.
+        # check if input still has special value so input doesn't keep getting blanked out.
+        if event.keyCode != TAB_KEY_CODE and !event.shiftKey and input.val() == PASSWORD_UNCHANGED
+          $(this).val('')
+      )

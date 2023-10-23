@@ -1,0 +1,21 @@
+<% title "Disclosed Vulnerabilities" %>
+<% breadcrumb workspace_link, vulns_link %>
+
+
+<% include_javascript "jquery.watch" -%>
+<% include_javascript "dataTables.filteringDelay" -%>
+<% include_view_javascript -%>
+
+
+<%= form_tag url: destroy_multiple_groups_workspace_vulns_path(@workspace), method: :post, html: {:id => 'table-form', :class => 'vulns_combined'}, remote: true do %>
+  <%= render :partial => 'shared/analysis_tabs' %>
+    <div class='tab_panel'>
+    <div class="control-bar-items">
+      <span class="button"><%= link_to "Individual View", workspace_vulns_path(@workspace), :class => 'multiple' %></span>
+      <span class="button any"><%= submit_delete(destroy_multiple_groups_workspace_vulns_path(@workspace), 'Delete ALL vulns in the selected groups?') %></span>
+    </div>
+    <div id="vulns-table-wrapper">
+      <%= render :partial => "vulns_combined" %>
+    </div>
+  </div>
+<% end %>

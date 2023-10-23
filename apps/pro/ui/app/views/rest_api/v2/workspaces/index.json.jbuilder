@@ -1,0 +1,1 @@
+json.array! @workspaces, partial: 'workspace', as: :workspace

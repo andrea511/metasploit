@@ -1,0 +1,95 @@
+<% title "File Browser: #{h(@session.host.address)}" %>
+<% breadcrumb workspace_link, sessions_link, session_link %>
+
+<form>
+	<%= label_tag(:path, "Current Directory") %>
+
+<%= text_field_tag(:path, @cwd, :size => 100, :class => 'searchform') %>
+
+<% unless @cwd.blank? %>
+	( <%= link_to("&uarr; UPLOAD FILE &uarr;".html_safe, { :remote => true, :url => session_upload_path(@session, :path => @cwd)}, {}) %> )
+<% end %>
+
+</form><br/>
+
+<%
+	loots = @session.host.loots || []
+	loots.to_a.reject! { |loot| loot.ltype !~ /download/ }
+
+	if loots.length > 0
+%>
+Downloaded <%=h loots.length%> file(s) (<%= show_hide_link "host_loot" %>)<br/>
+<div id="host_loot" style="display: none;">
+<%= render 'hosts/loots', :loots => loots %>
+</div>
+<br/>
+
+<% end %>
+
+<table class="list" id="files">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Size</th>
+			<th>Last Modified</th>
+			<th>Available Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @dirs.each do |name, attrs| %>
+		<tr class=<%=h row_cycle %>>
+			<td>
+				<%=
+					if name == ".."
+						ent_name = "Back to Parent Directory"
+						ent_icon = "door_out"
+					else
+						ent_name = name
+						ent_icon = "folder"
+					end
+
+					cls = "icon_" + ent_icon
+
+					if @cwd
+						link_to h(ent_name), {:action => 'files', :path => (@cwd + "#{@ifs}#{name}").gsub("#{@ifs}#{@ifs}", "#{@ifs}") }, :class => cls
+					else
+						link_to h(ent_name), {:action => 'files', :path => name}, :class => cls
+					end
+				%>
+			</td>
+			<td>
+				&nbsp;
+			</td>
+			<td>
+				<%=h ::Time.at( attrs['mtime'] ).in_time_zone %>
+			</td>
+			<td>
+				&nbsp;
+			</td>
+		</tr>
+		<% end %>
+
+		<% @files.each do |name, attrs|
+			ent_icon = icon_for_filename(name)
+			ent_name = name
+			cls = "icon_" + ent_icon
+		%>
+		<tr class=<%=h row_cycle %>>
+			<td>
+				<%= link_to(h(ent_name), session_download_path(@session, :path => ("#{@cwd}#{@ifs}#{name}").gsub("#{@ifs}#{@ifs}", "#{@ifs}")), :data => { :confirm => "Download #{name}?" }, :class => cls) %>
+			</td>
+			<td>
+				<%=h attrs['size'] %>
+			</td>
+			<td>
+				<%=h ::Time.at( attrs['mtime'] ).in_time_zone %>
+			</td>
+			<td>
+				<%= link_to("( &darr; STORE &darr; )".html_safe, session_download_path(@session, :path => ("#{@cwd}#{@ifs}#{name}").gsub("#{@ifs}#{@ifs}", "#{@ifs}"))) %> |
+				<%= link_to "( &times; DELETE &times; )".html_safe, session_delete_path(@session, :path => ("#{@cwd}#{@ifs}#{name}").gsub("#{@ifs}#{@ifs}", "#{@ifs}")), :data => { :confirm => "Delete #{name}?", :method => :delete } %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+

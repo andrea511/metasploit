@@ -1,0 +1,36 @@
+<%= render "shared/error_messages", :target => @console %>
+<div class="one_col_with_sidebar">
+
+  <fieldset>
+    <dl>
+      <dt><%= f.label :name, "Console Name" %></dt>
+      <dd><%= f.text_field :name, :autocomplete => :off, :autofocus => true %></dd>
+    </dl>
+    <dl>
+      <dt><%= f.label :address, "Console Address" %></dt>
+      <dd><%= f.text_field :address, :autocomplete => :off %></dd>
+    </dl>
+    <dl>
+      <dt><%= f.label :port, "Console Port" %></dt>
+      <dd><%= f.text_field :port, :autocomplete => :off %></dd>
+    </dl>
+    <dl>
+      <dt><%= f.label :username, "Console Username" %></dt>
+      <dd><%= f.text_field :username, :autocomplete => :off %></dd>
+    </dl>
+    <dl>
+      <dt><%= f.label :password, "Console Password" %></dt>
+      <dd><%= f.password_field :password, :autocomplete => :off %></dd>
+    </dl>
+    <dl>
+      <dt><%= f.label :enabled, "Enabled" %></dt>
+      <dd><%= f.check_box :enabled  %></dd>
+    </dl>
+
+    <div class="buttons">
+      <span class="btn"><%= f.submit 'Save', :class => "save" %></span>
+    </div>
+
+  </fieldset>
+
+</div>

@@ -1,0 +1,1336 @@
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#creds-main-region .fixed #single-cred-header h1, #creds-main-region .fixed .manage-creds-header h1, .single-host-view-container .fixed #single-cred-header h1, .single-host-view-container .fixed .manage-creds-header h1, #creds-main-region .fixed #single-cred-header h2, #creds-main-region .fixed .manage-creds-header h2, .single-host-view-container .fixed #single-cred-header h2, .single-host-view-container .fixed .manage-creds-header h2 {
+  color: #010101;
+  font-weight: 100;
+  padding-left: 12px;
+}
+
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#creds-main-region .fixed #single-cred-header, #creds-main-region .fixed .manage-creds-header, .single-host-view-container .fixed #single-cred-header, .single-host-view-container .fixed .manage-creds-header {
+  height: 55px;
+  position: relative;
+  min-width: 1000px;
+  border: 1px solid #e7e7e7;
+  background-image: -moz-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+  background-image: -webkit-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+  background-image: -ms-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+}
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#creds-main-region .fixed #single-cred-header h1, #creds-main-region .fixed .manage-creds-header h1, .single-host-view-container .fixed #single-cred-header h1, .single-host-view-container .fixed .manage-creds-header h1 {
+  margin: 0px;
+  font-size: 24px;
+  line-height: 52px;
+}
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#creds-main-region .fixed #single-cred-header h2, #creds-main-region .fixed .manage-creds-header h2, .single-host-view-container .fixed #single-cred-header h2, .single-host-view-container .fixed .manage-creds-header h2 {
+  margin: 0px;
+  color: #a5a5a5;
+  font-size: 12px;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#creds-main-region .fixed #single-cred-header:after, #creds-main-region .fixed .manage-creds-header:after, .single-host-view-container .fixed #single-cred-header:after, .single-host-view-container .fixed .manage-creds-header:after {
+  bottom: -4px;
+  content: " ";
+  display: block;
+  height: 4px;
+  width: 99.9%;
+  left: 1px;
+  position: absolute;
+  margin: 0 auto;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.09);
+}
+/* line 68, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#creds-main-region .fixed #single-cred-header > div:first-child, #creds-main-region .fixed .manage-creds-header > div:first-child, .single-host-view-container .fixed #single-cred-header > div:first-child, .single-host-view-container .fixed .manage-creds-header > div:first-child {
+  border: 1px solid white;
+  height: 100%;
+}
+
+/* line 74, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#creds-main-region #related-logins-region, #creds-main-region #creds-region, .single-host-view-container #related-logins-region, .single-host-view-container #creds-region {
+  border: 1px solid #efefef;
+  background-color: #f2f2f2;
+  margin: 0 auto;
+  width: 98%;
+  position: relative;
+}
+/* line 82, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#creds-main-region #related-logins-region:after, #creds-main-region #creds-region:after, .single-host-view-container #related-logins-region:after, .single-host-view-container #creds-region:after {
+  bottom: -2px;
+  height: 2px;
+  left: 2px;
+  display: block;
+  width: 99.7%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.07);
+  content: " ";
+}
+
+/* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+#creds-main-region #related-logins-region > div:first-child, #creds-main-region #creds-region > div:first-child, .single-host-view-container #related-logins-region > div:first-child, .single-host-view-container #creds-region > div:first-child {
+  margin: 0 15px 15px 15px;
+  padding: 10px 10px;
+  border-bottom-radius: 5px;
+  border: 1px solid #ddd;
+  border-top: 0px;
+  background-color: #fff;
+}
+
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tabs.scss */
+ul li.tab {
+  position: relative;
+  top: 1px;
+  padding: 9px 14px 9px 14px;
+  display: inline-block;
+  border-top-radius: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  margin-right: 5px;
+  min-width: 100px;
+  text-align: center;
+}
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tabs.scss */
+ul li.tab .invalid {
+  color: red;
+}
+/* line 21, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tabs.scss */
+ul li.tab.active {
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #fff;
+  background-color: #ffffff;
+  color: #000;
+}
+
+/* line 31, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tabs.scss */
+.tab-content {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  min-height: 80px;
+  overflow-y: auto;
+}
+
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.sexy-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-weight: 300;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.small-caps-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-size: 11px;
+  position: relative;
+}
+
+/* line 14, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags ul.token-input-list-metasploit, body ul.token-input-list-metasploit {
+  overflow: hidden;
+  height: auto !important;
+  height: 1%;
+  width: 100%;
+  border: 1px solid #ccc;
+  cursor: text;
+  font-size: 12px;
+  min-height: 1px;
+  margin: 0 auto;
+  padding: 0;
+  background-color: #fff;
+  list-style-type: none;
+  clear: left;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-border-radius: 2px;
+  /* Gecko */
+  -webkit-border-radius: 2px;
+  /* Webkit */
+  -khtml-border-radius: 2px;
+  /* Konqueror */
+  border-radius: 2px;
+  /* CSS3 */
+}
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags ul.token-input-list-metasploit li input, body ul.token-input-list-metasploit li input {
+  border: 0;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5px;
+  font-size: 12px;
+  -webkit-appearance: caret;
+}
+/* line 41, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit, body li.token-input-token-metasploit {
+  margin: 3px;
+  background-color: #d9d9d9;
+  cursor: default;
+  font-size: 11px;
+  float: left;
+  white-space: nowrap;
+  position: relative;
+  margin-left: 10px;
+  padding-left: 8px;
+}
+/* line 51, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit:before, body li.token-input-token-metasploit:before {
+  width: 0;
+  height: 0;
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 0;
+  bottom: 1px;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-right: 9px solid #d9d9d9;
+}
+/* line 63, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit:after, body li.token-input-token-metasploit:after {
+  position: absolute;
+  content: '\2022';
+  top: 0;
+  left: -3px;
+  bottom: 0;
+  color: #fff;
+}
+/* line 73, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit, body div.token-input-dropdown-metasploit {
+  position: absolute;
+  background-color: #fff;
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: 0;
+  margin: 0 auto;
+  cursor: default;
+  font-size: 11px;
+  z-index: 1005;
+}
+/* line 87, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit p, #add_tags li.token-input-token-metasploit span, body li.token-input-token-metasploit p, body li.token-input-token-metasploit span {
+  display: inline-block;
+  vertical-align: top;
+}
+/* line 92, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit p, body li.token-input-token-metasploit p {
+  color: #444;
+  padding: 0 5px 0 1px;
+  margin: 0;
+  line-height: 18px;
+  font-size: 11px;
+}
+/* line 100, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit span, body li.token-input-token-metasploit span {
+  font-size: 16px;
+  color: #b3b3b3;
+  border-left: 1px solid #cccccc;
+  cursor: pointer;
+  line-height: 18px;
+  padding: 0 5px;
+}
+/* line 107, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit span:hover, body li.token-input-token-metasploit span:hover {
+  text-decoration: none;
+  background-color: #d9d9d9;
+  background-image: -moz-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e1e1e1), color-stop(1, #d9d9d9));
+  background-image: -webkit-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -o-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -ms-linear-gradient(top, #e1e1e1, #d9d9d9);
+  background-image: linear-gradient(top, #e1e1e1, #d9d9d9);
+}
+/* line 113, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-selected-token-metasploit, body li.token-input-selected-token-metasploit {
+  background-color: #ccc;
+  border-color: #ccc;
+  color: #000;
+}
+/* line 117, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-selected-token-metasploit:before, body li.token-input-selected-token-metasploit:before {
+  border-right-color: #ccc;
+}
+/* line 120, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-selected-token-metasploit span.token-input-delete-token-metasploit, body li.token-input-selected-token-metasploit span.token-input-delete-token-metasploit {
+  border-left-color: silver;
+}
+/* line 125, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-input-token-metasploit, body li.token-input-input-token-metasploit {
+  float: left;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+/* line 132, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit p, body div.token-input-dropdown-metasploit p {
+  margin: 0;
+  padding: 5px;
+  font-weight: bold;
+  color: #777;
+}
+/* line 139, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul, body div.token-input-dropdown-metasploit ul {
+  margin: 0;
+  padding: 0;
+}
+/* line 144, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li, body div.token-input-dropdown-metasploit ul li {
+  background-color: #fff;
+  padding: 3px;
+  margin: 0;
+  list-style-type: none;
+  font-size: 11px;
+}
+/* line 152, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li.token-input-dropdown-item-metasploit, body div.token-input-dropdown-metasploit ul li.token-input-dropdown-item-metasploit {
+  background-color: #fff;
+}
+/* line 156, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li.token-input-dropdown-item2-metasploit, body div.token-input-dropdown-metasploit ul li.token-input-dropdown-item2-metasploit {
+  background-color: #fff;
+}
+/* line 160, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li em, body div.token-input-dropdown-metasploit ul li em {
+  font-weight: bold;
+  font-style: normal;
+}
+/* line 165, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li.token-input-selected-dropdown-item-metasploit, body div.token-input-dropdown-metasploit ul li.token-input-selected-dropdown-item-metasploit {
+  background-color: #ccc;
+  color: #000;
+}
+
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/file_input.scss */
+.file.input {
+  height: 32px;
+  position: relative;
+  margin-bottom: 20px;
+}
+/* line 7, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/file_input.scss */
+.file.input label {
+  width: 80% !important;
+  padding: 6px 7px !important;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+}
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/file_input.scss */
+.file.input label p {
+  margin: 0px 0px 0px 0px !important;
+  font-weight: normal;
+  color: #666;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/file_input.scss */
+.file.input label span {
+  right: 0;
+  width: 80px;
+  font-size: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 0 5px;
+  line-height: 31px;
+  text-align: center;
+  background: #eee;
+  border: 1px solid #aaa;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/file_input.scss */
+.file.input input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100% !important;
+  z-index: 55;
+  cursor: pointer;
+  opacity: 0;
+}
+
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.sexy-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-weight: 300;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.small-caps-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-size: 11px;
+  position: relative;
+}
+
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#dialog-region .export-form .pwdump-warning:before {
+  display: block;
+  height: 10px;
+  line-height: 10px;
+  width: 10px;
+  text-align: center;
+  border-radius: 20px;
+}
+
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#dialog-region .export-form .pwdump-warning:before {
+  background-color: #c91114;
+  border: 1px solid #9f0b12;
+  color: #fff;
+}
+
+/* line 61, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/circle_icons.scss */
+#dialog-region .export-form .pwdump-warning:before {
+  content: '!';
+  font-size: 9px;
+  font-weight: bold;
+}
+
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag, div.tags .tag-close, div.tags-wrap .tag, div.tags-wrap .tag-close {
+  font-weight: normal;
+  color: #666;
+  background: #d9d9d9;
+  font-size: 11px;
+  padding: 0px 5px;
+  display: inline-block;
+  height: 18px;
+  vertical-align: top;
+}
+/* line 18, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag a, div.tags .tag-close a, div.tags-wrap .tag a, div.tags-wrap .tag-close a {
+  color: #444;
+}
+/* line 22, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag, div.tags-wrap .tag {
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 0;
+  /* Gecko */
+  -webkit-border-top-right-radius: 0;
+  /* Webkit */
+  -khtml-border-top-right-radius: 0;
+  /* Konqueror */
+  border-top-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 0;
+  /* Konqueror */
+  border-bottom-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 0;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 0;
+  /* Konqueror */
+  border-bottom-left-radius: 0;
+  /* CSS3 */
+  position: relative;
+  margin-left: 10px;
+  padding-left: 8px;
+}
+/* line 27, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag:before, div.tags-wrap .tag:before {
+  width: 0;
+  height: 0;
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 0;
+  bottom: 1px;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-right: 9px solid #d9d9d9;
+}
+/* line 39, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag:after, div.tags-wrap .tag:after {
+  position: absolute;
+  content: '\2022';
+  top: 0;
+  left: -3px;
+  bottom: 0;
+  color: #fff;
+}
+/* line 47, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag:hover, div.tags-wrap .tag:hover {
+  background-color: #d9d9d9;
+  background-image: -moz-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e1e1e1), color-stop(1, #d9d9d9));
+  background-image: -webkit-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -o-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -ms-linear-gradient(top, #e1e1e1, #d9d9d9);
+  background-image: linear-gradient(top, #e1e1e1, #d9d9d9);
+}
+/* line 50, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag > a, div.tags .tag > span.name, div.tags-wrap .tag > a, div.tags-wrap .tag > span.name {
+  display: inline-block;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* line 55, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag > a:hover, div.tags .tag > span.name:hover, div.tags-wrap .tag > a:hover, div.tags-wrap .tag > span.name:hover {
+  max-width: none;
+  text-decoration: underline;
+}
+/* line 62, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag-close, div.tags-wrap .tag-close {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #b3b3b3;
+  border-left: 1px solid #cccccc;
+}
+/* line 67, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag-close:hover, div.tags-wrap .tag-close:hover {
+  text-decoration: none;
+  background-color: #d9d9d9;
+  background-image: -moz-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e1e1e1), color-stop(1, #d9d9d9));
+  background-image: -webkit-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -o-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -ms-linear-gradient(top, #e1e1e1, #d9d9d9);
+  background-image: linear-gradient(top, #e1e1e1, #d9d9d9);
+}
+/* line 71, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags .tag-close:active, div.tags-wrap .tag-close:active {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+/* line 81, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag, div.tags-wrap .tag a, div.tags-wrap .tag-close {
+  background: #333;
+  color: #fff;
+}
+/* line 85, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag {
+  -moz-border-radius-topleft: 0;
+  /* Gecko */
+  -webkit-border-top-left-radius: 0;
+  /* Webkit */
+  -khtml-border-top-left-radius: 0;
+  /* Konqueror */
+  border-top-left-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-topright: 5px;
+  /* Gecko */
+  -webkit-border-top-right-radius: 5px;
+  /* Webkit */
+  -khtml-border-top-right-radius: 5px;
+  /* Konqueror */
+  border-top-right-radius: 5px;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 5px;
+  /* Konqueror */
+  border-bottom-right-radius: 5px;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 0;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 0;
+  /* Konqueror */
+  border-bottom-left-radius: 0;
+  /* CSS3 */
+  padding-right: 8px;
+}
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag:before {
+  border-right: 9px solid #333;
+}
+/* line 91, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag > a {
+  max-width: 80px;
+}
+/* line 94, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/tags.scss */
+div.tags-wrap .tag:hover {
+  background: #333;
+  max-width: 80px;
+}
+
+/* line 30, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region {
+  position: relative;
+}
+/* line 33, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .nub-spacer {
+  z-index: 10;
+  position: absolute;
+  height: 18px;
+  background: red;
+  width: 100%;
+  left: 0px;
+  top: -31px;
+  opacity: 0;
+}
+/* line 45, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region > div {
+  width: 164px;
+  left: -59px;
+  display: none;
+  position: absolute;
+  border: 1px solid grey;
+  padding: 4px;
+  background: #ffffff;
+}
+/* line 55, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags {
+  z-index: 10;
+  margin-top: 1px;
+  text-align: center;
+  height: inherit;
+  top: 10px;
+}
+/* line 4, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags:after {
+  position: absolute;
+  z-index: 2;
+  border-style: solid;
+  border-width: 0 14px 14px 14px;
+  border-color: transparent transparent grey transparent;
+  content: '';
+  top: -14px;
+  right: 73px;
+  margin-left: -7px;
+}
+/* line 16, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags:before {
+  position: absolute;
+  z-index: 3;
+  border-style: solid;
+  border-width: 0 12px 12px 12px;
+  border-color: transparent transparent #fff transparent;
+  content: '';
+  top: -12px;
+  right: 75px;
+  margin-left: -6px;
+}
+/* line 63, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags > div {
+  padding-right: 0px;
+}
+/* line 68, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags .no-whitespace {
+  font-size: 0;
+}
+/* line 72, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .tags .tag, .tag-hover-region .tags .tag-close {
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+/* line 80, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region span.name:hover, .tag-hover-region span.name {
+  white-space: nowrap;
+  max-width: 100px !important;
+}
+/* line 85, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/tags.scss */
+.tag-hover-region .row.add-tags, .tag-hover-region #creds-main-region .fixed .add-tags#single-cred-header, #creds-main-region .fixed .tag-hover-region .add-tags#single-cred-header, .tag-hover-region #creds-main-region .fixed .add-tags.manage-creds-header, #creds-main-region .fixed .tag-hover-region .add-tags.manage-creds-header, .tag-hover-region .single-host-view-container .fixed .add-tags#single-cred-header, .single-host-view-container .fixed .tag-hover-region .add-tags#single-cred-header, .tag-hover-region .single-host-view-container .fixed .add-tags.manage-creds-header, .single-host-view-container .fixed .tag-hover-region .add-tags.manage-creds-header {
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container {
+  position: relative;
+}
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane {
+  position: absolute;
+  width: 100%;
+  left: 100%;
+  height: auto;
+  min-height: 200px;
+  transition-property: left;
+  transition-duration: 1s;
+}
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane.tab-loading {
+  top: 200px;
+}
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane.show {
+  left: 0%;
+}
+/* line 23, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane.slideOutLeft {
+  left: -100%;
+}
+/* line 27, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane.first {
+  position: relative;
+}
+/* line 31, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/window_slider.scss */
+.window-slider-container .window-slider-pane .content-region {
+  overflow-y: hidden;
+}
+
+/* line 16, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+[data-field='tags-component'] .content {
+  height: 175px !important;
+}
+
+/* line 21, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+.tabs .none, .tabs .plaintext, .tabs .ssh, .tabs .ntml-hash, .tabs .hash {
+  display: inline-block;
+}
+
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+.ie10 body.cores .mainContent, .ie9 body.cores .mainContent {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+/* line 41, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+.table-region .tag-count a {
+  color: #555;
+}
+/* line 43, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+.table-region .tag-count a:hover {
+  text-decoration: none;
+}
+
+/* line 51, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .modal {
+  min-width: 0;
+}
+/* line 54, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .cred-type {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+}
+/* line 58, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .cred-type .manual, #dialog-region .cred-type .import {
+  display: inline-block;
+}
+/* line 60, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .cred-type .manual label, #dialog-region .cred-type .import label {
+  float: none;
+  text-align: start;
+}
+/* line 67, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .private-data, #dialog-region .ssh-key-fingerprint, #dialog-region h4.private-key {
+  display: block;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 74, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .private-data {
+  padding-top: 20px;
+}
+/* line 76, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .delete-text {
+  margin-top: 8px;
+  width: 465px;
+  margin: 0 auto 0 auto;
+}
+/* line 82, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region #add_tags {
+  width: 246px;
+  margin: 0 auto 0 auto;
+}
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .tags {
+  display: inline-block;
+  width: 246px;
+}
+/* line 92, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .tags label#tags-component {
+  right: -44px !important;
+}
+/* line 96, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .tags > div {
+  margin-top: 10px;
+}
+/* line 101, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred hr {
+  height: 1px;
+  margin: 0 auto 0 auto;
+  width: 400px;
+}
+/* line 107, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .tag-container {
+  width: 300px;
+  margin: 0 auto 0 auto;
+}
+/* line 110, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .tag-container label {
+  padding-right: 20px;
+}
+/* line 115, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .import-type {
+  margin-bottom: 10px;
+  width: 100%;
+  display: inline-block;
+}
+/* line 119, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .import-type .radio-label {
+  display: inline-block;
+}
+/* line 124, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .password-type {
+  margin-bottom: 10px;
+  display: inline-block;
+}
+/* line 127, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .password-type > div {
+  text-align: center;
+}
+/* line 130, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .password-type > div select {
+  width: auto;
+}
+/* line 137, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .add-cred .core-errors {
+  width: 70%;
+  margin: 0 auto;
+  color: red;
+}
+/* line 145, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .tab-loading .form-container {
+  visibility: hidden;
+}
+/* line 150, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .clear-floats {
+  clear: both;
+  margin-top: 10px;
+}
+/* line 155, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container {
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 460px;
+}
+/* line 162, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container.login .tags {
+  display: inline-block;
+}
+/* line 166, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container.login .tags li.tags {
+  width: 100%;
+}
+/* line 170, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container.login .tags > div {
+  margin-top: 0px;
+}
+/* line 173, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container.login .tags #tags-component {
+  right: -44px !important;
+}
+/* line 179, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container > div {
+  padding: 6px 0 6px 0;
+}
+/* line 183, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container label {
+  text-align: right;
+  padding-right: 20px;
+  float: left;
+  width: 22%;
+  line-height: 22px;
+}
+/* line 192, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .tab-content label {
+  width: 33%;
+}
+/* line 197, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container input {
+  width: 50%;
+}
+/* line 201, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .error {
+  float: right;
+  width: 61%;
+  color: red;
+}
+/* line 208, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .file-input-region .error {
+  width: 100%;
+}
+/* line 211, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .user-pass-file-input-region {
+  display: none;
+}
+/* line 214, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .user-pass-file-input-region .user-file-input-region .error {
+  width: 100%;
+}
+/* line 220, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .user-pass-file-input-region .pass-file-input-region .error {
+  width: 100%;
+}
+/* line 226, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container textarea {
+  padding: 1px;
+  width: 50%;
+  resize: none;
+}
+/* line 232, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container select {
+  width: 55%;
+}
+/* line 236, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .radio-label {
+  width: 20%;
+  text-align: right;
+  padding-right: 4%;
+}
+/* line 242, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .inline-radio {
+  display: inline-block;
+  width: 100px;
+}
+/* line 245, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .inline-radio input {
+  width: auto;
+}
+/* line 249, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .inline-radio label {
+  float: none;
+  text-align: start;
+}
+/* line 257, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form hr {
+  height: 1px;
+  margin: 0 auto 0 auto;
+  width: 450px;
+}
+/* line 263, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form .password-help {
+  display: inline-block;
+  position: relative;
+}
+/* line 268, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form .password-help-label {
+  display: inline-block;
+  height: 15px;
+}
+/* line 271, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form .password-help-label label {
+  float: none;
+  position: relative;
+  width: auto;
+  top: 0;
+}
+/* line 280, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form .file label {
+  z-index: 32;
+  cursor: pointer;
+  float: left;
+  text-align: left;
+}
+/* line 285, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form .file label span {
+  border-left: 0;
+}
+/* line 290, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form .file .error {
+  position: absolute;
+  top: 35px;
+  left: 8px;
+}
+/* line 297, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form #import-file-input {
+  top: 47px;
+  right: 20px;
+}
+/* line 302, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form .import-type {
+  position: relative;
+}
+/* line 306, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form .import-type .import-format {
+  display: inline-block;
+}
+/* line 308, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .form-container .import-form .import-type .import-format label {
+  float: none;
+  position: relative;
+  width: auto;
+  top: 0;
+}
+/* line 322, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .export-form label {
+  width: 120px;
+}
+/* line 326, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .export-form .radio-label {
+  width: 120px;
+}
+/* line 331, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .export-form .inline-radio label.disabled {
+  opacity: 0.5;
+}
+/* line 336, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .export-form .inline-radio.wide {
+  width: 180px;
+}
+/* line 340, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .export-form .pwdump-warning {
+  color: red;
+  padding-left: 144px;
+  display: none;
+}
+/* line 341, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .export-form .pwdump-warning:before {
+  display: inline-block;
+  margin-right: 3px;
+}
+/* line 354, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#dialog-region .origin-disclosure-modal {
+  padding-top: 30px;
+  width: 580px;
+  text-align: center;
+}
+
+/* line 363, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+.tags-region {
+  position: absolute;
+  z-index: 1;
+  right: 80px;
+  top: 88px;
+}
+
+/* line 373, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header, #creds-main-region .fixed .manage-creds-header, .single-host-view-container .fixed #single-cred-header, .single-host-view-container .fixed .manage-creds-header {
+  height: auto;
+  min-height: 55px;
+}
+/* line 379, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header h1, #creds-main-region .fixed .manage-creds-header h1, .single-host-view-container .fixed #single-cred-header h1, .single-host-view-container .fixed .manage-creds-header h1 {
+  width: 230px;
+  float: left;
+}
+/* line 384, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header #total-count, #creds-main-region .fixed .manage-creds-header #total-count, .single-host-view-container .fixed #single-cred-header #total-count, .single-host-view-container .fixed .manage-creds-header #total-count {
+  font-size: 14px;
+  color: #999999;
+  float: left;
+  margin-top: 18px;
+  border: 1px solid #999999;
+  padding: 0 5px;
+  border-radius: 10px;
+}
+/* line 395, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header ul, #creds-main-region .fixed .manage-creds-header ul, .single-host-view-container .fixed #single-cred-header ul, .single-host-view-container .fixed .manage-creds-header ul {
+  vertical-align: top;
+}
+/* line 398, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header ul li, #creds-main-region .fixed .manage-creds-header ul li, .single-host-view-container .fixed #single-cred-header ul li, .single-host-view-container .fixed .manage-creds-header ul li {
+  vertical-align: top;
+  height: 48px;
+  border-right: 1px solid #d3d3d3;
+  width: 180px;
+  display: inline-block;
+  padding: 7px 7px 0px 20px;
+}
+/* line 407, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header ul li .black a.filter, #creds-main-region .fixed .manage-creds-header ul li .black a.filter, .single-host-view-container .fixed #single-cred-header ul li .black a.filter, .single-host-view-container .fixed .manage-creds-header ul li .black a.filter {
+  background: url(/assets/icons/filter-b4aac03c9884a31ff0e1c17aa6d9080f5b1c16a3af6a41bb2ac7f02222450a04.png) no-repeat;
+  padding-left: 20px;
+  display: inline-block;
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 407, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+  #creds-main-region .fixed #single-cred-header ul li .black a.filter, #creds-main-region .fixed .manage-creds-header ul li .black a.filter, .single-host-view-container .fixed #single-cred-header ul li .black a.filter, .single-host-view-container .fixed .manage-creds-header ul li .black a.filter {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/icons/filter@2x-33da0be47abb62ffc421dcdc46b64aa4263e24b3c933bfcc3863a3f0e59a1617.png);
+    background-size: 20px 20px;
+  }
+}
+/* line 414, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header ul li .black a.private-data-disclosure, #creds-main-region .fixed .manage-creds-header ul li .black a.private-data-disclosure, .single-host-view-container .fixed #single-cred-header ul li .black a.private-data-disclosure, .single-host-view-container .fixed .manage-creds-header ul li .black a.private-data-disclosure {
+  font-size: 10px;
+}
+/* line 418, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header ul li.tags, #creds-main-region .fixed .manage-creds-header ul li.tags, .single-host-view-container .fixed #single-cred-header ul li.tags, .single-host-view-container .fixed .manage-creds-header ul li.tags {
+  vertical-align: top;
+  color: black;
+}
+/* line 421, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header ul li.tags .count, #creds-main-region .fixed .manage-creds-header ul li.tags .count, .single-host-view-container .fixed #single-cred-header ul li.tags .count, .single-host-view-container .fixed .manage-creds-header ul li.tags .count {
+  vertical-align: bottom;
+  font-size: 18px;
+}
+/* line 427, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header ul li.quick-reuse, #creds-main-region .fixed .manage-creds-header ul li.quick-reuse, .single-host-view-container .fixed #single-cred-header ul li.quick-reuse, .single-host-view-container .fixed .manage-creds-header ul li.quick-reuse {
+  border-right: none;
+  padding: 7px 0px 0px 0px;
+  text-align: center;
+}
+/* line 431, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header ul li.quick-reuse a.btn.primary.launch, #creds-main-region .fixed .manage-creds-header ul li.quick-reuse a.btn.primary.launch, .single-host-view-container .fixed #single-cred-header ul li.quick-reuse a.btn.primary.launch, .single-host-view-container .fixed .manage-creds-header ul li.quick-reuse a.btn.primary.launch {
+  width: 80%;
+  line-height: 22px;
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  margin-top: auto;
+  margin-left: 0px;
+}
+/* line 442, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header ul li .black, #creds-main-region .fixed .manage-creds-header ul li .black, .single-host-view-container .fixed #single-cred-header ul li .black, .single-host-view-container .fixed .manage-creds-header ul li .black {
+  min-height: 18px;
+  font-weight: bold;
+  color: #000000;
+}
+/* line 452, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header, .single-host-view-container .fixed #single-cred-header {
+  height: auto;
+  min-height: 55px;
+}
+/* line 456, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header > ul, .single-host-view-container .fixed #single-cred-header > ul {
+  display: table;
+  width: 100%;
+  height: 55px;
+}
+/* line 460, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed #single-cred-header > ul > li, .single-host-view-container .fixed #single-cred-header > ul > li {
+  display: table-cell;
+  width: 14%;
+}
+/* line 468, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .fixed .manage-creds-header h1, .single-host-view-container .fixed .manage-creds-header h1 {
+  line-height: 51px;
+}
+/* line 474, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .validation-hover, .single-host-view-container .validation-hover {
+  font-size: 11px;
+  padding: 3px;
+  padding-left: 10px;
+  border: 1px solid #d3d3d3;
+  border-bottom-color: #ccc;
+  background: #fff;
+  margin-top: 7px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+/* line 486, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .validation-hover:before, .single-host-view-container .validation-hover:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 29px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #afafaf;
+  z-index: 0;
+}
+/* line 498, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .validation-hover:after, .single-host-view-container .validation-hover:after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 30px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #fff;
+}
+/* line 511, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header, .single-host-view-container .sub-header {
+  padding: 0px 6px 0px 2px;
+}
+/* line 514, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header > .row, #creds-main-region .fixed .sub-header > #single-cred-header, #creds-main-region .fixed .sub-header > .manage-creds-header, .single-host-view-container .fixed #creds-main-region .sub-header > #single-cred-header, .single-host-view-container .fixed #creds-main-region .sub-header > .manage-creds-header, .single-host-view-container .sub-header > .row, .single-host-view-container #creds-main-region .fixed .sub-header > #single-cred-header, #creds-main-region .fixed .single-host-view-container .sub-header > #single-cred-header, .single-host-view-container #creds-main-region .fixed .sub-header > .manage-creds-header, #creds-main-region .fixed .single-host-view-container .sub-header > .manage-creds-header, .single-host-view-container .fixed .sub-header > #single-cred-header, .single-host-view-container .fixed .sub-header > .manage-creds-header {
+  position: relative;
+}
+/* line 517, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header .hang, .single-host-view-container .sub-header .hang {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+/* line 525, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header .grey, .single-host-view-container .sub-header .grey {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  background-color: #f0f0f0;
+  border-right: 1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
+}
+/* line 532, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header .grey span.large, .single-host-view-container .sub-header .grey span.large {
+  font-size: 18px;
+  font-weight: 600;
+  padding-right: 3px;
+}
+/* line 537, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header .grey span.subtext, .single-host-view-container .sub-header .grey span.subtext {
+  font-weight: 100;
+  vertical-align: top;
+}
+/* line 541, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header .grey .instance-count, .single-host-view-container .sub-header .grey .instance-count {
+  vertical-align: bottom;
+  font-size: 18px;
+}
+/* line 546, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header .compromised-text, .single-host-view-container .sub-header .compromised-text {
+  text-align: left;
+}
+/* line 550, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header .white, .single-host-view-container .sub-header .white {
+  height: 40px;
+  line-height: 40px;
+  border-right: 1px solid #d3d3d3;
+}
+/* line 556, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header canvas, .single-host-view-container .sub-header canvas {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 10px;
+}
+/* line 562, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region .sub-header .compromised-text, .single-host-view-container .sub-header .compromised-text {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 12px;
+  margin-top: 7px;
+  margin-left: 6px;
+  width: 100px;
+}
+/* line 574, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region #related-logins-region, #creds-main-region #creds-region, .single-host-view-container #related-logins-region, .single-host-view-container #creds-region {
+  position: static;
+}
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/spinner.scss */
+#creds-main-region #related-logins-region .table-component .spinner, #creds-main-region #creds-region .table-component .spinner, .single-host-view-container #related-logins-region .table-component .spinner, .single-host-view-container #creds-region .table-component .spinner {
+  background-image: url(/assets/spinner-e008bc0bca2fa6f9b9c113fad73551230961baec88c06b20997ec50171bb2b6b.gif);
+  width: 16px;
+  height: 16px;
+  display: none;
+  margin-left: 10px;
+}
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/spinner.scss */
+#creds-main-region #related-logins-region .table-component .spinner.retina, #creds-main-region #creds-region .table-component .spinner.retina, .single-host-view-container #related-logins-region .table-component .spinner.retina, .single-host-view-container #creds-region .table-component .spinner.retina {
+  background-image: url(/assets/spinners/retina-spinner-6224558e17a0a3b81882db9c9b2d8c49267029f61254dcdd02e659e87b57f157.gif);
+  background-repeat: no-repeat;
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/spinner.scss */
+  #creds-main-region #related-logins-region .table-component .spinner.retina, #creds-main-region #creds-region .table-component .spinner.retina, .single-host-view-container #related-logins-region .table-component .spinner.retina, .single-host-view-container #creds-region .table-component .spinner.retina {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/spinners/retina-spinner@2x-e0613c810129f5bb095b5cdcc1ffce77ee17e758f81c9c2580de0f3ef858e081.gif);
+    background-size: 16px 16px;
+  }
+}
+/* line 7, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component td.clone, #creds-main-region #related-logins-region .table-component th.clone, #creds-main-region #creds-region .table-component td.clone, #creds-main-region #creds-region .table-component th.clone, .single-host-view-container #related-logins-region .table-component td.clone, .single-host-view-container #related-logins-region .table-component th.clone, .single-host-view-container #creds-region .table-component td.clone, .single-host-view-container #creds-region .table-component th.clone {
+  width: 40px;
+  text-align: center;
+}
+/* line 12, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component td.clone, #creds-main-region #creds-region .table-component td.clone, .single-host-view-container #related-logins-region .table-component td.clone, .single-host-view-container #creds-region .table-component td.clone {
+  text-align: center;
+}
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component td.clone a.clone, #creds-main-region #creds-region .table-component td.clone a.clone, .single-host-view-container #related-logins-region .table-component td.clone a.clone, .single-host-view-container #creds-region .table-component td.clone a.clone {
+  display: inline-block;
+  height: 10px;
+  width: 21px;
+  background-image: url(/assets/creds/clone-3b479fc8509c848648cf999d3c4638379ebb6a37ead33f7672279e3d14a90df9.png);
+}
+@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  /* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+  #creds-main-region #related-logins-region .table-component td.clone a.clone, #creds-main-region #creds-region .table-component td.clone a.clone, .single-host-view-container #related-logins-region .table-component td.clone a.clone, .single-host-view-container #creds-region .table-component td.clone a.clone {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url(/assets/creds/clone@2x-4c4c6174a15dfb812b63466e91b0717e39ce73f17be1f309c8ef06d915ba0460.png);
+    background-size: 21px 10px;
+  }
+}
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component td.get_session, #creds-main-region #creds-region .table-component td.get_session, .single-host-view-container #related-logins-region .table-component td.get_session, .single-host-view-container #creds-region .table-component td.get_session {
+  width: 100px;
+}
+/* line 26, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component td.get_session .loading, #creds-main-region #creds-region .table-component td.get_session .loading, .single-host-view-container #related-logins-region .table-component td.get_session .loading, .single-host-view-container #creds-region .table-component td.get_session .loading {
+  background-image: url(/assets/spinner-e008bc0bca2fa6f9b9c113fad73551230961baec88c06b20997ec50171bb2b6b.gif);
+  height: 16px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+/* line 34, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component td.access_level, #creds-main-region #creds-region .table-component td.access_level, .single-host-view-container #related-logins-region .table-component td.access_level, .single-host-view-container #creds-region .table-component td.access_level {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+/* line 39, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component div.key, #creds-main-region #creds-region .table-component div.key, .single-host-view-container #related-logins-region .table-component div.key, .single-host-view-container #creds-region .table-component div.key {
+  background-image: url(/assets/key-e65c3148af5fe0b0f1077f13e2eb0cb92304524cfb3567457a034907c4d3e73c.png);
+  background-position: center center;
+  height: 16px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  opacity: 0.4;
+}
+/* line 46, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component div.key:hover, #creds-main-region #creds-region .table-component div.key:hover, .single-host-view-container #related-logins-region .table-component div.key:hover, .single-host-view-container #creds-region .table-component div.key:hover {
+  opacity: 0.6;
+}
+/* line 49, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component div.key:active, #creds-main-region #creds-region .table-component div.key:active, .single-host-view-container #related-logins-region .table-component div.key:active, .single-host-view-container #creds-region .table-component div.key:active {
+  opacity: 0.7;
+}
+/* line 54, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/table_cells.scss */
+#creds-main-region #related-logins-region .table-component td.realm label, #creds-main-region #creds-region .table-component td.realm label, .single-host-view-container #related-logins-region .table-component td.realm label, .single-host-view-container #creds-region .table-component td.realm label {
+  display: inline-block;
+}
+/* line 591, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region #related-logins-region div.table-header, #creds-main-region #creds-region div.table-header, .single-host-view-container #related-logins-region div.table-header, .single-host-view-container #creds-region div.table-header {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+/* line 596, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region #related-logins-region .error, #creds-main-region #creds-region .error, .single-host-view-container #related-logins-region .error, .single-host-view-container #creds-region .error {
+  color: red;
+  font-size: 80%;
+  padding-left: 2px;
+}
+/* line 602, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region #related-logins-region .pagination-region, #creds-main-region #creds-region .pagination-region, .single-host-view-container #related-logins-region .pagination-region, .single-host-view-container #creds-region .pagination-region {
+  height: 35px;
+  bottom: 0;
+  padding-top: 2px;
+}
+/* line 608, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region #related-logins-region .filter, #creds-main-region #creds-region .filter, .single-host-view-container #related-logins-region .filter, .single-host-view-container #creds-region .filter {
+  margin-top: 20px;
+}
+/* line 613, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/creds/creds.scss */
+#creds-main-region #related-logins-region:after, #creds-main-region #creds-region:after, .single-host-view-container #related-logins-region:after, .single-host-view-container #creds-region:after {
+  display: none;
+  content: none;
+}

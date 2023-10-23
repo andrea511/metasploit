@@ -1,0 +1,21 @@
+%form{:id=>"exception-push-form"}
+  .row.exception-settings-line
+    .columns.exception-settings
+      .header.columns.small-12
+        .small-2.columns
+          EXCEPTION SETTINGS
+        .console-field.small-8.columns
+          %label.hide-console-field
+            Nexponse Console
+          {{select "console" console.consoles console.console}}
+
+          {{checkbox "auto_approve" "yes" true}}
+          %label
+            Automatically Approve
+        .push-exceptions.small-2.columns
+          .btnRow
+            %span{:class=>'btn'}
+              %a{:href=>"javascript:void(0)", :class=>'nexpose'}
+                Push Exceptions
+
+  .tabs

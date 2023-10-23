@@ -1,0 +1,12 @@
+<div id="report-display-panel">
+  <div id="unembeddable-message" class="report-display-panel-message">
+    <span>This filetype cannot be previewed in the browser.</span>
+  </div>
+  <div id="no-artifacts-message" class="report-display-panel-message">
+    <span>No report formats remaining for this report. Please click a format button on the left to begin regenerating this report.</span>
+  </div>
+  <div id="broken-artifact-message" class="report-display-panel-message">
+    <span>There was an error displaying the report. The report artifact file could not be found on the filesystem. Please delete and regenerate the file formats.</span>
+  </div>
+</div>
+

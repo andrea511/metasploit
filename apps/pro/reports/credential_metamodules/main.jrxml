@@ -1,0 +1,982 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="main" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="540b0d35-4db7-46ce-a978-c2af2f56b2ee">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="996"/>
+	<property name="ireport.callouts" value="##Mon Jun 03 16:39:41 CDT 2013"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<subDataset name="CrackedServices" uuid="4383cb97-b46c-43c3-8f38-b3f5ef975e0f">
+		<parameter name="host_address_clause" class="java.lang.String">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="task_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="app_run_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+count(logins.*) login_count,
+coalesce(services.name, 'Unknown') service_name
+from services
+inner join metasploit_credential_logins logins ON (services.id = logins.service_id)
+inner join credential_logins_tasks clt ON (clt.login_id = logins.id)
+inner join tasks ON (clt.task_id = tasks.id)
+inner join hosts ON (services.host_id = hosts.id)
+where tasks.app_run_id = $P{app_run_id}
+and $P!{host_address_clause}
+and logins.status = 'Successful'
+GROUP BY services.name
+ORDER BY login_count DESC
+LIMIT 5]]>
+		</queryString>
+		<field name="service_name" class="java.lang.String"/>
+		<field name="login_count" class="java.lang.Long"/>
+	</subDataset>
+	<subDataset name="CrackedHosts" uuid="fe6d5661-c07b-4088-9616-61f18da0659a">
+		<parameter name="host_address_clause" class="java.lang.String">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="task_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="app_run_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		</parameter>
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[select
+ x.address,
+ (x.login_count + x.session_count) access_count
+
+from
+(
+	WITH logins_by_host as (
+	 select hosts.id host_id, count(logins.*) login_count
+	 from metasploit_credential_logins logins
+	 inner join services ON (services.id = logins.service_id)
+	 inner join hosts ON (services.host_id = hosts.id)
+	 inner join credential_logins_tasks clt ON (clt.login_id = logins.id)
+	 inner join tasks ON (clt.task_id = tasks.id)
+	 where tasks.app_run_id = $P{app_run_id}
+	 and $P!{host_address_clause}
+	 and logins.status = 'Successful'
+	 group by hosts.id
+	),
+
+	sessions_by_host as (
+	 select hosts.id host_id, count(ses.*) session_count
+	 from sessions ses
+	 inner join task_sessions tses on (ses.id = tses.session_id)
+	 inner join tasks t on (tses.task_id = t.id)
+	 inner join app_runs ar on (t.app_run_id = ar.id)
+	 inner join hosts on (ses.host_id = hosts.id)
+	 where ar.id = $P{app_run_id}
+	 and $P!{host_address_clause}
+	 group by hosts.id
+	)
+
+	select
+	hosts.id host_id, coalesce(hosts.name, host(hosts.address)) as address,
+	coalesce((select session_count from sessions_by_host where host_id = hosts.id), 0) session_count,
+	coalesce((select login_count from logins_by_host where host_id = hosts.id), 0) login_count
+	from hosts
+	where $P!{host_address_clause}
+	and hosts.workspace_id = $P{workspace_id}
+	GROUP BY hosts.id
+	order by hosts.id
+) x
+where (session_count > 0 or login_count > 0)
+order by access_count desc
+limit 5]]>
+		</queryString>
+		<field name="address" class="java.lang.String"/>
+		<field name="access_count" class="java.lang.Long"/>
+	</subDataset>
+	<parameter name="workspace_id" class="java.lang.Integer"/>
+	<parameter name="usernames_reported" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA["../"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="product_name" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[The name of the product used to generate the report]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Metasploit Pro"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subreport_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "credential_metamodules/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_title" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$F{app_name} + " Report"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mask_credentials" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_cover" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_proj_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_findings_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_svcs_hosts_summ_charts" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_svcs_hosts_details" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_appendix_options" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="include_charts" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	app_name,
+	started_at,
+	coalesce(stopped_at, current_timestamp at time zone 'UTC') as stopped_at,
+	state, task_id,
+	user_selected,
+	realm_type,
+	realm_value,
+	private_type,
+	private_value,
+	hosts_selected, services_selected,
+	-- Add spaces, ordering to comma-sep list:
+	(select array_to_string(array_agg(inx.svc), ', ') in_svcs from
+		(select
+		unnest(regexp_split_to_array(x.svcs_selected, ',')) svc
+		order by svc) inx
+	) svcs_selected,
+	successful_logins, successful_auths, sessions_opened,
+ 	-- Existing/open or created in the run:
+	cores_involved, logins_involved, sessions_involved,
+	x.project_name, x.project_updated, x.project_created
+from
+(
+	WITH app_run_config as
+	(
+	select
+		regexp_replace(conf.param, '{["]*', '') param,
+		regexp_replace(conf.val, '["]*}', '') val
+
+		from
+		(
+		select
+			btrim(a[1], '\"') param,
+			case a[2]
+				when '\"\"' then null
+				when 'null' then null
+				else btrim(a[2], '\"')
+			end val
+			from
+			(
+				select
+				string_to_array(
+					unnest(string_to_array(config, ',"'))
+				, ':') a
+				from app_runs where id = $P{app_run_id}
+			) b
+		) conf
+	),
+
+	core_info as
+	(
+	select
+	publics.username AS "username",
+	realms.value AS "realm_value",
+	realms.key AS "realm_type",
+          (case split_part(privates.type, '::', 3)
+	  -- TODO Manual friendly mapping
+	  when 'SSHKey' then 'SSH Key'
+	  when 'NTLMHash' then 'NTLM Hash'
+            when 'NonreplayableHash' then 'Non-replayable Hash'
+	  when 'Password' then 'Password'
+	  else 'None'
+	end) as private_type,
+	privates.data AS "private_value"
+	from metasploit_credential_cores cores
+	left outer join metasploit_credential_publics publics ON (cores.public_id = publics.id)
+	left outer join metasploit_credential_realms realms ON (cores.realm_id = realms.id)
+	left outer join metasploit_credential_privates privates ON (cores.private_id = privates.id)
+	where cores.id = (select val from app_run_config where param = 'DS_CRED_CORE_ID')::int
+	)
+
+	select
+		a.name as app_name,
+		(select username from core_info) as user_selected,
+		(select realm_type from core_info),
+		(select realm_value from core_info),
+		(select private_type from core_info),
+		(select private_value from core_info),
+		w.name project_name, w.updated_at project_updated, w.created_at project_created,
+		ar.state,
+		ar.started_at,ar.stopped_at,
+		t.id task_id,
+		(select val from app_run_config where param = 'DS_SERVICES') svcs_selected,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Hosts Selected'
+		and ar.id = $P{app_run_id})::int, 0) hosts_selected,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Services Selected'
+		and ar.id = $P{app_run_id})::int, 0) services_selected,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Successful Auths'
+		and ar.id = $P{app_run_id})::int, 0) successful_auths,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Successful Login Attempts'
+		and ar.id = $P{app_run_id})::int, 0) successful_logins,
+		coalesce((select data
+		from run_stats rs
+		inner join tasks t on (rs.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where rs.name = 'Sessions Opened'
+		and ar.id = $P{app_run_id})::int, 0) sessions_opened,
+		(select count(login_id) from credential_logins_tasks clt
+		 where clt.task_id = t.id) logins_involved,
+		(select count(core_id) from credential_cores_tasks cct
+		 where cct.task_id = t.id) cores_involved,
+		(select count(*) from task_sessions
+		 where task_sessions.task_id = t.id) sessions_involved
+	from app_runs ar
+	inner join tasks t on (ar.id = t.app_run_id)
+	inner join apps a on (ar.app_id = a.id)
+	inner join workspaces w on (ar.workspace_id = w.id)
+	where ar.id = $P{app_run_id}
+	and w.id = $P{workspace_id}
+) x]]>
+	</queryString>
+	<field name="app_name" class="java.lang.String"/>
+	<field name="task_id" class="java.lang.Integer"/>
+	<field name="user_selected" class="java.lang.String"/>
+	<field name="private_type" class="java.lang.String"/>
+	<field name="hosts_selected" class="java.lang.Integer"/>
+	<field name="services_selected" class="java.lang.Integer"/>
+	<field name="successful_logins" class="java.lang.Integer"/>
+	<field name="sessions_opened" class="java.lang.Integer"/>
+	<field name="started_at" class="java.sql.Timestamp"/>
+	<field name="realm_value" class="java.lang.String"/>
+	<field name="private_value" class="java.lang.String"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="stopped_at" class="java.sql.Timestamp"/>
+	<field name="cores_involved" class="java.lang.Integer"/>
+	<field name="sessions_involved" class="java.lang.Integer"/>
+	<field name="svcs_selected" class="java.lang.String"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="project_created" class="java.sql.Timestamp"/>
+	<field name="project_updated" class="java.sql.Timestamp"/>
+	<field name="realm_type" class="java.lang.String"/>
+	<field name="logins_involved" class="java.lang.Integer"/>
+	<field name="successful_auths" class="java.lang.Integer"/>
+	<variable name="titleLogo" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{image_dir} + "rapid7_logo_padded.jpg"]]></initialValueExpression>
+	</variable>
+	<variable name="single_desc" class="java.lang.String">
+		<initialValueExpression><![CDATA["This report presents findings from a Single Password Testing MetaModule run. The selected user, password, targeted hosts and services are presented along with coverage of what accepted the credential during authentication. Details are provided for each service authenticated."]]></initialValueExpression>
+	</variable>
+	<variable name="ssh_desc" class="java.lang.String">
+		<initialValueExpression><![CDATA["This report presents findings from an SSH Key Testing MetaModule run. The selected user, SSH key, targeted hosts and services are presented along with coverage of what accepted the credential during authentication. Details are provided for each service authenticated."]]></initialValueExpression>
+	</variable>
+	<variable name="hash_desc" class="java.lang.String">
+		<initialValueExpression><![CDATA["This report presents findings from a Pass the Hash MetaModule run. The selected user, hash, targeted hosts and services are presented along with coverage of what accepted the credential during authentication. Details are provided for each service authenticated."]]></initialValueExpression>
+	</variable>
+	<variable name="known_desc" class="java.lang.String">
+		<initialValueExpression><![CDATA["This report presents findings from a Known Credentials Intrusion MetaModule run. This attempts to open sessions using known credentials associated with known services and hosts. The targeted hosts and services are presented along with coverage of what accepted the credential during authentication. Details are provided for each service authenticated, as well as sessions opened."]]></initialValueExpression>
+	</variable>
+	<variable name="desc" class="java.lang.String">
+		<initialValueExpression><![CDATA[new GroovyShell(new Binding([app_name:$F{app_name},single:$V{single_desc},ssh:$V{ssh_desc},hash:$V{hash_desc},known:$V{known_desc}])).evaluate("""
+switch ( app_name ) {
+    case 'Single Password Testing':
+        desc = single
+        break
+    case 'SSH Key Testing':
+        desc = ssh
+        break
+    case 'Pass the Hash':
+        desc = hash
+        break
+    case 'Known Credentials Intrusion':
+        desc = known
+        break
+    default:
+        desc = ""
+}
+return desc
+""")]]></initialValueExpression>
+	</variable>
+	<variable name="title" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[$F{app_name} + " Report"]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="663" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_cover}]]></printWhenExpression>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="1752fb27-e37e-4d33-964d-dac4348341ae" x="221" y="37" width="351" height="297"/>
+				<imageExpression><![CDATA[$V{titleLogo}]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement uuid="ff7a39e5-44d6-44a0-b6ba-d0e751de91f5" x="221" y="642" width="320" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Pages: " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="86c12df4-2ac5-46d8-a00c-fda0954d0425" style="generic_text" x="221" y="433" width="320" height="159"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3c874e63-9cf7-4e53-a602-55d3f24258c9" x="222" y="334" width="351" height="69"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{title}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement uuid="e510a785-6605-4c88-bf40-34970dfd6fa6" x="0" y="662" width="571" height="1"/>
+			</break>
+			<textField>
+				<reportElement uuid="dce9a2e9-4cf4-449c-9fda-cc5f405af041" mode="Transparent" x="1" y="1" width="220" height="661" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" markup="none">
+					<font fontName="SansSerif" size="48" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{product_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_cover} ? $V{PAGE_NUMBER} == 2 : $V{PAGE_NUMBER} == 1]]></printWhenExpression>
+			<textField pattern="">
+				<reportElement uuid="ce820390-da68-4546-b7e1-eb3676a1bc24" style="last_audited" x="331" y="17" width="241" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Started " + (new SimpleDateFormat("MMMMM dd, yyyy")).format($F{started_at})]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement uuid="893d8d8d-ea98-452e-b6d1-f4f534d83612" style="report_generated" x="395" y="0" width="177" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3813069f-31e2-4874-a34b-b4529a2c281e" style="section_header_1_no_bg" x="0" y="1" width="309" height="30"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$V{title}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="081e9a59-938a-4683-a8c1-4e65071949a1" style="separator_line" x="0" y="33" width="572" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="77" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_proj_summ}]]></printWhenExpression>
+			<line>
+				<reportElement uuid="a62dd667-3003-46dd-b8cc-d17829d15f2a" style="separator_line_lighter" x="0" y="51" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="d0c1a012-a9f8-4cbe-ba87-f2b3b62d588d" style="separator_line_lighter" x="0" y="73" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="c86f21f9-9848-4c73-bd53-0df35cdb50f4" style="table_text" x="136" y="53" width="424" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f3104955-fec0-4145-b23a-c5609e046819" style="table_text_indented" x="1" y="53" width="135" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}.toString().contains(",") ? "Users:" : "User:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dc25d020-1223-4110-b1a8-c76b421fb312" style="table_text" x="136" y="31" width="424" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7b708a6c-5dcd-4c86-a384-a176113e9b09" style="table_text_indented" x="1" y="31" width="135" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Project Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="97b71afb-41e7-4144-82a6-76812eb113dc" style="section_header_2" x="0" y="0" width="572" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[PROJECT SUMMARY]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="bfd29620-3a13-4010-8918-82bf1601dc19" style="separator_line_darker" x="0" y="30" width="572" height="1"/>
+			</line>
+		</band>
+		<band height="244">
+			<printWhenExpression><![CDATA[$P{display_findings_summ}]]></printWhenExpression>
+			<line>
+				<reportElement uuid="c4f5d5ff-30e2-4975-b5b0-d7f195227f3b" style="separator_line_lighter" x="0" y="71" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="a7b38eb3-d19b-43a9-a6e8-2fee80f73bc0" style="table_text" x="136" y="73" width="425" height="20">
+					<printWhenExpression><![CDATA[$F{app_name} != 'Known Credentials Intrusion']]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user_selected}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ea5c6bdb-398e-4065-a513-e69d717da927" style="table_text" x="136" y="51" width="425" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new GroovyShell(new Binding([started_at:$F{started_at},stopped_at:$F{stopped_at},state:$F{state}])).evaluate("""
+
+import groovy.time.TimeDuration
+import groovy.time.TimeCategory
+
+TimeDuration duration=TimeCategory.minus(stopped_at,started_at)
+// duration is very close, but let's make it prettier:
+
+def (days,hours,minutes,seconds) = [duration.getDays(),
+                                    duration.getHours(),
+                                    duration.getMinutes(),
+                                    duration.getSeconds()]
+def (day_str,hour_str,min_str,sec_str) = [] // null init
+
+// Handle all the singular/plurals...
+if (days > 0) {
+  if (days > 1) {
+    day_str = days + " days"
+  } else {
+    day_str = days + " day"
+  }
+}
+
+if (hours > 0) {
+  if (hours > 1) {
+    hour_str = hours + " hours"
+  } else {
+    hour_str = hours + " hour"
+  }
+}
+
+if (minutes > 0) {
+  if (minutes > 1) {
+    min_str = minutes + " minutes"
+  } else {
+    min_str = minutes + " minute"
+  }
+}
+
+if (seconds > 0) {
+  if (seconds > 1) {
+    sec_str = seconds + " seconds"
+  } else {
+    sec_str = seconds + " second"
+  }
+}
+
+// Join what we calculated:
+time_str = [day_str, hour_str, min_str, sec_str]
+time_str.removeAll([null])
+time_str = time_str.join(', ')
+
+return time_str
+
+""")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="14128098-9f9c-44e4-9523-d4d0ddedb7c6" style="table_text_indented" x="0" y="51" width="136" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Runtime:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2d717097-31a7-4141-8648-d342edc0ef59" style="table_text_indented" x="0" y="30" width="136" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MetaModule:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8562fbeb-7243-4ec0-b107-4954a6cf5d85" style="table_text_indented" x="0" y="73" width="136" height="20">
+					<printWhenExpression><![CDATA[$F{app_name} != 'Known Credentials Intrusion']]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Username selected:"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="64abf75e-57ea-405c-8ff1-621c169a1dd4" style="separator_line_lighter" x="0" y="50" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="674d6378-452c-4a51-8165-f8e6af0a3f7f" style="section_header_2" x="0" y="0" width="571" height="29"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[FINDINGS SUMMARY]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="109b259a-1629-44e7-8a66-4b8a7b2a1d61" style="separator_line_lighter" x="0" y="93" width="572" height="1">
+					<printWhenExpression><![CDATA[$F{app_name} != 'Known Credentials Intrusion']]></printWhenExpression>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement uuid="5c16b3e2-04cf-478b-b6c1-be268a4fe8e5" style="table_text" x="136" y="30" width="425" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{app_name}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="a7b38eb3-d19b-43a9-a6e8-2fee80f73bc0" style="table_text" x="136" y="94" width="425" height="20">
+					<printWhenExpression><![CDATA[$F{app_name} != 'Known Credentials Intrusion']]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+					<paragraph spacingBefore="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mask_credentials} ?
+    "** MASKED **" :
+    $F{private_value}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8562fbeb-7243-4ec0-b107-4954a6cf5d85" style="table_text_indented" x="0" y="94" width="136" height="20">
+					<printWhenExpression><![CDATA[$F{app_name} != 'Known Credentials Intrusion']]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{private_type} + " selected:"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="bfd29620-3a13-4010-8918-82bf1601dc19" style="separator_line_darker" x="0" y="29" width="572" height="1"/>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="a7b38eb3-d19b-43a9-a6e8-2fee80f73bc0" style="table_text" positionType="Float" isPrintRepeatedValues="false" x="136" y="115" width="425" height="20">
+					<printWhenExpression><![CDATA[$F{realm_value}.length() > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+					<paragraph spacingBefore="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{realm_value}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="8562fbeb-7243-4ec0-b107-4954a6cf5d85" style="table_text_indented" positionType="Float" isPrintRepeatedValues="false" x="0" y="115" width="136" height="20" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{realm_value}.length() > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{realm_type} + ": "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="109b259a-1629-44e7-8a66-4b8a7b2a1d61" style="separator_line_lighter" positionType="Float" x="0" y="114" width="572" height="1">
+					<printWhenExpression><![CDATA[$F{realm_value}.length() > 0]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<break>
+				<reportElement uuid="f23545d9-6c11-47f9-9e4b-6e89635c6b8f" x="0" y="232" width="572" height="1">
+					<printWhenExpression><![CDATA[$F{private_type} == "SSH Key"]]></printWhenExpression>
+				</reportElement>
+			</break>
+			<subreport>
+				<reportElement uuid="2c608b51-9deb-4045-a533-d3815662fef3" positionType="Float" x="0" y="157" width="572" height="60"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_name">
+					<subreportParameterExpression><![CDATA[$F{app_name}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "findings_summary.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="317">
+			<printWhenExpression><![CDATA[$P{display_svcs_hosts_summ_charts} && $P{include_charts}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="0c3ebf84-9fe0-468c-9ff8-1d5a46c2db52" style="section_header_1" x="0" y="0" width="573" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Authenticated Services and Hosts Summary Charts]]></text>
+			</staticText>
+			<break>
+				<reportElement uuid="02dbb0d1-1ecf-44b9-8209-6cb8a8a73209" x="0" y="316" width="570" height="1">
+					<printWhenExpression><![CDATA[$F{private_type} != "SSH Key"]]></printWhenExpression>
+				</reportElement>
+			</break>
+			<pieChart>
+				<chart isShowLegend="false" customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="6ee97de7-2472-4d38-9e7d-15c19ed823f0" x="1" y="71" width="286" height="245">
+						<printWhenExpression><![CDATA[$F{cores_involved} > 0 || $F{logins_involved} > 0 || $F{sessions_involved} > 0]]></printWhenExpression>
+					</reportElement>
+					<chartTitle color="#666666">
+						<font size="12"/>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="CrackedHosts" uuid="680639b7-719e-467e-a72f-b8a6e80d5acd">
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="app_run_id">
+								<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{address}]]></keyExpression>
+					<valueExpression><![CDATA[$F{access_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{0} ({1})">
+					<plot/>
+					<itemLabel>
+						<font size="6" isUnderline="false"/>
+					</itemLabel>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart isShowLegend="false" customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="23878052-0107-405b-a4b2-7cfd242df20d" x="287" y="71" width="286" height="245">
+						<printWhenExpression><![CDATA[$F{successful_logins} > 0 || $F{successful_auths} > 0]]></printWhenExpression>
+					</reportElement>
+					<chartTitle color="#666666">
+						<font size="12"/>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="CrackedServices" uuid="98d120b7-1fb6-4610-b9b8-32c22c17ca5c">
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="app_run_id">
+								<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{service_name}]]></keyExpression>
+					<valueExpression><![CDATA[$F{login_count}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{0} ({1})">
+					<plot/>
+					<itemLabel>
+						<font size="6"/>
+					</itemLabel>
+				</piePlot>
+			</pieChart>
+			<textField>
+				<reportElement uuid="24eb3a91-b714-4830-adfc-187636addfef" style="Graph title" mode="Opaque" x="0" y="30" width="286" height="41">
+					<printWhenExpression><![CDATA[$F{cores_involved} > 0 || $F{sessions_involved} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["Cracked Hosts (Top 5 by number of \n" + "successful logins and sessions)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="24eb3a91-b714-4830-adfc-187636addfef" style="Graph title" mode="Opaque" x="287" y="30" width="285" height="41">
+					<printWhenExpression><![CDATA[$F{successful_logins} > 0 || $F{successful_auths} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["Cracked Services (Top 5 by number \n" + "of successful logins)"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="184">
+			<printWhenExpression><![CDATA[$P{display_svcs_hosts_details}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="c3dcd908-26ec-479e-a104-9f67fcbea3f7" style="section_header_1" x="0" y="0" width="573" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Authenticated Services and Hosts Details]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="450b671a-f181-45c2-bcc5-466e9daed0b0" x="10" y="78" width="563" height="106"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="subreport_dir">
+					<subreportParameterExpression><![CDATA[$P{subreport_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="app_run_id">
+					<subreportParameterExpression><![CDATA[$P{app_run_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mask_credentials">
+					<subreportParameterExpression><![CDATA[$P{mask_credentials}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreport_dir} + "authenticated_details.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="fb2f2dfd-47f9-4707-aeff-cefd848c1975" style="generic_text" x="10" y="30" width="563" height="48"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["This section shows hosts against which a successful authentication was made or on which a session was opened during the MetaModule run."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="282">
+			<printWhenExpression><![CDATA[$P{display_appendix_options}]]></printWhenExpression>
+			<break>
+				<reportElement uuid="9785fb68-1868-4362-b943-e4097762c854" x="0" y="0" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="441a744d-e9a8-4600-ba4a-e51bda358e8d" style="section_header_1" x="0" y="1" width="573" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Report Options Selected]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b1f12bef-5700-4583-9346-6c1ee862bb84" style="title2" x="16" y="34" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Report Sections]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="93ab646d-de2d-4fab-acc2-2e6f49e36c7b" style="title2" x="16" y="154" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Report Options]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="820df4cd-3801-4094-a6bc-90828a8fe9e2" style="title2" x="351" y="34" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Key]]></text>
+			</staticText>
+			<image scaleImage="RealSize">
+				<reportElement uuid="dbe50efe-1cd7-4fb7-bc28-02fc982b458b" mode="Opaque" x="26" y="61" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_cover}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="70883101-527a-46d4-bdec-d4bc8c0d5862" x="358" y="85" width="10" height="10"/>
+				<imageExpression><![CDATA[$P{image_dir} + "subtract.png"]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="385366a0-e22a-46c7-bf6c-13bdd8743f21" x="358" y="62" width="10" height="10"/>
+				<imageExpression><![CDATA[$P{image_dir} + "add.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="af1408f5-8b8a-4b8c-8e16-5f1323a44bb5" style="glossary_def" x="379" y="60" width="101" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Selected"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ffcf7b8f-ec8d-4988-bfab-44c019abe4c5" style="glossary_def" x="379" y="83" width="101" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Unselected"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement uuid="ab03b8ed-5de7-47b8-bd81-2be6d9918fb6" x="26" y="75" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_proj_summ}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="f646870e-ceb6-4dd4-aef6-a27a3ea7f0ad" x="26" y="90" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_findings_summ}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="a281a08b-3966-46b8-8914-e86219030818" x="26" y="117" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_svcs_hosts_details}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="77829cf0-f20d-4da6-b910-36c293301d1a" x="26" y="103" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_svcs_hosts_summ_charts}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="0122d849-1ce9-4391-8850-e757717b5070" style="glossary_def" x="42" y="59" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Cover Page"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="93a04400-943f-43f0-bf28-53528a8fe378" style="glossary_def" x="42" y="73" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Project Summary"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7caffebc-9744-4ca4-9cc3-811630c26956" style="glossary_def" x="42" y="87" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Findings Summary"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e0a5caa6-e477-4d20-a178-521f00c3c30c" style="glossary_def" x="42" y="101" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Authenticated Services and Hosts Summary Charts"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2fd56bce-16b9-4fe0-a994-76fdc81d5abe" style="glossary_def" x="42" y="115" width="267" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Authenticated Services and Hosts Details"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9b5fa35b-1bd3-488d-8f5a-1a3e2380f92f" style="glossary_def" x="42" y="178" width="239" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Mask discovered passwords"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement uuid="8e0c38d7-be23-40e9-b7bf-f6af4a7deeff" x="26" y="180" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{mask_credentials}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="5295f64b-8ef9-40dd-a21d-c8b4e192c60c" x="26" y="195" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{include_charts}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="d84f492e-1670-441d-9c09-cb0d33f5be44" style="glossary_def" x="42" y="194" width="239" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Include charts and graphs"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="93ab646d-de2d-4fab-acc2-2e6f49e36c7b" style="title2" x="16" y="229" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{svcs_selected} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[Services Selected]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="9b5fa35b-1bd3-488d-8f5a-1a3e2380f92f" style="glossary_def" x="26" y="249" width="515" height="21">
+					<printWhenExpression><![CDATA[$F{svcs_selected} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{svcs_selected}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}>1]]></printWhenExpression>
+			<image scaleImage="RealSize" vAlign="Middle" isUsingCache="false" onErrorType="Blank">
+				<reportElement uuid="4cf7dcae-ea2a-434f-831f-5881fbd8c9c1" x="0" y="4" width="58" height="11"/>
+				<imageExpression><![CDATA[$P{image_dir} + "r7-logo_footer.jpg"]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement uuid="12e5a2b8-0918-4a80-ac57-1a92a978e57b" style="last_audited" x="519" y="0" width="52" height="18"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d1b07045-f888-4c3c-a8dc-cac2bdbff17b" style="last_audited" x="331" y="0" width="188" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Page " + ($V{PAGE_NUMBER} - 1) +" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

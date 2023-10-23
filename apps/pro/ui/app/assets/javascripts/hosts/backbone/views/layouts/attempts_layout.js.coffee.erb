@@ -1,0 +1,51 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/hosts/layouts/attempts") %>',
+  '<%= javascript_path("moment.min.js") %>'
+], ($, Template, m) ->
+  class AttemptsLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['hosts/layouts/attempts']
+
+    attemptsURL: => "/hosts/#{@host_id}/attempts"
+
+    initialize: ({@host_id}) ->
+
+    onRender: =>
+      @_loadTable()
+
+    _loadTable: =>
+      $.get(@attemptsURL(), (data) =>
+        $wrapper = $('.attempts-table .table', @el)
+        $wrapper.html(data)
+        $table = $wrapper.find('table')
+        $table.trigger('tabload')
+        $table.dataTable(
+          sDom: 'ft<"list-table-footer clearfix"ip <"sel" l>>r'
+          oSettings:
+            sInstance: 'attempts'
+          oLanguage:
+            sEmptyTable: "No Attempts have been made against this host."
+          sPaginationType: "r7Style"
+          aaSorting: [[6, 'desc']]
+          bStateSave: true
+          aoColumns: [
+            {mDataProp: "user"}
+            {mDataProp: "exploit"}
+            {mDataProp: "port"}
+            {mDataProp: "proto"}
+            {mDataProp: "result"}
+            {mDataProp: "detail"}
+            {
+              mDataProp: "created_at",
+              sTitle: "Created",
+              sClass: 'time',
+              fnRender: (o) ->
+                time = o.aData?.created_at
+                "<span title='#{_.escape(time)}'>#{_.escape(moment(time).fromNow())}</span>"
+            }
+          ]
+          fnDrawCallback: =>
+            $('table td.time', @el).tooltip()
+            $(@el).trigger('tabload')
+        )
+      )

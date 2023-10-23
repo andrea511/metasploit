@@ -1,0 +1,14 @@
+<div class="foundation">
+  <div class="filter">
+    <form>
+      <div class="filter-column">
+        <div class="filter-header">Host Name</div>
+
+        <div class="filter-input">
+          <input type="text" name="attributes[name]" placeholder="Enter key word">
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

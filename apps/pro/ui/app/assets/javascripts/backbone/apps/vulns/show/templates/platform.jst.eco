@@ -1,0 +1,2 @@
+<span class="<%= @icon %>"></span>
+<span class="platform"><%="#{@os_name || 'Unknown OS'} #{@os_sp || ''}"%></span>

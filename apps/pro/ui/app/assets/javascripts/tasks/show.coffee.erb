@@ -1,0 +1,38 @@
+# polls to update the task log, cancels polling when something
+# matching $('.end') appears in the logs
+jQuery(document).bind 'requirejs-ready', ->
+  window.initRequire [
+    'jquery', '<%= javascript_path("shared/backbone/views/task_console") %>'
+  ], ($, TaskConsole, AppStatModalLayout, AppRun) ->
+    $(document).ready ->
+      $appRunMeta = $('meta[name=app_run_id]')
+      $presenterMeta = $('meta[name=presenter]')
+
+      if $appRunMeta.length > 0  # APP RUN STATS
+        appRunId = $appRunMeta.attr('content')
+        window.initRequire [
+          '<%= javascript_path("apps/backbone/views/layouts/app_stat_modal_layout") %>',
+          '<%= javascript_path("apps/backbone/models/app_run") %>'
+        ], (AppStatModalLayout, AppRun) ->
+          appRun = new AppRun(id: appRunId)
+          appRun.fetch
+            success: =>
+              statLayout = new AppStatModalLayout(appRun: appRun)
+              region = new Backbone.Marionette.Region(el: $('#appStats'))
+              region.show(statLayout)
+              $('.app-stats').css(padding: 0)
+
+      else if $presenterMeta.length > 0 # NORMAL PRESENTER STATS MY MAN
+        presenter = $presenterMeta.attr('content')
+
+        initProRequire ['apps/tasks/tasks_app'], (TasksApp) ->
+          Pro.start
+            environment: "<%= Rails.env %>"
+
+      else # JUST A STATIC CONSOLE:
+        $(document).on 'logUpdate', (event, log, header) ->
+          $('#taskDetails').html(header)
+        $log = $('#task_logs')
+        task = $log.attr('task')
+        tc = new TaskConsole(el: $log[0], task: task, prerendered: true)
+        tc.startUpdating()

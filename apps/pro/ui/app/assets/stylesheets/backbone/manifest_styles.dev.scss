@@ -1,0 +1,10 @@
+/*
+  * This file is used only as a "watcher" file in development mode. It is never
+  * served to the client, but allows us to dynamically reload the require_config
+  * at the right moment (e.g., when the contents of any subdirectory change).
+
+  * We prevent this file from ever actually being compiled, as this would bloat
+  * our updater/installer sizes unnecessarily.
+
+  *= require_tree ../backbone
+*/

@@ -1,0 +1,30 @@
+{
+  "sEcho": <%= echo_data_tables %>,
+  "iTotalRecords": <%= @hosts_total_count.to_json %>,
+  "iTotalDisplayRecords": <%= @hosts_total_display_count.to_json %>,
+  "aaData": [
+
+    <%-# If we don't return raw html, the html will render incorrectly b/c characters are escaped -%>
+    <%-# The GSUB is ugly, but double quotes are used for denoting keys in JSON.-%>
+    <%-# To properly generate JSON we swap double quotes for single quotes  -%>
+    <%-# To prevent XSS we sanitize the strings that are injected into the HTML within the methods -%>
+
+  <% @hosts.each_with_index do |host, index| -%>
+    {
+      "DT_RowId":   "<%= dom_id(host)%>",
+      "checkbox":   "<%= raw host_checkbox_tag(host).gsub(/\"/,"'") %>",
+      "address":    "<%= raw host_address_html(host).gsub(/\"/,"'") %>",
+      "name":       "<%= raw host_name_html(host).gsub(/\"/,"'") %>",
+      "os":         "<%= raw host_os_html(host).gsub(/\"/,"'") %>",
+      "virtual":    "<%= raw host_os_virtual_html(host).gsub(/\"/,"'") %>",
+      "purpose":    "<%= raw host_purpose_html(host).gsub(/\"/,"'") %>",
+      "services":   "<%= raw host_services_html(host).gsub(/\"/,"'") %>",
+      "vulns":      "<%= raw host_vulns_html(host).gsub(/\"/,"'") %>",
+      "attempts":   "<%= raw host_attempts_html(host).gsub(/\"/,"'") %>",
+      "tags":       "<%= raw host_tags_or_notes_html(host, @tag_search).gsub(/\"/,"'") %>",
+      "updated_at": "<%= raw host_updated_at_html(host).gsub(/\"/,"'") %>",
+      "status":     "<%= raw host_status_html(host).gsub(/\"/,"'") %>"
+    }<%= ',' unless index == (@hosts.size - 1) %>
+  <% end -%>
+  ]
+}

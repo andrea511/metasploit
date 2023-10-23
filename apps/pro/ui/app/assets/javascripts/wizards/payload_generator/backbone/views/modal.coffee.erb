@@ -1,0 +1,407 @@
+$ = jQuery # only applies to our implicit scope
+
+WIDTH = 700
+FORM_URL = '/wizards/payload_generator/form/'
+UPSELL_URL = "#{FORM_URL}upsell"
+PREFERRED_ARCHES = ['x86', 'x64']
+NUM_TABS = 3
+ENCODER_IDX = 1
+OUTPUT_IDX  = 2
+POLL_WAIT = 2000 # 2s
+DYNAMIC_STAGERS = [
+  'reverse_tcp',
+  'reverse_http',
+  'reverse_https',
+  'bind_tcp'
+]
+DYNAMIC_DESCRIPTION = 'Generates a Windows executable that uses a dynamic stager '+
+                      'written entirely in randomized C code.'
+CLASSIC_DESCRIPTION = 'Builds a customized payload. (All platforms)'
+
+WINDOWS_ONLY_ENCODERS = ['generic/eicar']
+
+class @PayloadGeneratorModal extends @TabbedModalView
+
+  _lastPayload: null # current [Payload] instance
+  _lastEncoder: null # current [Encoder] instance
+
+  initialize: ->
+    super      
+    @setTitle 'Payload Generator'
+    @setTabs [
+      {name: 'Payload Options'},
+      {name: 'Encoding', checkbox: true},
+      {name: 'Output Options'}
+    ]
+    @setButtons [
+      {name: 'Cancel', class: 'close'},
+      {name: 'Generate', class: 'btn primary'}
+    ]
+    @_steps = _.map @_tabs, (tab) -> [tab.name, FORM_URL+_.str.underscored(tab.name)]
+    @_url = FORM_URL
+    @genPayload = new GeneratedPayload() # this is the Model we are building
+    PayloadCache.load(@renderForm)    # inner form renders once cache loads
+
+  events: _.extend({
+    'change form#payload_generator *': 'formChanged',
+    'change input#tab_encoding': 'encodingToggled',
+    'change li#payload_class input': 'payloadClassChanged'
+  }, TabbedModalView.prototype.events)
+
+  render: =>
+    super
+    @tabAt(ENCODER_IDX).find('[type=checkbox]').prop('checked', true)
+    @tabAt(i).toggle(false) for i in [1...NUM_TABS]
+
+  layout: =>
+    @$modal.width(WIDTH)
+    @center()
+    @$modal.addClass('payload-generator')
+
+  validLicense: => "true" # always valid.
+
+  getLicense: =>
+    $('meta[name=msp-feed-edition]').attr('content')
+
+  # Re-renders the inner form from our eco template
+  renderForm: =>
+    template = JST['templates/wizards/payload_generator/form']
+    @content().removeClass('loading tab-loading').html(template(@genPayload))
+
+    $li = @content().find('li#payload_class').remove()
+    $li.insertAfter $('h1:first', @$modal)
+    $hiddenPage = $('div.dynamic_payload_form')
+    @_hiddenPage = $hiddenPage.find('div.page')
+    @_hiddenPage.detach()
+    $hiddenPage.remove()
+    @inputEl('badchars').ByteEntry()
+    $('[name=authenticity_token]', @$modal).val($('meta[name=csrf-token]').attr('content'))
+    @initTabs()
+    unless @getLicense() == 'pro'
+      $li.find("input").prop('checked', false)
+      $li.find("input[value='classic_payload']").prop('checked', true)
+      @payloadClassChanged()
+    @payloadClassChanged()
+
+  encodingToggled: (e) =>
+    checked = $(e.target).is(':checked')
+    $span = @pageAt(ENCODER_IDX).find('h3 span')
+    @genPayload.set('useEncoder', checked)
+    if !checked
+      $span.removeClass('enabled')
+        .addClass('disabled')
+        .text('disabled')
+      @pageAt(ENCODER_IDX).css('pointer-events': 'none', opacity: 0.5)
+    else
+      $span.removeClass('disabled')
+        .addClass('enabled')
+        .text('enabled')
+      @pageAt(ENCODER_IDX).css('pointer-events': 'all', opacity: 1)
+
+  # Called on any change event in the form
+  formChanged: =>
+    return if @_updating
+    # reload @genPayload from the serialized form
+    data = Backbone.Syphon.serialize(@formEl()[0])
+    delete data?.payload?.options['payload'] # derived value, dont reset
+    @genPayload.set(data?.payload?.options || {})
+    @genPayload.set('useEncoder', $('#tab_encoding', @$modal).is(':checked'))
+    @updateForm()
+
+  payloadClassChanged: (e) =>
+    @_updating = true
+    removed = @formEl().find('div.page').detach()
+    @_lastPayload = @_lastEncoder = null
+    @_upsell.remove() if @_upsell?
+    if @_hiddenPage?
+      @formEl().append(@_hiddenPage)
+      @_hiddenPage = null
+    $tabs = $('ul.tabs li', @$modal).hide()
+    _.times @formEl().find('div.page').length, (i) => $tabs.eq(i).show()
+    @_hiddenPage = removed
+    @index(0)
+    @genPayload = new GeneratedPayload
+    if @useDynamicStagers()
+      @updateDescription(DYNAMIC_DESCRIPTION)
+      if @getLicense() != 'pro'
+        @renderUpsell()
+    else
+      @updateDescription(CLASSIC_DESCRIPTION)
+    @_updating = false
+    @updateForm()
+
+  # Updates DOM to match @genPayload GeneratedPayload model
+  # Called on every input change in the form
+  updateForm: =>
+    obj = @serialize()
+    @_updating = true
+
+    unless @genPayload.get('platform') == 'Windows'
+      obj.encoders = @removeNonWindowsEncoders(obj.encoders)
+
+    # update the model if its old values are no longer allowed
+    unless _.contains(obj.arches, @genPayload.get('arch'))
+      @genPayload.set('arch', obj.arches[0])
+      obj = @serialize()
+    unless _.contains(obj.stagers, @genPayload.get('stager'))
+      @genPayload.set('stager', obj.stagers[0])
+    unless _.contains(obj.stages, @genPayload.get('stage'))
+      @genPayload.set('stage', obj.stages[0])
+    unless _.contains(obj.singles, @genPayload.get('single'))
+      @genPayload.set('single', obj.singles[0])
+    unless _.contains(obj.encoders, @genPayload.get('encoder'))
+      @genPayload.set('encoder', obj.encoders[0])
+
+    if @useDynamicStagers()
+      obj.stagers = DYNAMIC_STAGERS
+      obj.arches = ["x86", "x64"]
+
+    # update the set of options in the dropdowns
+    @setOptions('platform', obj.platforms)
+    @setOptions('arch', obj.arches)
+    @setOptions('stager', obj.stagers)
+    @setOptions('stage', obj.stages)
+    @setOptions('single', obj.singles)
+    @setOptions('encoder', obj.encoders)
+    @setOptions('format', obj.formats)
+
+    numStagers = if @useDynamicStagers() then 1 else NUM_TABS 
+    @tabAt(i).toggle(true) for i in [0...numStagers]
+
+    # hide encoders tab if necessary
+    encodersPresent = !_.isEmpty(obj.encoders)
+    if @formEl().find('div.page').length > 1
+      @tabAt(ENCODER_IDX).toggle(encodersPresent)
+
+    $primaryBtn = $('a.btn.primary', @$modal)
+    if @useDynamicStagers() && @getLicense() != 'pro'
+      @tabAt(i).toggle(false) for i in [0..NUM_TABS]
+      @content().css(width: '100%', 'margin-left': '10px', border: 'none')
+      $primaryBtn.addClass('_disabled unsupported')
+    else
+      @content().css(width: '80%', 'margin-left': '0', border: '2px solid #d6d6d6')
+      if $primaryBtn.hasClass('unsupported')
+        $primaryBtn.removeClass('_disabled unsupported') 
+
+    # hide/show some fields based on what's available
+    stagersPresent = obj.stagers.length > 0 and obj.stages.length > 0
+
+    # update the model if no stagers are available
+    unless stagersPresent
+      @genPayload.set('useStager', false)
+
+    @inputEl('useStager').parent().toggle(!!stagersPresent)
+    @inputEl('arch').parent().toggle(obj.arches.length > 1)
+    if stagersPresent
+      @inputEl('stager').parent().show()
+      if @genPayload.get('useStager')
+        @inputEl('stager').css('pointer-events': 'all', opacity: 1.0)
+      else
+        @inputEl('stager').css('pointer-events': 'none', opacity: 0.5)
+    else
+      @inputEl('stager').parent().hide()
+    @inputEl('stage').parent().toggle(stagersPresent and @genPayload.get('useStager'))
+    @inputEl('single').parent().toggle(!(stagersPresent and @genPayload.get('useStager')))
+
+    # update the form to set the now-selected values
+    _.each @genPayload.attributes, (val, key) => @setValue(key, val)
+
+    @renderPayloadOptions(obj)
+    @renderEncoderOptions(obj)
+
+    @pageAt(0).find('li.exitfunc').hide() if @useDynamicStagers()
+
+    @inputEl('outputType')
+      .prop('checked', false)
+      .filter("[value=#{@genPayload.get('outputType')}]")
+      .prop('checked', true)
+
+    $output = @pageAt(OUTPUT_IDX)
+    $output.find('li.exe,span.exe.span-front').toggle(@genPayload.isOutputExe())
+    $output.find('li.source').toggle(@genPayload.isOutputBuffer())
+    $output.find('li.not-raw').toggle(!@genPayload.isOutputRaw())
+
+    @inputEl('keep').prop('checked', @genPayload.get('keep'))
+
+    @resetErrors()
+    @renderFileInputs()
+    @_updating = false
+    $('ul.tabs li', @$modal).find('.hasErrors').hide()
+
+  # When generating a static payload, the generic/icar payload is
+  # only useful on windows.
+  # @return [Array<String>] duplicated array with the windows-only encoders removed
+  removeNonWindowsEncoders: (encoders) =>
+    _.reject encoders, (enc) -> _.contains(WINDOWS_ONLY_ENCODERS, enc)
+
+  # Replaces the <option>'s for a specified <select>
+  # @param [String] inputName the name of the <select> to change options
+  # @param [Object<value, displayText>] options
+  # @param [Array<value>] options (alternate way to pass)
+  setOptions: (inputName, options) =>
+    options = _.object(options, options) if _.isArray(options)
+    $select = @inputEl(inputName).html('')
+    _.each options, (displayText, value) =>
+      $select.append($('<option />', value: value).text(displayText))
+
+  # Sets a value on the specified HTML input name in the form
+  setValue: (inputName, val) =>
+    $input = @inputEl(inputName)
+    if $input.is(':text')
+      $input.val(val)
+    else if $input.is('select')
+      $input.find('option').prop('selected', false)
+      option = _.find($input.find('option'), (opt) -> opt.value is val)
+      $(option).prop('selected', true) if option?
+    else if $input.is('[type=checkbox]')
+      $input.prop('checked', !!val)
+
+  # Re-renders the datastore options form if necessary
+  # @param [Object] obj a cached copy from @serialize()
+  renderPayloadOptions: (obj) =>
+    payload = @genPayload.findModule()
+    return if payload?.refname is @_lastPayload?.refname
+    return unless payload?
+    advancedOptions = payload.filteredOptions(advanced: true)
+    template = JST['templates/wizards/payload_generator/datastore']
+    @formEl().find('.payload-options .ajax').html(template(
+      options: payload.filteredOptions(advanced: false)
+      optionsHashName: 'payload[options][payload_datastore]'
+    ))
+    @formEl().find('.payload-options .ajax-advanced-options .render').html(template(
+      options: advancedOptions
+      optionsHashName: 'payload[options][payload_datastore]'
+    ))
+    @formEl().find('.payload-options .ajax-advanced-options').toggle(advancedOptions.length > 0)
+    Forms.renderHelpLinks(@el)
+    $('#modals .inline-help').css(position: 'fixed')
+    @_lastPayload = payload
+
+  renderEncoderOptions: (obj) =>
+    encoder = @genPayload.findEncoder()
+    return @formEl().find('.encoder-options .ajax').html('') unless encoder?
+    return if encoder?.refname is @_lastEncoder?.refname
+    return unless encoder?
+    template = JST['templates/wizards/payload_generator/datastore']
+    opts = encoder.filteredOptions(advanced: false)
+    advOpts = encoder.filteredOptions(advanced: true)
+    @formEl().find('.encoder-options .ajax').html(template(
+      options: opts
+      optionsHashName: 'payload[options][encoder_datastore]'
+    ))
+    @formEl().find('.encoder-options .ajax-advanced-options .render').html(template(
+      options: advOpts
+      optionsHashName: 'payload[options][encoder_datastore]'
+    ))
+    @formEl().find('.encoder-options.advanced').toggle(opts.length > 0)
+    @formEl().find('.encoder-options .ajax-advanced-options').toggle(advOpts.length > 0)
+    Forms.renderHelpLinks(@el)
+    $('#modals .inline-help').css(position: 'fixed')
+    @_lastEncoder = encoder
+
+  # Overrides TabbedModal#formOverrides
+  # We need to shove the calculated payload refname into the form hash
+  formOverrides: =>
+    overrides = {
+      'payload[options][payload]': @genPayload.findModule()?.refname || '',
+      'payload[options][encoder]': @genPayload.findEncoder()?.refname || '',
+      'payload[payload_class]': @payloadClass()
+    }
+    if @genPayload.isOutputRaw()
+      _.extend(overrides, 'payload[options][format]': 'raw')
+    unless @genPayload.get('useStager')
+      _.extend(overrides, 'payload[options][stage]': '')
+    overrides
+
+  # Just return this name returned
+  mapErrorToSelector: (attrName, modelName) => attrName
+
+  # TabbedModal was designed (poorly) for an array of model errors,
+  # here we have just one model. 
+  transformErrorData: (errors) =>
+    errors.errors = { payload: errors.errors }
+    # :payload is a derived column OUTSIDE of opts, so we need to
+    # shove it back into the model errors
+    if errors.errors.payload.payload? # jangles keys for a bit
+      errors.errors.payload.options ||= {}
+      errors.errors.payload["payload[options][single]"] = errors.errors.payload.payload
+      delete errors.errors.payload.payload
+    errors
+
+  # Start polling the generated_payload object from the db
+  formSubmittedSuccessfully: (data) =>
+    return @handleSubmitError(data.errors) unless _.isEmpty(data?.errors)
+
+    # otherwise, kick off polling
+    done = false
+    poll = =>
+      $.getJSON("#{FORM_URL}poll?payload_id=#{data.id}")
+        .done (data) =>
+          modal = @
+          return _.delay(poll, POLL_WAIT) if data.state == 'generating'
+          if data.state == 'failed'
+            @_loaderDialog.dialog
+              title: 'Error Occurred'
+              buttons:
+                Close: -> 
+                  $(@).dialog('close')
+                  $(@).remove()
+
+            @_loaderDialog
+              .removeClass('tab-loading loading')
+              .addClass('failed')
+              .append($('<p class="dialog-msg center">').text(data.generator_error))
+          else
+            close = ->
+              $(@).dialog('close')
+              $(@).remove()
+              modal.close()
+            @_loaderDialog.dialog
+              title: 'Payload generated'
+              buttons:
+                Close: close
+                Download: -> 
+                  $f = $('<iframe />', src: "#{FORM_URL}download?payload_id=#{data.id}")
+                  $f.css(display: 'none').appendTo($('body'))
+                  _.delay((-> $f.remove()), 60*1000)
+                  close.call(@)
+                  $('#modals').html('').addClass('empty')
+
+            @_loaderDialog
+              .removeClass('tab-loading loading failed')
+              .append($('<p class="dialog-msg center">').text("Filename: " + data.options.file_name))
+              .append($('<p class="dialog-msg center">').text("Size: " + window.helpers.formatBytes(data.size)))
+            $('#modals .tabbed-modal').hide()
+        .fail =>
+          _.delay(poll, POLL_WAIT)
+    _.delay(poll, POLL_WAIT)
+
+  renderUpsell: =>
+    $upsell = $('.upsell', @el).html('').addClass('tab-loading').css(height: 'auto', 'min-height': '350px')
+    $.get UPSELL_URL, (data) =>
+      $upsell.html(data).removeClass('tab-loading')
+
+  # @return [Object] that is rendered
+  serialize: (extraData={}) =>
+    _.extend {}, @genPayload.attributes, extraData,
+      platforms: PayloadCache.platforms().sort()
+      arches:    PayloadCache.arches(@genPayload.attributes).sort()
+      stagers:   PayloadCache.stagerTypes(@genPayload.attributes).sort()
+      stages:    _.uniq(_.pluck(PayloadCache.stagers(@genPayload.attributes), 'stageName')).sort()
+      singles:   _.pluck(PayloadCache.singles(@genPayload.attributes), 'refname').sort()
+      encoders:  _.pluck(PayloadCache.encoders(@genPayload.attributes), 'refname').sort()
+      formats:   PayloadCache.formats(buffer: @genPayload.isOutputBuffer())
+
+  # @param [String] name of desired input
+  # @return [$] jQuery wrapped input element
+  inputEl: (inputName) =>
+    @formEl().find("[name='payload[options][#{inputName}]']")
+
+  # @return [Object] jQuery wrapped form object
+  formEl: => @$el.find('form#payload_generator')
+
+  # @return [String] (dynamic_payload | classic_payload)
+  payloadClass: =>
+    @$el.find('li#payload_class input:checked').val()
+
+  useDynamicStagers: => @payloadClass() is 'dynamic_stager'

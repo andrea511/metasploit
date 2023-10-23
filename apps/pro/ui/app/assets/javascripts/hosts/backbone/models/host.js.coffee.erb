@@ -1,0 +1,46 @@
+define ['jquery'], ($) ->
+  class Host extends Backbone.Model
+    defaults:
+      id: 0
+      workspace_id: 0
+
+    # removes the specified tags from the host
+    # @option [Array<Integer>] tagIds array of tags to remove from the host
+    # @option [Function] success callback, optional
+    removeTags: ({tagIds, success}) =>
+      id = @get('id')
+      $.ajax(
+        method: "POST"
+        url: "/hosts/#{id}.json"
+        data:
+          '_method': "delete"
+          workspace_id: @attributes.workspace_id
+          remove_tag:
+            host_id: id
+          tag_ids: tagIds
+        success: =>
+          @attributes.tags = _.reject(@attributes.tags, (tag) ->
+            _.contains(tagIds, tag.id)
+          )
+          success() if success?
+      )
+
+    # updates only the specified attributes on the server
+    # @option [Hash] params the HTTP parameters to send
+    # @option [Function] success callback, optional
+    # @option [Function] error callback, optional
+    update: ({params, success, error}) =>
+      id = @get('id')
+      $.ajax
+        method: "POST"
+        url: "/hosts/#{id}.json"
+        data: _.extend(params, {'_method': "PATCH"})
+        success: (data) =>
+          @set(data.host) if data?.host?
+          success(data) if success?
+        error: (xhr) =>
+          try
+            data = $.parseJSON(xhr.responseText)
+            error(data) if error?
+          catch e
+            console.error 'Invalid 500 response from server.'

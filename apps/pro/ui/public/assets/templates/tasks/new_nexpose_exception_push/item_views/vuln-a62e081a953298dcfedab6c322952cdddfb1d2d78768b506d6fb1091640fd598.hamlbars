@@ -1,0 +1,75 @@
+.vuln-exception.columns
+  .header.row
+    .left.columns.small-12
+      .row
+        .name.columns.small-8
+          {{module_detail}}
+        .columns.small-4.spacer
+      .row
+        .columns.small-6
+          .row
+            .radios.columns
+              %input{:id=>"option_{{itemIndex}}_all",:name=>"option_{{itemIndex}}", :value=>'all', :type=>'radio'}
+              %label{:for=>"option_{{itemIndex}}_all"}
+                All Hosts with this Vulnerability
+              %input{:id=>"option_{{itemIndex}}_single",:name=>"option_{{itemIndex}}", :value=>'single', :checked=>'checked', :type=>'radio'}
+              %label{:for=>"option_{{itemIndex}}_single"}
+                Individual Hosts with this Vulnerability
+
+  .row.hosts
+    .columns.small-12
+      %table{:border=>1}
+        %tr
+          %th
+
+          %th
+
+          %th
+            .mass-assign.invisible
+              %label
+                Reason
+              %select{:name=>"group_reason"}
+                {{#each reasons}}
+                %option{:value=>"{{value}}"}
+                  {{text}}
+                {{/each}}
+          %th
+            .mass-assign.invisible
+              %label
+                Comment:
+              %input{:name=>'group_comment'}
+          %th
+          %th
+
+        {{#each result_exceptions}}
+        %tr{:class=> "{{#even_class?}}{{@index}}{{/even_class?}}"}
+          %td
+            %input{:type=>"checkbox", :class=>"host_checkbox", :name=>"nexpose_result_exceptions[{{../itemIndex}}][{{@index}}][checkbox]"}
+          %td
+            {{host_address}}
+          %td
+            %label
+              Reason:
+            .hidden-selection.invisible{:data=>{'reason' =>'{{reason}}'}}
+            %select{:name=>"nexpose_result_exceptions[{{../itemIndex}}][{{@index}}][reason]", :id=>"reason_{{@index}}"}
+              {{#each ../reasons}}
+              %option{:value=>"{{value}}"}
+                {{text}}
+              {{/each}}
+            %span.invisible
+          %td
+            %label
+              Comment:
+            %input{:id=>"comment_{{@index}}", :class=>"comment", :name=>"nexpose_result_exceptions[{{../itemIndex}}][{{@index}}][comments]", :value=>"{{comments}}"}
+            %span.invisible
+          %td
+            %label
+              Expire:
+            %input{:class=>'datetime',:id=>"expire_date_{{../itemIndex}}_{{@index}}", :name=>"nexpose_result_exceptions[{{../itemIndex}}][{{@index}}][expiration_date]", :value=>"{{#utc_to_datepicker}}{{expiration_date}}{{/utc_to_datepicker}}"}
+            %input{:type=>'hidden', :name=>"nexpose_result_exceptions[{{../itemIndex}}][{{@index}}][id]", :value=>"{{id}}"}
+            %input{:type=>'hidden', :name=>"nexpose_result_exceptions[{{../itemIndex}}][{{@index}}][automatic_exploitation_match_result_id]", :value=>"{{automatic_exploitation_match_result_id}}"}
+            %input{:type=>'hidden', :class=>'auto-approve', :name=>"nexpose_result_exceptions[{{../itemIndex}}][{{@index}}][approve]", :value=>"{{approve}}"}
+          %td
+            .result_code
+              Result Code: {{result_code}}
+        {{/each}}

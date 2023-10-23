@@ -1,0 +1,36 @@
+<table class="info">
+  <% if hash.respond_to?(:keys) %>
+	<% keys = hash.keys.sort{|a,b| a.to_s <=> b.to_s}.each do |key| %>
+	<%   val = hash[key] %>
+	<tr>
+		<td class="key"><%=h key %></td>
+		<td>
+			<% if val.respond_to? :keys %>
+        <% b = Thread.current[:controller].get_binding   %>
+        <% b.local_variable_set :hash, val %>
+				<%= ERB.new(File.read(File.join(Rails.root, 'app/views/notes/_hash.erb'))).result(b)%>
+			<% elsif val.is_a? Array %>
+				<%=h val.map {|x|
+					if x.is_a? Array
+						"[ " + x.map{|y| y.to_s}.join(", ") + " ]"
+					elsif x.is_a? Hash
+						hash_readable = []
+						x.each_pair {|k,v| hash_readable << "#{k}:#{v}" }
+						"{ " + hash_readable.map{|y| y.to_s}.join(", ") + " }"
+					else
+						x.to_s
+					end
+				}.join(", ") %>
+			<% else %>
+				<% if val.respond_to? :force_encoding %>
+					<%=h val.dup.force_encoding("UTF-8") %>
+				<% else %>
+					<%=h val %>
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+	<% end %>
+  <% end %>
+</table>
+

@@ -1,0 +1,218 @@
+$ = jQuery
+
+class @CampaignSlideFactsView extends CampaignFactsView
+  @EMAILS_SENT_VIEW: 0
+  @EMAIL_OPENINGS_VIEW: 1
+  @VISITS_VIEW: 2
+  @FORM_ACTIVITY_VIEW: 3
+  @PHISHING_RESULTS_VIEW: 4
+  @SESSIONS_VIEW: 5
+
+  initialize: ->
+    @hideSubCircles = false
+    @showTray = true
+    @selIdx = -1
+    @_tc = null
+    super
+    _.bindAll(this, 'scrollToCircle', 'updateDataTable')
+    $(@tabView).bind 'scrollToCircle', @scrollToCircle
+    $(@tabView).bind 'scrollToSubCircle', @scrollToSubCircle
+    @campaignSummary.bind 'change', @updateDataTable
+
+  dataTableColumns: ->
+    columns = [
+      { mDataProp: 'email_address', display:   'Email Address' },
+      { mDataProp: 'first_name',    display:   'First Name'    },
+      { mDataProp: 'last_name',     display:   'Last Name'     }
+    ]
+
+    renderPhishingResultLink = (row) =>
+      id = row.aData.phishing_result_id
+      url = "/workspaces/#{WORKSPACE_ID}/social_engineering/campaigns/#{@campaignSummary.id}/phishing_results/#{id}"
+      "<a href='#{_.escape url}' target='_blank' data-pr-id='#{_.escape id}' class='anonymous'>Anonymous</a>"
+
+    renderHumanTargetLink =  (row) =>
+      email_address = row.aData.email_address
+      id = row.aData.human_target_id
+      url = "/workspaces/#{WORKSPACE_ID}/social_engineering/human_targets/#{id}"
+      "<a href='#{_.escape url}' target='_blank' data-ht-id='#{_.escape id}'>#{_.escape email_address}</a>"
+
+    if @selIdx == CampaignSlideFactsView.PHISHING_RESULTS_VIEW
+      columns[0]['fnRender'] = (row) =>
+        email_address = row.aData.email_address
+        if email_address is null
+          renderPhishingResultLink(row)
+        else 
+          renderHumanTargetLink(row)
+      columns.push({ mDataProp: 'web_page_name', display: 'Web Page' }) 
+      columns.push({ mDataProp: 'created_at', display: 'Submitted on', sType: 'title-string', fnRender: dataTableDateFormat })
+
+    else if @selIdx == CampaignSlideFactsView.EMAIL_OPENINGS_VIEW
+      columns[0]['fnRender'] = (row) =>
+        renderHumanTargetLink(row)
+      columns.push({ mDataProp: 'created_at', display: 'Opened on', sType: 'title-string', fnRender: dataTableDateFormat })
+
+    else if @selIdx == CampaignSlideFactsView.VISITS_VIEW
+      columns[0]['fnRender'] = (row) =>
+        renderHumanTargetLink(row)
+      columns.push({ mDataProp: 'created_at', display: 'Clicked on', sType: 'title-string', fnRender: dataTableDateFormat })
+
+    else if @selIdx == CampaignSlideFactsView.SESSIONS_VIEW 
+      columns = [
+        { 
+          mDataProp: 'id', 
+          display: 'Name',
+          sWidth: '100px', 
+          fnRender: (row) ->
+            "<a target='_blank' href='/workspaces/#{WORKSPACE_ID}/sessions/#{_.escape(row.aData.id)}'>Session #{_.escape(row.aData.id)}</a>"
+        }
+        { mDataProp: 'host_name', display:   'Host' }
+        { mDataProp: 'desc', display:   'Description' }
+        { mDataProp: 'stype', display:  'Session Type' }
+        { mDataProp: 'via_exploit', display:   'Attack Module' }
+        { mDataProp: 'os', display:   'OS', sWidth: '150px' }
+        { mDataProp: 'platform', display:   'Platform' }
+        { mDataProp: 'opened_at', display:   'Opened', sWidth: '150px' }
+      ]
+    columns
+  updateDataTable: ->
+    @dataTable.fnReloadAjax() if @dataTable
+
+  template: _.template($('#campaign-facts').html())
+
+  currentCircleUrl: ->
+    id = @campaignSummary.get('id')
+    "/workspaces/#{WORKSPACE_ID}/social_engineering/campaigns/#{id}/#{@actions[@selIdx]}"
+
+  exportButtonClicked: ->
+    window.location.href = "#{@currentCircleUrl()}.csv"
+
+  events:
+    _.extend({
+      'click .tray .export': 'exportButtonClicked',
+      'click ul.tabs li.tab a': 'tabClicked',
+      'click .action-btn a': 'campaignActionClicked'
+    }, CampaignFactsView.prototype.events)
+  
+  tabClicked: (e) =>
+    idx = $(e.currentTarget).parent().index()
+    $tabs = @$el.find('.tab-container div.tabs div.tab')
+    $tabs.hide()
+    $tabs.eq(idx).show()
+    @$el.find('.tab-container ul.tabs li.tab a').removeClass('active')
+    $(e.currentTarget).addClass('active')
+    e.preventDefault()
+    false
+
+  circleClicked: (e) ->
+    $circle = $(e.target).parent('.circle')
+    $circle = $(e.target) unless $circle.size()
+    idx = $circle.parents('.cell').first().prevAll().size()
+    @scrollToCircle(e, $circle, idx)
+
+  campaignActionClicked: (e) ->
+    if campaignDetails.current_status != 'Finished' && $(e.target)[0].innerText != 'Generate Report'
+      e.preventDefault()
+      return if $(e.target).hasClass('ui-disabled')
+      id = @campaignSummary.get('id')
+      url = "/workspaces/#{WORKSPACE_ID}/social_engineering/campaigns/#{id}/execute"
+      $(e.currentTarget).addClass('ui-disabled')
+      $.ajax
+        url: url
+        type: 'POST'
+        dataType: 'json'
+        success: (data) ->
+          @campaignSummary = new CampaignSummary(data)
+          if ($(e.currentTarget)[0].innerText == 'Start')
+            $(e.currentTarget)[0].innerText = 'Stop'
+          else
+            $(e.currentTarget)[0].innerText = 'Generate Report'
+            campaignDetails.current_status == 'Finished'
+          $(e.currentTarget).removeClass('ui-disabled')
+
+  render: -> # make sure circle at @selIdx stays selected
+    super
+    if @selIdx > -1
+      $circles = $('.circle', @el)
+      $circles.each -> $(this).parent('.cell').removeClass('selected')
+      $circles.eq(@selIdx).addClass('selected').parent('cell').addClass('selected')
+    else # auto select first circle
+      $circle = $('.large-circles .cell:not(.hidden-cell) .circle', @el).first()
+      @scrollToCircle(null, $circle, $circle.parents('.cell').first().index())
+
+    if @visibleCircles().length == 0
+      @$el.find('.tab-container ul.tabs li.tab').first().hide().end().last().find('a').click()
+
+    if !@_tc?
+      initRequire ['<%= javascript_path("shared/backbone/views/task_console") %>'], (TaskConsole) =>
+        # poll the task ID
+        url = "campaigns/#{@campaignSummary.id}/to_task.json"
+        success = (data) =>
+          id = data.id
+          el = @$el.find('div.task-console')[0]
+          @_tc = new TaskConsole(el: el, task: id, prerendered: false)
+          @_tc.startUpdating()
+          $(el).removeClass('tab-loading')
+        request = -> $.getJSON(url, success).error(-> _.delay(request, 2500))
+        request()
+
+    $reportLink = $('.action-btn a', @el)
+    href = $reportLink.attr('href')
+    newUrl = href+"?campaign_id=#{@campaignSummary.id}"
+    $reportLink.attr('href', newUrl) unless href.match /\?/
+
+  scrollToCircle: (e, circle, idx) -> # overriden
+    # determine delay based on if user has to wait for tab view to push over
+    currPageClicked = ($(circle).parents().index(@$el) > -1)
+    delay = if currPageClicked then 75 else 200
+    if idx != @selIdx || !currPageClicked
+      @selIdx = idx
+      circle = $('.circle', @el)[idx]
+      $cell = $(circle).parents('.row > div').first()
+      # select the cell at that index
+      $circles = $('.circle', @el)
+      $circles.each -> $(this).parent('.cell').removeClass('selected')
+      $circles.removeClass('selected').eq(idx).addClass('selected')
+        .parent('.cell').addClass('selected')
+      $('.tray', @el).html('').addClass('loading')
+      _.delay (=>
+        # page has slid over, now slide down the tray
+        return unless @visibleCircles().length > 0
+        visibleIdx = @visibleCircles().index($('.circle', $cell))
+        left = $cell.position().left + parseInt($cell.css('margin-left'))
+        cWidth = parseInt($cell.width())
+        totalW = $('.large-circles').width()
+        $('.shadow-arrow', @el).css(
+          left: (left+cWidth/2-20)/totalW*100+'%', # arrow is 40px wide
+          bottom: '-7px',
+          top: 'auto'
+        )
+        $('.tray', @el).css(height: 'auto').show()
+        $('.campaign-facts.border-box', @el).css('padding-bottom': 0).removeClass 'rd-shadow'
+        $('.shadow-arrow-row', @el).css(height: '26px')
+        $('.shadow-arrow,.shadow-arrow-row', @el).show()
+        @renderPie(i) for i in [0..@actions.length]
+        # columns is the array of column data that we pass as aoColumns to datatables
+        columns = @dataTableColumns()
+        thead = ''
+        thead += "<th>#{col.display}</th>" for col in columns
+        # refresh the datatable here
+        $('.tray', @el).html(_.template($('#targets-table').html()).call())
+        $('.tray table>thead>tr', @el).html(thead)
+        @dataTable = $('.tray table', @el).dataTable {
+          oLanguage: {
+            sEmptyTable: "No data has been recorded."
+          },
+          sDom: 'ft<"list-table-footer clearfix"ip <"sel" l>>r',
+          sPaginationType: 'r7Style',
+          bServerSide: true,
+          sAjaxSource: @currentCircleUrl(),
+          aoColumns: columns,
+          bProcessing: true
+        }
+        $('.tray', @el).removeClass('loading')
+      ), delay
+
+    else # remove selection
+      return null # don't let them deselect anymore!
+

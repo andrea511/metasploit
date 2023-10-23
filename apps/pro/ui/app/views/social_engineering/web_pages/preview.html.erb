@@ -1,0 +1,13 @@
+<% if @web_page.file_attack? %>
+  No preview available for a file attack.
+<% else %>
+  <% if params[:nostrip].present? %>
+    <%= raw @content %>
+  <% else %>
+    <% if @extra_content.present? %>
+      <%= raw inject_script(strip_js(@content), @extra_content) %>
+    <% else %>
+      <%= raw strip_js(@content) %>
+    <% end %>
+  <% end %>
+<% end %>

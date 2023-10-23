@@ -1,0 +1,187 @@
+digraph ruby {
+  label = "Ruby Upgrades from 1.9.3 to 2.0 to 2.1 in Flood"
+
+  graph [
+    concentrate = true
+    rankdir = "LR"
+  ]
+  node [
+    shape = "record"
+  ]
+
+  /*
+   * Clusters
+   */
+
+  subgraph cluster_ruby_1_9_3 {
+    label = "Ruby 1.9.3"
+
+    "metasploit-erd (Ruby 1.9.3)" [
+      label = "metasploit-erd"
+    ]
+    "metasploit-framework (Ruby 1.9.3)" [
+      label = "metasploit-framework"
+    ]
+    "pro (Ruby 1.9.3)" [
+      label = "pro"
+    ]
+  }
+
+  subgraph cluster_ruby_2_0 {
+    label = "Ruby 2.0"
+
+    "Features (Ruby 2.0)" [
+      label = "Features | " +
+              "Keyword Arguments | " +
+              "Module#prepend | " +
+              "<asynchronous_thread_interrupt_handling> Asynchronous Thread interrupt handling | " +
+              "ObjectSpace::WeakMap | " +
+              "Iconv Removed | " +
+              "Thread-safe autoload"
+    ]
+
+    subgraph cluster_upgrade_ruby_2_0 {
+      label = "Upgrade to Ruby 2.0"
+
+      "metasploit-erd (Ruby 2.0)" [
+        label = "metasploit-erd"
+      ]
+      "metasploit-framework (Ruby 2.0)" [
+        label = "metasploit-framework"
+      ]
+      "pro (Ruby 2.0)" [
+        label = "pro"
+      ]
+    }
+  }
+
+  subgraph cluster_ruby_2_1 {
+    label = "Ruby 2.1"
+
+    "Features (Ruby 2.1)" [
+      label = "Features | " +
+              "Required Keyword Arguments | " +
+              "Refinements | " +
+              "Frozen String Literals | " +
+              "<string_scrub> String#scrub | " +
+              "<socket_getifaddrs> Socket.getifaddrs including network interfaces"
+    ]
+
+    subgraph cluster_upgrade_ruby_2_1 {
+      label = "Upgrade to Ruby 2.1"
+
+      "metasploit-erd (Ruby 2.1)" [
+        label = "metasploit-erd"
+      ]
+      "metasploit-framework (Ruby 2.1)" [
+        label = "metasploit-framework"
+      ]
+      "pro (Ruby 2.1)" [
+        label = "pro"
+      ]
+    }
+
+    subgraph cluster_already_ruby_2_1 {
+      label = "Already working with Ruby 2.1"
+
+      "metasploit_data_models" [
+        label = "metasploit_data_models | " +
+                "Replace ActiveSupport::Dependencies.autoload_paths with Kernel#autoload | " +
+                "Remove 1.9.3 from .travis.yml"
+        URL = "https://github.com/rapid7/metasploit_data_models/blob/8b98795ee93cb01fb4349cc0d2b1bdd9fe6822a2/.travis.yml#L12"
+      ]
+      "metasploit-concern" [
+        label = "metasploit-concern | " +
+                "Replace ActiveSupport::Dependencies.autoload_paths with Kernel#autoload | " +
+                "Remove 1.9.3 from .travis.yml"
+        URL = "https://github.com/rapid7/metasploit-concern/blob/c42095174d637d43787d6489a3bac3d54281da13/.travis.yml#L8"
+
+      ]
+      "metasploit-credential" [
+        label = "metasploit-credential | " +
+                "Replace ActiveSupport::Dependencies.autoload_paths with Kernel#autoload | " +
+                "Remove 1.9.3 from .travis.yml"
+        URL = "https://github.com/rapid7/metasploit-credential/blob/3242595671ae1c876ba0e43aa3bbfbdc8e9633bc/.travis.yml#L16"
+      ]
+      "metasploit-model" [
+        label = "metasploit-model | " +
+                "Replace ActiveSupport::Dependencies.autoload_paths with Kernel#autoload | " +
+                "Remove 1.9.3 from .travis.yml"
+        URL = "https://github.com/rapid7/metasploit-model/blob/6e5a33807ed8bf5ee33651f4583df53e216797fc/.travis.yml#L5"
+      ]
+      "yard-metasploit-erd" [
+        label = "metasploit-concern | " +
+                "Replace ActiveSupport::Dependencies.autoload_paths with Kernel#autoload | " +
+                "Remove 1.9.3 from .travis.yml"
+        URL = "https://github.com/rapid7/yard-metasploit-erd/blob/49687a29393bd30764a9eab267ae9cb0eb9f4605/.travis.yml#L5"
+      ]
+    }
+
+    subgraph cluster_native_ruby_2_1 {
+      label = "Develop against 2.1 from beginning"
+
+      "metasploit-cache"
+      "metasploit-version"
+      "metasploit-search"
+    }
+  }
+
+  /*
+   * Edges
+   */
+
+  "metasploit-erd (Ruby 1.9.3)" -> "metasploit-erd (Ruby 2.0)" [
+    label = "Add 2.0 to .travis.yml"
+  ]
+  "metasploit-erd (Ruby 1.9.3)" -> "metasploit-erd (Ruby 2.0)" [
+    label = "Replace ActiveSupport::Dependencies.autoload_paths with Kernel#autoload\n" +
+            "Remove 1.9.3 from .travis.yml to ensure Kernel#autoload is thread-safe"
+  ]
+  "metasploit-erd (Ruby 2.0)" -> "metasploit-erd (Ruby 2.1)" [
+    label = "Add 2.1 to .travis.yml"
+  ]
+
+  "metasploit-framework (Ruby 1.9.3)" -> "metasploit-framework (Ruby 2.0)" [
+    label = "Add 2.0 to .travis.yml"
+  ]
+  "metasploit-framework (Ruby 1.9.3)" -> "metasploit-framework (Ruby 2.0)" [
+    label = "Replace ActiveSupport::Dependencies.autoload_paths with Kernel#autoload"
+  ]
+  "metasploit-framework (Ruby 1.9.3)" -> "metasploit-framework (Ruby 2.0)" [
+    label = "Replace iconv with String.encode"
+  ]
+  "metasploit-framework (Ruby 1.9.3)" -> "metasploit-framework (Ruby 2.0)" [
+    label = "Use Thread.handle_interrupt for thread-safe Timeouts"
+    URL = "http://globaldev.co.uk/2013/03/ruby-2-0-0-in-detail/"
+  ]
+  "metasploit-framework (Ruby 1.9.3)" -> "metasploit-framework (Ruby 2.0)" [
+    label = "Remove 1.9.3 from .travis.yml due to usage of Ruby 2.0+ features"
+  ]
+
+  "metasploit-framework (Ruby 2.0)" -> "metasploit-framework (Ruby 2.1)" [
+    label = "Replace network-interfaces gem with Socket.getifaddrs"
+  ]
+  "metasploit-framework (Ruby 2.0)" -> "metasploit-framework (Ruby 2.1)" [
+    label = "Add 2.1 to .travis.yml"
+  ]
+  "metasploit-framework (Ruby 2.0)" -> "metasploit-framework (Ruby 2.1)" [
+    label = "Replace String.encode with String.scrub"
+  ]
+
+  "pro (Ruby 1.9.3)" -> "pro (Ruby 2.0)" [
+    label = "Add Ruby 2.0 build on Jenkins"
+  ]
+  "pro (Ruby 1.9.3)" -> "pro (Ruby 2.0)" [
+    label = "Replace ActiveSupport::Dependencies.autoload_paths with Kernel#autoload"
+  ]
+  "pro (Ruby 1.9.3)" -> "pro (Ruby 2.0)" [
+    label = "Use Thread.handle_interrupt for thread-safe Timeouts"
+  ]
+  "pro (Ruby 1.9.3)" -> "pro (Ruby 2.0)" [
+    label = "Remove Ruby 1.9.3 Jenkins build because of Ruby 2.0+ features"
+  ]
+
+  "pro (Ruby 2.0)" -> "pro (Ruby 2.1)" [
+    label = "Add Ruby 2.1 build on Jenkins"
+  ]
+}

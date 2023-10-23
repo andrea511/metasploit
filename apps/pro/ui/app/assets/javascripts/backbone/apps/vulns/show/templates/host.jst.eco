@@ -1,0 +1,1 @@
+<a href="<%= Routes.host_path(@id) %>"><%= @address %></a>

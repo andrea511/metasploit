@@ -1,0 +1,155 @@
+digraph "metasploit-yard" {
+  label = "metasploit-yard (to eliminate duplicate rake yard task actions)"
+
+  graph [
+    compound = true
+    rankdir = "LR"
+    splines = "line"
+  ]
+  node [
+    shape = "record"
+  ]
+
+  subgraph cluster_electro {
+    label = "Electro"
+
+    "metasploit-concern (Electro)" [
+      label = "metasploit-concern | " +
+              "<yard_rake> lib/tasks/yard.rake"
+    ]
+    "metasploit-credential (Electro)" [
+      label = "metasploit-credential | " +
+              "<yard_rake> lib/tasks/yard.rake"
+    ]
+    "metasploit-erd (Electro)" [
+      label = "metasploit-erd | " +
+              "<yard_rake> lib/tasks/yard.rake"
+    ]
+    "metasploit-model (Electro)" [
+      label = "metasploit-model | " +
+              "<yard_rake> lib/tasks/yard.rake"
+    ]
+    "metasploit_data_models (Electro)" [
+      label = "metasploit_data_models | " +
+              "<yard_rake> lib/tasks/yard.rake"
+    ]
+    "pro (Electro)" [
+      label = "pro | " +
+              "<yard_rake> ui/lib/metasploit/pro/ui/tasks/yard.rake"
+    ]
+    "yard-metasploit-erd (Electro)" [
+      label = "yard-metasploit-erd | " +
+              "<yard_rake> lib/tasks/yard.rake"
+    ]
+  }
+
+  subgraph cluster_flood {
+    label = "Flood"
+
+    subgraph cluster_flood_upgrade {
+      label = "Upgraded in Flood"
+
+      "metasploit-concern (Flood)" [
+        label = "metasploit-concern"
+      ]
+      "metasploit-credential (Flood)" [
+        label = "metasploit-credential"
+      ]
+      "metasploit-erd (Flood)" [
+        label = "metasploit-erd"
+      ]
+      "metasploit-framework"
+      "metasploit-model (Flood)" [
+        label = "metasploit-model"
+      ]
+      "metasploit_data_models (Flood)" [
+        label = "metasploit_data_models"
+      ]
+      "pro (Flood)" [
+        label = "pro"
+      ]
+      "yard-metasploit-erd (Flood)" [
+        label = "yard-metasploit-erd"
+      ]
+    }
+
+    subgraph cluster_flood_native {
+      label = "Developed in Flood"
+
+      /*
+       * Nodes
+       */
+
+      "metasploit-cache"
+      "metasploit-search"
+      "metasploit-yard"
+
+      /*
+       * Edges
+       */
+
+      "metasploit-yard" -> "metasploit-cache" [
+        label = "use"
+      ]
+      "metasploit-yard" -> "metasploit-framework" [
+        label = "use"
+      ]
+      "metasploit-yard" -> "metasploit-search" [
+        label = "use"
+      ]
+    }
+  }
+
+  /*
+   * Edges
+   */
+
+  "metasploit-concern (Electro)":yard_rake -> "metasploit-concern (Flood)" [
+    label = "remove"
+  ]
+  "metasploit-yard" -> "metasploit-concern (Flood)" [
+    label = "use"
+  ]
+
+  "metasploit-credential (Electro)":yard_rake -> "metasploit-credential (Flood)" [
+    label = "remove"
+  ]
+  "metasploit-yard" -> "metasploit-credential (Flood)" [
+    label = "use"
+  ]
+
+  "metasploit-erd (Electro)":yard_rake -> "metasploit-erd (Flood)" [
+    label = "remove"
+  ]
+  "metasploit-yard" -> "metasploit-erd (Flood)" [
+    label = "use"
+  ]
+
+  "metasploit-model (Electro)":yard_rake -> "metasploit-model (Flood)" [
+    label = "remove"
+  ]
+  "metasploit-yard" -> "metasploit-model (Flood)" [
+    label = "use"
+  ]
+
+  "metasploit_data_models (Electro)":yard_rake -> "metasploit_data_models (Flood)" [
+    label = "remove"
+  ]
+  "metasploit-yard" -> "metasploit_data_models (Flood)" [
+    label = "use"
+  ]
+
+  "pro (Electro)":yard_rake -> "pro (Flood)" [
+    label = "remove"
+  ]
+  "metasploit-yard" -> "pro (Flood)" [
+    label = "use"
+  ]
+
+  "yard-metasploit-erd (Electro)":yard_rake -> "yard-metasploit-erd (Flood)" [
+    label = "remove"
+  ]
+  "metasploit-yard" -> "yard-metasploit-erd (Flood)" [
+    label = "use"
+  ]
+}

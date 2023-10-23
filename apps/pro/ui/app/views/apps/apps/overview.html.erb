@@ -1,0 +1,41 @@
+<%= render :partial => 'shared/tabbed_modal' %>
+
+<% breadcrumb workspace_link, link_to(:controller => 'apps/apps', :action => :overview) { 'MetaModules Overview' } %>
+
+<% include_stylesheet 'metamodules' -%>
+<% include_stylesheet 'backbone/pro_carpenter' -%>
+
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<% title "MetaModules Overview" %>
+
+<meta name='apps' content="<%= @apps.to_json(:include => :app_categories) %>" />
+<meta name='num_app_runs' content="<%= @num_app_runs %>" />
+<meta name='last_app_run_id' content="<%= @last_app_run_id %>" />
+
+<div id='global-apps-container' class='foundation'>
+  <!-- Backbone region is rendered here. -->
+</div>
+
+<% if @licensed %>
+<%= nonced_javascript_tag do %>
+  jQuery(document).bind('requirejs-ready', function(){
+
+    jQuery(document).ready(
+     function(){
+      initRequire(
+        [
+          'jquery',
+          '<%= javascript_path("apps/overview_app") %>'
+        ],
+        function($, OverviewApp){
+          app = new OverviewApp;
+          app.start();
+      });
+
+    });
+  });
+<% end %>
+<% end %>
+
+<%= add_disable_overlay([:pro]) if not @licensed %>

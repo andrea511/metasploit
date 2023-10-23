@@ -1,0 +1,19 @@
+<table id="attack-list" class="list sortable">
+  <thead>
+    <th class="checkbox"><%= check_box_tag "all_target_lists", false %></th>
+    <th>Name</th>
+    <th>Human Targets</th>
+    <th>Creation Date</th>
+  </thead>
+
+  <tbody>
+    <% @target_lists.each do |target_list| %>
+      <tr>
+        <td><%= check_box_tag("target_list_ids[]", target_list.id, false, :id => nil)%></td>
+        <td><%= link_to target_list.name, workspace_social_engineering_target_list_path(@workspace, target_list) %></td>
+        <td><%= target_list.human_targets.count %></td>
+        <td><%= target_list.created_at %></td>
+      </tr>
+    <%- end%>
+  </tbody>
+</table>

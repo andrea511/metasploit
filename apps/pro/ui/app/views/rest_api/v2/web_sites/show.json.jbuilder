@@ -1,0 +1,1 @@
+json.partial! 'web_site', web_site: @web_site

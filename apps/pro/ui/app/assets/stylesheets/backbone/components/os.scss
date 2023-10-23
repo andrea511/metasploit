@@ -1,0 +1,81 @@
+.icon-logo{
+  span{
+    height:18px;
+    width:19px;
+    display: inline-block;
+  }
+
+  .platform{
+    width:auto;
+    vertical-align: top;
+  }
+
+  .vm-logo{
+    background-image: image_url('icons/os/vm_logo.png');
+  }
+
+  .aix-logo{
+    background-image: image_url('icons/os/aix_logo.png');
+  }
+
+  .apple-logo{
+    background-image: image_url('icons/os/apple_logo.png');
+  }
+
+  .beos-logo{
+    background-image: image_url('icons/os/beos_logo.png');
+  }
+
+  .openbsd-logo{
+    background-image: image_url('icons/os/openbsd_logo.png');
+  }
+
+  .freebsd-logo{
+    background-image: image_url('icons/os/freebsf_logo.png');
+  }
+
+  .bsd-logo{
+    background-image: image_url('icons/os/bsd_logo.png');
+  }
+
+  .cisco-logo{
+    background-image: image_url('icons/os/cisco_logo.png');
+  }
+
+  .hp-logo{
+    background-image: image_url('icons/os/hp_logo.png');
+  }
+
+  .ibm-logo{
+    background-image: image_url('icons/os/ibm_logo.png');
+  }
+
+  .linux-logo{
+    background-image: image_url('icons/os/linuxlogo.png');
+  }
+
+  .printer-logo{
+    background-image: image_url('icons/os/printer_logo.png');
+  }
+
+  .router-logo{
+    background-image: image_url('icons/os/router_logo.png');
+  }
+
+  .solaris-logo{
+    background-image: image_url('icons/os/solaris_logo.png');
+  }
+
+  .sunos-logo{
+    background-image: image_url('icons/os/sunos_logo.png');
+  }
+
+  .win-logo{
+    background-image: image_url('icons/os/winlogo.png');
+  }
+
+  .unknown-logo{
+    background-image: image_url('icons/os/unknown_logo.png');
+  }
+}
+

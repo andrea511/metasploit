@@ -1,0 +1,15 @@
+<% if @report.report_type == :social_engineering %>
+    <%= f.inputs "Campaign Selection" do -%>
+        <%= f.input :se_campaign_id,
+                    :label => "Campaign",
+                    :include_blank => false,
+                    :required => true,
+                    :as => "select",
+                    :collection => SocialEngineering::Campaign.where(workspace_id: @workspace.id).finished.order('name asc').pluck(:name, :id)
+        %>
+        <%= f.help_link :se_campaign_id do %>
+            <h3>Campaign name</h3>
+            <p>The campaign the report will describe.</p>
+        <% end %>
+    <% end %>
+<% end %>

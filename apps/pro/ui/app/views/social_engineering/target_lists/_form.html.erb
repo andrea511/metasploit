@@ -1,0 +1,9 @@
+<meta name='save-status' content='false' />
+<%= f.inputs do -%>
+  <%= f.input :name, :label => "List Name", :required => true %>
+  <%= f.input :import_file, :label => "Import Target List<br /> (CSV format)".html_safe, :as => :file %>
+  <input type='hidden' name='inline' value='<%= params[:inline] %>' />
+  <div style="border-bottom: 1px dotted #aaa; width: 100%; background: transparent; padding-top: 10px; margin-bottom: 10px;"></div>
+  <%= render 'multi_add_human_target' %>
+    <div class='clearfix'></div>
+<% end -%>

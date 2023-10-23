@@ -1,0 +1,59 @@
+<% if loots.count > 0 %>
+
+  <% title = 'Stored Data & Files' if title.nil? %>
+  <% if title.present? %>
+    <h3><%= title %></h3>
+  <% end %>
+
+  <table class="list sortable">
+    <% reset_cycle "rows" %>
+    <thead>
+      <th>Host</th>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Size</th>
+      <th>Info</th>
+      <th>Data</th>
+    </thead>
+
+    <% loots.each do |loot| %>
+    <% cyc = row_cycle %>
+
+      <tr class="<%= cyc %>">
+        <td class="timestamp"><%=h loot.created_at %></td>
+        <td><%=h loot.host.title %> </td>
+        <td><%=h loot.ltype %></td>
+        <td><%=h loot.name %> (<%=h loot.size %> bytes)</td>
+        <td><%=h loot.info %></td>
+        <td><%= link_to "Download", loot_path(loot) %></td>
+      </tr>
+
+      <% if not loot.binary? %>
+      <tr class="<%= cyc %>">
+        <td align="right">Text:</td>
+        <td colspan="5">
+          <textarea rows=5 cols=120><%=h loot.sniff %></textarea>
+        </td>
+      </tr>
+      <% else %>
+      <tr class="<%= cyc %>">
+        <td align="right">Bytes:</td>
+        <td colspan="5">
+        <%=h loot.sniff.to_s[0,32].unpack("C*").map{|x| "%.2x" % x}.join(" ")%>
+        </td>
+      </tr>
+      <% end %>
+
+      <% if loot.image? %>
+      <tr class="<%= cyc %>">
+        <td align="right">Image:</td>
+        <td colspan="5">
+          <a href="<%=h loot_path(loot) %>"><img src="<%=h loot_path(loot) %>" width="640" height="480" border="0"></a>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+
+  </table>
+<% end %>
+

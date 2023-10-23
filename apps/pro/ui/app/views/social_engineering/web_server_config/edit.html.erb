@@ -1,0 +1,38 @@
+<div class='web-server-config'>
+  <div class='rollup-header'>
+    <h3 class='max-width'>Configure Web Server</h3>
+  </div>
+
+  <% if @campaign.errors.any? %>
+    <div class='max-width' style='margin-top:47px'>
+      <%= render "shared/error_messages", :target => @campaign %>
+    </div>
+  <% end %>
+  <%= semantic_form_for @campaign, :url => workspace_social_engineering_campaign_web_server_config_path(@workspace, @campaign) do |f| %>
+    <%= f.inputs do %>
+      <%= f.input :web_host, :as => :radio, :collection => [
+        ["This server's IP address: <strong>#{@default_ip}</strong>".html_safe, @default_ip],
+        ["This server's hostname: <strong>#{@default_host}</strong>".html_safe, @default_host],
+        ["Alternate hostname or IP (must resolve to #{@default_ip}): ", SocialEngineering::WebServerConfigController::CUSTOM_HOST_VALUE_PLACEHOLDER]]
+      %>
+      <input name='social_engineering_campaign[web_host_custom]' value="<%= @other_value %>" type='text' />
+      <%= f.input :web_port, :label => "Listening Port", :as => :string, :input_html => { :style => 'width: 150px' } %>
+
+      <%= f.input :web_ssl, :label => "Serve over SSL", :as => :boolean %>
+      <%= f.input :ssl_cipher, :label => 'SSL cipher specification', :as => :string %>
+
+      <% unless @campaign.ssl_cert.nil? %>
+        <li>
+          <label>Last uploaded cert:</label>
+          <%= @campaign.ssl_cert.file.file.filename %>
+        </li>
+      <% end %>
+
+      <%= f.input :file, :for => :ssl_cert, :label => "Custom SSL Cert", :as => :file %>
+
+      <div class='bap-options'>
+        <%= f.input :web_bap_port, :label => "BrowserAutoPwn Port (disregard unless running BAP attack)", :as => :string %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

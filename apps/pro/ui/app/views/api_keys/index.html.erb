@@ -1,0 +1,12 @@
+<% title "API Keys" %>
+<% breadcrumb link_to("Global Settings", settings_path), link_to("API Keys", api_keys_path) %>
+
+<% if License.get.supports_api? %>
+<div id="api_keys">
+	<%= render "api_keys/api_keys", :api_keys => @api_keys %>
+</div>
+<% else %>
+<h1>Unsupported Feature</h1>
+<p>This product edition does not support the remote API, please upgrade to use this feature.</p>
+<% end %>
+

@@ -1,0 +1,18 @@
+/* line 1, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/payload_settings.scss */
+#dialog-region .modal {
+  min-width: 400px;
+}
+
+/* line 6, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/payload_settings.scss */
+.payload-settings .columns.large-6 {
+  margin: 4px 0;
+}
+/* line 7, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/payload_settings.scss */
+.payload-settings .columns.large-6 label {
+  float: right;
+}
+/* line 14, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/payload_settings.scss */
+.payload-settings .columns.large-12 > div {
+  width: 284px;
+  margin: 0 auto;
+}

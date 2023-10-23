@@ -1,0 +1,100 @@
+#!/usr/bin/env ruby
+
+def get_boot_time
+	Time.at(Time.now.to_i - File.read('/proc/uptime').split(/\s+/).first.to_i)
+end
+
+def get_thin_pid(base)
+	pid_file = File.join(base, "apps", "pro", "ui", "log", "thin.pid")
+	return nil unless File.exist?(pid_file)
+	pid = File.read(pid_file).strip.to_i
+	return nil unless pid > 0
+	# Ignore+remove pid files which predate the system's boot time...
+	if File.stat(pid_file).mtime < get_boot_time
+		File.delete(pid_file)
+		return nil
+	end
+	pid
+end
+
+def get_thin_port(base)
+	res = 3001
+	cnf = File.join(base, "apps", "pro", "ui", "conf", "metasploit.conf")
+	return res if not File.exist?(cnf)
+	dat = File.read(cnf)
+	if dat =~ /BalancerMember\s+http:\/\/127.0.0.1:(\d+)/
+		res = $1.to_i
+	end
+	res
+end
+
+def thin_opts
+	['-e', 'production', '-l', 'log/thin.log', '-P', 'log/thin.pid']
+end
+
+# TODO: port this to UI's proui.rb script currently used by systemd
+def exec_thin(*args)
+	ARGV.push(*args)
+	require 'rubygems'
+	require 'bundler/setup'
+	version = '>= 0'
+	gem 'thin', version
+	load Gem.bin_path('thin', 'thin', version)
+end
+
+def start_thin(base, port)
+	Dir.chdir(File.join(base, "apps", "pro", "ui"))
+	exec_thin('start', '-p', port.to_s, '-a', '127.0.0.1', '-d', *thin_opts)
+end
+
+def stop_thin(base)
+	Dir.chdir(File.join(base, "apps", "pro", "ui"))
+	exec_thin('stop', '-q', *thin_opts)
+end
+
+# Get our bearings
+@cwd = File.dirname(__FILE__)
+@pro = File.expand_path(File.join(@cwd, "..", "..", "..", ".."))
+@prt = get_thin_port(@pro)
+@pid = get_thin_pid(@pro)
+
+# Parse arguments
+@act = ARGV.shift
+
+case @act
+when "start"
+	if @pid and (::Process.kill(0, @pid).to_i rescue 0) == 1
+		puts "metasploit already running"
+	else
+		puts "metasploit is starting"
+		start_thin(@pro, @prt)
+	end
+
+when "stop"
+	if @pid
+		# The normal thin stop command throws a nasty stack trace if the
+		# service is already stopped, so only attempt to gracefully stop
+		# if we believe it's running.
+		if (::Process.kill(0, @pid).to_i rescue 0) == 1
+			stop_thin(@pro)
+		end
+		::Process.kill(9, @pid) rescue nil
+	end
+	system("pkill -9 -f thin")
+	puts "metasploit is stopped"
+
+when "status"
+	if @pid
+		if (::Process.kill(0, @pid).to_i rescue 0) == 1
+			puts "metasploit is running"
+		else
+			puts "metasploit is stopped"
+		end
+	else
+		puts "metasploit is stopped"
+	end
+
+else
+	exit(0)
+
+end

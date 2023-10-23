@@ -1,0 +1,54 @@
+# Adds an annoying banner on the user if they are not using a supported browser
+$ = jQuery
+
+SYSTEM_REQS_URL = 'www.rapid7.com/products/metasploit/system-requirements.jsp'
+COOKIE_EXPIRATION = 2 # days
+SUPPORTED_BROWSERS = {
+  chrome: 12,
+  msie: 10,
+  firefox: 18
+}
+
+browserIsSupported = false
+requiredVersion = null
+browsers = window.browserDetect()
+matchedBrowsers = []
+for own key, val of SUPPORTED_BROWSERS
+  matchedBrowsers.push(key) if browsers[key]
+
+msg = null
+browserName = null
+
+if !matchedBrowsers?.length and !browsers.webkit? and !browsers.mozilla?
+  msg = "You are using an unsupported browser. Please install a <a "+
+        "href='#{SYSTEM_REQS_URL}' target='_blank' class='supported-"+
+        "browsers'>supported browser</a>."
+else
+  # do the version check
+  version = parseInt(browsers.version, 10)
+  return unless version
+  browserName = null
+  for name in matchedBrowsers
+    if SUPPORTED_BROWSERS[name]
+      browserName = name
+      break
+  requiredVersion = SUPPORTED_BROWSERS[browserName]
+  browserIsSupported = !(requiredVersion? and version < requiredVersion)
+
+unless browserIsSupported or $.cookie('browser-nagware') == '1'
+  $(document).ready ->
+    $nag = $('<div />', id: 'nagware').appendTo($('body'))
+    name = if browserName == 'msie'
+      'IE'
+    else
+      browserName.replace(/^./, browserName[0].toUpperCase())
+
+    msg ||= "You are using an unsupported browser. Please upgrade to #{name} "+
+            "<strong>#{requiredVersion}</strong> or higher."
+    $nag.html(msg)
+    $('#appWrap').css('padding-top', $nag.height()+1)
+
+    $close = $('<a />', class: 'close').html('&times;').appendTo($nag).click ->
+      $nag.remove()
+      $('#appWrap').css('padding-top', 0)
+      $.cookie('browser-nagware', '1', { expires: COOKIE_EXPIRATION })

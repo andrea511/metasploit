@@ -1,0 +1,32 @@
+<% if @schema.badge?: %>
+  <div class='stat-badge' style='display: none'>
+    <span></span>
+  </div>
+<% end %>
+
+<% if @schema?.type is 'percentage': %>
+
+  <div class="pie-chart-wrapper load-table" clickable="false">
+    <div class="pie-chart">
+      <canvas width="70px" height="80px" style='margin-top: 8px;'></canvas>
+    </div>
+    <label class="stat run-stat">
+      <span class='numStat'></span>/<span class='totalStat'></span>
+    </label>
+    <label class="desc">
+      <%= _.str.humanize(@title) %>
+    </label>
+  </div>
+
+<% else: %>
+
+  <div class="big-stat center load-table" clickable="false">
+    <span class="stat run-stat numStat"></span>
+    <label>
+      <span><%= _.str.humanize(@title) %></span>
+    </label>
+  </div>
+
+<% end %>
+
+<div class='lil-nubster'></div>

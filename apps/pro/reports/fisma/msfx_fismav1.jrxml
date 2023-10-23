@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fisma" language="groovy" pageWidth="612" pageHeight="842" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="adddeb08-9201-404f-83a0-13250d720a2c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="414"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="reporting_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="first_control" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA['AC-7']]></defaultValueExpression>
+	</parameter>
+	<parameter name="fisma_revision" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[4]]></defaultValueExpression>
+	</parameter>
+	<parameter name="last_control" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA['SI-10']]></defaultValueExpression>
+	</parameter>
+	<queryString language="xPath">
+		<![CDATA[/MetasploitFISMAr3v1/requirements/requirement]]>
+	</queryString>
+	<field name="control" class="java.lang.String">
+		<fieldDescription><![CDATA[@control]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[description]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[result/@status]]></fieldDescription>
+	</field>
+	<field name="project" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitFISMAr3v1/generated/@project]]></fieldDescription>
+	</field>
+	<field name="time" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitFISMAr3v1/generated/@time]]></fieldDescription>
+	</field>
+	<field name="user" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitFISMAr3v1/generated/@user]]></fieldDescription>
+	</field>
+	<field name="sport" class="java.lang.String">
+		<fieldDescription><![CDATA[result/details/hosts/host/services/service/port]]></fieldDescription>
+	</field>
+	<field name="cport" class="java.lang.String">
+		<fieldDescription><![CDATA[result/details/hosts/host/credentials/credential/service/port]]></fieldDescription>
+	</field>
+	<field name="product_name" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitFISMAr3v1/product/@name]]></fieldDescription>
+	</field>
+	<field name="logo_path" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitFISMAr3v1/logo]]></fieldDescription>
+	</field>
+	<field name="plaintext-fisma-reqs" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitFISMAr3v1/plaintext-fisma-reqs]]></fieldDescription>
+	</field>
+	<field name="plaintext-fisma-results" class="java.lang.String">
+		<fieldDescription><![CDATA[/MetasploitFISMAr3v1/plaintext-fisma-results]]></fieldDescription>
+	</field>
+	<title>
+		<band height="676" splitType="Stretch">
+			<image scaleImage="RealHeight" onErrorType="Blank">
+				<reportElement uuid="f1ceed1c-05e7-48f3-84d3-f094b2d87ee8" x="252" y="171" width="320" height="320"/>
+				<imageExpression><![CDATA[$F{logo_path}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="c6f84d50-7e64-4eef-8cbe-84f67a719309" x="252" y="556" width="320" height="24"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Report generated:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8d3d1f38-ac23-41a9-ac25-b13b66d9b678" x="252" y="491" width="320" height="65"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FISMA: NIST SP800-53, Revision " + $P{fisma_revision} + " Compliance Findings"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b46d8401-66e6-4d0d-a2ad-7ed8f675fe3f" mode="Transparent" x="0" y="0" width="252" height="676" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" markup="none">
+					<font fontName="SansSerif" size="48" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement uuid="1d40d683-e6ee-4274-b13a-359b57035340" x="252" y="580" width="320" height="23"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="f754bf4a-e3ad-4209-bf0c-f9d0fad9713f" x="252" y="656" width="320" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Pages: " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement uuid="c84cd985-204b-41f6-8a38-bf8c95c46abc" x="0" y="675" width="100" height="1"/>
+			</break>
+		</band>
+	</title>
+	<detail>
+		<band height="300" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{control} == $P{first_control}]]></printWhenExpression>
+			<textField textAdjust="StretchHeight" evaluationTime="Report">
+				<reportElement uuid="1778a8cc-662c-441f-bbfb-b17a60006ee0" style="left_indented" x="0" y="24" width="572" height="64"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["This report is an appendix for a more complete SP800-53r" + $P{fisma_revision} + " (FISMA) compliance audit, performed by " + $F{product_name} + " from Rapid7, Inc. It contains confidential information about the state of your network. Access to this information by unauthorized personnel may allow them to compromise your network.\n\n" +
+"The table below summarizes the pass/fail status of each of the tested FISMA compliance requirements."]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="19ea64ac-91db-4e45-b5db-757ed75e90a1" x="152" y="88" width="170" height="175"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plaintext-fisma-reqs}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="1ef78c37-0fdd-4f73-916f-db1c3dba5ce0" x="322" y="88" width="100" height="175" forecolor="#000000"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plaintext-fisma-results}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5d5c9a00-73eb-4082-a0c4-afc1e5889bd7" style="section_header_base" x="0" y="0" width="572" height="24"/>
+				<textElement>
+					<font size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Executive Summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5992c430-fd25-4f6c-83f2-dded9c9f0961" style="section_header_base" x="0" y="263" width="572" height="24"/>
+				<textElement>
+					<font size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Detailed Findings]]></text>
+			</staticText>
+		</band>
+		<band height="86">
+			<textField>
+				<reportElement uuid="e02d7ea5-f98c-4379-be25-a4c5a8a44f52" style="Section Header - No BG" x="0" y="0" width="285" height="20"/>
+				<textElement>
+					<font size="14" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FISMA Requirement " + $F{control}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="76fa1096-dd91-4b2d-ab79-49af995a0bae" style="gray_p" positionType="Float" x="0" y="20" width="572" height="17"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Control: " + $F{description} + "\n"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2a7fe357-de24-4d42-9baf-a1539a4b82ba" style="generic_text" positionType="Float" x="0" y="37" width="572" height="16">
+					<printWhenExpression><![CDATA[$F{status}.equalsIgnoreCase("pass")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Results: All surveyed hosts satisfy this requirement.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dd686679-a49b-4a22-bf9d-67238b0569f7" style="generic_text" positionType="Float" x="0" y="37" width="572" height="16">
+					<printWhenExpression><![CDATA[$F{status}.equalsIgnoreCase("fail") && !($F{control}.endsWith( "-1" ))]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Results: The following hosts failed to satisfy this requirement.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f42011b7-889d-47d4-8df3-0ef0381c6af2" positionType="Float" x="0" y="53" width="572" height="8"/>
+				<textElement>
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="634cf53b-118b-42ba-9027-47bae42e8310" positionType="Float" x="19" y="61" width="536" height="16">
+					<printWhenExpression><![CDATA[$F{status}.equalsIgnoreCase("fail")]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sport">
+					<subreportParameterExpression><![CDATA[$F{sport}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cport">
+					<subreportParameterExpression><![CDATA[$F{cport}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="vuln_related">
+					<subreportParameterExpression><![CDATA[$F{control} in ["AT-2", "RA-5", "SI-2", "SI-10"]]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cred_related">
+					<subreportParameterExpression><![CDATA[$F{control} in ["AC-7", "IA-2", "IA-5"]]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$P{REPORT_DATA_SOURCE}.subDataSource("requirement/result/details/hosts/host")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "msfx_fismav1_subreport_hosts.jasper"]]></subreportExpression>
+			</subreport>
+			<image>
+				<reportElement uuid="53349403-937d-4891-971c-0e89ec07044f" x="499" y="2" width="40" height="18">
+					<printWhenExpression><![CDATA[$F{status}.equalsIgnoreCase("pass")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{image_dir} + "pass.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="9e78de2f-779c-4ae4-9bd6-818162b71d05" x="499" y="2" width="31" height="15">
+					<printWhenExpression><![CDATA[$F{status}.equalsIgnoreCase("fail")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{image_dir} + "fail.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="07a3af3f-fbdf-43bc-aae1-429a72e8d5b1" style="separator_line" positionType="FixRelativeToBottom" x="86" y="79" width="400" height="1" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{control} != $P{last_control}]]></printWhenExpression>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

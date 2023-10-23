@@ -1,0 +1,29 @@
+<%= semantic_form_for [@host, @vuln] do |f| -%>
+  <div class='vulns_form'>
+    <div class="vuln-form-container">
+      <div>
+        <%= f.input :name, :required => true, :input_html => {:maxlength => nil} %>
+      </div>
+      <div>
+        <%= f.input :info, :required => false, :label => "Information" %>
+      </div>
+    </div>
+
+    <div class="vuln-refs-container">
+      <h2>References</h2>
+      <div class="add-ref">
+        <div class="green-add-text"><a href="javascript:void(0)">Add Ref</a></div>
+        <a class="green-add" href="javascript:void(0)" title="Add tags to this host">+</a>
+      </div>
+
+      <% @vuln.refs.reverse_each do |ref| %>
+        <% unless ref.new_record? %>
+          <% prefix = h "existing_ref_attributes[]" %>
+          <%= f.fields_for prefix, ref do |reference| %>
+            <%= reference.text_field :name, :class => "inline-edit"%>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

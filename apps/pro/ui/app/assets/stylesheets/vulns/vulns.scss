@@ -1,0 +1,75 @@
+#vulns-table {
+  td table tr {
+    border-bottom: 0;
+    td {
+      padding: 0;
+    }
+  }
+  &.vuln-validation {
+    td div[data-status="not_exploitable"] {
+      font-weight: bold;
+      color: black;
+    }
+    td div[data-status="exploited"] {
+      color:#CB615E;
+      font-weight: bold;
+    }
+    td div[data-status="not_exploited"] {
+      color: #69B45E;
+      font-weight: bold;
+    }
+  }
+}
+.btns {
+  float: right;
+  margin-bottom: 5px;
+  .create-exception {
+    display: inline-block;
+    .dropdown-list {
+      display: none;
+      border: 1px solid grey;
+      border-top:none;
+      background-color: white;
+      position: absolute;
+      margin-top:23px;
+      padding: 2px 0px 2px 0px;
+      z-index: 1;
+      li {
+        padding: 0px 10px 0px 10px;
+        &:hover {
+          background-color: #a9a9a9;
+        }
+      }
+    }
+    .arrow {
+      position:relative;
+      margin-left: -3px;
+      .btn {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-left: none;
+        a {
+          padding-left: 4px;
+          padding-right: 2px;
+        }
+      }
+    }
+
+    .btn {
+      margin-right: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    .arrow {
+      display: inline-block;
+    }
+  }
+
+  .dropdown {
+    padding-right: 2px;
+    padding-left: 2px;
+    background-image: none;
+  }
+}

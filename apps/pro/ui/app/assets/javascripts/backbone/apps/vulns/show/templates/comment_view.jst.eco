@@ -1,0 +1,4 @@
+<form>
+  <textarea><%= if @comment? then @comment else @data.comment %></textarea>
+  <div class="error"></div>
+</form>

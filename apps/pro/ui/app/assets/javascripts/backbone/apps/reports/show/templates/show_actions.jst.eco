@@ -1,0 +1,13 @@
+<h3>Report Actions</h3>
+
+<div id="report-actions">
+  <div class="action">
+    <button id="email-report"></button>
+  </div>
+  <div class="action">
+    <button id="download-report"></button>
+  </div>
+  <div class="action">
+    <button id="destroy-report"></button>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<%= render 'root/boiler_plate' %>
+
+IF [%1]==[] (
+  "%BASE%ruby\bin\ruby.exe" "%BASE%apps\pro\engine\mspupdate" wait
+) ELSE (
+  IF "%1" == "nowindow" (
+    "%BASE%ruby\bin\ruby.exe" "%BASE%apps\pro\engine\mspupdate" nowait
+  ) ELSE (
+    "%BASE%ruby\bin\ruby.exe" "%BASE%apps\pro\engine\mspupdate" %*
+  )
+)

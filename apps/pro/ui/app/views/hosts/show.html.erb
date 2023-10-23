@@ -1,0 +1,51 @@
+<% title (@host.name.blank? ? @host.address : @host.title) -%>
+
+<% include_stylesheet('shared/backbone/tabs') %>
+<% include_stylesheet('hosts') %>
+<% include_stylesheet('creds/creds') %>
+<% include_stylesheet('backbone/pro_carpenter') %>
+
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<meta name='workspace_id' content="<%= @workspace.id %>" />
+
+<%= nonced_javascript_tag do %>
+  jQuery(document).bind('requirejs-ready', function(){
+    jQuery(document).ready(function() {
+      window.WORKSPACE_ID = jQuery('meta[name=workspace_id]').attr('content')
+      initProRequire(
+      [
+        'jquery',
+        '<%= javascript_path("hosts/host_view_app") %>'
+      ],
+      function($, HostViewApp){
+        app = new HostViewApp;
+        app.start();
+      });
+    });
+  });
+<% end %>
+
+<% breadcrumb workspace_link, hosts_link, host_link -%>
+
+<div class="control-bar">
+	<span class="button">
+		<%= link_to "Delete", delete_host_path(@workspace, @host), :data => { :remote => true, :method => :delete,
+			:confirm => "Delete host #{h(@host.address)}?"} , :class => "delete" %>
+	</span>
+	<div class="separator"></div>
+	<form class="nofloat">
+		<%= hidden_field_tag "host_ids[]", @host.id %>
+		<span class="button"><%= submit_checkboxes_to "Scan", new_scan_path(@workspace), { :class => "scan" } %></span>
+		<span class="button"><%= link_to "Nexpose Scan", new_workspace_import_path(@workspace, :anchor => "nexpose"), { :class => "nexpose" } %></span>
+		<% if License.get.supports_webapp_exploitation? %>
+			<span class="button"><%= submit_checkboxes_to "WebScan", new_webscan_path(@workspace), { :class => "webscan" } %></span>
+		<% end %>
+		<div class="separator"></div>
+		<span class="button"><%= submit_checkboxes_to "Bruteforce", workspace_brute_force_guess_index_path(@workspace) + '#quick', { :class => "brute" } %></span>
+
+		<span class="button"><%= submit_checkboxes_to "Exploit", new_exploit_path(@workspace), { :class => "exploit" } %></span>
+	</form>
+</div>
+
+<div id="host-view" class="tab-loading"></div>

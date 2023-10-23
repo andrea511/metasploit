@@ -1,0 +1,16 @@
+
+
+<% if @['private.type'] == 'ssh' || @['core.private.type'] == 'ssh' : %>
+  <div class='ssh-key-fingerprint'>
+    <h4>Fingerprint:</h4>
+
+    <div><%= @['private.full_fingerprint'] || @['core.private.full_fingerprint'] %></div>
+
+  </div>
+
+  <h4 class="private-key">Private key:</h4>
+<% end %>
+
+<div class='private-data'>
+  <%= @['private.data'] || @['core.private.data'] %>
+</div>

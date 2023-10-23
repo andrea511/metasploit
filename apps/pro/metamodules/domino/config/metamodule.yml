@@ -1,0 +1,11 @@
+name:
+  Credentials Domino
+description:
+  Uses a valid login or an active session to perform an iterative credentials attack that collects credentials from compromised hosts. It reuses collected credentials to identify other possible attack routes. This MetaModule runs until it tries all credentials or reaches a termination condition.
+rating:
+  5
+categories:
+  - Auditing
+  - Credentials
+symbol:
+  domino

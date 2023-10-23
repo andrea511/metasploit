@@ -1,0 +1,182 @@
+.toggle-container
+  .toggle
+    {{#unless_eq task_chain.state compare="suspended"}}
+    %label
+      %input{:type=>'checkbox', :class=>"suspend",:name=>'schedule_suspend', :value=>'manual'}
+      Suspend
+    {{/unless_eq}}
+    {{#if_eq task_chain.state compare="suspended"}}
+    %label
+      %input{:type=>'checkbox', :class=>"suspend",:name=>'schedule_suspend', :value=>'manual', :checked=>true}
+      Suspend
+    {{/if_eq}}
+
+%form{:method => 'post', :action=>'javascript:void(0)'}
+  .option
+    %label{:for=>'schedule_type'}
+      Run Chain
+    %select{:id=>'schedule_type',:name=>'schedule_recurrence[frequency]'}
+      %option{:value=>'once'}
+        Once
+      %option{:value=>'hourly'}
+        Hourly
+      %option{:value=>'daily'}
+        Daily
+      %option{:value=>'weekly', :selected=>'true'}
+        Weekly
+      %option{:value=>'monthly'}
+        Monthly
+
+    %span
+      on
+    .weekdays
+      .toggle-button
+        %label
+          {{#if_arrContains task_chain.schedule_hash.weekly.days compare='0'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'0', :checked=>true}
+          {{/if_arrContains}}
+          {{#unless_arrContains task_chain.schedule_hash.weekly.days compare='0'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'0'}
+          {{/unless_arrContains}}
+          .button
+            S
+        %label
+          {{#if_arrContains task_chain.schedule_hash.weekly.days compare='1'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'1', :checked=>true}
+          {{/if_arrContains}}
+          {{#unless_arrContains task_chain.schedule_hash.weekly.days compare='1'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'1'}
+          {{/unless_arrContains}}
+          .button
+            M
+      .toggle-button
+        %label
+          {{#if_arrContains task_chain.schedule_hash.weekly.days compare='2'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'2', :checked=>true}
+          {{/if_arrContains}}
+          {{#unless_arrContains task_chain.schedule_hash.weekly.days compare='2'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'2'}
+          {{/unless_arrContains}}
+          .button
+            T
+      .toggle-button
+        %label
+          {{#if_arrContains task_chain.schedule_hash.weekly.days compare='3'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'3', :checked=>true}
+          {{/if_arrContains}}
+          {{#unless_arrContains task_chain.schedule_hash.weekly.days compare='3'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'3'}
+          {{/unless_arrContains}}
+          .button
+            W
+      .toggle-button
+        %label
+          {{#if_arrContains task_chain.schedule_hash.weekly.days compare='4'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'4', :checked=>true}
+          {{/if_arrContains}}
+          {{#unless_arrContains task_chain.schedule_hash.weekly.days compare='4'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'4'}
+          {{/unless_arrContains}}
+          .button
+            T
+      .toggle-button
+        %label
+          {{#if_arrContains task_chain.schedule_hash.weekly.days compare='5'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'5', :checked=>true}
+          {{/if_arrContains}}
+          {{#unless_arrContains task_chain.schedule_hash.weekly.days compare='5'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'5'}
+          {{/unless_arrContains}}
+          .button
+            F
+      .toggle-button
+        %label
+          {{#if_arrContains task_chain.schedule_hash.weekly.days compare='6'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'6', :checked=>true}
+          {{/if_arrContains}}
+          {{#unless_arrContains task_chain.schedule_hash.weekly.days compare='6'}}
+          %input{:type=>'checkbox', :name=>'schedule_recurrence[weekly][days][]',:value=>'6'}
+          {{/unless_arrContains}}
+          .button
+            S
+
+  .option
+    .weekly.start-date
+      %label{:for=>'weekday-date'}
+        Start on
+      %input{:type=>'text', :id => 'weekday-date', :readonly=>'readonly',
+             :name=>'schedule_recurrence[weekly][start_date]', :value=>'{{task_chain.schedule_hash.weekly.start_date}}'}
+
+    .weekly.start-time
+      %label.start-time-label{:for=>'weekday-time'}
+        %span
+          @
+        %input{:type=>'text', :id =>'weekday-time', :readonly=>'readonly',
+               :name=>'schedule_recurrence[weekly][start_time]', :value=>'{{task_chain.schedule_hash.weekly.start_time}}' }
+
+  .option
+    .interval
+      %label
+        Run Every
+      {{#if_eq task_chain.schedule_hash.weekly.interval compare=undefined}}
+      %input{:type=>'text', :name=>'schedule_recurrence[weekly][interval]', :value=>'1'}
+      {{else}}
+      %input{:type=>'text', :name=>'schedule_recurrence[weekly][interval]', :value=>'{{task_chain.schedule_hash.weekly.interval}}'}
+      {{/if_eq}}
+
+    %span
+      week(s)
+
+  .option
+    %label
+      Max Duration
+    %select{:name=>'schedule_recurrence[weekly][max_duration]'}
+      {{#if_eq task_chain.schedule_hash.weekly.max_duration compare="week"}}
+      %option{:value=>'week', :selected=>true}
+        1 Week
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.weekly.max_duration compare="week"}}
+      %option{:value=>'week'}
+        1 Week
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.weekly.max_duration compare="month"}}
+      %option{:value=>'month', :selected=>true}
+        1 Month
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.weekly.max_duration compare="month"}}
+      %option{:value=>'month'}
+        1 Month
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.weekly.max_duration compare="year"}}
+      %option{:value=>'year', :selected=>true}
+        1 Year
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.weekly.max_duration compare="year"}}
+      %option{:value=>'year'}
+        1 Year
+      {{/unless_eq}}
+
+      {{#if_eq task_chain.schedule_hash.weekly.max_duration compare="never_expire"}}
+      %option{:value=>'never_expire', :selected=>true}
+        Never Expire
+      {{/if_eq}}
+      {{#unless_eq task_chain.schedule_hash.weekly.max_duration compare="never_expire"}}
+      %option{:value=>'never_expire'}
+        Never Expire
+      {{/unless_eq}}
+
+  .option.skip-disable
+    %label.spacer
+
+    .delete-project-data
+      %input{:type=>'hidden', :name=>'task_chain[clear_workspace_before_run]', :value=>'0'}
+
+      {{#if_eq task_chain.clear_workspace_before_run compare=true}}
+      %input{:type=>'checkbox', :name=>'task_chain[clear_workspace_before_run]', :checked=>true, :value=>'1'}
+      {{else}}
+      %input{:type=>'checkbox', :name=>'task_chain[clear_workspace_before_run]', :value=>'1'}
+      {{/if_eq}}
+
+      Delete Previous project data (Recommended)

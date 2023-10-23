@@ -1,0 +1,1140 @@
+// for Tabbed Modals e.g. the Quick Penetration Test Wizard
+@import "css3-mixins";
+@import "shared/variables";
+
+$orange-header-background-color: #EA5709;
+$menu-font-family: $base-font-stack;
+$main-title-font-family: "Trebuchet MS", Helvetica, Arial, "Lucida Grande", sans-serif;
+$tab-link-color: '#29383f';
+$tab-radius: 11px;
+
+#modals, .config {
+  // container class for our modals
+  .bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 800; // jquery-modal is 1000+
+    background: #000;
+    opacity: 0.4;
+  }
+  .tabbed-modal {
+    z-index: 800; // jquery-modal is 1000+
+    zoom: 1;
+    font-size: 11px; // base font size
+    font-family: $menu-font-family;
+    background: #fff;
+    position: fixed;
+    overflow: hidden;
+    top: 0; // resize/reposition to fit with JS
+    left: 0;
+    right: auto;
+    bottom: auto;
+    border-radius: 13px;
+    border: 5px solid #222;
+    border: 5px solid rgba(0,0,0,.5);
+    @include box-sizing;
+    min-width: 600px;
+    padding: 0;
+    @include background-clip(padding);
+    //min-height: 500px;
+    //height: 590px;
+    //box-shadow: 0 0 20px 2px rgba(0,0,0,.3);
+    div.advanced {
+      background: #f6f6f6;
+      box-shadow: inset 0 0 5px rgba(0,0,0, .2);
+      @include border-radius-separate(0, 0, 5px, 5px);
+      border: 1px solid #ddd;
+      h3, h4 {
+        color: #000;
+      }
+      li.input {
+        padding-left: 0;
+      }
+      padding: 10px;
+      display: none;
+    }
+    a.advanced {
+      display: inline-block;
+      width: auto;
+      padding-right: 15px;
+      font-size: 11px;
+      background: image-url('darrow.png');
+      background-repeat: no-repeat;
+      background-position: right center;
+      padding-right: 15px;
+      color: #000;
+      @include box-sizing;
+    }
+    a.not_advanced {
+      background: image-url('uarrow.png');
+      background-repeat: no-repeat;
+      background-position: right center;
+    }
+    hr {
+      border: 0;
+      margin: 0;
+      background: #f0f0f0;
+      height: 3px;
+      border-bottom: 1px solid #eee;
+      box-shadow: inset -1px 0 1px rgba(0,0,0,.1);
+    }
+    .body-disabled-overlay {
+      margin-right: 10px;
+    }
+
+    .padding {
+      padding: 7px 5px 10px 15px;
+      &>h1 {
+        font-size: 1.5em;
+        font-family: $main-title-font-family;
+        color: $orange-header-background-color;
+        margin: 5px 0;
+      }
+      &>a.close {
+        position: absolute;
+        right: 10px;
+        top: 6px;
+        font-family: Helvetica, arial, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 22px;
+        color: #777;
+        &:hover {
+          color: #333;
+        }
+      }
+      ul.radio-horizontal {
+        list-style: none;
+        li {
+          display: inline;
+        }
+      }
+      &>div.content {
+        float: right;
+        width: 80%;
+        @include box-sizing;
+        border-radius: $tab-radius;
+        background: #fff;
+        border: 2px solid #d6d6d6;
+        position: relative;
+        left: -10px;
+
+        padding: 5px 10px;
+        height: 445px;
+        overflow-y: auto;
+        &.top-left-square {
+          @include border-radius-separate(0, $tab-radius, $tab-radius, $tab-radius)
+        }
+      }
+      &>p {
+        margin: 7px 10px 10px 0;
+        color: black;
+        font-weight: 100;
+      }
+      &>ul.tabs {
+        float: left;
+        width: 20%;
+        @include box-sizing;
+        overflow: hidden;
+        margin-top: 0;
+        li {
+          display: block;
+          line-height: 38px;
+          padding-left: 8px;
+          border: 1px solid #d5d5d5;
+          color: $tab-link-color;
+          font-weight: normal;
+          cursor: pointer;
+          height: auto;
+          background-image: none;
+          @include linear-gradient-horizontal(#fff, #f2f2f2);
+          @include border-radius-separate($tab-radius, 0, 0, $tab-radius);
+          @include box-sizing;
+          margin: 6px 0;
+          input {
+            margin-left: 0;
+            margin-right: 1px;
+            cursor: pointer;
+          }
+          label {
+            cursor: pointer;
+          }
+          &.tab-click-disabled {
+            border-color: #e3e3e3;
+            background: #fff;
+            color: #ccc;
+            pointer-events: none;
+            input {
+              opacity: 0.3;
+            }
+          }
+          &.first-child {
+            margin-top: 0;
+          }
+          &.selected {
+            border-width: 2px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            padding: 0 0 0 7px;
+            background: #fff;
+            position: relative;
+            z-index: 801;
+            border-right: none;
+            margin-right: 8px;
+            color: $orange-header-background-color;
+            box-shadow: -3px 1px 6px rgba(0,0,0,.07);
+            &.first-child {
+              margin-top: 0;
+            }
+            &:hover, &.hover {
+              color: $orange-header-background-color;
+            }
+          }
+          &>span.hasErrors {
+            display: none;
+            font-size: 1.5em;
+            line-height: 0;
+            position: relative;
+            right: 2px;
+            top: 2px;
+            color: #f00;
+          }
+          &>img {
+            display: none;
+            vertical-align: middle;
+            position: relative;
+            left: 2px;
+            padding-bottom: 1px;
+          }
+          &.tab-loading {
+            width: auto;
+            &>img {
+              display: inline;
+            }
+          }
+          &:hover, &.hover {
+            color: #222;
+          }
+          &.fat {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            font-weight: 600;
+            font-size: 1.2em;
+            &.selected {
+              padding-top: 14px;
+              padding-bottom: 14px;
+            }
+          }
+        }
+      }
+    }
+    div.modal-actions {
+      $footer-height: 53px;
+      height: $footer-height;
+      border-top: 1px solid darken(#e0e0e0, 7%);
+      background: #f3f3f3;
+      background-image: image-url('tileable_contours_white.jpg');
+      background-repeat: repeat;
+      margin-top: 10px;
+      text-align: center;
+      @include border-radius-separate(0, 0, 5px, 5px);
+      // @include box-shadow(0, -2px, 3px, rgba(50,50,50,.1));
+      a {
+        font-size: 1.2em;
+        line-height: $footer-height;
+        &.disabled, &._disabled {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+}
+
+.ui-dialog.white {
+  .ui-tabs-panel {
+    padding: 0 !important;
+
+    #errorExplanation {
+      width: 65% !important;
+      margin: 0 !important;
+    }
+  }
+  .ui-tabs-wrap {
+    padding: 1em 1.4em;
+    fieldset.inputs {
+      border: none;
+      box-shadow: none;
+    }
+
+    &>.ui-tabs-wrap {
+      padding: 0 !important;
+    }
+  }
+  /// NEW JQUERY-UI MODAL STYLES
+  border: 1px solid #BBB;
+  box-shadow: 0 0 10px rgba(0,0,0,.3);
+  .ui-dialog-titlebar {
+    background-image: none !important;
+    background-color: white;
+    color: black;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #DDD;
+  }
+  .ui-dialog-buttonpane {
+    padding-bottom: 0;
+    border-top: 1px solid #DDD;
+    button[type=button] {
+      // TODO: Should be imported correctly from jquery-ui-overrides
+      @extend .link3 !optional;
+      padding: 2px;
+      &:last-child {
+        // TODO:
+        @extend span, .btn, .primary !optional;
+      }
+    }
+  }
+  .ui-dialog-titlebar-close {
+    display: none !important;
+  }
+  a {
+    color: #000 !important
+  }
+}
+
+// common pages
+#modals .tabbed-modal, .config .tabbed-modal {
+  form.formtastic>.page {
+    padding-top: 6px;
+    // form styles!
+    li.select.input {
+      label {
+        padding-top: 2px;
+      }
+    }
+
+    &>li { width: 80%; }
+    &>.page-overlay { display: none; }
+    &.page-loading {
+      &>.page-overlay {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 802;
+        opacity: 0.6;
+        background: #fff image-url('loader-bar.gif') no-repeat scroll center center !important;
+      }
+    }
+    &>p.error-desc {
+      padding: 7px;
+      margin-bottom: 8px;
+      color: #B94A48;
+      border: 1px solid #EED3D7;
+      background: #F2DEDE;
+    }
+  }
+  .page.create_project {
+    fieldset.inputs.user_access {
+      background: transparent;
+      width: 100%;
+      margin: 15px 0 0 0;
+      padding: 0;
+      border: 0;
+      box-shadow: none;
+      float: none;
+      legend {
+        display: none;
+      }
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    select#workspace_owner_id {
+      width: auto;
+    }
+
+    form.formtastic {
+      div.row.small-options {
+        margin-top: 2px;
+        margin-left: 19%;
+        width: 60%;
+        #workspace_limit_to_network_input {
+          display: inline-block;
+          margin: 0;
+          width: auto;
+          label {
+            margin: 0;
+          }
+        }
+        div.exclude_toggle_wrap {
+          margin-left: 0;
+          text-align: right;
+          display: inline-block;
+          a {
+            font-size: 11px;
+          }
+        }
+      }
+      li#workspace_name_input {
+        label {
+          color: #000;
+        }
+      }
+      li#workspace_boundary_input {
+        margin-bottom: 0;
+        label {
+          color: #000;
+        }
+      }
+      li#scan_task_blacklist_string_input {
+        label { font-weight: normal; }
+      }
+      li#workspace_description_input {
+        margin-bottom: 0;
+        label {
+          padding-right: 12px;
+          font-weight: normal;
+        }
+        textarea {
+          float: right;
+          margin-right: 33px;
+        }
+      }
+      a.advanced {
+        position: absolute;
+        bottom: 0;
+        right: 10px;
+      }
+      div.advanced>li, div.excluded_addresses {
+        width: 80%;
+      }
+      div.relativer {
+        position: relative;
+        li {
+          width: 80%;
+        }
+      }
+      &.advanced_wide {
+        li#workspace_boundary_input {
+          margin-bottom: 6px;
+        }
+        a.advanced {
+          margin-bottom: 4px;
+        }
+      }
+      li.text {
+        label {
+          line-height: 1.3;
+        }
+      }
+      div.excluded_addresses {
+        display: none;
+      }
+    }
+  }
+  form.formtastic {
+    font-size: 1.15em;
+    /* generic input styles */
+    hr {
+      border: none;
+      border-top: 1px solid #e6e6e6;
+    }
+    h4 {
+      margin-top: 0;
+    }
+    textarea {
+      font-size: .85em;
+      height: 5em;
+      padding: 1px;
+    }
+    input {
+      vertical-align: baseline;
+    }
+    input[type=checkbox], input[type=radio] {
+      vertical-align: baseline;
+    }
+    label {
+      line-height: 1.5;
+    }
+    li label {
+      font-size: 1em;
+    }
+    li.boolean {
+      label {
+        font-size: .85em;
+        width: auto;
+        font-weight: normal;
+        margin-left: 35%;
+        padding: 0;
+        margin-bottom: 8px;
+        margin-top: -2px;
+        line-height: 1.3;
+      }
+    }
+    li.error {
+      input, select, textarea {
+        border: 1px solid #f00;
+      }
+      label {
+        color: #f00;
+      }
+      p.inline-error {
+        color: #f00;
+        font-size: .9em;
+      }
+      &.text {
+        p.inline-error {
+          margin-left: 20%;
+        }
+      }
+    }
+
+    // -----||---------------------
+    //      ||  WIZARD REPORT TAB
+    // =====||=====================
+    .page.generate_report {
+      @extend %report-tab-styles;
+
+      width: 633px;
+
+      h4 {
+        font-size: 12px;
+      }
+
+      li.hidden {
+        display: none;
+      }
+
+      li {
+        display: list-item;
+
+        ol {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+
+      ol li {
+        position: static;
+      }
+
+      // hide required field indicator (*)
+      label {
+        abbr {
+          display: none;
+        }
+      }
+
+      // FILE FORMATS
+      #report_file_formats_input {
+        ol.choices-group li.choice {
+          width: 60px;
+          margin-right: 0px;
+
+          label {
+            padding-right: 0px;
+
+            input {
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+
+      fieldset.choices {
+        position: static;
+      }
+
+      fieldset {
+        box-shadow: none;
+      }
+
+
+      // REPORT NAME
+      div.top-row {
+        height: 40px;
+
+        div.cell.first {
+          width: 47%;
+
+          label {
+            width: auto;
+          }
+
+          #report_name {
+            margin-top: 10px;
+          }
+
+          a.help {
+            display: none;
+          }
+        }
+
+        // REPORT TYPE
+        div.cell.second.report_type {
+          position: relative;
+          width: 53%;
+
+          label {
+            width: 25%;
+            padding-right: 0px;
+          }
+
+          #report_report_type {
+            width: 50%;
+            display: inline-block;
+            padding-left: 2px;
+          }
+
+          ol {
+            width: 300px;
+          }
+
+          fieldset.inputs {
+            margin-top: 4px;
+            background: none;
+          }
+
+          a.help {
+            right: 15px;
+            top: 10px;
+          }
+
+          fieldset {
+            border: none;
+            box-shadow: none;
+
+            legend { display: none; }
+          }
+        }
+      }
+
+      .bottom-row {
+        height: 75px;
+
+        fieldset.inputs {
+          margin-top: 0px;
+        }
+
+        // ADDRESSES
+        .address_settings {
+          label {
+            width: auto;
+          }
+
+          #report_included_addresses_input {
+            height: 0px;
+
+            label, textarea { display: none; }
+
+            a.help {
+              top: 0;
+            }
+          }
+
+          #report_excluded_addresses_input {
+            margin-top: -15px;
+          }
+        }
+
+        // EMAILS
+        .email {
+          fieldset legend {
+            display: none;
+          }
+
+          label {
+            display: block;
+            @extend %tabbed-modal-label;
+          }
+
+          fieldset.inputs {
+            padding-top: 0;
+          }
+
+          textarea {
+            margin-top: 5px;
+          }
+
+          a.help {
+            right: 217px;
+          }
+        }
+      }
+    }
+  }
+  &.create-project-modal {
+    max-width: 600px;
+    .padding > div.content {
+      height: 260px;
+      font-weight: 100;
+    }
+    form > .page > li {
+      width: 100%;
+    }
+    a.advanced {
+      position: absolute;
+      bottom: 0;
+      right: 10px;
+      margin-right: 17px;
+      margin-top: 4px;
+    }
+    .page.create_project div.advanced > li {
+      width: 100%;
+    }
+    li#workspace_name_input label {
+      color: #000;
+    }
+    li#workspace_boundary_input {
+      label {
+        color: #333;
+        font-weight: normal;
+      }
+    }
+    li#workspace_limit_to_network_input  {
+      margin-left: 25%;
+      padding-top: 5px;
+      width: auto;
+    }
+    li#workspace_description_input label {
+      padding-right: 0 !important;
+      font-weight: normal;
+    }
+  }
+  .page.configure_web_audit {
+    li.slider {
+      display: inline-block;
+      width: 260px;
+      margin-top: 35px;
+      label {
+        padding-left: 15px;
+      }
+    }
+  }
+
+  // -----||---------------------
+  //      || REPORT TAB - SHARED
+  // =====||=====================
+
+  .page.generate_report { @extend %report-tab-styles; }
+
+  %report-tab-styles {
+
+    // -----||---------------------
+    //      ||       COMMON
+    // =====||=====================
+
+    $label-font-weight: 600;
+    $label-font-color: #000;
+
+    %tabbed-modal-label {
+      font-weight: $label-font-weight;
+      color: $label-font-color;
+      font-size: 1em;
+    }
+
+    padding-top: 0;
+
+    // fixes ie9 auto-expand width bug
+    fieldset {
+      width: auto !important;
+    }
+
+    hr {
+      margin: 10px 0;
+      height: 0;
+      background: #ddd;
+    }
+
+    .right {
+      float: right;
+      width: 49%;
+      @include box-sizing;
+    }
+
+    .left {
+      float: left;
+      width: 49%;
+      @include box-sizing;
+    }
+
+    h4 {
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+
+    div.report_formats, div.report_sections, div.report_options, div.report_name {
+      fieldset {
+        float: none;
+        border: none;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        legend {
+          display: none;
+        }
+        ol {
+          max-width: none;
+          li {
+            font-size: 1em;
+          }
+        }
+
+        #report_name_input{
+          margin: 0px;
+          position: relative;
+        }
+      }
+    }
+
+
+
+    div.advanced {
+      fieldset {
+        background: none;
+      }
+    }
+
+    // -----||---------------------
+    //      ||   REPORT FORMATS
+    // =====||=====================
+
+    div.report_formats {
+      fieldset.inputs {
+        ol {
+          display: inline-block;
+          margin-left: 0;
+          li {
+            margin-bottom: 0;
+            margin-right: 10px;
+            display: inline-block;
+            font-size: 1.2em;
+            position: static;
+            label {
+              input {
+                margin: 0 5px 0 0;
+                position: relative;
+                bottom: 1px;
+              }
+            }
+          }
+        }
+      }
+      a.help {
+        display: none;
+      }
+    }
+
+    // -----||---------------------
+    //      ||    NAME & TYPES
+    // =====||=====================
+
+    div.top-row.row {
+      div.cell.first {
+        width: 50%;
+        height: 40px;
+        label {
+          width: 30%;
+          text-align: left;
+          line-height: 40px;
+        }
+        #report_name {
+          margin-bottom: 9px;
+        }
+        a.help img {
+          margin-bottom: -4px;
+        }
+      }
+      // full-width name field, if there are no report types to display
+      div.cell.first.full-width {
+        width: 100%;
+        fieldset.inputs {
+          width: 100% !important;
+        }
+        #report_name {
+          width: 80%;
+        }
+      }
+      div.cell.second {
+        width: 50%;
+        label {
+          width: 20%;
+          @include box-sizing;
+        }
+        select {
+          width: 80%;
+          @include box-sizing;
+        }
+      }
+      label {
+        @extend %tabbed-modal-label;
+        padding-right: 10px;
+        padding-left: 3px;
+        text-align: center;
+        line-height: 1.5;
+        width: auto;
+      }
+      input,select {
+        width: 58%;
+        vertical-align: bottom;
+      }
+    }
+
+    // -----||---------------------
+    //      ||  SECTIONS & OPTIONS
+    // =====||=====================
+
+    div.report_sections, div.report_options {
+      position: relative;
+
+      li {
+        margin-bottom: 7px;
+        label {
+          line-height: 1.4;
+          font-size: .9em;
+          input {
+            margin: 0;
+            margin-right: 3px;
+            margin-left: 3px;
+          }
+        }
+      }
+
+      ol li a.help {
+        position: absolute;
+        top: 0px;
+        left: 55px;
+      }
+    }
+
+    // -----||---------------------
+    //      ||  ADDRESSES & EMAILS
+    // =====||=====================
+
+    .bottom-row {
+      position: relative;
+
+      .email {
+        a.help {
+          position: absolute;
+          top: 0;
+          right: 187px;
+        }
+      }
+
+      &.full-width {
+        fieldset.inputs {
+          width: 100% !important;
+          margin-bottom: 0;
+          padding-bottom: 0;
+        }
+
+        #report_email_recipients {
+          height: 45px;
+          min-height: 45px;
+          width: 100%;
+        }
+
+        a.help {
+          position: absolute;
+          top: 0px;
+          left: 75px;
+        }
+      }
+
+      * { @include box-sizing; }
+
+      fieldset {
+        border: none;
+        padding-left: 0px;
+      }
+
+      legend span {
+        @extend %tabbed-modal-label;
+      }
+
+      label {
+        display: none;
+      }
+
+      li {
+        padding: 0;
+        position: static;
+      }
+
+      textarea {
+        width: 280px;
+      }
+
+      .address_settings {
+        fieldset {
+          padding-top: 0px;
+        }
+
+        legend {
+          display: none;
+        }
+
+        label {
+          @extend %tabbed-modal-label;
+          display: inline-block;
+          margin-bottom: 5px;
+        }
+
+        #report_included_addresses_input {
+          label, textarea { display: none; }
+        }
+
+        a.help {
+          position: absolute;
+          left: 115px;
+        }
+      }
+    }
+  }
+
+
+
+  input#tab_generate_report {
+    line-height: 38px;
+    vertical-align: middle;
+    font-size: 1.1em;
+  }
+
+  @import "shared/pretty_file_inputs";
+  h3.enabled {
+    margin: 5px 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #000;
+    span.enabled {
+      color: #47C26A;
+    }
+    span.disabled {
+      color: #be4848;
+    }
+  }
+  li.slider.string.input {
+    padding-left: 10px;
+    label { width: 100%; }
+    input { width: 60px; }
+  }
+  li.slider {
+    padding: 0;
+    margin-top: 8px;
+    label {
+      padding-left: 0;
+      display: block;
+      text-align: left;
+      width: 100%;
+    }
+    input {
+      width: 60px;
+    }
+    div.ui-slider {
+      margin: 0;
+      display: inline-block;
+      margin-left: 8px;
+      top: -1px;
+      width: 150px;
+      border: 1px solid #d0d0d0;
+      border-radius: 1px;
+      height: 5px;
+      box-shadow: inset 0 0 2px rgba(0,0,0,.1);
+      a.ui-slider-handle {
+        top: -.4em;
+        height: 15px;
+        width: 12px;
+      }
+    }
+  }
+}
+
+
+// -----||---------------------------
+//      || WEB APP TEST - REPORT TAB
+// =====||===========================
+
+#modals .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report,
+.config .tabbed-modal.quick-web-app-scan-modal form.formtastic .page.generate_report{
+  width: 760px;
+
+  li#report_file_formats_input {
+    fieldset.choices ol.choices-group li.choice label {
+      width: 60px;
+    }
+  }
+
+  %larger-text-areas {
+    textarea { width: 340px; }
+  }
+
+  #report_option_for_webapp_assessment {
+    li#report_order_vulns_by_input {
+      label {
+        width: 75px;
+      }
+
+      a.help {
+        top: -24px;
+        left: 51px;
+      }
+    }
+  }
+
+  .bottom-row {
+    .address_settings {
+      li#report_included_addresses_input {
+        padding-top: 0;
+      }
+
+      li#report_excluded_addresses_input {
+        padding-top: 0;
+        margin-top: -20px;
+
+        label {
+          padding-left: 0;
+        }
+
+        @extend %larger-text-areas;
+      }
+    }
+
+    .email {
+      li#report_email_recipients_input {
+        padding-top: 0;
+
+        label {
+          padding-left: 0;
+        }
+
+        @extend %larger-text-areas;
+
+        a.help {
+          right: 278px;
+        }
+      }
+    }
+  }
+}
+
+// -----||------------------------------
+//      || VULN VALIDATION - REPORT TAB
+// =====||==============================
+
+#modals .tabbed-modal form.formtastic.vuln_validation .page.generate_report,
+.config .tabbed-modal form.formtastic.vuln_validation .page.generate_report {
+  .bottom-row textarea {
+    height: 50px;
+  }
+}

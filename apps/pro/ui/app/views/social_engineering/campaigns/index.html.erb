@@ -1,0 +1,96 @@
+<% include_stylesheet 'campaign' -%>
+<% include_stylesheet 'rollup_modal' -%>
+<% include_stylesheet('backbone/pro_carpenter') %>
+<% title "Campaign Dashboard" %>
+<% breadcrumb workspace_link, social_engineering_campaigns_link %>
+<!-- FIX ME: we need a manifest index.js to do this stuff -->
+<% include_stylesheet "editors" %>
+<div id='campaigns-show'>
+
+
+  <!-- tab view is rendered in here -->
+  <div class='border' id='tab-wrap'>
+  </div>
+
+  <!-- more backbone templates -->
+  <script id='tab-header' type='text/x-tmpl'>
+    <%= render :partial => 'campaign_show_tabs' %>
+  </script>
+  <script id='tab-pages' type='text/x-tmpl'>
+    <div class='slider row'>
+      <div class='pages'>
+      </div>
+    </div>
+  </script>
+  <script id='campaign-components'  type='text/x-tmpl'>
+    <%= render :partial => 'campaign_components' %>
+  </script>
+  <script id='campaign-configuration'  type='text/x-tmpl'>
+    <%= render :partial => 'campaign_configuration' %>
+  </script>
+  <script id='campaign-server-configurations'  type='text/x-tmpl'>
+    <%= render :partial => 'campaign_server_configurations' %>
+  </script>
+  <script id='campaign-facts' type='text/x-tmpl'>
+    <%= render :partial => 'campaign_facts' %>
+  </script>
+  <script id='campaign-facts-circles' type='text/x-tmpl'>
+    <%= render :partial => 'campaign_facts_circles' %>
+  </script>
+  <script id='campaign-charts' type='text/x-tmpl'>
+    <div class='campaign-facts-wrapper' style='padding-top: 3px'>
+      <h3>Campaign Results</h3>
+      <div class='border-box rd-shadow campaign-charts'>
+        <div class='fake-charts'></div>
+      </div>
+    </div>
+  </script>
+  <script id='targets-table' type='text/x-tmpl'>
+    <%= render :partial => 'targets_table' %>
+  </script>
+  <script id='campaign-status' type='text/x-tmpl'>
+    <%= render :partial => 'campaign_status' %>
+  </script>
+  <script id='paginated-rollup-view-header' type='text/x-tmpl'>
+    <%= render :partial => 'paginated_rollup_view_header' %>
+  </script>
+  <script id='reusable-elements' type='text/x-tmpl'>
+    <%= render :partial => 'reusable_elements' %>
+  </script>
+  <script id='edit-buttons' type='text/x-tmpl'>
+    <%= render :partial => 'edit_buttons' %>
+  </script>
+  <script id='rollup-modal' type='text/x-tmpl'>
+    <%= render :partial => 'shared/rollup_modal' %>
+  </script>
+  <script id='campaign-list' type='text/x-tmpl'>
+    <%= render :partial => 'campaign_list' %>
+  </script>
+  <script id='campaign-preview-modal' type='text/x-tmpl'>
+    <div class='preview-modal'>
+      <div class='page row' title='{{title}}'>
+        {% _.each(components, function(component) { %}
+          <div class='cell loading' title='{{component.name}}' component-type='{{component.type}}' component-id='{{component.id}}'>
+            <div class='component-content'></div>
+            <a class='left arrow next' style='display:none;' href='#'>&#9664;</a>
+            <a class='right arrow prev' style='display:none;' href='#'>&#9654;</a>
+          </div>
+        {% }) %}
+      </div>
+    </div>
+  </script>
+  <script id='campaign-notification' type='text/x-tmpl'>
+    <%= render :partial => 'campaign_notification' %>
+  </script>
+
+  <!-- pass over our campaign & workspace id -->
+  <meta name='workspace-id' content='<%= @workspace.id %>' />
+  <meta name='smtp-password-unchanged' content='<%= SmtpSettings::PASSWORD_UNCHANGED %>' />
+  <meta name='num-campaigns' content='<%= @num_campaigns %>' />
+  <meta name='campaign-summaries-init' content="<%= @summaries.to_json %>" />
+</div>
+<% if License.get.supports_campaigns? %>
+  <%= javascript_include_tag 'social_engineering/campaigns/index' %>
+<% end %>
+
+<%= add_disable_overlay([:pro]) if not License.get.supports_campaigns? %>

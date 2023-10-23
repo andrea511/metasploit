@@ -1,0 +1,27 @@
+
+<h1>Session <%=h @session.id %> on
+    <% if @session.host %>
+        <%= link_to h(@session.host.address), @session.host %>
+    <% else %>
+        (Deleted Host)
+    <% end %>
+</h1>
+
+<div class="props">
+	<table class="list mar-bot10" style="width: auto">
+		<tr class="<%=h row_cycle %>">
+			<td><span class="lbl">Session Type</span></td>
+			<td><%=h @session.stype %> <%=h "(#{@session.via_payload})" if @session.via_payload %>
+			</td>
+		</tr>
+		<tr class="<%=h row_cycle %>">
+			<td><span class="lbl">Information</span></td>
+			<td><%=h @session.desc %></td>
+		</tr>
+		<tr class="<%=h row_cycle %>">
+			<td><span class="lbl">Attack Module</span></td>
+			<td><%= link_to h(@session.via_exploit), session_reopen_path(@workspace, @session) %></td>
+		</tr>
+	</table>
+</div>
+

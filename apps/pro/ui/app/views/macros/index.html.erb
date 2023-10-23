@@ -1,0 +1,16 @@
+<% title "Macros" %>
+<% breadcrumb link_to("Global Settings", settings_path), link_to("Macros", macros_path) %>
+
+<% include_view_javascript -%>
+<% include_javascript "macros" %>
+
+<%# TODO: This should be a block helper method. -%>
+<% if License.get.supports_macros? %>
+  <div id="macro_container">
+	  <%= render "macros/macros", :macros => @macros %>
+  </div>
+<% else %>
+  <h1>Unsupported Feature</h1>
+  <p>This product edition does not support Macros. Please upgrade to use this feature.</p>
+<% end %>
+

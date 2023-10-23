@@ -1,0 +1,29 @@
+define [
+  '<%= javascript_path("apps/backbone/models/app") %>',
+  '<%= javascript_path("apps/backbone/models/run_stat") %>',
+  'jquery'
+], (App, RunStat, $) ->
+
+  class AppRun extends Backbone.Model
+    defaults:
+      app: {}
+      started_at: null
+      stopped_at: null
+      status: 'preparing'
+      tasks: []
+
+    # returns an Object mapping run_stat[name] => run_stat[data]
+    runStatHash: =>
+      statData = {}
+      runStats = @get('run_stats')
+      _.each(runStats, (stat) -> statData[_.str.underscored(stat.name)] = stat.data)
+      statData
+    
+    url: (extension='.json') =>
+      "/workspaces/#{WORKSPACE_ID}/apps/app_runs/#{@id}#{extension}"
+
+    abort: =>
+      $.ajax
+        url: @url('')+'/abort'
+        method: 'POST'
+        data: { '_method': 'PUT' }

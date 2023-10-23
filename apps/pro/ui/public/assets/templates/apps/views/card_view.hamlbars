@@ -1,0 +1,20 @@
+.large-4.columns
+  .card
+    %a.title{ :href => '#' }
+      %h6
+        {{ name }}
+    .categories
+      {{#each app_categories}}
+      %span.category
+        {{name}}
+      {{/each}}
+    .wrap-description
+      %p.description
+        {{description}}
+    %a.launch.btn.primary
+      Launch
+    .safety-rating
+      Safety Rating:
+      %span.rating-stars{ :class => 'star{{rating}}', :title => '{{rating}}/5 stars' }
+        %span
+    %div.clearfix{ :style => 'clear:both' }

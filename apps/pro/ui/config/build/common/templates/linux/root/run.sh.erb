@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Follow links from wherever we were called from (probably /usr/local/bin/)
+# back to the install directory.
+export LINK=$(which "$0")
+export NAME=$(basename "$0")
+while [ -L "$LINK" ]; do
+	LAST=$LINK
+	LINK="$(readlink "$LINK")"
+	if [ ! -L "$LINK" ]; then
+		break
+	fi
+done
+
+BASE=$(dirname "$LAST")
+BASE=$(dirname "$BASE")
+export BASE
+
+# Autogen'd
+. ${BASE}/scripts/setenv.sh
+
+# Use Pro's bundled gems instead of the gemcache
+export MSF_BUNDLE_GEMS=0
+export BUNDLE_GEMFILE=${BASE}/apps/pro/Gemfile
+
+# Set a flag so Gemfile can limit gems
+export FRAMEWORK_FLAG=true
+
+export MSF_DATABASE_CONFIG=${BASE}/apps/pro/ui/config/database.yml
+export TERMINFO=${BASE}/common/share/terminfo/
+
+# Override msfupdate
+if [ "${NAME}" = "msfupdate" ]; then
+  exec ${BASE}/apps/pro/engine/mspupdate "$@"
+fi
+
+# Check for ruby scripts such as msfconsole directly
+if [ -f "${BASE}/apps/pro/vendor/bundle/ruby/3.0.0/bin/${NAME}" ]; then
+	exec ${BASE}/apps/pro/vendor/bundle/ruby/3.0.0/bin/${NAME} "$@"
+fi
+
+exec ${NAME} "$@"

@@ -1,0 +1,274 @@
+@import 'css3-mixins';
+
+@import 'components/header_bar';
+@import 'components/buttons';
+@import 'components/circle_icons';
+
+$primary-color: #010101;
+$main-area-background-color: #ffffff;
+$thead-background-color: #e1e1e1;
+$row-background-color: #f2f2f2;
+$selected-indicator-color: #8e8e8e;
+
+.modal{
+ .content{
+   ul{
+     margin-left: 16px;
+     list-style-type: initial;
+   }
+ }
+}
+
+
+#task-chains-main-region {
+  color: $primary-color;
+
+  // -----||--------------------------
+  //      ||         HEADER
+  // =====||==========================
+
+  #task-chain-header-region {
+    @extend %header-bar;
+
+    h1 {
+      line-height: $header-height;
+    }
+  }
+
+  // -----||--------------------------
+  //      ||         LIST
+  // =====||==========================
+
+  #task-chain-list-region {
+    @extend %header-bar-content-wrapper;
+
+    // Style the container div created by Backbone.
+    & > div:first-child {
+      @extend %header-bar-content;
+    }
+
+    .toolbar {
+      position: relative;
+
+      a {
+        @extend %button;
+
+        &#new {
+          @extend %button-green;
+        }
+      }
+    }
+
+    #selected-indicator {
+      color: $selected-indicator-color;
+      font-size: 11px;
+      margin: 5px 28px;
+    }
+
+    table {
+      width: 100%;
+
+      td.checkbox, th#select-all {
+        padding: 0 0 0 25px;
+        width: 20px;
+      }
+
+      td.schedule, th.schedule {
+        width: 110px;
+        text-align: center;
+      }
+
+      td.tasks, th.tasks {
+        width: 260px;
+      }
+
+      td.history {
+        a.error {
+          color: red;
+        }
+      }
+
+      td.status {
+        width: 150px;
+      }
+
+      thead {
+        background-color: $thead-background-color;
+        text-transform: uppercase;
+
+        tr {
+          height: 30px;
+
+          th {
+            font-size: 13px;
+            color: $primary-color;
+            user-select: none;
+
+            &.sortable:hover {
+              cursor: pointer;
+            }
+
+            .arrow {
+              $arrow-color: #ea5709;
+              $arrow-size: 4px;
+              display: inline-block;
+              margin-left: 5px;
+              margin-bottom: 3px;
+              height: 0;
+
+              // Add a transparent arrow as a placeholder.
+              border-left: $arrow-size solid transparent;
+              border-right: $arrow-size solid transparent;
+              border-bottom: $arrow-size solid transparent;
+
+              &.up {
+                width: 0;
+                border-left: $arrow-size solid transparent;
+                border-right: $arrow-size solid transparent;
+                border-bottom: $arrow-size solid $arrow-color;
+                border-top: none;
+              }
+
+              &.down {
+                width: 0;
+                border-left: $arrow-size solid transparent;
+                border-right: $arrow-size solid transparent;
+                border-top: $arrow-size solid $arrow-color;
+                border-bottom: none;
+              }
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          border-top: 10px solid $main-area-background-color;
+
+          td {
+
+            height: 55px;
+            background-color: $row-background-color;
+
+            &.schedule {
+              .schedule-wrapper {
+                position: relative;
+
+                .no-schedule, .schedule {
+                  height: 33px;
+                  width: 32px;
+                  margin: 0 auto;
+                  background-image: image-url('task_chains/clock.png');
+                  @include image-2x(image-path('task_chains/clock@2x.png'), 32px, 33px);
+                }
+
+                .no-schedule {
+                  opacity: 0.5;
+                }
+
+                div::after {
+                  position: absolute;
+                  top: 26px;
+                  right: 39px;
+                }
+
+                .unscheduled::after, .running::after {
+                  @extend %circle-icon-grey;
+                  @extend %circle-icon-plus;
+                }
+
+                .once::after {
+                  @extend %circle-icon-green;
+                  @extend %circle-icon-check;
+                }
+
+                .suspended::after {
+                  @extend %circle-icon-yellow;
+                  @extend %circle-icon-minus;
+                }
+
+                .scheduled::after {
+                  @extend %circle-icon-blue;
+                  @extend %circle-icon-reload;
+                }
+
+                .failed::after {
+                  @extend %circle-icon-red;
+                  @extend %circle-icon-exclamation;
+                }
+              }
+            }
+
+            &.name {
+              font-size: 18px;
+              font-weight: 100;
+              padding-right: 5px;
+
+              a {
+                color: $primary-color;
+                text-decoration: none;
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+
+            &.tasks {
+              text-transform: uppercase;
+            }
+
+            &.status {
+              .common-state {
+                float: left;
+                margin-left: 10px;
+                scale: 3;
+                transform: translate(50%, 50%);
+              }
+
+              div::after {
+                position: absolute;
+              }
+
+              .failed-state::after {
+                @extend .common-state;
+                @extend %circle-icon-red;
+                @extend %circle-icon-exclamation;
+              }
+
+              .success-state::after {
+                @extend .common-state;
+                @extend %circle-icon-green;
+                @extend %circle-icon-check;
+              }
+
+              .stopped-state::after {
+                @extend .common-state;
+                margin-top: -5px;
+                @extend %circle-icon-yellow;
+                @extend %circle-icon-minus;
+              }
+
+
+              canvas {
+                float: left;
+                margin-left: 15px;
+              }
+
+              .task-info {
+                float: right;
+                width: 50%;
+                margin-top: 3px;
+              }
+
+              a[href='javascript:void(0)']{
+                text-decoration: none;
+              }
+
+            }
+          }
+        }
+      }
+    }
+  }
+}

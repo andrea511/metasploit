@@ -1,0 +1,163 @@
+jQueryInWindow ($) ->
+  class @WebPageFormView extends PaginatedFormView
+    initialize: ->
+
+      @configuring = false
+      @dontRenderSelect2 = true
+      @loadingModal = $('<div class="loading">').dialog(
+        modal: true
+        title: 'Loading... '
+        autoOpen: false
+        width: '700px'
+        closeOnEscape: false
+        close: =>
+          # wait 300ms in case they pressed escape
+          # this is not a very good solution.
+          _.delay((=>@configuring = false), 300)
+        buttons:
+          "Cancel": ->
+            $(this).dialog("close")
+          "Upload": @uploadFile
+      )
+      super
+
+    events: _.extend({
+      "click .clone-btn": 'showCloneDialog'
+      "change [name=editor-buttonset]": 'editorChanged'
+      "change li#social_engineering_web_page_template_id_input select": 'editorChanged'
+      'scrollProxy': 'scrollProxy'
+    }, PaginatedFormView.prototype.events)
+
+
+    scrollProxy: ->
+      $iframe = $('.preview iframe', @el)
+      $iframe.contents().scrollTop($('.blocker', @el).scrollTop())
+
+    fileUrl: ->
+      "/workspaces/#{WORKSPACE_ID}/social_engineering/files/new?inline=true"
+
+    fileChanged: (e) =>
+      $selOption = $('option:selected', e.target)
+      if $selOption.index() == 1 # the "Create new target list... option"
+        @beginFileSetup() # deselect all
+        $selOption.parents('select').select2("val", "")
+
+    editorChanged: (e) =>
+      self = @
+      val = $('[name=editor-buttonset]:checked', @el).val()
+      h = $('.CodeMirror-scroll', @el).height()
+      $form = $('form', @el).first()
+      # reverse the content so that the browser does not flag as XSS
+      # when the content is spit back
+      reverse = (str) -> str.split("").reverse().join("")
+      content = reverse($form.triggerHandler('getMirrorContent'))
+      $('.CodeMirror,.clone-btn', @el).toggle(val == 'edit')
+      $preview = $('.preview', @el)
+      $preview.toggle(val == 'preview')
+      if val == 'preview'
+        $iframe = $('.preview iframe', @el)
+        $iframe.css(width: '100%', border: '0').hide().height(h)
+        tmpl = $('li#social_engineering_web_page_template_id_input select option:selected', @el).val()
+        url = $('meta[name=preview-url]', @el).attr('content')
+        $preview.addClass('loading').height(380).css('min-height': '0').show()
+                .css(border: '1px solid #ddd')
+        $new_form = $("<form method='POST' style='display:none'></form>").appendTo($('body'))
+        $new_form.attr('action', url)
+        $new_form.attr('target', 'web-page-iframe')
+        $inputs = [$('<input type="hidden" name="template_id"></input>'),
+                   $('<input type="hidden" name="content"></input>'),
+                   $('<input type="hidden" name="authenticity_token"></input>')]
+        $inputs[0].val(tmpl)
+        $inputs[1].val(content)
+        $inputs[2].val($('meta[name=csrf-token]').attr('content'))
+        $new_form.append($input) for $input in $inputs
+        $new_form.submit()
+        $iframe[0].onload = =>
+          $('.preview', @el).show().removeClass('loading').css(height: 'auto')
+          h = $('.CodeMirror-scroll', @el).height()
+          $iframe.show().height(h)
+          $new_form.remove()
+          $('.blocker', $form).height(h)
+          iframeWin = $iframe[0].contentWindow || $iframe[0].contentWindow.parentWindow
+          if iframeWin.document.body then $('.blocker .spacer').height(iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight)      
+          $('.blocker', @el).scroll(() -> $(self.el).trigger('scrollProxy'));
+
+
+    showLoading: ->
+      @loadingModal.dialog('close')
+      @loadingModal.dialog(width: '430px', title: 'Loading...')
+      $('.ui-dialog-titlebar-close', @loadingModal.parents('.ui-dialog')).hide()
+      @loadingModal.html('<div class="loading"></div>')
+      @loadingModal.dialog('open')
+      $('.ui-dialog-buttonpane', @loadingModal.parents('.ui-dialog')).hide()
+
+    showFileConfig: ->
+      @loadingModal.dialog('close')
+      @loadingModal.dialog(title: 'Upload a new file', width: '700px')
+      @loadingModal.css('max-height': '450px')
+      @loadingModal.removeClass('loading')
+      $('.ui-dialog-titlebar-close', @loadingModal.parents('.ui-dialog')).show()
+      @loadingModal.dialog('open')
+      $('.ui-dialog-buttonpane', @loadingModal.parents('.ui-dialog')).show()
+    
+    uploadFile: =>
+      $.ajax
+        url: $('form', @loadingModal).attr('action')
+        type: 'POST'
+        files: $('form :file', @loadingModal)
+        data: $('form input,select,textarea', @loadingModal).not(':file').serializeArray()
+        iframe: true
+        processData: false
+        success: (data, status) =>
+          @loadingModal.html(data)
+          saveStatus = $('meta[name=save-status]', @loadingModal).attr('content')
+          if saveStatus == 'false' || !saveStatus
+            @showFileConfig() # render error in dialog
+          else # success!
+            jsonData = $.parseJSON(saveStatus)
+            @loadingModal.dialog('close')
+            @configuring = falsewidth: '430px', 
+            file = jsonData['user_submitted_file']
+            # add the <option> to our overlying <select>
+            $select = $("select[name='social_engineering_web_page[user_supplied_file]']", @el)
+            $newOption = $("<option>").val(file.id).html(_.escape(file.name))
+            $select.append($newOption)
+            $select.select2('val', file.id)
+        error: =>
+      @showLoading()
+
+    beginFileSetup: ->
+      @configuring = true
+      url = @fileUrl()
+      @showLoading()
+      $(@loadingModal).load url, =>
+        @showFileConfig()
+
+    onLoad: ->
+      super
+      $opts = $("select[name='social_engineering_web_page[phishing_redirect_web_page_id]'] option")
+      if $opts.size() == 0 || ($opts.size() == 1 && $opts.eq(0).text() == '')
+        # blank dropdown, disable the whole thing
+        $li = $opts.parents('li').first().addClass('ui-disabled')
+        $li.after($('<div>').addClass('no-pages').text('You must create another Web Page to redirect to first.'))
+      $('select', @el).select2($.extend({
+        escapeMarkup: (markup) -> markup # disable so we dont double-encode
+        formatSelection: (state) ->
+          return _.escape state['text'] # must escape ourselves
+        formatResult: (state, container) ->
+          unless state['id'] == 'Upload a new file...'
+            return _.escape state['text']
+          img = '<%= image_tag('icons/silky/add.png', alt: '+', style: 'vertical-align: middle; position: relative; bottom: 2px; right: 1px;') %>'
+          # setting these properties as a single hash doesnt work for some reason
+          $(container).css('border-bottom': '1px dotted #ccc')
+          $(container).css('border-top': '1px dotted #ccc') 
+          $(container).css('margin-bottom': '4px')
+          $(container).css('padding-bottom': '8px')
+          $(container).css('padding-top': '8px')
+          return img + state['text']
+      }, DEFAULT_SELECT2_OPTS))
+      $('.white-box.editor-box', @el).buttonset()
+      $("select[name='social_engineering_web_page[user_supplied_file]']", @el).change(@fileChanged)
+
+    showCloneDialog: ->
+      window.renderCloneDialog()

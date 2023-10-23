@@ -1,0 +1,12 @@
+<div class="step">
+	<h3>Discovery</h3>
+	<div class="stepInfo begin" id="discovery">
+		<%= render :partial => 'disco_results' %>
+	</div>
+	<div class="btns">
+		<span class="btn"><%= submit_checkboxes_to "Scan...", new_scan_path(@workspace), { :class => "scan" } %></span>
+		<span class="btn"><%= link_to "Import...", new_workspace_import_path(@workspace, :anchor => "file"), {  :class => "import" } %></span>
+		<span class="btn"><%= link_to "Nexpose Scan...", new_workspace_import_path(@workspace, :anchor => "nexpose"), {  :class => "nexpose" } %></span>
+    <span class="btn"><%= link_to "Sonar Import...", new_workspace_import_path(@workspace, :anchor => "sonar"), {  :class => "generic" } %></span>
+	</div>
+</div>

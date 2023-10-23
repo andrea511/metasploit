@@ -1,0 +1,236 @@
+define [
+  'base_model'
+  'base_collection'
+  'lib/concerns/entities/fetch_ids'
+], ->
+  @Pro.module "Entities", (Entities, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+
+    #
+    # A single credential core.
+    #
+    class Entities.Cred extends App.Entities.Model
+
+      @Realms: <%= const_map('Metasploit::Model::Realm::Key') %>
+
+      @Origins:
+        ALL: <%= [
+          Metasploit::Credential::Origin::CrackedPassword,
+          Metasploit::Credential::Origin::Import,
+          Metasploit::Credential::Origin::Manual,
+          Metasploit::Credential::Origin::Service,
+          Metasploit::Credential::Origin::Session
+        ].collect { |klass| klass.model_name.human }.to_json %>
+
+      @Types:
+        Nil:          'none',
+        SSHKey:       'ssh',
+        PasswordHash: 'hash',
+        NTLMHash:     'ntlm',
+        Password:     'plaintext'
+
+      defaults:
+        workspace_id: WORKSPACE_ID
+        realm:
+          key: "None"
+        public:
+          username: ''
+        private:
+          type: 'none'
+        import:
+          password_type: "plaintext"
+          type: 'csv'
+        tags:
+          []
+        # The help text for the tagging modal:
+        taggingModalHelpContent:
+          """
+          <p>
+            A tag is an identifier that you can use to group together credentials.
+            You apply tags so that you can easily search for credentials.
+            For example, when you search for a particular tag, any login that
+            is labelled with that tag will appear in your search results.
+          </p>
+          <p>
+            To apply a tag, start typing the name of the tag you want to use in the
+            Tag field. As you type in the search box, Metasploit automatically predicts
+            the tags that may be similar to the ones you are searching for. If the tag
+            does not exist, Metasploit creates and adds it to the project.
+          </p>
+          """
+
+      #
+      # Url for updating or creating a cred. Prototype tweaks the content-types so we need to be explicit with .json
+      #
+      # @return [String] url for updating/creating a cred
+      url: ->
+        if @id?
+          "/workspaces/#{@.get('workspace_id')}/metasploit/credential/cores/#{@id}.json"
+        else
+          "/workspaces/#{@.get('workspace_id')}/metasploit/credential/cores.json"
+      #
+      # Url Used to tag creds
+      #
+      # @return [String] url for tagging creds
+      tagUrl: ->
+        "/workspaces/#{@.get('workspace_id')}/metasploit/credential/cores/quick_multi_tag.json"
+
+      #
+      # Determine if the cred's private data has been truncated.
+      #
+      # @return [Boolean] true if the data has been truncated, false otherwise
+      isTruncated: ->
+        @get('private.data')?.length > @get('private.data_truncated')?.length
+
+      #
+      # @return [Boolean] true if this credential is an SSH key
+      isSSHKey: ->
+        (@get('private.type') == @constructor.Types.SSHKey)
+
+      #
+      # Create a copy of this credential suitable for editing and saving as a new cred.
+      #
+      # @return [Entities.Cred] the freshly cloned cred
+      clone: ->
+        new Entities.Cred
+          public:
+            username: @get('public.username')
+          private:
+            data: @get('private.data')
+            type: @get('private.type')
+          realm:
+            key: @get('realm.key')
+            value: @get('realm.value')
+
+      #
+      # Fetches tags for the cred
+      #
+      # @param successCallback [object Function] success callback for fetching tags
+      fetchTags: (successCallback) ->
+        @fetch
+          success:successCallback
+          url: "/workspaces/#{@.get('workspace_id')}/metasploit/credential/cores/#{@id}/tags.json"
+
+      #
+      # Remove tag on the cred
+      #
+      # @option opts success      [object Function] success callback for removing a tag
+      # @option opts tagId        [Integer] id of the tag to be removed
+      removeTag: (opts={}) ->
+        {tagId, success} = opts
+
+        @save {tagId: tagId},
+          success: success
+          url: "/workspaces/#{@.get('workspace_id')}/metasploit/credential/cores/#{@id}/remove_tag.json"
+
+      #
+      # Flatten the keys for some nested data in the response.
+      #
+      # @param data [Object] the raw JSON data for this cred
+      #
+      # @return [Object] the JSON data with correctly flattened keys
+      parse: (response) ->
+        if response.private
+          response['private.data'] = response.private.data
+          response['private.data_truncated'] = response.private.data_truncated
+          response['private.type'] = response.private.type
+          response['private.full_fingerprint'] = response.private.full_fingerprint
+
+        response
+
+    #
+    # A collection of credentials
+    #
+
+    # Contains all Creds that are accessible to a specific workspace
+    class Entities.CredsCollection extends App.Entities.Collection
+
+      # Thrown when invalid scoping options are passed to the creds:entities API endpoint
+      class ScopingError < Error
+
+      @include 'FetchIDs'
+
+      model: Entities.Cred
+
+      # @param opts [Object] the options hash
+      # @option opts workspace_id [Number] the id of the host to look up accessing creds on
+      initialize: (models, opts={}) ->
+        _.defaults @, { workspace_id: WORKSPACE_ID }
+
+      url: =>
+        "/workspaces/#{@workspace_id}/metasploit/credential/cores.json"
+
+    #
+    # A group of credentials that is persisted on the server
+    #
+    class Entities.CredsGroup extends App.Entities.Model
+
+    # Contains Creds that were captured/collected from a specific host
+    class Entities.HostOriginatingCredsCollection extends Entities.CredsCollection
+
+      # @param opts [Object] the options hash
+      # @option opts host_id [Number] the id of the host to look up accessing creds on
+      initialize: (models, opts={}) ->
+        @host_id = opts.host_id || HOST_ID
+
+      url: =>
+        "/hosts/#{@host_id}/metasploit/credential/cores/originating.json"
+
+    #
+    # API
+    #
+
+    API =
+      # @return [Collection] of all Cred objects in a given workspace
+      getCreds: (workspace_id) ->
+        creds = new Entities.CredsCollection([], workspace_id: workspace_id)
+        creds
+
+      # @return [Collection] of Cred objects that originated from the given host
+      getOriginatingCredsForHost: (host_id) ->
+        creds = new Entities.HostOriginatingCredsCollection([], host_id: host_id)
+        creds
+
+      getCred: (id) ->
+        cred = new Entities.Cred(id: id)
+        cred.fetch()
+        cred
+
+      newCred: (attributes={}) ->
+        new Entities.Cred(attributes)
+
+    #
+    # REQUEST HANDLERS
+    #
+
+    # @param opts [Object] the options hash
+    # @option opts provide_access_to_host [Number] when set, the returned collection contains all
+    #   Creds that can be used to log into a host of the given ID
+    # @option opts originating_from_host [Number] when set, the returned collection contains all
+    #   Creds that can be used to log into a host of the given ID
+    # @option opts workspace_id [Number] when set, the returned collection contains all Creds in the
+    #   workspace of the given ID
+    # @throw [Entities.CredsCollection.ScopingError] if more than one of the above options are set
+    App.reqres.setHandler "creds:entities", (opts={}) ->
+      # Ensure that 1 or less scoping options is supplied
+      optionNames = ['provide_access_to_host', 'originating_from_host', 'workspace_id']
+      definedOpts = _.reject(optionNames, (name) -> _.isUndefined(opts[name]))
+      if definedOpts.length > 1
+        throw new Entities.CredsCollection.ScopingError(
+          "Only one of the following arguments may be set: "+JSON.stringify(definedOpts)
+        )
+
+      if opts.originating_from_host?
+        API.getOriginatingCredsForHost(opts.originating_from_host)
+      else
+        wid = if opts.workspace_id then opts.workspace_id else WORKSPACE_ID
+        API.getCreds(wid)
+
+    App.reqres.setHandler "cred:entity", (id) ->
+      API.getCred id
+
+    App.reqres.setHandler "new:cred:entity", (attributes={}) ->
+      API.newCred attributes

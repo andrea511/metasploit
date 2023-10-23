@@ -1,0 +1,14 @@
+<span id="vulns-combined-path" class="invisible"><%= combined_workspace_vulns_path(@workspace, :format => :json) %></span>
+
+<table id="vulns-table" class="list sortable">
+	<thead>
+		<tr>
+      <th class="checkbox"><%= check_box_tag "all_vulns", false %></th>
+			<th>Name</th>
+			<th>References</th>
+			<th>Hosts</th>
+		</tr>
+	</thead>
+	<tbody id="vuln_list">
+	</tbody>
+</table>

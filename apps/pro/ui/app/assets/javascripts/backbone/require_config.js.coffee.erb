@@ -1,0 +1,59 @@
+#= depend_on_asset './manifest.dev'
+#= depend_on_asset 'backbone/manifest_styles.dev'
+
+@initProRequire = requirejs.config
+  context: 'reports'
+  waitSeconds: 30
+
+  shim:
+    completely:
+      exports: 'completely'
+    d3_min:
+      exports: 'd3'
+    d3_transform:
+      deps: ['d3_min']
+    pro:
+      exports: 'Pro'
+
+  paths:
+    pro: '<%= js_path('backbone/pro') %>'
+    modal: '<%= js_path('shared/backbone/layouts/modal') %>'
+    jquery: '<%= jquery_path %>'
+    select2: '<%= js_path('select2/select2') %>'
+    completely: '<%= js_path('completely') %>'
+    carpenter: '<%= js_path('marionette.carpenter.min') %>'
+    d3_min: '<%= js_path('d3.v3.min') %>'
+    underscore: '<%= underscore_path %>'
+    jquery_caret: '<%= js_path('jquery.caret') %>'
+    d3_transform: '<%= js_path('d3.transform') %>'
+    dragtable: '<%= js_path('jquery.dragtable') %>'
+    backbone: '<%= backbone_path %>'
+    cocktail: '<%= cocktail_path %>'
+    'backbone.radio': '<%= js_path('backbone.radio')%>'
+    backbone_chooser: '<%= js_path('backbone-chooser-min') %>'
+    backbone_queryparams: '<%= js_path('shared/lib/backbone.queryparams') %>'
+    marionette: '<%= marionette_path %>'
+    pie_chart: '<%= js_path('shared/lib/pie_chart') %>'
+    form_helpers: '<%= js_path('shared/lib/install_form_helpers') %>'
+    host_view_controller: '<%= js_path('hosts/backbone/controllers/host_view_controller') %>'
+    rainbow_bar: '<%= js_path('shared/lib/rainbow_progress_bar') %>'
+    growl: '<%= js_path('jquery.growl') %>'
+    task_console: '<%= js_path('shared/backbone/views/task_console') %>'
+    css: '<%= js_path('css') %>'
+    'jquery.ajax-retry': '<%= js_path('jquery.ajax-retry') %>'
+    visualsearch: '<%= js_path('visualsearch/build/visualsearch') %>'
+    'visualsearch-datauri': '<%= css_path('visualsearch/build/visualsearch-datauri') %>'
+
+    base_controller: '<%= js_path('backbone/lib/controllers/application_controller') %>'
+    base_collection: '<%= js_path('backbone/lib/entities/collections') %>'
+    base_model: '<%= js_path('backbone/lib/entities/models') %>'
+    base_view: '<%= js_path('backbone/lib/views/_view') %>'
+    base_collectionview: '<%= js_path('backbone/lib/views/collectionview') %>'
+    base_compositeview: '<%= js_path('backbone/lib/views/compositeview') %>'
+    base_itemview: '<%= js_path('backbone/lib/views/itemview') %>'
+    base_formview: '<%= js_path('backbone/lib/views/formview') %>'
+    base_layout: '<%= js_path('backbone/lib/views/layout') %>'
+
+<%= requirejs_js_dir 'backbone', indent: 2 %>,
+<%= requirejs_css_dir 'backbone', indent: 2 %>,
+<%= requirejs_css_dir 'backbone', indent: 2, root_directory: 'vendor/assets/stylesheets' %>

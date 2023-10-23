@@ -1,0 +1,46 @@
+2023-10-16 16:07:44.642 +07 [21184] LOG:  database system was shut down at 2023-10-16 16:07:41 +07
+2023-10-16 16:07:44.657 +07 [19712] LOG:  database system is ready to accept connections
+2023-10-16 16:08:23.580 +07 [9264] ERROR:  relation "users" does not exist at character 491
+2023-10-16 16:08:23.580 +07 [9264] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	       c.collname, col_description(a.attrelid, a.attnum) AS comment,
+	       attgenerated as attgenerated
+	  FROM pg_attribute a
+	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+	 WHERE a.attrelid = '"users"'::regclass
+	   AND a.attnum > 0 AND NOT a.attisdropped
+	 ORDER BY a.attnum
+	
+2023-10-16 16:31:21.236 +07 [22092] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-16 16:31:21.237 +07 [6272] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-16 16:33:39.570 +07 [13712] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-16 16:33:39.571 +07 [7688] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:05:05.207 +07 [19616] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:05:05.244 +07 [22440] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:09:53.746 +07 [18868] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:09:53.760 +07 [17160] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:09:53.762 +07 [21488] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:33:36.117 +07 [25048] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:33:36.117 +07 [20656] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:34:30.909 +07 [18556] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:34:30.916 +07 [7740] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2023-10-17 08:34:37.271 +07 [19712] LOG:  received fast shutdown request
+2023-10-17 08:34:37.273 +07 [19712] LOG:  aborting any active transactions
+2023-10-17 08:34:37.277 +07 [19712] LOG:  background worker "logical replication launcher" (PID 20488) exited with exit code 1
+2023-10-17 08:34:37.280 +07 [6324] LOG:  shutting down
+2023-10-17 08:34:37.308 +07 [19712] LOG:  database system is shut down

@@ -1,0 +1,13 @@
+<ul>
+	<% tree.each do |path_element, tree_or_module| %>
+	<li>
+	<% if tree_or_module.kind_of?(Hash) %>
+		<%=h path_element %>
+		<%= render "module_tree", :tree => tree_or_module %>
+	<% else %>
+		<%= link_to h(path_element), new_module_run_path(@workspace, tree_or_module.fullname) %>
+	<% end %>
+	</li>
+	<% end %>
+</ul>
+

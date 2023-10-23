@@ -1,0 +1,32 @@
+<% host_record ||= false %>
+<% if host_record %>
+	<h3>Active Services</h3>
+<% end %>
+<table class="list" id="services">
+	<% if not host_record %>
+		<caption>Active Services</caption>
+	<% end %>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Port</th>
+			<th>Service Information</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% reset_cycle "rows" %>
+		<% if services.nil? or services.empty? or services.reject {|s| s.state != 'open'}.length.zero? %>
+			<tr><td class="odd" style="text-align: center" colspan=10> No services discovered</tr></td>
+		<% else %>
+			<% services.each do |svc| %>
+			<% next if svc.state != "open" %>
+			<tr class="<%=h row_cycle %>">
+				<td><%= link_for_service_name(svc) %></td>
+				<td><%=h svc.port %>/<%=h svc.proto %></td>
+				<td><%=h svc.info %></td>
+			</tr>
+		<% end %>
+		<% end %>
+	</tbody>
+</table>
+

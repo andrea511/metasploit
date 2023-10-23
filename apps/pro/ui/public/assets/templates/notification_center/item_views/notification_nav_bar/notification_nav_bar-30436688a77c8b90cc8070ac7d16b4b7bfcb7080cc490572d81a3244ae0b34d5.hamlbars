@@ -1,0 +1,17 @@
+.notification-type 
+  .type-title
+    %span
+      Latest Notifications
+  .sort-options
+    %span
+      Show
+    %span
+      %select{:name=>'notification_type'}
+        %option{:value=>''}
+          All
+        %option{:value=>'metamodule_notification'}
+          MetaModule
+        %option{:value=>'task_notification'}
+          Task
+        %option{:value=>'system_notification'}
+          System

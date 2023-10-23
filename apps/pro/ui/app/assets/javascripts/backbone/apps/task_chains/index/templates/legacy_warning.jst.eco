@@ -1,0 +1,16 @@
+<div>
+  The following task chains need to be updated due to recent changes to the import and Nexpose configuration pages:
+
+  <br><br>
+
+  <h5>Affected Chains:</h5>
+
+  <ul>
+  <% for chain in @legacyChains:  %>
+    <li><%= chain.name %></li>
+  <% end %>
+  </ul>
+
+
+
+</div>

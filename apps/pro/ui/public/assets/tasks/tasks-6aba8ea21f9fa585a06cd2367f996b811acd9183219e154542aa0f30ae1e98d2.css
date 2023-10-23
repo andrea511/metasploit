@@ -1,0 +1,65 @@
+/* line 1, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+.empty-message {
+  text-align: center;
+  line-height: 350px;
+}
+
+/* line 8, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+.foundation .spacer {
+  min-height: 1px;
+}
+
+/* line 13, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+.hide-input {
+  visibility: hidden;
+  position: absolute;
+}
+
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .exception-settings {
+  padding: 10px 0px 10px 0px;
+  background-color: #F2F2F2;
+}
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .exception-settings .header > div {
+  border-bottom: 1px solid #a9a9a9;
+  height: 20px;
+  padding-bottom: 35px;
+}
+/* line 31, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .content {
+  min-height: 400px;
+}
+/* line 35, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .exception-settings-line {
+  background-color: #F2F2F2;
+}
+/* line 40, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .vuln-exception {
+  margin-top: 20px;
+}
+/* line 43, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .vuln-exception .header .name {
+  font-size: 14px;
+}
+/* line 48, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .vuln-exception table {
+  border-bottom: 1px solid black;
+  width: 100%;
+}
+/* line 52, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .vuln-exception table tr:first-child {
+  border-bottom: 1px solid black;
+}
+/* line 56, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .vuln-exception table td, #exception-push .vuln-exception table th {
+  padding: 10px 0px 10px 0px;
+}
+/* line 58, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .vuln-exception table td .result_code, #exception-push .vuln-exception table th .result_code {
+  width: 140px;
+}
+/* line 63, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/tasks/tasks.scss */
+#exception-push .vuln-exception table tr.even {
+  background-color: #F8F8F8;
+}

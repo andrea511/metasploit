@@ -1,0 +1,33 @@
+<script type='html-template' id='multi-add-human-target-template'>  
+    <li class='columns {class}' style="text-align: right; display: inline;">
+      <div style='width: 31%;'>
+        <input type="text" name="{email_field}" value="{email_address}" placeholder="Email Address" />
+      </div>
+      <div style='width: 30%;'>
+        <input type="text" name="{first_name_field}" value="{first_name}" placeholder="First Name" />
+      </div>
+      <div style='width: 31%;'>
+      <input type="text" name="{last_name_field}" value="{last_name}"  placeholder="Last Name" />
+      </div>
+      <div style='width: 8%;'>
+        <div class='actions'>
+          <a class='plus' href='#'><%= image_tag('icons/silky/add.png', alt: '+') %></a>
+          <a class='minus' href='#'><%= image_tag('delete.png', alt: '-') %></a>
+        </div>
+      </div>
+    </div>
+  </li>
+</script>
+
+<label class='multi-add-human-target-label'>Manually Add Targets:</label>
+<ul class='multi-add-human-target'>
+</ul>
+<meta id='prevTargets' content="<%= (@prev_targets || []).to_json %>" />
+
+<% if params[:inline].present? %>
+  <div style='text-align: right'>
+    <span class='btn primary' style='margin-right:23px'>
+      <a href='#' class='save-targets' style='color:#fff !important'>Submit</a>
+    </span>
+  </div>
+<% end %>

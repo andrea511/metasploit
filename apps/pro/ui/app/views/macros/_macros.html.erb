@@ -1,0 +1,68 @@
+<% include_javascript 'macros/_index' %>
+
+<div class="macros">
+
+  <p>
+    Macros define a series of actions that will occur when the macro is applied to an existing session or configured
+    to run when a new session opens for a given task.
+  </p>
+
+<%= form_tag delete_macros_path, :method => :delete do %>
+
+  <div class="control-bar">
+    <span class="button">
+      <%= link_to "New Macro", new_macro_path, :class => "new" %>
+    </span>
+    <span class="button">
+      <%= submit_tag "Delete", :class => "delete", :id => 'macro-delete-submit' %>
+    </span>
+  </div>
+
+  <table id="macro_list" class="list">
+    <thead>
+      <th class="checkbox"><%= check_box_tag "all_macros", true %></th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+      <th>Author</th>
+      <th>Updated</th>
+    </thead>
+    <tbody>
+    <% @macros.each do |macro| %>
+    <tr id="<%=h dom_id(macro) %>" class="<%=h row_cycle %>">
+      <td><%= check_box_tag("macro_ids[]", macro.id, false, :id => nil) %></td>
+      <td>
+        <%= link_to(h(macro.name), edit_macro_path(macro)) %>
+      </td>
+      <td>
+        <%=h macro.description %>
+      </td>
+      <td>
+        <%= (macro.actions || []).length.to_s %>
+      </td>
+      <td>
+        <%=h macro.owner %>
+      </td>
+      <td>
+        <%= macro.updated_at %>
+      </td>
+    </tr>
+    <% end %>
+    <% if @macros.empty? %>
+      <td colspan=6 align=center>
+        No Post-Exploitations Macros
+      </td>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+</div>
+
+<%= nonced_javascript_tag do %>
+    (function() {
+      jQuery(function($) {
+        $("#all_macros").checkAll($("#macro_list"));
+      });
+    }).call(this);
+<% end %>

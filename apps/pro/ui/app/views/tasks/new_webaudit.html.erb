@@ -1,0 +1,117 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, web_link, link_to("New Web Application Audit", "#") %>
+<% include_view_javascript %>
+
+<%= semantic_form_for @task, :url => start_webaudit_path, :complete => "enableSubmitButtons();", :html => { :autocomplete => 'off' }, :remote=> true do |f| %>
+	<%= f.hidden_field :workspace_id %>
+
+	<div id="popup_errors"></div>
+
+	<div class="one_col_no_sidebar">
+
+		<%# if @task.known_servers.length == 0 %>
+		<% if false -%>
+
+			<h1>No forms have been discovered</h1><br/>
+			<span class="btn">
+				<%= link_to "Back to Web Apps", web_sites_path, :class => "back" %>
+			</span>
+
+		<% else %>
+
+
+			<%= f.inputs "Web Application Audit Settings" do -%>
+				<%= f.input :max_threads, :label => "Maximum concurrent HTTP requests" %>
+				<%= f.input :max_minutes, :label =>"Time limit/form in minutes" %>
+				<%= render :partial => "web_auth_fields", :locals => {:f => f} %>
+			<% end -%>
+
+			<%= advanced_options_button %>
+
+			<div class="advanced">
+			<%= f.inputs "Target Web Applications" do -%>
+
+				<div id="known_targets" style="width: 95%; float: left;">
+					<table width="100%" class="list mar-tb10">
+						<thead>
+							<tr>
+								<th width="5"><%= check_box_tag "all_targets", true %></th>
+								<th width>
+									Virtual Host
+								</th>
+								<th>
+									URL
+								</th>
+							</tr>
+						</thead>
+
+						<tbody id="target_list">
+						<%  @task.known_servers.each_index do |tidx|
+							checked = true
+						%>
+							<tr class="<%=h row_cycle %>">
+							<td align="left" valign="top">
+								<%= check_box_tag "webaudit_task[known_targets][#{tidx}][enabled]", tidx.to_s, checked, :id => "server-enabled-#{tidx}" %>
+							</td>
+							<td align="right" valign="top">
+								<%= text_field_tag "webaudit_task[known_targets][#{tidx}][vhost]", @task.known_servers[tidx][0], { :size => 16, :readonly => true } %>
+							</td>
+							<td align="left" valign="top">
+								<%= text_field_tag "webaudit_task[known_targets][#{tidx}][url]", @task.known_servers[tidx][1], { :size => 100, :readonly => true }%>
+							</td>
+						<% end %>
+						</tbody>
+					</table>
+				</div>
+			<% end -%>
+
+              <%= f.inputs "Security checks" do %>
+                  <%= f.input :session_cookie_name, :label => "Name of the session cookie"%>
+                  <%= f.input :direct_object_reference, :as => :boolean,
+                              :label => "Check for insecure direct object reference" %>
+              <% end-%>
+			</div>
+
+            <%= f.help_link :max_threads do -%>
+                <h3>Max concurrent requests</h3>
+                <p>Amount of parallel HTTP requests to perform at any given time.</p>
+            <% end -%>
+
+			<%= f.help_link :max_minutes do -%>
+				<h3>Time Limit</h3>
+				<p>Specifies the maximum amount of time that the audit will spend per application form.</p>
+			<% end -%>
+
+
+            <%= f.help_link :session_cookie_name do -%>
+                <h3>Name of the session cookie</h3>
+                <p>
+                  Will be used to ensure that the web application handles the cookie
+                  (and subsequently the session) in a secure manner.
+                </p>
+            <% end -%>
+
+          <%= f.help_link :direct_object_reference do -%>
+              <h3>Insecure direct object reference</h3>
+              <p>
+                Checks if access for objects which are not explicitly exposed is allowed.
+              </p>
+          <% end -%>
+
+            <div class='inline-help' data-field="webaudit_task_known_targets_input">
+				<h3>Target Web Applications</h3>
+				<p> This list indicates what specific forms will be audited. This list is generated through the WebScan component and by importing results from
+					other web application tools. The checkbox next to each item allows the form to be included or excluded from the audit.
+ 				</p>
+			</div>
+
+			<%= f.actions do -%>
+				<span class="btn">
+					<%= f.submit "Launch Audit", :class => "webaudit", :id => 'popup_submit' %>
+				</span>
+			<% end -%>
+		</div>
+	<% end %>
+<% end %>
+
+<%= add_disable_overlay([:pro]) if not @licensed %>

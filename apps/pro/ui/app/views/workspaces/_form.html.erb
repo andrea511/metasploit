@@ -1,0 +1,33 @@
+<% no_js ||= false %>
+<% hide_boundary ||= false %>
+<% no_users ||= false %>
+
+<%= render "shared/error_messages", :target => @workspace %>
+<%= f.inputs "Project Settings" do -%>
+
+  <%= f.input :name, :label => "Project name", :required => true, :input_html=> {:size => 30} -%>
+  <%= f.input :description, :as => :text, :input_html => {:cols => 30, :rows => 5} %>
+  
+  <% unless hide_boundary %>
+    <%= f.input :boundary, :label => "Network range", :as => :text, :input_html => {:cols => 20, :rows => 8} %>
+    <%  f.help_link :boundary do %>
+      <h3>Network Range</h3>
+
+      <p>
+        Defines the default network for new Scans, Exploits, etc.
+      </p>
+
+      The following formats are accepted:
+      <ul>
+        <li>10.0.0.42</li>
+        <li>192.168.1.0/24</li>
+        <li>10.0.0.1-10.0.0.99</li>
+      </ul>
+    <% end -%>
+    <%= f.input :limit_to_network, :label => "Restrict to network range", :required => false %>
+  <% end %>
+<% end -%>
+
+<% unless no_users %>
+  <%= render "workspaces/users", :f => f %>
+<% end %>

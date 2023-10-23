@@ -1,0 +1,9 @@
+Name: libpgtypes
+Description: PostgreSQL libpgtypes library
+Url: http://www.postgresql.org/
+Version: 12.8
+Requires: 
+Requires.private: 
+Cflags: -I/c/Users/vagrant/metasploit-build/dependencies/windows/mingw/postgresql/include
+Libs: -L/c/Users/vagrant/metasploit-build/dependencies/windows/mingw/postgresql/lib -lpgtypes
+Libs.private: -L/c/Users/vagrant/metasploit-build/dependencies/windows/mingw/devkit/bin -L/c/Users/vagrant/metasploit-build/dependencies/windows/mingw/devkit/lib -L/mingw64/lib -LC:/tools/msys64/mingw64/lib -lm

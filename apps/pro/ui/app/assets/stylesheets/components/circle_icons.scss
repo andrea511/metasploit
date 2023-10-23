@@ -1,0 +1,95 @@
+
+%icon-base {
+  display: block;
+  height: 10px;
+  line-height: 10px;
+  width: 10px;
+  text-align: center;
+  border-radius: 20px;
+}
+
+%icon-large {
+  height: 20px;
+  width: 20px;
+}
+// -----||--------------------------
+//      ||         COLORS
+// =====||==========================
+
+%circle-icon-grey {
+  @extend %icon-base;
+  background-color: #cdcdcd;
+  border: 1px solid #b1b1b1;
+}
+
+%circle-icon-green {
+  @extend %icon-base;
+  background-color: #97cc55;
+  border: 1px solid #7ba645;
+  color: #fff;
+}
+
+%circle-icon-red {
+  @extend %icon-base;
+  background-color: #c91114;
+  border: 1px solid #9f0b12;
+  color: #fff;
+}
+
+%circle-icon-blue {
+  @extend %icon-base;
+  background-color: #1278cc;
+  border: 1px solid #216397;
+  color: #fff;
+}
+
+%circle-icon-yellow {
+  @extend %icon-base;
+  background-color: #FFC000;
+  border: 1px solid #FFBF00;
+  color: #fff;
+}
+
+// -----||--------------------------
+//      ||         CONTENT
+// =====||==========================
+
+%circle-icon-plus {
+  content: '+';
+}
+
+%circle-icon-exclamation {
+  content: '!';
+  font-size: 9px;
+  font-weight: bold;
+}
+
+%circle-icon-question {
+  content: '?';
+  font-size: 9px;
+  font-weight: bold;
+}
+
+%circle-icon-minus {
+  content: '\2014';
+  font-size: 9px;
+}
+
+%circle-icon-check {
+  content: '\2713';
+  font-size: 9px;
+}
+
+%circle-icon-reload {
+  content: '\27F3';
+  font-size: 9px;
+  padding-left: 1px;
+}
+
+%circle-icon-pause {
+  content: '\2016';
+  font-size: 9px;
+  padding-left: 1px;
+}
+
+

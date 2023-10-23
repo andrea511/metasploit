@@ -1,0 +1,31 @@
+<div class="row">
+
+  <div class="columns small-12">
+    <div id="sonar-domain-input-error-container" class="error-container"></div>
+  </div>
+
+  <div class="columns large-12">
+
+    <div class="inline-block domain">
+      <label for="sonar-domain-input-textbox" hidden>Sonar Domain</label>
+      <input id="sonar-domain-input-textbox" type="text" name="imports[sonar][domain]" placeholder="Example: rapid7.com" value="<%= @domainUrl %>">
+    </div>
+
+    <div class="inline-block last-seen">
+      <label>
+        Last seen within
+        <input id="sonar-last-seen-input" name="imports[sonar][last_seen]" type="number" min="1" maxlength="3" value="30"/>
+        day(s)
+      </label>
+    </div>
+
+    <div class="inline-block query">
+      <span id="sonar-domain-query-button" class="btn disabled">
+        <input class="generic" name="commit" type="submit" value="Query">
+      </span>
+    </div>
+
+
+  </div>
+
+</div>

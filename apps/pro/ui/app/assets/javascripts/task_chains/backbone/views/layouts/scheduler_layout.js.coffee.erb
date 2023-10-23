@@ -1,0 +1,221 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/layouts/scheduler') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/scheduler/daily_schedule') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/scheduler/monthly_schedule') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/scheduler/weekly_schedule') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/scheduler/hourly_schedule') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/scheduler/once_schedule') %>'
+], ($, Template, DailySchedule, MonthlySchedule, WeeklySchedule, HourlySchedule, OnceSchedule) ->
+  class SchedulerLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['task_chains/layouts/scheduler']
+
+    VALIDATION_URL: "/workspaces/#{WORKSPACE_ID}/task_chains/validate_schedule"
+
+    ui:
+      schedule_info: '.schedule-info'
+      run_info: '.run-info'
+
+    #Can't define multiple events in a single hash :-(
+    events:
+      'scheduleChanged .schedule-options' : '_scheduleTypeChanged'
+      'input .schedule-options' : '_changed'
+      'change .schedule-options' : '_changed'
+      'select .schedule-options' : '_changed'
+      'toggleTitle .schedule-options' : '_toggleTitle'
+      'change .schedule-options [name="schedule_suspend"]': '_toggleEnabledEvent'
+
+    regions:
+      scheduleOptions: '.schedule-options'
+
+    initialize: () ->
+      #To Handle Case where user never opens the modal
+      unless @cachedView?
+        if @model.get('task_chain')?
+          frequency = if @model.get('task_chain').schedule_hash? then @model.get('task_chain').schedule_hash.frequency else null
+          @_showSchedule(frequency, @model)
+        else if @model.get("scheduleCache")?
+          frequency = @model.get('scheduleCache').schedule_hash.frequency
+          if @model.get('task_chain')
+            @model.get('task_chain').schedule_hash = @model.get('scheduleCache').schedule_hash
+            @model.get('task_chain').clear_workspace_before_run = @model.get('scheduleCache').clear_workspace_before_run
+          else
+            @model.set('task_chain', @model.get("scheduleCache"))
+          @_showSchedule(frequency, @model)
+        else
+          @cachedView = new DailySchedule()
+        @cachedView.$el.html(@cachedView.template(@model.attributes))
+
+
+
+    close: () ->
+      @onBeforeClose?()
+      @onClose?()
+      @stopListening()
+
+    onShow: () ->
+      @undelegateEvents()
+      @delegateEvents()
+      @bindUIElements()
+
+      unless @cachedView?
+        if @model.get('task_chain')?
+          frequency = if @model.get('task_chain').schedule_hash? then @model.get('task_chain').schedule_hash.frequency else null
+          @_showSchedule(frequency, @model)
+        else
+          @cachedView = new DailySchedule()
+
+      if @restoreSchedule?
+        @cachedView = @restoreSchedule
+
+
+      if this.cachedView.isDestroyed
+        opts =
+          cachedEl: @cachedView.cachedEl
+          restoreEl: @cachedView.restoreEl
+          $el: @cachedView.$el
+          el: @cachedView.el
+
+        @cachedView = new @cachedView.constructor(opts)
+
+      @restoreSchedule = @cachedView
+      @scheduleOptions.show(@cachedView, preventDestroy: true, forceShow:true)
+
+      @_initTitle()
+      @_debouncedValidation = _.debounce(@_validateStartDateInfo,300)
+
+    _scheduleTypeChanged: (e,select) =>
+      schedule_type = $(select).val()
+      @_showSchedule(schedule_type, null)
+      @scheduleOptions.show(@cachedView, preventDestroy: true)
+      @_initTitle()
+
+    _showSchedule: (schedule_type, task_config) ->
+      unless task_config?
+        task_config = new Backbone.Model({task_chain:{schedule:"exists"}})
+
+      switch schedule_type
+        when 'once'
+          unless @once_schedule?
+            @once_schedule = new OnceSchedule({model:task_config})
+          @cachedView = @once_schedule
+        when 'hourly'
+          unless @hourly_schedule?
+            @hourly_schedule = new HourlySchedule({model:task_config})
+          @cachedView = @hourly_schedule
+        when 'weekly'
+          unless @weekly_schedule?
+            @weekly_schedule = new WeeklySchedule({model:task_config})
+          @cachedView = @weekly_schedule
+        when 'daily'
+          unless @daily_schedule?
+            @daily_schedule = new DailySchedule({model:task_config})
+          @cachedView = @daily_schedule
+        when 'monthly'
+          unless @monthly_schedule?
+            @monthly_schedule = new MonthlySchedule({model:task_config})
+          @cachedView = @monthly_schedule
+        else
+          unless @once_schedule?
+            @once_schedule = new OnceSchedule({model:task_config})
+          @cachedView = @once_schedule
+
+    _validateStartDateInfo: () =>
+      $form = $('form', @el)
+
+      data = [{
+        name: 'authenticity_token'
+        value: $('meta[name=csrf-token]').attr('content')
+      }]
+
+      @scheduleData = $('input,select,textarea', $form).not(':file, [name="_method"][value="delete"] ').serializeArray()
+      data = data.concat(@scheduleData)
+
+      opts = {
+        type: 'POST',
+        data: data
+      }
+
+      $.ajax(
+        @VALIDATION_URL,
+        opts
+      ).done((data)=>
+        $('.error',@el).remove()
+        @model.set('scheduleCache', @_form_to_object(@scheduleData))
+        if @model.get('task_chain')?
+          @model.get('task_chain').schedule_hash = @model.get('scheduleCache').schedule_hash
+          @model.get('task_chain').clear_workspace_before_run = @model.get('scheduleCache').clear_workspace_before_run
+        @ui.run_info.html(data.schedule)
+        $('.modal-actions>a.primary').removeClass('disabled')
+      ).error((data)=>
+        @_renderErrors(data.responseJSON)
+        @ui.run_info.html(data.responseJSON.schedule) if data.responseJSON.schedule?
+
+        if $('.schedule-options input[name="schedule_suspend"]:checked').length == 0
+          $('.modal-actions>a.primary').addClass('disabled')
+      )
+
+    _form_to_object: (formArray) =>
+      my_grouped_data = {}
+      for entry in formArray
+        if entry.name.endsWith('[]')
+          new_key = entry.name.substring(0, entry.name.length-2)
+          unless my_grouped_data[new_key]?
+            my_grouped_data[new_key] = []
+          my_grouped_data[new_key].push(entry.value)
+        else
+          my_grouped_data[entry.name] = entry.value
+
+      cached_frequency = my_grouped_data['schedule_recurrence[frequency]']
+      schedule_object = {
+        frequency: cached_frequency
+      }
+      schedule_object[cached_frequency] = []
+      prefix_key = 'schedule_recurrence[' + cached_frequency + ']['
+      for k,v of my_grouped_data
+        if k.include(prefix_key)
+          new_key = k.substring(prefix_key.length, k.length-1)
+          schedule_object[cached_frequency][new_key] = v
+      task_chain_object = {
+        clear_workspace_before_run: my_grouped_data['task_chain[clear_workspace_before_run]']
+        schedule_hash: schedule_object
+      }
+      task_chain_object
+
+    #
+    # Helper methods
+    #
+    _renderErrors: (errors) =>
+      $('.error',@el).remove()
+      _.each errors, (v, k) =>
+        name = "[#{k}]"
+        $msg = $('<div />', class: 'error').text(v[0])
+        $("input[name$='#{name}']", @el).addClass('invalid').before($msg)
+        $("input[name$='#{name}[]']", @el).first().addClass('invalid').before($msg)
+
+    _initTitle:() ->
+      toggle_button = @scheduleOptions.currentView.ui.toggle_button
+      @_toggleEnabled(toggle_button)
+
+    _toggleEnabledEvent:(e)->
+      @_toggleEnabled($(e.target))
+
+    _changed: (e) ->
+      unless $(e.target).hasClass('ios-switch') || $(e.target).attr('name') == 'task_chain[clear_workspace_before_run]' || $(e.target).attr('id') == 'schedule_type'
+        @_debouncedValidation()
+
+    _toggleEnabled: ($elem)->
+      $form =  $(':not(.skip-disable, .skip-disable * )',@scheduleOptions.currentView.ui.form)
+      if $elem.prop('checked')
+        @ui.schedule_info.css('visibility','hidden')
+        $form.css('opacity','0.5')
+        $form.css('pointer-events','none')
+        $('.modal-actions>a.primary').removeClass('disabled')
+      else
+        @ui.schedule_info.css('visibility','visible')
+        $form.css('opacity','1')
+        $form.css('pointer-events','auto')
+        @_validateStartDateInfo()
+
+
+

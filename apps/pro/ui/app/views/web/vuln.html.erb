@@ -1,0 +1,75 @@
+<% title "Web Application Vulnerability - #{@vuln.web_site.to_url}#{@vuln.path}" %>
+<% breadcrumb workspace_link, web_link, web_vulns_link, web_vuln_link %>
+<h1 class='orange'>
+  Vuln Info: <%= @workspace.name %> #<%= @vuln.id %> (<%= @vuln.category_label %>)
+</h1>
+
+<div class='row' style='margin-bottom: 20px'>
+  <div class='cell' style='width: 50%'>
+    <ul class='round'>
+      <li>
+        <label>URL: </label>
+        <a href="<%= @vuln_action %>"><%= @vuln_action %></a>
+      </li>
+
+      <li>
+        <label>Host: </label>
+          <%= link_to(@vuln.web_site.service.host, host_path(@vuln.web_site.service.host)) %>
+          <img src="<%= os_to_icon(@vuln.web_site.service.host.os) %>" class="os_icon" style='float: right'>
+      </li>
+
+      <li>
+        <label>Category: </label>
+        <%= @vuln.category_label %>
+      </li>
+
+      <li>
+        <label>Name: </label>
+        <%= @vuln.name %>
+      </li>
+
+      <li>
+        <label>Risk: </label>
+        <%= @vuln.risk_label %> (<%= @vuln.risk %>)
+      </li>
+
+     <!--  <li>
+        <label>Blame: </label>
+        <%= @vuln.blame %>
+      </li> -->
+
+      <li>
+        <label>Confidence: </label>
+        <%= @vuln.confidence %>
+      </li>
+
+      <% if not @vuln.description.to_s.empty? %>
+          <li>
+            <label>Description: </label>
+             <p><%= @vuln.description %></p>
+          </li>
+      <% end %>
+
+      <li>
+        <label>Vulnerable Method: </label>
+        <code><%= @vuln.method %></code>
+      </li>
+
+      <li>
+        <label>Vulnerable Parameter: </label>
+        <code><%= @vuln.pname %></code>
+      </li>
+
+      <li>
+        <label>Proof: </label>
+        <p><pre style='background:#fff; border: 1px solid #aaa; overflow: auto;'>
+          <%= @vuln.proof %>
+        </pre></p>
+      </li>
+    </ul>
+  </div>
+  <div class='cell' style='width:50%'>
+    <div style='width: 420px; margin: 0 auto;'><h2>Replay Vulnerability</h2></div>
+    <%= render 'replay' %>
+  </div>
+</div>

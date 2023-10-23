@@ -1,0 +1,61 @@
+<meta name='custom_resource_create' content="<%= workspace_report_custom_resources_path(@workspace) %>" />
+
+<div style='background-color: #fff; border: 1px solid #ddd; padding: 5px 20px; margin-bottom: 20px; float: left;'>
+  <h3>Custom Report Collateral</h3>
+  <p>This table lists the available custom report templates (JRXML or compiled JASPER templates) and logos (GIF, PNG, or JPG images) available for custom report generation. Note that custom logos are also available for use with Standard Reports. To add new templates or logos, use the 'Upload Custom Report Collateral' button below.</p>
+  <br/>
+
+  <table id='report_templates' class='list'>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Create Date</th>
+      <th>Creator</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% if (@report_custom_resources.blank?) %>
+        <tr>
+          <td class='odd' style='text-align:center;' colspan=10>
+          No report templates or custom logos have been uploaded for this project.
+          </td>
+        </tr>
+    <% else %>
+        <% @report_custom_resources.each do |resource| %>
+            <tr class="<%=h row_cycle %>">
+              <td><%=h resource.name %></td>
+              <td><%=h resource.resource_type.capitalize %></td>
+              <td><%=h resource.updated_at %></td>
+              <td><%=h resource.created_by %></td>
+              <td>
+                <%= link_to('Download', workspace_report_custom_resource_path(@workspace, resource)) %>
+                <% if current_user and current_user.admin %>
+                    |
+                    <%= link_to('Delete', workspace_report_custom_resource_path(@workspace, resource),
+                                :data => {
+                                        :confirm => "Are you sure you want to delete this #{resource.resource_type}?",
+                                        :method  => :delete,
+                                        :remote  => true
+                                }
+                        ) %>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+
+    <% end %>
+    </tbody>
+  </table>
+
+  <% if current_user and current_user.admin? %>
+      <div class='btnRow' style='text-align: right; margin-top: 5px;'>
+        <span class='btn'>
+          <a id='upload_report_custom_resource' class='new' href='#'>Upload Custom Report Collateral</a>
+        </span>
+      </div>
+  <% end %>
+
+</div>

@@ -1,0 +1,108 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/apps/app_stat_modal_header") %>'
+], ($, Template) ->
+  PUSH_VALIDATION_URL = "/workspaces/#{WORKSPACE_ID}/nexpose/result/push_validations.json"
+  VALIDATION_POLL_INTERVAL = 500
+
+  class AppStatModalHeader extends Backbone.Marionette.ItemView
+    initialize: ({ @appRun }) =>
+      @appRun.bind('change', @render)
+    events:
+      'click @ui.pushButton': 'pushValidationsClicked'
+    ui:
+      pushButton:'span.push_exceptions'
+    template: HandlebarsTemplates['apps/app_stat_modal_header']
+
+
+
+
+
+    stopSubmitting: ->
+      @ui.pushButton.removeClass('submitting disabled')
+    serializeData: =>
+      stats = @appRun.runStatHash()
+      initProRequire ['entities/vuln'], =>
+        all_vulns = Pro.request('vulns:entities')
+        all_vulns.on("sync", (x,y) =>
+          stats = @appRun.runStatHash()
+          showItem = stats.vuln_exceptions + stats.vuln_validations > 0
+          showButton = y.length == @appRun.runStatHash()['vulns_found']
+          if showItem && showButton
+            @ui.pushButton.addClass('btn')
+            @ui.pushButton.append('<a class="nexpose" href="javascript:void(0)">Push To Nexpose</a>')
+          else if (showItem && !showButton)
+            @ui.pushButton.append("<a href='../vulns/'>Go to Vulnerabilites Index</a>")
+          else
+            @ui.pushButton.empty()
+        )
+      _.extend({showPushLink:true}, @, { stats: stats})
+
+    # called when user clicks the Push Validations button
+    pushValidationsClicked: (e) =>
+      e.preventDefault()
+      $link = $(e.currentTarget)
+      return if $link.is('.disabled')
+      $link.addClass('disabled submitting')
+      initProRequire ['lib/shared/nexpose_push/nexpose_push_controllers'], =>
+        selectAllState = selectedIDs = deselectedIDs = selectedVisibleCollection = tableCollection = null
+        request_message = jQuery.ajax
+          url: Routes.push_to_nexpose_message_workspace_vulns_path(workspace_id: WORKSPACE_ID)
+          type: 'GET'
+          data:
+            vv_run: true
+            selections:
+              select_all_state: selectAllState || null
+              selected_ids:     selectedIDs || []
+              deselected_ids:   deselectedIDs || []
+              ignore_pagination: true
+
+        request_message.then (data)=>
+          opts = {
+            message: data.message
+            has_console: data.has_console
+            has_console_enabled: data.has_console_enabled
+            has_validations: data.has_validations
+            has_exceptions: data.has_exceptions
+            selectAllState: true
+            selectedIDs: data.selected_ids || []
+            deselectedIDs: data.deselected_ids || []
+            redirectToTaskLog: false
+            }
+          controller = new Pro.Shared.NexposePush.ModalController opts
+          @listenTo(controller, "modal:close", @stopSubmitting)
+          controller.showModal()
+
+
+
+
+    startPollingValidationRun: (taskId) =>
+      done = false
+      url = "/workspaces/#{WORKSPACE_ID}/tasks/#{taskId}.json"
+      poll = =>
+        $.ajax
+          url: url
+          success: (taskJson) =>
+            if taskJson.completed_at?
+              done = true
+              if taskJson.error? and taskJson.error.length > 0
+                img = '<%= image_tag('icons/incomplete.png', style: "vertical-align: top;") %>'
+                $failed = $('<span />')
+                $failed.css(paddingRight: '10px', verticalAlign: 'top')
+                $failed.html(
+                  img+" Push failed. [<a style='vertical-align:top;' href='/workspaces/#{WORKSPACE_ID}/tasks/#{taskId}'>more...</a>]"
+                )
+                $('span.push_validations', @el).replaceWith($failed)
+              else
+                '<%= image_tag('icons/complete.png', style: "vertical-align: top;") %>'
+                $succeeded = $('<span />')
+                $succeeded.css(paddingRight: '10px', verticalAlign: 'top')
+                $succeeded.html("#{img} Push succeeded.")
+                $('span.push_validations', @el).replaceWith($succeeded)
+            else
+              setTimeout(poll, VALIDATION_POLL_INTERVAL) unless done
+          error: =>
+            done = true
+            $('span.push_validations a', @el).removeClass('disabled submitting')
+
+      setTimeout(poll, VALIDATION_POLL_INTERVAL)

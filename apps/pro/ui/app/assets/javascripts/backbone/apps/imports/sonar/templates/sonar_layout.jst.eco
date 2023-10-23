@@ -1,0 +1,4 @@
+<div id="sonar-import-container" class="columns large-12 shared boxes">
+  <div id="sonar-domain-input-region"></div>
+  <div id="sonar-results-region"></div>
+</div>

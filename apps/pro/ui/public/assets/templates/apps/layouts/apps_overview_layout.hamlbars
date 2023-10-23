@@ -1,0 +1,14 @@
+%div
+  .stats-area.stats.row
+    .cell{ :style => 'width: 24%;' }
+      %a.view-all-runs{ :href => './app_runs' }
+        %div.wrap
+          %div.all View All
+          %div.sub {{numAppRuns}} recently launched metamodules
+    .cell{ :style => 'width: 1%;' }
+      &nbsp;
+
+    .cell{ :style => 'width: 75%;' }
+      .last-stat{ :style => 'position:relative' }
+    
+  .apps-area

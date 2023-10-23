@@ -1,0 +1,36 @@
+<% title h("Add Loot") %>
+
+
+
+<% include_javascript "jquery.watch" -%>
+<% include_javascript "dataTables.filteringDelay" -%>
+<% include_view_javascript -%>
+
+<% @host= Mdm::Host.find(params[:id]) %>
+<% @workspace = @host.workspace %>
+
+<% breadcrumb workspace_link, hosts_link, host_link, link_to("New Loot", "#") -%>
+
+<%= required_label %>
+<% @loot = Mdm::Loot.new(:content_type => "text/plain" , :ltype => "user.added.loot", :host => @host) %>
+<div class="one_col_no_sidebar"> 
+<%= semantic_form_for @loot, :html => {:multipart => true}, :url => add_loot_path do |f| %>
+  <%= f.inputs "Upload Loot File" do %>
+    <%= f.input :data, :label => "File to upload", :required => true, :as => :file %>
+    <%= f.input :name, :required => true, :as=> "string" %>
+    <%= f.input :content_type %>
+    <%= f.input :info %>
+
+  <% end %>
+
+
+
+  <%= f.actions do -%>
+	<span class="btn">
+		<%= f.submit "Create", :id => "popup_submit", :class => "new" %>
+	</span>
+  <% end %>
+<% end %>
+
+
+</div>

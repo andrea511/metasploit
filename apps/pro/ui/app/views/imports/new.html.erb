@@ -1,0 +1,32 @@
+<% title "Import" %>
+
+
+<% breadcrumb workspace_link, imports_link %>
+
+
+<div id="imports-main-region" class='tab-loading'></div>
+
+<%= javascript_include_tag 'backbone/require_config' %>
+
+
+<% include_stylesheet('backbone/pro_carpenter') %>
+<% include_stylesheet('imports/index') %>
+
+<%= nonced_javascript_tag do %>
+  jQuery(document).bind('requirejs-ready', function(){
+    jQuery(document).ready(function() {
+      var dependencies = [
+        'apps/imports/imports_app'
+      ];
+
+      initProRequire(dependencies, function() {
+        Pro.addInitializer(function() {
+          jQuery('#imports-main-region').removeClass('tab-loading');
+        });
+        Pro.start({
+          environment: "<%= Rails.env %>"
+        });
+      });
+    });
+  });
+<% end %>

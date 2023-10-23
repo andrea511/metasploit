@@ -1,0 +1,10 @@
+<div class="one_col_no_sidebar">
+  <%= semantic_form_for [@workspace, @export] do |f| %>
+      <%= f.hidden_field :workspace_id %>
+      <%= render :partial => 'exports/export_type',      :locals => {:f => f} %>
+      <%= render :partial => 'exports/export_name',      :locals => {:f => f} %>
+      <%= render :partial => 'exports/address_settings', :locals => {:f => f} %>
+      <%= render :partial => 'exports/export_options',   :locals => {:f => f} %>
+      <%= render :partial => 'exports/submit_button',    :locals => {:f => f} %>
+  <% end %>
+</div>

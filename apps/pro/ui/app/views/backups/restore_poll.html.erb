@@ -1,0 +1,16 @@
+<% include_jquery_ui %>
+<head>
+  <%= yield :jquery %>
+  <%= javascript_include_tag 'restore' %>
+  <% if @backup.present? %>
+    <meta name="msp:backup_present" content="true" />
+    <meta name="msp:backup_name" content="<%= @backup.name %>" />
+  <% end %>
+</head>
+<% title 'Metasploit restore status' %>
+
+<div id="restart_status">
+  <%= render :partial => 'status' %>
+</div>
+<div id="error" style="display:none">
+</div>

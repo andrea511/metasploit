@@ -1,0 +1,27 @@
+<% title "Web Vulnerabilities" %>
+<% breadcrumb workspace_link, workspace_web_vulns_link %>
+
+<div id="web-vulns-main-region"></div>
+
+<% include_stylesheet('backbone/pro_carpenter') %>
+<% include_stylesheet('shared/backbone/tabs') %>
+<% include_stylesheet 'hosts' -%>
+
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<%= nonced_javascript_tag do %>
+  jQuery(document).bind('requirejs-ready', function(){
+    jQuery(document).ready(function() {
+      var dependencies = [
+        'apps/web_vulns/web_vulns_app'
+      ];
+
+      initProRequire(dependencies, function() {
+
+        Pro.start({
+          environment: "<%= Rails.env %>"
+        });
+      });
+    });
+  });
+<% end %>

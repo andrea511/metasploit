@@ -1,0 +1,90 @@
+@import 'shared/tags';
+
+@mixin arrow-top($border-color) {
+  &:after {
+    $width: 14px;
+    position: absolute;
+    z-index: 2;
+    border-style: solid;
+    border-width: 0 $width $width $width;
+    border-color: transparent transparent $border-color transparent;
+    content: '';
+    top: -14px;
+    right: 73px;
+    margin-left: -$width/2;
+  }
+  &:before {
+    $width: 12px;
+    position: absolute;
+    z-index: 3;
+    border-style: solid;
+    border-width: 0 $width $width $width;
+    border-color: transparent transparent #fff transparent;
+    content: '';
+    top: -12px;
+    right: 75px;
+    margin-left: -$width/2;
+  }
+}
+
+.tag-hover-region{
+  position:relative;
+
+  .nub-spacer{
+    z-index: 10;
+    position: absolute;
+    height:18px;
+    background:red;
+    width:100%;
+    left:0px;
+    top:-31px;
+    opacity: 0;
+  }
+
+
+  >div{
+    width:164px;
+    left: -59px;
+    display:none;
+    position: absolute;
+    border: 1px solid grey;
+    padding: 4px;
+    background: #ffffff;
+  }
+
+  .tags{
+    z-index:10;
+
+    margin-top:1px;
+    text-align: center;
+    height: inherit;
+    @include arrow-top(grey);
+    top:10px;
+    &>div{
+      padding-right:0px;
+    }
+
+    //So we can remove whitespace between two inline elements
+    .no-whitespace{
+      font-size: 0;
+    }
+
+    .tag, .tag-close{
+      margin-bottom: 4px;
+      font-size: 11px;
+    }
+
+  }
+
+
+  span.name:hover, span.name{
+    white-space: nowrap;
+    max-width:100px !important;
+  }
+
+  .row.add-tags{
+    text-align: center;
+    margin-top:4px;
+  }
+
+}

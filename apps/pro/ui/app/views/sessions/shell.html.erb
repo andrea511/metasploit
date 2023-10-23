@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="msp:session_id" content="<%=h (@session ? @session.id : 'console') %>" />
+  <meta name="msp:session_type" content="<%=h (@session ? @session.stype : 'console') %>" />
+  <meta name="msp:console_id" content="<%= (@console.nil? ? '': @console) %>" />
+
+  <%= csrf_meta_tags %>
+
+  <title>Metasploit Shell Session</title>
+  <%= javascript_include_tag 'vendor/jquery-2.1.1' %>
+  <%= javascript_include_tag 'prototype' %>
+  <%= javascript_include_tag 'effects' %>
+  <%= stylesheet_link_tag 'console' %>
+</head>
+<body class='<%= @body_class_name %>'>
+
+	<div id="console_header">
+
+		<div id="console_header_inner">
+			<%=h @console_title %>
+			<span id="console_spinner">* please wait *</span>
+		</div>
+
+	</div>
+
+	<div id="console_command_bar">
+		<div id="console_command_bar_inner">
+			<span id="console_prompt">
+				<%=h @prompt %>
+			</span>
+
+			<input id="console_input"
+				autocomplete="off"
+				spellcheck="off"
+				wrap="off"
+			></input>
+
+		</div>
+
+	</div>
+
+	<div id="console_window"><div id="console_output"></div></div>
+
+  <%= javascript_include_tag 'console' %>
+</body>
+</html>
+

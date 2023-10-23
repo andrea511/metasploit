@@ -1,0 +1,33 @@
+#!/bin/sh
+
+POSTGRESDIR="@@BITROCK_POSTGRESQL_ROOTDIR@@"
+
+true > "$1"
+
+if [ -r "$POSTGRESDIR/../scripts/setenv.sh" ]; then
+    . "$POSTGRESDIR/../scripts/setenv.sh"
+fi
+
+# Same as the main env, but without bundler
+echo PATH="$PATH" >> "$1"
+echo LD_LIBRARY_PATH="$LD_LIBRARY_PATH" >> "$1"
+echo HOME="$HOME" >> "$1"
+echo SSL_CERT_FILE="$SSL_CERT_FILE" >> "$1"
+echo GEM_HOME="$GEM_HOME" >> "$1"
+echo RUBY_HOME="$RUBY_HOME" >> "$1"
+echo RUBYLIB="$RUBYLIB" >> "$1"
+echo TERMINFO="$TERMINFO" >> "$1"
+echo NMAPDIR="$NMAPDIR" >> "$1"
+echo RAILS_ENV="$RAILS_ENV" >> "$1"
+echo MSP_ENV_ACTIVE="$MSP_ENV_ACTIVE" >> "$1"
+
+if [ -r "$POSTGRESDIR/bin/setenv.sh" ]; then
+    . "$POSTGRESDIR/bin/setenv.sh"
+fi
+
+echo LD_LIBRARY_PATH="$LD_LIBRARY_PATH" >> "$1"
+echo LC_MESSAGES="$LC_MESSAGES" >> "$1"
+echo PGHOST="$PGHOST" >> "$1"
+echo PGPORT="$PGPORT" >> "$1"
+echo PGUSER="$PGUSER" >> "$1"
+echo PGDATA="$PGDATA" >> "$1"

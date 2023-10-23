@@ -1,0 +1,24 @@
+<%#
+  Rendering this partial requires the following locals:
+  @param [Mdm::Task] workspace the QuickWebScan Task object
+  @param [Boolean] run_now optionally includes a <script> tag that instantiates the view
+  Once you include this partial, you can instantiate a WebScanStatsView
+  like so: new WebScanStatsView(el: $('#container'), workspaceId:1, taskId:2).render()
+#%>
+
+<% run_now ||= false %>
+
+<!-- include our underscore templates -->
+<script id="stats-circles" type="text/x-tmpl">
+  <%=  render :partial => "shared/stats_circles" %>
+</script>
+
+<%= stylesheet_link_tag "stats_circles" %>
+<%= javascript_include_tag "web_scans/index" %>
+
+<% if run_now %>
+  <div id="stats-container"> </div>
+<% end %>
+<!-- pass the task id down -->
+<meta name="msp:workspace_id" content="<%= task.workspace.id %>" />
+<meta name="task_id" content="<%= task.id %>">

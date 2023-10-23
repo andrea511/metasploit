@@ -1,0 +1,32 @@
+define [
+  'base_model'
+  'base_collection'
+], ->
+  @Pro.module "Entities.Sonar", (Sonar, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+    # Corresponds to Nexpose::Data::ImportRun
+    class Sonar.ImportRun extends App.Entities.Model
+      #
+      # Url for creating a Sonar Import Run.
+      # Prototype tweaks the content-types so we need to be explicit with .json
+      #
+      # @return [String] url for updating/creating a cred
+      url: ->
+        Routes.workspace_sonar_imports_path(WORKSPACE_ID)+'.json'
+
+
+    #
+    # API
+    #
+    API =
+      getImportRun: (opts = {}) ->
+        new Sonar.ImportRun(opts)
+
+    #
+    # REQUEST HANDLERS
+    #
+    App.reqres.setHandler "sonar:importRun:entity", (opts={}) ->
+      API.getImportRun(opts)

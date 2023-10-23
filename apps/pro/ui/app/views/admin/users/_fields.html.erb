@@ -1,0 +1,99 @@
+<div class="one_col_no_sidebar">
+	<%= required_label %>
+	<%= render "shared/error_messages", :target => @user %>
+	<% tabindex = 9 %>
+	
+	<%= f.inputs "User Settings" do -%>
+
+		<% if @user.new_record? %>
+      <%= f.input :username, :input_html => {:autocomplete => :off, :tabindex => 1}, :required => true %>
+		<% end -%>
+
+		<%= f.input :fullname, :label => "Full name", :input_html => {:tabindex => 2} %>
+
+		<% if @user.new_record? -%>
+      <%= f.input :password, :as => :password, :input_html => { :autocomplete => :off, :tabindex => 3 }, :required => true %>
+      <%= f.input :password_confirmation, :as => :password,  :input_html => { :autocomplete => :off, :tabindex => 4 }, :required => true %>
+      <%= f.input :time_zone, :as => :hidden %>
+		<% else -%>
+      <%= f.input :email, :input_html => {:tabindex => 5}, :required => false  %>
+      <%= f.input :company, :input_html => {:tabindex => 6}, :label => "Organization" %>
+      <%= f.input :time_zone, :input_html => {:tabindex => 7}, :as => :time_zone %>
+		<% end %>
+
+		<%= f.help_link :password do -%>
+			<h3>Password</h3>
+			<p>
+				Passwords must:
+
+				<ul>
+					<li>Contain letters, numbers, and at least one special character.</li>
+					<li>Not contain the username.</li>
+					<li>Not be common.</li>
+					<li>Not be a predictable sequence of characters.</li>
+				</ul>
+			</p>
+		<% end -%>
+	<% end -%>
+
+	<%= f.inputs "Roles/Access" do -%>
+    <%= f.input :admin, :as => :boolean, :label => "Administrator", :input_html => { :disabled => (@user == current_user), :tabindex => 8 } %>
+
+		<%  f.help_link :admin do -%>
+			<h3>Administrator role</h3>
+			<p>
+				Administrators have access to all projects, can manage users, and can apply software updates.
+			</p>
+		<% end -%>
+
+		<div id="workspaces" class="advanced">
+
+			<dl>
+			<dt><label style="padding-right: 20px; text-align: right;">Project access</label></dt>
+			</dl>
+
+			<table class="list" style="width: 60%; margin-bottom: 10px; margin-left: 20px;">
+				<thead>
+					<tr>
+						<th>
+							<%= check_box_tag "all_workspaces" %>
+						</th>
+						<th>
+							Project Name
+						</th>
+						<th>
+							Owner
+						</th>
+					</tr>
+				</thead>
+        <tbody id="workspace_checkboxes">
+					<% for workspace in Mdm::Workspace.all %>
+						<tr class="<%=h row_cycle %>">
+							<td>
+								<%= 
+									check_box_tag "user[workspace_ids][]", workspace.id, workspace.usable_by?(@user), { :disabled => workspace.owner == @user, :tabindex => tabindex, :is_owner => workspace.owner == @user }
+								%>
+								<% tabindex += 1 %>
+							</td>
+							<td>
+								<%=h workspace.name %>
+							</td>
+							<td>
+								<%=h workspace.owner.title if workspace.owner %>
+							</td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+
+		</div>
+	<% end -%>
+
+	<%= advanced_options_button %>
+
+	<%= f.actions do %>
+		<%= f.commit_button :label => "Save Changes", :button_html => { :class => "save", :tabindex => tabindex } %>
+	<% end %>
+
+</div>
+

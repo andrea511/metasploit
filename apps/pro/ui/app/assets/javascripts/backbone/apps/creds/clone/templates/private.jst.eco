@@ -1,0 +1,3 @@
+<form>
+  <textarea id="data" type="text" name="private[data]"></textarea>
+</form>

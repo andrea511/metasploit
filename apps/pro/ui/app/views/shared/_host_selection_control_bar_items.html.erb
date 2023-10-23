@@ -1,0 +1,14 @@
+<span class="button any"><%= link_to "Tag #{'Hosts' unless controller_name == 'hosts'}", '', :class => 'tag-edit' %></span>
+<div class="separator"></div>
+<span class="button"><%= submit_checkboxes_to "Scan", new_scan_path(@workspace), { :class => "scan" } %></span>
+<span class="button"><%= link_to "Import...", new_workspace_import_path(@workspace, :anchor => "file"), { :class => "import" } %></span>
+<span class="button<%= " disabled" if Mdm::NexposeConsole.all.empty? %>"><%= link_to "Nexpose Scan", new_workspace_import_path(@workspace, :anchor => "nexpose"), { :class => "nexpose" } %></span>
+<% if License.get.supports_webapp_exploitation? %>
+	<span class="button"><%= submit_checkboxes_to "WebScan", new_webscan_path(@workspace), { :class => "webscan" } %></span>
+<% end %>
+<div class="separator"></div>
+<span class="button"><%= submit_checkboxes_to "Modules", modules_path(@workspace), { :class => "exploit" } %></span>
+<div class="separator"></div>
+<span class="button"><%= submit_checkboxes_to "Bruteforce", workspace_brute_force_guess_index_path(@workspace) + '#quick', { :class => "brute" } %></span>
+<span class="button"><%= submit_checkboxes_to "Exploit", new_exploit_path(@workspace), { :class => "exploit" } %></span>
+<div class="separator"></div>

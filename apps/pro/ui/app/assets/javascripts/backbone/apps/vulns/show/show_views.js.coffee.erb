@@ -1,0 +1,583 @@
+define [
+  'lib/utilities/dom/has_overflowed_height'
+  'base_layout'
+  'base_view'
+  'base_itemview'
+  'apps/vulns/show/templates/show_layout'
+  'apps/vulns/show/templates/header'
+  'apps/vulns/show/templates/exploit_button'
+  'apps/vulns/show/templates/overview_tab'
+  'apps/vulns/show/templates/description'
+  'apps/vulns/show/templates/related_modules_tab'
+  'apps/vulns/show/templates/related_hosts_tab'
+  'lib/components/filter/filter_controller'
+  'apps/vulns/show/templates/host'
+  'apps/vulns/show/templates/platform'
+  'apps/vulns/show/templates/push_validation_confirmation_view'
+  'apps/vulns/show/templates/push_exception_confirmation_view'
+  'apps/vulns/show/templates/push_buttons'
+  'apps/vulns/show/templates/comment_view'
+  'apps/vulns/show/components/vuln_attempt_status_pill/vuln_attempt_status_pill_controller'
+  'entities/vuln_history'
+  'entities/related_modules'
+  'entities/related_hosts'
+  'entities/vuln_history'
+  'entities/related_modules'
+  'entities/nexpose/validation'
+  'entities/nexpose/exception'
+  'entities/note'
+  'lib/components/table/table_controller'
+  'lib/components/pill/pill_controller'
+  'lib/components/stars/stars_controller'
+  'lib/components/os/os_controller'
+  'lib/components/tabs/tabs_controller'
+  'lib/shared/cve_cell/cve_cell_controller'
+  'lib/components/tags/index/index_controller'
+  'lib/concerns/pollable'
+  'entities/task'
+], ->
+
+  @Pro.module "VulnsApp.Show", (Show, App) ->
+
+    class Show.Layout extends App.Views.Layout
+      template: @::templatePath('vulns/show/show_layout')
+
+      className: 'vuln-show-container'
+
+      regions:
+        headerRegion: '.header-region'
+        contentRegion: '.tab-content-region'
+        pushButtonsRegion: '.push-buttons-region'
+
+    class Show.Header extends App.Views.ItemView
+      template: @::templatePath('vulns/show/header')
+
+      ui:
+        refs: '.refs'
+        more: 'a.more'
+        vulnEdit: '.vuln-name a.pencil'
+        refEdit: '.vuln-refs a.pencil'
+
+      triggers:
+        'click @ui.vulnEdit' : 'vuln:edit'
+        'click @ui.refEdit'  : 'ref:edit'
+        'click @ui.more'  : 'ref:more'
+
+      modelEvents:
+        'change': 'render'
+
+      onRender: =>
+        _.defer =>
+          if @ui.refs.hasOverflowedHeight()
+            @ui.more.show()
+
+    class Show.PushButtons extends App.Views.ItemView
+      template: @::templatePath('vulns/show/push_buttons')
+
+      ui:
+        nexposeBtn: 'a.nexpose'
+        notExploitable: '.not-exploitable'
+        notExploitableCheckBox: '[name="not_exploitable"]'
+
+      triggers:
+        'click @ui.nexposeBtn' : 'nexpose:push'
+
+      events:
+        'change @ui.notExploitable' : '_toggleExploitable'
+
+      modelEvents:
+        'change:markable': 'render'
+        'change:not_exploitable': 'render'
+        'change:not_pushable_reason': 'render'
+
+
+      _toggleExploitable: ->
+        #Manual trigger so we can pass the value of the checkbox
+        @trigger('vuln:not:exploitable',@ui.notExploitableCheckBox.prop('checked'))
+
+
+    class Show.Description extends App.Views.ItemView
+      template: @::templatePath('vulns/show/description')
+
+      defaults: ->
+        runModuleText: false
+
+      initialize: (opts) ->
+        config = _.defaults opts, @_getDefaults()
+        {runModuleText, vuln} = config
+
+        @model.set('runModuleText',runModuleText)
+        @model.set('vuln',vuln)
+
+
+    class Show.RelatedModulesTab extends App.Views.Layout
+      template: @::templatePath('vulns/show/related_modules_tab')
+
+      initialize: (opts) ->
+        {@model} = opts
+
+      regions:
+        relatedModulesRegion: '.related-modules-region'
+
+      onShow: ->
+        @renderRelatedModulesTable()
+
+      renderRelatedModulesTable: ->
+        collection = App.request 'relatedModules:entities'
+          workspace_id: WORKSPACE_ID
+          vuln_id: VULN_ID
+
+        columns = [
+          {
+            label: 'Module Type'
+            attribute: 'mtype'
+            render: () ->
+              _.escape(_.str.capitalize(@model.get('mtype')))
+          },
+          {
+            label: 'Platform'
+            attribute: 'module_icons'
+            view: Pro.Components.Os.Controller
+            sortable: false
+          },
+          {
+            label: 'Module'
+            attribute: 'description'
+            view: Show.Description
+            viewOpts: {
+              vuln: @model
+            }
+          },
+          {
+            label: 'Ranking'
+            attribute: 'rating'
+            sortAttribute: 'rank'
+            view: Pro.Components.Stars.Controller
+          },
+          {
+            label: 'References'
+            attribute: 'references'
+            view: Pro.Shared.CveCell.Controller
+            sortAttribute: 'ref_count'
+          },
+          {
+            label: 'Action'
+            sortable:false
+            attribute: 'action'
+            view: Show.ExploitButton
+            viewOpts: {
+              vuln: @model
+            }
+          }
+        ]
+
+
+        App.request "table:component", {
+          region: @relatedModulesRegion
+          static: false
+          collection: collection
+          perPage: 20
+          columns: columns
+        }
+
+
+    class Show.ExploitButton extends App.Views.ItemView
+      template: @::templatePath('vulns/show/exploit_button')
+
+      initialize: (opts) ->
+        {@vuln} = opts
+
+      events:
+        'click input' : 'redirectToModule'
+
+      redirectToModule: ->
+        target_host =  @vuln.get('host').address
+        url = "#{Routes.new_module_run_path(WORKSPACE_ID)}/#{@model.get('module')}?target_host=#{target_host}"
+        window.location.href = url
+
+    class Show.CommentView extends App.Views.Layout
+      template: @::templatePath('vulns/show/comment_view')
+
+      className: 'comment-view'
+
+      ui:
+        comment: 'textarea'
+        error: '.error'
+
+      triggers:
+        'mouseout @ui.comment': 'center'
+
+      getComment: ->
+        @ui.comment.val()
+
+      # Interface method required by {Components.Modal}
+      #
+      # @return [Promise] jQuery promise
+      onFormSubmit: () ->
+        # jQuery Deferred Object that closes modal when resolved.
+        defer = $.Deferred()
+        defer.promise()
+
+        commentModel = App.request 'new:note:entity', {
+          data:
+            comment:@ui.comment.val()
+          workspace_id: WORKSPACE_ID
+          type:'Mdm::Vuln'
+          type_id: VULN_ID
+        }
+        commentModel.save({},
+          success: (model) =>
+            defer.resolve()
+          error: (model,response) =>
+            @ui.error.html(response.responseJSON.error.data[0])
+            @ui.error.show()
+        )
+        defer
+
+
+    class Show.OverviewTab extends App.Views.Layout
+      template: @::templatePath('vulns/show/overview_tab')
+
+      className: 'foundation overview-tab'
+
+      regions:
+        overviewRegion: '.overview-region'
+
+      modelEvents:
+        'change:new_vuln_attempt_status': 'refreshTable'
+        'change:restore_vuln_attempt_status': 'refreshTable'
+
+      initialize: (opts={}) ->
+        @model.set('buttomMoreAssetTag', '<%= image_tag("icons/buttom_more.svg", class: "btn more-text") %>')
+
+      refreshTable: (model,value,options) ->
+        #Only refresh table after ajax request completes and flag unset
+        unless value?
+          @table.refresh()
+
+      ui:
+        commentBtn: 'img.btn.more-text'
+        commentInput: 'textarea#comments'
+        error: '.error'
+
+      events:
+        'click @ui.commentBtn' : '_commentModal'
+        'focusout @ui.commentInput' : '_saveComment'
+
+      _commentModal: () ->
+        data = Backbone.Syphon.serialize(@)
+        _.extend(data,{workspace_id: WORKSPACE_ID,type:'Mdm::Vuln', type_id: VULN_ID})
+
+        model = App.request 'new:note:entity', data
+        commentView = new Show.CommentView(model: model)
+
+        App.execute 'showModal', commentView,
+          modal:
+            title: 'Comment'
+            description: ''
+            width: 300
+          buttons: [
+            { name: 'Cancel', class: 'close' }
+            { name: 'OK', class: 'btn primary' }
+          ]
+          doneCallback: () =>
+            @model.set('notes',[{comment:commentView.getComment()}])
+            @_setComment(commentView.getComment())
+
+      _setComment: (comment) ->
+        @ui.commentInput.val(comment)
+
+      _saveComment: () ->
+        commentModel = App.request 'new:note:entity', {
+          data:
+            comment:@ui.commentInput.val()
+          workspace_id: WORKSPACE_ID
+          type:'Mdm::Vuln'
+          type_id: VULN_ID
+        }
+        commentModel.save({},
+          success:(model)=>
+            @model.set('notes',[{comment:model.get('data').comment}])
+            @ui.error.html()
+            @ui.error.hide()
+          error: (model,response) =>
+            @ui.error.html(response.responseJSON.error.data[0])
+            @ui.error.show()
+        )
+
+
+      onShow: ->
+        @renderOverviewTable()
+
+
+      renderOverviewTable: ->
+        collection = App.request 'vulnHistory:entities'
+          workspace_id: WORKSPACE_ID
+          vuln_id: VULN_ID
+
+        columns = [
+          {
+            label: 'Action'
+            attribute: 'action'
+            sortable: false
+          },
+          {
+            label: 'Description'
+            attribute: 'description'
+            view: Show.Description
+            viewOpts:{
+              runModuleText: true
+              vuln: @model
+            }
+          },
+          {
+            label: 'Status'
+            attribute: 'status'
+            sortable: false
+            view: Pro.Components.VulnAttemptStatusPill.Controller
+          },
+          {
+            label: 'User'
+            attribute: 'username'
+          },
+          {
+            label: 'Time',
+            attribute: 'attempted_at'
+            sortAttribute: 'vuln_attempts.attempted_at'
+          }
+        ]
+
+        @table = App.request "table:component", {
+          region: @overviewRegion
+          static: false
+          collection: collection
+          perPage: 20
+          columns: columns
+          filterable: false
+        }
+
+    class Show.Platform extends App.Views.ItemView
+      template: @::templatePath('vulns/show/platform')
+
+      className: 'icon-logo'
+
+    class Show.Host extends App.Views.ItemView
+      template: @::templatePath('vulns/show/host')
+
+    class Show.RelatedHostsTab extends App.Views.Layout
+      template: @::templatePath('vulns/show/related_hosts_tab')
+
+      className: 'foundation related-hosts-tab'
+
+      regions:
+        relatedHostsRegion: '.related-hosts-region'
+
+      onShow: ->
+        @renderRelatedHostsTable()
+
+      renderRelatedHostsTable: ->
+        collection = App.request 'relatedHosts:entities'
+          workspace_id: WORKSPACE_ID
+          vuln_id: VULN_ID
+
+        columns =[
+          {
+            label: 'Host IP'
+            attribute: 'address'
+            view: Show.Host
+          },
+          {
+            label: 'Host Name'
+            attribute: 'name'
+          },
+          {
+            label: 'Platform'
+            attribute: 'os_name'
+            view: Show.Platform
+          },
+          {
+            label: 'Tags'
+            attribute: 'tags'
+            view: App.request 'tags:index:component'
+          },
+          {
+            label: 'Vuln Status'
+            attribute: 'vuln_attempt_status'
+            sortable:false
+            view: Pro.Components.VulnAttemptStatusPill.Controller
+          },
+          {
+            label: "Host Status"
+            attribute: 'status'
+            view: Pro.Components.Pill.Controller
+          }
+        ]
+
+        @table = App.request 'table:component',
+          region: @relatedHostsRegion
+          static: false
+          collection: collection
+          columns: columns
+          filterOpts:
+            filterValuesEndpoint: Routes.related_hosts_filter_values_workspace_vuln_path WORKSPACE_ID, VULN_ID
+            helpEndpoint: Routes.search_operators_workspace_vuln_path WORKSPACE_ID, VULN_ID
+            keys: [{label: 'host.address', value: 'address'}
+                   {label: 'host.name',    value: 'name'}
+                   {label: 'host.os_name', value: 'os_name'}]
+
+    class Show.PushExceptionConfirmationView extends App.Views.ItemView
+
+      @include "Pollable"
+
+      template: @::templatePath('vulns/show/push_exception_confirmation_view')
+
+      className: 'push-exception-confirmation-view'
+
+      ui:
+        processing: '.processing'
+        errorState: '.error-state'
+        message: '.msg'
+        datetime: '.datetime'
+        form: 'form'
+
+      # Sets the poll interval used by the Pollable concern
+      pollInterval: 3000
+
+      initialize: () ->
+        #Vuln model passed into view
+        comment = @model.get('notes')?[0]?.comment
+
+        #So it's referenced in the view template
+        @model = App.request 'new:nexpose:exception:entity',{
+          vuln_id: VULN_ID
+          workspace_id: WORKSPACE_ID
+          comments: comment
+        }
+
+      # Implementation is required by the Pollable concern
+      poll: =>
+        if @task.isCompleted()
+          #Now that task is complete lets check the exception status
+          @model.fetch(
+            success: (model,response) =>
+              if response[0].sent_to_nexpose
+                @formDefer.resolve()
+              else
+                @_setErrorState(response[0].nexpose_response)
+          )
+          # stop in 5 seconds, to ensure any last-minute updates are synced.
+          _.defer(@stopPolling, @pollInterval)
+        @task.fetch()
+
+      _setErrorState: (msg) ->
+        @ui.form.removeClass('disabled')
+        @ui.processing.hide()
+        @ui.errorState.html(msg)
+        @ui.errorState.show()
+        #Enable Yes button.
+        @trigger("btn:enable:modal", "Yes")
+
+      _hideErrorState: ->
+        @ui.errorState.html()
+        @ui.errorState.hide()
+
+
+      onShow: ->
+        @ui.datetime.datepicker({minDate:1})
+
+      onBeforeDestroy: ->
+        @ui.datetime.datepicker('destroy')
+
+      onFormSubmit: ->
+        # jQuery Deffered Object that closes modal when resolved.
+        @formDefer = $.Deferred()
+        @formDefer.promise()
+
+        @_hideErrorState()
+
+        #Disable Yes button.
+        @trigger("btn:disable:modal", "Yes")
+        @ui.form.addClass('disabled')
+
+        formData = Backbone.Syphon.serialize(this)
+
+        @model.save(formData,
+          success: (model,response) =>
+            @ui.processing.show()
+            @task = new App.Entities.Task(id: response.task_id, workspace_id: WORKSPACE_ID)
+            @startPolling()
+          error: (model,response) =>
+            @_setErrorState()
+
+        )
+
+        @formDefer
+
+    class Show.PushValidationConfirmationView extends App.Views.ItemView
+
+      @include "Pollable"
+
+      template: @::templatePath('vulns/show/push_validation_confirmation_view')
+
+      className: 'push-validation-confirmation-view'
+
+      ui:
+        processing: '.processing'
+        errorState: '.error-state'
+        message: '.msg'
+
+
+      # Sets the poll interval used by the Pollable concern
+      pollInterval: 3000
+
+      initialize: ->
+        @model = App.request 'new:nexpose:validation:entity',{
+          vuln_id: VULN_ID
+          workspace_id: WORKSPACE_ID
+        }
+
+      # Implementation is required by the Pollable concern
+      poll: =>
+        if @task.isCompleted()
+          #Now that task is complete lets check the validation status
+          @model.fetch(
+            success: (model,response) =>
+              if response[0].sent_to_nexpose
+                @formDefer.resolve()
+              else
+                @_setErrorState(response[0].nexpose_response)
+          )
+          # stop in 5 seconds, to ensure any last-minute updates are synced.
+          _.defer(@stopPolling, @pollInterval)
+        @task.fetch()
+
+      onFormSubmit: ->
+        # jQuery Deffered Object that closes modal when resolved.
+        @formDefer = $.Deferred()
+        @formDefer.promise()
+
+        #Enable Yes button.
+        @trigger("btn:disable:modal", "Yes")
+
+        @model.save({},
+          success: (model,response) =>
+            @ui.processing.show()
+            @_hideErrorState()
+            @task = new App.Entities.Task(id: response.task_id, workspace_id: WORKSPACE_ID)
+            @startPolling()
+          error: (model,response) =>
+            @_setErrorState()
+        )
+
+        @formDefer
+
+      _setErrorState: (msg) ->
+        @ui.processing.hide()
+        @ui.errorState.html(msg)
+        @ui.errorState.show()
+        #Enable Yes button.
+        @trigger("btn:enable:modal", "Yes")
+
+      _hideErrorState: ->
+        @ui.errorState.html()
+        @ui.errorState.hide()

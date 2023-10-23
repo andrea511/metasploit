@@ -1,0 +1,25 @@
+<div class='group-row'>
+
+  <div class='title'>
+    <span class='username'>
+      <%= @['public.username'] %>
+    </span>
+    <span class='private'>
+      <%= @['private.data'] %>
+    </span>
+  </div>
+  <div class='subtitle'>
+    <% if @['realm.key']?.length > 0: %>
+      <%= @['realm.key'] %> (<%= @['realm.value'] %>)
+    <% else: %>
+      No Realm
+    <% end %>
+  </div>
+
+  <a class='right delete' title='Remove this credential from the selection.' href='javascript:void(0)'>
+    <span>
+      &times;
+    </span>
+  </a>
+
+</div>

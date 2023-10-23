@@ -1,0 +1,190 @@
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.sexy-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-weight: 300;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/variables.scss */
+.small-caps-font {
+  font-family: "roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Arial Narrow", Helvetica, san-serif;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-size: 11px;
+  position: relative;
+}
+
+/* line 14, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags ul.token-input-list-metasploit, body ul.token-input-list-metasploit {
+  overflow: hidden;
+  height: auto !important;
+  height: 1%;
+  width: 100%;
+  border: 1px solid #ccc;
+  cursor: text;
+  font-size: 12px;
+  min-height: 1px;
+  margin: 0 auto;
+  padding: 0;
+  background-color: #fff;
+  list-style-type: none;
+  clear: left;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-border-radius: 2px;
+  /* Gecko */
+  -webkit-border-radius: 2px;
+  /* Webkit */
+  -khtml-border-radius: 2px;
+  /* Konqueror */
+  border-radius: 2px;
+  /* CSS3 */
+}
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags ul.token-input-list-metasploit li input, body ul.token-input-list-metasploit li input {
+  border: 0;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5px;
+  font-size: 12px;
+  -webkit-appearance: caret;
+}
+/* line 41, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit, body li.token-input-token-metasploit {
+  margin: 3px;
+  background-color: #d9d9d9;
+  cursor: default;
+  font-size: 11px;
+  float: left;
+  white-space: nowrap;
+  position: relative;
+  margin-left: 10px;
+  padding-left: 8px;
+}
+/* line 51, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit:before, body li.token-input-token-metasploit:before {
+  width: 0;
+  height: 0;
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 0;
+  bottom: 1px;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-right: 9px solid #d9d9d9;
+}
+/* line 63, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit:after, body li.token-input-token-metasploit:after {
+  position: absolute;
+  content: '\2022';
+  top: 0;
+  left: -3px;
+  bottom: 0;
+  color: #fff;
+}
+/* line 73, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit, body div.token-input-dropdown-metasploit {
+  position: absolute;
+  background-color: #fff;
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: 0;
+  margin: 0 auto;
+  cursor: default;
+  font-size: 11px;
+  z-index: 1005;
+}
+/* line 87, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit p, #add_tags li.token-input-token-metasploit span, body li.token-input-token-metasploit p, body li.token-input-token-metasploit span {
+  display: inline-block;
+  vertical-align: top;
+}
+/* line 92, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit p, body li.token-input-token-metasploit p {
+  color: #444;
+  padding: 0 5px 0 1px;
+  margin: 0;
+  line-height: 18px;
+  font-size: 11px;
+}
+/* line 100, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit span, body li.token-input-token-metasploit span {
+  font-size: 16px;
+  color: #b3b3b3;
+  border-left: 1px solid #cccccc;
+  cursor: pointer;
+  line-height: 18px;
+  padding: 0 5px;
+}
+/* line 107, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-token-metasploit span:hover, body li.token-input-token-metasploit span:hover {
+  text-decoration: none;
+  background-color: #d9d9d9;
+  background-image: -moz-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e1e1e1), color-stop(1, #d9d9d9));
+  background-image: -webkit-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -o-linear-gradient(#e1e1e1, #d9d9d9);
+  background-image: -ms-linear-gradient(top, #e1e1e1, #d9d9d9);
+  background-image: linear-gradient(top, #e1e1e1, #d9d9d9);
+}
+/* line 113, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-selected-token-metasploit, body li.token-input-selected-token-metasploit {
+  background-color: #ccc;
+  border-color: #ccc;
+  color: #000;
+}
+/* line 117, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-selected-token-metasploit:before, body li.token-input-selected-token-metasploit:before {
+  border-right-color: #ccc;
+}
+/* line 120, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-selected-token-metasploit span.token-input-delete-token-metasploit, body li.token-input-selected-token-metasploit span.token-input-delete-token-metasploit {
+  border-left-color: silver;
+}
+/* line 125, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags li.token-input-input-token-metasploit, body li.token-input-input-token-metasploit {
+  float: left;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+/* line 132, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit p, body div.token-input-dropdown-metasploit p {
+  margin: 0;
+  padding: 5px;
+  font-weight: bold;
+  color: #777;
+}
+/* line 139, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul, body div.token-input-dropdown-metasploit ul {
+  margin: 0;
+  padding: 0;
+}
+/* line 144, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li, body div.token-input-dropdown-metasploit ul li {
+  background-color: #fff;
+  padding: 3px;
+  margin: 0;
+  list-style-type: none;
+  font-size: 11px;
+}
+/* line 152, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li.token-input-dropdown-item-metasploit, body div.token-input-dropdown-metasploit ul li.token-input-dropdown-item-metasploit {
+  background-color: #fff;
+}
+/* line 156, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li.token-input-dropdown-item2-metasploit, body div.token-input-dropdown-metasploit ul li.token-input-dropdown-item2-metasploit {
+  background-color: #fff;
+}
+/* line 160, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li em, body div.token-input-dropdown-metasploit ul li em {
+  font-weight: bold;
+  font-style: normal;
+}
+/* line 165, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/token-input-metasploit.scss */
+#add_tags div.token-input-dropdown-metasploit ul li.token-input-selected-dropdown-item-metasploit, body div.token-input-dropdown-metasploit ul li.token-input-selected-dropdown-item-metasploit {
+  background-color: #ccc;
+  color: #000;
+}

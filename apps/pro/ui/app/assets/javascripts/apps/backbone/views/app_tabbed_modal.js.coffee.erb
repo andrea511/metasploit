@@ -1,0 +1,68 @@
+define ['jquery'], ($) ->
+  class AppTabbedModalView extends TabbedModalView
+    @WIDTH: 800
+
+    initialize: ->
+      super
+      @setButtons [
+        {name: 'Cancel', class: 'close'},
+        {name: 'Launch', class: 'btn primary'}
+      ]
+
+      @loadForm(@submitUrl())
+
+    events: _.extend({
+      'change input#tab_generate_report': 'toggleGenerateReport'
+    }, TabbedModalView.prototype.events)
+
+    formLoadedSuccessfully: (html) =>
+      super
+      $('form.formtastic', @el).removeClass('formtastic').addClass('metamodule')
+      enabled = !!$("[name*='report_enabled']", @$modal).attr('value')
+      $('input#tab_generate_report', @$modal).prop('checked', enabled)
+      _.defer =>
+        $secs = $('.report_formats>div, .report_sections>div, .report_options>div', @$modal)
+        $secs.addClass('active_report_option').show()
+
+    # fit MM screen to height of display
+    layout: =>
+      @$modal.width(@constructor.WIDTH || AppTabbedModalView.WIDTH)
+      @center()
+
+    handleErrors: (errorsHash, tabIdx) =>
+      @errors = @transformErrorData(errorsHash).errors
+      $oldPage = @content().find('div.page').eq(tabIdx)
+      $oldPage.find('p.inline-error,p.error-desc').remove()
+
+      #Clear errors if validating current tab and previous one not set (in task chains)
+      unless tabIdx
+        $page = $(@pageAt(@_tabIdx))
+        $('li.error',$page).removeClass("error")
+
+
+      _.each @errors, (modelErrors, modelName) =>
+        _.each modelErrors, (attrErrors, attrName) =>
+          $input = $("[name='#{modelName}[#{attrName}]']", @$modal)
+          $page = $input.parents('div.page').first()
+          if not tabIdx? or $page.index('.page') == tabIdx
+            @tabAt($page.index('.page')).find('.hasErrors').show()
+            $li = $input.parents('li').first().addClass('error')
+            # only add the first error message
+            $("<p>").addClass('inline-error').appendTo($li).text(attrErrors[0])
+      null
+
+
+    # checkbox on tab for report generation
+    toggleGenerateReport: (e) =>
+      return unless $(e.currentTarget).parents('li').first().hasClass('selected')
+      checked = $(e.currentTarget).is(':checked')
+      $('.generate_report h3.enabled>span', @$modal).removeClass('disabled enabled')
+      if checked
+        $('.generate_report h3.enabled>span', @$modal).text("enabled").addClass('enabled').removeClass('disabled')
+        # toggle input value for report_enabled (hidden)
+        $("[name*='report_enabled']", @$modal).attr('value', '1')
+      else
+        $('.generate_report h3.enabled>span', @$modal).text("disabled").addClass('disabled').removeClass('enabled')
+        # toggle input value for report_enabled (hidden)
+        $("[name*='report_enabled']", @$modal).removeAttr('value')
+

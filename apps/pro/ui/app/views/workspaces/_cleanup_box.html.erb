@@ -1,0 +1,9 @@
+<div class="step">
+	<h3>Cleanup</h3>
+	<div class="stepInfo begin" id="cleanup">
+		<%= render :partial => 'cleanup_results' %>
+	</div>
+	<div class="btns">
+		<span class="btn"><%= submit_checkboxes_to "Cleanup...", new_cleanup_path(@workspace), { :class => "cleanup" } %></span>
+	</div>
+</div>

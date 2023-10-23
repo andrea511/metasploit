@@ -1,0 +1,12 @@
+<div id="report_nav_bar">
+	<div class="control-bar-items">
+		<span class="button any"><%= link_to 'Delete', destroy_multiple_workspace_reports_path(@workspace, :format => :json), :data => { :confirm => 'Delete selected report(s)?' }, :id => 'user-delete-submit' %></span>
+		<div class="separator"></div>
+		<% if License.get.supports_custom_reporting? -%>
+			<span class="button"><%= link_to "Standard Report", new_workspace_report_path(@workspace), :class => :standard_report %></span>
+			<span class="button"><%= link_to "Custom Report", new_workspace_custom_report_path(@workspace), :class => :custom_report %></span>
+		<% else %>
+			<span class="button"><%= link_to "Standard Report", new_workspace_report_path(@workspace), :class => :standard_report %></span>
+		<% end -%>
+	</div>
+</div>

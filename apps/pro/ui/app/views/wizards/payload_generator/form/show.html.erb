@@ -1,0 +1,12 @@
+<meta name='steps' content="<%= @steps.map { |s| [s, wizard_path(s)] }.to_json %>" />
+<%= semantic_form_for @form, :as => :generated_payload, :url => wizard_path do |f| %>
+  <div class='page payload_options'>
+
+  </div>
+  <div class='page encoding'>
+
+  </div>
+  <div class='page output_options'>
+    
+  </div>
+<% end %>

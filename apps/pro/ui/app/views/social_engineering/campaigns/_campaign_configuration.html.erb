@@ -1,0 +1,13 @@
+<div class='campaign-configuration'>
+  <%= semantic_form_for [:workspace, @campaign], :html => {:onsubmit => 'return false'} do |f| %>
+    <%= f.inputs do %>
+      <%= f.input :name %>
+      <%= f.input :config_type, :as => 'radio', 
+                                :label => false,
+                                :required => true,
+                                :collection => SocialEngineering::Campaign::CAMPAIGN_CONFIG_TYPES_FORMATTED,
+                                :selected => 'ok' %>
+    <% end %>
+  <% end %>
+  <div class='row'></div>
+</div>

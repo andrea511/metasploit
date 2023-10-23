@@ -1,0 +1,24 @@
+<div class="add-cred">
+    <div class="cred-type">
+        <div class="manual">
+            <input id="manual" name="cred_type" value="manual" type="radio" checked="checked">
+            <label for="manual">Manual</label>
+        </div>
+        <div class="import">
+            <input id="import" name="cred_type" value="import" type="radio">
+            <label for="import">Import</label>
+        </div>
+    </div>
+
+    <div class="form-container cred"></div>
+
+    <div class="login-form-container"></div>
+
+
+    <div class="tag-container clear-floats">
+        <label for="token-input-">Tags</label>
+        <div class="tags"></div>
+    </div>
+
+    <div class="core-errors"></div>
+</div>

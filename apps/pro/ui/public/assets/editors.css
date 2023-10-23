@@ -1,0 +1,630 @@
+.CodeMirror {
+  line-height: 1em;
+  font-family: monospace;
+
+  /* Necessary so the scrollbar can be absolutely positioned within the wrapper on Lion. */
+  position: relative;
+  /* This prevents unwanted scrollbars from showing up on the body and wrapper in IE. */
+  overflow: hidden;
+}
+
+.CodeMirror-scroll {
+  overflow: auto;
+  height: 300px;
+  /* This is needed to prevent an IE[67] bug where the scrolled content
+     is visible outside of the scrolling box. */
+  position: relative;
+  outline: none;
+}
+
+/* Vertical scrollbar */
+.CodeMirror-scrollbar {
+  position: absolute;
+  right: 0; top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  z-index: 5;
+}
+.CodeMirror-scrollbar-inner {
+  /* This needs to have a nonzero width in order for the scrollbar to appear
+     in Firefox and IE9. */
+  width: 1px;
+}
+.CodeMirror-scrollbar.cm-sb-overlap {
+  /* Ensure that the scrollbar appears in Lion, and that it overlaps the content
+     rather than sitting to the right of it. */
+  position: absolute;
+  z-index: 1;
+  float: none;
+  right: 0;
+  min-width: 12px;
+}
+.CodeMirror-scrollbar.cm-sb-nonoverlap {
+  min-width: 12px;
+}
+.CodeMirror-scrollbar.cm-sb-ie7 {
+  min-width: 18px;
+}
+
+.CodeMirror-gutter {
+  position: absolute; left: 0; top: 0;
+  z-index: 10;
+  background-color: #f7f7f7;
+  border-right: 1px solid #eee;
+  min-width: 2em;
+  height: 100%;
+}
+.CodeMirror-gutter-text {
+  color: #aaa;
+  text-align: right;
+  padding: .4em .2em .4em .4em;
+  white-space: pre !important;
+  cursor: default;
+}
+.CodeMirror-lines {
+  padding: .4em;
+  white-space: pre;
+  cursor: text;
+}
+
+.CodeMirror pre {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  border-width: 0; margin: 0; padding: 0; background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0; margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: inherit;
+  color: inherit;
+  overflow: visible;
+}
+
+.CodeMirror-wrap pre {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+.CodeMirror-wrap .CodeMirror-scroll {
+  overflow-x: hidden;
+}
+
+.CodeMirror textarea {
+  outline: none !important;
+}
+
+.CodeMirror pre.CodeMirror-cursor {
+  z-index: 10;
+  position: absolute;
+  visibility: hidden;
+  border-left: 1px solid black;
+  border-right: none;
+  width: 0;
+}
+.cm-keymap-fat-cursor pre.CodeMirror-cursor {
+  width: auto;
+  border: 0;
+  background: transparent;
+  background: rgba(0, 200, 0, .4);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#6600c800, endColorstr=#4c00c800);
+}
+/* Kludge to turn off filter in ie9+, which also accepts rgba */
+.cm-keymap-fat-cursor pre.CodeMirror-cursor:not(#nonsense_id) {
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.CodeMirror pre.CodeMirror-cursor.CodeMirror-overwrite {}
+.CodeMirror-focused pre.CodeMirror-cursor {
+  visibility: visible;
+}
+
+div.CodeMirror-selected { background: #d9d9d9; }
+.CodeMirror-focused div.CodeMirror-selected { background: #d7d4f0; }
+
+.CodeMirror-searching {
+  background: #ffa;
+  background: rgba(255, 255, 0, .4);
+}
+
+/* Default theme */
+
+.cm-s-default span.cm-keyword {color: #708;}
+.cm-s-default span.cm-atom {color: #219;}
+.cm-s-default span.cm-number {color: #164;}
+.cm-s-default span.cm-def {color: #00f;}
+.cm-s-default span.cm-variable {color: black;}
+.cm-s-default span.cm-variable-2 {color: #05a;}
+.cm-s-default span.cm-variable-3 {color: #085;}
+.cm-s-default span.cm-property {color: black;}
+.cm-s-default span.cm-operator {color: black;}
+.cm-s-default span.cm-comment {color: #a50;}
+.cm-s-default span.cm-string {color: #a11;}
+.cm-s-default span.cm-string-2 {color: #f50;}
+.cm-s-default span.cm-meta {color: #555;}
+.cm-s-default span.cm-error {color: #f00;}
+.cm-s-default span.cm-qualifier {color: #555;}
+.cm-s-default span.cm-builtin {color: #30a;}
+.cm-s-default span.cm-bracket {color: #997;}
+.cm-s-default span.cm-tag {color: #170;}
+.cm-s-default span.cm-attribute {color: #00c;}
+.cm-s-default span.cm-header {color: blue;}
+.cm-s-default span.cm-quote {color: #090;}
+.cm-s-default span.cm-hr {color: #999;}
+.cm-s-default span.cm-link {color: #00c;}
+
+span.cm-header, span.cm-strong {font-weight: bold;}
+span.cm-em {font-style: italic;}
+span.cm-emstrong {font-style: italic; font-weight: bold;}
+span.cm-link {text-decoration: underline;}
+
+span.cm-invalidchar {color: #f00;}
+
+div.CodeMirror span.CodeMirror-matchingbracket {color: #0f0;}
+div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
+
+@media print {
+
+  /* Hide the cursor when printing */
+  .CodeMirror pre.CodeMirror-cursor {
+    visibility: hidden;
+  }
+
+}
+.cm-s-elegant span.cm-number, .cm-s-elegant span.cm-string, .cm-s-elegant span.cm-atom {color: #762;}
+.cm-s-elegant span.cm-comment {color: #262; font-style: italic; line-height: 1em;}
+.cm-s-elegant span.cm-meta {color: #555; font-style: italic; line-height: 1em;}
+.cm-s-elegant span.cm-variable {color: black;}
+.cm-s-elegant span.cm-variable-2 {color: #b11;}
+.cm-s-elegant span.cm-qualifier {color: #555;}
+.cm-s-elegant span.cm-keyword {color: #730;}
+.cm-s-elegant span.cm-builtin {color: #30a;}
+.cm-s-elegant span.cm-error {background-color: #fdd;}
+.cm-s-elegant span.cm-link {color: #762;}
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg {
+  border: 1px solid #999;
+  padding: 0;
+  background: #fff repeat-x top;
+}
+
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg * {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.jwysiwyg-custom-command {
+  overflow: hidden;
+}
+
+/* line 7, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar {
+  border-bottom: 1px solid #ccc;
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+/* line 8, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li {
+  list-style: none;
+  float: left;
+  margin: 1px 2px 3px 0;
+  background: #f0f0f0;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  clear: none;
+  padding: 0;
+}
+
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.separator {
+  background: none;
+  width: 1px;
+  height: 20px;
+  margin: 0 4px 0px 5px;
+  border: none;
+  border-left: 1px solid #ccc;
+}
+
+/* line 10, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li {
+  text-indent: -5000px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: url(/assets/jquery.wysiwyg-78c4107b6b2a532272b1a56ceb88c1797993733d5f44a24ca95f436f7f2d8f17.gif) no-repeat -640px -800px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  margin: 0px;
+}
+
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.wysiwyg-button-hover, div.wysiwyg ul.toolbar li.active {
+  background-color: #DDD;
+  border: 1px solid transparent;
+}
+
+/* line 12, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.active {
+  background-color: #ffff40;
+  border: 1px solid #d0d0d0;
+  border-left-color: #aaa;
+  border-top-color: #aaa;
+  height: 18px;
+  width: 18px;
+  padding: -1px 0 0 -1px;
+  margin: 0;
+}
+
+/* line 14, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.disabled, div.wysiwyg ul.toolbar li.wysiwyg-button-hover.disabled, div.wysiwyg ul.toolbar li.active.disabled {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  border: 0px none transparent;
+  padding: 1px;
+  cursor: auto;
+}
+
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.bold {
+  background-position: -1px -15px;
+}
+
+/* line 18, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.italic {
+  background-position: -18px -15px;
+}
+
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.strikeThrough {
+  background-position: -36px -15px;
+}
+
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.underline {
+  background-position: -55px -15px;
+}
+
+/* line 21, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.highlight {
+  background-position: -48px -96px;
+}
+
+/* line 23, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.justifyLeft {
+  background-position: 0 2px;
+}
+
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.justifyCenter {
+  background-position: -18px 2px;
+}
+
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.justifyRight {
+  background-position: -36px 2px;
+}
+
+/* line 26, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.justifyFull {
+  background-position: -55px 2px;
+}
+
+/* line 28, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.indent {
+  background-position: -74px 1px;
+}
+
+/* line 29, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.outdent {
+  background-position: -92px 1px;
+}
+
+/* line 31, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.subscript {
+  background-position: -74px -15px;
+}
+
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.superscript {
+  background-position: -92px -15px;
+}
+
+/* line 34, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.undo {
+  background-position: 0px -68px;
+}
+
+/* line 35, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.redo {
+  background-position: -18px -69px;
+}
+
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.insertOrderedList {
+  background-position: -36px -49px;
+}
+
+/* line 38, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.insertUnorderedList {
+  background-position: -19px -49px;
+}
+
+/* line 39, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.insertHorizontalRule {
+  background-position: 0 -49px;
+}
+
+/* line 41, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.h1 {
+  background-position: 0px -31px;
+}
+
+/* line 42, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.h2 {
+  background-position: -18px -31px;
+}
+
+/* line 43, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.h3 {
+  background-position: -36px -31px;
+}
+
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.h4 {
+  background-position: -55px -31px;
+}
+
+/* line 45, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.h5 {
+  background-position: -74px -31px;
+}
+
+/* line 46, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.h6 {
+  background-position: -92px -31px;
+}
+
+/* line 48, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.paragraph {
+  background-position: 0px -106px;
+}
+
+/* line 49, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.colorpicker {
+  background-position: -18px -106px;
+}
+
+/* line 50, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.fullscreen {
+  background-position: -36px -106px;
+}
+
+/* line 52, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.cut {
+  background-position: -36px -68px;
+}
+
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.copy {
+  background-position: -55px -68px;
+}
+
+/* line 54, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.paste {
+  background-position: -74px -68px;
+}
+
+/* line 55, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.insertTable {
+  background-position: -74px -49px;
+}
+
+/* line 57, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.increaseFontSize {
+  background-position: -18px -87px;
+}
+
+/* line 58, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.decreaseFontSize {
+  background-position: -36px -87px;
+}
+
+/* line 60, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.createLink {
+  background-position: -92px -48px;
+}
+
+/* line 61, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.unLink {
+  background-position: -74px -87px;
+}
+
+/* line 62, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.insertImage {
+  background-position: -92px -87px;
+}
+
+/* line 64, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.html {
+  background-position: -55px -49px;
+}
+
+/* line 65, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.removeFormat {
+  background-position: -92px -68px;
+}
+
+/* line 67, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.empty {
+  background-position: -73px -86px;
+}
+
+/* line 69, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.code {
+  background-position: -74px -106px;
+}
+
+/* line 70, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg ul.toolbar li.cssWrap {
+  background-position: -92px -106px;
+}
+
+/* line 72, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg-dialogRow {
+  float: left;
+  width: 100%;
+  font-size: 16px;
+}
+
+/* line 74, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg iframe {
+  clear: left;
+  background-color: white;
+  padding: 0 10px;
+  margin: 0;
+  display: block;
+  width: 100%;
+}
+
+/* line 77, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+div.wysiwyg iframe html {
+  margin-top: 10px;
+}
+
+/* dialog */
+/* line 82, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog {
+  position: fixed;
+  top: 50px;
+  left: 50px;
+  width: 450px;
+  height: 300px;
+  background: transparent;
+  font: 14px "Helvetic Neue", Helvetica,Arial,sans-serif;
+}
+
+/* line 83, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog .wysiwyg-dialog-topbar {
+  background: #333;
+  border: 1px #111 solid;
+  color: white;
+  padding: 10px;
+  position: relative;
+}
+
+/* line 84, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog .wysiwyg-dialog-topbar .wysiwyg-dialog-close-wrapper .wysiwyg-dialog-close-button {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 6px 10px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  height: 14px;
+  margin-top: -12px;
+}
+
+/* line 85, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog .wysiwyg-dialog-topbar .wysiwyg-dialog-close-wrapper a.wysiwyg-dialog-close-button:hover {
+  background: #666;
+}
+
+/* line 86, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog .wysiwyg-dialog-topbar .wysiwyg-dialog-title {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+/* line 87, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog .wysiwyg-dialog-content {
+  border: 1px #ccc solid;
+  border-top: 0;
+  padding: 15px;
+  background: white;
+}
+
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-modal-div {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+
+/* line 89, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-content form.wysiwyg fieldset {
+  border: 1px #ccc solid;
+}
+
+/* line 90, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-content form.wysiwyg legend {
+  padding: 7px;
+}
+
+/* line 91, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-content form.wysiwyg .form-row {
+  clear: both;
+  padding: 4px 0;
+}
+
+/* line 92, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-content form.wysiwyg .form-row label, .wysiwyg-dialog form.wysiwyg .form-row .form-row-key {
+  display: block;
+  float: left;
+  width: 35%;
+  text-align: right;
+  padding: 4px 5px;
+}
+
+/* line 93, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-content form.wysiwyg .form-row .form-row-value {
+  display: block;
+  float: left;
+  width: 55%;
+}
+
+/* line 94, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-content form.wysiwyg .form-row input.width-auto {
+  width: auto;
+}
+
+/* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-content form.wysiwyg input.width-small {
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+}
+
+/* line 96, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-content form.wysiwyg input, .wysiwyg-dialog form.wysiwyg select {
+  padding: 2px;
+  width: 100%;
+  margin: 2px;
+}
+
+/* line 97, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/vendor/assets/stylesheets/jquery.wysiwyg.scss */
+.wysiwyg-dialog-content form.wysiwyg input[type=submit], .wysiwyg-dialog form.wysiwyg input[type=reset] {
+  padding: 2px 7px;
+  width: auto;
+}
+/*
+ * CSS file that includes necessary styles for Codemirror 
+ * and jquery.wysiwyg editors.
+ *
+
+
+
+ */

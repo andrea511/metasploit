@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'socket'
+require 'timeout'
+
+# Simple script to wait for a port to come up, desired total timeout length
+# should be handled by whatever calls this
+
+loop do
+  Timeout.timeout(1) do
+    TCPSocket.new('localhost', ARGV[0].to_i).close
+  end
+  break
+rescue SystemCallError, Timeout::Error
+  sleep 1
+end

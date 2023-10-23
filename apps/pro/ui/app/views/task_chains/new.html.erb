@@ -1,0 +1,30 @@
+<% breadcrumb workspace_link, task_chains_link, link_to("New", new_workspace_task_chain_path(@workspace)) %>
+
+<% include_javascript "task_chains/new" -%>
+<% include_javascript "modules/_index" -%>
+<% include_javascript 'tasks/new_cleanup' %>
+<% include_javascript 'tasks/new_collect_evidence' %>
+<% include_javascript 'tasks/new_nexpose' %>
+<% include_javascript('reports/new') %>
+<% include_stylesheet('reports') %>
+<% include_stylesheet('backbone/pro_carpenter') %>
+
+
+<% title "New Task Chain" %>
+
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<% if License.get.supports_campaigns? %>
+  <%= init_require('task_chains/backbone/app') %>
+<% end %>
+
+<%= include_stylesheet "task_chains/task_chains" %>
+<% include_stylesheet 'metamodules' -%>
+
+<%= render :partial => 'shared/tabbed_modal' %>
+
+<div id="task-chain-region"></div>
+<div class="stashed-form-region"></div>
+
+
+<%= add_disable_overlay([:pro]) unless License.get.supports_schedules? %>

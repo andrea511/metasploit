@@ -1,0 +1,8 @@
+2023-10-19 01:21:21.529 +07 [6500] LOG:  aborting any active transactions
+2023-10-19 01:21:21.529 +07 [5104] FATAL:  terminating connection due to administrator command
+2023-10-19 01:21:21.530 +07 [10252] FATAL:  terminating connection due to administrator command
+2023-10-19 01:21:21.537 +07 [10520] FATAL:  terminating connection due to administrator command
+2023-10-19 01:21:21.543 +07 [3484] ERROR:  canceling statement due to user request
+2023-10-19 01:21:21.557 +07 [6500] LOG:  background worker "logical replication launcher" (PID 3484) exited with exit code 1
+2023-10-19 01:21:21.559 +07 [5472] LOG:  shutting down
+2023-10-19 01:21:21.594 +07 [6500] LOG:  database system is shut down

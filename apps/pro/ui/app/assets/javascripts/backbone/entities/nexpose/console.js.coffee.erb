@@ -1,0 +1,29 @@
+define [
+  'base_model',
+  'base_collection'
+], ->
+  @Pro.module "Entities.Nexpose", (Nexpose, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+    # Corresponds to Mdm::NexposeConsole
+    class Nexpose.Console extends App.Entities.Model
+      url: '/nexpose_consoles.json'
+
+      destroy: (opts={}) =>
+        _.extend(opts, { url: '/nexpose_consoles/destroy.json', data: 'id='+@id })
+        super(opts)
+
+    #
+    # API
+    #
+    API =
+      newConsole: (attributes = {}) ->
+        new Nexpose.Console(attributes)
+
+    #
+    # REQUEST HANDLERS
+    #
+    App.reqres.setHandler "new:nexpose:console:entity", (attributes) ->
+      API.newConsole attributes

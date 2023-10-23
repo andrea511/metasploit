@@ -1,0 +1,10 @@
+<% symbol ||= class_name || '' %>
+<% href ||= '#' %>
+
+<li class="<%= symbol %>" name="<%= symbol %>">
+  <a href='<%= href %>' class='btn'>
+    <span class='img'></span>
+  </a>
+  <div></div> <!-- clear both -->
+  <a href='#' class='text'><%= name %></a>
+</li>

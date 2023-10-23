@@ -1,0 +1,21 @@
+.rollup-header
+  .max-width
+
+.app-stats.max-width{ :style => 'padding: 0 20px;' }
+  %ul.rollup-tabs
+    %li.selected
+      %a{ :href => 'javascript:void(0)' } Statistics
+    %li
+      %a{ :href => 'javascript:void(0)' } Task Log
+
+  .rollup-page
+    .rollup-tab
+      .stats-region
+        .stats.tab-loading
+      .drilldown-padding
+        .drilldown-area.tab-loading
+        .right.exploit-continue-btn{ :style => 'display: none; position: absolute; top: 7px; right: 6px;' }
+          %span.btn
+            %a.continue-button{ :href => 'javascript:void(0)' } Continue Exploitation
+    .rollup-tab{ :style => 'display: none' }
+      .console-area

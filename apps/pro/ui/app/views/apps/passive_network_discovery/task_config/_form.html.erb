@@ -1,0 +1,65 @@
+<%= meta_module_form_for @task_config do |f| %>
+  <%= form_tab "Configure Capture", :class => 'short' do %>
+    <%= f.input :interface,       :as => :select, :collection => Apps::PassiveNetworkDiscovery::TaskConfig::INTERFACE_NAMES, :label => 'Network Interface' %>
+    <%= f.input :timeout,         :as => :string, :label => 'Timeout (in minutes)', :wrapper_html => { :class => "slider" }, :input_html => { 'data-min' => 1, 'data-max' => Apps::PassiveNetworkDiscovery::TaskConfig::MAX_TIMEOUT }  %>
+    <%= f.input :max_file_size,   :as => :string, :label => 'Maximum File Size', :wrapper_html => { :class => "slider" }, :input_html => {'data-bytes' => true, 'data-min' => 1024*1024, 'data-max' => Apps::PassiveNetworkDiscovery::TaskConfig::MAX_FILE_SIZE, 'data-inc' => 1024*1024 } %>
+    <%= f.input :max_total_size, :label => 'Maximum Total Size', :wrapper_html => { :class => "slider" }, :input_html => {'data-bytes' => true, 'data-min' => 1024*1024, 'data-max' => Apps::PassiveNetworkDiscovery::TaskConfig::MAX_TOTAL_SIZE, 'data-inc' => 1024*1024 } %>
+  <% end %>
+
+  <%= form_tab "Configure Filters" do %>
+    <%= f.input :filter_type, :collection => Apps::PassiveNetworkDiscovery::TaskConfig::FILTER_TYPES,
+          :as => :radio, :required => false,
+          :label => "Packet Filter" %>
+
+    <div class='simple-rows'>
+      <% Apps::PassiveNetworkDiscovery::TaskConfig::SIMPLE_BPF.each do |filter| %>
+        <div class='simple-row'>
+          <%= label_tag do %>
+            <%= check_box_tag filter[:label] %>
+            <%= filter[:label] %>
+          <% end %>
+          <%= advanced_link filter[:label] %>
+          <div style='clear:both'></div>
+          <%= advanced_area filter[:label], :show => false do %>
+            <% if filter.has_key?(:protocol) %>
+              <div class='protocols'>
+                <%= label_tag 'Protocols:', nil, :class => 'protocols' %>
+                <%= label_tag do %>
+                  <%= check_box_tag filter[:protocol] %>
+                  <%= filter[:protocol] %>
+                <% end %>
+              </div>
+            <% end %>
+            <% if filter.has_key?(:ports) %>
+              <div class='ports'>
+                <%= label_tag 'Ports:', nil, :class => 'ports' %>
+                <% filter[:ports].each do |port| %>
+                  <%= label_tag do %>
+                    <%= check_box_tag "port_#{port}" %>
+                    <%= port %>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div style='position:relative;margin:0 10px;'>
+      <%= f.input :bpf_string, :as => :text, :label => "Custom BPF String", :input_html => { :spellcheck => false } %>
+      <div class='generatedView' style='display:none'>
+        <label>Generated BPF String</label>
+        <pre>
+        </pre>
+      </div>
+      <%= f.help_link :bpf_string do %>
+        <h3>Berkeley Packet Filter</h3>
+        <p>Filter the captured packets with a Berkeley Packet Filter (BPF) string, using the same format as arguments to Linux's tcpdump command.</p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= render :partial => 'wizards/report_tab', :locals => {
+             :f => f,
+             :rtypes => [Apps::PassiveNetworkDiscovery::TaskConfig::REPORT_TYPE] } %>
+<% end %>

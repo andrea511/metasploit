@@ -1,0 +1,33 @@
+<div class="foundation">
+  <div class="row">
+    <div class="large-9 columns">
+      <p>
+        Choose the targets you want to test with the selected credentials from the list below. To refine the list, use the filters to create a custom search query.
+      </p>
+    </div>
+
+    <div class="large-3 columns last"></div>
+  </div>
+
+  <div class="row">
+    <div class="large-9 columns left-side">
+      <h1 class="invisible" data-table-id="targets"></h1>
+      <div class="targets-table"></div>
+    </div>
+    <div class="large-3 columns last right-side">
+
+
+      <div class="btn-arrow add-selection">
+        <span class="icon icon-fb"><span>＋</span></span>
+        <span class="title">Add Target(s) to this list</span>
+      </div>
+
+
+      <div class="target-list"></div>
+
+      <a href="javascript:void(0)" class="btn primary launch disabled">Next</a>
+    </div>
+  </div>
+</div>
+
+

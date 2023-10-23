@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="msfxv3_detail_services" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fad8efcf-4abd-49e3-9fdc-4fdb53fa8d39">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Serif" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Serif" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Serif" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Serif" fontSize="12"/>
+	<parameter name="host_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+  vulns.id AS vuln_id,
+  vulns.name AS vuln_name,
+  vulns.info AS vuln_info,
+  hosts.id AS host_id,
+  HOST(CAST(hosts.address as inet)) AS host_address
+FROM vulns
+  LEFT OUTER JOIN hosts ON hosts.id = vulns.host_id
+WHERE
+    hosts.id = $P{host_id}
+ORDER BY vuln_id
+;]]>
+	</queryString>
+	<field name="vuln_id" class="java.lang.Integer"/>
+	<field name="vuln_name" class="java.lang.String"/>
+	<field name="vuln_info" class="java.lang.String"/>
+	<field name="host_id" class="java.lang.Integer"/>
+	<field name="host_address" class="java.lang.String"/>
+	<pageHeader>
+		<band height="21">
+			<line>
+				<reportElement uuid="e5f8d0a0-fa10-494a-a8a4-8609bb861bb1" positionType="FixRelativeToBottom" x="0" y="20" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="a5f09c68-d754-4741-a61a-5814e13ba455" style="Column header" x="0" y="0" width="216" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Vulnerability]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ee0beb8b-5ef4-43fb-9109-829891e051d4" style="Column header" x="216" y="0" width="339" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<line>
+				<reportElement uuid="c53cf190-c748-4700-907c-fd707b493737" positionType="FixRelativeToBottom" x="0" y="17" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement uuid="ade9c202-4661-40ac-8a15-3343453ce1c9" style="Detail" x="216" y="0" width="339" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+					<paragraph spacingAfter="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vuln_info}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement uuid="3370868a-cea5-4f71-b34f-eae356cf80d5" style="Detail" x="0" y="0" width="205" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vuln_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

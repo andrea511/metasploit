@@ -1,0 +1,27 @@
+<% @export_type_map = Export::EXPORT_TYPE_MAP %>
+<% @export_types = @export_type_map.keys.sort %>
+<% @export_types_collection = []
+   @export_types.each do |key|
+     @export_types_collection << [ @export_type_map[key].pretty_name, key ]
+   end
+%>
+
+<%= f.inputs "Export Type" do %>
+    <%= f.input :export_type,
+                :collection => @export_types_collection,
+                :as => 'select',
+                :include_blank => false
+    %>
+
+    <%= f.help_link :export_type do %>
+        <h3>Available Export Types</h3>
+        <ul>
+          <% @export_types.each do |export_type| %>
+              <% etype = @export_type_map[export_type] %>
+              <% help_line = "#{etype.pretty_name}: #{etype.description}" %>
+              <%= content_tag(:li, help_line) %>
+          <% end %>
+        </ul>
+    <% end %>
+
+<% end %>

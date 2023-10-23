@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="port-distribution" language="groovy" pageWidth="572" pageHeight="800" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="04c1c33e-d550-4bc8-a34f-f722701df75d">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<subDataset name="CountsbyStateGroup" uuid="763fecc9-4c24-4ce9-ba70-34531679a9d9">
+		<parameter name="port_states" class="java.lang.String" isForPrompting="false">
+			<defaultValueExpression><![CDATA["('open','closed','unknown','filtered')"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="app_run_id" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select initcap(port_group) as port_group, initcap(state) as port_state, count(port) as cnt
+from
+(
+	select
+	port, state, (case when port <= 1024 then 'critical'
+	  else 'registered'
+	end) as port_group
+	from
+	(
+		select generate_series(er.start_port, er.end_port) port, er.state
+		from egadz_result_ranges er
+		inner join tasks t on (er.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where ar.id = $P{app_run_id}
+	) x
+) y
+group by port_state, port_group
+order by port_group, cnt desc]]>
+		</queryString>
+		<field name="port_state" class="java.lang.String"/>
+		<field name="port_group" class="java.lang.String"/>
+		<field name="cnt" class="java.lang.Long"/>
+	</subDataset>
+	<parameter name="port_states" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["('open','closed','unknown','filtered')"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lowest_port" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="highest_port" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select initcap(port_group) port_group, state port_state, count(port) cnt
+from
+(
+	select port, state,
+	(case when port <= 1024 then 'critical'
+	  else 'registered'
+	end) as port_group
+	from
+	(
+		select generate_series(er.start_port, er.end_port) port, er.state
+		from egadz_result_ranges er
+		inner join tasks t on (er.task_id = t.id)
+		inner join app_runs ar on (t.app_run_id = ar.id)
+		where ar.id = $P{app_run_id}
+	) x
+) y
+group by state, port_group
+order by cnt]]>
+	</queryString>
+	<field name="port_state" class="java.lang.String"/>
+	<field name="port_group" class="java.lang.String"/>
+	<field name="cnt" class="java.lang.Long"/>
+	<summary>
+		<band height="296">
+			<textField>
+				<reportElement uuid="dd557375-3091-445a-8191-9351197d182a" style="generic_text" x="287" y="16" width="285" height="219">
+					<printWhenExpression><![CDATA[!($P{lowest_port} > 1024)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["0 registered ports"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dd557375-3091-445a-8191-9351197d182a" style="generic_text" x="0" y="16" width="287" height="219">
+					<printWhenExpression><![CDATA[!($P{lowest_port} <= 1024)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["0 critical ports"]]></textFieldExpression>
+			</textField>
+			<pieChart>
+				<chart isShowLegend="false" customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="b250369f-1d4c-4bf3-a972-5ed9deb55d34" style="chart_labels" x="0" y="16" width="285" height="219">
+						<printWhenExpression><![CDATA[$P{lowest_port} <= 1024]]></printWhenExpression>
+					</reportElement>
+					<chartTitle position="Top" color="#666666">
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Critical Ports"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<incrementWhenExpression><![CDATA[$F{port_group} == 'Critical']]></incrementWhenExpression>
+						<datasetRun subDataset="CountsbyStateGroup" uuid="30ccedc4-ef94-478d-ad0f-4834f4dc0e25">
+							<datasetParameter name="app_run_id">
+								<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{port_state}]]></keyExpression>
+					<valueExpression><![CDATA[$F{cnt}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="true" isCircular="true" labelFormat="{2}  {0}">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart isShowLegend="false" customizerClass="com.jaspersoft.bizdev.PieLabels" theme="se_charts">
+					<reportElement uuid="b250369f-1d4c-4bf3-a972-5ed9deb55d34" style="chart_labels" x="287" y="16" width="285" height="219">
+						<printWhenExpression><![CDATA[$P{highest_port} > 1024]]></printWhenExpression>
+					</reportElement>
+					<chartTitle position="Top" color="#666666">
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Registered Ports"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<incrementWhenExpression><![CDATA[$F{port_group} == 'Registered']]></incrementWhenExpression>
+						<datasetRun subDataset="CountsbyStateGroup" uuid="30ccedc4-ef94-478d-ad0f-4834f4dc0e25">
+							<datasetParameter name="app_run_id">
+								<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<keyExpression><![CDATA[$F{port_state}]]></keyExpression>
+					<valueExpression><![CDATA[$F{cnt}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="true" isCircular="true" labelFormat="{2}  {0}">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<componentElement>
+				<reportElement uuid="45f0cf9f-47d8-4a1c-b9b8-0fcd0a525480" key="table" x="10" y="235" width="567" height="50"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="CountsbyStateGroup" uuid="afdc7e46-f03e-48f9-891d-d2207ec2121c">
+						<datasetParameter name="app_run_id">
+							<datasetParameterExpression><![CDATA[$P{app_run_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="184" uuid="4535ac72-2937-4af6-8f31-8369a1922bd7">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f9ab6b01-0826-4b57-9bc7-c902109a8b98" style="section_header_3" x="0" y="0" width="184" height="25"/>
+								<textElement textAlignment="Left">
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<text><![CDATA[Port type]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="56030079-23db-49aa-9cdc-ce74a0c8174f" style="tighter_table" x="0" y="0" width="184" height="19"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+									<paragraph leftIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{port_group}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="6c29bc52-c4cf-4555-a465-34ac16a3db59" style="separator_line_lighter" x="0" y="19" width="184" height="1"/>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="150" uuid="39d47b3c-d726-4c48-af7d-efc16d73d0c1">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f2cbcda4-1be6-4cfa-9097-27e93668a984" style="section_header_3" x="0" y="0" width="150" height="25"/>
+								<textElement textAlignment="Left"/>
+								<text><![CDATA[State]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="1beb367e-fb6a-4f0c-8ce1-d2c3c5a6ea7a" style="tighter_table" x="0" y="0" width="150" height="19"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{port_state}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="6c29bc52-c4cf-4555-a465-34ac16a3db59" style="separator_line_lighter" x="0" y="19" width="150" height="1"/>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="237" uuid="afb39f95-3be2-4cac-a80e-7b84fbc08579">
+						<jr:columnHeader height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="587187b6-be55-4fd4-8a3d-316faed5cd2f" style="section_header_3" x="0" y="0" width="237" height="25"/>
+								<textElement textAlignment="Right">
+									<paragraph rightIndent="150"/>
+								</textElement>
+								<text><![CDATA[Count]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="f0c475d5-ce61-45e4-81cc-e9fe2fb475b8" style="tighter_table" x="0" y="0" width="237" height="19"/>
+								<textElement textAlignment="Right">
+									<font size="8"/>
+									<paragraph rightIndent="150"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cnt}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="6c29bc52-c4cf-4555-a465-34ac16a3db59" style="separator_line_lighter" x="0" y="19" width="237" height="1"/>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

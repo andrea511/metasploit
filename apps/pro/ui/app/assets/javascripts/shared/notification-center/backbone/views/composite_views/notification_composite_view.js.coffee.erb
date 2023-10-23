@@ -1,0 +1,28 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/notification_center/composite_views/notification_composite_view') %>',
+  '<%= javascript_path('shared/notification-center/backbone/views/item_views/notification_item_view') %>',
+  '<%= javascript_path('shared/notification-center/backbone/event_aggregators/event_aggregator') %>'
+], ($, template, NotificationItemView, EventAggregator) -> 
+ class NotificationCompositeView extends Backbone.Marionette.CompositeView
+  itemView: NotificationItemView
+  emptyView: NotificationItemView
+
+  template: HandlebarsTemplates['notification_center/composite_views/notification_composite_view']
+
+  triggers:
+    'change .sort-options select' : 'sort:changed'
+  
+
+  initialize: ->
+    @_bind_triggers()
+
+  _bind_triggers: ->
+    @on('sort:changed',@_update_notification_type)
+
+  _update_notification_type: ->
+    EventAggregator.trigger('notification-center:change:type')
+    
+  redraw_with_sort_preserved: ->
+    #Manually trigger collection reset event to redraw collection view
+    @collection.trigger('reset')

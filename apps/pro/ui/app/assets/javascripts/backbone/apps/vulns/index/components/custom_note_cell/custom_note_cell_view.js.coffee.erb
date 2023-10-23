@@ -1,0 +1,99 @@
+define [
+  'jquery'
+  'base_itemview'
+  'apps/vulns/show/components/comment/comment_view'
+  'entities/note'
+], ($) ->
+  @Pro.module "Components.CustomNoteCell", (CustomNoteCell, App, Backbone, Marionette, $, _) ->
+
+    #
+    # PushStatusCell View
+    #
+    class CustomNoteCell.View extends App.Views.Layout
+
+      # Initialize cell view with a comment model
+      #
+      initialize: (opts)->
+        data =
+          workspace_id: WORKSPACE_ID
+          type: 'Mdm::Vuln'
+          type_id: parseInt @model.id
+          data:
+            comment: @model.get('comment.data.comment')
+        @commentModel = App.request 'new:note:entity', data
+
+      # Generate template with comment
+      #
+      # @param [Object] data The data from model
+      # @option data :comment.data.comment [String] The latest comment/note
+      template: (data)->
+        if data['comment.data.comment']
+          comment = data['comment.data.comment']
+        else
+          comment = ''
+
+        """
+        <textarea rows="1" id="comments" type="text" name="comment">#{comment}</textarea>
+        <%= image_tag("icons/buttom_more.svg", class: "btn more-text") %>
+        <div class="error" style="display:none;"></div>
+        """
+
+      ui:
+        commentBtn: 'img.btn.more-text'
+        commentInput: 'textarea#comments'
+        error: '.error'
+
+      events:
+        'click @ui.commentBtn' : '_commentModal'
+        'focusout @ui.commentInput' : '_saveComment'
+
+      # Instantiate new comment modal with the comment model
+      #
+      _commentModal: () ->
+        commentView = new Pro.Components.Comment.View(model: @commentModel)
+        App.execute 'showModal', commentView,
+          modal:
+            title: 'Comment'
+            description: ''
+            width: 300
+          buttons: [
+            { name: 'Cancel', class: 'close' }
+            { name: 'OK', class: 'btn primary' }
+          ]
+          doneCallback: () =>
+            @commentModel.set('data',{
+              comment: commentView.getComment()
+            })
+            @_setComment(commentView.getComment())
+
+      # Save comment by creating new note entity
+      #
+      _saveComment: () ->
+        data = _.extend(@commentModel.attributes,{
+          data:
+            comment:@ui.commentInput.val()
+        })
+
+        commentModel = App.request 'new:note:entity', data
+        commentModel.save({},
+          # Set comment on view's comment model
+          #
+          # @param [Object] :model The new comment model
+          # @option model :data [Object] The new comment data
+          # @option data :comment [String] The new comment
+          success:(model)=>
+            @commentModel.set('data',{
+              comment: model.get('data').comment
+            })
+            @ui.error.html()
+            @ui.error.hide()
+          error: (model,response) =>
+            @ui.error.html(response.responseJSON.error.data[0])
+            @ui.error.show()
+        )
+
+      # Set comment on UI
+      #
+      # @param [String] :comment The comment to be set
+      _setComment: (comment) ->
+        @ui.commentInput.val(comment)

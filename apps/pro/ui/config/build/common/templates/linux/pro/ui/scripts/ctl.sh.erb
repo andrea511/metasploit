@@ -1,0 +1,17 @@
+#!/bin/sh
+
+CWD="$(readlink -f $(dirname "$0"))"
+RUBY="$( readlink -f ${CWD}/../../../../ruby/bin/ruby )"
+cd "${CWD}"
+
+if [ -f "${CWD}/../../../../.systemd_enabled" ]; then
+  systemctl $1 metasploit-ui.service
+  exit $?
+fi
+
+# Run as daemon
+if [ $(id -u) -eq 0 ]; then
+  exec su daemon -s /bin/sh -c "$0 $@"
+fi
+
+exec ${RUBY} ${CWD}/ctl.rb $1 $2 $3 $4 $5

@@ -1,0 +1,153 @@
+<fieldset>
+
+  <div class="columns large-12">
+    <div class="columns large-4">
+      <div class="row">
+        Overall Timeout
+      </div>
+    </div>
+
+    <div class="columns large-8">
+      <div class="columns large-3">
+        <div class="row">
+          <label style="display: none" for="quick-bruteforce-options-overall-timeout-hour">Bruteforce Options Overall Timeout Hour</label>
+          <input class="time" type="text" value="4" id="quick-bruteforce-options-overall-timeout-hour" name="quick_bruteforce[options][overall_timeout][hour]">
+        </div>
+
+        <div class="row ellipses">
+          Hours
+        </div>
+      </div>
+
+      <div class="columns large-3">
+        <div class="row">
+          <label style="display: none" for="quick-bruteforce-options-overall-timeout-minutes">Bruteforce Options Overall Timeout Minutes</label>
+          <input class="time" type="text" value="0" id="quick-bruteforce-options-overall-timeout-minutes" name="quick_bruteforce[options][overall_timeout][minutes]">
+        </div>
+
+        <div class="row ellipses">
+          Minutes
+        </div>
+      </div>
+
+      <div class="columns large-3">
+        <div class="row">
+          <label style="display: none" for="quick-bruteforce-options-overall-timeout-seconds">Bruteforce Options Overall Timeout Seconds</label>
+          <input class="time" type="text" value="0" id="quick-bruteforce-options-overall-timeout-seconds" name="quick_bruteforce[options][overall_timeout][seconds]">
+        </div>
+
+        <div class="row ellipses">
+          Seconds
+        </div>
+      </div>
+
+      <div class="columns large-3 overall-timeout-tooltip-region"></div>
+    </div>
+  </div>
+
+  <div class="columns large-12">
+    <div class="columns large-4">
+      <div class="row">
+        Service Timeout
+      </div>
+    </div>
+
+    <div class="columns large-8">
+      <div class="columns large-3">
+        <div class="row">
+          <label style="display: none" for="quick-bruteforce-options-service-timeout">Bruteforce Options Service Timeout</label>
+          <input class="time" type="text" value="900" id="quick-bruteforce-options-service-timeout" name="quick_bruteforce[options][service_timeout]">
+        </div>
+
+        <div class="row">
+          Seconds
+        </div>
+      </div>
+
+      <div class="columns large-6">
+
+      </div>
+
+      <div class="columns large-3 service-timeout-tooltip-region"></div>
+    </div>
+  </div>
+
+  <div class="columns large-12">
+    <div class="columns large-4">
+      <div class="row">
+        Time Between Attempts
+      </div>
+    </div>
+
+    <div class="columns large-8">
+      <div class="columns large-9">
+        <div class="row">
+          <select class="time-between-attempts" name="quick_bruteforce[options][time_between_attempts]">
+            <option value="5">None (0 seconds)</option>
+            <option value="4">Aggressive (0.1 seconds)</option>
+            <option value="3">Normal (0.5 seconds)</option>
+            <option value="2">Polite (1 second)</option>
+            <option value="1">Sneaky (15 seconds)</option>
+            <option value="0">Glacial (5 minutes)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="columns large-3 time-tooltip-region"></div>
+    </div>
+  </div>
+
+  <div class="columns large-12">
+    <hr />
+  </div>
+
+  <div class="columns large-12 bottom-options">
+    <div class="columns large-7">
+      <div class="row">
+        <label>
+          <input type="checkbox" name="quick_bruteforce[options][mutation]" />
+          <div>Apply mutation(s) </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="columns large-5">
+      <div class="columns large-7 empty">
+
+      </div>
+      <div class=" columns large-5 mutation-tooltip-region">
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="columns large-12 bottom-options">
+    <label>
+      <input type="checkbox" name="quick_bruteforce[options][stop_on_guess]" />
+      <div>Stop bruteforcing a target when a credential is guessed</div>
+    </label>
+  </div>
+
+
+  <div class="columns large-12 bottom-options">
+    <div class="columns large-7">
+      <div class="row">
+        <label>
+          <input type="checkbox" name="quick_bruteforce[options][payload_settings]" />
+          <div>Get session if possible</div>
+        </label>
+      </div>
+    </div>
+
+    <div class="columns large-5">
+      <div class="columns large-7 empty">
+
+      </div>
+      <div class=" columns large-5 session-tooltip-region">
+
+      </div>
+    </div>
+  </div>
+
+</fieldset>

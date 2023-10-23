@@ -1,0 +1,108 @@
+define [
+  'jquery',
+  '<%= javascript_path("shared/backbone/views/modal_form") %>',
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, ModalForm, EventAggregator) ->
+  PLACEHOLDER = 'Vuln Reference ID or URL'
+  class VulnForm extends ModalForm
+
+    events:
+      _.extend({}, ModalForm.prototype.events,{
+        "click .add-ref": '_addRef'
+      })
+
+    initialize: (opts) ->
+      @options = opts
+      $.extend(@, opts)
+      @
+
+    _addRef: ->
+      @addRefInput()
+
+    formLoadedSuccessfully: =>
+      super
+      _.defer => $(':input:visible', @el).first().focus()
+      _.defer => $('.vuln-refs-container',@el).hide() if @hideRefs
+      _.defer => $('.vuln-form-container',@el).hide() if @hideVuln
+
+    #default action, if nil then don't load form
+    action: 'new'
+
+    actionUrl: ->
+      switch @options.action
+        when "edit" then "#{@URL()}/#{@options.id}/#{@options.action}"
+        when "new" then "#{@URL()}/#{@options.action}"
+
+    onRender: =>
+      if @options.action?
+        @setLoading(true)
+        @loadForm(@actionUrl())
+
+
+    addRefInput: () ->
+      html = '<input id="vuln_new_ref_attributes__name" name="vuln[new_ref_attributes][][name]" size="60" type="text">'
+      fragment = $(html).attr('placeholder', PLACEHOLDER).insertAfter($('.add-ref', @el))
+      @initEditInput(fragment)
+
+
+    _postForm: (defer) =>
+      data = $('form',@el).serialize()
+      switch @options.action
+        when "edit"
+          $.ajax
+            url: "#{@URL()}/#{@options.id}.json"
+            type: 'PUT'
+            data: data
+            defer: defer
+            _this: @
+            error: @_failureCallback
+            success: @_successCallback
+        when "new"
+          $.ajax
+            url: "#{@URL()}.json"
+            type: 'POST'
+            data: data
+            _this:@
+            defer: defer
+            error: @_failureCallback
+            success: @_successCallback
+
+
+    _failureCallback: (xhr) ->
+      json = $.parseJSON(xhr.responseText)
+      @_this._renderErrors(json.error)
+
+    _successCallback: (xhr) ->
+      EventAggregator.trigger('redrawTable')
+      @_this.$el.trigger('destroy')
+
+      #If we are using the newer modal component. It closes modal once promise is resolved
+      @defer?.resolve()
+
+
+    _renderErrors: (errors) =>
+      $('.error',@el).remove()
+      _.each errors, (v, k) =>
+        name = "vuln[#{k}]"
+        $msg = $('<div />', class: 'error').text(v[0])
+        $("input[name='#{name}']", @el).addClass('invalid').after($msg)
+
+
+    onFormSubmit: ->
+      # jQuery Deferred Object that closes modal when resolved.
+      defer = $.Deferred()
+      defer.promise()
+      @_postForm(defer)
+      defer
+
+    _formSubmit: (e) ->
+      e.preventDefault()
+      @_postForm()
+
+
+    URL: ->
+      #If host_id passed in as opt else use host_id from url
+      if @host_id
+        "/hosts/#{@host_id}/vulns"
+      else
+       "/hosts/#{HOST_ID}/vulns"

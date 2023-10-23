@@ -1,0 +1,11 @@
+define [
+  'jquery',
+  '<%= javascript_path("apps/backbone/controllers/apps_overview_controller") %>'
+], ($, AppsOverviewController) ->
+
+  class OverviewApp
+    start: =>
+      @region = new Backbone.Marionette.Region(el: '#global-apps-container')
+      @controller = new AppsOverviewController(region: @region)
+      app = new Backbone.Marionette.Application
+      app.start()

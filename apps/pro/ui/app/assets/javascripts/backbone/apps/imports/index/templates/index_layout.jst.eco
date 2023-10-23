@@ -1,0 +1,60 @@
+<fieldset class="shared">
+  <legend><span>Import Data</span></legend>
+
+
+  <div class="row v-padding import-type-select-region"></div>
+
+  <div class="row main-import-view-region"></div>
+
+  <div class="row">
+    <div class="row tags-label">
+      <div class="columns small-2 left-text">
+          <span class="collapse left-align">▼</span><span class="expand left-align">▶</span>&nbsp;Automatic Tagging (Optional)
+      </div>
+      <div class="columns small-8 empty"></div>
+    </div>
+
+    <div class="row tags-pane">
+      <div class="row">
+        <div class="columns small-1 add-tags">Add Tags</div>
+        <div class="columns small-3">
+            <div class="row tags-region"></div>
+            <div class="row">
+              <label>
+                <input type="checkbox" name="imports[autotag_os]">
+                Automatically Tag by OS
+              </label>
+            </div>
+        </div>
+        <div class="columns small-8 empty"></div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+</fieldset>
+
+<div class="row">
+  <div class="columns large-12">
+    <div class="columns large-9 empty">
+
+    </div>
+
+    <div class="columns large-2 align-right">
+      <input id="update_hosts" type="checkbox" name="import[update_hosts]" ><label for="update_hosts">Don't change existing hosts</label>
+    </div>
+
+
+    <% if @showTypeSelection: %>
+      <div class="columns large-1 align-right">
+      <span class="btn disabled import-btn">
+        <input class="import" id="popup_submit" name="commit" type="submit" value="Import Data">
+      </span>
+      </div>
+    <% end %>
+
+  </div>
+
+</div>

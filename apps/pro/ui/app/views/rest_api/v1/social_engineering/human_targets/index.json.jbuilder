@@ -1,0 +1,1 @@
+json.array! @human_targets, partial: 'human_target', as: :human_target

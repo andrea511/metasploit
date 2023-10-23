@@ -1,0 +1,142 @@
+digraph "metasploit-version" {
+  label = "metasploit-version"
+
+  graph [
+    rankdir = "LR"
+    ranksep = 3
+    splines = "line"
+  ]
+  node [
+    shape = "record"
+  ]
+
+  subgraph cluster_electro {
+    label = "Electro"
+
+    "metasploit-concern (Electro)" [
+      label = "metasploit-concern | " +
+              "<version_spec> spec/lib/metasploit/concern/version_spec.rb"
+    ]
+    "metasploit-credential (Electro)" [
+      label = "metasploit-credential | " +
+              "<version_spec> spec/lib/metasploit/credential/version_spec.rb"
+    ]
+    "metasploit-erd (Electro)" [
+      label = "metasploit-erd | " +
+              "<version_spec> spec/metasploit/erd/version_spec.rb"
+    ]
+    "metasploit-model (Electro)" [
+      label = "metasploit-model | " +
+              "<version_spec> spec/lib/metasploit/model/version_spec.rb"
+    ]
+    "yard-metasploit-erd (Electro)" [
+      label = "yard-metasploit-erd | " +
+              "<version_spec> spec/yard/metasploit/erd/version_spec.rb"
+    ]
+  }
+
+  subgraph cluster_flood {
+    label = "Flood"
+
+    subgraph cluster_flood_upgrade {
+      label = "Upgraded in Flood"
+
+      "metasploit-concern (Flood)" [
+        label = "metasploit-concern | " +
+                "<version_spec> spec/lib/metasploit/concern/version_spec.rb"
+      ]
+      "metasploit-credential (Flood)" [
+        label = "metasploit-credential | " +
+                "<version_spec> spec/lib/metasploit/credential/version_spec.rb"
+      ]
+      "metasploit-erd (Flood)" [
+        label = "metasploit-erd | " +
+                "<version_spec> spec/metasploit/erd/version_spec.rb"
+      ]
+      "metasploit-model (Flood)" [
+        label = "metasploit-model | " +
+                "<version_spec> spec/lib/metasploit/model/version_spec.rb"
+      ]
+      "yard-metasploit-erd (Flood)" [
+        label = "yard-metasploit-erd | " +
+                "<version_spec> spec/yard/metasploit/erd/version_spec.rb"
+      ]
+    }
+
+    subgraph cluster_flood_native {
+      label = "Developed in Flood"
+
+      /*
+       * Nodes
+       */
+
+      "it_should_behave_like" [
+        shape = "oval"
+      ]
+
+      "metasploit-cache" [
+        label = "metasploit-cache | " +
+                "<version_spec> spec/lib/metasploit/cache/version_spec.rb"
+      ]
+      "metasploit-search" [
+        label = "metasploit-search | " +
+                "<version_spec> spec/lib/metasploit/search/version_spec.rb"
+      ]
+      "metasploit-version" [
+        label = "metasploit-version | " +
+                "<version_constant> 'Metasploit::Version VERSION constant' shared example | " +
+                "<version_module> 'Metasploit::Version Version Module' shared example | " +
+                "rake version:create | " +
+                "rake version:branch | " +
+                "rake version:merge | " +
+                "rake version:pull_request"
+      ]
+      "metasploit-yard"
+
+      /*
+       * Edges
+       */
+
+      "it_should_behave_like" -> "metasploit-cache":version_spec
+      "it_should_behave_like" -> "metasploit-search":version_spec
+
+      "metasploit-version":version_constant -> "it_should_behave_like"
+      "metasploit-version":version_module -> "it_should_behave_like"
+
+      "metasploit-version" -> "metasploit-yard" [
+        label = "Cannot use metasploit-version as it will lead to circular dependency"
+        style = "dotted"
+      ]
+
+      "metasploit-yard" -> "metasploit-version" [
+        label = "use"
+      ]
+    }
+  }
+
+  /*
+   * Edges
+   */
+
+  "it_should_behave_like" -> "metasploit-concern (Flood)":version_spec
+  "it_should_behave_like" -> "metasploit-credential (Flood)":version_spec
+  "it_should_behave_like" -> "metasploit-erd (Flood)":version_spec
+  "it_should_behave_like" -> "metasploit-model (Flood)":version_spec
+  "it_should_behave_like" -> "yard-metasploit-erd (Flood)":version_spec
+
+  "metasploit-concern (Electro)":version_spec -> "metasploit-concern (Flood)":version_spec [
+    label = "modify"
+  ]
+  "metasploit-credential (Electro)":version_spec -> "metasploit-credential (Flood)":version_spec [
+    label = "modify"
+  ]
+  "metasploit-erd (Electro)":version_spec -> "metasploit-erd (Flood)":version_spec [
+    label = "modify"
+  ]
+  "metasploit-model (Electro)":version_spec -> "metasploit-model (Flood)":version_spec [
+    label = "modify"
+  ]
+  "yard-metasploit-erd (Electro)":version_spec -> "yard-metasploit-erd (Flood)":version_spec [
+    label = "modify"
+  ]
+}

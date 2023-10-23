@@ -1,0 +1,29 @@
+<% title "Disclosed Vulnerabilities" %>
+<% breadcrumb workspace_link, vulns_link %>
+
+<meta name='vuln_validation' content='<%= License.get.supports_vuln_validation?.to_s %>' />
+
+<div id="vulns-main-region"></div>
+
+<% include_stylesheet('backbone/pro_carpenter') %>
+<% include_stylesheet('shared/backbone/tabs') %>
+<% include_stylesheet 'hosts' -%>
+
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<%= nonced_javascript_tag do %>
+  jQuery(document).bind('requirejs-ready', function(){
+    jQuery(document).ready(function() {
+      var dependencies = [
+        'apps/vulns/vulns_app'
+      ];
+
+      initProRequire(dependencies, function() {
+
+        Pro.start({
+          environment: "<%= Rails.env %>"
+        });
+      });
+    });
+  });
+<% end %>

@@ -1,0 +1,109 @@
+digraph flood {
+  graph [
+    concentrate = true
+    label = "Electro to Flood metasploit-search changes"
+    rankdir = "LR"
+  ]
+  node [
+    shape = "record"
+  ]
+
+  /*
+   *  Nodes
+   */
+
+  subgraph cluster_electro {
+    label = "Electro"
+
+    "metasploit-model (Electro)" [
+      label = "<title> metasploit-model | " +
+              "<search> Metasploit::Model::Search | " +
+              "<search_association> Metasploit::Model::Search::Association | " +
+              "<search_attribute> Metasploit::Model::Search::Attribute | " +
+              "<search_group> Metasploit::Model::Search::Group | " +
+              "<search_operation> Metasploit::Model::Search::Operation | " +
+              "<search_operator> Metasploit::Model::Search::Operator | " +
+              "<search_operator_association> Metasploit::Model::Search::Operator::Association | " +
+              "<search_operator_attribute> Metasploit::Model::Search::Operator::Attribute | " +
+              "<search_operator_base> Metasploit::Model::Search::Operator::Base | " +
+              "<search_operator_delegation> Metasploit::Model::Search::Operator::Delegation | " +
+              "<search_operator_group> Metasploit::Model::Search::Operator::Group | " +
+              "<search_operator_help> Metasploit::Model::Search::Operator::Help | " +
+              "<search_operator_null> Metasploit::Model::Search::Operator::Null | " +
+              "<search_operator_single> Metasploit::Model::Search::Operator::Single | " +
+              "<search_query> Metasploit::Model::Search::Query | " +
+              "<search_with> Metasploit::Model::Search::With"
+    ]
+  }
+
+  subgraph cluster_great_one {
+    label = "GREAT #1"
+
+    "metasploit_data_models (GREAT #1)" [
+      label = "<title> metasploit_data_models | " +
+              "<search_visitor> MetasploitDataModels::Search::Visitor"
+    ]
+  }
+
+  subgraph cluster_flood {
+    label = "Flood"
+
+    "metasploit-search" [
+      label = "<title> metasploit-search | " +
+              "<root> Metasploit::Search | " +
+              "<association> Metasploit::Search::Association | " +
+              "<attribute> Metasploit::Search::Attribute | " +
+              "<group> Metasploit::Search::Group | " +
+              "<operation> Metasploit::Search::Operation | " +
+              "<operator> Metasploit::Search::Operator | " +
+              "<operator_association> Metasploit::Search::Operator::Association | " +
+              "<operator_attribute> Metasploit::Search::Operator::Attribute | " +
+              "<operator_base> Metasploit::Search::Operator::Base | " +
+              "<operator_delegation> Metasploit::Search::Operator::Delegation | " +
+              "<operator_group> Metasploit::Search::Operator::Group | " +
+              "<operator_help> Metasploit::Search::Operator::Help | " +
+              "<operator_null> Metasploit::Search::Operator::Null | " +
+              "<operator_single> Metasploit::Search::Operator::Single | " +
+              "<query> Metasploit::Search::Query | " +
+              "<visitor> Metasploit::Search::Visitor | " +
+              "<with> Metasploit::Search::With"
+    ]
+  }
+
+  /*
+   *
+   *  Edges
+   *
+   */
+
+  /*
+   *  Electro -> Great #1
+   */
+
+  /*
+   *  Great #1 -> Flood
+   */
+
+  "metasploit_data_models (GREAT #1)":search_visitor -> "metasploit-search":visitor
+
+  /*
+   *  Electro -> Flood
+   */
+
+   "metasploit-model (Electro)":search -> "metasploit-search":root
+   "metasploit-model (Electro)":search_association -> "metasploit-search":association
+   "metasploit-model (Electro)":search_attribute -> "metasploit-search":attribute
+   "metasploit-model (Electro)":search_group -> "metasploit-search":group
+   "metasploit-model (Electro)":search_operation -> "metasploit-search":operation
+   "metasploit-model (Electro)":search_operator -> "metasploit-search":operator
+   "metasploit-model (Electro)":search_operator_association -> "metasploit-search":operator_association
+   "metasploit-model (Electro)":search_operator_attribute -> "metasploit-search":operator_attribute
+   "metasploit-model (Electro)":search_operator_base -> "metasploit-search":operator_base
+   "metasploit-model (Electro)":search_operator_delegation -> "metasploit-search":operator_delegation
+   "metasploit-model (Electro)":search_operator_group -> "metasploit-search":operator_group
+   "metasploit-model (Electro)":search_operator_help -> "metasploit-search":operator_help
+   "metasploit-model (Electro)":search_operator_null -> "metasploit-search":operator_null
+   "metasploit-model (Electro)":search_operator_single -> "metasploit-search":operator_single
+   "metasploit-model (Electro)":search_query -> "metasploit-search":query
+   "metasploit-model (Electro)":search_with -> "metasploit-search":with
+}

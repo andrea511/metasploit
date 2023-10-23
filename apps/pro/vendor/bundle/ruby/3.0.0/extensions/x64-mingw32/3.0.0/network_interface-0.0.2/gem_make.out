@@ -1,0 +1,377 @@
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/network_interface-0.0.2/ext/network_interface_ext
+C:/Users/vagrant/pro/pkg/w32/ruby/bin/ruby.exe -I C:/Users/vagrant/pro/pkg/w32/ruby/lib/ruby/site_ruby/3.0.0 -r ./siteconf20230522-388-9cfpij.rb extconf.rb
+
+[*] Running checks for netifaces code...
+[*] Warning : this platform as not been tested
+checking for getifaddrs()... yes
+checking for getnameinfo()... yes
+checking for net/if_dl.h... no
+checking for netash/ash.h... no
+checking for netatalk/at.h... no
+checking for netax25/ax25.h... no
+checking for neteconet/ec.h... no
+checking for netipx/ipx.h... no
+checking for netpacket/packet.h... no
+checking for netrose/rose.h... no
+checking for struct sockaddr.sa_len in sys/types.h,sys/socket.h,net/if.h... no
+checking for struct sockaddr_at in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_ax25 in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_dl in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_eon in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_in in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_in6 in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_inarp in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_ipx in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_iso in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_ns in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_un in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_x25 in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_rose in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_ash in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_ec in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_ll in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_atmpvc in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_atmsvc in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_dn in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_irda in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+checking for struct sockaddr_llc in sys/types.h,sys/socket.h,sys/un.h,net/if.h,netinet/in.h... no
+creating Makefile
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/network_interface-0.0.2/ext/network_interface_ext
+make DESTDIR\= clean
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/network_interface-0.0.2/ext/network_interface_ext
+make DESTDIR\=
+generating network_interface_ext-x64-mingw32.def
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 15733 s in the future
+compiling netifaces.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+netifaces.c: In function 'rbnetifaces_s_interfaces':
+netifaces.c:577:5: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+  577 |     if (pAdapterInfo)
+      |     ^~
+netifaces.c:580:7: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+  580 |       rb_raise(rb_eRuntimeError, "Unknow error at OS level");
+      |       ^~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_interface_info':
+netifaces.c:735:5: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+  735 |     if (pAdapterInfo)
+      |     ^~
+netifaces.c:738:7: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+  738 |       rb_raise(rb_eRuntimeError, "Unknow error at OS level");
+      |       ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/intern.h:57,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:101,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+netifaces.c:794:65: warning: pointer targets in passing argument 1 of 'rb_str_new_cstr' differ in signedness [-Wpointer-sign]
+  794 |           rb_hash_aset(result, rb_str_new2("name"), rb_str_new2(buffer));
+      |                                                                 ^~~~~~
+      |                                                                 |
+      |                                                                 LPBYTE {aka unsigned char *}
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/intern/string.h:222:25: note: in definition of macro 'rb_str_new_cstr'
+  222 |       rb_str_new_cstr) (str))
+      |                         ^~~
+netifaces.c:794:53: note: in expansion of macro 'rb_str_new2'
+  794 |           rb_hash_aset(result, rb_str_new2("name"), rb_str_new2(buffer));
+      |                                                     ^~~~~~~~~~~
+netifaces.c:794:65: note: expected 'const char *' but argument is of type 'LPBYTE' {aka 'unsigned char *'}
+  794 |           rb_hash_aset(result, rb_str_new2("name"), rb_str_new2(buffer));
+      |                                                                 ^~~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/intern/string.h:222:25: note: in definition of macro 'rb_str_new_cstr'
+  222 |       rb_str_new_cstr) (str))
+      |                         ^~~
+netifaces.c:794:53: note: in expansion of macro 'rb_str_new2'
+  794 |           rb_hash_aset(result, rb_str_new2("name"), rb_str_new2(buffer));
+      |                                                     ^~~~~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_addresses':
+netifaces.c:277:5: warning: 'strncpy' output truncated before terminating nul copying 12 bytes from a string of the same length [-Wstringop-truncation]
+  277 |     strncpy(cmpAdapterName, "\\Device\\NPF_", 12);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_interfaces':
+netifaces.c:596:5: warning: 'strncpy' output truncated before terminating nul copying 12 bytes from a string of the same length [-Wstringop-truncation]
+  596 |     strncpy(outputname, "\\Device\\NPF_", 12);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_interface_info':
+netifaces.c:764:5: warning: 'strncpy' output truncated before terminating nul copying 12 bytes from a string of the same length [-Wstringop-truncation]
+  764 |     strncpy(cmpAdapterName, "\\Device\\NPF_", 12);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:779:5: warning: 'strncpy' output truncated before terminating nul copying 80 bytes from a string of the same length [-Wstringop-truncation]
+  779 |     strncpy(keypath, prefix, prefix_len);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:781:5: warning: 'strncpy' output truncated before terminating nul copying 11 bytes from a string of the same length [-Wstringop-truncation]
+  781 |     strncpy(keypath + prefix_len + adaptername_len, sufix, sufix_len);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:765:5: warning: 'strncpy' specified bound depends on the length of the source argument [-Wstringop-overflow=]
+  765 |     strncpy(cmpAdapterName + 12, pInfo->AdapterName, AdapterName_len);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:762:27: note: length computed here
+  762 |     int AdapterName_len = strlen(pInfo->AdapterName);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_addresses':
+netifaces.c:278:5: warning: 'strncpy' specified bound depends on the length of the source argument [-Wstringop-overflow=]
+  278 |     strncpy(cmpAdapterName + 12, pInfo->AdapterName, AdapterName_len);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:269:27: note: length computed here
+  269 |     int AdapterName_len = strlen(pInfo->AdapterName);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~
+linking shared-object network_interface_ext.so
+make: warning:  Clock skew detected.  Your build may be incomplete.
+
+current directory: C:/Users/vagrant/pro/pkg/w32/bun/vendor/bundle/ruby/3.0.0/gems/network_interface-0.0.2/ext/network_interface_ext
+make DESTDIR\= install
+make: Warning: File '/C/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h' has modification time 15731 s in the future
+compiling netifaces.c
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/int.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'RB_INT2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:88:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   88 |     const unsigned long j = i;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_idiv':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     const SIGNED_VALUE y = x - RUBY_FIXNUM_FLAG;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h: In function 'rbimpl_fix2long_by_shift':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/long.h:140:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  140 |     const SIGNED_VALUE y = x;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/fl_type.h:35,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h: In function 'RB_BUILTIN_TYPE':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/value_type.h:157:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  157 |     VALUE ret = RBASIC(obj)->flags & RUBY_T_MASK;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/char.h:29,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h: In function 'RSTRING_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rstring.h:109:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  109 |     VALUE f = RBASIC(str)->flags;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic.h:36,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:25,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h: In function 'RB_ST2FIX':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/arithmetic/st_data_t.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     unsigned long y = RBIMPL_CAST((unsigned long)x);
+      |     ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:23,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_EMBED_LEN':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:123:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  123 |     VALUE f = RBASIC(ary)->flags;
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_PTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:248:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  248 |     VALUE tmp = RB_OBJ_WB_UNPROTECT_FOR(ARRAY, ary);
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h: In function 'RARRAY_ASET':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:227:5: note: in definition of macro 'RBIMPL_RARRAY_STMT'
+  227 |     const VALUE rbimpl_ary = (ary);                          \
+      |     ^~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rarray.h:255:5: note: in expansion of macro 'RARRAY_PTR_USE_TRANSIENT'
+  255 |     RARRAY_PTR_USE_TRANSIENT(ary, ptr,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:30,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h: In function 'ROBJECT_IVPTR':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/robject.h:86:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   86 |     struct RObject *const ptr = ROBJECT(obj);
+      |     ^~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core.h:31,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:26,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h: In function 'RREGEXP_SRC':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/core/rregexp.h:55:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   55 |     VALUE ret = RREGEXP(rexp)->src;
+      |     ^~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:42,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h: In function 'rb_clone_setup':
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/newobj.h:56:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   56 |     const VALUE flags = RUBY_FL_PROMOTED0 | RUBY_FL_PROMOTED1 | RUBY_FL_FINALIZE;
+      |     ^~~~~
+netifaces.c: In function 'rbnetifaces_s_interfaces':
+netifaces.c:577:5: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+  577 |     if (pAdapterInfo)
+      |     ^~
+netifaces.c:580:7: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+  580 |       rb_raise(rb_eRuntimeError, "Unknow error at OS level");
+      |       ^~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_interface_info':
+netifaces.c:735:5: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+  735 |     if (pAdapterInfo)
+      |     ^~
+netifaces.c:738:7: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+  738 |       rb_raise(rb_eRuntimeError, "Unknow error at OS level");
+      |       ^~~~~~~~
+In file included from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/intern.h:57,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/ruby.h:101,
+                 from C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby.h:38,
+                 from netifaces.c:1:
+netifaces.c:794:65: warning: pointer targets in passing argument 1 of 'rb_str_new_cstr' differ in signedness [-Wpointer-sign]
+  794 |           rb_hash_aset(result, rb_str_new2("name"), rb_str_new2(buffer));
+      |                                                                 ^~~~~~
+      |                                                                 |
+      |                                                                 LPBYTE {aka unsigned char *}
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/intern/string.h:222:25: note: in definition of macro 'rb_str_new_cstr'
+  222 |       rb_str_new_cstr) (str))
+      |                         ^~~
+netifaces.c:794:53: note: in expansion of macro 'rb_str_new2'
+  794 |           rb_hash_aset(result, rb_str_new2("name"), rb_str_new2(buffer));
+      |                                                     ^~~~~~~~~~~
+netifaces.c:794:65: note: expected 'const char *' but argument is of type 'LPBYTE' {aka 'unsigned char *'}
+  794 |           rb_hash_aset(result, rb_str_new2("name"), rb_str_new2(buffer));
+      |                                                                 ^~~~~~
+C:/Users/vagrant/pro/pkg/w32/ruby/include/ruby-3.0.0/ruby/internal/intern/string.h:222:25: note: in definition of macro 'rb_str_new_cstr'
+  222 |       rb_str_new_cstr) (str))
+      |                         ^~~
+netifaces.c:794:53: note: in expansion of macro 'rb_str_new2'
+  794 |           rb_hash_aset(result, rb_str_new2("name"), rb_str_new2(buffer));
+      |                                                     ^~~~~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_addresses':
+netifaces.c:277:5: warning: 'strncpy' output truncated before terminating nul copying 12 bytes from a string of the same length [-Wstringop-truncation]
+  277 |     strncpy(cmpAdapterName, "\\Device\\NPF_", 12);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_interfaces':
+netifaces.c:596:5: warning: 'strncpy' output truncated before terminating nul copying 12 bytes from a string of the same length [-Wstringop-truncation]
+  596 |     strncpy(outputname, "\\Device\\NPF_", 12);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_interface_info':
+netifaces.c:764:5: warning: 'strncpy' output truncated before terminating nul copying 12 bytes from a string of the same length [-Wstringop-truncation]
+  764 |     strncpy(cmpAdapterName, "\\Device\\NPF_", 12);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:779:5: warning: 'strncpy' output truncated before terminating nul copying 80 bytes from a string of the same length [-Wstringop-truncation]
+  779 |     strncpy(keypath, prefix, prefix_len);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:781:5: warning: 'strncpy' output truncated before terminating nul copying 11 bytes from a string of the same length [-Wstringop-truncation]
+  781 |     strncpy(keypath + prefix_len + adaptername_len, sufix, sufix_len);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:765:5: warning: 'strncpy' specified bound depends on the length of the source argument [-Wstringop-overflow=]
+  765 |     strncpy(cmpAdapterName + 12, pInfo->AdapterName, AdapterName_len);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:762:27: note: length computed here
+  762 |     int AdapterName_len = strlen(pInfo->AdapterName);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c: In function 'rbnetifaces_s_addresses':
+netifaces.c:278:5: warning: 'strncpy' specified bound depends on the length of the source argument [-Wstringop-overflow=]
+  278 |     strncpy(cmpAdapterName + 12, pInfo->AdapterName, AdapterName_len);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+netifaces.c:269:27: note: length computed here
+  269 |     int AdapterName_len = strlen(pInfo->AdapterName);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~
+linking shared-object network_interface_ext.so
+/usr/bin/install -c -m 0755 network_interface_ext.so ./.gem.20230522-388-mq6gp
+make: warning:  Clock skew detected.  Your build may be incomplete.

@@ -1,0 +1,1 @@
+Metasploit::Pro::UI::Engine.load_seed

@@ -1,0 +1,22 @@
+define [
+  '<%= javascript_path("apps/backbone/views/collection_views/cards_collection_view") %>'
+  '<%= javascript_path("templates/apps/layouts/apps_overview_collection_layout") %>'
+  '<%= javascript_path("apps/backbone/views/filter_view") %>'
+  '<%= javascript_path("apps/backbone/models/app") %>'
+  'jquery'
+], (CardsCollectionView, Template, FilterView, App, $) ->
+  class AppsOverviewCollectionLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['apps/layouts/apps_overview_collection_layout']
+
+    regions:
+      filtersArea: '.filters'
+      collectionArea:  '.collection'
+
+    renderRegions: ->
+      appData = $.parseJSON($('meta[name=apps]').attr('content'))
+      apps = _.map(appData, (attrs) -> new App(attrs))
+      collection = new Backbone.Collection(apps, { model: App })
+      @cardsView = new CardsCollectionView(collection: collection)
+      @collectionArea.show(@cardsView)
+      @filterView = new FilterView(collectionView: @cardsView, collection: collection)
+      @filtersArea.show(@filterView)

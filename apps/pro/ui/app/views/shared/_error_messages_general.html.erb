@@ -1,0 +1,10 @@
+<% if @errors %>
+  <div id="errorExplanation" class="errors">
+    <p><%= pluralize(@errors.keys.count, "error") %> prevented this record from being saved:</p>
+    <ul>
+      <% @errors.each_value do |msg| %>
+        <li><%= msg %></li>
+      <% end %> 
+    </ul>
+  </div>
+<% end %>

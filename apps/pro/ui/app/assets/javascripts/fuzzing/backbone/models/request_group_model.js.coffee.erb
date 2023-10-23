@@ -1,0 +1,4 @@
+define [] , () ->
+  class RequestGroupModel extends Backbone.Model
+    url: () ->
+      return '/workspaces/'+@.get("workspace_id")+'/fuzzing/fuzzing/'+@.get("fuzzing_id")+'/request_groups'

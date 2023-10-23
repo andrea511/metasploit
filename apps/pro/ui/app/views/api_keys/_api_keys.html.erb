@@ -1,0 +1,62 @@
+<% include_javascript 'api_keys/_index' %>
+
+<div class="api_keys">
+
+  <p>
+    API Keys provide remote access to the Metasploit product with administrative privileges. Access to the API occurs over the standard
+    web service and provides full access to all Metasploit Pro features. For more information about the Metasploit Remote API,
+    please see the <a href="https://metasploit.help.rapid7.com/docs/rest-api" target="_api_guide_docs">Metasploit Remote API Guide</a>.
+  </p>
+
+<%# TODO: For some reason, collection routes don't generate correctly. destroy_api_keys_path wants an id, but it doesn't need one.
+  Had to hardcode the route to get around this issue. %>
+<%= form_tag '/api_keys/destroy', :method => :delete do %>
+
+  <div class="control-bar">
+    <span class="button">
+      <%= link_to "Create an API Key", new_api_key_path, :class => "new" %>
+    </span>
+    <span class="button">
+      <%= submit_tag "Delete", :class => "delete", :id => "api_key_delete", :data => { :confirm => "Delete selected API keys?" } %>
+    </span>
+  </div>
+
+  <table id="api_key_list" class="list">
+    <thead>
+      <th class="checkbox"><%= check_box_tag "all_api_keys", true %></th>
+      <th>Name</th>
+      <th>Authentication Token</th>
+      <th>Issue Date</th>
+    </thead>
+    <tbody>
+    <% @api_keys.each do |akey| %>
+    <tr id="<%=h dom_id(akey) %>" class="<%=h row_cycle %>" rurl="<%= reveal_api_key_url(akey) %>" rid="<%= akey.id %>">
+      <td><%= check_box_tag("api_key_ids[]", akey.id, false, :id => nil) %></td>
+      <td><%=akey.name %></td>
+      <td>
+        <%= link_to(h(akey.obfuscated_token), '#', :title => 'View Full Key', :class => 'reveal') %>
+      </td>
+      <td>
+        <%= akey.created_at %>
+      </td>
+    </tr>
+    <% end %>
+    <% if @api_keys.empty? %>
+      <td colspan=4 align=center>
+        No API Keys
+      </td>
+    <% end %>
+    </tbody>
+  </table>
+  
+<% end %>
+
+</div>
+
+<%= nonced_javascript_tag do %>
+  (function() {
+    jQuery(function($) {
+      $("#all_api_keys").checkAll($("#api_key_list"));
+    });
+  }).call(this);
+<% end %>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="authenticated_details_services" language="groovy" pageWidth="543" pageHeight="752" columnWidth="543" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dd417550-df85-4c32-a153-07ceca83a734">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="app_run_id" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+services.port,
+upper(services.proto) as protocol,
+services.name,
+logins.last_attempted_at,
+logins.status,
+coalesce(logins.access_level, 'Unknown') as access_level
+from metasploit_credential_logins logins
+inner join credential_logins_tasks clt ON (clt.login_id = logins.id)
+inner join services ON (services.id = logins.service_id)
+inner join tasks ON (clt.task_id = tasks.id)
+inner join hosts ON (services.host_id = hosts.id)
+where tasks.app_run_id = $P{app_run_id}
+and hosts.id = $P{host_id}
+order by services.port, logins.last_attempted_at]]>
+	</queryString>
+	<field name="port" class="java.lang.Integer"/>
+	<field name="protocol" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="last_attempted_at" class="java.sql.Timestamp"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="access_level" class="java.lang.String"/>
+	<pageHeader>
+		<band height="31">
+			<staticText>
+				<reportElement uuid="9d5ddbb9-513b-4565-9d7b-1bf709fbda50" style="section_header_3" x="0" y="0" width="53" height="31"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Port]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d5ddbb9-513b-4565-9d7b-1bf709fbda50" style="section_header_3" x="53" y="0" width="59" height="31"/>
+				<textElement textAlignment="Left">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Protocol]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d5ddbb9-513b-4565-9d7b-1bf709fbda50" style="section_header_3" x="112" y="0" width="113" height="31"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Service]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d5ddbb9-513b-4565-9d7b-1bf709fbda50" style="section_header_3" x="225" y="0" width="122" height="31"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Login Attempted]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d5ddbb9-513b-4565-9d7b-1bf709fbda50" style="section_header_3" x="347" y="0" width="91" height="31"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Login Result]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d5ddbb9-513b-4565-9d7b-1bf709fbda50" style="section_header_3" x="438" y="0" width="105" height="31"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Access Level]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="25">
+			<textField>
+				<reportElement uuid="25436c37-fcbe-44c9-9c59-e3ff4b55d6ab" style="table_text_underlined" x="0" y="0" width="53" height="25"/>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{port}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="25436c37-fcbe-44c9-9c59-e3ff4b55d6ab" style="table_text_underlined" x="53" y="0" width="59" height="25"/>
+				<textElement textAlignment="Left">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{protocol}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="25436c37-fcbe-44c9-9c59-e3ff4b55d6ab" style="table_text_underlined" x="112" y="0" width="113" height="25"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="25436c37-fcbe-44c9-9c59-e3ff4b55d6ab" style="table_text_underlined" x="225" y="0" width="122" height="25"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd h:mma").format($F{last_attempted_at})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="25436c37-fcbe-44c9-9c59-e3ff4b55d6ab" style="table_text_underlined" x="347" y="0" width="91" height="25"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="25436c37-fcbe-44c9-9c59-e3ff4b55d6ab" style="table_text_underlined" x="438" y="0" width="105" height="25"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{access_level}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

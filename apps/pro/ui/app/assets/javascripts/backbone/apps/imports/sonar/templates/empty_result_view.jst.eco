@@ -1,0 +1,8 @@
+<div class="row v-padding">
+  <div id="sonar-empty-results" class="columns small-12">
+    <div class="columns small-12 shared boxes inset">
+      Query Sonar for Results
+    </div>
+  </div>
+
+</div>

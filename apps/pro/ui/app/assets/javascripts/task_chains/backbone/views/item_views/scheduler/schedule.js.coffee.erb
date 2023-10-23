@@ -1,0 +1,59 @@
+define [
+  'jquery'
+], ($) ->
+  class Schedule extends Backbone.Marionette.ItemView
+
+    ui:
+      schedule_type: '#schedule_type'
+      toggle_button: '[name="schedule_suspend"]'
+      form : 'form'
+
+    events:
+      'submit form' : '_formSubmit'
+      'change #schedule_type' : '_scheduleTypeChanged'
+
+
+    initialize: (opts={}) ->
+      _.extend(@,opts)
+
+    # Override Render if we have the form cached.
+    # We aren't storing the form field values in a Backbone Model :-(
+    render: () ->
+      if @cachedEl? or @restoreEl?
+        @isClosed = false
+        @triggerMethod("before:render", @)
+        @triggerMethod("item:before:render", @)
+
+        if @restoreEl?
+          @$el.html(@restoreEl)
+        else
+          @$el.html(@cachedEl)
+
+        @bindUIElements()
+        @triggerMethod("render", @)
+        @triggerMethod("item:rendered", @)
+
+        @
+      else
+        super
+
+
+    onShow:() ->
+      #Used to restore inputs if user cancels the modal and made changes
+      @restoreEl = helpers.cloneNodeAndForm(@el)
+
+      @undelegateEvents()
+      @delegateEvents()
+
+      #So we Run Validations if a schedule doesn't exist on first load to disable icons
+      unless @model?
+        @ui.toggle_button.trigger('toggleTitle')
+
+
+    _formSubmit:(e) ->
+      @restoreEl = null
+      @cachedEl = helpers.cloneNodeAndForm(@el)
+      $(@el).trigger('closeSchedule')
+
+    _scheduleTypeChanged: () ->
+      $(@el).trigger('scheduleChanged', @ui.schedule_type)

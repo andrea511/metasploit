@@ -1,0 +1,12 @@
+#!/bin/sh
+
+CWD="$(readlink -f $(dirname "$0"))"
+RUBY="$( readlink -f ${CWD}/../../../../ruby/bin/ruby )"
+cd "${CWD}"
+
+if [ -f "${CWD}/../../../../.systemd_enabled" ]; then
+  systemctl $1 metasploit-prosvc.service
+  exit $?
+fi
+
+${RUBY} ${CWD}/ctl.rb $1 $2 $3 $4 $5

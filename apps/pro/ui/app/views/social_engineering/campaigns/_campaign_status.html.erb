@@ -1,0 +1,8 @@
+<div class='status-top {{ (persisted) ? 'persisted' : '' }}'>
+  {% if (persisted) { %}
+    You are editing an existing campaign which has the following state: 
+      <label class='status {{campaignDetails.current_status.toLowerCase()}}' style='line-height: 18px; margin-left: 3px'>{{campaignDetails.current_status}}</span>
+  {% } else { %}
+    You are creating a new campaign.
+  {% } %}
+</div>

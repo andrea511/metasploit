@@ -1,0 +1,6 @@
+@echo off
+CALL "@@BITROCK_INSTALLDIR@@\scripts\setenv.bat"
+cd "@@BITROCK_INSTALLDIR@@"
+ruby "@@BITROCK_INSTALLDIR@@\apps\pro\ui\script\diagnostic_logs.rb"
+explorer .
+pause

@@ -1,0 +1,14 @@
+<% if @private_type_humanized == 'SSHKey': %>
+<div class='ssh-key-fingerprint'>
+  <h4>Fingerprint:</h4>
+
+  <div><%= @full_fingerprint %></div>
+
+</div>
+
+<h4 class="private-key">Private key:</h4>
+<% end %>
+
+<div class='private-data'>
+  <%= @private %>
+</div>

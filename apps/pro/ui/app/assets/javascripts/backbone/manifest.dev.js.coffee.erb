@@ -1,0 +1,20 @@
+#
+# This file is used only as a "watcher" file in development mode. It is never
+# served to the client, but allows us to dynamically reload the require_config
+# at the right moment (e.g., when the contents of any subdirectory change).
+#
+
+#
+# We prevent this file from ever actually being compiled, as this would bloat
+# our updater/installer sizes unnecessarily.
+#
+
+#
+# We can't require_tree ./ because it will induce a circular dependency :(
+# For some reason the #stub directive does not save us here...
+# So instead we require the subdirectories in ./ one-by-one, awesome.
+#
+
+#= require_tree './apps'
+#= require_tree './entities'
+#= require_tree './lib'

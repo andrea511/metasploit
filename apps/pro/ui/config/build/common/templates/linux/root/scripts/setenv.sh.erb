@@ -1,0 +1,101 @@
+#!/bin/sh
+if [ ! -z "${MSP_ENV_ACTIVE}" ]; then
+  return 0
+fi
+
+<% installation_pathname = "@@BITROCK_INSTALLDIR@@" %>
+<% ruby_platform = "@@BITROCK_RUBY_PLATFORM@@" %>
+
+if ! echo $LD_LIBRARY_PATH | egrep "<%= installation_pathname %>/common" > /dev/null ; then
+<%
+  bin_parents = [
+    'ruby',
+    'postgresql',
+    'common',
+    'john',
+    'java'
+  ]
+
+  bin_pathnames = bin_parents.collect { |parent|
+    "#{installation_pathname}/#{parent}/bin"
+  }
+
+  path_components = bin_pathnames + ['$PATH']
+  path = path_components.join(':')
+%>
+PATH="<%= path %>"
+export PATH
+<%
+  lib_parents = [
+    'ruby',
+    'common',
+    'postgresql'
+  ]
+
+  lib_pathnames = lib_parents.collect { |parent|
+    "#{installation_pathname}/#{parent}/lib"
+  }
+
+  ld_library_path_components = lib_pathnames + ['$LD_LIBRARY_PATH']
+  ld_library_path = ld_library_path_components.join(':')
+%>
+LD_LIBRARY_PATH="<%= ld_library_path %>"
+export LD_LIBRARY_PATH
+fi
+
+# Set home if its not already set
+if ! env | egrep "HOME="  > /dev/null ;then
+  HOME="<%= installation_pathname %>"
+  export HOME
+fi
+
+SSL_CERT_FILE="<%= installation_pathname %>/apps/pro/engine/certs/cacert.pem"
+export SSL_CERT_FILE
+
+#### RUBY ENV #####
+# Don't override GEM_PATH so users can install gems for the system ruby and
+# they at least have a chance of working with ours
+<% ruby_abi_version = '3.0.0' %>
+<% ruby_pathname = "#{installation_pathname}/ruby" %>
+GEM_HOME=<%= "#{ruby_pathname}/lib/ruby/gems/#{ruby_abi_version}" %>
+RUBY_HOME=<%= ruby_pathname %>
+<%
+  ruby_lib_path = "lib/ruby"
+  ruby_abi_lib_path = "#{ruby_lib_path}/#{ruby_abi_version}"
+  site_ruby_path = "#{ruby_lib_path}/site_ruby"
+  site_ruby_abi_path = "#{site_ruby_path}/#{ruby_abi_version}"
+
+  rubylib_paths = [
+    site_ruby_abi_path,
+    "#{site_ruby_abi_path}/#{ruby_platform}",
+    site_ruby_path,
+    ruby_abi_lib_path,
+    "#{ruby_abi_lib_path}/#{ruby_platform}",
+  ]
+
+  rubylib_pathnames = rubylib_paths.collect { |path|
+    "#{ruby_pathname}/#{path}"
+  }
+
+  rubylib = rubylib_pathnames.join(':')
+%>
+RUBYLIB="<%= rubylib %>"
+RUBYOPT="-rbundler/setup -rrubygems"
+BUNDLE_GEMFILE="<%= installation_pathname %>/apps/pro/Gemfile-pro"
+export GEM_HOME
+export RUBY_HOME
+export RUBYLIB
+export RUBYOPT
+export BUNDLE_GEMFILE
+
+# Set terminfo for Readline
+TERMINFO="<%= installation_pathname %>/common/share/terminfo"
+export TERMINFO
+
+NMAPDIR="<%= installation_pathname %>/common/share/nmap/"
+export NMAPDIR
+
+RAILS_ENV=production
+export RAILS_ENV
+MSP_ENV_ACTIVE=true
+export MSP_ENV_ACTIVE

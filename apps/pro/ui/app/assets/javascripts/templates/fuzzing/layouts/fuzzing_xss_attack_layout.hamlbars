@@ -1,0 +1,15 @@
+%h1 Fuzzing Frame Attack - XSS
+
+%div
+  .row
+    .columns.small-2 Reference Request
+    .columns.small-10
+      %button.columns.small-2 Choose another request
+      .columns.small-10
+  .request
+
+.parameters
+
+.target-browsers
+
+.xss-crafter

@@ -1,0 +1,6 @@
+<%= form_tag activate_path do %>
+	<%= hidden_field_tag "revert", "true" %>
+	<span class="btn">
+		<%= submit_tag "Revert License", :class => "register" %>
+	</span>
+<% end %>

@@ -1,0 +1,20 @@
+<% title "Activate Metasploit" %>
+
+<h1>Metasploit Offline Activation</h1>
+
+<p>Metasploit requires an Internet connection for the first activation of the product. Once you have activated Metasploit, you can use it offline.</p>
+
+<p>However, if activating online is not an option even for the first activation, you can request an offline activation file from the <a href="https://www.rapid7.com/for-customers/">Rapid7 Customer Center</a>. This option is only available for Rapid7 customers who use a commercial Metasploit Edition (no trials).</p>
+
+<%= form_tag offline_activation_path, :multipart => true do %>
+	<div class="inline_fields">
+		<p>
+      <%= file_field_tag "activation_file", :autofocus => true, :size => 60 %>
+		</p>
+	</div>
+
+
+	<span class="btn">
+		<%= submit_tag "Activate Product", :class => "register" %>
+	</span>
+<% end %>

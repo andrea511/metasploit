@@ -1,0 +1,4 @@
+<% for icon in @model.get('parsedIcons'): %>
+  <span class="<%= icon %>"></span>
+<% end %>
+

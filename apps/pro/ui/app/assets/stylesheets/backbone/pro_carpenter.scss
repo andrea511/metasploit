@@ -1,0 +1,14 @@
+@import 'marionette.carpenter';
+@import "css3-mixins";
+@import '../shared/variables';
+@import '../components/buttons';
+@import '../components/spinner';
+
+
+.table-component {
+  .pagination-region .paginator .page_navigation input.curr{
+    height: 22px;
+  }
+}
+
+

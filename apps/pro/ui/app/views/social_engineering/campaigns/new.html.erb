@@ -1,0 +1,18 @@
+<% title "New Campaign" %>
+<% breadcrumb workspace_link, social_engineering_campaigns_link, social_engineering_campaign_link %>
+
+<%= javascript_include_tag 'backbone/require_config' %>
+
+<div class="one_col_no_sidebar">
+	<h1>New Campaign</h1>
+
+	<%= semantic_form_for [:workspace, @campaign], :html => { :multipart => true } do |f| %>
+		<%= render 'form', :f => f %>
+		<%= f.actions do %>
+			<span class="btn"><%= f.submit 'Save', :class => "save" %></span>
+			<span class="btn"><%= link_to "Cancel", :back, :class => "cancel" %></span>
+		<% end -%>
+	<% end %>
+</div>
+
+<%= add_disable_overlay unless @licensed %>

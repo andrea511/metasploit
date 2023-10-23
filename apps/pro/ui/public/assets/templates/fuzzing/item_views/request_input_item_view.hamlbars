@@ -1,0 +1,6 @@
+%h2 Collect GET
+
+.row
+  %textarea{:class=>'small-10 columns field'}
+  .small-2.columns 
+    %button.columns.small-6 Load

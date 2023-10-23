@@ -1,0 +1,100 @@
+// scss for 
+
+@import "css3-mixins";
+@import "shared/variables";
+
+
+// static circle shapes
+.row.circles {
+  width: 50%;
+  margin: 15px auto;
+  .cell {
+    text-align: center;
+    //p { cursor: pointer;}
+    p.circle {
+      $base-size: 56px;
+      $base-color: #eee;
+      width: $base-size;
+      height: $base-size;
+      line-height: $base-size;
+      text-align: center;
+      background: $base-color;
+      font-size: 1.4em;
+      font-weight: 600;
+      color: #444;
+      display: inline-block;
+      border-radius: 50%;
+      border: 4px solid darken($base-color, 8%);
+      margin: 0;
+      transition: all .1s;
+      // &:hover {
+      //   $hover-color: #ffad4c;
+      //   background: $hover-color;
+      //   border: 4px solid darken($hover-color, 8%);
+      //   color: #fff;
+      // }
+    }
+    p.text {
+      display: inline-block;
+      margin: 5px 0;
+    }
+  }
+}
+
+// now we in business
+.stats {
+  // pie chart stats!
+  .pie-chart {
+    text-align: center;
+    width: 80px;
+    margin: 0 auto;
+  }
+  label.stat, label.desc {
+    display: block;
+    font-size: 11px;
+    line-height: 1.2;
+    @extend .small-caps-font;
+    font-variant: none;
+    text-transform: uppercase;
+    text-shadow: 0 0 0 #666;
+    color: #777;
+    &.stat {
+      font-weight: 600;
+    }
+    &.desc {
+
+    }
+  }
+
+  .big-stat {
+    @extend .sexy-font;    
+    span.stat {
+      color: #000;
+      display: block;
+      line-height: 1.4;
+      font-size: 41px;
+    }
+    label {
+      display: inline-block;
+      margin: 5px 5px;
+      font-size: 18px;
+      span {
+        line-height: 1.2;
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+}
+
+// partition map for port ranges/status
+.partition-map {
+  width: 532px;
+  background: #ddd;
+  height: 18px;
+  clear: both;
+}
+
+.columns.hide {
+  visibility: hidden;
+}

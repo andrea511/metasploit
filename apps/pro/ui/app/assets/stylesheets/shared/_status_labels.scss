@@ -1,0 +1,28 @@
+@import "css3-mixins";
+
+label.status {
+  display: inline-block;
+  color: #fff;
+  border-radius: 5px;
+  padding: 2px 6px;
+  background: #999;
+  &.finished, &.completed {
+    background: #666;
+  }
+  &.unconfigured {
+    background: #cacaca;
+  }
+  &.launchable, &.ready {
+    background: #ff9900;
+  }
+  &.running, &.importing, &.scanning, &.building_matches, &.collecting_evidence,
+    &.exploiting, &.cleaning_up, &.reporting {
+    background: #990000;
+  }
+  &.preparing, &.paused {
+    background: #ff6200;
+  }
+  &.interrupted, &.cancelled, &.failed, &.aborted, &.stopped {
+    background: #550000;
+  }
+}

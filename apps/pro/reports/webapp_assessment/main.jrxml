@@ -1,0 +1,1378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="main" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e1c29546-f7bd-485e-93b7-916758275323">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="2305"/>
+	<template><![CDATA[$P{style_template_dir} + "webapp_styles.jrtx"]]></template>
+	<subDataset name="PageAddition" uuid="fbc5f037-ac14-42b1-97d9-0b13e51c331b">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select
+count(id) as pages,
+truncated_date
+from
+(
+		select date_trunc('minute', wp.created_at) as truncated_date, wp.id
+		from web_pages wp
+		inner join web_sites ws on (wp.web_site_id = ws.id)
+		inner join services s on (ws.service_id = s.id)
+		inner join hosts on (s.host_id = hosts.id)
+		where hosts.workspace_id = $P{workspace_id}
+		and $P!{host_address_clause}
+		order by date_trunc('minute', wp.created_at)
+) inn
+group by truncated_date
+order by truncated_date]]>
+		</queryString>
+		<field name="pages" class="java.lang.Long"/>
+		<field name="truncated_date" class="java.sql.Timestamp"/>
+	</subDataset>
+	<subDataset name="FormAddition" uuid="5c913c56-f5fc-4250-a607-4198e192782a">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select
+	count(id) as forms,
+	truncated_date
+from
+(
+select date_trunc('minute', wf.created_at) truncated_date, wf.id
+from web_forms wf
+inner join web_sites ws on (wf.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+order by date_trunc('minute', wf.created_at)
+) inn
+group by truncated_date
+order by truncated_date]]>
+		</queryString>
+		<field name="forms" class="java.lang.Long"/>
+		<field name="truncated_date" class="java.sql.Timestamp"/>
+	</subDataset>
+	<subDataset name="VulnAddition" uuid="6f4b28ea-a860-4648-9f57-a9143cf5af5f">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select
+	count(id) as web_vulns,
+	truncated_date
+from
+(
+select date_trunc('minute', wv.created_at) truncated_date, wv.id
+from web_vulns wv
+inner join web_sites ws on (wv.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+order by date_trunc('minute', wv.created_at)
+) inn
+group by truncated_date
+order by truncated_date]]>
+		</queryString>
+		<field name="web_vulns" class="java.lang.Long"/>
+		<field name="truncated_date" class="java.sql.Timestamp"/>
+	</subDataset>
+	<subDataset name="SessionAddition" uuid="39b48c94-abd2-4a5a-a3bc-ba7e551dd9f2">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select
+	count(id) as sessions,
+	truncated_date
+from
+(
+select date_trunc('minute', s.opened_at) truncated_date, s.id
+from sessions s
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+order by date_trunc('minute', s.opened_at)
+) inn
+group by truncated_date
+order by truncated_date]]>
+		</queryString>
+		<field name="sessions" class="java.lang.Long"/>
+		<field name="truncated_date" class="java.sql.Timestamp"/>
+	</subDataset>
+	<subDataset name="SiteAddition" uuid="31fafd4e-d1a3-402d-a98e-94192b2f547b">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select
+	count(id) as sites,
+	truncated_date
+from
+(
+select date_trunc('minute', ws.created_at) truncated_date, ws.id
+from web_sites ws
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+order by date_trunc('minute', ws.created_at)
+) inn
+group by truncated_date
+order by truncated_date]]>
+		</queryString>
+		<field name="sites" class="java.lang.Long"/>
+		<field name="truncated_date" class="java.sql.Timestamp"/>
+	</subDataset>
+	<subDataset name="WebsploitAttempts" uuid="97e4fc4f-1837-47ca-8fe7-ceee4a2cd7a6">
+		<parameter name="workspace_id" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+			<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+			<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select
+	count(id) as websploit_attempts,
+	truncated_date
+from
+(
+select date_trunc('minute', t.created_at) truncated_date, t.id
+from tasks t
+where t.workspace_id = $P{workspace_id}
+and t.module = 'pro/websploit'
+order by date_trunc('minute', t.created_at)
+) inn
+group by truncated_date
+order by truncated_date]]>
+		</queryString>
+		<field name="websploit_attempts" class="java.lang.Long"/>
+		<field name="truncated_date" class="java.sql.Timestamp"/>
+	</subDataset>
+	<parameter name="usernames_reported" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporting_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="style_template_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "style_templates/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{reporting_dir} + "images/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo_path" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="workspace_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="product_name" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[The name of the product used to generate the report]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Metasploit Pro"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_cover" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_exec_summ" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_engage_scope" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_owasp_status" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_summ_graphs" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_vuln_details" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="display_appendices" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="report_title" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Web Application Assessment Report"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="order_vulns_by" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Risk"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="vuln_order" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new GroovyShell(new Binding([order_by:$P{order_vulns_by}])).evaluate("""
+
+switch ( order_by ) {
+    case 'Host':
+        order = "host_name"
+        break
+    case 'Category':
+        order = "category"
+        break
+    case 'Path':
+        order = "wv.path"
+        break
+    case 'Risk':
+        order = "wv.risk desc"
+        break
+    case 'Vhost':
+        order = "ws.vhost"
+        break
+    case 'OWASP':
+        order = "owasp_category"
+        break
+}
+return order
+""")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="host_address_clause" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Enter "hosts.address is not null" without quotes, or a valid SQL statement to select among hosts.]]></parameterDescription>
+		<defaultValueExpression><![CDATA["hosts.address is not null"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[WITH site_ids_dates as (
+  select ws.id, ws.created_at
+  from web_sites ws
+  inner join services s on (ws.service_id = s.id)
+  inner join hosts on (s.host_id = hosts.id)
+  where hosts.workspace_id = $P{workspace_id}
+  and $P!{host_address_clause}
+), page_ids_dates as (
+  select wp.id, wp.created_at
+  from web_pages wp
+  inner join web_sites ws on (wp.web_site_id = ws.id)
+  inner join services s on (ws.service_id = s.id)
+  inner join hosts on (s.host_id = hosts.id)
+  where hosts.workspace_id = $P{workspace_id}
+  and $P!{host_address_clause}
+), form_ids_dates as (
+  select wf.id, wf.created_at
+  from web_forms wf
+  inner join web_sites ws on (wf.web_site_id = ws.id)
+  inner join services s on (ws.service_id = s.id)
+  inner join hosts on (s.host_id = hosts.id)
+  where hosts.workspace_id = $P{workspace_id}
+  and $P!{host_address_clause}
+), webvuln_ids_dates as (
+  select wv.id, wv.created_at
+  from web_vulns wv
+  inner join web_sites ws on (wv.web_site_id = ws.id)
+  inner join services s on (ws.service_id = s.id)
+  inner join hosts on (s.host_id = hosts.id)
+  where hosts.workspace_id = $P{workspace_id}
+  and $P!{host_address_clause}
+), websploit_ids_dates as (
+  select t.id, t.completed_at, t.created_at
+  from tasks t
+  where t.workspace_id = $P{workspace_id}
+   and module = 'pro/websploit'
+), session_ids_dates as (
+  select s.id, s.opened_at
+  from sessions s
+  inner join hosts on (s.host_id = hosts.id)
+  where hosts.workspace_id = $P{workspace_id}
+  and $P!{host_address_clause}
+)
+
+select
+	host_count,
+	site_count, (site_count > 2 and site_span >= interval '2 minute') show_site_sparkline,
+	first_site,
+	pages_found, (pages_found > 2 and page_span >= interval '2 minute') show_page_sparkline,
+	forms_found, (forms_found > 2 and form_span >= interval '2 minute') show_form_sparkline,
+	web_vulns, (web_vulns > 2 and vuln_span >= interval '2 minute') show_vuln_sparkline,
+	sessions_opened, (sessions_opened > 2 and session_span >= interval '2 minute') show_session_sparkline,
+  module_runtime,
+  websploit_attempts, (websploit_attempts > 2 and attempt_span >= interval '2 minute') show_attempt_sparkline,
+  owasp_failure_count,
+	vuln_cat_count,
+	os_vuln_count,
+	text_proof_count,
+	project_name, project_updated, project_created
+from
+(
+select
+count(id) site_count,
+coalesce((max(created_at) - min(created_at)), interval '0 second') site_span
+from site_ids_dates
+) a,
+(
+select min(ws.created_at) first_site
+from web_sites ws
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+) b,
+(
+select
+count(id) pages_found,
+coalesce((max(created_at) - min(created_at)), interval '0 second') as page_span
+from page_ids_dates
+) c,
+(
+select
+count(id) forms_found,
+coalesce((max(created_at) - min(created_at)), interval '0 second') as form_span
+from form_ids_dates
+) d,
+(
+select
+count(id) web_vulns,
+coalesce((max(created_at) - min(created_at)), interval '0 second') as vuln_span
+from webvuln_ids_dates
+) e,
+(
+select count(id) sessions_opened,
+coalesce((max(opened_at) - min(opened_at)), interval '0 second') as session_span
+from session_ids_dates
+) f,
+(
+select
+extract(epoch from sum(coalesce(completed_at, current_timestamp at time zone 'UTC') - created_at)) as module_runtime
+from tasks
+where workspace_id = $P{workspace_id}
+and module in ('pro/webscan', 'pro/webaudit', 'pro/websploit', 'pro/wizard/web_app_test')
+) g,
+(
+select count(id) websploit_attempts,
+coalesce((max(completed_at) - min(created_at)), interval '0 second') as attempt_span
+from websploit_ids_dates
+) h,
+(
+select count(distinct hosts.id) host_count
+from web_sites ws
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+) i,
+(
+select count(wco.id) owasp_failure_count
+from web_vulns wv
+inner join web_vuln_category_metasploits wcm on (wv.category_id = wcm.id)
+inner join web_vuln_category_projection_metasploit_owasps wcmo on (wcm.id = wcmo.metasploit_id)
+inner join web_vuln_category_owasps wco on (wcmo.owasp_id = wco.id)
+inner join web_sites ws on (wv.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+and wco.version = '2013rc1'
+) j,
+(
+select count(distinct hosts.os_name) os_vuln_count
+from web_vulns wv
+inner join web_sites ws on (wv.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+) k,
+(
+select count(wcm.id) vuln_cat_count
+from web_vulns wv
+inner join web_vuln_category_metasploits wcm on (wv.category_id = wcm.id)
+inner join web_sites ws on (wv.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+) l,
+(
+select count(wp.text) text_proof_count
+from web_vulns wv
+left outer join web_proofs wp on (wv.id = wp.vuln_id)
+inner join web_sites ws on (wv.web_site_id = ws.id)
+inner join services s on (ws.service_id = s.id)
+inner join hosts on (s.host_id = hosts.id)
+where hosts.workspace_id = $P{workspace_id}
+and $P!{host_address_clause}
+) m,
+(
+select
+w.name project_name,
+w.created_at project_created,
+w.updated_at project_updated
+from workspaces w
+where w.id = $P{workspace_id}
+) n]]>
+	</queryString>
+	<field name="host_count" class="java.lang.Long"/>
+	<field name="site_count" class="java.lang.Long"/>
+	<field name="first_site" class="java.sql.Timestamp"/>
+	<field name="pages_found" class="java.lang.Long"/>
+	<field name="forms_found" class="java.lang.Long"/>
+	<field name="web_vulns" class="java.lang.Long"/>
+	<field name="sessions_opened" class="java.lang.Long"/>
+	<field name="module_runtime" class="java.lang.Double"/>
+	<field name="websploit_attempts" class="java.lang.Long"/>
+	<field name="owasp_failure_count" class="java.lang.Long"/>
+	<field name="vuln_cat_count" class="java.lang.Long"/>
+	<field name="os_vuln_count" class="java.lang.Long"/>
+	<field name="text_proof_count" class="java.lang.Integer"/>
+	<field name="show_site_sparkline" class="java.lang.Boolean"/>
+	<field name="show_page_sparkline" class="java.lang.Boolean"/>
+	<field name="show_form_sparkline" class="java.lang.Boolean"/>
+	<field name="show_vuln_sparkline" class="java.lang.Boolean"/>
+	<field name="show_session_sparkline" class="java.lang.Boolean"/>
+	<field name="show_attempt_sparkline" class="java.lang.Boolean"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="project_updated" class="java.sql.Timestamp"/>
+	<field name="project_created" class="java.sql.Timestamp"/>
+	<title>
+		<band height="663" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_cover}]]></printWhenExpression>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement uuid="3fbc3773-dd0d-42a2-b9b0-c4c46411e52b" x="221" y="37" width="351" height="297"/>
+				<imageExpression><![CDATA[$P{logo_path}]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement uuid="67b2fb8f-ad3d-4557-ab0f-173956ca124c" x="221" y="642" width="320" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Pages: " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2f3f7b18-7795-41c3-9ec1-ff69c57ca1bf" style="generic_text" x="221" y="433" width="320" height="159"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[An overview of web application assessments performed in Metasploit Pro. Graphical summaries of findings from web scans, audits and exploit attempts allow you to focus on the areas of greatest potential impact. Vulnerabilities detected are correlated with OWASP application risk categories to provide a common schema for issue assessment. Details and proofs of each vulnerability uncovered in the assessment are provided along with remediation advice.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e8e1558c-816a-4f4f-8f2b-02fb08d7ffe4" x="222" y="334" width="351" height="69"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{report_title}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement uuid="4f101a04-899c-4c2d-8be0-f3608863fb54" x="0" y="662" width="571" height="1"/>
+			</break>
+			<textField>
+				<reportElement uuid="a1f8be9e-a077-48a7-b616-143242bed22a" mode="Transparent" x="1" y="1" width="220" height="661" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" markup="none">
+					<font fontName="SansSerif" size="48" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{product_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_cover} ?     $V{PAGE_NUMBER} == 2 :     $V{PAGE_NUMBER} == 1]]></printWhenExpression>
+			<textField pattern="">
+				<reportElement uuid="5a2d9963-b66c-4776-be19-81990420072b" style="last_audited" x="331" y="17" width="241" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Started " + (new SimpleDateFormat("MMMMM dd, yyyy")).format($F{first_site})]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement uuid="939e7756-e766-4c59-9e49-deb73907d7dd" style="report_generated" x="395" y="0" width="177" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c20e33eb-f534-4893-9b73-1af770b61c7d" style="Section Header - No BG" x="0" y="1" width="274" height="30"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{report_title}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="194ee464-b916-4ac9-8a1d-637e2781a862" style="separator_line" x="0" y="33" width="572" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="77" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{display_exec_summ}]]></printWhenExpression>
+			<line>
+				<reportElement uuid="b9038185-efa3-4be7-86e5-a0ae0ec4dc26" style="separator_line_lighter" x="1" y="51" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="37619488-35ac-4ee4-a218-b99aee4ff794" style="separator_line_lighter" x="1" y="73" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="b6c10282-fad3-40c2-b83b-67917944deb7" style="table_text" x="121" y="53" width="439" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="df3b6504-eee5-449a-bed8-96151b8fd587" style="table_text_indented" x="1" y="53" width="120" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usernames_reported}.toString().contains(",") ? "Users:" : "User:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6f7fc93b-834e-4f89-8b9d-22f8c97128ce" style="table_text" x="121" y="31" width="439" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d4fba306-19e4-415f-9784-8d24c2a22edf" style="table_text_indented" x="1" y="31" width="120" height="20" forecolor="#000000" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Project Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a6afd370-8066-43c4-aa82-0a77dfb244ff" style="Section Header - No BG" x="1" y="1" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Executive Summary]]></text>
+			</staticText>
+		</band>
+		<band height="87">
+			<printWhenExpression><![CDATA[$P{display_exec_summ}]]></printWhenExpression>
+		</band>
+		<band height="309">
+			<printWhenExpression><![CDATA[$P{display_engage_scope}]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="24ea3bba-ede6-4bd4-aff4-21d04f52ed84" style="scope_metrics" x="185" y="253" width="179" height="29">
+					<printWhenExpression><![CDATA[!$F{show_session_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{sessions_opened}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8ff3ce05-7c53-4eba-8e5f-c9b997b6ac02" style="scope_metrics" x="1" y="253" width="182" height="29">
+					<printWhenExpression><![CDATA[!$F{show_attempt_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{websploit_attempts}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="02e88608-41ce-4238-8dac-338d2cf76508" style="scope_metrics" x="365" y="171" width="208" height="29">
+					<printWhenExpression><![CDATA[!$F{show_vuln_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{web_vulns}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8befd041-0a5f-4a79-8936-e48fc6d0775b" style="scope_metrics" x="185" y="171" width="178" height="29">
+					<printWhenExpression><![CDATA[!$F{show_form_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{forms_found}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="956739b3-beda-4855-a2ae-d611108d1012" style="scope_metrics" x="1" y="171" width="182" height="29">
+					<printWhenExpression><![CDATA[!$F{show_page_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pages_found}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b64908d3-e844-4255-a46b-52602288973f" style="table_text" x="121" y="99" width="187" height="20">
+					<printWhenExpression><![CDATA[!$F{show_site_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{site_count}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f16e67da-a6dd-45f5-ac8f-591443b31519" style="Section header" x="1" y="1" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Engagement Scope]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="52471811-4f05-4d4a-8cf7-e47d4fa5c761" style="scope_titles" x="1" y="34" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Crawl]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="38ec1b18-a028-490d-9ae7-a851c55c8851" style="scope_titles" x="1" y="130" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Audit]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="29df73a7-11b4-4638-bd62-effdef432a48" style="scope_metrics" x="101" y="171" width="70" height="29">
+					<printWhenExpression><![CDATA[$F{show_page_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pages_found}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="21855aca-b1b1-423f-a6b7-1773093cb55a" style="tighter_table" x="40" y="151" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Pages Found"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="c853bd1f-0a02-40ad-8b83-16a8b6d81ead" style="separator_line" x="1" y="200" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="a0900c45-9087-4036-b1f3-08646716b7bf" style="separator_line" x="0" y="150" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="fe3c520a-e013-4c33-b43d-108c52bebbb7" style="separator_line" x="183" y="151" width="1" height="49"/>
+			</line>
+			<line>
+				<reportElement uuid="b957a145-c630-4fcf-b8e8-33c79e98dc5b" style="separator_line" x="363" y="151" width="1" height="49"/>
+			</line>
+			<staticText>
+				<reportElement uuid="1e11e9d0-81aa-4684-a1c7-4128c6153907" style="scope_titles" x="1" y="212" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Exploit]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9fa47ef6-212d-41bf-b282-24a60e57985c" style="separator_line" x="1" y="282" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="eccfbfcf-3dd4-4acc-86ce-751d50fd3579" style="separator_line" x="0" y="232" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="2959f266-89b0-4adf-8992-e692ea1b3cf1" style="separator_line" x="184" y="232" width="1" height="50"/>
+			</line>
+			<line>
+				<reportElement uuid="be3aff96-77d5-4022-89d3-1db47f00cb68" style="separator_line" x="364" y="232" width="1" height="50"/>
+			</line>
+			<elementGroup/>
+			<textField>
+				<reportElement uuid="a805d1e3-0010-483c-a1d7-4a8c524ee210" style="tighter_table" x="222" y="151" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Unique Forms"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2a6fdea8-3444-467a-93f9-4f25b69be609" style="tighter_table" x="419" y="151" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Vulns"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="260802bc-6bce-487a-9547-ae0b57d2ff61" style="tighter_table" x="419" y="233" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Proof Collected"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6734a054-fa97-41a9-b1f0-2fa64e38f9c9" style="tighter_table" x="222" y="233" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Sessions Opened"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7302d090-3e21-4ca8-8c86-1261cad5a95e" style="scope_metrics" x="285" y="171" width="70" height="29">
+					<printWhenExpression><![CDATA[$F{show_form_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{forms_found}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="32643cd5-7748-4cc0-8075-85f769e476b8" style="scope_metrics" x="481" y="171" width="82" height="29">
+					<printWhenExpression><![CDATA[$F{show_vuln_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{web_vulns}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dac99e63-195b-4ac3-a652-08903a5bdea3" style="scope_metrics" x="285" y="253" width="70" height="29">
+					<printWhenExpression><![CDATA[$F{show_session_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{sessions_opened}]]></textFieldExpression>
+			</textField>
+			<timeSeriesChart>
+				<chart isShowLegend="false" theme="SparklineTheme">
+					<reportElement uuid="e0729082-797a-43e8-8ecc-4e0f163ffa30" x="402" y="175" width="70" height="20">
+						<printWhenExpression><![CDATA[$F{show_vuln_sparkline}]]></printWhenExpression>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Minute">
+					<dataset>
+						<datasetRun subDataset="VulnAddition" uuid="36828f47-a669-42f0-900a-3c8bca376a1f">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA[1]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{truncated_date}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{web_vulns}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot isShowShapes="false">
+					<plot/>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<timeSeriesChart>
+				<chart isShowLegend="false" theme="SparklineTheme">
+					<reportElement uuid="cbc1e0ed-da20-4bc9-92f3-ee1ea0239665" x="207" y="257" width="70" height="20">
+						<printWhenExpression><![CDATA[$F{show_session_sparkline}]]></printWhenExpression>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Minute">
+					<dataset>
+						<datasetRun subDataset="SessionAddition" uuid="72667411-ca97-4078-aedd-965388c9012c">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA[1]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{truncated_date}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{sessions}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot isShowShapes="false">
+					<plot/>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<timeSeriesChart>
+				<chart isShowLegend="false" theme="SparklineTheme">
+					<reportElement uuid="02a1cfbf-e9b2-4c6e-bf00-2fecf3d6e38b" x="207" y="175" width="70" height="20">
+						<printWhenExpression><![CDATA[$F{show_form_sparkline}]]></printWhenExpression>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Minute">
+					<dataset>
+						<datasetRun subDataset="FormAddition" uuid="b3788a13-dd93-4f9c-96a9-b6c46922f645">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA[1]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{truncated_date}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{forms}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot isShowShapes="false">
+					<plot/>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<timeSeriesChart>
+				<chart isShowLegend="false" theme="SparklineTheme">
+					<reportElement uuid="74393e9f-2596-48ec-acb7-428f876e6b76" x="20" y="175" width="70" height="20">
+						<printWhenExpression><![CDATA[$F{show_page_sparkline}]]></printWhenExpression>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Minute">
+					<dataset>
+						<datasetRun subDataset="PageAddition" uuid="edb92bc9-0496-4436-a673-973c288a6fcf">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA[1]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{truncated_date}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{pages}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot isShowShapes="false">
+					<plot/>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<line>
+				<reportElement uuid="a00341aa-337f-485f-a3a9-d25ad2c3ac75" style="separator_line_lighter" x="1" y="75" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="414c3269-3470-4613-91ac-4e0e4e722e35" style="separator_line_lighter" x="1" y="97" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="27cdb9c7-0d7e-4f5c-8910-34f46c97d505" style="table_text" x="121" y="55" width="439" height="20" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{module_runtime} && $F{module_runtime} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new GroovyShell(new Binding([duration:$F{module_runtime}])).evaluate("""
+
+seconds    =  (duration % 60) as Integer
+second_string = seconds + "s"
+
+duration = ((duration - seconds) / 60) as Integer
+
+if (duration > 1) {
+  minutes    =  duration % 60
+  duration = ((duration - minutes) / 60) as Integer
+  minute_string = minutes + "min"
+  if (duration > 1) {
+    hours      =  duration % 24
+    hour_string = hours + "h"
+    return hour_string + " " + minute_string + " " + second_string
+  }
+  return minute_string + " " + second_string
+}
+
+return second_string
+
+""")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c603866c-1966-4d19-b8e2-e56b7f01655f" style="table_text_indented" x="1" y="56" width="120" height="20" forecolor="#000000" backcolor="#666666">
+					<printWhenExpression><![CDATA[$F{module_runtime} && $F{module_runtime} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total runtime:]]></text>
+			</staticText>
+			<timeSeriesChart>
+				<chart isShowLegend="false" theme="SparklineTheme">
+					<reportElement uuid="42651974-6e0f-43e1-a6d9-1eb751fecb73" x="121" y="100" width="70" height="20">
+						<printWhenExpression><![CDATA[$F{show_site_sparkline}]]></printWhenExpression>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Minute">
+					<dataset>
+						<datasetRun subDataset="SiteAddition" uuid="c56449ae-afeb-4c2d-90cf-042bef0f70ce">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA[1]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{truncated_date}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{sites}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot isShowShapes="false">
+					<plot/>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<staticText>
+				<reportElement uuid="c413d1c3-82a6-4dc9-858b-a6b891c8fede" style="table_text_indented" x="1" y="99" width="120" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sites:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e2754fac-2324-4235-b163-450f0b44711e" style="tighter_table" x="40" y="233" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Attempts"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e6b25c5f-f154-4e05-aedf-ddd1d0bdcb74" style="scope_metrics" x="108" y="253" width="70" height="29">
+					<printWhenExpression><![CDATA[$F{show_attempt_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{websploit_attempts}]]></textFieldExpression>
+			</textField>
+			<timeSeriesChart>
+				<chart isShowLegend="false" theme="SparklineTheme">
+					<reportElement uuid="862c1294-e6d1-4349-93ae-2804375a17f2" x="27" y="257" width="70" height="20">
+						<printWhenExpression><![CDATA[$F{show_attempt_sparkline}]]></printWhenExpression>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Minute">
+					<dataset>
+						<datasetRun subDataset="WebsploitAttempts" uuid="33d236dc-848c-4046-b5d6-765d1f309806">
+							<datasetParameter name="workspace_id">
+								<datasetParameterExpression><![CDATA[$P{workspace_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="host_address_clause">
+								<datasetParameterExpression><![CDATA[$P{host_address_clause}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA[1]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{truncated_date}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{websploit_attempts}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot isShowShapes="false">
+					<plot/>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<textField>
+				<reportElement uuid="bb94d478-c8ba-447d-bad2-725c6a8db75d" style="table_text" x="121" y="77" width="117" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{host_count}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e0cb5b37-dd89-43cf-88f4-b32f9be7bf46" style="table_text_indented" x="1" y="77" width="120" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unique Hosts:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="f78ef51b-1a46-4409-91b3-c2192bde901e" style="separator_line_lighter" x="1" y="120" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="c2ec777b-e064-44a1-a8c2-6234cc2e8efa" style="scope_metrics" x="365" y="254" width="208" height="28"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{text_proof_count}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4f30c457-7a67-4113-94f8-58cea71ed299" style="table_text" x="191" y="99" width="117" height="20">
+					<printWhenExpression><![CDATA[$F{show_site_sparkline}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{site_count}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="96">
+			<printWhenExpression><![CDATA[$F{web_vulns} == 0]]></printWhenExpression>
+			<break>
+				<reportElement uuid="ba2d6e54-4b9b-452a-a4fd-6d3485ffcd9e" x="0" y="2" width="573" height="1"/>
+			</break>
+			<textField>
+				<reportElement uuid="c236bd87-a587-4223-885f-d430e52b4089" style="important_term" x="1" y="41" width="570" height="37"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["No web vulnerabilities were discovered, so there is no OWASP or detail information to display."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bf416d2c-95b4-4489-ac36-1d2f42dd74ea" style="Section header" x="0" y="5" width="573" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[OWASP Summary and Vulnerability Details]]></text>
+			</staticText>
+		</band>
+		<band height="213">
+			<printWhenExpression><![CDATA[$P{display_owasp_status} && $F{owasp_failure_count} > 0]]></printWhenExpression>
+			<break>
+				<reportElement uuid="04c1299d-c997-4b84-819b-8accd535527b" x="0" y="0" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="477d1b95-2d03-4eb9-aeaa-ee769a922923" style="Section header" x="0" y="1" width="573" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[OWASP 2013 Top 10 Web Application Security Risk Summary - Failures]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="2c68330d-6eb3-43fe-9f8a-1dde6082a9f2" x="0" y="36" width="572" height="168"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="image_dir">
+					<subreportParameterExpression><![CDATA[$P{image_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "owasp_status.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="194">
+			<printWhenExpression><![CDATA[$P{display_summ_graphs} && ($F{owasp_failure_count} > 0 || $F{vuln_cat_count} > 0 || $F{os_vuln_count} > 0)]]></printWhenExpression>
+			<break>
+				<reportElement uuid="2b2fc63d-b4a4-4c9b-98ae-6796d689da33" x="0" y="1" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="f013df63-9802-4183-9137-edc954ed9701" style="Section header" x="0" y="2" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Summary Graphs]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="e184f505-6375-4b58-9a53-67343fb37de5" x="1" y="37" width="572" height="150"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="site_count">
+					<subreportParameterExpression><![CDATA[$F{site_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="vuln_cat_count">
+					<subreportParameterExpression><![CDATA[$F{vuln_cat_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="owasp_failure_count">
+					<subreportParameterExpression><![CDATA[$F{owasp_failure_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="os_vuln_count">
+					<subreportParameterExpression><![CDATA[$F{os_vuln_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="image_dir">
+					<subreportParameterExpression><![CDATA[$P{image_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "chart_section.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="186">
+			<printWhenExpression><![CDATA[$F{site_count} > 0]]></printWhenExpression>
+			<break>
+				<reportElement uuid="9daec75a-4903-439c-938b-d82a492c3613" x="0" y="1" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="873915ad-5a6e-4997-99c8-3ff7b7170218" style="Section header" x="0" y="2" width="571" height="30"/>
+				<textElement/>
+				<text><![CDATA[Web Site Details]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="6cfbf77a-7897-47a9-a35f-711ff938304b" x="0" y="37" width="572" height="138"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="site_count">
+					<subreportParameterExpression><![CDATA[$F{site_count}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "web_site_details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="193">
+			<printWhenExpression><![CDATA[$P{display_vuln_details} && $F{web_vulns} > 0]]></printWhenExpression>
+			<break>
+				<reportElement uuid="38cef568-2e13-4f6a-a4d9-9a27edfe7a56" x="0" y="1" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="33b9d653-6190-4605-aa30-28bd232be32b" style="Section header" x="0" y="2" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Web Vulnerability Details]]></text>
+			</staticText>
+			<subreport isUsingCache="true">
+				<reportElement uuid="fb6408a4-7ff3-43f8-b631-b77925132586" x="1" y="37" width="570" height="150"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="report_dir">
+					<subreportParameterExpression><![CDATA[$P{report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reporting_dir">
+					<subreportParameterExpression><![CDATA[$P{reporting_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="workspace_id">
+					<subreportParameterExpression><![CDATA[$P{workspace_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="host_address_clause">
+					<subreportParameterExpression><![CDATA[$P{host_address_clause}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="vuln_order">
+					<subreportParameterExpression><![CDATA[$P{vuln_order}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="image_dir">
+					<subreportParameterExpression><![CDATA[$P{image_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "vuln_details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="214">
+			<printWhenExpression><![CDATA[$P{display_appendices}]]></printWhenExpression>
+			<break>
+				<reportElement uuid="fa774d15-7727-4958-8827-0ba84430d54f" x="0" y="1" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="f0128318-ab83-49cf-8cb9-818b0eff10ba" style="Section header" x="0" y="2" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Remediation Advice and Resources]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="852efa55-0d23-4a65-ba80-8c6d149c96b6" x="1" y="32" width="572" height="172"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} +  "remediation.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="189">
+			<printWhenExpression><![CDATA[$P{display_appendices}]]></printWhenExpression>
+			<break>
+				<reportElement uuid="58c5c993-e5c8-4d1c-8967-642586eb75cd" x="0" y="1" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="9966dff4-6e23-4cf8-a8a6-bc531f6b3578" style="Section header" x="0" y="2" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Glossary]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="41a1df4e-1b22-4396-b748-ee49e64f8cd4" x="2" y="40" width="571" height="139"/>
+				<subreportParameter name="style_template_dir">
+					<subreportParameterExpression><![CDATA[$P{style_template_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{report_dir} + "glossary.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="297">
+			<printWhenExpression><![CDATA[$P{display_appendices}]]></printWhenExpression>
+			<break>
+				<reportElement uuid="42612a0f-36f0-4517-8c27-c09e093696ab" x="0" y="0" width="571" height="1"/>
+			</break>
+			<staticText>
+				<reportElement uuid="0506d1a6-d657-42b2-8835-d89e9cd8f2b0" style="Section header" x="1" y="1" width="571" height="30"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Appendix: Report Options Selected]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2224618c-3401-495e-b2de-ddf24bdc3925" style="title2" x="15" y="35" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Report Sections]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d98c6577-e178-4429-9ccc-7ee308027b41" style="title2" x="15" y="179" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Report Options]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="57a866eb-5f84-48f7-b101-469d61a31e27" style="title2" x="350" y="35" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Key]]></text>
+			</staticText>
+			<image scaleImage="RealSize">
+				<reportElement uuid="69e2f81f-2ec7-49af-9b37-c4828dfdc1ae" mode="Opaque" x="25" y="62" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_cover}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="e7b4b2d1-05dd-47e9-b548-797c40795323" x="357" y="86" width="10" height="10"/>
+				<imageExpression><![CDATA[$P{image_dir} + "subtract.png"]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="46d33a5f-c355-42d4-95ff-c48bb08dea9f" x="357" y="63" width="10" height="10"/>
+				<imageExpression><![CDATA[$P{image_dir} + "add.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="269daa92-a969-4c02-913f-e04b09c8d872" style="glossary_def" x="378" y="61" width="101" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Selected"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7600c360-f743-46c9-a03d-551aec3e88f5" style="glossary_def" x="378" y="84" width="101" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Unselected"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize">
+				<reportElement uuid="6d2edaeb-3c84-4139-9227-7832d6da3f78" x="25" y="76" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_exec_summ}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="12ede0c0-ca79-483b-a508-c9d9e88ce684" x="25" y="91" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_engage_scope}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="edf0d82d-fdc9-4794-a673-a6fef4921f0b" x="25" y="132" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_vuln_details}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="a7c6612e-9441-4e22-a654-deaea665f420" x="25" y="118" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_summ_graphs}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="75b47e9d-0752-4f46-bbc8-19c554d1ee84" x="25" y="104" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_owasp_status}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize">
+				<reportElement uuid="6fa50348-b08d-4fe8-b0a3-b0112101cd25" x="25" y="146" width="10" height="10"/>
+				<imageExpression><![CDATA[new GroovyShell(new Binding([section:$P{display_appendices}, img_dir:$P{image_dir}])).evaluate("""
+switch ( section ) {
+    case true:
+        img = "add.png"
+        break
+    default:
+        img = "subtract.png"
+        break
+}
+return (img_dir + img)
+""")]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="35cd856e-efa3-4193-944b-7852f3fb4a09" style="glossary_def" x="41" y="60" width="186" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Cover Page"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="854068b8-f602-4b67-9448-be58a4e1f803" style="glossary_def" x="41" y="74" width="186" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Executive Summary"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="13ed24fa-b7eb-4e8b-a566-645abcec1fe4" style="glossary_def" x="41" y="88" width="186" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Engagement Scope"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="058248dd-9573-4598-b751-80b6f30a59f7" style="glossary_def" x="41" y="102" width="186" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["OWASP Status"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b53b3f89-f2ff-43a0-9c13-0fff35f1a756" style="glossary_def" x="41" y="116" width="186" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Summary Graphs"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3bcb8007-111f-4fc4-b5eb-16dbd8ccfca4" style="glossary_def" x="41" y="130" width="186" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Web Vulnerability Details"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ffa38d58-5803-4dff-b8d4-4a12dc33c693" style="glossary_def" x="41" y="144" width="186" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Appendices"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4ee4f299-bc38-436a-9622-c362cc228db9" style="option_no_indent" x="25" y="204" width="268" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["--    Order vulns by: " + $P{order_vulns_by}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}>1]]></printWhenExpression>
+			<image scaleImage="RealSize" vAlign="Middle" isUsingCache="false" onErrorType="Blank">
+				<reportElement uuid="41cea7d6-6cd4-4c7c-8faa-44f54a04893c" x="0" y="4" width="58" height="11"/>
+				<imageExpression><![CDATA[$P{image_dir} + "r7-logo_footer.jpg"]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement uuid="2cc39fd7-8e4b-4418-be3a-b7f1bda40358" style="last_audited" x="519" y="0" width="52" height="18"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" " + ($V{PAGE_NUMBER} - 1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bbf517da-4645-4017-b4be-ba53fe13b71b" style="last_audited" x="331" y="0" width="188" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Page " + ($V{PAGE_NUMBER} - 1) +" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

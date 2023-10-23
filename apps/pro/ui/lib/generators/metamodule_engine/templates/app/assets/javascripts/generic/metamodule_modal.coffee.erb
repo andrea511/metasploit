@@ -1,0 +1,39 @@
+define [
+  'jquery',
+  '<%%= javascript_path("apps/backbone/views/app_tabbed_modal") %>'
+],($, AppTabbedModalView) ->
+
+  <%=file_name.underscore.upcase%>_START_URL = '/workspaces/'+"#{WORKSPACE_ID}"+'/apps/<%=file_name%>/task_config/'
+
+  class <%=file_name.camelize%>ModalView extends AppTabbedModalView
+    #
+    # Set up listeners for DOM events
+    #
+    events: _.extend({
+
+    }, AppTabbedModalView.prototype.events)
+
+    #
+    # Overriden behavior
+    #
+    initialize: ->
+      super
+      @setTitle '<%= file_name.titleize %>'
+      @setDescription 'Short Description Goes Here'
+      @setTabs [
+        {name: 'Config'},
+        {name: 'Generate Report', checkbox: true}
+      ]
+
+    submitUrl: => <%= file_name.underscore.upcase %>_START_URL
+
+    formLoadedSuccessfully: (html) =>
+      super
+
+    #
+    # DOM event callbacks
+    #
+
+    #
+    # DOM helpers
+    #

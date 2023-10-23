@@ -1,0 +1,21 @@
+<% title "Session #{@session.id}" %>
+<% breadcrumb workspace_link, sessions_link, session_link %>
+<%
+	upath = url_for(:action => 'vnc', :id => params[:id].to_i)
+	baseu = "#{upath}?port=#{@port.to_i}&viewer="
+	vncu  = "vnc://#{@self_host}:#{@port.to_i}"
+%>
+<h1>Session <%=h @session.id %> Remote Desktop</h1>
+
+<p>
+	A VNC desktop has been configured on <%=h @self_host %>:<%=h @port %>, this desktop
+	will only accept a single connection before closing. Please choose your preferred
+	VNC viewer from the list below.
+</p>
+
+<ul>
+<li><a href="<%=h vncu %>">Connect manually</a> to <%=h @self_host %> on port <%=h @port %></li>
+<!-- // <li>Connect using <%= link_to("Adobe Flash", baseu + 'flash') %></li> -->
+<li>Connect using <%= link_to("Java Applet", baseu + 'java') %></li>
+</ul>
+

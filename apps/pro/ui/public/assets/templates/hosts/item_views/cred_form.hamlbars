@@ -1,0 +1,16 @@
+.cred-form
+  {{#form "/" class="form formtastic"}}
+  %ul
+    %li.name
+      {{label "aaData[service]" "Service"}}
+      {{select "aaData[service]" services.services services.selected}}
+    %li.ptype
+      {{label "aaData[ptype]" "Type"}}
+      {{select "aaData[ptype]" ptypes.ptypes ptypes.selected}}
+    %li.user
+      {{label "aaData[user]" "User"}}
+      {{input "aaData[user]" ""}}
+    %li.port
+      {{label "aaData[pass]" "Password"}}
+      {{textarea "aaData[pass]" ""}}
+  {{/form}}

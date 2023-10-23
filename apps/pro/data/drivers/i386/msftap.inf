@@ -1,0 +1,116 @@
+
+[Version]
+	Provider       = "%Company%"
+	Signature      = "$Windows NT$"
+	Class          = Net
+	ClassGUID      = {4d36e972-e325-11ce-bfc1-08002be10318}
+	CatalogFile    = msftap.cat
+	DriverVer      = 12/06/2010,1.1
+
+[Manufacturer]
+	%Company%      = msftap, NTx86, NTia64, NTamd64
+	
+[msftap]
+	%Description0% = msftap0.install, msftap0
+	%Description1% = msftap1.install, msftap1
+	%Description2% = msftap2.install, msftap2
+	%Description3% = msftap3.install, msftap3
+
+[msftap.NTx86]
+	%Description0% = msftap0.install, msftap0
+	%Description1% = msftap1.install, msftap1
+	%Description2% = msftap2.install, msftap2
+	%Description3% = msftap3.install, msftap3
+
+[msftap.NTamd64]
+	%Description0% = msftap0.install, msftap0
+	%Description1% = msftap1.install, msftap1
+	%Description2% = msftap2.install, msftap2
+	%Description3% = msftap3.install, msftap3
+
+[msftap.NTia64] 
+	; unsupported
+
+[ControlFlags]
+	ExcludeFromSelect = *  
+	
+[msftap.reg]
+	HKR, ,               Manufacturer, 0, "%Company%"
+	HKR, ,               ProductName,  0, "%Description%"
+	HKR, Ndi,            Service,      0, "msftap"
+	HKR, Ndi,            Help,         0, "%Help%"
+	HKR, Ndi\Interfaces, UpperRange,   0, "ndis5"
+	HKR, Ndi\Interfaces, LowerRange,   0, "ethernet"
+
+[msftap.service]
+	LoadOrderGroup = NDIS
+	ServiceBinary  = %12%\msftap.sys
+	DisplayName    = %Description%
+	StartType      = 3 ; SERVICE_DEMAND_START
+	ServiceType    = 1 ; SERVICE_KERNEL_DRIVER
+	ErrorControl   = 1 ; SERVICE_ERROR_NORMAL
+	
+[SourceDisksNames]
+	1 = %Description%
+
+[SourceDisksFiles]
+	msftap.sys = 1,"",
+
+[DestinationDirs]
+	msftap.copy = 12 ; %windir%\System32\Drivers
+	
+[msftap.copy]
+	msftap.sys,,,6
+	
+[msftap0.install]
+	CopyFiles       = msftap.copy
+	AddReg          = msftap.reg, msftap0.ndi
+	Characteristics = 0x81 ; NCF_HAS_UI | NCF_VIRTUAL 
+	
+[msftap0.install.Services]
+	AddService = msftap, 2, msftap.service
+
+[msftap0.ndi]
+	HKR, , TAP,            0x00010001, 0
+
+[msftap1.install]
+	CopyFiles       = msftap.copy
+	AddReg          = msftap.reg, msftap1.ndi
+	Characteristics = 0x81 ; NCF_HAS_UI | NCF_VIRTUAL 
+	
+[msftap1.install.Services]
+	AddService = msftap, 2, msftap.service
+
+[msftap1.ndi]
+	HKR, , TAP,            0x00010001, 1
+	
+[msftap2.install]
+	CopyFiles       = msftap.copy
+	AddReg          = msftap.reg, msftap2.ndi
+	Characteristics = 0x81 ; NCF_HAS_UI | NCF_VIRTUAL 
+	
+[msftap2.install.Services]
+	AddService = msftap, 2, msftap.service
+
+[msftap2.ndi]
+	HKR, , TAP,            0x00010001, 2
+	
+[msftap3.install]
+	CopyFiles       = msftap.copy
+	AddReg          = msftap.reg, msftap3.ndi
+	Characteristics = 0x81 ; NCF_HAS_UI | NCF_VIRTUAL 
+	
+[msftap3.install.Services]
+	AddService = msftap, 2, msftap.service
+
+[msftap3.ndi]
+	HKR, , TAP,            0x00010001, 3
+
+[Strings]
+	Company      = "Rapid7 LLC"
+	Description  = "Metasploit Pro VPN Pivot Driver"
+	Description0 = "Metasploit Pro VPN Pivot Interface A"
+	Description1 = "Metasploit Pro VPN Pivot Interface B"
+	Description2 = "Metasploit Pro VPN Pivot Interface C"
+	Description3 = "Metasploit Pro VPN Pivot Interface D"
+	Help         = "Metasploit Pro VPN Pivot Driver Instance"

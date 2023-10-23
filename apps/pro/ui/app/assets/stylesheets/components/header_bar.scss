@@ -1,0 +1,103 @@
+
+// -----||--------------------------
+//      ||       VARIABLES
+// =====||==========================
+
+$header-font-weight: 100;
+$header-height: 55px;
+$header-min-width: 1000px;
+$header-padding-size: 12px;
+// TODO: This value should be inheriting from a global variables file.
+$primary-header-font-color: #010101;
+$secondary-header-font-color: #a5a5a5;
+$inset-shadow-color: rgba(0, 0, 0, 0.09);
+
+// -----||--------------------------
+//      ||      PLACEHOLDERS
+// =====||==========================
+
+%header-font {
+  color: $primary-header-font-color;
+  font-weight: $header-font-weight;
+  padding-left: $header-padding-size;
+}
+
+%header-bar {
+  // TODO:
+  @extend .row !optional;
+  height: $header-height;
+  position: relative;
+  min-width: $header-min-width;
+
+  border: 1px solid rgb(231, 231, 231);
+  background-image: -moz-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(249,249,249) 7%, rgb(252,252,252) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(249,249,249) 7%, rgb(252,252,252) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(249,249,249) 7%, rgb(252,252,252) 100%);
+
+  h1 {
+    margin: 0px;
+    font-size: 24px;
+    line-height: 52px;
+    @extend %header-font;
+  }
+
+  h2 {
+    margin: 0px;
+
+    @extend %header-font;
+    color: $secondary-header-font-color;
+    font-size: 12px;
+  }
+
+  // narrow shadow under header region
+  &:after {
+    bottom: -4px;
+    content: " ";
+    display: block;
+    height: 4px;
+    width: 99.9%;
+    left: 1px;
+    position: absolute;
+    margin: 0 auto;
+    z-index: 2;
+
+    background-color: $inset-shadow-color;
+  }
+
+  // Style the container div created by Backbone.
+  & > div:first-child {
+    border: 1px solid white;
+    height: 100%;
+  }
+}
+
+%header-bar-content-wrapper {
+  border: 1px solid #efefef;
+  background-color: #f2f2f2;
+  margin: 0 auto;
+  width: 98%;
+  position: relative;
+
+  // narrow shadow
+  &:after {
+    bottom: -2px;
+    height: 2px;
+    left: 2px;
+    display: block;
+    width: 99.7%;
+
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.07);
+    content: " ";
+  }
+}
+
+%header-bar-content {
+  margin: 0 15px 15px 15px;
+  padding: 10px 10px;
+
+  border-bottom-radius: 5px;
+  border: 1px solid #ddd;
+  border-top: 0px;
+  background-color: #fff;
+}

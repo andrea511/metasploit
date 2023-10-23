@@ -1,0 +1,26 @@
+<% title "Macro - Create" %>
+<% breadcrumb link_to("Global Settings", settings_path), link_to("Macros", macros_path), link_to("Create", new_macro_path) %>
+<% include_javascript "macros" %>
+
+
+<% content_for :header_buttons do %>
+	<span class="btn">
+		<%= link_to "Back to Macros", macros_path, :class => "back" %>
+	</span>
+<% end %>
+
+<%= required_label %>
+
+<div class="one_col_no_sidebar">
+	<%= semantic_form_for @macro do |f| %>
+		<%= render "shared/error_messages", :target => @macro %>
+		<%= f.inputs "Macro Settings" do -%>
+			<%= render 'form', :f => f %>
+		<% end -%>
+
+		<%= f.actions do %>
+			<span class="btn"><%= f.submit 'Save', :class => "save" %></span>
+		<% end -%>
+	<% end %>
+</div>
+

@@ -1,0 +1,16 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/fuzzing/item_views/fuzzing_iframe_item_view')%>',
+  '<%= javascript_path('fuzzing/backbone/event_aggregator') %>',
+  '<%= javascript_path('fuzzing/backbone/collections/request_group_collection') %>'
+  ], ($,Template, EventAggregator, RequestGroupCollection) ->
+  class FuzzingIframeItemView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['fuzzing/item_views/fuzzing_iframe_item_view']
+
+    initialize: ->
+      @request_group_collection = RequestGroupCollection
+      EventAggregator.on('iframe:update:url', @._update_iframe_url)
+
+    _update_iframe_url: =>
+      request_id = @request_group_collection.at(@request_group_collection.length-1).get("id")
+      $('iframe',@el).attr("src","http://localhost:3791/"+request_id)

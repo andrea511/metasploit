@@ -1,0 +1,149 @@
+define [
+  '<%= javascript_path("templates/apps/layouts/app_stat_modal_layout") %>',
+  '<%= javascript_path("apps/backbone/views/generic_stats_view") %>',
+  '<%= javascript_path("shared/backbone/views/task_console") %>',
+  'jquery',
+  '<%= javascript_path("moment.min.js") %>',
+  '<%= javascript_path("apps/backbone/views/app_stat_modal_header") %>'
+  ], (Template, GenericStatsView, TaskConsole, $, m, AppStatModalHeader) ->
+
+  VULN_VALIDATION_WIZARD_URL = '/wizards/vuln_validation/form/'
+
+  class AppStatModalLayout extends Backbone.Marionette.LayoutView
+    @BASE_URL: "/workspaces/#{window.WORKSPACE_ID}/apps/app_runs"
+
+    _selectedStat: null
+    _dataTable: null
+    _header: null
+
+    template: HandlebarsTemplates['apps/layouts/app_stat_modal_layout']
+
+    regions:
+      statsArea: '.stats'
+      consoleArea: '.console-area'
+      drilldownArea: '.drilldown-area'
+
+    initialize: ({ @appRun }) =>
+      @appRun.bind('change', @onModelChange)
+
+    events:
+      'click ul.rollup-tabs li a': 'tabClicked',
+      'click .load-table': 'loadTableClicked',
+      'click .exploit-continue-btn': 'exploitContinueClicked'
+
+    onModelChange: =>
+      @_dataTable.fnDraw() if @_dataTable?
+
+    onRender: =>
+      @showStatsForApp(@appRun.get('app'), complete: =>
+        $('.load-table', @el).not('[clickable=false]').first().click()
+      )
+      @showConsoleForTask(@appRun.get('tasks')[0])
+      unless @_header?
+        @_header = new AppStatModalHeader(
+          appRun: @appRun,
+          el: @$el.find('.rollup-header .max-width')[0]
+        )
+        @_header.render()
+
+    onClose: =>
+      @console.stopUpdating()
+      @statsView.stopPoll()
+
+    loadTableClicked: (e) =>
+      return if @_selectedStat? and @_selectedStat?[0] == e.currentTarget
+      @statClicked(e.currentTarget)
+      $('canvas,.big-stat', @el).removeClass('selected')
+      $('canvas,.big-stat', e.currentTarget).addClass('selected')
+      @statsView.update()
+
+    statClicked: (statEl) =>
+      return if $(statEl).attr('clickable') == 'false'
+      @_selectedStat = $(statEl)
+      @statsView.setSelected(true)
+      @statsView.update()
+      label = $(statEl).attr('label')
+      statName = $(statEl).attr('name')
+      label = statName unless label?.length > 0
+      # where to get the data from
+      url = AppStatModalLayout.BASE_URL+"/#{@appRun.id}.json?collection="+statName
+      # instantiate a datatable there with the above URL
+      $area = $('.drilldown-area', @el)
+      $area.addClass('tab-loading').html('')
+      datatable_columns = @appRun.get('datatable_columns')
+      opts={
+        el: $area
+        dataTable:
+          aaSorting: [[ 3, "desc" ]]
+          sAjaxSource: url
+          oLanguage:
+            sEmptyTable: "No data has been recorded."
+          fnInitComplete: (oSettings, json) =>
+            $('table',$area).attr(id: label)
+        columns:
+          created_at:
+            name: 'Created'
+            sType: 'title-string'
+            fnRender: (o) ->
+              time = o.aData?.created_at
+              "<span title='#{_.escape(time)}'>#{_.escape(moment(time).fromNow())}</span>"
+        success: (dt) =>
+          @_dataTable = dt
+          $area.prepend($('<h4 />',
+            html: _.str.humanize(label)
+            'data-table-id': label
+          ))
+      }
+      if datatable_columns?
+        merged_column_opts = $.extend(opts.columns, datatable_columns[statName]);
+        opts.columns = merged_column_opts
+      helpers.loadRemoteTable(opts)
+      # TODO: joev you can do better than this. We have require now!
+      name = _.str.humanize(statName)
+      toggle = name.toLowerCase() == 'exploit matches' and
+              @appRun.get('dry_run') and
+              @appRun.get('procedure_state') == 'paused'
+      $area.parent().find('.right.exploit-continue-btn').toggle(toggle)
+
+    # TODO: need a way for metamodule-defined subviews to render here. this is not hard~!
+    exploitContinueClicked: (e) ->
+      return if $(e.currentTarget).hasClass('disabled')
+      $(e.currentTarget).addClass('disabled submitting')
+      # ajax request to rails action that calls continue! on the Procedure
+      $.ajax(
+        url: VULN_VALIDATION_WIZARD_URL+'continue_exploitation'
+        data: { procedure_id: @appRun.get('procedure_id') }
+        type: 'POST'
+        success: =>
+          window.location.reload(true)
+        error: =>
+          $(e.currentTarget).removeClass('disabled submitting')
+      )
+
+    showStatsForApp: (app, { complete }) ->
+      # load the correct stats display
+      $stats = $('.stats', @el)
+      $stats.addClass('tab-loading')
+      done = ->
+        $stats.removeClass('tab-loading')
+        complete() if complete?
+      @statsView = new GenericStatsView(model: @appRun)
+      @statsArea.show(@statsView)
+      done()
+
+    showConsoleForTask: (task) ->
+      @console = new TaskConsole(task: task.id)
+      @consoleArea.show(@console)
+      @console.startUpdating()
+
+    tabClicked: (e) =>
+      e.preventDefault()
+      $('ul.rollup-tabs li', @el).removeClass('selected')
+      $selLi = $(e.currentTarget).parents('ul.rollup-tabs li').first()
+      $selLi.addClass('selected')
+      $('.rollup-tab', @el).hide()
+      $('.rollup-tab', @el).eq($selLi.index()).show()
+
+    serializeData: => @
+
+

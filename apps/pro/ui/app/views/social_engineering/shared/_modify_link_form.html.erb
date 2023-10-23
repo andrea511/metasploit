@@ -1,0 +1,25 @@
+<!-- this partial requires a local variable named 'object' 
+     object must respond to .other_web_pages method -->
+<div class='dialog formtastic modify-link-popup' style='display: none;'>
+  <li class="select input required" style='margin-top: 5px; margin-left: 5px'>
+    <label class="label" for="webpage">
+      Web Page<abbr title="required">*</abbr>
+    </label>
+    <select name="webpage">
+      <% if @email.campaign.uses_wizard? %>
+        <option value="Landing Page">Landing Page</option>
+      <% else %>
+        <% object.other_web_pages.each do |page| %>
+          <option value="<%= page.id %>"><%= page.name %></option>
+        <% end %>
+      <% end %>
+    </select>
+  </li>
+  <div class='spoof' style='padding:14px 0 18px 35px;background:#f0f0f0;'>
+    <label style='width: auto; float: none; text-align: left;'>
+      <input type='checkbox' name='spoof-hover' />
+      Spoof hover text to display URL:
+    </label>
+    <input style='margin:6px 0 0 5px;' type='text' name='hover-text' />
+  </div>
+</div>

@@ -1,0 +1,101 @@
+en:
+  activerecord:
+    ancestors:
+      sonar:
+        import_run:
+          last_seen:
+            less_than: "Number of days must be equal to or less than 90"
+            greater_than: "Number of days must be equal to or greater than 1"
+          domain:
+            valid: "Domain must be valid"
+      sonar/data/fdns:
+        search:
+          operator:
+            names:
+              address:
+                help: "Filters the results by host address"
+              hostname:
+                help: "Filters the results by hostname"
+      nexpose/data/site:
+        search:
+          operator:
+            names:
+              name:
+                help: "Filters the results by service name."
+      nexpose/result:
+        message:
+          push_modal:
+            title:
+              no_console_exists: 'No Consoles Connected'
+              no_console_enabled: 'No Consoles Enabled'
+              has_console: 'Push To Nexpose'
+            has_validations_and_exceptions: "You have selected one or more Nexpose sourced vulnerabilities. Exploited vulnerabilities will be pushed as validations, others will be pushed as exceptions."
+            has_only_validations: "You have selected one or more exploited vulnerabilities sourced from Nexpose. They will be pushed to Nexpose as validations."
+            has_only_exceptions: "You have selected one or more Nexpose sourced vulnerabilities that were not exploitable. They will be pushed to Nexpose as exceptions."
+            no_console_exists: "You don't have any Nexpose Consoles connected."
+            no_console_enabled: "You can manage your consoles by following the link below."
+            has_no_results: "You have no validations or exceptions to push."
+          button:
+            none_selected: "You must select at least one vulnerability in order to push to Nexpose"
+            not_from_nexpose: "None of the selected vulnerabilities originated from Nexpose."
+            from_nexpose_not_pushable: "None of the selected vulnerabilities have status Exploited or Not Exploitable."
+            from_nexpose_pushable: "Push Vulnerabilities to Nexpose."
+            no_console_exists: "No Consoles Connected."
+
+    errors:
+      models:
+        brute_force/guess/attempt:
+          attributes:
+            base:
+              inconsistent_workspaces: "has inconsistent workspaces between the core credentials' workspace and the service's host's workspace.  This could cause a cross-workspace credential disclosure."
+        brute_force/reuse/attempt:
+          attributes:
+            base:
+              inconsistent_workspaces: "has inconsistent workspaces between the core credentials' workspace and the service's host's workspace.  This could cause a cross-workspace credential disclosure."
+        brute_force/reuse/group:
+          attributes:
+            metasploit_credential_cores:
+              too_short: 'has too few core credentials.  (Minimum is 1 core credential.)'
+            workspace:
+              inconsistent: "is different than the core credentials' workspaces.  This could cause a cross-workspace credential disclosure."
+        metasploit/credential/core:
+          attributes:
+            workspace:
+              inconsistent: "is different than the brute force reuse groups' workspaces.  This could cause a cross-workspace credential disclosure."
+
+  notifications:
+    banner_messages:
+      usage_metrics_announcement:
+        title: "Usage Metrics Collection Announcement"
+        message: "To continuously improve Metasploit, we want to collect anonymous usage metrics. You have 7 days to decide if you do not want to participate in this program. For more information, see this <a target=_blank href=https://help.rapid7.com/metasploit/#managing-updating-metasploit/usage-metrics.html>page</a>."
+      backup_restore_announcement:
+        title: "Backup and Restore Your Data"
+        message: "<a target=_blank href=/settings#backups>Backup and restore</a> your Metasploit server to protect yourself from data loss. <a target=_blank href=https://help.rapid7.com/metasploit/#managing-updating-metasploit/back-up-restore.html>Learn more</a> about this feature."
+      auto_target_announcement:
+        title: "Automated Exploitation Improved"
+        message: "Automated exploitation just got better! Metasploit now uses the detected host OS to automatically configure multi-target modules. In particular, this means that automated exploitation of vulnerable Linux hosts is more reliable."
+      upcoming_eol_for_32bit_systems:
+        title: "Upcoming EOL for 32-bit systems"
+        message: "As of July 5, 2017, 32-bit installations of Metasploit on all platforms will no longer receive updates. Please read <a target=_blank href=https://community.rapid7.com/community/metasploit/blog/2016/07/06/announcement-end-of-life-metasploit-32-bit-versions>this blog post</a> for details. To help you back up your data and migrate to a 64-bit installation, please check out <a target=_blank href=https://help.rapid7.com/metasploit/Content/faqs/32bit-end-of-life.html>this help page</a>."
+      ms17_010_banner:
+        title: "Wanna Decryptor (WannaCry) Ransomware Explained"
+        message: "Metasploit can now scan for and exploit MS17-010, the vulnerability used by the WannaCry ransomware. Learn more about this powerful attack vector and how you can <a target=_blank href=https://community.rapid7.com/community/nexpose/blog/2017/05/15/scanning-and-remediating-wannacry-in-insightvm-and-nexpose>protect yourself from it.</a>"
+      eol_for_32bit_systems:
+        title: "32-bit Packages End-of-life July 5, 2017"
+        message: "As of July 5, 2017, 32-bit installations of Metasploit on all platforms will no longer receive updates. Please read <a target=_blank href=https://community.rapid7.com/community/metasploit/blog/2016/07/06/announcement-end-of-life-metasploit-32-bit-versions>this blog post</a> for details. To help you back up your data and migrate to a 64-bit installation, please check out <a target=_blank href=https://help.rapid7.com/metasploit/Content/faqs/32bit-end-of-life.html>this help page</a>."
+      priorities_survey_announcement:
+        title: "Do you have seven minutes to take a survey?"
+        message: "Rapid7 wants to understand your priorities, the challenges you’re facing, and how Metasploit Pro can better address your needs. <a target=_blank href=https://rapid7cx.az1.qualtrics.com/jfe/form/SV_0CK7lMPbw9KnjRX>Take the survey here</a>."
+  date:
+    formats:
+      #default: '%m/%d/%Y'
+      with_weekday: '%a %m/%d/%y'
+
+  time:
+    formats:
+      #default: '%a, %b %-d, %Y at %r'
+      date: '%b %-d, %Y'
+      short: '%B %d'
+      short_date: '%m-%d-%Y'
+      short_text_date: '%b %e, %Y'
+      short_datetime: '%m-%d-%Y %l:%M %p'

@@ -1,0 +1,105 @@
+@import "css3-mixins";
+
+//Legacy button style declarations
+.toggle-button {
+  label{
+    .button{
+      float: left;
+      width: 1.65em; height: 1.65em;
+      margin: -.1em;
+      border: 1px solid rgba(0,0,0,.35);
+      border-radius: inherit;
+      background: white;
+      background-image: linear-gradient(rgba(0,0,0,.2), transparent);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr=#{ie-hex-str(rgba(0,0,0,.2))},GradientType=0 ); /* IE6-9 */
+      box-shadow: 0 .1em .1em .1em hsla(0,0%,100%,.8) inset,
+      0 0 .5em rgba(0,0,0,.3);
+      text-shadow: 0 -1px 1px rgba(0,0,0,.3);
+      text-align: center;
+
+      &:hover{
+        background-image: linear-gradient(rgba(0,0,0,.4), transparent);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr=#{ie-hex-str(rgba(0,0,0,.4))},GradientType=0 ); /* IE6-9 */
+      }
+    }
+
+    input[type="checkbox"]:checked + .button{
+      background-image: linear-gradient(rgba(0,0,0,.6), transparent);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr=#{ie-hex-str(rgba(0,0,0,.6))},GradientType=0 ); /* IE6-9 */
+    }
+
+
+  }
+}
+
+//Start Zurb Style Button Styles
+$orange-header-background-color: #EA5709;
+$primary-btn-color-start:  #61bcdc;
+$primary-btn-color-end:    #3586a4;
+$primary-btn-border-color: #618696;
+$primary-btn-border-bottom-color: #28373d;
+$color: #ffffff;
+
+
+@mixin cssButton(
+  $primary-btn-color-start:$primary-btn-color-start,
+  $primary-btn-color-end:$primary-btn-color-end,
+  $primary-btn-border-color:$primary-btn-border-color,
+  $primary-btn-border-bottom-color:$primary-btn-border-bottom-color,
+  $color: $color
+){
+  cursor: pointer;
+  border-radius: 3px;
+  color: $color;
+  @include linear-gradient($primary-btn-color-start, $primary-btn-color-end);
+  border: 1px solid $primary-btn-border-color;
+  border-top: 1px solid $primary-btn-border-color;
+  border-bottom: 1px solid lighten($primary-btn-border-bottom-color, 10%);
+  padding: 7px;
+  margin-left: 10px;
+  font-weight: 600;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+  &:hover {
+    text-decoration: none;
+    box-shadow: 0 0 3px rgba(0,0,0,.4);
+  }
+  &:active {
+    box-shadow: inset 0 0 5px rgba(0,0,0, 0.6);
+  }
+
+  &.disabled{
+    @include linear-gradient(grayscale($primary-btn-color-start), grayscale($primary-btn-color-end));
+    border: 1px solid grayscale($primary-btn-border-color);
+    border-top: 1px solid grayscale($primary-btn-border-color);
+    border-bottom: 1px solid lighten(grayscale($primary-btn-border-bottom-color), 10%);
+    pointer-events: none;
+  }
+
+  &.reload{
+    vertical-align: middle;
+    background-position: 2px 2px;
+    background-size: 10px 10px;
+    background-image: image-url('btnReload.png');
+    background-repeat: no-repeat;
+  }
+}
+
+
+//Define Classes
+a.btn.primary, input.btn.primary, span.btn.primary {
+  @include cssButton();
+}
+
+a.btn.ellipses, input.btn.ellipses, span.btn.ellipses {
+  @include cssButton(
+    $primary-btn-color-start:#ffffff,
+    $primary-btn-color-end:#e5e5e5,
+    $primary-btn-border-color: #e2e2e2,
+    $primary-btn-border-bottom-color:#b8b8b8,
+    $color: #666666
+  );
+  font-size:5px;
+  &:after{
+    content: "● ● ●";
+  }
+}

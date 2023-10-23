@@ -1,0 +1,4 @@
+.columns.small-12
+  .config.container
+    %div.empty-message
+      No tasks have been added yet.

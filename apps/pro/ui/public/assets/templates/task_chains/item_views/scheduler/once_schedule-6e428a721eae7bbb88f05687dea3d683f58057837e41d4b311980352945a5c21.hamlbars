@@ -1,0 +1,60 @@
+.toggle-container
+  .toggle
+    {{#unless_eq task_chain.state compare="suspended"}}
+    %label
+      %input{:type=>'checkbox', :class=>"suspend",:name=>'schedule_suspend', :value=>'manual'}
+      Suspend
+    {{/unless_eq}}
+    {{#if_eq task_chain.state compare="suspended"}}
+    %label
+      %label
+      %input{:type=>'checkbox', :class=>"suspend",:name=>'schedule_suspend', :value=>'manual', :checked=>true}
+      Suspend
+    {{/if_eq}}
+
+%form{:method => 'post', :action=>'javascript:void(0)'}
+
+  .option
+    %label{:for=>'schedule_type'}
+      Run Chain
+    %select{:id=>'schedule_type',:name=>'schedule_recurrence[frequency]'}
+      %option{:value=>'once', :selected=>'true'}
+        Once
+      %option{:value=>'hourly'}
+        Hourly
+      %option{:value=>'daily'}
+        Daily
+      %option{:value=>'weekly'}
+        Weekly
+      %option{:value=>'monthly'}
+        Monthly
+
+
+  .option
+    .once.start-date
+      %label{:for=>'weekday-date'}
+        Start on
+      %input{:type=>'text', :id => 'weekday-date', :readonly=>'readonly',
+             :name=>'schedule_recurrence[once][start_date]', :value=>'{{task_chain.schedule_hash.once.start_date}}'}
+
+      .once.start-time
+        %label.start-time-label{:for=>'weekday-time'}
+          %span
+            @
+          %input{:type=>'text', :id =>'weekday-time', :readonly=>'readonly',
+                 :name=>'schedule_recurrence[once][start_time]', :value=>'{{task_chain.schedule_hash.once.start_time}}' }
+
+
+  .option.skip-disable
+    %label.spacer
+
+    .delete-project-data
+      %input{:type=>'hidden', :name=>'task_chain[clear_workspace_before_run]', :value=>'0'}
+
+      {{#if_eq task_chain.clear_workspace_before_run compare=true}}
+      %input{:type=>'checkbox', :name=>'task_chain[clear_workspace_before_run]', :checked=>true, :value=>'1'}
+      {{else}}
+      %input{:type=>'checkbox', :name=>'task_chain[clear_workspace_before_run]', :value=>'1'}
+      {{/if_eq}}
+
+      Delete Previous project data (Recommended)

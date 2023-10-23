@@ -1,0 +1,1 @@
+json.partial! 'target_list', target_list: @target_list

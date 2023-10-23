@@ -1,0 +1,144 @@
+define ['jquery'], ($) ->
+  class RainbowProgressBar
+    @UPDATE_THRESHOLD: 0.000001
+
+    # private state
+    _percentage: 0
+    _text: 0
+    _stroke: 3
+    _canvas: null
+    _percentFill: '#cccccc'
+    _percentFillHover: '#cccccc'
+    _innerFill: "#666666"
+    _innerFillHover: '#666666'
+    _textFill: "#cccccc"
+    _textFillHover: "#cccccc"
+    _fontSize: '28px'
+    _fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light",
+                      "Helvetica Neue", "Arial Narrow", Helvetica, san-serif'
+    _fontStyle: ''
+    _animationDuration: 600 #ms
+    _hover: false
+    _selected: false
+    _radius: 14
+    _innerRadius: 6
+
+    constructor: (args={}) ->
+      #stuff args into private state
+      _.each(args,(v,k)=> @['_'+k] = v)
+      $parent = $(@_canvas).parents('.rainbow-progress-wrapper').first()
+
+      @_setDimensions()
+
+      if $parent.attr('clickable') == 'true'
+        $parent.mouseenter(=> @_hover = true; @update())
+        $parent.mouseleave(=> @_hover =false; @update())
+
+    setPercentage: (percentage, opts={}) => @_setPercentage(opts, percentage)
+
+    _setPercentage: ({shouldUpdate, shouldAnimate}, percentage) =>
+      percentage ||= 0
+      shouldUpdate ?= true
+      shouldAnimate ?= true
+      return if Math.abs(percentage - @_percentage) < RainbowProgressBar.UPDATE_THRESHOLD && percentage !=0
+      if shouldAnimate
+        $(percentage: @_percentage).animate {percentage: percentage},
+          duration: @_animationDuration,
+          easing: 'easeInExpo',
+          step: (val) => @setPercentage(val, shouldAnimate: false)
+      else
+        @_percentage = percentage
+        @update() if shouldUpdate
+
+    setText: (@_text, {shouldUpdate}) =>
+      @_text ||= ''
+      shouldUpdate ?= true
+      @update() if shouldUpdate
+
+    setSelected: (@_selected, {shouldUpdate}) =>
+      shouldUpdate ?= true
+      @update() if shouldUpdate
+
+    setInnerFill: (@_innerFill, {shouldUpdate}) =>
+      shouldUpdate ?= true
+      @update() if shouldUpdate
+
+    getInnerFill: () =>
+      @_innerFill
+
+    update: =>
+      @context = @_canvas.getContext('2d')
+      @setSelected($(@_canvas).hasClass('selected'), shouldUpdate: false)
+
+      @context.clearRect(0,0,@_originalWidth,@_originalHeight)
+
+      #call sub routines
+      @x = @_originalWidth/4
+      @y = @_originalHeight/2 + @_radius/2
+
+      @counterClockwise = false
+
+      @_fillBackgroundImage()
+      @_fillProgressArch()
+      @_fillInnerCircle()
+      @_fillPercentText()
+
+    _fillBackgroundImage: () ->
+      @context.beginPath()
+      @context.lineWidth = 8
+      @context.strokeStyle = '#cccccc'
+      @context.arc(@x,@y,@_radius,Math.PI,0,@counterClockwise)
+      @context.stroke()
+
+    _fillProgressArch: () ->
+      startAngle = Math.PI
+      endAngle = Math.PI + Math.PI * (@_percentage/100)
+
+      @context.beginPath()
+      @context.lineWidth = 8
+      @context.strokeStyle = @_fillStyle('percentFill')
+      @context.arc(@x,@y,@_radius,startAngle,endAngle,@counterClockwise)
+      @context.stroke()
+
+    _fillInnerCircle: () ->
+      @context.beginPath()
+      @context.strokeStyle = @_fillStyle('innerFill')
+      @context.arc(@x,@y,@_innerRadius,Math.PI,0,@counterClockwise)
+      @context.fillStyle = @_fillStyle('innerFill')
+      @context.fill()
+      @context.stroke()
+
+    _fillPercentText: () ->
+      @context.fillStyle = @_fillStyle('textFill')
+      @context.font = @_fontStyle
+      @context.fillText("#{Math.round(@_percentage)}%", @x+@_radius+8,@y)
+
+
+    _fillStyle: (attr) =>
+      if @_hover
+        @['_'+attr+'Hover'] || @['_'+attr]
+      else if @_selected
+        @['_'+attr+'Selected'] || @['_'+attr]
+      else
+        @['_'+attr]
+
+    _setDimensions: ->
+      @context ||= @_canvas.getContext('2d')
+
+      # Store the original height/width values of the canvas element for later use.
+      @_originalHeight = @_canvas.height
+      @_originalWidth  = @_canvas.width
+
+      if window.devicePixelRatio
+        hidefCanvasCssWidth     = @_canvas.width
+        hidefCanvasCssHeight    = @_canvas.height
+        hidefCanvasWidth  = hidefCanvasCssWidth  * window.devicePixelRatio
+        hidefCanvasHeight = hidefCanvasCssHeight * window.devicePixelRatio
+
+        $(@_canvas).attr 'width',  hidefCanvasWidth
+        $(@_canvas).attr 'height', hidefCanvasHeight
+        $(@_canvas).css  'width',  hidefCanvasCssWidth
+        $(@_canvas).css  'height', hidefCanvasCssHeight
+
+        @context.scale(window.devicePixelRatio, window.devicePixelRatio)
+

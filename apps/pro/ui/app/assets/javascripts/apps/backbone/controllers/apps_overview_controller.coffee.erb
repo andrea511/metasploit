@@ -1,0 +1,8 @@
+define [
+  '<%= javascript_path("apps/backbone/views/layouts/apps_overview_layout") %>'
+], (AppsOverviewLayout) ->
+  class AppsOverviewController
+    constructor: ({ @region }) ->
+      @layout = new AppsOverviewLayout()
+      @region.show(@layout)
+      @layout.renderRegions()

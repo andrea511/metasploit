@@ -1,0 +1,9 @@
+<div class="step">
+	<h3>Evidence Collection</h3>
+	<div class="stepInfo begin" id="evidence">
+		<%= render :partial => 'collect_results' %>
+	</div>
+	<div class="btns">
+		<span class="btn"><%= submit_checkboxes_to "Collect...", new_collect_evidence_path(@workspace),  { :class => "collect" } %></span>
+	</div>
+</div>

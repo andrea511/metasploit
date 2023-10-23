@@ -1,0 +1,341 @@
+/*
+ *  File:         demo_table.css
+ *  CVS:          $Id$
+ *  Description:  CSS descriptions for DataTables demo pages
+ *  Author:       Allan Jardine
+ *  Created:      Tue May 12 06:47:22 BST 2009
+ *  Modified:     $Date$ by $Author$
+ *  Language:     CSS
+ *  Project:      DataTables
+ *
+ *  Copyright 2009 Allan Jardine. All Rights Reserved.
+ *
+ * ***************************************************************************
+ * DESCRIPTION
+ *
+ * The styles given here are suitable for the demos that are used with the standard DataTables
+ * distribution (see www.datatables.net). You will most likely wish to modify these styles to
+ * meet the layout requirements of your site.
+ *
+ * Common issues:
+ *   'full_numbers' pagination - I use an extra selector on the body tag to ensure that there is
+ *     no conflict between the two pagination types. If you want to use full_numbers pagination
+ *     ensure that you either have "example_alt_pagination" as a body class name, or better yet,
+ *     modify that selector.
+ *   Note that the path used for Images is relative. All images are by default located in
+ *     ../images/ - relative to this CSS file.
+ */
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables features
+ */
+
+
+.dataTables_wrapper {
+	position: relative;
+	min-height: 302px;
+	clear: both;
+	_height: 302px;
+	zoom: 1; /* Feeling sorry for IE */
+}
+
+.dataTables_processing {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 250px;
+	height: 30px;
+	margin-left: -125px;
+	margin-top: -15px;
+	padding: 14px 0 2px 0;
+	border: 1px solid #ddd;
+	text-align: center;
+	color: #999;
+	font-size: 14px;
+	background-color: white;
+}
+
+.dataTables_length {
+	width: 40%;
+	float: left;
+}
+
+.dataTables_filter {
+	width: 50%;
+	float: right;
+	text-align: right;
+}
+
+.dataTables_info {
+	width: 60%;
+	float: left;
+}
+
+.dataTables_paginate {
+	width: 44px;
+	* width: 50px;
+	float: right;
+	text-align: right;
+}
+
+/* Pagination nested */
+.paginate_disabled_previous, .paginate_enabled_previous, .paginate_disabled_next, .paginate_enabled_next {
+	height: 19px;
+	width: 19px;
+	margin-left: 3px;
+	float: left;
+}
+
+.paginate_disabled_previous {
+  background-image: url(data:image/jpeg;base64,%2F9j%2F4AAQSkZJRgABAgAAZABkAAD%2F7AARRHVja3kAAQAEAAAAZAAA%2F%2B4ADkFkb2JlAGTAAAAAAf%2FbAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQECAQECAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD%2F8AAEQgAEwATAwERAAIRAQMRAf%2FEAHoAAQADAQAAAAAAAAAAAAAAAAYFBwgKAQEBAAAAAAAAAAAAAAAAAAAAARAAAAQDBAUHDQEAAAAAAAAAAQIEBREDBgASEwchMRQVNkFRkTIjNBZhcYHB4UJSgjNDZUYXCBEBAAICAwAAAAAAAAAAAAAAAAERITFBcZH%2F2gAMAwEAAhEDEQA%2FAOvdZWSqUoOQs%2BABDQAhoD12ChaE%2FwBhZVZo5gVZltlxW6KuH2hUJ1VXr6ZA7rSrEsBYnQ7hUVWmKZiWVEWbPNjI0s6fNSYJyqAknApDA1%2Fobljd4CHiHChD7ew9XX8WmxcM353UjTGctJvWXlYq32VTj3dlucin6jdqbUOCUCmJObXCe0K0kxwZ1suYYilHOxEyggwOQYAINJ0C5JZQZaZAMM1jy5bW5hboCmltyFMRMXBNdmDNMYscQ4GklAbxhHVyWBf4l7X6o8Rx63Lsfn12UWqd%2FwBq3mo45heNq3PDX7kdMOeySdoQdqgPHHp3Pz9PttV4He3j%2B1d%2F%2FH3r1zo2mHy3fLYnr%2F%2FZ);
+}
+
+.paginate_enabled_previous {
+  background-image: url(data:image/jpeg;base64,%2F9j%2F4AAQSkZJRgABAgAAZABkAAD%2F7AARRHVja3kAAQAEAAAAZAAA%2F%2B4ADkFkb2JlAGTAAAAAAf%2FbAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQECAQECAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD%2F8AAEQgAEwATAwERAAIRAQMRAf%2FEAJAAAAIDAAAAAAAAAAAAAAAAAAcIBQYKAQABBAMAAAAAAAAAAAAAAAAAAQMFBgQHCBAAAAUCAQcHDAMAAAAAAAAAAQIDBAURBgcAITESExQIUZEyIzQVNkFhcYHB4UJSgjNDFmVGFxEAAgAFAgQEBwAAAAAAAAAAAQIAEQMEBSEGMUESB1GxIhTwYZFCghMj%2F9oADAMBAAIRAxEAPwDXu8vJ0k4OQq9ACmYBDMHtyIIXaweNXBvFXE%2B7sIsNMQY2%2FLssOIWlbycWuIy9sW%2BolIsowYR1dTUDwbu4iOXtFmTVZwq02RyuQROBSGsdfaeetNurum6t3p4Z7pbdXbTrqMlSoOkcZdNNiSZcpT1kwLmi1f2ysDWC9UvkCB5mCJ%2Focltu0BT9h2VKfj3Ho6fmz5VyMjSFW4jMO7b4gMP7jwruyfu6CgbiICT91Zd0SNrybhECHTUj3y0esmnKwb4ihiO2DkqrVymNDkqBTFsO2M%2BNs5mllzaWl8lM60blC9Jh%2BLK6sPtZWBB8RMFi4oe4omkGZJ81MiPjwMKTwf8ACow4SbquRtba8YvacjbrqPjHLBJNooJhk4hykm%2BaGMZVB1smphECmVSENB65g3h3Y7x4TuLsOwwmNtBj7i1vlqNbqPQP5VUZkcaOJsomwV%2BHpkJxD4zFVbG8etUb9gZJdXPiDIjl5Q4n7L1v3R8R16Xl3P06cubpRPTgTz%2B9d5uPHNNY2juemn4K56cuQYDxiEHeqD449fc%2FLz%2B%2FJYXlFd6%2Bv9q7f%2FH62tqc280%2BnV8%2BRCfWP%2F%2FZ);
+}
+
+.paginate_disabled_next {
+  background-image: url(data:image/jpeg;base64,%2F9j%2F4AAQSkZJRgABAgAAZABkAAD%2F7AARRHVja3kAAQAEAAAAZAAA%2F%2B4ADkFkb2JlAGTAAAAAAf%2FbAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQECAQECAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD%2F8AAEQgAEwATAwERAAIRAQMRAf%2FEAHoAAAICAwAAAAAAAAAAAAAAAAIFBAYHCAoBAQEAAAAAAAAAAAAAAAAAAAABEAAABAMEBAoLAAAAAAAAAAABAgMEEQUGABIUByExEwhBUZEygiM0FRY2YXGB4UJSM0NlRhcRAQACAwEAAAAAAAAAAAAAAAABESExQZH%2F2gAMAwEAAhEDEQA%2FAOpPeK3oJDu3ZW1VnBWbWoZpS1HuKYTm7KlWLeZz3D1LVkipFJ0yYOXjBN4WXuZ8RwsQFQUFBI%2BzA57pDBOyr3mMvs7aWQrLK6tpXVsiWApVlGR1UH8rcnJtAYT2TPkWs4kEzKmIGFs8QQXAogN2AgIgx%2Focy23aAh4h2UIfbwPN1%2FNpsXDV7eGpGXZ0Zf1BlpNngtpZUEypJw%2BVIJRPhqdrKnqnVTKUwwisWS3Ola6QdG0Zlnl2IK0TS0pkb3CAzczRsiklM5ikUpQg9XSAgKEvBeAggIFHhEdNoD8S9b9UfMcedw4P167KLYnn%2BK7zceeYXjau54a%2Fgjphx2STskHFQHzx7e5%2BPl99qvFd6%2BP7V2%2F8fevXOTEw6N302J6%2F%2F9k%3D);
+}
+
+.paginate_enabled_next {
+  background-image: url(data:image/jpeg;base64,%2F9j%2F4AAQSkZJRgABAgAAZABkAAD%2F7AARRHVja3kAAQAEAAAAZAAA%2F%2B4ADkFkb2JlAGTAAAAAAf%2FbAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQECAQECAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD%2F8AAEQgAEwATAwERAAIRAQMRAf%2FEAI4AAAIDAQAAAAAAAAAAAAAAAAUHBAYICgEAAQUBAAAAAAAAAAAAAAAAAQADBAUGBxAAAAQDBAUHDQAAAAAAAAAAAQIDBBEFBgASBwgxEyMUFSFRkTI0FjZBYXGB4UJSgjNDZUYXEQABAwMDAgUFAQAAAAAAAAABEQIDAAQFITESBgdBYYGRMvBRsSITFP%2FaAAwDAQACEQMRAD8A6j8yGaWnMs%2BFNW4zVw3n8xpGjF6YJOWtLsm0yngNqlq2RUgk6ZMHLxgk7LL3U%2FTXWICoKCgkfVgc90hrbCYa7z%2BUixFgn%2BybkGAqhLWuemgJ14oNN%2FKm5pWwRmV%2FxG%2FulScIc0mGmPVJI1thJX0lrWn1bhHCstXOnMJS6UT1oS6oJK9SbTmnpoVMQMLV83brgUQNcuiAic1gcx07eHH5u3lt7seDwij7tOzh5tJFCKaKdnOFwc363o1%2FQ5lru0BDvDqoQ%2B3uPV0%2FFy2qKe0rFWcigH2YDA6usIJa%2Bbs3VXP6GAXThcqKTdpIsQ6SqWYLHMJTjs2EmVEClKJjjAoBEQtuu2ufxfSvW9h1DmRI7HWjpHuawK5xEMgYwBR83lrSSQGgknQGoV%2FBJcWb4IU5uAGuw1Cn0FAcD8vGEGAx0ZrR8kbt6qGWcNmFQpLLN3MwRMmUFU3SSKxEXaRjheAFinApgAxQKYI21XcvvX1P3ID7G8EMOE%2FpzbEI4y4EH9Tz48mlNEYW6KCXCo2PxNvYo9imZEVT66L%2BabHeXa%2FVHxHHreXc%2FTptxtKtVpTz%2FeuJuPHMLxtHB4afcjyw57I0jvQQd6gPjj18H5%2Bn22NHwqu7eP7V2%2F8AH3r1zo3mHy3fPZUPev%2FZ);
+}
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables display
+ */
+table.display {
+	margin: 0 auto;
+	clear: both;
+	width: 100%;
+
+	/* Note Firefox 3.5 and before have a bug with border-collapse
+	 * ( https://bugzilla.mozilla.org/show%5Fbug.cgi?id=155955 )
+	 * border-spacing: 0; is one possible option. Conditional-css.com is
+	 * useful for this kind of thing
+	 *
+	 * Further note IE 6/7 has problems when calculating widths with border width.
+	 * It subtracts one px relative to the other browsers from the first column, and
+	 * adds one to the end...
+	 *
+	 * If you want that effect I'd suggest setting a border-top/left on th/td's and
+	 * then filling in the gaps with other borders.
+	 */
+}
+
+table.display thead th {
+	padding: 3px 18px 3px 10px;
+	border-bottom: 1px solid black;
+	font-weight: bold;
+	cursor: pointer;
+	* cursor: hand;
+}
+
+table.display tfoot th {
+	padding: 3px 18px 3px 10px;
+	border-top: 1px solid black;
+	font-weight: bold;
+}
+
+table.display tr.heading2 td {
+	border-bottom: 1px solid #aaa;
+}
+
+table.display td {
+	padding: 3px 10px;
+}
+
+table.display td.center {
+	text-align: center;
+}
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables sorting
+ */
+
+.sorting_asc {
+	cursor: pointer;
+  background: rgba(100,100,100,.1) url(/assets/sort_asc-13a78ef51838a696a6d039a752838b370aa9b7f4ab9accefaf493f6f8fbc0bf6.png) no-repeat center right;;
+}
+
+.sorting_desc {
+	cursor: pointer;
+  background: rgba(100,100,100,.1) url(/assets/sort_desc-399076c440cfe8823dfaf6c5834e65b0f02167820e1df7623a114e83574f6cf6.png) no-repeat center right;
+}
+
+.sorting {
+	cursor: pointer;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables row classes
+ *
+table.display tr.odd.gradeA {
+	background-color: #ddffdd;
+}
+
+table.display tr.even.gradeA {
+	background-color: #eeffee;
+}
+
+table.display tr.odd.gradeC {
+	background-color: #ddddff;
+}
+
+table.display tr.even.gradeC {
+	background-color: #eeeeff;
+}
+
+table.display tr.odd.gradeX {
+	background-color: #ffdddd;
+}
+
+table.display tr.even.gradeX {
+	background-color: #ffeeee;
+}
+
+table.display tr.odd.gradeU {
+	background-color: #ddd;
+}
+
+table.display tr.even.gradeU {
+	background-color: #eee;
+}
+
+
+tr.odd {
+	background-color: #E2E4FF;
+}
+
+tr.even {
+	background-color: white;
+}
+*/
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Misc
+ */
+.dataTables_scroll {
+	clear: both;
+}
+
+.dataTables_scrollBody {
+	*margin-top: -1px;
+}
+
+.top, .bottom {
+	padding: 15px;
+	background-color: #F5F5F5;
+	border: 1px solid #CCCCCC;
+}
+
+.top .dataTables_info {
+	float: none;
+}
+
+.clear {
+	clear: both;
+}
+
+.dataTables_empty {
+	text-align: center;
+}
+
+tfoot input {
+	margin: 0.5em 0;
+	width: 100%;
+	color: #444;
+}
+
+tfoot input.search_init {
+	color: #999;
+}
+
+td.group {
+	background-color: #d1cfd0;
+	border-bottom: 2px solid #A19B9E;
+	border-top: 2px solid #A19B9E;
+}
+
+td.details {
+	background-color: #d1cfd0;
+	border: 2px solid #A19B9E;
+}
+
+
+.example_alt_pagination div.dataTables_info {
+	width: 40%;
+}
+
+.paging_full_numbers {
+	width: 400px;
+	height: 22px;
+	line-height: 22px;
+}
+
+.paging_full_numbers span.paginate_button,
+ 	.paging_full_numbers span.paginate_active {
+	border: 1px solid #aaa;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: 2px 5px;
+	margin: 0 3px;
+	cursor: pointer;
+	*cursor: hand;
+}
+
+.paging_full_numbers span.paginate_button {
+	background-color: #ddd;
+}
+
+.paging_full_numbers span.paginate_button:hover {
+	background-color: #ccc;
+}
+
+.paging_full_numbers span.paginate_active {
+	background-color: #99B3FF;
+}
+
+
+/*
+ * KeyTable
+ */
+table.KeyTable td {
+	border: 3px solid transparent;
+}
+
+table.KeyTable td.focus {
+	border: 3px solid #3366FF;
+}
+
+table.display tr.gradeA {
+	background-color: #eeffee;
+}
+
+table.display tr.gradeC {
+	background-color: #ddddff;
+}
+
+table.display tr.gradeX {
+	background-color: #ffdddd;
+}
+
+table.display tr.gradeU {
+	background-color: #ddd;
+}
+
+div.box {
+	height: 100px;
+	padding: 10px;
+	overflow: auto;
+	border: 1px solid #8080FF;
+	background-color: #E5E5FF;
+}

@@ -1,0 +1,206 @@
+define [
+  'jquery'
+  'base_model'
+  'base_collection'
+], ($) ->
+  @Pro.module "Entities", (Entities, App) ->
+
+    #
+    # ENTITY CLASSES
+    #
+
+    class Entities.Login extends App.Entities.Model
+
+      @Status: <%= const_map('Metasploit::Model::Login::Status') %>
+
+      @Types:
+        Nil:          'none',
+        SSHKey:       'ssh',
+        PasswordHash: 'hash',
+        NTLMHash:     'ntlm',
+        Password:     'plaintext'
+
+      defaults:
+        workspace_id: null
+        core_id: null
+        tags: []
+        attempting_login: false
+        authentication_task: null
+        # The help text for the tagging modal:
+        taggingModalHelpContent:
+          """
+          <p>
+            A tag is an identifier that you can use to group together logins.
+            You apply tags so that you can easily search for logins.
+            For example, when you search for a particular tag, any login that
+            is labelled with that tag will appear in your search results.
+          </p>
+          <p>
+            To apply a tag, start typing the name of the tag you want to use in the
+            Tag field. As you type in the search box, Metasploit automatically predicts
+            the tags that may be similar to the ones you are searching for. If the tag
+            does not exist, Metasploit creates and adds it to the project.
+          </p>
+          """
+
+      url: (opts={}) =>
+        opts.extension ?= '.json'
+        if @id?
+          "#{@_rootURL()}/#{@id}#{opts.extension}"
+        else
+          "#{@_rootURL()}#{opts.extension}"
+
+      # Sends a request to Rails that kicks off the login validation module and
+      #  returns the id of the running task.
+      # @return [$.Deferred] deferred object that resolves when the URL is fetched
+      #   and passes a [Task] entity object back to the handlers
+      validateAuthentication: =>
+        deferred = $.Deferred()
+        $.ajax(
+          method: 'post'
+          url: @_validateAuthenticationURL()
+        ).done (response) =>
+          if response.task_id?
+            # Task is a lazy dependency of this class. requirejs ftw
+            initProRequire ['entities/task'], =>
+              task = new App.Entities.Task(workspace_id: @_workspaceId(), id: response.task_id)
+              deferred.resolve(task)
+        deferred
+
+      # Sends a request to Rails that kicks off the login session module and
+      # returns the id of the running task.
+      # @return [$.Deferred] deferred object that resolves when the URL is fetched
+      #   and passes a [Task] entity object back to the handlers
+      attemptSession: (payloadModel) =>
+        deferred = $.Deferred()
+        $.ajax(
+          method: 'post'
+          url: Routes.attempt_session_workspace_metasploit_credential_login_path(@_workspaceId(),@get('id')) + ".json"
+          data: payloadModel.toJSON()
+        ).done (response) =>
+          if response.task_id?
+            # Task is a lazy dependency of this class. requirejs ftw
+            initProRequire ['entities/task'], =>
+              task = new App.Entities.Task(workspace_id: @_workspaceId(), id: response.task_id)
+              deferred.resolve(task)
+        deferred
+
+      sessions: () =>
+        $.ajax(
+          method: 'get'
+          url: Routes.get_session_workspace_metasploit_credential_login_path(WORKSPACE_ID,@get('id'))+'.json'
+        )
+
+      _rootURL: =>
+        "/workspaces/#{@_workspaceId()}/metasploit/credential/logins"
+
+      # @return [String] the URL to POST to to kick off the auth validation task
+      _validateAuthenticationURL: =>
+        "#{@_rootURL()}/#{@id}/validate_authentication.json"
+
+      # Figures out the workspace this entity belongs in, one way or another
+      # @return [Number] the id of the workspace that contains this Login
+      _workspaceId: =>
+        @get('service.host.workspace_id') || window.WORKSPACE_ID
+
+
+
+      fetchTags: (successCallback) ->
+        @fetch
+          success:successCallback
+          url: "/workspaces/#{@.get('workspace_id')}/metasploit/credential/cores/#{@get('core_id')}/logins/#{@id}/tags.json"
+
+      removeTag: (opts={}) ->
+        {tagId, success} = opts
+
+        @save {tagId: tagId},
+          success: success
+          url: "/workspaces/#{@.get('workspace_id')}/metasploit/credential/cores/#{@get('core_id')}/logins/#{@id}/remove_tag.json"
+
+      #
+      # Determine if the logins's private data has been truncated. (Through a core)
+      #
+      # @return [Boolean] true if the data has been truncated, false otherwise
+      isTruncated: ->
+        @get('core.private.data')?.length > @get('core.private.data_truncated')?.length
+
+      #
+      # @return [Boolean] true if this login's core is an SSH key
+      isSSHKey: ->
+        (@get('core.private.type') == @constructor.Types.SSHKey)
+
+    class Entities.LoginsCollection extends App.Entities.Collection
+
+      # @property accessLevels [Array<String>] a sorted list of unique values
+      #   of the `access_level` property across the models in this collection
+
+      initialize: (models, {@core_id, @workspace_id}) ->
+        @url = "/workspaces/#{@workspace_id}/metasploit/credential/cores/#{@core_id}/logins"
+
+      rebind: ->
+        @on 'change:access_level', @recalculateAccessLevels, @
+
+      model: Entities.Login
+
+      # Called any time an access level is changed on a Login in this collection
+      # @return [Array<String>] @see accessLevels property
+      recalculateAccessLevels: ->
+        oldLevels = @accessLevels
+        @accessLevels = _(@models)
+          .map((m) -> m.get('access_level'))
+          .uniq()
+          .reject((m) -> _.contains(['admin', 'read only'], m?.toLowerCase?()) )
+          .sort()
+
+        unless _.isEmpty _.difference(@accessLevels, oldLevels)
+          @trigger('levelsChanged', @accessLevels)
+
+        @accessLevels
+
+
+    class Entities.HostAccessingLoginsCollection extends Entities.LoginsCollection
+      initialize: (models, opts={}) ->
+        @host_id = opts.host_id || HOST_ID
+
+      url: =>
+        "/hosts/#{@host_id}/metasploit/credential/logins/accessing.json"
+    #
+    # API
+    #
+
+    API =
+      getLogins: (opts={}) ->
+        new Entities.LoginsCollection([], opts)
+
+      getAccessingLoginsForHost: (host_id) ->
+        new Entities.HostAccessingLoginsCollection([], host_id: host_id)
+
+      getLogin: (id) ->
+        new Entities.Login(id: id)
+
+      newLogin: (attributes = {}) ->
+        new Entities.Login(attributes)
+
+    #
+    # REQUEST HANDLERS
+    #
+
+    App.reqres.setHandler "logins:entities", (opts={}) ->
+      optionNames = ['provide_access_to_host','workspace_id']
+      definedOpts = _.reject(optionNames,(name)-> _.isUndefined(opts[name]))
+
+      if definedOpts.length > 1
+        throw new Entities.EntityCollection.ScopingError(
+          "Only one of the following arguments may be set: "+JSON.stringify(definedOpts)
+        )
+
+      if opts.provide_access_to_host?
+        API.getAccessingLoginsForHost(opts.provide_access_to_host)
+      else
+        API.getLogins(opts)
+
+    App.reqres.setHandler "logins:entity", (id) ->
+      API.getLogin id
+
+    App.reqres.setHandler "new:login:entity", (attributes) ->
+      API.newLogin attributes

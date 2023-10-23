@@ -1,0 +1,36 @@
+<div class='web-server-config'>
+  <%= render "shared/error_messages", :target => @portable_file.campaign %>
+  <div class='rollup-header'>
+    <h3 class='max-width'>Configure Portable File Settings</h3>
+  </div>
+  <%= semantic_form_for(@portable_file, :url => @portable_file_path) do |f| %>
+    <%= f.inputs do %>
+      <meta name="module-data" content="<%= @portable_file.exploit_module_config.to_json unless @portable_file.exploit_module_config.blank? %>" />
+      <meta name="module-path" content="<%= @portable_file.exploit_module_path unless @portable_file.exploit_module_path.blank? %>" />
+      <meta name="module-title" content="<%= @portable_file.exploit_module.title unless @portable_file.exploit_module.blank? %>" />
+      <div class='exploit-module-config' style="display: none">
+
+      </div>
+      <div class="file">
+        <%= f.input :name, :required => true, :label => "Component name" %>
+        <%= f.input :file_name, :required => true, :label => "Generated file name" %>
+        <%= f.input :lhost, :required => true, :label => "Listener Host (LHOST)" %>
+        <%= f.input :lport, :required => true, :label => "Listener Port (LPORT)" %>
+        <%= f.input :payload_type, :as => 'radio', :label => 'Payload Type', :collection => portable_file_payload_type_pairs, :required => true %>
+        <%= f.input :file_generation_type, :as => 'radio', :label => 'Portable file type', :collection => portable_file_file_generation_type_pairs,:required => true %>
+        <% if License.get.supports_dynamic_stagers? %>
+          <div class="exe_agent" style="display:none">
+            <%= f.input :dynamic_stagers, :as => :boolean, :label => "Use Dynamic Stagers (AV evasion)" %>
+          </div>
+        <% end %>
+
+        <div class="file_format" style='display:none;'>
+          <hr style='margin-bottom: 7px;' />
+          <div class='load-modules'>
+          </div>
+        </div>
+      </div>
+      
+    <% end %>
+  <% end %>
+</div>

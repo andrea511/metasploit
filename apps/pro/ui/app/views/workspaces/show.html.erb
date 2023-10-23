@@ -1,0 +1,84 @@
+<% title "Overview" %>
+<% breadcrumb workspace_link %>
+<%= render :partial => 'shared/tabbed_modal' %>
+
+<% include_view_javascript -%>
+<% include_stylesheet 'workspaces/show' -%>
+
+<div id="overview">
+  <% if License.get.pro? %>
+
+    <% if show_dashboard? %>
+    <div id="dashboard">
+          <%= render :partial => 'dashboard' %>
+    </div>
+    <% end %>
+
+    <div class="dashboard-title">
+      Overview - Project <%= h(@workspace.name) %>
+
+      <div id="overview-expander" class="expanded"></div>
+    </div>
+    <form class="overview">
+      <% if @workspace.web_vulns.size > 0 && @workspace.vulns.count > 0 %>
+        <div class="stepsHolder clearfix">
+          <div class="step">
+            <h3>Total Vulnerabilities</h3>
+            <div class="stepInfo blankBackground begin" id="total_vulns">
+              <p>
+                <strong><%= @workspace.all_vulns.size %> total vulnerabilities</strong> found
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <div class="stepsHolder clearfix">
+        <div class="stepLead float-Lt">
+          <%= render :partial => 'disco_box' %>
+        </div>
+        <div class="stepLead float-Rt">
+          <%= render :partial => 'penetration_box' %>
+        </div>
+      </div>
+      <div class="stepsHolder clearfix">
+        <div class="stepLead float-Lt">
+          <%= render :partial => 'web_box' %>
+        </div>
+        <div class="stepLead float-Rt">
+          <%= render :partial => 'social_box' %>
+        </div>
+      </div>
+      <div class="stepLead" style="width:100%;">
+        <%= render :partial => 'events_box' %>
+      </div>
+    </form>
+  <% else %>
+    <div class="dashboard-title">
+      Overview - Project <%= h(@workspace.name) %>
+
+      <div id="overview-expander" class="expanded"></div>
+    </div>
+    <form class="overview">
+      <div class="stepsHolder clearfix">
+        <div class="stepLead float-Lt">
+          <%= render :partial => 'disco_box' %>
+        </div>
+        <div class="stepLead float-Rt">
+          <%= render :partial => 'penetration_box' %>
+        </div>
+      </div>
+      <div class="stepsHolder clearfix">
+        <div class="stepLead float-Lt">
+          <%= render :partial => 'collect_box' %>
+        </div>
+        <div class="stepLead float-Rt">
+          <%= render :partial => 'cleanup_box' %>
+        </div>
+      </div>
+      <div class="stepLead" style="width:100%;">
+        <%= render :partial => 'events_box' %>
+      </div>
+    </form>
+  <% end %>
+</div>
+

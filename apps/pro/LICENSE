@@ -1,0 +1,3438 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Source: http://www.metasploit.com/
+
+Files: *
+Copyright: 2006-2014, Rapid7, Inc.
+License: Metasploit
+
+# Metasploit is licensed under the commercial license provided at the end of
+# this file.
+#
+# The copyright on this package is held by Rapid, Inc.
+#
+# This license does not apply to third-party components detailed below.
+#
+# Last updated: 2014-Mar-18
+#
+
+Files: apps/pro/java/lib/barbecue*
+Copyright: 2003 International Barcode Consortium
+License: BSD-3-clause
+
+Files: apps/pro/java/lib/castor*
+Copyright: 2004-2005 Werner Guttmann
+License: Apache
+
+Files: apps/pro/java/lib/snakeyaml*
+Copyright: 2008-2012 http://www.snakeyaml.org
+License: Apache
+
+Files: apps/pro/java/lib/xalan*
+Copyright: 1999-2012 The Apache Software Foundation
+License: Apache
+
+Files: apps/pro/wkhtmltoimage/*
+Copyright: 2010 wkhtmltopdf/wkhtmltoimage Authors
+License: LGPL
+
+Files: apps/pro/ui/public/assets/coffee-script.js
+Copyright: 2011 Jeremy Ashkenas
+License: MIT
+
+Files: apps/pro/ui/public/assets/handlebars*
+Copyright: 2011 Yehuda Katz
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/d3.transform
+Copyright: 2013 Erik Cunningham, Spiros Eliopoulos
+License: MIT
+
+Files: apps/pro/ui/public/assets/icons/silky/*
+Files: apps/pro/ui/app/assets/images/icons/filter.png
+Copyright: Funnel designed by Naomi Atkinson from the thenounproject.com
+Website: http://thenounproject.com/term/funnel/5608/
+License: CC-BY 3.0
+
+Files: apps/pro/ui/app/assets/images/icons/silky/*
+Copyright: Mark James
+License: CC-BY
+
+Files: apps/pro/ui/app/assets/images/icons/silky/terminal.png
+Copyright: icons8.com
+License: CC-3.0
+
+Files: apps/pro/ui/app/assets/images/spinners/*
+Website: https://github.com/sjhcockrell/spinners/
+License: MIT
+
+Files: apps/pro/ui/app/assets/javascripts/shared/lib/handlebars_form_helpers.js
+Copyright: 2013 Richard Willis
+License: MIT
+
+Files: apps/pro/ui/public/docs/online-help/*/swfobject.js
+Copyright: 2007-2008 Geoff Stearns, Michael Williams and Bobby van Sluis
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/async.js
+Copyright: 2010 Caolan McMahon
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/backbone.js
+Copyright: 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/backbone.paginator.js
+Copyright 2012-2014 Jimmy Yuen Ho Wong and contributors
+Website: https://github.com/johnkpaul/jquery-ajax-retry
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/jquery.caret.js
+Copyright 2009 Gideon Sireling
+Website: http://plugins.jquery.com/caret/
+License: BSD3
+
+Files: apps/pro/ui/vendor/assets/javascripts/backbone.mutators.min.js
+Copyright (c) 2014 Sebastian Golasch <public@asciidisco.com>
+Website: http://asciidisco.github.com/Backbone.Mutators/index.html
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/completely.js
+Copyright (c) 2013 Lorenzo Puccetti
+Website: http://complete-ly.appspot.com/
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/jquery.ajax-retry.js
+Copyright: 2012 John Paul
+Website: http://dobtco.github.io/jquery-resizable-columns/
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/jquery.resizableColumns.min.js
+Copyright: none
+Website: http://dobtco.github.io/jquery-resizable-columns/
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/backbone-chooser-min.js
+Copyright: 2014 Brian Mann
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/backbone.marionette.js
+Copyright: 2013 Derick Bailey, Muted Solutions, LLC.
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/backbone.syphon.js
+Copyright: 2012 Derick Bailey, Muted Solutions, LLC
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/backbone.queryparams.js
+Copyright: 2012, Joseph A. Hudson
+Website: https://github.com/jhudson8/backbone-query-parameters
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/browser_detect.js
+Copyright: tuki (https://github.com/tuki/js-popunder)
+License: pubic-domain
+
+Files: apps/pro/ui/vendor/assets/javascripts/cocktail.min.js
+Copyright: 2012 Onsi Fakhouri
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/codemirror*
+Copyright: Marijn Haverbeke
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/control.js apps/pro/ui/vendor/assets/javascripts/dragdrop.js apps/pro/ui/vendor/assets/javascripts/effects.js
+Copyright: 2005-2008 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/d3*
+Copyright: 2012, Michael Bostock
+License: BSD-3-clause
+
+Files: apps/pro/ui/vendor/assets/javascripts/g.*
+Copyright: 2008 Dmitry Baranovskiy
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/handlebars_helpers.js
+Copyright: Dan Harper
+License: public-domain
+
+Files: apps/pro/ui/vendor/assets/javascripts/jquery-cookie.js
+Copyright: 2013 Klaus Hartl (https://github.com/carhartl/jquery-cookie)
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/jquery-ie9-cors.js
+Copyright: Julian Aubourg j@ubourg.net
+Repo: https://github.com/jaubourg/ajaxHooks
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/jquery-iframeTransport.js
+Copyright: cmlenz
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/jquery_timepicker/jquery-ui-sliderAccess.js
+Copyright: Trent Richardson
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/jquery*
+Copyright: 2013 jQuery Foundation and other contributors
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/livepipe.js
+Copyright: 2008 PersonalGrid Corporation
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/moment*
+Copyright: Tim Wood
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/Placeholders.js
+Copyright: James Allardice
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/pretty_json.js
+Copyright: warfares
+License: public-domain
+
+Files: apps/pro/ui/vendor/assets/javascripts/prototype*
+Copyright: 2005-2010 Sam Stephenson
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/protovis*
+Copyright: 2010 Stanford Visualization Group
+License: BSD-2-clause
+
+Files: apps/pro/ui/vendor/assets/javascripts/raphael*
+Copyright: 2010 Dmitry Baranovskiy
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/require.js
+Copyright: 2010-2012, The Dojo Foundation
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/sinon-*
+Copyright: Christian Johansen
+License: BSD-3-clause
+
+Files: apps/pro/ui/vendor/assets/javascripts/squeezeFrame.js
+Copyright: frank -futtta- goossens
+License: LGPL
+
+Files: apps/pro/ui/vendor/assets/javascripts/tabs.js
+Copyright: 2008 PersonalGrid Corporation
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/underscore.js
+Copyright: 2009-2013 Jeremy Ashkenas, DocumentCloud Inc.
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/javascripts/underscore-string.js
+Copyright: 2010 Esa-Matti Suuronen
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/stylesheets/data-table.css.erb
+Copyright: 2009 Allan Jardine
+License: MIT
+
+Files: apps/pro/ui/vendor/assets/stylesheets/select2/*
+Copyright: 2012 Igor Vaynberg
+License: Apache
+
+Files: apps/pro/ui/vendor/assets/stylesheets/toggle-slider.css.scss
+Copyright: 2013 Lea Verou http://lea.verou.me
+License: public-domain
+
+Files: apps/pro/ui/public/flash/clippy.swf
+Copyright: 2008 Tom Preston-Werner
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/actionmailer-*/*
+Copyright: 2004-2011 David Heinemeier Hansson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/actionpack-*/*
+Copyright: 2004-2011 David Heinemeier Hansson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/activemodel-*/*
+Copyright: 2004-2011 David Heinemeier Hansson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/activerecord-*/*
+Copyright: 2004-2011 David Heinemeier Hansson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/activeresource-*/*
+Copyright: 2006-2011 David Heinemeier Hansson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/activesupport-*/*
+Copyright: 2005-2011 David Heinemeier Hansson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/acts_as_list-*/*
+Copyright: 2007 David Heinemeir Hansson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/arel-*/*
+Copyright: 2007-2010 Nick Kallen, Bryan Helmkamp, Emilio Tagua, Aaron Patterson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/authlogic-*/*
+Copyright: 2011 Ben Johnson of Binary Logic
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/bcrypt-*/*
+Copyright: 2007-2011 Coda Hale
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/builder-*/*
+Copyright: 2003-2012 Jim Weirich (jim.weirich@gmail.com)
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/carrierwave-*/*
+Copyright: 2008-2012 Jonas Nicklas
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/chunky_png-*/*
+Copyright: 2010 Willem van Bergen
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/compass-*/*
+Copyright: 2009 Christopher M. Eppstein
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/cookiejar-*/*
+Copyright: 2009 David Waite <david@alkaline-solutions.com>
+License: Cookiejar
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/coderay-*/*
+Copyright: 2006-2011, murphy (Kornelius Kalnback) <murphy rubychan de>
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/daemons-*/*
+Copyright: 2005-2012 Thomas Uehlinger
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/delayed_job-*/*
+Copyright: 2005 Tobias Lütke
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/delayed_job_active_record-*/*
+Copyright: 2005 Tobias Lütke
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/erubis-*/*
+Copyright: 2006-2011 kuwata-lab.com all rights reserved
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/eventmachine-*/*
+Copyright: Francis Cianfrocca
+License: Ruby
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/formtastic-*/*
+Copyright: 2008-2010
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/fssm-*/*
+Copyright: 2011 Travis Tilley
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/gon-*/*
+Copyright: 2011-2014 gazay
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/has_scope-*/*
+Copyright: 2009-2013 Plataformatec
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/hike-*/*
+Copyright: 2011 Sam Stephenson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/i18n-*/*
+Copyright: 2008 The Ruby I18n team
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/ice_cube-*/*
+Copyright: 2010-2012 John Crepezzi
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/journey-*/*
+Copyright: 2011 Aaron Patternson
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/jquery-rails-*/*
+Copyright: 2010 Andre Arko
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/json-*/*
+Copyright: Daniel Luz <dev at mernen dot com>
+License: Ruby
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/kaminari-*/*
+Copyright: 2011 Akira Matsuda
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/liquid-*/*
+Copyright: 2005, 2006 Tobias Luetke
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/mime-types-*/*
+Copyright: 2003–2013 Austin Ziegler
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/mail-*/*
+Copyright: 2009, 2010, 2011, 2012 Mikel Lindsaar
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/bundler/gems/metasploit_data_modules-*/*
+Copyright: 2012 Rapid7, Inc.
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/method_source-*/*
+Copyright: 2011 John Mair (banisterfiend)
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/msgpack-*/*
+Copyright: Austin Ziegler
+License: Ruby
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/multi_json-*/*
+Copyright: 2010 Michael Bleigh, Josh Kalderimis, Erik Michaels-Ober, and Intridea, Inc.
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/nokogiri-*/*
+Copyright: 2008 - 2012 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/packetfu-*/*
+Copyright: 2008-2012 Tod Beardsley
+License: BSD-3-clause
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/pcaprub-*/*
+Copyright: Unknown
+License: LGPL
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/pg-*/*
+Copyright: 1997-2012 by the authors
+License: Ruby
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/polyglot-*/*
+Copyright: 2007 Clifford Heath
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/bundler/gems/prototype_legacy_helper-*/*
+Copyright: No copyright statement provided (unmaintained per https://github.com/rails/prototype_legacy_helper)
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/rack-*/*
+Copyright: 2007-2010 Christian Neukirchen <purl.org/net/chneukirchen>
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/rack-cache-*/*
+Copyright: 2008 Ryan Tomayko <http://tomayko.com/about>
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/rack-ssl-*/*
+Copyright: 2010 Joshua Peek
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/rack-test-*/*
+Copyright: 2008-2009 Bryan Helmkamp, Engine Yard Inc.
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/railties-*/*
+Copyright: No copyright statement provided
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/rake-*/*
+Copyright: 2003, 2004 Jim Weirich
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/rdoc-*/*
+Copyright: Dave Thomas <dave@pragmaticprogrammer.com>
+License: Ruby
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/rest-client-*/*
+Copyright: Unknown
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/robots-*/*
+Copyright: 2008 Kyle Maxwell, contributors
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/sass-*/*
+Copyright: 2006-2009 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/slop-*/*
+Copyright: 2012 Lee Jarvis
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/sprockets-*/*
+Copyright: 2011 Sam Stephenson, Joshua Peek
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/state_machine-*/*
+Copyright: 2006-2012 Aaron Pfeifer
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/thin-*/*
+Copyright: Marc-Andre Cournoyer
+License: Ruby
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/thor-*/*
+Copyright: 2008 Yehuda Katz
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/tilt-*/*
+Copyright: 2010 Ryan Tomayko <http://tomayko.com/about>
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/treetop-*/*
+Copyright: 2007 Nathan Sobo
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/tzinfo-*/*
+Copyright: 2005-2006 Philip Ross
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/wicked-*/*
+Copyright: Unknown
+License: MIT
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/win32-api-*/*
+Copyright: 2003-2011, Daniel J. Berger
+License: Artistic
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/win32console-*/*
+Copyright: 2003-2004 Gonzalo Garramuno (ggarramuno@aol.com)
+           2001 Michael L. Semon (mlsemon@sega.net)
+           2003 Jean-Louis Morel <jl_morel@bribes.org>
+License: Artistic
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/win32-service-*/*
+Copyright: 2003-2011, Daniel J. Berger
+License: Artistic
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/windows-api-*/*
+Copyright: 2007-2012, Daniel J. Berger
+License: Artistic
+
+Files: apps/pro/ui/vendor/bundle/ruby/2.6.0/gems/windows-pr-*/*
+Copyright: 2006-2010, Daniel J. Berger
+License: Artistic
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/bson-*/*
+Copyright: 2008-2010 10gen Inc.
+License: Apache
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/bson_ext-*/*
+Copyright: 2008-2010 10gen Inc.
+License: Apache
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/bundler-*/*
+Copyright: 2010 Andre Arko
+           2009 Engine Yard
+License: MIT
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/daemons-*/*
+Copyright: 2005-2012 Thomas Uehlinger
+License: MIT
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/eventmachine-*/*
+Copyright: 2006-2007, Francis Cianfrocca
+License: Ruby
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/json-*/*
+Copyright: Daniel Luz <dev at mernen dot com>
+License: Ruby
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/libv8-*/*
+Copyright: 2009,2010 Charles Lowell
+License: MIT
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/msgpack-*/*
+Copyright: Austin Ziegler
+License: Ruby
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/nokogiri-*/*
+Copyright: 2008 - 2012 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada
+License: MIT
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/pg-*/*
+Copyright: 1997-2012 by the authors
+License: Ruby
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/rack-*/*
+Copyright: 2007-2010 Christian Neukirchen <purl.org/net/chneukirchen>
+License: MIT
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/rake-*/*
+Copyright: 2003, 2004 Jim Weirich
+License: MIT
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/rdoc-*/*
+Copyright: Dave Thomas <dave@pragmaticprogrammer.com>
+License: Ruby
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/therubyracer-*/*
+Copyright: 2009-2011 Charles Lowell
+License: MIT
+
+Files: ruby/lib/ruby/gems/2.6.0/gems/thin-*/*
+Copyright: Marc-Andre Cournoyer <macournoyer@gmail.com>
+License: Ruby
+
+#
+# Components
+#
+# The following components don't follow the file format exactly.
+# We list the component name under the Files attribute.
+#
+
+Files: 7zip
+Copyright: 1999-2006 Igor Pavlov
+License: LGPL
+
+Files: Apache Commons
+Copyright: The Apache Software Foundation
+License: Apache
+
+Files: Apache Portable Runtime Library
+Copyright: The Apache Software Foundation
+License: Apache
+
+Files: Berkeley Database Library
+Copyright: 1990, 2010 Oracle and/or its affiliates
+License: BSD-3-clause
+
+Files: Bison
+Copyright: 1992, 1998-1999, 2003-2005, 2008-2011 Free Software Foundation, Inc.
+License: GPL-3
+
+Files: bzip2
+Copyright: 1996-2010 Julian R. Seward
+License: BSD-4-clause
+
+Files: Console
+Copyright: 2001-2011 Marko Bozikovic
+License: GPL-2
+
+Files: Cyrus SASL Library
+Copyright: 1998-2003 Carnegie Mellon University
+License: BSD-4-clause
+
+Files: Curl
+Copyright: 1996-2012 Daniel Stenberg <daniel@haxx.se>
+License: Curl
+
+Files: Expat Library
+Copyright: 2001-2006 Expat maintainers
+License: MIT
+
+Files: Flex
+Copyright: 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex Project.
+License: BSD-2-clause
+
+Files: FreeImage
+Copyright: 2003-2012 FreeImage
+License: FreeImage
+
+Files: Freetype
+Copyright: 1996-2002, 2006 David Turner, Robert Wilhelm, and Werner Lemberg
+License: GPL-2 and Freetype
+
+Files: ui/vendor/assets/fonts/roboto/*
+Copyright: 2012 Google
+License: Apache
+
+Files: GD Graphics Library
+Copyright: 1991-2002, Thomas G. Lane
+           1994-2002, Cold Spring Harbor Laboratory
+           1996-2002, Thomas Boutell (Boutell.Com, Inc.)
+           1999-2002, Greg Roelofs
+           1999-2002, John Ellson <ellson@lucent.com>
+           1999-2002, Philip Warner
+           2000-2002, Maurice Szmurlo <Maurice.Szmurlo@info.unicaen.fr>
+           2000-2002, Johan Van den Brande <johan@vandenbrande.com>
+           2000-2002, Doug Becker <thebeckers@home.com>
+           2000-2007 Pierre-Alain Joye <pierre@libgd.org>
+License: BSD Style
+
+Files: Git
+Copyright: 2005-2012 Linus Torvalds and others
+License: GPL-2
+
+Files: GMP Library
+Copyright: GMP contributors <http://gmplib.org/manual/Contributors.html>
+License: LGPL
+
+Files: GNU Charset Library
+Copyright: 2000-2009, 2011-2012 Free Software Foundation, Inc.
+License: LGPL
+
+Files: Groovy
+Copyright: 2003-2012 the original author or authors
+License: Apache
+
+Files: iText
+Copyright: 1998-2012 1T3XT BVBA
+License: LGPL
+
+Files: Jasper Reports
+Copyright: 2001-2013 Jaspersoft Corporation
+License: LGPL
+
+Files: Java
+Copyright: 1993-2011 Oracle and/or its affiliates
+License: Java
+
+Files: JFreeChart
+Copyright: 2005-2013 Object Refinery Limited
+License: LGPL
+
+Files: JPEG Library
+Copyright: 2011 Linaro Limited
+License: LGPL-2.1
+
+Files: Liberation Fonts
+Copyright: authors
+License: OFL-1.1
+
+Files: libffi
+Copyright: 1996-2012  Anthony Green, Red Hat, Inc and others
+License: MIT
+
+Files: libiconv
+Copyright: 1998, 2010 Free Software Foundation, Inc.
+License: LGPL
+
+Files: libpcap
+Copyright: 199302997 The Regents of the University of California
+License: BSD-3-clause
+
+Files: LibXML2 Library
+Copyright: 1998-2002 Daniel Veillard
+License: MIT
+
+Files: Libxslt Library
+Copyright: 2001-2002 Daniel Veillard
+           2001-2002 Thomas Broyer, Charlie Bozeman and Daniel Veillard
+License: MIT
+
+Files: LibYAML Library
+Copyright: 2006 Kirill Simonov
+License: MIT
+
+Files: Log4j
+Copyright: 2000-2002 The Apache Software Foundation
+License: Apache
+
+Files: Neon Library
+Copyright: 1999-2008 Joe Orton
+License: LGPL
+
+Files: Netlink Protocol Library Suite
+Copyright: Thomas Graf <tgraf@suug.ch>
+           Baruch Even <baruch@ev-en.org>
+License: LGPL
+
+Files: Nmap
+Copyright: 1996-2012 Insecure.Com LLC
+License: Rapid7 holds a commercial agreement to distribute Nmap
+
+Files: OpenLDAP
+Copyright: Copyright 1998-2012 The OpenLDAP Foundation
+License: OpenLDAP
+
+Files: OpenSSL
+Copyright: 1998-2011 The OpenSSL Project
+License: OpenSSL
+
+Files: PCRE - Perl Compatible Regular Expressions Library
+Copyright: 1997-2007 University of Cambridge
+License: BSD-3-clause
+
+Files: PNG Library
+Copyright: 1995-2012 contributing authors.
+License: LibPNG
+
+Files: Postgresql
+Copyright: 1996-2013, The PostgreSQL Global Development Group
+           1994, The Regents of the University of California
+License: Postgresql
+
+Files: Ruby
+Copyright: Yukihiro Matsumoto <matz@netlab.jp>
+License: Ruby
+
+Files: Serf Library
+Copyright: 2002-2001 Justin Erenkrantz and Greg Stein
+           2005 The Apache Software Foundation or its licensors, as applicable
+License: Apache
+
+Files: Spring
+Copyright: 2002-2012 the original author or authors
+License: Apache
+
+Files: SQLite Library
+Copyright: The author disclaims all copyright
+License: public-domain
+
+Files: Subversion
+Copyright: 2010 Apache Software Foundation
+License: Apache
+
+Files: VNC Viewer Free Edition
+Copyright: 2002-2008 RealVNC Ltd.
+License: GPL
+
+Files: WinVi32
+Copyright: 1994-2005 Raphael Molle, Berlin
+License: Freeware (not well defined)
+
+Files: xcacls.vbs
+Copyright: 2001 Microsoft Corporation
+License: Microsoft Freeware (not well defined)
+
+Files: Zlib Library
+Copyright: 1995-1998 Jean-loup Gailly and Mark Adler
+License: Zlib
+
+License: Metasploit
+ Rapid7 End User License and Services Terms and Conditions
+ .
+ Customer agrees to be bound by the following terms and conditions (this
+ "Agreement") in connection with its purchase and use of certain Rapid7 LLC's
+ ("Rapid7") Software and Services (each as defined below). Before installing and
+ using any Software and/or obtaining and using any Services you should read this
+ Agreement carefully. Clicking "accept" or otherwise installing and/or using the
+ Software and/or obtaining and/or using any Services establishes a binding
+ agreement between Rapid7 and you as the person licensing the Software and/or
+ obtaining the Services; provided that if you are entering into this Agreement
+ on behalf of a company or other legal entity, you represent that you have the
+ authority to bind such entity to this Agreement, in which case the term
+ "Customer" shall refer to such entity. If you do not have such authority or if
+ you do not accept all of the terms of this Agreement, you shall have no right
+ to install and/or use the Software and/or obtain and/or use any Services.
+ .
+ 1. DEFINITIONS
+ .
+ 1.1 "Content Updates" means content used by certain Rapid7 Software which is
+ updated from time to time, including but not limited to updated vulnerability
+ signatures for vulnerability assessment products and exploits for penetration
+ testing products.
+ .
+ 1.2 "Documentation" means the published and generally available user manuals
+ and written materials Rapid7 delivers or makes available with the Software.
+ .
+ 1.3 "License Term" shall mean the period in which Customer is authorized to
+ utilize the Software.  Each License Term shall be listed on the applicable
+ Product Order Form and shall commence on the date Customer is delivered the
+ Software.  If the Product Order Form fails to specify a specific License Term
+ for the use of the Software then it shall be deemed a perpetual License Term.
+ .
+ 1.4 "Metasploit(r) Products" shall mean Rapid7's proprietary penetration
+ testing products currently marketed under the names Metasploit(r) Express,
+ Metasploit(r) Pro and Metasploit(r) Community Edition.
+ .
+ 1.5 "Nexpose(r) Products" shall mean Rapid7's proprietary network scanning and
+ vulnerability products currently marketed under the names Nexpose(r) Express
+ Edition, Nexpose(r) Consultant, Nexpose(r) Enterprise, Nexpose(r) Ultimate and
+ Nexpose(r) Community Edition.
+ .
+ 1.6  "Product Order Form" means either Rapid7's online registration form or
+ other ordering document entered into by Customer and Rapid7 which identifies
+ the Software or any hardware ordered by Customer from Rapid7, sets forth the
+ price to be paid for such Software or hardware and sets forth the number of
+ Users who may access and use the Software (for Metasploit Products and Nexpose
+ Products) and the number of IP addresses that may be scanned by the Software
+ (for Nexpose Products).
+ .
+ 1.7 "ScanNow(tm)" shall mean Rapid7's proprietary ScanNow software application.
+ .
+ 1.8 "Services" means Rapid7's maintenance and support services and professional
+ services as described herein.
+ .
+ 1.9 "Software" means those Rapid7 Metasploit Products, Nexpose Products,
+ ControlsInsight and/or ScanNow listed on the applicable Product Order Form and
+ all updates, enhancements, bug fixes and new releases thereto that Rapid7
+ elects in its discretion to make available to Customer.
+ .
+ 1.10 "User" means those specific individual named users who are granted access
+ to the Software by Customer.  For the sake of clarity, Users shall include full
+ and part-time employees, contractors, agents, or other workers of Customer;
+ provided, however each individual person shall count as only one User.  Once a
+ User has been deactivated by the Software's administrator (even if as a result
+ of employee turnover) such User license may be transferred to another person.
+ .
+ 2. SOFTWARE LICENSES
+ .
+ 2.1. License to Metasploit Products.  To the extent that Customer has licensed
+ any of Rapid7's proprietary Metasploit Products then the following license
+ terms, as applicable, shall apply:
+ .
+ (a) For Metasploit Express:  Subject to the terms and conditions of this
+ Agreement, Rapid7 hereby grants to Customer, during the applicable License Term
+ only, a non-exclusive, non-transferable license to allow the number of Users
+ set forth on the Product Order Form to use such Software (in object code form
+ only) solely for network penetration testing purposes, solely in accordance
+ with any restrictions on use set forth on the Product Order Form and only in
+ accordance with the applicable Documentation.  Customer shall ensure that its
+ use of the Software does not exceed the number of Users set forth on the
+ Product Order Form.
+ .
+ (b) For Metasploit Pro:  Subject to the terms and conditions of this Agreement,
+ Rapid7 hereby grants to Customer, during the applicable License Term only, a
+ non-exclusive, non-transferable license to use such Software (in object code
+ form only) solely for network penetration testing purposes, solely in
+ accordance with any restrictions on use set forth on the Product Order Form and
+ only in accordance with the applicable Documentation.  Customer shall ensure
+ that its use of the Software does not exceed the number of Users, machines,
+ seats and/or other restrictions set forth on the Product Order Form (all as
+ more fully described on such Product Order Form).
+ .
+ (c) For Metasploit Community Edition.  Subject to the terms and conditions of
+ this Agreement, Rapid7 hereby grants to Customer, during the applicable License
+ Term only, a non-exclusive, non-transferable license to allow one (1) User only
+ to use such Software (in object code form only) solely for network penetration
+ testing purposes, solely in accordance with any restrictions on use set forth
+ on the Product Order Form and only in accordance with the applicable
+ Documentation.  Customer shall ensure that its use of the Software does not
+ exceed one (1) User.  NOTWITHSTANDING ANYTHING TO THE CONTRARY HEREIN, THE
+ SOFTWARE IS PROVIDED "AS IS" AND ALL WARRANTIES, EXPRESS OR IMPLIED, ARE
+ EXCLUDED AND DISCLAIMED, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND ANY
+ WARRANTIES ARISING BY STATUTE OR OTHERWISE IN LAW OR FROM COURSE OF DEALING,
+ COURSE OF PERFORMANCE, OR USE OF TRADE.  Sections 5.1, 5.2 and 10 shall not be
+ applicable to the Software.
+ .
+ (d) For Evaluation or Trial Licenses to any Metasploit Products.  If Customer's
+ Product Order Form specifies that its license to the applicable Metasploit
+ Product is for a trial or evaluation only then Customer shall have a
+ non-exclusive, non-transferable, revocable license to use the applicable
+ Metasploit Product (in object code form only) solely for Customer's internal
+ evaluation purposes and solely for the trial or evaluation term specified on
+ the Product Order Form.  Customer may not utilize the same Metasploit Product
+ for more than one (1) trial or evaluation term in any twelve (12) month period.
+ Rapid7 may revoke Customer's license at any time and for any reason.  Sections
+ 5.1, 5.2 and 10 shall not be applicable to any evaluation or trial license of
+ the Metasploit Product.
+ .
+ 2.2. License to Nexpose Products.  To the extent that Customer has licensed any
+ of Rapid7's proprietary Nexpose Products then the following license terms, as
+ applicable, shall apply:
+ .
+ (a) For Nexpose Express Edition.  Subject to the terms and conditions of this
+ Agreement, Rapid7 hereby grants to Customer, during the applicable License Term
+ only, a non-exclusive, non-transferable license to allow one User to use such
+ Software (in object code form only) solely for purposes of scanning IP
+ addresses owned by Customer for Customer's own internal business purposes only.
+ The Nexpose Express license does not include the ability to scan any IP
+ addresses belonging to third parties without the prior written consent of both
+ Rapid7 and such third party. Customer shall ensure that when using the Software
+ it does not scan more IP addresses than those set forth on the Product Order
+ Form and shall comply with any other restrictions on use set forth on the
+ Product Order Form.
+ .
+ (b) For Nexpose Consultant.  Subject to the terms and conditions of this
+ Agreement, Rapid7 hereby grants to Customer, during the applicable License Term
+ only, a non-exclusive, non-transferable license to allow one User to install
+ the Software (in object code form only) solely on one (1) laptop computer and
+ to use such Software for purposes of scanning authorized IP addresses.  The
+ Nexpose Consultant license allows Customer to also scan IP addresses of third
+ parties provided that such third party has authorized Customer to perform such
+ scan.  Customer may not scan more IP addresses than those set forth on the
+ Product Order Form and shall comply with any other restrictions on use set
+ forth on the Product Order Form.
+ .
+ (c) For Nexpose Enterprise or Nexpose Ultimate.  Subject to the terms and
+ conditions of this Agreement, Rapid7 hereby grants to Customer, during the
+ applicable License Term only, a non-exclusive, non-transferable license to
+ allow an unlimited number of Users to use such Software (in object code form
+ only) for purposes of scanning IP addresses owned by Customer for Customer's
+ internal business purposes only.   This license does not include the ability to
+ scan any IP addresses belonging to third parties without the prior written
+ consent of both Rapid7 and such third party. Customer shall ensure that when
+ using the Software it does not scan more IP addresses than those set forth on
+ the Product Order Form and shall comply with any other restrictions on use set
+ forth on the Product Order Form.
+ .
+ (d) For Nexpose Managed Security Service Provider (MSSP) Edition. Subject to
+ the terms and conditions of this Agreement, Rapid7 hereby grants to Customer,
+ during the applicable License Term only, a non-exclusive, non-transferable
+ license to allow an unlimited number of Users to use such Software for purposes
+ of scanning authorized IP addresses.  The Nexpose MSSP license allows Customer
+ to scan IP addresses of third parties provided that such third party has
+ authorized Customer to perform such scan. Customer may not scan more IP
+ addresses than those set forth on the Product Order Form and shall comply with
+ any other restrictions on use set forth on the Product Order Form.
+ .
+ (e) For Nexpose Community Edition.  Subject to the terms and conditions of this
+ Agreement, Rapid7 hereby grants to Customer, during the applicable License Term
+ only, a non-exclusive, non-transferable license to allow one (1) User only to
+ use such Software (in object code form only) solely for purposes of scanning up
+ to thirty-two (32) authorized IP addresses, solely in accordance with any
+ restrictions on use set forth on the Product Order Form and only in accordance
+ with the applicable Documentation.  Customer shall ensure that its use of the
+ Software does not exceed one (1) User and that it does not use the Software to
+ perform vulnerability scans for more than 32 IP addresses (each an "IP Address
+ License").  Customer may, however, deactivate such IP Address Licenses, in
+ total, and re-allocate such IP Address Licenses to replacement IP Addresses no
+ more than one time per six (6) month period.   NOTWITHSTANDING ANYTHING TO THE
+ CONTRARY HEREIN, THE SOFTWARE IS PROVIDED "AS IS" AND ALL WARRANTIES, EXPRESS
+ OR IMPLIED, ARE EXCLUDED AND DISCLAIMED, INCLUDING WITHOUT LIMITATION THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+ NON-INFRINGEMENT, AND ANY WARRANTIES ARISING BY STATUTE OR OTHERWISE IN LAW OR
+ FROM COURSE OF DEALING, COURSE OF PERFORMANCE, OR USE OF TRADE.  Sections 5.1,
+ 5.2 and 10 shall not be applicable to the Software.
+ .
+ (f) For Evaluation or Trial Licenses to any Nexpose Products.  If Customer's
+ Product Order Form specifies that its license to the applicable Nexpose Product
+ is for a trial or evaluation only then Customer shall have a non-exclusive,
+ non-transferable, revocable license to use the applicable Nexpose Product (in
+ object code form only) solely for Customer's internal evaluation purposes and
+ solely for the term specified on the Product Order Form.  Customer may not
+ utilize the same Nexpose Product for more than one (1) trial or evaluation term
+ in any twelve (12) month period.   Rapid7 may revoke Customer's license at any
+ time and for any reason.  Sections 5.1, 5.2 and 10 shall not be applicable to
+ any evaluation or trial license of the Nexpose Product.
+ .
+ 2.3 License to ScanNow.  Subject to the terms and conditions of this Agreement,
+ Rapid7 hereby grants to Customer, during the applicable License Term only, a
+ non-exclusive, non-transferable license to run the ScanNow Product on one
+ machine. NOTWITHSTANDING ANYTHING TO THE CONTRARY HEREIN, THE SCANNOW SOFTWARE
+ IS PROVIDED "AS IS" AND ALL WARRANTIES, EXPRESS OR IMPLIED, ARE EXCLUDED AND
+ DISCLAIMED, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND ANY
+ WARRANTIES ARISING BY STATUTE OR OTHERWISE IN LAW OR FROM COURSE OF DEALING,
+ COURSE OF PERFORMANCE, OR USE OF TRADE.  Sections 5.1, 5.2 and 10 shall not be
+ applicable to the Software.
+ .
+ 2.4 Delivery and Copies. Delivery shall be deemed to have been made upon Rapid7
+ providing Customer with instructions to download the Software from a Rapid7
+ designated download site.  Notwithstanding anything to the contrary herein,
+ Customer may make a reasonable number of copies of the Software for the sole
+ purpose of backing-up and archiving the Software.  Each copy of the Software is
+ subject to all of the terms and conditions of this Agreement and must contain
+ the same titles, trademarks, and copyright notices as the original.  To the
+ extent that Rapid7 provides any hardware to Customer (either sold or provided
+ as part of an evaluation), then all shipments are FOB Rapid7's designated
+ shipping facility.
+ .
+ 2.5 Restrictions. All Software provided is licensed, not sold. The restrictions
+ contained in this Agreement represent conditions of Customer's license.
+ Customer may not use the Software for the purposes of (i) creating any
+ anti-virus signatures, (ii) performing any malware analysis on the Software in
+ order to create any anti-virus heuristic or (iii) conducting any comparative
+ analysis, evaluations or product benchmarks with respect to the Software
+ without Rapid7's prior written approval.  Customer recognizes and agrees that
+ there is no adequate remedy at law for a breach of this Section 2.5 and that
+ such breach would irreparably harm Rapid7 for which monetary damages would not
+ be an adequate remedy and that Rapid7 is entitled to equitable relief in
+ addition to any other remedies.
+ .
+ 3. FEES AND PAYMENT TERMS
+ .
+ Customer shall pay Rapid7 the fees, charges and other amounts specified on the
+ Product Order Form in accordance with the payment terms set forth on the
+ Product Order Form.  Overdue balances are subject to a service charge equal to
+ the lesser of 1.5% per month or the maximum legal interest rate allowed by law.
+ Customer shall be responsible for all shipping costs, including any applicable
+ duties, and taxes levied on any transaction under this Agreement, including,
+ without limitation, all federal, state, and local sales taxes, levies and
+ assessments and local withholding taxes in Customer's jurisdiction, if any,
+ excluding, however, any taxes based on Rapid7's income. In the event Customer
+ is required to withhold taxes from its payment to Rapid7 or withholding taxes
+ are subsequently required to be paid to a local taxing jurisdiction, Customer
+ is obligated to pay such tax, and Rapid7 will receive the full payment, net of
+ any such taxes, as agreed on the applicable Product Order Form.  Customer shall
+ also pay all reasonable travel and out-of-pocket expenses incurred by Rapid7 in
+ connection with any Services rendered provided such expenses have been
+ pre-approved in advance by Customer.
+ .
+ 4. CONTENT UPDATES
+ .
+ For so long as Customer subscribes to Rapid7's maintenance and support services
+ for the Software, Customer is granted the right to use, as part of the
+ Software, such Content Updates as and when they are made generally available to
+ Rapid7's end user customers who are covered by Rapid7's maintenance and support
+ services for such Software. This Agreement does not otherwise permit Customer
+ to obtain and use Content Updates.
+ .
+ 5. LIMITED WARRANTY
+ .
+ 5.1. Warranty.  Rapid7 warrants that  for a period of ninety (90) days
+ following the initial delivery of any Software to Customer, the Software will
+ perform in conformity with its Documentation in all material respects.  Rapid7
+ will pass on all manufacturers' warranties for any hardware product purchased
+ from Rapid7. The foregoing warranties do not apply to hardware or Software that
+ has been damaged, mishandled, mistreated, altered or used or maintained or
+ stored other than in conformity with this Agreement and the Documentation.
+ Rapid7 further represents and warrants all Services will be provided with
+ reasonable skill and care conforming to generally accepted industry standards.
+ .
+ 5.2. Remedy.  If the above warranties are breached, Rapid7 will, at its option
+ and at no cost to Customer, (a) provide remedial services necessary to enable
+ the hardware, Software or Services to conform to the warranty, or (b) replace
+ any defective hardware or Software, or (c) refund amounts paid by Customer and
+ received by Rapid7 in respect of the defective hardware, Software or Services.
+ Customer will provide Rapid7 with a reasonable opportunity to remedy any breach
+ and reasonable assistance in remedying any defects.  Customer will notify
+ Rapid7 in writing of any breach of warranty promptly after becoming aware of
+ the same, but in any event, within the warranty periods set forth in Section
+ 5.1.  The remedies set out in this subsection are Customer's sole and exclusive
+ remedies for breach of the above warranties.
+ .
+ 5.3. No Third Party Beneficiaries. Nothing in this Agreement, express or
+ implied, is intended to or shall confer upon any other person any right,
+ benefit or remedy of any nature whatsoever under or by reason of this
+ Agreement, including but not limited to any of Customer's own clients or
+ customers. RAPID7 DISCLAIMS ANY AND ALL WARRANTIES, EXPRESS OR IMPLIED, TO ANY
+ SUCH THIRD PARTY AND SHALL HAVE NO LIABILITY TO SUCH THIRD PARTIES FOR
+ CUSTOMER'S USE OF THE SOFTWARE OR SERVICES.
+ .
+ 5.4. No Other Warranty. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE
+ WARRANTIES SET FORTH IN THIS SECTION 5 ARE CUSTOMER'S EXCLUSIVE WARRANTIES AND
+ ARE IN LIEU OF ALL OTHER WARRANTIES, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT
+ NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, SATISFACTORY
+ QUALITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT OF INTELLECTUAL
+ PROPERTY RIGHTS. RAPID7 MAKES NO WARRANTIES OR REPRESENTATIONS THAT THE
+ SOFTWARE, ANY HARDWARE, ANY SERVICES OR ANY CONTENT UPDATES WILL MEET CUSTOMERS
+ REQUIREMENTS OR THAT OPERATION OR USE OF THE SOFTWARE, HARDWARE OR CONTENT
+ UPDATES WILL BE UNINTERRUPTED OR ERROR-FREE.  RAPID7 MAKES NO WARRANTY THAT ALL
+ SECURITY RISKS OR THREATS WILL BE DETECTED BY USE OF THE SOFTWARE OR THAT FALSE
+ POSITIVES WILL NOT BE FOUND. CUSTOMER MAY HAVE OTHER WARRANTY RIGHTS, WHICH MAY
+ VARY FROM STATE TO STATE AND COUNTRY TO COUNTRY.
+ .
+ 6. LIMITATION OF LIABILITY.
+ .
+ TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW AND REGARDLESS OF WHETHER ANY
+ REMEDY SET FORTH HEREIN FAILS OF ITS ESSENTIAL PURPOSE, IN NO EVENT WILL RAPID7
+ OR ANY OF RAPID7'S LICENSORS, RESELLERS, SUPPLIERS OR AGENTS BE LIABLE TO
+ CUSTOMER FOR (i) ANY COSTS OF PROCUREMENT OF SUBSTITUTE OR REPLACEMENT GOODS
+ AND SERVICES, LOSS OF PROFITS, LOSS OF USE, LOSS OF OR CORRUPTION TO DATA,
+ BUSINESS INTERRUPTION, LOSS OF PRODUCTION, LOSS OF REVENUES, LOSS OF CONTRACTS,
+ LOSS OF GOODWILL, OR ANTICIPATED SAVINGS OR WASTED MANAGEMENT AND STAFF TIME;
+ (ii) ANY SPECIAL, CONSEQUENTIAL, INCIDENTAL OR INDIRECT DAMAGES WHETHER ARISING
+ DIRECTLY OR INDIRECTLY OUT OF THIS AGREEMENT, EVEN IF RAPID7 OR RAPID7'S
+ LICENSORS, RESELLERS, SUPPLIERS OR AGENTS HAVE BEEN ADVISED SUCH DAMAGES MIGHT
+ OCCUR OR (iii) ANY CLAIMS OR DAMAGES IN EXCESS OF THE FEES CUSTOMER PAID RAPID7
+ FOR THE HARDWARE, SOFTWARE OR SERVICES GIVING RISE TO THE CLAIM.  NOTHING IN
+ THIS AGREEMENT SHALL OPERATE SO AS TO EXCLUDE OR LIMIT A PARTY'S LIABILITY FOR
+ DEATH OR PERSONAL INJURY ARISING OUT OF NEGLIGENCE OR FOR ANY OTHER LIABILITY
+ WHICH CANNOT BE EXCLUDED OR LIMITED BY LAW.  THE LIMITATIONS CONTAINED IN THIS
+ SECTION 6 SHALL ALSO NOT APPLY TO (A) A BREACH BY A PARTY OF ITS OBLIGATIONS
+ SET FORTH IN SECTION 8 BELOW (CONFIDENTIALITY), (B) A VIOLATION BY CUSTOMER OF
+ ANY OF RAPID7'S INTELLECTUAL PROPERTY RIGHTS IN AND TO THE SOFTWARE OR USE OF
+ THE SOFTWARE BY CUSTOMER EXCEPT AS EXPRESSLY PERMITTED HEREIN, OR (C) ANY
+ AMOUNTS DUE RAPID7 UNDER THIS AGREEMENT.
+ .
+ 7. USAGE VERIFICATION
+ .
+ Customer understands and acknowledges that the Software may track and/or
+ enforce its usage limits, including but not limited to license keys, user
+ counts, and other technical enforcements of license limitations. Additionally,
+ Rapid7 may make a written request, such request not to exceed once every six
+ (6) months, upon which request Customer shall provide Rapid7 with a signed
+ certification verifying that the Software is being used pursuant to the
+ provisions of this Agreement. In addition to the foregoing, at Rapid7's written
+ request, Customer will permit Rapid7 to review and verify Customer's records,
+ deployment and use of the Software for compliance with the terms and conditions
+ of this Agreement, at Rapid7's expense.  Any such review shall be scheduled at
+ least ten (10) days in advance, shall be conducted during normal business hours
+ at Customer's facilities, and shall not unreasonably interfere with Customer's
+ business activities.
+ .
+ 8. CONFIDENTIALITY
+ .
+ 8.1 Confidential Information.  During the term of this Agreement, each party
+ will regard any information provided to it by the other party and designated in
+ writing as proprietary or confidential to be confidential ("Confidential
+ Information"). Confidential Information shall also include information which,
+ to a reasonable person familiar with the disclosing party's business and the
+ industry in which it operates, is of a confidential or proprietary nature.  A
+ party will not disclose the other party's Confidential Information to any third
+ party without the prior written consent of the other party, nor make use of any
+ of the other party's Confidential Information except in its performance under
+ this Agreement.  Each party accepts responsibility for the actions of its
+ agents or employees and shall protect the other party's Confidential
+ Information in the same manner as it protects its own valuable confidential
+ information, but in no event shall less than reasonable care be used. The
+ parties expressly agree that the Software and the terms and pricing of this
+ Agreement are the Confidential Information of Rapid7.   The receiving party
+ shall promptly notify the disclosing party upon becoming aware of a breach or
+ threatened breach hereunder, and shall cooperate with any reasonable request of
+ the disclosing party in enforcing its rights. The provisions of this Section
+ 8.1 will continue for a period of three (3) years after termination or
+ expiration of this Agreement.
+ .
+ 8.2 Confidentiality of Software. Rapid7 retains all right, title and interest
+ in and to the Documentation, Software, Content Updates and in all copies,
+ modifications and derivative works thereto including, without limitation, all
+ rights to patent, copyright, trade secret, trademark and other proprietary or
+ intellectual property rights.  Customer will not and will not allow a third
+ party to:  (i) decompile, reverse engineer, disassemble or otherwise attempt to
+ derive, analyze or use any source code or underlying ideas or algorithms
+ related to the Software by any means whatsoever, except and only to the minimal
+ extent the provisions of this Section are expressly prohibited by applicable
+ statutory law, (ii) except as expressly set forth herein, provide, lease, lend,
+ use for timesharing or service bureau purposes or otherwise use or allow others
+ to use the Software to or for the benefit of third parties or (iii) remove any
+ product identification, copyright or other notices or on any Software.
+ Customer agrees to hold in confidence, not disclose, and not use the Software
+ or the Content Updates except as expressly permitted herein.  The provisions of
+ this Section 8.2 will survive termination or expiration of this Agreement for
+ any reason.
+ .
+ 8.3 Exclusions.  Information will not be deemed Confidential Information
+ hereunder if such information: (i) is known prior to receipt from the
+ disclosing party, without any obligation of confidentiality; (ii) becomes known
+ to the receiving party directly or indirectly from a source other than one
+ having an obligation of confidentiality to the disclosing party; (iii) becomes
+ publicly known or otherwise publicly available, except through a breach of this
+ Agreement; or (iv) is independently developed by the receiving party. The
+ receiving party may disclose Confidential Information pursuant to the
+ requirements of applicable law, legal process or government regulation,
+ provided that it gives the disclosing party reasonable prior written notice to
+ permit the disclosing party to contest such disclosure, and such disclosure is
+ otherwise limited to the required disclosure.
+ .
+ 9. TERMINATION
+ .
+ This Agreement or a Product Order Form may be terminated (a) by either party if
+ the other party is adjudicated as bankrupt, or if a petition in bankruptcy is
+ filed against the other party and such petition is not discharged within sixty
+ (60) days of such filing, or (b) by either party if the other party materially
+ breaches this Agreement or the Product Order Form and fails to cure such breach
+ to such party's reasonable satisfaction within thirty (30) days following
+ receipt of written notice thereof.  Customer's license to use the Software
+ shall also terminate upon the expiration of the applicable License Term.  Upon
+ any termination of this Agreement or a Product Order Form by Rapid7, all
+ applicable licenses are revoked and Customer shall immediately cease use of the
+ applicable Software and certify in writing to Rapid7 within thirty (30) days
+ after termination that Customer has destroyed or returned to Rapid7 such
+ Software and all copies thereof. Termination of this Agreement or a license
+ granted hereunder shall not limit either party from pursuing any remedies
+ available to it, including injunctive relief, or relieve Customer of its
+ obligation to pay all fees that have accrued, have been paid, or have become
+ payable by Customer hereunder. All provisions of this Agreement which by their
+ nature are intended to survive the termination of this Agreement shall survive
+ such termination.
+ .
+ 10. INDEMNIFICATION
+ .
+ 10.1 Indemnification.  Rapid7 will defend and indemnify, at its own expense,
+ any third party claim against Customer that arises due to a claim that the
+ Software infringes any valid United States copyright or involves the
+ misappropriation of a trade secret.  Rapid7 will pay such damages or costs as
+ are finally awarded against Customer or agreed to in settlement for such claim
+ provided that Customer gives Rapid7: (a) written notice of any such claim or
+ threatened claim within ten (10) days of Customer being made aware of the claim
+ or threat; (b) sole control of the defense, negotiations and settlement of such
+ claim; and (c) full cooperation in any defense or settlement of the claim (at
+ Rapid7's cost).  Rapid7 will not be liable for the settlement of a claim made
+ without Rapid7's prior written consent.  If Customer's use of the Software
+ results in, or in Rapid7's opinion is likely to become subject to a claim of
+ infringement or misappropriation, then Rapid7 will, at its sole option and
+ expense, either: (i) obtain for the Customer the right to continue using the
+ Software; (ii) replace or modify the Software so that it is non-infringing and
+ substantially equivalent in function to, and interchangeable with, the
+ infringing Software; or (iii) if options (i) and (ii) above cannot be
+ accomplished despite the reasonable efforts of Rapid7, then Rapid7 may
+ terminate Customer's rights to use the infringing Software.  When option (iii)
+ is elected, Rapid7 will refund all collected license fees under this Agreement
+ for the infringing Software on a monthly declining straight-line basis over a
+ forty-eight (48) month period from delivery.  THE RIGHTS GRANTED TO CUSTOMER
+ UNDER THIS SECTION 10 SHALL BE CUSTOMER'S SOLE AND EXCLUSIVE REMEDY FOR ANY
+ ALLEGED INFRINGEMENT BY THE SOFTWARE OF ANY PATENT, COPYRIGHT OR OTHER
+ PROPRIETARY RIGHT.
+ .
+ 10.2 Exclusions.  Rapid7 shall have no obligation under this Section 10 with
+ respect to any claim of infringement or misappropriation based upon: (i)
+ combination of the Software with products, programs or data not furnished by
+ Rapid7 where, but for the combination, the claim would have been avoided; (ii)
+ any modification of the Software not performed by Rapid7, if such claim would
+ have been avoided by use of the unmodified Software; (iii) compliance by Rapid7
+ with Customer's custom requirements or specifications if and to the extent such
+ compliance with Customer's custom requirements or specifications resulted in
+ the infringement; or (iv) failure of Customer to use a replacement Software
+ provided by Rapid7 to Customer in a timely manner to avoid such claim of
+ infringement or misappropriation.
+ .
+ 11. TECHNICAL SUPPORT AND PROFESSIONAL SERVICES
+ .
+ 11.1 Maintenance and Support Services.  Rapid7 offers multiple maintenance and
+ support programs for the Software.  The maintenance and support program
+ selected by Customer shall be as set forth on the applicable Product Order Form
+ and shall be further subject to Rapid7's maintenance and support policies,
+ copies of which are located at
+ http://www.rapid7.com/docs/customers-support-guidebook.pdf
+ .
+ 11.2 Professional Services.  Rapid7 may provide Customer certain professional
+ services, such as installation, configuration, consulting, training,
+ penetration testing, and external scanning, if and as specified on a Product
+ Order Form or a separate statement of work (SOW) executed by the parties. All
+ changes to an SOW must be approved by both parties in writing.  Unless
+ otherwise provided on a Product Order Form or SOW, Customer is responsible for
+ installing and configuring all Software.  Rapid7 shall have sole discretion in
+ staffing the professional services and may assign the performance of any
+ portion of the professional services to any subcontractor; provided that Rapid7
+ shall be responsible for the performance of any such subcontractor. Customer
+ shall designate at least one employee with knowledge of Customer's business and
+ Rapid7's technology and services as its primary contact to be available for
+ communication with Rapid7 in providing the professional services. Customer will
+ cooperate with Rapid7, will provide Rapid7 with accurate and complete
+ information, will provide Rapid7 with such assistance and access as Rapid7 may
+ reasonably request, and will fulfill its responsibilities as set forth in this
+ Agreement and the SOW or Product Order Form, as the case may be.  Customer will
+ have a non-exclusive, non-transferable license to use any deliverables or other
+ work product developed by Rapid7 in the performance of the professional
+ services and which is delivered to Customer, upon Customer's payment in full of
+ all amounts due for such deliverables or work product.  Rapid7 retains
+ ownership of all information, software and other property owned by it prior to
+ this Agreement or which it develops independently of this Agreement and all
+ deliverables and work product compiled or developed by Rapid7 in the
+ performance of the professional services.
+ .
+ 12. GENERAL PROVISIONS
+ .
+ 12.1. Miscellaneous.  (a) This Agreement shall be construed in accordance with
+ and governed for all purposes by the laws of the Commonwealth of Massachusetts,
+ excluding its choice of law provisions; (b) this Agreement, along with the
+ accompanying Product Order Forms constitutes the entire agreement and
+ understanding of the parties hereto with respect to the subject matter hereof
+ and supersedes all prior agreements and undertakings, both written and oral;
+ (c) this Agreement and each Product Order Form may not be modified except by a
+ writing signed by each of the parties; (d) in case any one or more of the
+ provisions contained in this Agreement shall for any reason be held to be
+ invalid, illegal or unenforceable in any respect, such invalidity, illegality
+ or unenforceability shall not affect any other provisions of this Agreement but
+ this Agreement shall be construed as if such invalid, illegal or other
+ unenforceable provision had never been contained herein; (e) Customer shall not
+ assign its rights or obligations hereunder without Rapid7's advance written
+ consent; (f) subject to the foregoing subsection (e), this Agreement shall be
+ binding upon the and shall inure to the benefit of the parties  hereto and
+ their successors and permitted assigns; (g) no waiver of any right or remedy
+ hereunder with respect to any occurrence or event on one occasion shall be
+ deemed a waiver of such right or remedy with respect to such occurrence or
+ event on any other occasion; and (h) the headings to the sections of this
+ Agreement are for ease of reference only and shall not affect the
+ interpretation or construction of this Agreement..
+ .
+ 12.2. Export. Customer acknowledges that the export, re-export, deemed export,
+ and import of the Software and Documentation is subject to certain laws, rules,
+ Executive Orders, directives, arrangements, and regulations ("laws") of the
+ United States and of other countries. These laws apply to Customer. Customer
+ will not violate these laws. Without limitation, Customer agrees that the
+ Software, Documentation, or any direct or indirect product thereof, must not be
+ exported, re-exported,  transferred by download or otherwise, directly or
+ indirectly into (i) Cuba, Iran, Northern Sudan, North Korea, Syria, or into any
+ other country embargoed by the United States, or to (ii) anyone on the United
+ States Treasury Department's list of Specially Designated Nationals or the
+ United States Commerce Department's Table of Denial Orders, or to (iii) any end
+ user or for any end use in violation of any United States Executive Order,
+ policy, embargo, or laws, without first obtaining the required licenses or
+ authorizations from the United States Government. Customer will not allow the
+ Software, related Documentation, or the underlying technology to be used for
+ any purpose prohibited by United States laws, including, without limitation,
+ for the development, design, manufacture, proliferation, or production of
+ nuclear, chemical, biological or any weapons of mass destruction.  Further,
+ Customer represents that it is not a national, resident, or under the control
+ of the government of Cuba, Iran, Northern Sudan, North Korea, Syria, or any
+ country to which the United States has prohibited export of the Software or
+ Documentation and that it is not listed on the United States Department of
+ Treasury lists of Specially Designated Nationals, Specially Designated
+ Terrorists, Specially Designated Narcotic Traffickers, or on the United States
+ Department of Commerce Table of Denial Orders.  Customer acknowledges that,
+ with regard to Metasploit, an export license from the Bureau of Industry and
+ Security is required to provide the Software or Documentation to any
+ "government end-user" in any country that is not listed as a Supplement No. 3,
+ Favorable Treatment Country, in accordance with 740.17(b)(2) of the Export
+ Administration Regulations which identifies certain categories of encryption
+ products that are "restricted" for purposes of License Exception ENC.  Customer
+ shall indemnify, hold harmless, and defend Rapid7, including the payment of all
+ reasonable attorney's fees and court costs, against any claims or losses
+ related to Customer's failure to conform to any and all of these requirements
+ and obligations.
+ .
+ 12.3. Data Privacy.  To the extent that Rapid7 processes personal data about
+ any living individual ("Data") in the course of providing the Services, it will
+ do so only as a data processor acting on behalf of Customer (as data
+ controller) and in accordance with the requirements of this Agreement. Rapid7
+ will process the Data in accordance with Customer's lawful instructions and
+ will not (i) assume any responsibility for determining the purposes for which
+ and the manner in which the Data is processed or (ii) process the Data for its
+ own purposes (other than for aggregated, analytical purposes which the Customer
+ hereby authorizes). Rapid7 will have in place and maintain throughout the term
+ of this Agreement appropriate technical and organizational measures to protect
+ the Data against accidental or unlawful destruction or accidental loss,
+ alteration, unauthorized disclosure or access, and against all other unlawful
+ forms of processing. In this Section, the terms "controller", "processor" and
+ "personal data" will bear the meanings given to them in European Union Data
+ Protection Directive 95/46/EC.
+ .
+ 12.4. Compliance with Law.   Customer acknowledges that the Software can be
+ configured by the user to obtain access to information using penetration
+ techniques that may cause disruption in systems or services and may cause data
+ corruption.  Denial of Service attacks may be run on command that will attempt
+ to render systems and services unavailable to authorized users. Customer
+ specifically agrees that the Software will only be used to target devices under
+ the authorized control of the Customer and in a way in which damage to systems
+ or loss of access or loss of data will create no liability for Rapid7 or any
+ third party.  Customer further agrees to strictly comply with all federal,
+ state and local laws and regulations governing the use of network scanners,
+ vulnerability assessment software products, hacking tools, encryption devices,
+ and related software in all jurisdictions in which systems are scanned or
+ scanning is controlled.
+ .
+ 12.5. Government Restricted Rights.  This Section 12.4 applies to all
+ acquisitions of the Software by or for the federal government, or by any prime
+ contractor or subcontractor (at any tier) under any contract, grant,
+ cooperative agreement or other activity with the federal government. The
+ Software was developed at private expense and is Commercial Computer Software,
+ as defined in Section 12.212 of the Federal Acquisition Regulation (48 CFR
+ 12.212 (October 1995)) and Sections 227.7202-1 and 227.7202-3 of the Defense
+ Federal Acquisition Regulation Supplement (48 CFR 227.7202-1, 227.7202-3 (June
+ 1995)). Accordingly, any use, duplication or disclosure by the Government or
+ any of its authorized users is subject to restrictions as set forth in this
+ standard license agreement for the Software. If for any reason, Sections
+ 12.212, 227.7202-1 or 227.7202-3 are deemed not applicable, then the
+ Government's rights to use, duplicate or disclose the Software are limited to
+ "Restricted Rights" as defined in 48 CFR Section 52.227-19(c)(1) and (2) (June
+ 1987), or DFARS 252.227-7014(a)(14) (June 1995), as applicable. If this
+ Agreement fails to meet the government's needs or is inconsistent in any
+ respect with Federal law, the government agrees to return the Software, unused,
+ to Rapid7. Manufacturer is Rapid7 LLC, 100 Summer Street, Boston, MA 02110.
+ .
+ 12.6. Relationship of the Parties.  Rapid7 and Customer are independent
+ contractors, and nothing in this Agreement shall be construed as making them
+ partners or creating the relationships of employer and employee, master and
+ servant, or principal and agent between them, for any purpose whatsoever.
+ Neither party shall make any contracts, warranties or representations or assume
+ or create any obligations, express or implied, in the other party's name or on
+ its behalf.
+ .
+ 12.7. Force Majeure.  Except for the obligation to make payments,
+ nonperformance of either party shall be excused to the extent that performance
+ is rendered impossible by strike, fire, flood, governmental acts or orders or
+ restrictions, failure of suppliers, or any other reason where failure to
+ perform is beyond the reasonable control of the non-performing party.
+ .
+ 12.8.  No reliance. Customer represents that it has not relied on the
+ availability of any future version of the purchased product or any future
+ product in executing this Agreement or placing any orders hereunder.
+ .
+ 12.9. Third Party Software.  Customer acknowledges that the Software may
+ contain or be accompanied by certain third party hardware and software products
+ or components ("Third-Party Products").   Additional information about
+ Third-Party Products may be set forth in the Product Order Form, the Third
+ Party Product packaging and/or in a text file, installation file or similar
+ file or folder accompanying the Software ("Third-Party Notices"). The
+ Third-Party Notices may include important licensing and warranty information
+ and disclaimers. Customer acknowledges that Section 10 of this Agreement shall
+ not be applicable to the Third-Party Products.
+ .
+ 12.10. Publicity. Customer acknowledges that Rapid7 may use Customer's name and
+ logo for the purposes of identifying Customer as a customer of Rapid7 products
+ and/or services, including in Rapid7's quarterly press releases highlighting
+ new customer engagements.
+ .
+ 12.11. Notices.  Any demand, notice, consent, or other communication required
+ by this Agreement must be given in writing and shall be deemed delivered upon
+ receipt when delivered personally or upon confirmation of receipt following
+ delivery by a nationally recognized overnight courier service, in each case
+ addressed to the receiving party at its address set forth on the applicable
+ Product Order Form.  Either party may change its address by giving written
+ notice of such change to the other party.
+ .
+ Last Modified February 2015
+
+License: BSD-2-clause
+ Redistribution and use in source and binary forms, with or without modification,
+ are permitted provided that the following conditions are met:
+ .
+ Redistributions of source code must retain the above copyright notice, this
+ list of conditions and the following disclaimer.
+ .
+ Redistributions in binary form must reproduce the above copyright notice, this
+ list of conditions and the following disclaimer in the documentation and/or
+ other materials provided with the distribution.
+ .
+ THIS SOFTWARE IS PROVIDED BY {{THE COPYRIGHT HOLDERS AND CONTRIBUTORS}} "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL {{THE COPYRIGHT HOLDER OR CONTRIBUTORS}} BE
+ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: BSD-3-clause
+ Redistribution and use in source and binary forms, with or without modification,
+ are permitted provided that the following conditions are met:
+ .
+     * Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+ .
+     * Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+ .
+     * Neither the name of Rapid7, Inc. nor the names of its contributors
+     may be used to endorse or promote products derived from this software
+     without specific prior written permission.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: BSD-4-clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+ 3. All advertising materials mentioning features or use of this software
+    must display the following acknowledgement:
+    This product includes software developed by the <organization>.
+ 4. Neither the name of the <organization> nor the
+    names of its contributors may be used to endorse or promote products
+    derived from this software without specific prior written permission.
+ .
+ THIS SOFTWARE IS PROVIDED BY <COPYRIGHT HOLDER> ''AS IS'' AND ANY
+ EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: Ruby
+ 1. You may make and give away verbatim copies of the source form of the
+    software without restriction, provided that you duplicate all of the
+    original copyright notices and associated disclaimers.
+ .
+ 2. You may modify your copy of the software in any way, provided that
+    you do at least ONE of the following:
+ .
+    a) place your modifications in the Public Domain or otherwise
+       make them Freely Available, such as by posting said
+       modifications to Usenet or an equivalent medium, or by allowing
+       the author to include your modifications in the software.
+ .
+    b) use the modified software only within your corporation or
+       organization.
+ .
+    c) rename any non-standard executables so the names do not conflict
+       with standard executables, which must also be provided.
+ .
+    d) make other distribution arrangements with the author.
+ .
+ 3. You may distribute the software in object code or executable
+    form, provided that you do at least ONE of the following:
+ .
+    a) distribute the executables and library files of the software,
+       together with instructions (in the manual page or equivalent)
+       on where to get the original distribution.
+ .
+    b) accompany the distribution with the machine-readable source of
+       the software.
+ .
+    c) give non-standard executables non-standard names, with
+       instructions on where to get the original software distribution.
+ .
+    d) make other distribution arrangements with the author.
+ .
+ 4. You may modify and include the part of the software into any other
+    software (possibly commercial).  But some files in the distribution
+    are not written by the author, so that they are not under this terms.
+    They are gc.c(partly), utils.c(partly), regex.[ch], fnmatch.[ch],
+    glob.c, st.[ch] and some files under the ./missing directory.  See
+    each file for the copying condition.
+ .
+ 5. The scripts and library files supplied as input to or produced as
+    output from the software do not automatically fall under the
+    copyright of the software, but belong to whomever generated them,
+    and may be sold commercially, and may be aggregated with this
+    software.
+ .
+ 6. THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
+    IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+    WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
+    PURPOSE.
+
+License: GPL-2
+ This program is free software; you can redistribute it
+ and/or modify it under the terms of the GNU General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later
+ version.
+ .
+ This program is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied
+ warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public
+ License along with this package; if not, write to the Free
+ Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ Boston, MA  02110-1301 USA
+ .
+ On Debian systems, the full text of the GNU General Public
+ License version 2 can be found in the file
+ `/usr/share/common-licenses/GPL-2'.
+
+License: GPL-3
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the full text of the GPL is also available at
+ /usr/share/common-licenses/GPL-3
+
+License: LGPL-2.1
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+License: OpenSSL
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ .
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+ .
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the
+    distribution.
+ .
+ 3. All advertising materials mentioning features or use of this
+    software must display the following acknowledgment:
+    "This product includes software developed by the OpenSSL Project
+    for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
+ .
+ 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+    endorse or promote products derived from this software without
+    prior written permission. For written permission, please contact
+    openssl-core@openssl.org.
+ .
+ 5. Products derived from this software may not be called "OpenSSL"
+    nor may "OpenSSL" appear in their names without prior written
+    permission of the OpenSSL Project.
+ .
+ 6. Redistributions of any form whatsoever must retain the following
+    acknowledgment:
+    "This product includes software developed by the OpenSSL Project
+    for use in the OpenSSL Toolkit (http://www.openssl.org/)"
+ .
+ THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT `AS IS'' AND ANY
+ EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ OF THE POSSIBILITY OF SUCH DAMAGE.
+ .
+ This product includes cryptographic software written by Eric Young
+ (eay@cryptsoft.com).  This product includes software written by Tim
+ Hudson (tjh@cryptsoft.com).
+
+License: SSLeay
+ This package is an SSL implementation written
+ by Eric Young (eay@cryptsoft.com).
+ The implementation was written so as to conform with Netscapes SSL.
+ .
+ This library is free for commercial and non-commercial use as long as
+ the following conditions are aheared to.  The following conditions
+ apply to all code found in this distribution, be it the RC4, RSA,
+ lhash, DES, etc., code; not just the SSL code.  The SSL documentation
+ included with this distribution is covered by the same copyright terms
+ except that the holder is Tim Hudson (tjh@cryptsoft.com).
+ .
+ Copyright remains Eric Young's, and as such any Copyright notices in
+ the code are not to be removed.
+ If this package is used in a product, Eric Young should be given attribution
+ as the author of the parts of the library used.
+ This can be in the form of a textual message at program startup or
+ in documentation (online or textual) provided with the package.
+ .
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ 1. Redistributions of source code must retain the copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+ 3. All advertising materials mentioning features or use of this software
+    must display the following acknowledgement:
+    "This product includes cryptographic software written by
+    Eric Young (eay@cryptsoft.com)"
+    The word 'cryptographic' can be left out if the rouines from the library
+    being used are not cryptographic related :-).
+ 4. If you include any Windows specific code (or a derivative thereof) from
+    the apps directory (application code) you must include an acknowledgement:
+    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
+ .
+ THIS SOFTWARE IS PROVIDED BY ERIC YOUNG `AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+ .
+ The licence and distribution terms for any publically available version or
+ derivative of this code cannot be changed.  i.e. this code cannot simply be
+ copied and put under another distribution licence
+ [including the GNU Public Licence.]
+
+License: MIT
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+License: Artistic
+ Copyright (c) 2000-2006, The Perl Foundation.
+ .
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+ .
+ Preamble
+ .
+ This license establishes the terms under which a given free software
+ Package may be copied, modified, distributed, and/or redistributed.
+ The intent is that the Copyright Holder maintains some artistic
+ control over the development of that Package while still keeping the
+ Package available as open source and free software.
+ .
+ You are always permitted to make arrangements wholly outside of this
+ license directly with the Copyright Holder of a given Package. If the
+ terms of this license do not permit the full use that you propose to
+ make of the Package, you should contact the Copyright Holder and seek
+ a different licensing arrangement.
+ .
+ Definitions
+ .
+ "Copyright Holder" means the individual(s) or organization(s)
+ named in the copyright notice for the entire Package.
+ .
+ "Contributor" means any party that has contributed code or other
+ material to the Package, in accordance with the Copyright Holder's
+ procedures.
+ .
+ "You" and "your" means any person who would like to copy,
+ distribute, or modify the Package.
+ .
+ "Package" means the collection of files distributed by the
+ Copyright Holder, and derivatives of that collection and/or of
+ those files. A given Package may consist of either the Standard
+ Version, or a Modified Version.
+ .
+ "Distribute" means providing a copy of the Package or making it
+ accessible to anyone else, or in the case of a company or
+ organization, to others outside of your company or organization.
+ .
+ "Distributor Fee" means any fee that you charge for Distributing
+ this Package or providing support for this Package to another
+ party. It does not mean licensing fees.
+ .
+ "Standard Version" refers to the Package if it has not been
+ modified, or has been modified only in ways explicitly requested
+ by the Copyright Holder.
+ .
+ "Modified Version" means the Package, if it has been changed, and
+ such changes were not explicitly requested by the Copyright
+ Holder.
+ .
+ "Original License" means this Artistic License as Distributed with
+ the Standard Version of the Package, in its current version or as
+ it may be modified by The Perl Foundation in the future.
+ .
+ "Source" form means the source code, documentation source, and
+ configuration files for the Package.
+ .
+ "Compiled" form means the compiled bytecode, object code, binary,
+ or any other form resulting from mechanical transformation or
+ translation of the Source form.
+ .
+ Permission for Use and Modification Without Distribution
+ .
+ (1) You are permitted to use the Standard Version and create and use
+ Modified Versions for any purpose without restriction, provided that
+ you do not Distribute the Modified Version.
+ .
+ .
+ Permissions for Redistribution of the Standard Version
+ .
+ (2) You may Distribute verbatim copies of the Source form of the
+ Standard Version of this Package in any medium without restriction,
+ either gratis or for a Distributor Fee, provided that you duplicate
+ all of the original copyright notices and associated disclaimers. At
+ your discretion, such verbatim copies may or may not include a
+ Compiled form of the Package.
+ .
+ (3) You may apply any bug fixes, portability changes, and other
+ modifications made available from the Copyright Holder. The resulting
+ Package will still be considered the Standard Version, and as such
+ will be subject to the Original License.
+ .
+ .
+ Distribution of Modified Versions of the Package as Source
+ .
+ (4) You may Distribute your Modified Version as Source (either gratis
+ or for a Distributor Fee, and with or without a Compiled form of the
+ Modified Version) provided that you clearly document how it differs
+ from the Standard Version, including, but not limited to, documenting
+ any non-standard features, executables, or modules, and provided that
+ you do at least ONE of the following:
+ .
+ (a) make the Modified Version available to the Copyright Holder
+ of the Standard Version, under the Original License, so that the
+ Copyright Holder may include your modifications in the Standard
+ Version.
+ .
+ (b) ensure that installation of your Modified Version does not
+ prevent the user installing or running the Standard Version. In
+ addition, the Modified Version must bear a name that is different
+ from the name of the Standard Version.
+ .
+ (c) allow anyone who receives a copy of the Modified Version to
+ make the Source form of the Modified Version available to others
+ under
+ .
+ (i) the Original License or
+ .
+ (ii) a license that permits the licensee to freely copy,
+ modify and redistribute the Modified Version using the same
+ licensing terms that apply to the copy that the licensee
+ received, and requires that the Source form of the Modified
+ Version, and of any works derived from it, be made freely
+ available in that license fees are prohibited but Distributor
+ Fees are allowed.
+ .
+ .
+ Distribution of Compiled Forms of the Standard Version
+ or Modified Versions without the Source
+ .
+ (5) You may Distribute Compiled forms of the Standard Version without
+ the Source, provided that you include complete instructions on how to
+ get the Source of the Standard Version. Such instructions must be
+ valid at the time of your distribution. If these instructions, at any
+ time while you are carrying out such distribution, become invalid, you
+ must provide new instructions on demand or cease further distribution.
+ If you provide valid instructions or cease distribution within thirty
+ days after you become aware that the instructions are invalid, then
+ you do not forfeit any of your rights under this license.
+ .
+ (6) You may Distribute a Modified Version in Compiled form without
+ the Source, provided that you comply with Section 4 with respect to
+ the Source of the Modified Version.
+ .
+ .
+ Aggregating or Linking the Package
+ .
+ (7) You may aggregate the Package (either the Standard Version or
+ Modified Version) with other packages and Distribute the resulting
+ aggregation provided that you do not charge a licensing fee for the
+ Package. Distributor Fees are permitted, and licensing fees for other
+ components in the aggregation are permitted. The terms of this license
+ apply to the use and Distribution of the Standard or Modified Versions
+ as included in the aggregation.
+ .
+ (8) You are permitted to link Modified and Standard Versions with
+ other works, to embed the Package in a larger work of your own, or to
+ build stand-alone binary or bytecode versions of applications that
+ include the Package, and Distribute the result without restriction,
+ provided the result does not expose a direct interface to the Package.
+ .
+ .
+ Items That are Not Considered Part of a Modified Version
+ .
+ (9) Works (including, but not limited to, modules and scripts) that
+ merely extend or make use of the Package, do not, by themselves, cause
+ the Package to be a Modified Version. In addition, such works are not
+ considered parts of the Package itself, and are not subject to the
+ terms of this license.
+ .
+ .
+ General Provisions
+ .
+ (10) Any use, modification, and distribution of the Standard or
+ Modified Versions is governed by this Artistic License. By using,
+ modifying or distributing the Package, you accept this license. Do not
+ use, modify, or distribute the Package, if you do not accept this
+ license.
+ .
+ (11) If your Modified Version has been derived from a Modified
+ Version made by someone other than you, you are nevertheless required
+ to ensure that your Modified Version complies with the requirements of
+ this license.
+ .
+ (12) This license does not grant you the right to use any trademark,
+ service mark, tradename, or logo of the Copyright Holder.
+ .
+ (13) This license includes the non-exclusive, worldwide,
+ free-of-charge patent license to make, have made, use, offer to sell,
+ sell, import and otherwise transfer the Package with respect to any
+ patent claims licensable by the Copyright Holder that are necessarily
+ infringed by the Package. If you institute patent litigation
+ (including a cross-claim or counterclaim) against any party alleging
+ that the Package constitutes direct or contributory patent
+ infringement, then this Artistic License to you shall terminate on the
+ date that such litigation is filed.
+ .
+ (14) Disclaimer of Warranty:
+ THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS
+ IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR
+ NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY YOUR LOCAL
+ LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR CONTRIBUTOR WILL
+ BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+ DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE, EVEN IF
+ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: Apache
+ Version 2.0, January 2004
+ http://www.apache.org/licenses/
+ .
+ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+ .
+ 1. Definitions.
+ .
+ "License" shall mean the terms and conditions for use, reproduction,
+ and distribution as defined by Sections 1 through 9 of this document.
+ .
+ "Licensor" shall mean the copyright owner or entity authorized by
+ the copyright owner that is granting the License.
+ .
+ "Legal Entity" shall mean the union of the acting entity and all
+ other entities that control, are controlled by, or are under common
+ control with that entity. For the purposes of this definition,
+ "control" means (i) the power, direct or indirect, to cause the
+ direction or management of such entity, whether by contract or
+ otherwise, or (ii) ownership of fifty percent (50%) or more of the
+ outstanding shares, or (iii) beneficial ownership of such entity.
+ .
+ "You" (or "Your") shall mean an individual or Legal Entity
+ exercising permissions granted by this License.
+ .
+ "Source" form shall mean the preferred form for making modifications,
+ including but not limited to software source code, documentation
+ source, and configuration files.
+ .
+ "Object" form shall mean any form resulting from mechanical
+ transformation or translation of a Source form, including but
+ not limited to compiled object code, generated documentation,
+ and conversions to other media types.
+ .
+ "Work" shall mean the work of authorship, whether in Source or
+ Object form, made available under the License, as indicated by a
+ copyright notice that is included in or attached to the work
+ (an example is provided in the Appendix below).
+ .
+ "Derivative Works" shall mean any work, whether in Source or Object
+ form, that is based on (or derived from) the Work and for which the
+ editorial revisions, annotations, elaborations, or other modifications
+ represent, as a whole, an original work of authorship. For the purposes
+ of this License, Derivative Works shall not include works that remain
+ separable from, or merely link (or bind by name) to the interfaces of,
+ the Work and Derivative Works thereof.
+ .
+ "Contribution" shall mean any work of authorship, including
+ the original version of the Work and any modifications or additions
+ to that Work or Derivative Works thereof, that is intentionally
+ submitted to Licensor for inclusion in the Work by the copyright owner
+ or by an individual or Legal Entity authorized to submit on behalf of
+ the copyright owner. For the purposes of this definition, "submitted"
+ means any form of electronic, verbal, or written communication sent
+ to the Licensor or its representatives, including but not limited to
+ communication on electronic mailing lists, source code control systems,
+ and issue tracking systems that are managed by, or on behalf of, the
+ Licensor for the purpose of discussing and improving the Work, but
+ excluding communication that is conspicuously marked or otherwise
+ designated in writing by the copyright owner as "Not a Contribution."
+ .
+ "Contributor" shall mean Licensor and any individual or Legal Entity
+ on behalf of whom a Contribution has been received by Licensor and
+ subsequently incorporated within the Work.
+ .
+ 2. Grant of Copyright License. Subject to the terms and conditions of
+ this License, each Contributor hereby grants to You a perpetual,
+ worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+ copyright license to reproduce, prepare Derivative Works of,
+ publicly display, publicly perform, sublicense, and distribute the
+ Work and such Derivative Works in Source or Object form.
+ .
+ 3. Grant of Patent License. Subject to the terms and conditions of
+ this License, each Contributor hereby grants to You a perpetual,
+ worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+ (except as stated in this section) patent license to make, have made,
+ use, offer to sell, sell, import, and otherwise transfer the Work,
+ where such license applies only to those patent claims licensable
+ by such Contributor that are necessarily infringed by their
+ Contribution(s) alone or by combination of their Contribution(s)
+ with the Work to which such Contribution(s) was submitted. If You
+ institute patent litigation against any entity (including a
+ cross-claim or counterclaim in a lawsuit) alleging that the Work
+ or a Contribution incorporated within the Work constitutes direct
+ or contributory patent infringement, then any patent licenses
+ granted to You under this License for that Work shall terminate
+ as of the date such litigation is filed.
+ .
+ 4. Redistribution. You may reproduce and distribute copies of the
+ Work or Derivative Works thereof in any medium, with or without
+ modifications, and in Source or Object form, provided that You
+ meet the following conditions:
+ .
+ (a) You must give any other recipients of the Work or
+ Derivative Works a copy of this License; and
+ .
+ (b) You must cause any modified files to carry prominent notices
+ stating that You changed the files; and
+ .
+ (c) You must retain, in the Source form of any Derivative Works
+ that You distribute, all copyright, patent, trademark, and
+ attribution notices from the Source form of the Work,
+ excluding those notices that do not pertain to any part of
+ the Derivative Works; and
+ .
+ (d) If the Work includes a "NOTICE" text file as part of its
+ distribution, then any Derivative Works that You distribute must
+ include a readable copy of the attribution notices contained
+ within such NOTICE file, excluding those notices that do not
+ pertain to any part of the Derivative Works, in at least one
+ of the following places: within a NOTICE text file distributed
+ as part of the Derivative Works; within the Source form or
+ documentation, if provided along with the Derivative Works; or,
+ within a display generated by the Derivative Works, if and
+ wherever such third-party notices normally appear. The contents
+ of the NOTICE file are for informational purposes only and
+ do not modify the License. You may add Your own attribution
+ notices within Derivative Works that You distribute, alongside
+ or as an addendum to the NOTICE text from the Work, provided
+ that such additional attribution notices cannot be construed
+ as modifying the License.
+ .
+ You may add Your own copyright statement to Your modifications and
+ may provide additional or different license terms and conditions
+ for use, reproduction, or distribution of Your modifications, or
+ for any such Derivative Works as a whole, provided Your use,
+ reproduction, and distribution of the Work otherwise complies with
+ the conditions stated in this License.
+ .
+ 5. Submission of Contributions. Unless You explicitly state otherwise,
+ any Contribution intentionally submitted for inclusion in the Work
+ by You to the Licensor shall be under the terms and conditions of
+ this License, without any additional terms or conditions.
+ Notwithstanding the above, nothing herein shall supersede or modify
+ the terms of any separate license agreement you may have executed
+ with Licensor regarding such Contributions.
+ .
+ 6. Trademarks. This License does not grant permission to use the trade
+ names, trademarks, service marks, or product names of the Licensor,
+ except as required for reasonable and customary use in describing the
+ origin of the Work and reproducing the content of the NOTICE file.
+ .
+ 7. Disclaimer of Warranty. Unless required by applicable law or
+ agreed to in writing, Licensor provides the Work (and each
+ Contributor provides its Contributions) on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ implied, including, without limitation, any warranties or conditions
+ of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+ PARTICULAR PURPOSE. You are solely responsible for determining the
+ appropriateness of using or redistributing the Work and assume any
+ risks associated with Your exercise of permissions under this License.
+ .
+ 8. Limitation of Liability. In no event and under no legal theory,
+ whether in tort (including negligence), contract, or otherwise,
+ unless required by applicable law (such as deliberate and grossly
+ negligent acts) or agreed to in writing, shall any Contributor be
+ liable to You for damages, including any direct, indirect, special,
+ incidental, or consequential damages of any character arising as a
+ result of this License or out of the use or inability to use the
+ Work (including but not limited to damages for loss of goodwill,
+ work stoppage, computer failure or malfunction, or any and all
+ other commercial damages or losses), even if such Contributor
+ has been advised of the possibility of such damages.
+ .
+ 9. Accepting Warranty or Additional Liability. While redistributing
+ the Work or Derivative Works thereof, You may choose to offer,
+ and charge a fee for, acceptance of support, warranty, indemnity,
+ or other liability obligations and/or rights consistent with this
+ License. However, in accepting such obligations, You may act only
+ on Your own behalf and on Your sole responsibility, not on behalf
+ of any other Contributor, and only if You agree to indemnify,
+ defend, and hold each Contributor harmless for any liability
+ incurred by, or claims asserted against, such Contributor by reason
+ of your accepting any such warranty or additional liability.
+ .
+ END OF TERMS AND CONDITIONS
+ .
+ APPENDIX: How to apply the Apache License to your work.
+ .
+ To apply the Apache License to your work, attach the following
+ boilerplate notice, with the fields enclosed by brackets "[]"
+ replaced with your own identifying information. (Don't include
+ the brackets!) The text should be enclosed in the appropriate
+ comment syntax for the file format. We also recommend that a
+ file or class name and description of purpose be included on the
+ same "printed page" as the copyright notice for easier
+ identification within third-party archives.
+ .
+ Copyright [yyyy] [name of copyright owner]
+ .
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ .
+ http://www.apache.org/licenses/LICENSE-2.0
+ .
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+License: Zlib
+ This software is provided 'as-is', without any express or implied
+ warranty.  In no event will the authors be held liable for any damages
+ arising from the use of this software.
+ .
+ Permission is granted to anyone to use this software for any purpose,
+ including commercial applications, and to alter it and redistribute it
+ freely, subject to the following restrictions:
+ .
+ 1. The origin of this software must not be misrepresented; you must not
+    claim that you wrote the original software. If you use this software
+    in a product, an acknowledgment in the product documentation would be
+    appreciated but is not required.
+ 2. Altered source versions must be plainly marked as such, and must not be
+    misrepresented as being the original software.
+ 3. This notice may not be removed or altered from any source distribution.
+
+License: Postgresql
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose, without fee, and without a written agreement is
+ hereby granted, provided that the above copyright notice and this paragraph and
+ the following two paragraphs appear in all copies.
+ .
+ IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST
+ PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF
+ THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ .
+ THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING,
+ BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND
+ THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT,
+ UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+
+License: curl
+ All rights reserved.
+ .
+ Permission to use, copy, modify, and distribute this software for any purpose
+ with or without fee is hereby granted, provided that the above copyright
+ notice and this permission notice appear in all copies.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN
+ NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ OR OTHER DEALINGS IN THE SOFTWARE.
+ .
+ Except as contained in this notice, the name of a copyright holder shall not
+ be used in advertising or otherwise to promote the sale, use or other dealings
+ in this Software without prior written authorization of the copyright holder.
+
+License: Java
+ Please see http://java.com/license
+ .
+ ORACLE AMERICA, INC. ("ORACLE"), FOR AND ON BEHALF OF ITSELF AND ITS
+ SUBSIDIARIES AND AFFILIATES UNDER COMMON CONTROL, IS WILLING TO LICENSE THE
+ SOFTWARE TO YOU ONLY UPON THE CONDITION THAT YOU ACCEPT ALL OF THE TERMS
+ CONTAINED IN THIS BINARY CODE LICENSE AGREEMENT AND SUPPLEMENTAL LICENSE TERMS
+ (COLLECTIVELY "AGREEMENT"). PLEASE READ THE AGREEMENT CAREFULLY. BY SELECTING
+ THE "ACCEPT LICENSE AGREEMENT" (OR THE EQUIVALENT) BUTTON AND/OR BY USING THE
+ SOFTWARE YOU ACKNOWLEDGE THAT YOU HAVE READ THE TERMS AND AGREE TO THEM. IF YOU
+ ARE AGREEING TO THESE TERMS ON BEHALF OF A COMPANY OR OTHER LEGAL ENTITY, YOU
+ REPRESENT THAT YOU HAVE THE LEGAL AUTHORITY TO BIND THE LEGAL ENTITY TO THESE
+ TERMS. IF YOU DO NOT HAVE SUCH AUTHORITY, OR IF YOU DO NOT WISH TO BE BOUND BY
+ THE TERMS, THEN SELECT THE "DECLINE LICENSE AGREEMENT" (OR THE EQUIVALENT)
+ BUTTON AND YOU MUST NOT USE THE SOFTWARE ON THIS SITE OR ANY OTHER MEDIA ON
+ WHICH THE SOFTWARE IS CONTAINED.
+ .
+ 1. DEFINITIONS. "Software" means the software identified above in binary form
+ that you selected for download, install or use (in the version You selected for
+ download, install or use) from Oracle or its authorized licensees, any other
+ machine readable materials (including, but not limited to, libraries, source
+ files, header files, and data files), any updates or error corrections provided
+ by Oracle, and any user manuals, programming guides and other documentation
+ provided to you by Oracle under this Agreement. "General Purpose Desktop
+ Computers and Servers" means computers, including desktop and laptop computers,
+ or servers, used for general computing functions under end user control (such as
+ but not specifically limited to email, general purpose Internet browsing, and
+ office suite productivity tools). The use of Software in systems and solutions
+ that provide dedicated functionality (other than as mentioned above) or designed
+ for use in embedded or function-specific software applications, for example but
+ not limited to: Software embedded in or bundled with industrial control systems,
+ wireless mobile telephones, wireless handheld devices, kiosks, TV/STB, Blu-ray
+ Disc devices, telematics and network control switching equipment, printers and
+ storage management systems, and other related systems are excluded from this
+ definition and not licensed under this Agreement. "Programs" means (a) Java
+ technology applets and applications intended to run on the Java Platform,
+ Standard Edition platform on Java-enabled General Purpose Desktop Computers and
+ Servers; and (b) JavaFX technology applications intended to run on the JavaFX
+ Runtime on JavaFX-enabled General Purpose Desktop Computers and Servers.
+ “Commercial Features” means those features identified in Table 1-1 (Commercial
+ Features In Java SE Product Editions) of the Java SE documentation accessible at
+ http://www.oracle.com/technetwork/java/javase/documentation/index.html. “README
+ File” means the README file for the Software accessible at
+ http://www.oracle.com/technetwork/java/javase/documentation/index.html.
+ .
+ 2. LICENSE TO USE. Subject to the terms and conditions of this Agreement
+ including, but not limited to, the Java Technology Restrictions of the
+ Supplemental License Terms, Oracle grants you a non-exclusive, non-transferable,
+ limited license without license fees to reproduce and use internally the
+ Software complete and unmodified for the sole purpose of running Programs. THE
+ LICENSE SET FORTH IN THIS SECTION 2 DOES NOT EXTEND TO THE COMMERCIAL FEATURES.
+ YOUR RIGHTS AND OBLIGATIONS RELATED TO THE COMMERCIAL FEATURES ARE AS SET FORTH
+ IN THE SUPPLEMENTAL TERMS ALONG WITH ADDITIONAL LICENSES FOR DEVELOPERS AND
+ PUBLISHERS.
+ .
+ 3. RESTRICTIONS. Software is copyrighted. Title to Software and all associated
+ intellectual property rights is retained by Oracle and/or its licensors. Unless
+ enforcement is prohibited by applicable law, you may not modify, decompile, or
+ reverse engineer Software. You acknowledge that the Software is developed for
+ general use in a variety of information management applications; it is not
+ developed or intended for use in any inherently dangerous applications,
+ including applications that may create a risk of personal injury. If you use the
+ Software in dangerous applications, then you shall be responsible to take all
+ appropriate fail-safe, backup, redundancy, and other measures to ensure its safe
+ use. Oracle disclaims any express or implied warranty of fitness for such uses.
+ No right, title or interest in or to any trademark, service mark, logo or trade
+ name of Oracle or its licensors is granted under this Agreement. Additional
+ restrictions for developers and/or publishers licenses are set forth in the
+ Supplemental License Terms.
+ .
+ 4. DISCLAIMER OF WARRANTY. THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF
+ ANY KIND. ORACLE FURTHER DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED,
+ INCLUDING WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS
+ FOR A PARTICULAR PURPOSE OR NONINFRINGEMENT.
+ .
+ 5. LIMITATION OF LIABILITY. IN NO EVENT SHALL ORACLE BE LIABLE FOR ANY INDIRECT,
+ INCIDENTAL, SPECIAL, PUNITIVE OR CONSEQUENTIAL DAMAGES, OR DAMAGES FOR LOSS OF
+ PROFITS, REVENUE, DATA OR DATA USE, INCURRED BY YOU OR ANY THIRD PARTY, WHETHER
+ IN AN ACTION IN CONTRACT OR TORT, EVEN IF ORACLE HAS BEEN ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGES. ORACLE'S ENTIRE LIABILITY FOR DAMAGES HEREUNDER
+ SHALL IN NO EVENT EXCEED ONE THOUSAND DOLLARS (U.S. $1,000).
+ .
+ 6. TERMINATION. This Agreement is effective until terminated. You may terminate
+ this Agreement at any time by destroying all copies of Software. This Agreement
+ will terminate immediately without notice from Oracle if you fail to comply with
+ any provision of this Agreement. Either party may terminate this Agreement
+ immediately should any Software become, or in either party's opinion be likely
+ to become, the subject of a claim of infringement of any intellectual property
+ right. Upon termination, you must destroy all copies of Software.
+ .
+ 7. EXPORT REGULATIONS. You agree that U.S. export control laws and other
+ applicable export and import laws govern your use of the Software, including
+ technical data; additional information can be found on Oracle's Global Trade
+ Compliance web site (http://www.oracle.com/products/export). You agree that
+ neither the Software nor any direct product thereof will be exported, directly,
+ or indirectly, in violation of these laws, or will be used for any purpose
+ prohibited by these laws including, without limitation, nuclear, chemical, or
+ biological weapons proliferation.
+ .
+ 8. TRADEMARKS AND LOGOS. You acknowledge and agree as between you and Oracle
+ that Oracle owns the ORACLE and JAVA trademarks and all ORACLE- and JAVA-related
+ trademarks, service marks, logos and other brand designations ("Oracle Marks"),
+ and you agree to comply with the Third Party Usage Guidelines for Oracle
+ Trademarks currently located at
+ http://www.oracle.com/us/legal/third-party-trademarks/index.html . Any use you
+ make of the Oracle Marks inures to Oracle's benefit.
+ .
+ 9. U.S. GOVERNMENT LICENSE RIGHTS. If Software is being acquired by or on behalf
+ of the U.S. Government or by a U.S. Government prime contractor or subcontractor
+ (at any tier), then the Government's rights in Software and accompanying
+ documentation shall be only those set forth in this Agreement.
+ .
+ 10. GOVERNING LAW. This agreement is governed by the substantive and procedural
+ laws of California. You and Oracle agree to submit to the exclusive jurisdiction
+ of, and venue in, the courts of San Francisco, or Santa Clara counties in
+ California in any dispute arising out of or relating to this agreement.
+ .
+ 11. SEVERABILITY. If any provision of this Agreement is held to be
+ unenforceable, this Agreement will remain in effect with the provision omitted,
+ unless omission would frustrate the intent of the parties, in which case this
+ Agreement will immediately terminate.
+ .
+ 12. INTEGRATION. This Agreement is the entire agreement between you and Oracle
+ relating to its subject matter. It supersedes all prior or contemporaneous oral
+ or written communications, proposals, representations and warranties and
+ prevails over any conflicting or additional terms of any quote, order,
+ acknowledgment, or other communication between the parties relating to its
+ subject matter during the term of this Agreement. No modification of this
+ Agreement will be binding, unless in writing and signed by an authorized
+ representative of each party.
+ .
+ SUPPLEMENTAL LICENSE TERMS
+ .
+ These Supplemental License Terms add to or modify the terms of the Binary Code
+ License Agreement. Capitalized terms not defined in these Supplemental Terms
+ shall have the same meanings ascribed to them in the Binary Code License
+ Agreement. These Supplemental Terms shall supersede any inconsistent or
+ conflicting terms in the Binary Code License Agreement, or in any license
+ contained within the Software.
+ .
+ A. COMMERCIAL FEATURES. You may not use the Commercial Features for running
+ Programs, Java applets or applications in your internal business operations or
+ for any commercial or production purpose, or for any purpose other than as set
+ forth in Sections B, C, D and E of these Supplemental Terms. If You want to use
+ the Commercial Features for any purpose other than as permitted in this
+ Agreement, You must obtain a separate license from Oracle.
+ .
+ B. SOFTWARE INTERNAL USE FOR DEVELOPMENT LICENSE GRANT. Subject to the terms and
+ conditions of this Agreement and restrictions and exceptions set forth in the
+ README File incorporated herein by reference, including, but not limited to the
+ Java Technology Restrictions of these Supplemental Terms, Oracle grants you a
+ non-exclusive, non-transferable, limited license without fees to reproduce
+ internally and use internally the Software complete and unmodified for the
+ purpose of designing, developing, and testing your Programs.
+ .
+ C. LICENSE TO DISTRIBUTE SOFTWARE. Subject to the terms and conditions of this
+ Agreement and restrictions and exceptions set forth in the README File,
+ including, but not limited to the Java Technology Restrictions and Limitations
+ on Redistribution of these Supplemental Terms, Oracle grants you a
+ non-exclusive, non-transferable, limited license without fees to reproduce and
+ distribute the Software, provided that (i) you distribute the Software complete
+ and unmodified and only bundled as part of, and for the sole purpose of running,
+ your Programs, (ii) the Programs add significant and primary functionality to
+ the Software, (iii) you do not distribute additional software intended to
+ replace any component(s) of the Software, (iv) you do not remove or alter any
+ proprietary legends or notices contained in the Software, (v) you only
+ distribute the Software subject to a license agreement that: (a) is a complete,
+ unmodified reproduction of this Agreement; or (b) protects Oracle's interests
+ consistent with the terms contained in this Agreement and that includes the
+ notice set forth in Section H, and (vi) you agree to defend and indemnify Oracle
+ and its licensors from and against any damages, costs, liabilities, settlement
+ amounts and/or expenses (including attorneys' fees) incurred in connection with
+ any claim, lawsuit or action by any third party that arises or results from the
+ use or distribution of any and all Programs and/or Software. The license set
+ forth in this Section C does not extend to the Software identified in Section G.
+ .
+ D. LICENSE TO DISTRIBUTE REDISTRIBUTABLES. Subject to the terms and conditions
+ of this Agreement and restrictions and exceptions set forth in the README File,
+ including but not limited to the Java Technology Restrictions and Limitations on
+ Redistribution of these Supplemental Terms, Oracle grants you a non-exclusive,
+ non-transferable, limited license without fees to reproduce and distribute those
+ files specifically identified as redistributable in the README File
+ ("Redistributables") provided that: (i) you distribute the Redistributables
+ complete and unmodified, and only bundled as part of Programs, (ii) the Programs
+ add significant and primary functionality to the Redistributables, (iii) you do
+ not distribute additional software intended to supersede any component(s) of the
+ Redistributables (unless otherwise specified in the applicable README File),
+ (iv) you do not remove or alter any proprietary legends or notices contained in
+ or on the Redistributables, (v) you only distribute the Redistributables
+ pursuant to a license agreement that: (a) is a complete, unmodified reproduction
+ of this Agreement; or (b) protects Oracle's interests consistent with the terms
+ contained in the Agreement and includes the notice set forth in Section H, (vi)
+ you agree to defend and indemnify Oracle and its licensors from and against any
+ damages, costs, liabilities, settlement amounts and/or expenses (including
+ attorneys' fees) incurred in connection with any claim, lawsuit or action by any
+ third party that arises or results from the use or distribution of any and all
+ Programs and/or Software. The license set forth in this Section D does not
+ extend to the Software identified in Section G.
+ .
+ E. DISTRIBUTION BY PUBLISHERS. This section pertains to your distribution of the
+ JavaTM SE Development Kit Software (“JDK”) with your printed book or magazine
+ (as those terms are commonly used in the industry) relating to Java technology
+ ("Publication"). Subject to and conditioned upon your compliance with the
+ restrictions and obligations contained in the Agreement, Oracle hereby grants to
+ you a non-exclusive, nontransferable limited right to reproduce complete and
+ unmodified copies of the JDK on electronic media (the "Media") for the sole
+ purpose of inclusion and distribution with your Publication(s), subject to the
+ following terms: (i) You may not distribute the JDK on a stand-alone basis; it
+ must be distributed with your Publication(s); (ii) You are responsible for
+ downloading the JDK from the applicable Oracle web site; (iii) You must refer to
+ the JDK as JavaTM SE Development Kit; (iv) The JDK must be reproduced in its
+ entirety and without any modification whatsoever (including with respect to all
+ proprietary notices) and distributed with your Publication subject to a license
+ agreement that is a complete, unmodified reproduction of this Agreement; (v) The
+ Media label shall include the following information: “Copyright [YEAR], Oracle
+ America, Inc. All rights reserved. Use is subject to license terms. ORACLE and
+ JAVA trademarks and all ORACLE- and JAVA-related trademarks, service marks,
+ logos and other brand designations are trademarks or registered trademarks of
+ Oracle in the U.S. and other countries.” [YEAR] is the year of Oracle's release
+ of the Software; the year information can typically be found in the Software’s
+ “About” box or screen. This information must be placed on the Media label in
+ such a manner as to only apply to the JDK; (vi) You must clearly identify the
+ JDK as Oracle's product on the Media holder or Media label, and you may not
+ state or imply that Oracle is responsible for any third-party software contained
+ on the Media; (vii) You may not include any third party software on the Media
+ which is intended to be a replacement or substitute for the JDK; (viii) You
+ agree to defend and indemnify Oracle and its licensors from and against any
+ damages, costs, liabilities, settlement amounts and/or expenses (including
+ attorneys' fees) incurred in connection with any claim, lawsuit or action by any
+ third party that arises or results from the use or distribution of the JDK
+ and/or the Publication; ; and (ix) You shall provide Oracle with a written
+ notice for each Publication; such notice shall include the following
+ information: (1) title of Publication, (2) author(s), (3) date of Publication,
+ and (4) ISBN or ISSN numbers. Such notice shall be sent to Oracle America, Inc.,
+ 500 Oracle Parkway, Redwood Shores, California 94065 U.S.A , Attention: General
+ Counsel.
+ .
+ F. JAVA TECHNOLOGY RESTRICTIONS. You may not create, modify, or change the
+ behavior of, or authorize your licensees to create, modify, or change the
+ behavior of, classes, interfaces, or subpackages that are in any way identified
+ as "java", "javax", "sun", “oracle” or similar convention as specified by Oracle
+ in any naming convention designation.
+ .
+ G. LIMITATIONS ON REDISTRIBUTION. You may not redistribute or otherwise
+ transfer: (a) JavaFX Runtime prior to version 2.0.2, (b) JavaFX Development Kit
+ prior to version 2.0.2, or (c) any and all patches, bug fixes and updates made
+ available by Oracle through Oracle Premier Support, including those made
+ available under Oracle's Java SE Support program.
+ .
+ H. COMMERCIAL FEATURES NOTICE. For purpose of complying with Supplemental Term
+ Section C.(v)(b) and D.(v)(b), your license agreement shall include the
+ following notice, where the notice is displayed in a manner that anyone using
+ the Software will see the notice:
+ .
+ Use of the Commercial Features for any commercial or production purpose requires
+ a separate license from Oracle. “Commercial Features” means those features
+ identified Table 1-1 (Commercial Features In Java SE Product Editions) of the
+ Java SE documentation accessible at
+ http://www.oracle.com/technetwork/java/javase/documentation/index.html
+ .
+ I. SOURCE CODE. Software may contain source code that, unless expressly licensed
+ for other purposes, is provided solely for reference purposes pursuant to the
+ terms of this Agreement. Source code may not be redistributed unless expressly
+ provided for in this Agreement.
+ .
+ J. THIRD PARTY CODE. Additional copyright notices and license terms applicable
+ to portions of the Software are set forth in the THIRDPARTYLICENSEREADME file
+ accessible at
+ http://www.oracle.com/technetwork/java/javase/documentation/index.html. In
+ addition to any terms and conditions of any third party opensource/freeware
+ license identified in the THIRDPARTYLICENSEREADME file, the disclaimer of
+ warranty and limitation of liability provisions in paragraphs 4 and 5 of the
+ Binary Code License Agreement shall apply to all Software in this distribution.
+ .
+ K. TERMINATION FOR INFRINGEMENT. Either party may terminate this Agreement
+ immediately should any Software become, or in either party's opinion be likely
+ to become, the subject of a claim of infringement of any intellectual property
+ right.
+ .
+ L. INSTALLATION AND AUTO-UPDATE. The Software's installation and auto-update
+ processes transmit a limited amount of data to Oracle (or its service provider)
+ about those specific processes to help Oracle understand and optimize them.
+ Oracle does not associate the data with personally identifiable information. You
+ can find more information about the data Oracle collects as a result of your
+ Software download at
+ http://www.oracle.com/technetwork/java/javase/documentation/index.html.
+ .
+ For inquiries please contact: Oracle America, Inc., 500 Oracle Parkway, Redwood
+ Shores, California 94065, USA.
+ .
+ Last updated 2 July 2012
+
+License: OpenLDAP
+ Redistribution and use of this software and associated documentation
+ ("Software"), with or without modification, are permitted provided
+ that the following conditions are met:
+ .
+ 1. Redistributions in source form must retain copyright statements
+    and notices,
+ .
+ 2. Redistributions in binary form must reproduce applicable copyright
+    statements and notices, this list of conditions, and the following
+    disclaimer in the documentation and/or other materials provided
+    with the distribution, and
+ .
+ 3. Redistributions must contain a verbatim copy of this document.
+ .
+ The OpenLDAP Foundation may revise this license from time to time.
+ Each revision is distinguished by a version number.  You may use
+ this Software under terms of this license revision or under the
+ terms of any subsequent revision of the license.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE OPENLDAP FOUNDATION AND ITS
+ CONTRIBUTORS ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT
+ SHALL THE OPENLDAP FOUNDATION, ITS CONTRIBUTORS, OR THE AUTHOR(S)
+ OR OWNER(S) OF THE SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT,
+ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGE.
+ .
+ The names of the authors and copyright holders must not be used in
+ advertising or otherwise to promote the sale, use or other dealing
+ in this Software without specific, written prior permission.  Title
+ to copyright in this Software shall at all times remain with copyright
+ holders.
+ .
+ OpenLDAP is a registered trademark of the OpenLDAP Foundation.
+ .
+ Copyright 1999-2003 The OpenLDAP Foundation, Redwood City,
+ California, USA.  All Rights Reserved.  Permission to copy and
+ distribute verbatim copies of this document is granted.
+
+License: LibPNG
+ COPYRIGHT NOTICE, DISCLAIMER, and LICENSE:
+ .
+ If you modify libpng you may insert additional notices immediately following
+ this sentence.
+ .
+ This code is released under the libpng license.
+ .
+ libpng versions 1.2.6, August 15, 2004, through 1.5.13, September 27, 2012, are
+ Copyright (c) 2004, 2006-2012 Glenn Randers-Pehrson, and are
+ distributed according to the same disclaimer and license as libpng-1.2.5
+ with the following individual added to the list of Contributing Authors
+ .
+    Cosmin Truta
+ .
+ libpng versions 1.0.7, July 1, 2000, through 1.2.5 - October 3, 2002, are
+ Copyright (c) 2000-2002 Glenn Randers-Pehrson, and are
+ distributed according to the same disclaimer and license as libpng-1.0.6
+ with the following individuals added to the list of Contributing Authors
+ .
+    Simon-Pierre Cadieux
+    Eric S. Raymond
+    Gilles Vollant
+ .
+ and with the following additions to the disclaimer:
+ .
+    There is no warranty against interference with your enjoyment of the
+    library or against infringement.  There is no warranty that our
+    efforts or the library will fulfill any of your particular purposes
+    or needs.  This library is provided with all faults, and the entire
+    risk of satisfactory quality, performance, accuracy, and effort is with
+    the user.
+ .
+ libpng versions 0.97, January 1998, through 1.0.6, March 20, 2000, are
+ Copyright (c) 1998, 1999 Glenn Randers-Pehrson, and are
+ distributed according to the same disclaimer and license as libpng-0.96,
+ with the following individuals added to the list of Contributing Authors:
+ .
+    Tom Lane
+    Glenn Randers-Pehrson
+    Willem van Schaik
+ .
+ libpng versions 0.89, June 1996, through 0.96, May 1997, are
+ Copyright (c) 1996, 1997 Andreas Dilger
+ Distributed according to the same disclaimer and license as libpng-0.88,
+ with the following individuals added to the list of Contributing Authors:
+ .
+    John Bowler
+    Kevin Bracey
+    Sam Bushell
+    Magnus Holmgren
+    Greg Roelofs
+    Tom Tanner
+ .
+ libpng versions 0.5, May 1995, through 0.88, January 1996, are
+ Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.
+ .
+ For the purposes of this copyright and license, "Contributing Authors"
+ is defined as the following set of individuals:
+ .
+    Andreas Dilger
+    Dave Martindale
+    Guy Eric Schalnat
+    Paul Schmidt
+    Tim Wegner
+ .
+ The PNG Reference Library is supplied "AS IS".  The Contributing Authors
+ and Group 42, Inc. disclaim all warranties, expressed or implied,
+ including, without limitation, the warranties of merchantability and of
+ fitness for any purpose.  The Contributing Authors and Group 42, Inc.
+ assume no liability for direct, indirect, incidental, special, exemplary,
+ or consequential damages, which may result from the use of the PNG
+ Reference Library, even if advised of the possibility of such damage.
+ .
+ Permission is hereby granted to use, copy, modify, and distribute this
+ source code, or portions hereof, for any purpose, without fee, subject
+ to the following restrictions:
+ .
+ 1. The origin of this source code must not be misrepresented.
+ .
+ 2. Altered versions must be plainly marked as such and must not
+    be misrepresented as being the original source.
+ .
+ 3. This Copyright notice may not be removed or altered from any
+    source or altered source distribution.
+ .
+ The Contributing Authors and Group 42, Inc. specifically permit, without
+ fee, and encourage the use of this source code as a component to
+ supporting the PNG file format in commercial products.  If you use this
+ source code in a product, acknowledgment is not required but would be
+ appreciated.
+ .
+ .
+ A "png_get_copyright" function is available, for convenient use in "about"
+ boxes and the like:
+ .
+    printf("%s",png_get_copyright(NULL));
+ .
+ Also, the PNG logo (in PNG format, of course) is supplied in the
+ files "pngbar.png" and "pngbar.jpg (88x31) and "pngnow.png" (98x31).
+ .
+ Libpng is OSI Certified Open Source Software.  OSI Certified Open Source is a
+ certification mark of the Open Source Initiative.
+ .
+ Glenn Randers-Pehrson
+ glennrp at users.sourceforge.net
+ September 27, 2012
+
+License: FreeImage
+ .
+ 1. Definitions.
+ .
+ 1.1. "Contributor" means each entity that creates or contributes to the
+ creation of Modifications.
+ .
+ 1.2. "Contributor Version" means the combination of the Original Code, prior
+ Modifications used by a Contributor, and the Modifications made by that
+ particular Contributor.
+ .
+ 1.3. "Covered Code" means the Original Code or Modifications or the combination
+ of the Original Code and Modifications, in each case including portions
+ thereof.
+ .
+ 1.4. "Electronic Distribution Mechanism" means a mechanism generally accepted
+ in the software development community for the electronic transfer of data.
+ .
+ 1.5. "Executable" means Covered Code in any form other than Source Code.
+ .
+ 1.6. "Initial Developer" means the individual or entity identified as the
+ Initial Developer in the Source Code notice required by Exhibit A.
+ .
+ 1.7. "Larger Work" means a work which combines Covered Code or portions thereof
+ with code not governed by the terms of this License.
+ .
+ 1.8. "License" means this document.
+ .
+ 1.9. "Modifications" means any addition to or deletion from the substance or
+ structure of either the Original Code or any previous Modifications. When
+ Covered Code is released as a series of files, a Modification is:
+ .
+ A. Any addition to or deletion from the contents of a file containing Original
+ Code or previous Modifications.
+ .
+ B. Any new file that contains any part of the Original Code or previous
+ Modifications.
+ .
+ 1.10. "Original Code" means Source Code of computer software code which is
+ described in the Source Code notice required by Exhibit A as Original Code, and
+ which, at the time of its release under this License is not already Covered
+ Code governed by this License.
+ .
+ 1.11. "Source Code" means the preferred form of the Covered Code for making
+ modifications to it, including all modules it contains, plus any associated
+ interface definition files, scripts used to control compilation and
+ installation of an Executable, or a list of source code differential
+ comparisons against either the Original Code or another well known, available
+ Covered Code of the Contributor's choice. The Source Code can be in a
+ compressed or archival form, provided the appropriate decompression or
+ de-archiving software is widely available for no charge.
+ .
+ 1.12. "You" means an individual or a legal entity exercising rights under, and
+ complying with all of the terms of, this License or a future version of this
+ License issued under Section 6.1. For legal entities, "You" includes any entity
+ which controls, is controlled by, or is under common control with You. For
+ purposes of this definition, "control" means (a) the power, direct or indirect,
+ to cause the direction or management of such entity, whether by contract or
+ otherwise, or (b) ownership of fifty percent (50%) or more of the outstanding
+ shares or beneficial ownership of such entity.
+ .
+ 2. Source Code License.
+ .
+ 2.1. The Initial Developer Grant.  The Initial Developer hereby grants You a
+ world-wide, royalty-free, non-exclusive license, subject to third party
+ intellectual property claims:
+ .
+ (a) to use, reproduce, modify, display, perform, sublicense and distribute the
+ Original Code (or portions thereof) with or without Modifications, or as part
+ of a Larger Work; and
+ .
+ (b) under patents now or hereafter owned or controlled by Initial Developer, to
+ make, have made, use and sell ("Utilize") the Original Code (or portions
+ thereof), but solely to the extent that any such patent is reasonably necessary
+ to enable You to Utilize the Original Code (or portions thereof) and not to any
+ greater extent that may be necessary to Utilize further Modifications or
+ combinations.
+ .
+ 2.2. Contributor Grant.  Each Contributor hereby grants You a world-wide,
+ royalty-free, non-exclusive license, subject to third party intellectual
+ property claims:
+ .
+ (a) to use, reproduce, modify, display, perform, sublicense and distribute the
+ Modifications created by such Contributor (or portions thereof) either on an
+ unmodified basis, with other Modifications, as Covered Code or as part of a
+ Larger Work; and
+ .
+ (b) under patents now or hereafter owned or controlled by Contributor, to
+ Utilize the Contributor Version (or portions thereof), but solely to the extent
+ that any such patent is reasonably necessary to enable You to Utilize the
+ Contributor Version (or portions thereof), and not to any greater extent that
+ may be necessary to Utilize further Modifications or combinations.
+ .
+ 3. Distribution Obligations.
+ .
+ 3.1. Application of License.  The Modifications which You create or to which
+ You contribute are governed by the terms of this License, including without
+ limitation Section 2.2. The Source Code version of Covered Code may be
+ distributed only under the terms of this License or a future version of this
+ License released under Section 6.1, and You must include a copy of this License
+ with every copy of the Source Code You distribute. You may not offer or impose
+ any terms on any Source Code version that alters or restricts the applicable
+ version of this License or the recipients' rights hereunder. However, You may
+ include an additional document offering the additional rights described in
+ Section 3.5.
+ .
+ 3.2. Availability of Source Code.  Any Modification which You create or to
+ which You contribute must be made available in Source Code form under the terms
+ of this License either on the same media as an Executable version or via an
+ accepted Electronic Distribution Mechanism to anyone to whom you made an
+ Executable version available; and if made available via Electronic Distribution
+ Mechanism, must remain available for at least twelve (12) months after the date
+ it initially became available, or at least six (6) months after a subsequent
+ version of that particular Modification has been made available to such
+ recipients. You are responsible for ensuring that the Source Code version
+ remains available even if the Electronic Distribution Mechanism is maintained
+ by a third party.
+ .
+ 3.3. Description of Modifications.  You must cause all Covered Code to which
+ you contribute to contain a file documenting the changes You made to create
+ that Covered Code and the date of any change. You must include a prominent
+ statement that the Modification is derived, directly or indirectly, from
+ Original Code provided by the Initial Developer and including the name of the
+ Initial Developer in (a) the Source Code, and (b) in any notice in an
+ Executable version or related documentation in which You describe the origin or
+ ownership of the Covered Code.
+ .
+ 3.4. Intellectual Property Matters
+ .
+ (a) Third Party Claims.  If You have knowledge that a party claims an
+ intellectual property right in particular functionality or code (or its
+ utilization under this License), you must include a text file with the source
+ code distribution titled "LEGAL" which describes the claim and the party making
+ the claim in sufficient detail that a recipient will know whom to contact. If
+ you obtain such knowledge after You make Your Modification available as
+ described in Section 3.2, You shall promptly modify the LEGAL file in all
+ copies You make available thereafter and shall take other steps (such as
+ notifying appropriate mailing lists or newsgroups) reasonably calculated to
+ inform those who received the Covered Code that new knowledge has been
+ obtained.
+ .
+ (b) Contributor APIs.  If Your Modification is an application programming
+ interface and You own or control patents which are reasonably necessary to
+ implement that API, you must also include this information in the LEGAL file.
+ .
+ 3.5. Required Notices.  You must duplicate the notice in Exhibit A in each file
+ of the Source Code, and this License in any documentation for the Source Code,
+ where You describe recipients' rights relating to Covered Code. If You created
+ one or more Modification(s), You may add your name as a Contributor to the
+ notice described in Exhibit A. If it is not possible to put such notice in a
+ particular Source Code file due to its structure, then you must include such
+ notice in a location (such as a relevant directory file) where a user would be
+ likely to look for such a notice. You may choose to offer, and to charge a fee
+ for, warranty, support, indemnity or liability obligations to one or more
+ recipients of Covered Code. However, You may do so only on Your own behalf, and
+ not on behalf of the Initial Developer or any Contributor. You must make it
+ absolutely clear than any such warranty, support, indemnity or liability
+ obligation is offered by You alone, and You hereby agree to indemnify the
+ Initial Developer and every Contributor for any liability incurred by the
+ Initial Developer or such Contributor as a result of warranty, support,
+ indemnity or liability terms You offer.
+ .
+ 3.6. Distribution of Executable Versions.  You may distribute Covered Code in
+ Executable form only if the requirements of Section 3.1-3.5 have been met for
+ that Covered Code, and if You include a notice stating that the Source Code
+ version of the Covered Code is available under the terms of this License,
+ including a description of how and where You have fulfilled the obligations of
+ Section 3.2. The notice must be conspicuously included in any notice in an
+ Executable version, related documentation or collateral in which You describe
+ recipients' rights relating to the Covered Code. You may distribute the
+ Executable version of Covered Code under a license of Your choice, which may
+ contain terms different from this License, provided that You are in compliance
+ with the terms of this License and that the license for the Executable version
+ does not attempt to limit or alter the recipient's rights in the Source Code
+ version from the rights set forth in this License. If You distribute the
+ Executable version under a different license You must make it absolutely clear
+ that any terms which differ from this License are offered by You alone, not by
+ the Initial Developer or any Contributor. You hereby agree to indemnify the
+ Initial Developer and every Contributor for any liability incurred by the
+ Initial Developer or such Contributor as a result of any such terms You offer.
+ .
+ 3.7. Larger Works.  You may create a Larger Work by combining Covered Code with
+ other code not governed by the terms of this License and distribute the Larger
+ Work as a single product. In such a case, You must make sure the requirements
+ of this License are fulfilled for the Covered Code.
+ .
+ 4. Inability to Comply Due to Statute or Regulation.
+ .
+ If it is impossible for You to comply with any of the terms of this License
+ with respect to some or all of the Covered Code due to statute or regulation
+ then You must: (a) comply with the terms of this License to the maximum extent
+ possible; and (b) describe the limitations and the code they affect. Such
+ description must be included in the LEGAL file described in Section 3.4 and
+ must be included with all distributions of the Source Code. Except to the
+ extent prohibited by statute or regulation, such description must be
+ sufficiently detailed for a recipient of ordinary skill to be able to
+ understand it.
+ .
+ 5. Application of this License.
+ .
+ This License applies to code to which the Initial Developer has attached the
+ notice in Exhibit A, and to related Covered Code.
+ .
+ 6. Versions of the License.
+ .
+ 6.1. New Versions.  Floris van den Berg may publish revised and/or new versions
+ of the License from time to time. Each version will be given a distinguishing
+ version number.
+ .
+ 6.2. Effect of New Versions.  Once Covered Code has been published under a
+ particular version of the License, You may always continue to use it under the
+ terms of that version. You may also choose to use such Covered Code under the
+ terms of any subsequent version of the License published by Floris van den Berg
+ No one other than Floris van den Berg has the right to modify the terms
+ applicable to Covered Code created under this License.
+ .
+ 6.3. Derivative Works.  If you create or use a modified version of this License
+ (which you may only do in order to apply it to code which is not already
+ Covered Code governed by this License), you must (a) rename Your license so
+ that the phrases "FreeImage", `FreeImage Public License", "FIPL", or any
+ confusingly similar phrase do not appear anywhere in your license and (b)
+ otherwise make it clear that your version of the license contains terms which
+ differ from the FreeImage Public License. (Filling in the name of the Initial
+ Developer, Original Code or Contributor in the notice described in Exhibit A
+ shall not of themselves be deemed to be modifications of this License.)
+ .
+ 7. DISCLAIMER OF WARRANTY.
+ .
+ COVERED CODE IS PROVIDED UNDER THIS LICENSE ON AN "AS IS" BASIS, WITHOUT
+ WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT
+ LIMITATION, WARRANTIES THAT THE COVERED CODE IS FREE OF DEFECTS, MERCHANTABLE,
+ FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE RISK AS TO THE
+ QUALITY AND PERFORMANCE OF THE COVERED CODE IS WITH YOU. SHOULD ANY COVERED
+ CODE PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL DEVELOPER OR ANY
+ OTHER CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY SERVICING, REPAIR OR
+ CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS
+ LICENSE. NO USE OF ANY COVERED CODE IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS
+ DISCLAIMER.
+ .
+ 8. TERMINATION.
+ .
+ This License and the rights granted hereunder will terminate automatically if
+ You fail to comply with terms herein and fail to cure such breach within 30
+ days of becoming aware of the breach. All sublicenses to the Covered Code which
+ are properly granted shall survive any termination of this License. Provisions
+ which, by their nature, must remain in effect beyond the termination of this
+ License shall survive.
+ .
+ 9. LIMITATION OF LIABILITY.
+ .
+ UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER TORT (INCLUDING
+ NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE INITIAL DEVELOPER, ANY OTHER
+ CONTRIBUTOR, OR ANY DISTRIBUTOR OF COVERED CODE, OR ANY SUPPLIER OF ANY OF SUCH
+ PARTIES, BE LIABLE TO YOU OR ANY OTHER PERSON FOR ANY INDIRECT, SPECIAL,
+ INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT
+ LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR
+ MALFUNCTION, OR ANY AND ALL OTHER COMMERCIAL DAMAGES OR LOSSES, EVEN IF SUCH
+ PARTY SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES. THIS
+ LIMITATION OF LIABILITY SHALL NOT APPLY TO LIABILITY FOR DEATH OR PERSONAL
+ INJURY RESULTING FROM SUCH PARTY'S NEGLIGENCE TO THE EXTENT APPLICABLE LAW
+ PROHIBITS SUCH LIMITATION. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR
+ LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THAT EXCLUSION AND
+ LIMITATION MAY NOT APPLY TO YOU.
+ .
+ 10. U.S. GOVERNMENT END USERS.
+ .
+ The Covered Code is a "commercial item," as that term is defined in 48 C.F.R.
+ 2.101 (Oct. 1995), consisting of "commercial computer software" and "commercial
+ computer software documentation," as such terms are used in 48 C.F.R. 12.212
+ (Sept. 1995). Consistent with 48 C.F.R. 12.212 and 48 C.F.R. 227.7202-1 through
+ 227.7202-4 (June 1995), all U.S. Government End Users acquire Covered Code with
+ only those rights set forth herein.
+ .
+ 11. MISCELLANEOUS.
+ .
+ This License represents the complete agreement concerning subject matter
+ hereof. If any provision of this License is held to be unenforceable, such
+ provision shall be reformed only to the extent necessary to make it
+ enforceable. This License shall be governed by Dutch law provisions (except to
+ the extent applicable law, if any, provides otherwise), excluding its
+ conflict-of-law provisions. With respect to disputes in which at least one
+ party is a citizen of, or an entity chartered or registered to do business in,
+ the The Netherlands: (a) unless otherwise agreed in writing, all disputes
+ relating to this License (excepting any dispute relating to intellectual
+ property rights) shall be subject to final and binding arbitration, with the
+ losing party paying all costs of arbitration; (b) any arbitration relating to
+ this Agreement shall be held in Almelo, The Netherlands; and (c) any litigation
+ relating to this Agreement shall be subject to the jurisdiction of the court of
+ Almelo, The Netherlands with the losing party responsible for costs, including
+ without limitation, court costs and reasonable attorneys fees and expenses. Any
+ law or regulation which provides that the language of a contract shall be
+ construed against the drafter shall not apply to this License.
+ .
+ 12. RESPONSIBILITY FOR CLAIMS.
+ .
+ Except in cases where another Contributor has failed to comply with Section
+ 3.4, You are responsible for damages arising, directly or indirectly, out of
+ Your utilization of rights under this License, based on the number of copies of
+ Covered Code you made available, the revenues you received from utilizing such
+ rights, and other relevant factors. You agree to work with affected parties to
+ distribute responsibility on an equitable basis.
+ .
+ EXHIBIT A.
+ .
+ "The contents of this file are subject to the FreeImage Public License Version
+ 1.0 (the "License"); you may not use this file except in compliance with the
+ License. You may obtain a copy of the License at
+ http://home.wxs.nl/~flvdberg/freeimage-license.txt
+ .
+ Software distributed under the License is distributed on an "AS IS" basis,
+ WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+ the specific language governing rights and limitations under the License.
+
+License: CC-BY
+ CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE
+ LEGAL SERVICES. DISTRIBUTION OF THIS LICENSE DOES NOT CREATE AN
+ ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS INFORMATION
+ ON AN "AS-IS" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES REGARDING THE
+ INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM
+ ITS USE.
+ .
+ License
+ .
+ THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE
+ COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED BY
+ COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
+ .
+ BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE
+ TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY
+ BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS
+ CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND
+ CONDITIONS.
+ .
+ 1. Definitions
+ .
+ a. "Adaptation" means a work based upon the Work, or upon the Work and
+ other pre-existing works, such as a translation, adaptation, derivative
+ work, arrangement of music or other alterations of a literary or
+ artistic work, or phonogram or performance and includes cinematographic
+ adaptations or any other form in which the Work may be recast,
+ transformed, or adapted including in any form recognizably derived from
+ the original, except that a work that constitutes a Collection will not
+ be considered an Adaptation for the purpose of this License. For the
+ avoidance of doubt, where the Work is a musical work, performance or
+ phonogram, the synchronization of the Work in timed-relation with a
+ moving image ("synching") will be considered an Adaptation for the
+ purpose of this License.
+ .
+ b. "Collection" means a collection of literary or artistic works, such
+ as encyclopedias and anthologies, or performances, phonograms or
+ broadcasts, or other works or subject matter other than works listed in
+ Section 1(f) below, which, by reason of the selection and arrangement of
+ their contents, constitute intellectual creations, in which the Work is
+ included in its entirety in unmodified form along with one or more other
+ contributions, each constituting separate and independent works in
+ themselves, which together are assembled into a collective whole. A work
+ that constitutes a Collection will not be considered an Adaptation (as
+ defined above) for the purposes of this License.
+ .
+ c. "Distribute" means to make available to the public the original and
+ copies of the Work or Adaptation, as appropriate, through sale or other
+ transfer of ownership.
+ .
+ d. "Licensor" means the individual, individuals, entity or entities that
+ offer(s) the Work under the terms of this License.
+ .
+ e. "Original Author" means, in the case of a literary or artistic work,
+ the individual, individuals, entity or entities who created the Work or
+ if no individual or entity can be identified, the publisher; and in
+ addition (i) in the case of a performance the actors, singers,
+ musicians, dancers, and other persons who act, sing, deliver, declaim,
+ play in, interpret or otherwise perform literary or artistic works or
+ expressions of folklore; (ii) in the case of a phonogram the producer
+ being the person or legal entity who first fixes the sounds of a
+ performance or other sounds; and, (iii) in the case of broadcasts, the
+ organization that transmits the broadcast.
+ .
+ f. "Work" means the literary and/or artistic work offered under the
+ terms of this License including without limitation any production in the
+ literary, scientific and artistic domain, whatever may be the mode or
+ form of its expression including digital form, such as a book, pamphlet
+ and other writing; a lecture, address, sermon or other work of the same
+ nature; a dramatic or dramatico-musical work; a choreographic work or
+ entertainment in dumb show; a musical composition with or without words;
+ a cinematographic work to which are assimilated works expressed by a
+ process analogous to cinematography; a work of drawing, painting,
+ architecture, sculpture, engraving or lithography; a photographic work
+ to which are assimilated works expressed by a process analogous to
+ photography; a work of applied art; an illustration, map, plan, sketch
+ or three-dimensional work relative to geography, topography,
+ architecture or science; a performance; a broadcast; a phonogram; a
+ compilation of data to the extent it is protected as a copyrightable
+ work; or a work performed by a variety or circus performer to the extent
+ it is not otherwise considered a literary or artistic work.
+ .
+ g. "You" means an individual or entity exercising rights under this
+ License who has not previously violated the terms of this License with
+ respect to the Work, or who has received express permission from the
+ Licensor to exercise rights under this License despite a previous
+ violation.
+ .
+ h. "Publicly Perform" means to perform public recitations of the Work
+ and to communicate to the public those public recitations, by any means
+ or process, including by wire or wireless means or public digital
+ performances; to make available to the public Works in such a way that
+ members of the public may access these Works from a place and at a place
+ individually chosen by them; to perform the Work to the public by any
+ means or process and the communication to the public of the performances
+ of the Work, including by public digital performance; to broadcast and
+ rebroadcast the Work by any means including signs, sounds or images.
+ .
+ i. "Reproduce" means to make copies of the Work by any means including
+ without limitation by sound or visual recordings and the right of
+ fixation and reproducing fixations of the Work, including storage of a
+ protected performance or phonogram in digital form or other electronic
+ medium.
+ .
+ 2. Fair Dealing Rights. Nothing in this License is intended to reduce,
+ limit, or restrict any uses free from copyright or rights arising from
+ limitations or exceptions that are provided for in connection with the
+ copyright protection under copyright law or other applicable laws.
+ .
+ 3. License Grant. Subject to the terms and conditions of this License,
+ Licensor hereby grants You a worldwide, royalty-free, non-exclusive,
+ perpetual (for the duration of the applicable copyright) license to
+ exercise the rights in the Work as stated below:
+ .
+ a. to Reproduce the Work, to incorporate the Work into one or more
+ Collections, and to Reproduce the Work as incorporated in the
+ Collections;
+ .
+ b. to create and Reproduce Adaptations provided that any such
+ Adaptation, including any translation in any medium, takes reasonable
+ steps to clearly label, demarcate or otherwise identify that changes
+ were made to the original Work. For example, a translation could be
+ marked "The original work was translated from English to Spanish," or a
+ modification could indicate "The original work has been modified.";
+ .
+ c. to Distribute and Publicly Perform the Work including as incorporated
+ in Collections; and,
+ .
+ d. to Distribute and Publicly Perform Adaptations.
+ .
+ e. For the avoidance of doubt:
+ .
+ i. Non-waivable Compulsory License Schemes. In those jurisdictions in
+ which the right to collect royalties through any statutory or compulsory
+ licensing scheme cannot be waived, the Licensor reserves the exclusive
+ right to collect such royalties for any exercise by You of the rights
+ granted under this License;
+ .
+ ii. Waivable Compulsory License Schemes. In those jurisdictions in which
+ the right to collect royalties through any statutory or compulsory
+ licensing scheme can be waived, the Licensor waives the exclusive right
+ to collect such royalties for any exercise by You of the rights granted
+ under this License; and,
+ .
+ iii. Voluntary License Schemes. The Licensor waives the right to collect
+ royalties, whether individually or, in the event that the Licensor is a
+ member of a collecting society that administers voluntary licensing
+ schemes, via that society, from any exercise by You of the rights
+ granted under this License.
+ .
+ The above rights may be exercised in all media and formats whether now
+ known or hereafter devised. The above rights include the right to make
+ such modifications as are technically necessary to exercise the rights
+ in other media and formats. Subject to Section 8(f), all rights not
+ expressly granted by Licensor are hereby reserved.
+ .
+ .
+ 4. Restrictions. The license granted in Section 3 above is expressly
+ made subject to and limited by the following restrictions:
+ .
+ a. You may Distribute or Publicly Perform the Work only under the terms
+ of this License. You must include a copy of, or the Uniform Resource
+ Identifier (URI) for, this License with every copy of the Work You
+ Distribute or Publicly Perform. You may not offer or impose any terms on
+ the Work that restrict the terms of this License or the ability of the
+ recipient of the Work to exercise the rights granted to that recipient
+ under the terms of the License. You may not sublicense the Work. You
+ must keep intact all notices that refer to this License and to the
+ disclaimer of warranties with every copy of the Work You Distribute or
+ Publicly Perform. When You Distribute or Publicly Perform the Work, You
+ may not impose any effective technological measures on the Work that
+ restrict the ability of a recipient of the Work from You to exercise the
+ rights granted to that recipient under the terms of the License. This
+ Section 4(a) applies to the Work as incorporated in a Collection, but
+ this does not require the Collection apart from the Work itself to be
+ made subject to the terms of this License. If You create a Collection,
+ upon notice from any Licensor You must, to the extent practicable,
+ remove from the Collection any credit as required by Section 4(b), as
+ requested. If You create an Adaptation, upon notice from any Licensor
+ You must, to the extent practicable, remove from the Adaptation any
+ credit as required by Section 4(b), as requested.
+ .
+ b. If You Distribute, or Publicly Perform the Work or any Adaptations or
+ Collections, You must, unless a request has been made pursuant to
+ Section 4(a), keep intact all copyright notices for the Work and
+ provide, reasonable to the medium or means You are utilizing: (i) the
+ name of the Original Author (or pseudonym, if applicable) if supplied,
+ and/or if the Original Author and/or Licensor designate another party or
+ parties (e.g., a sponsor institute, publishing entity, journal) for
+ attribution ("Attribution Parties") in Licensor's copyright notice,
+ terms of service or by other reasonable means, the name of such party or
+ parties; (ii) the title of the Work if supplied; (iii) to the extent
+ reasonably practicable, the URI, if any, that Licensor specifies to be
+ associated with the Work, unless such URI does not refer to the
+ copyright notice or licensing information for the Work; and (iv) ,
+ consistent with Section 3(b), in the case of an Adaptation, a credit
+ identifying the use of the Work in the Adaptation (e.g., "French
+ translation of the Work by Original Author," or "Screenplay based on
+ original Work by Original Author"). The credit required by this Section
+ 4 (b) may be implemented in any reasonable manner; provided, however,
+ that in the case of a Adaptation or Collection, at a minimum such credit
+ will appear, if a credit for all contributing authors of the Adaptation
+ or Collection appears, then as part of these credits and in a manner at
+ least as prominent as the credits for the other contributing authors.
+ For the avoidance of doubt, You may only use the credit required by this
+ Section for the purpose of attribution in the manner set out above and,
+ by exercising Your rights under this License, You may not implicitly or
+ explicitly assert or imply any connection with, sponsorship or
+ endorsement by the Original Author, Licensor and/or Attribution Parties,
+ as appropriate, of You or Your use of the Work, without the separate,
+ express prior written permission of the Original Author, Licensor and/or
+ Attribution Parties.
+ .
+ c. Except as otherwise agreed in writing by the Licensor or as may be
+ otherwise permitted by applicable law, if You Reproduce, Distribute or
+ Publicly Perform the Work either by itself or as part of any Adaptations
+ or Collections, You must not distort, mutilate, modify or take other
+ derogatory action in relation to the Work which would be prejudicial to
+ the Original Author's honor or reputation. Licensor agrees that in those
+ jurisdictions (e.g. Japan), in which any exercise of the right granted
+ in Section 3(b) of this License (the right to make Adaptations) would be
+ deemed to be a distortion, mutilation, modification or other derogatory
+ action prejudicial to the Original Author's honor and reputation, the
+ Licensor will waive or not assert, as appropriate, this Section, to the
+ fullest extent permitted by the applicable national law, to enable You
+ to reasonably exercise Your right under Section 3(b) of this License
+ (right to make Adaptations) but not otherwise.
+ .
+ 5. Representations, Warranties and Disclaimer
+ .
+ UNLESS OTHERWISE MUTUALLY AGREED TO BY THE PARTIES IN WRITING, LICENSOR
+ OFFERS THE WORK AS-IS AND MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY
+ KIND CONCERNING THE WORK, EXPRESS, IMPLIED, STATUTORY OR OTHERWISE,
+ INCLUDING, WITHOUT LIMITATION, WARRANTIES OF TITLE, MERCHANTIBILITY,
+ FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR THE ABSENCE OF
+ LATENT OR OTHER DEFECTS, ACCURACY, OR THE PRESENCE OF ABSENCE OF ERRORS,
+ WHETHER OR NOT DISCOVERABLE. SOME JURISDICTIONS DO NOT ALLOW THE
+ EXCLUSION OF IMPLIED WARRANTIES, SO SUCH EXCLUSION MAY NOT APPLY TO YOU.
+ .
+ 6. Limitation on Liability. EXCEPT TO THE EXTENT REQUIRED BY APPLICABLE
+ LAW, IN NO EVENT WILL LICENSOR BE LIABLE TO YOU ON ANY LEGAL THEORY FOR
+ ANY SPECIAL, INCIDENTAL, CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES
+ ARISING OUT OF THIS LICENSE OR THE USE OF THE WORK, EVEN IF LICENSOR HAS
+ BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+ .
+ 7. Termination
+ .
+ a. This License and the rights granted hereunder will terminate
+ automatically upon any breach by You of the terms of this License.
+ Individuals or entities who have received Adaptations or Collections
+ from You under this License, however, will not have their licenses
+ terminated provided such individuals or entities remain in full
+ compliance with those licenses. Sections 1, 2, 5, 6, 7, and 8 will
+ survive any termination of this License.
+ .
+ b. Subject to the above terms and conditions, the license granted here
+ is perpetual (for the duration of the applicable copyright in the Work).
+ Notwithstanding the above, Licensor reserves the right to release the
+ Work under different license terms or to stop distributing the Work at
+ any time; provided, however that any such election will not serve to
+ withdraw this License (or any other license that has been, or is
+ required to be, granted under the terms of this License), and this
+ License will continue in full force and effect unless terminated as
+ stated above.
+ .
+ 8. Miscellaneous
+ .
+ a. Each time You Distribute or Publicly Perform the Work or a
+ Collection, the Licensor offers to the recipient a license to the Work
+ on the same terms and conditions as the license granted to You under
+ this License.
+ .
+ b. Each time You Distribute or Publicly Perform an Adaptation, Licensor
+ offers to the recipient a license to the original Work on the same terms
+ and conditions as the license granted to You under this License.
+ .
+ c. If any provision of this License is invalid or unenforceable under
+ applicable law, it shall not affect the validity or enforceability of
+ the remainder of the terms of this License, and without further action
+ by the parties to this agreement, such provision shall be reformed to
+ the minimum extent necessary to make such provision valid and
+ enforceable.
+ .
+ d. No term or provision of this License shall be deemed waived and no
+ breach consented to unless such waiver or consent shall be in writing
+ and signed by the party to be charged with such waiver or consent. This
+ License constitutes the entire agreement between the parties with
+ respect to the Work licensed here. There are no understandings,
+ agreements or representations with respect to the Work not specified
+ here. Licensor shall not be bound by any additional provisions that may
+ appear in any communication from You.
+ .
+ e. This License may not be modified without the mutual written agreement
+ of the Licensor and You.
+ .
+ f. The rights granted under, and the subject matter referenced, in this
+ License were drafted utilizing the terminology of the Berne Convention
+ for the Protection of Literary and Artistic Works (as amended on
+ September 28, 1979), the Rome Convention of 1961, the WIPO Copyright
+ Treaty of 1996, the WIPO Performances and Phonograms Treaty of 1996 and
+ the Universal Copyright Convention (as revised on July 24, 1971). These
+ rights and subject matter take effect in the relevant jurisdiction in
+ which the License terms are sought to be enforced according to the
+ corresponding provisions of the implementation of those treaty
+ provisions in the applicable national law. If the standard suite of
+ rights granted under applicable copyright law includes additional rights
+ not granted under this License, such additional rights are deemed to be
+ included in the License; this License is not intended to restrict the
+ license of any rights under applicable law.
+ .
+ .
+ Creative Commons Notice
+ .
+ Creative Commons is not a party to this License, and makes no warranty
+ whatsoever in connection with the Work. Creative Commons will not be
+ liable to You or any party on any legal theory for any damages
+ whatsoever, including without limitation any general, special,
+ incidental or consequential damages arising in connection to this
+ license. Notwithstanding the foregoing two (2) sentences, if Creative
+ Commons has expressly identified itself as the Licensor hereunder, it
+ shall have all rights and obligations of Licensor.
+ .
+ Except for the limited purpose of indicating to the public that the Work
+ is licensed under the CCPL, Creative Commons does not authorize the use
+ by either party of the trademark "Creative Commons" or any related
+ trademark or logo of Creative Commons without the prior written consent
+ of Creative Commons. Any permitted use will be in compliance with
+ Creative Commons' then-current trademark usage guidelines, as may be
+ published on its website or otherwise made available upon request from
+ time to time. For the avoidance of doubt, this trademark restriction
+ does not form part of this License.
+ .
+ Creative Commons may be contacted at http://creativecommons.org/.
+
+License: OFL-1.1
+ PREAMBLE
+ The goals of the Open Font License (OFL) are to stimulate worldwide
+ development of collaborative font projects, to support the font creation
+ efforts of academic and linguistic communities, and to provide a free and
+ open framework in which fonts may be shared and improved in partnership
+ with others.
+ .
+ The OFL allows the licensed fonts to be used, studied, modified and
+ redistributed freely as long as they are not sold by themselves. The
+ fonts, including any derivative works, can be bundled, embedded,
+ redistributed and/or sold with any software provided that any reserved
+ names are not used by derivative works. The fonts and derivatives,
+ however, cannot be released under any other type of license. The
+ requirement for fonts to remain under this license does not apply
+ to any document created using the fonts or their derivatives.
+ .
+ DEFINITIONS
+ "Font Software" refers to the set of files released by the Copyright
+ Holder(s) under this license and clearly marked as such. This may
+ include source files, build scripts and documentation.
+ .
+ "Reserved Font Name" refers to any names specified as such after the
+ copyright statement(s).
+ .
+ "Original Version" refers to the collection of Font Software components as
+ distributed by the Copyright Holder(s).
+ .
+ "Modified Version" refers to any derivative made by adding to, deleting,
+ or substituting -- in part or in whole -- any of the components of the
+ Original Version, by changing formats or by porting the Font Software to a
+ new environment.
+ .
+ "Author" refers to any designer, engineer, programmer, technical
+ writer or other person who contributed to the Font Software.
+ .
+ PERMISSION & CONDITIONS
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of the Font Software, to use, study, copy, merge, embed, modify,
+ redistribute, and sell modified and unmodified copies of the Font
+ Software, subject to the following conditions:
+ .
+ 1) Neither the Font Software nor any of its individual components,
+ in Original or Modified Versions, may be sold by itself.
+ .
+ 2) Original or Modified Versions of the Font Software may be bundled,
+ redistributed and/or sold with any software, provided that each copy
+ contains the above copyright notice and this license. These can be
+ included either as stand-alone text files, human-readable headers or
+ in the appropriate machine-readable metadata fields within text or
+ binary files as long as those fields can be easily viewed by the user.
+ .
+ 3) No Modified Version of the Font Software may use the Reserved Font
+ Name(s) unless explicit written permission is granted by the corresponding
+ Copyright Holder. This restriction only applies to the primary font name as
+ presented to the users.
+ .
+ 4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+ Software shall not be used to promote, endorse or advertise any
+ Modified Version, except to acknowledge the contribution(s) of the
+ Copyright Holder(s) and the Author(s) or with their explicit written
+ permission.
+ .
+ 5) The Font Software, modified or unmodified, in part or in whole,
+ must be distributed entirely under this license, and must not be
+ distributed under any other license. The requirement for fonts to
+ remain under this license does not apply to any document created
+ using the Font Software.
+ .
+ TERMINATION
+ This license becomes null and void if any of the above conditions are
+ not met.
+ .
+ DISCLAIMER
+ THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+ OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+ COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+ DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+ OTHER DEALINGS IN THE FONT SOFTWARE.
+
+License: Cookiejar
+ You can redistribute it and/or modify it under either the terms of the GPL
+ (see COPYING.txt file), or the conditions below:
+ .
+ 1. You may make and give away verbatim copies of the source form of the
+    software without restriction, provided that you duplicate all of the
+    original copyright notices and associated disclaimers.
+ .
+ 2. You may modify your copy of the software in any way, provided that
+    you do at least ONE of the following:
+ .
+    a) place your modifications in the Public Domain or otherwise
+       make them Freely Available, such as by posting said
+       modifications to Usenet or an equivalent medium, or by allowing
+       the author to include your modifications in the software.
+ .
+    b) use the modified software only within your corporation or
+       organization.
+ .
+    c) rename any non-standard executables so the names do not conflict
+       with standard executables, which must also be provided.
+ .
+    d) make other distribution arrangements with the author.
+ .
+ 3. You may distribute the software in object code or executable
+    form, provided that you do at least ONE of the following:
+ .
+    a) distribute the executables and library files of the software,
+       together with instructions (in the manual page or equivalent)
+       on where to get the original distribution.
+ .
+    b) accompany the distribution with the machine-readable source of
+       the software.
+ .
+    c) give non-standard executables non-standard names, with
+       instructions on where to get the original software distribution.
+ .
+    d) make other distribution arrangements with the author.
+ .
+ 4. The scripts and library files supplied as input to or produced as
+    output from the software do not automatically fall under the
+    copyright of the software, but belong to whomever generated them,
+    and may be sold commercially, and may be aggregated with this
+    software.
+ .
+ 5. THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
+    IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+    PURPOSE.

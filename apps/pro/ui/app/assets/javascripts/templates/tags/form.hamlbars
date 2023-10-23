@@ -1,0 +1,4 @@
+%form#add_tags{ :style => 'padding: 3px 0', :action => '' }
+  %ul
+    %li.name.tags{ :style => 'margin-bottom: 20px' }
+      %input{ :name => 'name' }

@@ -1,0 +1,37 @@
+@import "css3-mixins";
+
+%vuln-modal{
+  .modal .content {
+    border-radius: 0;
+    .container {
+      width: 80%;
+      margin-left:auto;
+    }
+    .add-ref {
+      text-align: right;
+      &:hover {
+        .green-add-text {
+          text-decoration: underline;
+        }
+      }
+      .green-add {
+        font-size: 19px;
+        text-align: center;
+        display: inline-block;
+      }
+      .green-add-text {
+        margin-right: 4px;
+        line-height: 18px;
+        vertical-align: top;
+        display:inline-block;
+      }
+    }
+    .vulns_form{
+      input{
+        width:70%;
+      }
+    }
+
+  }
+}
+

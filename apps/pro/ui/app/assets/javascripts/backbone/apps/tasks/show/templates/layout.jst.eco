@@ -1,0 +1,25 @@
+<div class="rollup-header"></div>
+<div class="app-stats max-width" style="padding: 0px;">
+  <ul class="rollup-tabs">
+    <li class="selected">
+      <a href="javascript:void(0)">Statistics</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)">Task Log</a>
+    </li>
+  </ul>
+  <div class="rollup-page">
+    <div class="rollup-tab">
+      <div class="stat-row stats-region">
+      </div>
+      <div class="drilldown-padding">
+        <div class="drilldown-area tab-loading">
+        </div>
+      </div>
+    </div>
+    <div class="rollup-tab" style="display: none">
+      <div class="console-area">
+      </div>
+    </div>
+  </div>
+</div>

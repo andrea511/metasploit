@@ -1,0 +1,31 @@
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pill.scss */
+.pill {
+  padding: 2px;
+  color: white;
+  text-align: center;
+}
+/* line 16, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pill.scss */
+.pill a, .pill div {
+  display: inline-block;
+  color: white;
+  width: 100%;
+  text-decoration: none;
+  border-radius: 6px;
+  text-transform: capitalize;
+}
+/* line 24, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pill.scss */
+.pill a.red, .pill a.shelled, .pill a.exploit-attempted, .pill a.filtered, .pill div.red, .pill div.shelled, .pill div.exploit-attempted, .pill div.filtered {
+  background-color: #CF3030;
+}
+/* line 28, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pill.scss */
+.pill a.green, .pill a.scanned, .pill a.exploited, .pill a.open, .pill div.green, .pill div.scanned, .pill div.exploited, .pill div.open {
+  background-color: #309C22;
+}
+/* line 32, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pill.scss */
+.pill a.black, .pill a.looted, .pill a.not-tested, .pill a.unknown, .pill div.black, .pill div.looted, .pill div.not-tested, .pill div.unknown {
+  background-color: #5E5E5E;
+}
+/* line 36, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/backbone/components/pill.scss */
+.pill a.blue, .pill a.cracked, .pill a.not-exploitable, .pill a.closed, .pill div.blue, .pill div.cracked, .pill div.not-exploitable, .pill div.closed {
+  background-color: #0197B8;
+}

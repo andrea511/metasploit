@@ -1,0 +1,49 @@
+define [
+  '<%= javascript_path('fuzzing/backbone/views/regions/app_region') %>', 
+  '<%= javascript_path('fuzzing/backbone/views/layouts/fuzzing_frame_layout') %>',
+  '<%= javascript_path('fuzzing/backbone/views/layouts/request_collector_layout') %>',
+  '<%= javascript_path('fuzzing/backbone/views/item_views/result_page_header_item_view') %>', 
+  '<%= javascript_path('fuzzing/backbone/views/item_views/fuzzing_iframe_item_view') %>', 
+  '<%= javascript_path('fuzzing/backbone/views/layouts/fuzzing_xss_attack_layout') %>',
+  '<%= javascript_path('fuzzing/backbone/views/item_views/fuzzing_attack_header_item_view') %>'  
+], (AppRegion,FuzzingFrameLayout, RequestCollectorLayout,
+    ResultPageHeaderItemView, FuzzingIframeItemView, FuzzingXSSAttackLayout,
+    FuzzingAttackHeaderItemView) ->
+
+  class FuzzingFrameController
+    constructor: ->
+      @app_region = new AppRegion
+      @fuzzing_frame_layout = new FuzzingFrameLayout
+      @app_region.show(@fuzzing_frame_layout)
+
+    _layout_region_reset: ->
+      @fuzzing_frame_layout.top_row.reset()
+      @fuzzing_frame_layout.middle_row.reset()
+      @fuzzing_frame_layout.bottom_row.reset()      
+
+    _initFuzzzingFrame: ->
+      @fuzzing_xss_attack_layout = new FuzzingXSSAttackLayout
+      @fuzzing_iframe_item_view = new FuzzingIframeItemView
+      @fuzzing_attack_header_item_view = new FuzzingAttackHeaderItemView
+
+    _initRequestCollector: -> 
+      @request_collector_layout = new RequestCollectorLayout
+      @result_page_header_item_view = new ResultPageHeaderItemView
+      @fuzzing_iframe_item_view = new FuzzingIframeItemView
+ 
+
+    showFuzzingFrame:-> 
+      @_initFuzzzingFrame()
+      @_layout_region_reset() 
+
+      @fuzzing_frame_layout.top_row.show(@fuzzing_xss_attack_layout)
+      @fuzzing_frame_layout.middle_row.show(@fuzzing_attack_header_item_view)
+      @fuzzing_frame_layout.bottom_row.show(@fuzzing_iframe_item_view)
+
+    showRequestCollector: ->
+      @_initRequestCollector()
+      @_layout_region_reset()
+
+      @fuzzing_frame_layout.top_row.show(@request_collector_layout)
+      @fuzzing_frame_layout.middle_row.show(@result_page_header_item_view)
+      @fuzzing_frame_layout.bottom_row.show(@fuzzing_iframe_item_view)

@@ -1,0 +1,19 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/shared/layouts/row_dropdown") %>'
+], ($, Template) ->
+  class RowDropdownLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['shared/layouts/row_dropdown']
+
+    events:
+      'click .header': 'toggleDropdown'
+
+    regions:
+      header: '.header'
+      dropdown: '.dropdown'
+
+    # Option enabled: toggle the click event action
+    initialize: ({@enabled}) =>
+
+    toggleDropdown: =>
+      $('.dropdown', @el).slideToggle(200) if @enabled

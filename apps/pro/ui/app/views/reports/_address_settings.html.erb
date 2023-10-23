@@ -1,0 +1,20 @@
+<% if @report.rtype.addresses_included? %>
+  <%= f.inputs 'Address Settings' do %>
+    <%= f.input :included_addresses,
+          :label        => 'Included addresses',
+          :as           => :text,
+          :required     => false,
+          :wrapper_html => {:id => 'report_included_addresses_input'}
+    %>
+    <%= f.input :excluded_addresses,
+          :label        => 'Excluded addresses',
+          :as           => :text,
+          :required     => false,
+          :wrapper_html => {:id => 'report_excluded_addresses_input'}
+    %>
+    <%= f.help_link 'included_addresses' do %>
+      <h3>Included and Excluded Addresses</h3>
+      <p>Specify <b>Included Addresses</b> and <b>Excluded Addresses</b> to configure the scope of the report, or leave blank to include all the hosts associated with this project. Hosts with addresses outside the allowable range(s) will not be included in the reported data. Entries may be specified as single addresses (192.168.1.1), dashed entries (192.168.1.1-192.168.1.100), wildcards (192.168.1.*), or using CIDR notation (192.168.1.0/29).</p>
+    <% end %>
+  <% end %>
+<% end %>

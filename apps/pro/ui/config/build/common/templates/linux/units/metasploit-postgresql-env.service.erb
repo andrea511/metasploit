@@ -1,0 +1,10 @@
+[Unit]
+Description=Metasploit Pro PostgreSQL environment generator
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+User=root
+Group=root
+ExecStart=@@BITROCK_INSTALLDIR@@/postgresql/scripts/gen_env.sh @@BITROCK_INSTALLDIR@@/postgresql/scripts/.env.txt

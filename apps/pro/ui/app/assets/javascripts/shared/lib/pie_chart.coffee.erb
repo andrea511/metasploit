@@ -1,0 +1,188 @@
+define ['jquery'], ($) ->
+  # PieChart defines a reusable, minimal canvas-based PieChart
+  # Usage: pc = new PieChart(canvas: 'canvas', stroke: 15)
+  #        pc.setText(24)
+  #        pc.setPercentage(90)
+  #        pc.update()
+  class PieChart
+    @UPDATE_THRESHOLD: 0.000001
+
+    # private state
+    # Pass the name without the _ as an option to the constructor
+    _percentage: 0
+    _text: 0
+    _stroke: 3
+    _canvas: null
+    _innerFill: '#fff'
+    _innerFillHover: '#b4b4b4'
+    #_innerFillSelected: '#f00'
+    _outerFill: '#c5c5c5'
+    _outerFillHover: '#fafafa'
+    #_outerFillSelected: '#00f'
+    _percentFill: '#ea5709'
+    # _percentFillHover: '#fafafa'
+    _textFill: '#2b2b2b'
+    _textFillHover: '#222'
+    #_textFillSelected: '#fff'
+    _fontSize: '28px'
+    _fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light",
+                  "Helvetica Neue", "Arial Narrow", Helvetica, san-serif'
+    _fontStyle: ''
+    _animationDuration: 600 #ms
+    _hover: false
+    _selected: false
+
+    constructor: (args={}) ->
+      # stuff args into private state
+      _.each(args, (v, k) => @['_'+k] = v)
+      @_fixRetina()
+      $parent = $(@_canvas).parents('.generic-stat-wrapper').first()
+      if $parent.attr('clickable') == 'true'
+        $parent.mouseenter(=> @_hover = true; @update())
+        $parent.mouseleave(=> @_hover = false; @update())
+      @watch = window.matchMedia?('screen and (-webkit-min-device-pixel-ratio: 1.5)')
+      @watch?.addListener?(@_fixRetina)
+      # poll on the state of the Canvas to make sure we remove that global event hook
+      # when the canvas is removed from the dom
+      @itvl = setInterval(@killEventHandlersIfDead, 5000)
+
+    # Since this was pre-Marionette, there was no system for tracking "onDestroy"
+    # "onDestroy?", asks past-joev, "you mean like location.reload()?"
+    killEventHandlersIfDead: =>
+      unless $.contains(document, @_canvas)
+        @watch?.removeListener?(@_fixRetina)
+        clearInterval(@itvl)
+        @watch = null
+
+    setPercentage: (percentage, opts={}) => @_setPercentage(opts, percentage)
+
+    _fixRetina: =>
+      @origWidth ?= parseInt(@_canvas.width, 10)
+      @origHeight ?= parseInt(@_canvas.height, 10)
+      if !@_canvas || !@_canvas.parentNode
+        @watch.removeListener?(@_fixRetina)
+        return
+      @_canvas.width = @origWidth*@_pixelRatio()
+      @_canvas.height = @origHeight*@_pixelRatio()
+      @_canvas.style.width = parseInt(@_canvas.width, 10)/@_pixelRatio()+'px'
+      @_canvas.style.height = parseInt(@_canvas.height, 10)/@_pixelRatio()+'px'
+      @update()
+
+    _pixelRatio: ->
+      window.devicePixelRatio || 1.0
+
+    # why did i do this? because i want coffeescript's key/val params, and not have
+    #  to specify a mandatory empty hash in the second arg of setPercentage :)
+    _setPercentage: ({ shouldUpdate, shouldAnimate }, percentage) =>
+      percentage ||= 0
+      shouldUpdate ?= true
+      shouldAnimate ?= true
+      return if Math.abs(percentage - @_percentage) < PieChart.UPDATE_THRESHOLD
+      if shouldAnimate
+        $(percentage: @_percentage).animate {percentage: percentage},
+          duration: @_animationDuration,
+          easing: 'easeInExpo',
+          step: (val) => @setPercentage(val, shouldAnimate: false)
+      else
+        @_percentage = percentage
+        @update() if shouldUpdate
+
+    setText: (@_text, { shouldUpdate }) =>
+      @_text ||= ''
+      shouldUpdate ?= true
+      @update() if shouldUpdate
+
+    setSelected: (@_selected, { shouldUpdate }) =>
+      shouldUpdate ?= true
+      @update() if shouldUpdate
+
+    setInnerFill: (@_innerFill, {shouldUpdate}) =>
+      shouldUpdate ?= true
+      @update() if shouldUpdate
+
+    getInnerFill: () =>
+      @_innerFill
+
+    update: =>
+      # re-render our entire canvas!
+      context = @_canvas.getContext('2d')
+      # check selected state
+      @setSelected($(@_canvas).hasClass('selected'), shouldUpdate: false)
+      # clear the canvas first
+      size = parseInt(@_canvas.width)
+      context.clearRect(0, 0, size, size)
+      # call subroutines
+      @_fillOuterCircle(context, size)
+      @_fillBorderArc(context, size)
+      @_fillCenterCircle(context, size)
+      @_drawText(context, size)
+
+    _fillBorderArc: (context, size) =>
+      context.save()
+      halfSize = size/2
+      context.beginPath()
+      context.moveTo(size/2, size/2)
+      context.arc(
+        halfSize,
+        halfSize,
+        halfSize,
+        -Math.PI/2,
+        Math.PI*(@_percentage/100*2)-Math.PI/2,
+        false
+      )
+      context.closePath()
+      context.fillStyle = @_fillStyle('percentFill')
+      context.fill()
+      context.restore()
+
+    _fillCenterCircle: (context, size) =>
+      context.save()
+      circleSize = size-(@_stroke*@_pixelRatio())*2
+      halfCircleSize = circleSize/2
+      context.beginPath()
+      context.arc(size/2, size/2, halfCircleSize, 0, Math.PI*2, false)
+      context.closePath()
+      context.fillStyle = @_fillStyle('innerFill')
+
+      context.fill()
+      context.restore()
+
+    _fillOuterCircle: (context, size) =>
+      context.save()
+      halfSize = size/2
+      inversePercentage = 100-@_percentage
+      context.beginPath()
+      context.moveTo(size/2, size/2)
+      context.arc(
+        halfSize,
+        halfSize,
+        halfSize,
+        -Math.PI*(inversePercentage/100*2)-Math.PI/2,
+        -Math.PI/2,
+        false
+      )
+      context.closePath()
+      context.fillStyle = @_fillStyle('outerFill')
+      context.fill()
+      context.restore()
+
+    _drawText: (context, size) =>
+      $(@_canvas).attr('data-text',@_text)
+      context.save()
+      context.textAlign = 'center'
+      context.textBaseline = 'middle'
+      context.font = "#{@_fontStyle} #{parseInt(@_fontSize, 10)*@_pixelRatio()}px #{@_fontFamily}"
+      context.fillStyle = @_fillStyle('textFill')
+      context.shadowOffsetY = 1
+      context.shadowColor = 'rgba(255,255,255,.2)'
+      context.shadowBlur = 3
+      context.fillText(@_text, size/2, size/2)
+      context.restore()
+
+    _fillStyle: (attr) =>
+      if @_hover
+        @['_'+attr+'Hover'] || @['_'+attr]
+      else if @_selected
+        @['_'+attr+'Selected'] || @['_'+attr]
+      else
+        @['_'+attr]

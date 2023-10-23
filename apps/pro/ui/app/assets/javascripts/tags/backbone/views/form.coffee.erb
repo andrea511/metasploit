@@ -1,0 +1,83 @@
+define [
+  'jquery',
+  '<%= javascript_path("templates/tags/form") %>',
+  '<%= javascript_path("jquery.tokeninput") %>',
+  '<%= javascript_path("shared/backbone/views/modal_form") %>'
+], ($, Template, TokenInput, ModalForm) ->
+  class TagForm extends ModalForm
+    template: HandlebarsTemplates['tags/form']
+
+    events:
+      'submit form': 'formSubmitted'
+
+    # Options:
+    #   hosts => an array of applicable hosts
+    initialize: (opts={}) ->
+      $.extend(@, opts)
+      super
+
+    serialize: => @
+
+    focus: => @$el.find('input:visible').focus()
+
+    #
+    # Marionette callbacks
+    #
+    onShow: =>
+      # install the token input plugin
+      nameField = @_nameField()
+      unless nameField.data('tokenInputObject')?
+        wid = @workspace_id || window.WORKSPACE_ID
+        route = Routes.search_workspace_tags_path(wid, format: 'json')
+
+        nameField.tokenInput route, {
+          theme: "metasploit"
+          hintText: "Type in a tag name..."
+          searchingText: "Searching tags..."
+          allowCustomEntry: true
+          preventDuplicates: true
+          allowFreeTagging: true
+          resultsLimit: 3
+        }
+
+    #
+    # Event handlers
+    #
+
+    formSubmitted: (e) =>
+      @_removeError()
+      @setLoading(true)
+      e.preventDefault()
+      tokens = _.map(@_nameField().data('tokenInputObject').getTokens(), (tok) -> tok.name)
+
+      data =
+        host_ids: _.map(@hosts, (h) -> h.id)
+        new_host_tags: tokens.join(',')
+        preserve_existing: true
+      $.ajax
+        url: @_tagRoute()
+        method: 'POST'
+        data: data
+        success: (x) =>
+          @hosts[0].set(x.host)
+          @modal.destroy() if @modal?
+        error: (x) =>
+          json = $.parseJSON(x.responseText)
+          @_showError(json.error)
+          @setLoading(false)
+
+    #
+    # Helpers
+    #
+
+    _nameField: => $('[name=name]', @el)
+    _tagRoute: => "/workspaces/#{window.WORKSPACE_ID}/hosts/quick_multi_tag.json"
+
+    _removeError: =>
+      $('form .error', @el).remove()
+
+    _showError: (err) =>
+      @_removeError()
+      $errDiv = $('<li />', class: 'error')
+      $errDiv.text(err)
+      $('form', @el).prepend($errDiv)

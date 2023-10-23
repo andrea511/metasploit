@@ -1,0 +1,35 @@
+define [
+  '<%= javascript_path('shared/notification-center/backbone/models/notification_message_model') %>',
+  'jquery'
+], (NotificationMessage, $) ->
+  class NotificationMessageCollection extends Backbone.Collection
+    model: NotificationMessage
+    url: "#{Routes.notifications_messages_path()}.json"
+
+    # Better than patching Backbone#sync, but still a bit gross.
+    sync: (meth, coll, opts) =>
+      # patch the original success call that converts JSON -> Backbone Models
+      oldSuccess = opts.success
+      opts.success = (resp) ->
+        try
+          resp = $.parseJSON(resp)
+        catch e
+        finally
+          oldSuccess.call(@, resp) if oldSuccess?
+      # patch in the workspace id
+      opts.data ||= {}
+      opts.data['workspace_id'] = window.WORKSPACE_ID
+      # perform the xhr call
+      xhr = super(meth, coll, $.extend({}, opts, {
+        dataFilter: @myDataFilter
+      }))
+
+    # filters out the "extra" keys and returns only the :messages array
+    myDataFilter: (data, type) =>
+      try
+        json = $.parseJSON(data)
+        if json?.messages?
+          $(document).trigger('updateBadges', json)
+          return JSON.stringify(json.messages)
+      catch e
+      data

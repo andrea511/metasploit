@@ -1,0 +1,2 @@
+<div class="title">Realm Name</div>
+<div class="value"><%=@realm%></div>

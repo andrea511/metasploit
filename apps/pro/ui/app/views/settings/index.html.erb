@@ -1,0 +1,94 @@
+<% title "Global Settings" %>
+<% breadcrumb link_to("Global Settings", settings_path) %>
+<% include_stylesheet 'settings/index' -%>
+<% include_javascript "api_keys/_index" %>
+<% include_javascript "macros" %>
+<% include_javascript "nexpose_consoles/_index" %>
+<% include_javascript "listeners/_index" %>
+<% include_javascript "settings/_index" %>
+<% include_javascript "backups/_index" %>
+
+<ul class='tabs'>
+  <li class='tab'><a class='active' href='javascript:void(0)'>Global Settings</a></li>
+
+  <li class='tab'><a href='javascript:void(0)'>SMTP Settings</a></li>
+
+  <% if License.get.supports_api? %>
+    <li class='tab'><a href='javascript:void(0)'>API Keys</a></li>
+  <% end %>
+
+  <% if License.get.supports_macros? %>
+    <li class='tab'><a href='javascript:void(0)'>Post-Exploitation Macros</a></li>
+  <% end %>
+
+  <% if License.get.supports_listeners? %>
+    <li class='tab'><a href='javascript:void(0)'>Persistent Listeners</a></li>
+  <% end %>
+
+  <li class='tab'><a href='javascript:void(0)'>Nexpose Consoles</a></li>
+
+  <% if current_user.admin %>
+    <li class='tab'><a href='javascript:void(0)'>Stop All Tasks</a></li>
+    <li class='tab'><a href='javascript:void(0)'>Backups</a></li>
+    <li class='tab'><a href='javascript:void(0)'>Web Server</a></li>
+  <% end %>
+</ul>
+
+<style type='text/css'>
+div.tabs>div {
+  margin-top: 18px;
+}
+</style>
+
+<div class='tabs'>
+  <div id="profile_container">
+    <%= render "profile", :profile => @profile %>
+  </div>
+
+  <div id="smtp_container">
+    <%= render "smtp", :profile => @profile %>
+  </div>
+
+  <% if License.get.supports_api? %>
+    <div id="api_keys_container">
+      <%= render "api_keys/api_keys", :apikeys => @api_keys %>
+    </div>
+  <% end %>
+
+  <% if License.get.supports_macros? %>
+    <div id="macros_container">
+      <%= render "macros/macros", :macros => @macros %>
+    </div>
+  <% end %>
+
+  <% if License.get.supports_listeners? %>
+    <div id="listeners_container">
+      <%= render "listeners/listeners", :listeners => @listeners %>
+    </div>
+  <% end %>
+
+  <div id="consoles_container">
+    <%= render "nexpose_consoles/nexpose_consoles", :consoles => @consoles %>
+  </div>
+
+  <% if current_user.admin %>
+    <div id="stop-all-tasks">
+      <h2 style="color:red">Stop all tasks in all projects</h2>
+      <p>
+        <strong>This will stop every single running task in the application. Be VERY sure you want to do this!</strong>
+      </p>
+      <span class="btn">
+      <%= link_to 'Stop all tasks', stop_all_tasks_path, :data => { :confirm => 'Immediately stop all tasks in the application? There is no undo!', :method => :post, :remote => true}, :class => 'cancel', :title => "Stop all tasks" %>
+      </span>
+    </div>
+
+    <div id="backups_container">
+      <%= render "backups/backups", :backups => @backups %>
+    </div>
+
+    <div id="web_server_settings">
+      <%= render "web_server", :ui_server => @ui_server %>
+    </div>
+  <% end %>
+</div>
+

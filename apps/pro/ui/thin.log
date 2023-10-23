@@ -1,0 +1,1086 @@
+2023-10-16 16:08:06 +0700 Initializing Thin Service...
+2023-10-16 16:08:06 +0700 Thin Service started with thread #<Thread:0x000001c1d5dfb0b8 thin_service.rb:57 run>
+2023-10-16 16:08:06 +0700 Thin Service associated with PID 8020
+2023-10-16 16:08:17 +0700 Using rack adapter
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/zeitwerk-2.6.8/lib/zeitwerk/kernel.rb:38: warning: Win32API is deprecated after Ruby 1.9.1; use fiddle directly instead
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TypeDefs
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::SizeTypes
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::CHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SSHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::USHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::DOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Array
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BYTE_ORDER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LITTLE_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BIG_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Pointer::NULL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::CallbackInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::FunctionInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Function
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Struct
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeLibrary
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LAZY
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOW
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_GLOBAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOLOAD
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NODELETE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_FIRST
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_DEEPBIND
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_MEMBER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_BINDING_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCATION_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_ALL_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: already initialized constant FFI::Platform::OS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: previous definition of OS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: already initialized constant FFI::Platform::OSVERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: previous definition of OSVERSION was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: already initialized constant FFI::Platform::CPU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: previous definition of CPU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: already initialized constant FFI::Platform::ARCH
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: previous definition of ARCH was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: already initialized constant FFI::Platform::IS_GNU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: previous definition of IS_GNU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: already initialized constant FFI::Platform::IS_LINUX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: previous definition of IS_LINUX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: already initialized constant FFI::Platform::IS_MAC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: previous definition of IS_MAC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: already initialized constant FFI::Platform::IS_FREEBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: previous definition of IS_FREEBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: already initialized constant FFI::Platform::IS_NETBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: previous definition of IS_NETBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: already initialized constant FFI::Platform::IS_OPENBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: previous definition of IS_OPENBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: already initialized constant FFI::Platform::IS_DRAGONFLYBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: previous definition of IS_DRAGONFLYBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: already initialized constant FFI::Platform::IS_SOLARIS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: previous definition of IS_SOLARIS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: already initialized constant FFI::Platform::IS_WINDOWS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: previous definition of IS_WINDOWS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: already initialized constant FFI::Platform::IS_BSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: previous definition of IS_BSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: already initialized constant FFI::Platform::NAME
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: previous definition of NAME was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: already initialized constant FFI::Platform::CONF_DIR
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: previous definition of CONF_DIR was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: already initialized constant FFI::Platform::LIBPREFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: previous definition of LIBPREFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: already initialized constant FFI::Platform::LIBSUFFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: previous definition of LIBSUFFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: already initialized constant FFI::Platform::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::USE_THIS_PROCESS_AS_LIBRARY
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of USE_THIS_PROCESS_AS_LIBRARY was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: already initialized constant FFI::Library::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: already initialized constant FFI::Library::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: already initialized constant FFI::Library::FlagsMap
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: previous definition of FlagsMap was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: already initialized constant FFI::AbstractMemory::LONG_MAX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: previous definition of LONG_MAX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: already initialized constant FFI::StructLayoutBuilder::NUMBER_TYPES
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: previous definition of NUMBER_TYPES was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: already initialized constant FFI::VERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: previous definition of VERSION was here
+2023-10-16 16:11:02 +0700 Thin web server (v1.8.2 codename Ruby Razor)
+2023-10-16 16:11:02 +0700 Maximum connections set to 1024
+2023-10-16 16:11:02 +0700 Listening on 127.0.0.1:3001, CTRL+C to stop
+2023-10-17 08:34:32 +0700 Thin Service stopping...
+2023-10-17 08:34:58 +0700 Initializing Thin Service...
+2023-10-17 08:34:58 +0700 Thin Service started with thread #<Thread:0x0000024d7a7ab178 thin_service.rb:57 run>
+2023-10-17 08:34:58 +0700 Thin Service associated with PID 21692
+2023-10-17 08:35:09 +0700 Using rack adapter
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/zeitwerk-2.6.8/lib/zeitwerk/kernel.rb:38: warning: Win32API is deprecated after Ruby 1.9.1; use fiddle directly instead
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TypeDefs
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::SizeTypes
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::CHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SSHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::USHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::DOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Array
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BYTE_ORDER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LITTLE_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BIG_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Pointer::NULL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::CallbackInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::FunctionInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Function
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Struct
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeLibrary
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LAZY
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOW
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_GLOBAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOLOAD
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NODELETE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_FIRST
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_DEEPBIND
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_MEMBER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_BINDING_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCATION_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_ALL_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: already initialized constant FFI::Platform::OS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: previous definition of OS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: already initialized constant FFI::Platform::OSVERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: previous definition of OSVERSION was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: already initialized constant FFI::Platform::CPU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: previous definition of CPU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: already initialized constant FFI::Platform::ARCH
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: previous definition of ARCH was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: already initialized constant FFI::Platform::IS_GNU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: previous definition of IS_GNU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: already initialized constant FFI::Platform::IS_LINUX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: previous definition of IS_LINUX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: already initialized constant FFI::Platform::IS_MAC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: previous definition of IS_MAC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: already initialized constant FFI::Platform::IS_FREEBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: previous definition of IS_FREEBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: already initialized constant FFI::Platform::IS_NETBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: previous definition of IS_NETBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: already initialized constant FFI::Platform::IS_OPENBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: previous definition of IS_OPENBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: already initialized constant FFI::Platform::IS_DRAGONFLYBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: previous definition of IS_DRAGONFLYBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: already initialized constant FFI::Platform::IS_SOLARIS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: previous definition of IS_SOLARIS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: already initialized constant FFI::Platform::IS_WINDOWS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: previous definition of IS_WINDOWS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: already initialized constant FFI::Platform::IS_BSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: previous definition of IS_BSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: already initialized constant FFI::Platform::NAME
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: previous definition of NAME was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: already initialized constant FFI::Platform::CONF_DIR
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: previous definition of CONF_DIR was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: already initialized constant FFI::Platform::LIBPREFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: previous definition of LIBPREFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: already initialized constant FFI::Platform::LIBSUFFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: previous definition of LIBSUFFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: already initialized constant FFI::Platform::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::USE_THIS_PROCESS_AS_LIBRARY
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of USE_THIS_PROCESS_AS_LIBRARY was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: already initialized constant FFI::Library::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: already initialized constant FFI::Library::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: already initialized constant FFI::Library::FlagsMap
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: previous definition of FlagsMap was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: already initialized constant FFI::AbstractMemory::LONG_MAX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: previous definition of LONG_MAX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: already initialized constant FFI::StructLayoutBuilder::NUMBER_TYPES
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: previous definition of NUMBER_TYPES was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: already initialized constant FFI::VERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: previous definition of VERSION was here
+2023-10-17 08:37:11 +0700 Thin web server (v1.8.2 codename Ruby Razor)
+2023-10-17 08:37:11 +0700 Maximum connections set to 1024
+2023-10-17 08:37:11 +0700 Listening on 127.0.0.1:3001, CTRL+C to stop
+2023-10-17 08:45:05 +0700 Thin Service stopping...
+2023-10-17 08:45:50 +0700 Initializing Thin Service...
+2023-10-17 08:45:50 +0700 Thin Service started with thread #<Thread:0x000001be5128b890 thin_service.rb:57 run>
+2023-10-17 08:45:50 +0700 Thin Service associated with PID 5352
+2023-10-17 08:46:03 +0700 Using rack adapter
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/zeitwerk-2.6.8/lib/zeitwerk/kernel.rb:38: warning: Win32API is deprecated after Ruby 1.9.1; use fiddle directly instead
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TypeDefs
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::SizeTypes
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::CHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SSHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::USHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::DOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Array
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BYTE_ORDER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LITTLE_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BIG_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Pointer::NULL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::CallbackInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::FunctionInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Function
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Struct
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeLibrary
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LAZY
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOW
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_GLOBAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOLOAD
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NODELETE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_FIRST
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_DEEPBIND
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_MEMBER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_BINDING_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCATION_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_ALL_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: already initialized constant FFI::Platform::OS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: previous definition of OS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: already initialized constant FFI::Platform::OSVERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: previous definition of OSVERSION was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: already initialized constant FFI::Platform::CPU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: previous definition of CPU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: already initialized constant FFI::Platform::ARCH
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: previous definition of ARCH was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: already initialized constant FFI::Platform::IS_GNU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: previous definition of IS_GNU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: already initialized constant FFI::Platform::IS_LINUX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: previous definition of IS_LINUX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: already initialized constant FFI::Platform::IS_MAC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: previous definition of IS_MAC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: already initialized constant FFI::Platform::IS_FREEBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: previous definition of IS_FREEBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: already initialized constant FFI::Platform::IS_NETBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: previous definition of IS_NETBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: already initialized constant FFI::Platform::IS_OPENBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: previous definition of IS_OPENBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: already initialized constant FFI::Platform::IS_DRAGONFLYBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: previous definition of IS_DRAGONFLYBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: already initialized constant FFI::Platform::IS_SOLARIS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: previous definition of IS_SOLARIS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: already initialized constant FFI::Platform::IS_WINDOWS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: previous definition of IS_WINDOWS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: already initialized constant FFI::Platform::IS_BSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: previous definition of IS_BSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: already initialized constant FFI::Platform::NAME
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: previous definition of NAME was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: already initialized constant FFI::Platform::CONF_DIR
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: previous definition of CONF_DIR was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: already initialized constant FFI::Platform::LIBPREFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: previous definition of LIBPREFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: already initialized constant FFI::Platform::LIBSUFFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: previous definition of LIBSUFFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: already initialized constant FFI::Platform::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::USE_THIS_PROCESS_AS_LIBRARY
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of USE_THIS_PROCESS_AS_LIBRARY was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: already initialized constant FFI::Library::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: already initialized constant FFI::Library::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: already initialized constant FFI::Library::FlagsMap
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: previous definition of FlagsMap was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: already initialized constant FFI::AbstractMemory::LONG_MAX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: previous definition of LONG_MAX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: already initialized constant FFI::StructLayoutBuilder::NUMBER_TYPES
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: previous definition of NUMBER_TYPES was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: already initialized constant FFI::VERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: previous definition of VERSION was here
+2023-10-18 17:29:08 +0700 Initializing Thin Service...
+2023-10-18 17:29:08 +0700 Thin Service started with thread #<Thread:0x000001f0f013f2f8 thin_service.rb:57 run>
+2023-10-18 17:29:08 +0700 Thin Service associated with PID 5464
+2023-10-18 17:29:28 +0700 Using rack adapter
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/zeitwerk-2.6.8/lib/zeitwerk/kernel.rb:38: warning: Win32API is deprecated after Ruby 1.9.1; use fiddle directly instead
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TypeDefs
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::SizeTypes
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::CHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SSHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::USHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::DOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Array
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BYTE_ORDER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LITTLE_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BIG_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Pointer::NULL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::CallbackInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::FunctionInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Function
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Struct
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeLibrary
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LAZY
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOW
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_GLOBAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOLOAD
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NODELETE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_FIRST
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_DEEPBIND
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_MEMBER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_BINDING_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCATION_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_ALL_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: already initialized constant FFI::Platform::OS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: previous definition of OS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: already initialized constant FFI::Platform::OSVERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: previous definition of OSVERSION was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: already initialized constant FFI::Platform::CPU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: previous definition of CPU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: already initialized constant FFI::Platform::ARCH
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: previous definition of ARCH was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: already initialized constant FFI::Platform::IS_GNU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: previous definition of IS_GNU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: already initialized constant FFI::Platform::IS_LINUX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: previous definition of IS_LINUX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: already initialized constant FFI::Platform::IS_MAC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: previous definition of IS_MAC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: already initialized constant FFI::Platform::IS_FREEBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: previous definition of IS_FREEBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: already initialized constant FFI::Platform::IS_NETBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: previous definition of IS_NETBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: already initialized constant FFI::Platform::IS_OPENBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: previous definition of IS_OPENBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: already initialized constant FFI::Platform::IS_DRAGONFLYBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: previous definition of IS_DRAGONFLYBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: already initialized constant FFI::Platform::IS_SOLARIS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: previous definition of IS_SOLARIS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: already initialized constant FFI::Platform::IS_WINDOWS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: previous definition of IS_WINDOWS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: already initialized constant FFI::Platform::IS_BSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: previous definition of IS_BSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: already initialized constant FFI::Platform::NAME
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: previous definition of NAME was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: already initialized constant FFI::Platform::CONF_DIR
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: previous definition of CONF_DIR was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: already initialized constant FFI::Platform::LIBPREFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: previous definition of LIBPREFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: already initialized constant FFI::Platform::LIBSUFFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: previous definition of LIBSUFFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: already initialized constant FFI::Platform::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::USE_THIS_PROCESS_AS_LIBRARY
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of USE_THIS_PROCESS_AS_LIBRARY was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: already initialized constant FFI::Library::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: already initialized constant FFI::Library::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: already initialized constant FFI::Library::FlagsMap
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: previous definition of FlagsMap was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: already initialized constant FFI::AbstractMemory::LONG_MAX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: previous definition of LONG_MAX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: already initialized constant FFI::StructLayoutBuilder::NUMBER_TYPES
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: previous definition of NUMBER_TYPES was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: already initialized constant FFI::VERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: previous definition of VERSION was here
+2023-10-18 17:31:46 +0700 Thin web server (v1.8.2 codename Ruby Razor)
+2023-10-18 17:31:46 +0700 Maximum connections set to 1024
+2023-10-18 17:31:46 +0700 Listening on 127.0.0.1:3001, CTRL+C to stop
+2023-10-19 01:21:21 +0700 Thin Service stopping...
+2023-10-19 01:22:24 +0700 Initializing Thin Service...
+2023-10-19 01:22:24 +0700 Thin Service started with thread #<Thread:0x0000022074dd3038 thin_service.rb:57 run>
+2023-10-19 01:22:24 +0700 Thin Service associated with PID 5392
+2023-10-19 01:22:37 +0700 Using rack adapter
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/zeitwerk-2.6.8/lib/zeitwerk/kernel.rb:38: warning: Win32API is deprecated after Ruby 1.9.1; use fiddle directly instead
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TypeDefs
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::SizeTypes
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::CHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SSHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::USHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::DOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Array
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BYTE_ORDER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LITTLE_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BIG_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Pointer::NULL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::CallbackInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::FunctionInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Function
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Struct
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeLibrary
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LAZY
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOW
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_GLOBAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOLOAD
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NODELETE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_FIRST
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_DEEPBIND
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_MEMBER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_BINDING_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCATION_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_ALL_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: already initialized constant FFI::Platform::OS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: previous definition of OS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: already initialized constant FFI::Platform::OSVERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: previous definition of OSVERSION was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: already initialized constant FFI::Platform::CPU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: previous definition of CPU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: already initialized constant FFI::Platform::ARCH
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: previous definition of ARCH was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: already initialized constant FFI::Platform::IS_GNU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: previous definition of IS_GNU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: already initialized constant FFI::Platform::IS_LINUX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: previous definition of IS_LINUX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: already initialized constant FFI::Platform::IS_MAC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: previous definition of IS_MAC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: already initialized constant FFI::Platform::IS_FREEBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: previous definition of IS_FREEBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: already initialized constant FFI::Platform::IS_NETBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: previous definition of IS_NETBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: already initialized constant FFI::Platform::IS_OPENBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: previous definition of IS_OPENBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: already initialized constant FFI::Platform::IS_DRAGONFLYBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: previous definition of IS_DRAGONFLYBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: already initialized constant FFI::Platform::IS_SOLARIS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: previous definition of IS_SOLARIS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: already initialized constant FFI::Platform::IS_WINDOWS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: previous definition of IS_WINDOWS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: already initialized constant FFI::Platform::IS_BSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: previous definition of IS_BSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: already initialized constant FFI::Platform::NAME
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: previous definition of NAME was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: already initialized constant FFI::Platform::CONF_DIR
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: previous definition of CONF_DIR was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: already initialized constant FFI::Platform::LIBPREFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: previous definition of LIBPREFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: already initialized constant FFI::Platform::LIBSUFFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: previous definition of LIBSUFFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: already initialized constant FFI::Platform::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::USE_THIS_PROCESS_AS_LIBRARY
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of USE_THIS_PROCESS_AS_LIBRARY was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: already initialized constant FFI::Library::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: already initialized constant FFI::Library::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: already initialized constant FFI::Library::FlagsMap
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: previous definition of FlagsMap was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: already initialized constant FFI::AbstractMemory::LONG_MAX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: previous definition of LONG_MAX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: already initialized constant FFI::StructLayoutBuilder::NUMBER_TYPES
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: previous definition of NUMBER_TYPES was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: already initialized constant FFI::VERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: previous definition of VERSION was here
+2023-10-20 16:55:44 +0700 Initializing Thin Service...
+2023-10-20 16:55:44 +0700 Thin Service started with thread #<Thread:0x00000259a99f3008 thin_service.rb:57 run>
+2023-10-20 16:55:44 +0700 Thin Service associated with PID 5240
+2023-10-20 16:55:58 +0700 Using rack adapter
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/zeitwerk-2.6.8/lib/zeitwerk/kernel.rb:38: warning: Win32API is deprecated after Ruby 1.9.1; use fiddle directly instead
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TypeDefs
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::SizeTypes
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VOID
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::CHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT8
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UCHAR
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SSHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT16
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::USHORT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_INT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_UINT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::SLONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_ULONG
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT32
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_FLOAT64
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::DOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_LONGDOUBLE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_POINTER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_STRING
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_IN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_OUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BUFFER_INOUT
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_BOOL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeType::VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::TYPE_VARARGS
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Array
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BYTE_ORDER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LITTLE_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::BIG_ENDIAN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT8_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT16_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT32_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::INT64_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::FLOAT_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::LONG_DOUBLE_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_ALIGN
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Platform::ADDRESS_SIZE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Pointer::NULL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::CallbackInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::FunctionInfo
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Function
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::Type::Struct
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::NativeLibrary
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LAZY
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOW
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_GLOBAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCAL
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NOLOAD
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_NODELETE
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_FIRST
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_DEEPBIND
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_MEMBER
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_BINDING_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_LOCATION_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi_c.so: warning: already initialized constant FFI::DynamicLibrary::RTLD_ALL_MASK
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: already initialized constant FFI::Platform::OS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:38: warning: previous definition of OS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: already initialized constant FFI::Platform::OSVERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:59: warning: previous definition of OSVERSION was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: already initialized constant FFI::Platform::CPU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:61: warning: previous definition of CPU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: already initialized constant FFI::Platform::ARCH
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:63: warning: previous definition of ARCH was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: already initialized constant FFI::Platform::IS_GNU
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:94: warning: previous definition of IS_GNU was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: already initialized constant FFI::Platform::IS_LINUX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:95: warning: previous definition of IS_LINUX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: already initialized constant FFI::Platform::IS_MAC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:96: warning: previous definition of IS_MAC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: already initialized constant FFI::Platform::IS_FREEBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:97: warning: previous definition of IS_FREEBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: already initialized constant FFI::Platform::IS_NETBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:98: warning: previous definition of IS_NETBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: already initialized constant FFI::Platform::IS_OPENBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:99: warning: previous definition of IS_OPENBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: already initialized constant FFI::Platform::IS_DRAGONFLYBSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:100: warning: previous definition of IS_DRAGONFLYBSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: already initialized constant FFI::Platform::IS_SOLARIS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:101: warning: previous definition of IS_SOLARIS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: already initialized constant FFI::Platform::IS_WINDOWS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:102: warning: previous definition of IS_WINDOWS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: already initialized constant FFI::Platform::IS_BSD
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:103: warning: previous definition of IS_BSD was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: already initialized constant FFI::Platform::NAME
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:108: warning: previous definition of NAME was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: already initialized constant FFI::Platform::CONF_DIR
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:109: warning: previous definition of CONF_DIR was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: already initialized constant FFI::Platform::LIBPREFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:113: warning: previous definition of LIBPREFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: already initialized constant FFI::Platform::LIBSUFFIX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:122: warning: previous definition of LIBSUFFIX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: already initialized constant FFI::Platform::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/platform.rb:134: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::USE_THIS_PROCESS_AS_LIBRARY
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of USE_THIS_PROCESS_AS_LIBRARY was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: already initialized constant FFI::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:32: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: already initialized constant FFI::Library::CURRENT_PROCESS
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:79: warning: previous definition of CURRENT_PROCESS was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: already initialized constant FFI::Library::LIBC
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:80: warning: previous definition of LIBC was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: already initialized constant FFI::Library::FlagsMap
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/library.rb:182: warning: previous definition of FlagsMap was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: already initialized constant FFI::AbstractMemory::LONG_MAX
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/abstract_memory.rb:34: warning: previous definition of LONG_MAX was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: already initialized constant FFI::StructLayoutBuilder::NUMBER_TYPES
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/struct_layout_builder.rb:100: warning: previous definition of NUMBER_TYPES was here
+C:/metasploit/apps/pro/vendor/bundle/ruby/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: already initialized constant FFI::VERSION
+C:/metasploit/ruby/lib/ruby/gems/3.0.0/gems/ffi-1.15.4/lib/ffi/version.rb:2: warning: previous definition of VERSION was here

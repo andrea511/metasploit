@@ -1,0 +1,700 @@
+@import 'css3-mixins';
+@import 'components/tabs';
+@import 'shared/variables';
+@import 'shared/edit_icons';
+@import 'shared/vuln_modal';
+
+@mixin arrow-top($border-color) {
+  &:after {
+    $width: 14px;
+    position: absolute;
+    z-index: 2;
+    border-style: solid;
+    border-width: 0 $width $width $width;
+    border-color: transparent transparent $border-color transparent;
+    content: '';
+    top: 12px;
+    right: 40px;
+    margin-left: -$width/2;
+  }
+  &:before {
+    $width: 12px;
+    position: absolute;
+    z-index: 3;
+    border-style: solid;
+    border-width: 0 $width $width $width;
+    border-color: transparent transparent #fff transparent;
+    content: '';
+    top: 14px;
+    right: 42px;
+    margin-left: -$width/2;
+  }
+}
+
+@mixin hover-max-width($width: 250px) {
+  max-width: $width;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  &:hover {
+    position: relative;
+    z-index: 99;
+    overflow: visible;
+    text-shadow: 0 0 4px #fff;
+  }
+}
+
+$bar-height: 50px;
+.loot_preview {
+  .text_dump {
+    background: #f0f0f0;
+    height: 440px;
+    width: 100%;
+    font-family: monospace;
+    word-wrap: break-word;
+    word-wrap: break-all;
+    border: 0;
+    @include box-sizing(border-box);
+    padding: 4px;
+    white-space: pre;
+  }
+}
+.single-host-view-container, .host_form{
+  .host-stats-overview {
+    ul {
+      height: $bar-height;
+      display: inline-block;
+      li {
+        vertical-align: top;
+        display: inline-block;
+        position: relative;
+        &.host {
+          height: 100%;
+          margin-right: 20px;
+          line-height: 1.2;
+          div.inline-block {
+            display: inline-block;
+          }
+          .ip {
+            font-weight: 100;
+            font-size: 24px;
+            color: #000;
+            line-height: 30px;
+            @include hover-max-width;
+          }
+          .name {
+            padding-left: 2px;
+            font-weight: 100;
+            @include hover-max-width;
+          }
+        }
+
+        &.state {
+          line-height: $bar-height;
+          color: #FFFFFF;
+          font-size: 14px;
+          padding: 0px 22px 0px 22px;
+          top: -1px;
+          padding-bottom: 0px;
+          text-shadow: 0 1px 2px rgba(0,0,0,.1);
+
+          // TODO: CLEAN ME UP (DRY VIOLATION IN app.css.scss:333)
+          &.scanned {
+            background-color: #8BD93A;
+            border: 1px solid #37B937;
+          }
+          &.cracked {
+            background-color: dimgrey;
+            border: 1px solid #555;
+          }
+          &.shelled {
+            background-color: #f00;
+            border: 1px solid #a00;
+          }
+          &.looted {
+            background-color: #000;
+            border: 1px solid #000;
+          }
+        }
+
+        &.os, &.pivot, &.nexpose {
+          font-size: 11px;
+          font-weight: 100;
+          border-right: 1px solid #E3E3E3;
+        }
+
+        &.os {
+          height: 100%;
+          padding: 8px 10px 0px 10px;
+          max-width: 150px;
+          .icons {
+            text-align: center;
+            height: 22px;
+            div {
+              display: inline-block;
+            }
+            img {
+              float: none;
+            }
+          }
+          .menu {
+            width: 160px;
+            left: 14px;
+          }
+          .bottom_pin {
+            position: static;
+            white-space: nowrap;
+            line-height: 16px;
+            text-overflow: ellipsis;
+          }
+        }
+
+        &.pivot {
+          padding: 0 10px 0 10px;
+          background-image: image-url('icons/vpn_pivot_on.png');
+          background-repeat: no-repeat;
+          background-position: center 3px;
+          width: 90px;
+          height: 50px;
+        }
+
+        &.nexpose {
+          background-image: image-url('icons/linkBtn.png');
+          background-position: 21px -73px;
+          width: 70px;
+          height: 25px;
+          padding-bottom: 25px;
+          @include box-sizing(content-box);
+        }
+
+        .bottom_pin {
+          position: absolute;
+          bottom: 3px;
+          left: 3px;
+          right: 3px;
+          text-align: center;
+          height: 18px;
+          overflow: hidden;
+        }
+
+        $menu-border-color: #cfcfcf;
+        .menu {
+          @include box-sizing(border-box);
+          display: none;
+          position: absolute;
+          top: 47px;
+          left: 0;
+          z-index: 55;
+          padding-top: 13px;
+          background: transparent;
+          @include arrow-top($menu-border-color);
+          width: 300px;
+          font-size: 0;
+          &:before {
+            top: 2px;
+            left: 28px;
+            right: auto;
+          }
+          &:after {
+            top: 0px;
+            left: 27px;
+            right: auto;
+          }
+          label, .value {
+            font-size: 11px;
+            display: inline-block;
+            width: 60%;
+            vertical-align: top;
+            margin: 3px 0;
+            line-height: 1.4;
+          }
+          label {
+            width: 40%;
+            text-align: right;
+            font-weight: 600;
+            padding-right: 15px;
+          }
+        }
+        &:hover, .menu:hover, &.hover {
+          .menu {
+            display: block;
+            min-width: 200px;
+            .padding {
+              border: 1px solid $menu-border-color;
+              background: #fff;
+              padding: 10px;
+              border-radius: 3px;
+              box-shadow: 0 1px 3px rgba(0,0,0,.2);
+            }
+          }
+        }
+      }
+    }
+
+    // edit button with (i) and pencil
+    a.edit-info {
+      display: inline-block;
+      width: 36px;
+      height: 24px;
+      vertical-align: top;
+      margin-top: 13px;
+      margin-left: 5px;
+      background-image: image-url('icons/edit_info.png');
+      &:hover {
+        background-position: 0 55px;
+      }
+      &:active {
+        background-position: 0 23px;
+      }
+    }
+  }
+
+  .btnRow {
+    position: absolute;
+    z-index: 1;
+    float: left;
+    width: auto;
+    display: inline-block;
+    &:after {
+      clear: both;
+    }
+  }
+
+  .dataTables_processing {
+    top: 88px;
+    padding-bottom: 30px;
+  }
+  .dataTables_filter {
+    font-size: 0;
+    input {
+      font-size: 13px;
+      font-weight: 100;
+      height: auto;
+      padding: 2px 5px;
+      @include border-radius(2px);
+      background-position: 97%;
+    }
+  }
+
+
+  .header .container.foundation.row {
+    border: 1px solid #E3E3E3;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0px 1px 2px #ECECEC;
+  }
+
+
+
+  div.tags {
+    label.tags {
+      margin-right: 10px;
+      font-size: 14px;
+      vertical-align: top;
+      font-weight: 600;
+      color: #aaa;
+      font-weight: 100;
+    }
+    text-align: right;
+    height: $bar-height;
+    vertical-align: middle;
+    font-size: 0;
+    div.under {
+      display: none;
+    }
+    a.more {
+      margin-right: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      vertical-align: top;
+      text-decoration: underline;
+      color: $orange;
+      position: relative;
+      // dropdown logic
+      &~.under {
+        position: absolute;
+        top: 32px;
+        right: 20px;
+        padding-top: 25px;
+        display: none;
+        $border-color: #cfcfcf;
+        &>.white {
+          border-radius: 3px;
+          border: 1px solid $border-color;
+          box-shadow: 0 1px 3px rgba(0,0,0,.2);
+          background: #fff;
+          max-width: 300px;
+          padding: 10px;
+          text-align: left;
+          @include arrow-top($border-color);
+          .wrap {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 3px;
+            box-sizing: border-box;
+          }
+
+        }
+      }
+      &:hover~.under, &~.under:hover, &.hover~.under, &~.under.hover {
+        display: block;
+      }
+    }
+    a.green-add {
+      text-align: center;
+      font-size: 19px;
+      border-radius: 3px;
+    }
+    & > div {
+      padding-right: 10px;
+      margin-top: 16px;
+    }
+  }
+
+  div.tag-hover-region .tags{
+    text-align: center;
+    height:auto;
+  }
+
+  .backbone-tabs {
+    .content {
+      overflow: auto;
+      &>div {
+        position: relative;
+      }
+      .btn {
+        .new {
+          height: 20px;
+        }
+      }
+      .sessions, .shares, .credentials {
+        h4 {
+          font-size: 15px;
+          border-bottom: 1px dotted #ddd;
+          padding-bottom: 5px;
+          margin-top: 2px;
+          clear: both;
+          &.clear {
+            padding-top: 28px;
+          }
+        }
+      }
+      .table-component {
+        .header-region {
+          display: none;
+        }
+      }
+      .credentials {
+        .accessing-logins {
+          margin-bottom: 30px;
+        }
+        .originating-creds {
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+        .table-container {
+          @import 'creds/table_cells';
+        }
+      }
+    }
+    .dataTables_filter {
+      font-size: 0;
+      margin-bottom: 5px;
+    }
+    .dataTables_wrapper {
+      min-height: 0;
+      .error {
+        color:red;
+      }
+      .invalid {
+        margin-top: 20px;
+      }
+      .edit-table-row {
+        text-align: center;
+        a.save, a.cancel {
+          margin-right: 6px;
+        }
+      }
+      table {
+        margin-top: 10px;
+      }
+    }
+    .break-all {
+      word-break: break-all;
+    }
+  }
+
+  @extend %edit-icons;
+
+  #modals {
+    .error-box {
+      padding: 8px 10px;
+      color: #B94A48;
+      border: 1px solid #EED3D7;
+      @include border-radius(2px);
+      background: #F2DEDE;
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    .services-form, .cred-form {
+      padding: 0 10px;
+      margin-top: 5px;
+      // label {
+      //   text-align: left;
+      // }
+    }
+
+    .label-spacer {
+      width: 20%;
+      display: inline-block;
+    }
+
+    .input-container {
+      width: 70%;
+      display: inline-block;
+    }
+
+    .field-text {
+      display: inline-block;
+      height: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      word-break: break-all;
+      width: 70%
+    }
+
+
+    .controls {
+      display: inline-block;
+      .refs {
+        width: 70%;
+        display:inline-block;
+
+        div {
+          display:inline-block;
+        }
+      }
+    }
+  }
+
+  // toggle-edit form style
+  form.toggle-edit {
+    input, textarea {
+      display: none;
+    }
+    .btns {
+      display: inline-block;
+      float: right;
+      padding-top: 3px;
+      .actions {
+        display: inline-block;
+        display: none;
+        a {
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+#modals .host_form {
+  div.error {
+    margin-left: 29%;
+    width: 65%;
+    color: $error-red;
+    font-size: 11px;
+  }
+  h5 {
+    font-size: 15px;
+    border-bottom: 1px solid #d2d2d2;
+    padding-bottom: 2px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    &:first-child {
+      margin-top: 0;
+    }
+    a {
+      display: inline-block;
+      float: right;
+      font-size: 11px;
+      font-weight: 100;
+    }
+  }
+  .actions a {
+    font-size: 11px;
+    font-weight: 100;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .actions.comments {
+    display: none;
+  }
+  p.comments {
+    margin-right: 0;
+    margin-left: 0;
+    font-weight: 100;
+    font-size: 11px;
+    max-height: 85px;
+    overflow: auto;
+    background: #e2e2e2;
+    padding: 10px;
+    color: #333;
+    &>span {
+      white-space: pre;
+    }
+  }
+  a.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  li {
+    clear:both;
+    &>label, &>a {
+      line-height: 2.1;
+    }
+    &>a {
+      max-width: 220px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    label {
+      width: 28%;
+      display: inline-block;
+    }
+    input {
+      width: 45%;
+      border: 1px solid #ccc;
+      padding: 3px;
+      &.invalid {
+        border-color: $error-red;
+      }
+    }
+  }
+  textarea {
+    display: block;
+    display: none;
+    width: 100%;
+    @include box-sizing(border-box);
+    height: 85px;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+#modal .vulns_form {
+  .container {
+    width: 100%;
+  }
+  .add-ref {
+    padding-top: 2px;
+    display: inline-block;
+    float: right;
+  }
+  .add-ref + .container {
+    padding-top: 0;
+  }
+  .container {
+    padding: 4px 0;
+    .input-container {
+      input {
+        width: 100%;
+      }
+    }
+  }
+  h2 {
+    padding-bottom: 4px !important;
+  }
+  .controls {
+    position: relative;
+    top: -1px;
+  }
+}
+
+#modals{
+  @extend %vuln-modal;
+}
+
+
+.modal .loot_form {
+  // get the nice file input
+  @import "shared/_pretty_file_inputs";
+
+  .errors {
+    background-image: none;
+    padding: 10px;
+    font-size: 13px;
+    text-align: center;
+  }
+  form {
+    padding-right: 40px;
+    padding-top: 10px;
+    font-size: 13px;
+  }
+}
+
+.modal .vulns_form{
+  li .error{
+    float: right;
+    width: 76%;
+    color:red;
+  }
+}
+
+.modal .services-form{
+  li .error{
+    float:right;
+    width:72%;
+    color:red;
+  }
+}
+
+
+.modal{
+  .loot_form, .services-form, .cred-form, .form-content {
+    font-size: 12px;
+    li.file.input {
+      position: relative;
+      left: 20px;
+      margin-bottom: 20px;
+    }
+    input, textarea {
+      @include box-sizing(border-box);
+      border: 1px solid #ccc;
+      padding: 3px 4px;
+      font-size: 11px;
+      &[type=file] {
+        border: 0;
+      }
+    }
+    label {
+      line-height: 22px;
+      font-weight: normal;
+    }
+  }
+}
+
+body.hosts#index {
+  .table-region table {
+    thead.vm, td.vm {
+      width: 17px;
+    }
+
+    thead.services, td.services, thead.vulns, td.vulns {
+      width: 60px;
+    }
+
+    thead.attempts, td.attempts {
+      width: 50px;
+    }
+
+    td.status {
+      text-align: center;
+    }
+  }
+}

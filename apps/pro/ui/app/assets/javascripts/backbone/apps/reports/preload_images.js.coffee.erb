@@ -1,0 +1,39 @@
+<%
+  # Generate JavaScript array items of asset pathnames for the given image filename pattern.
+  #
+  # @param image_path [String] the string image path pattern
+  #
+  # @return [String] the JavaScript array code
+  def preload_pathnames_javascript_array(image_path, options = {})
+    options.reverse_merge! retina: false
+
+    preload_pathnames = Dir.glob(File.join(Rails.root, "app/assets/images/#{image_path}"))
+
+    retina_preload_pathnames, regular_preload_pathnames = preload_pathnames.partition { |path| path.include?('@2x.') }
+    preload_pathnames_for_device = options[:retina] ? retina_preload_pathnames : regular_preload_pathnames
+
+    preload_image_pathnames_for_device = preload_pathnames_for_device.collect{ |path| path.gsub(File.join(Rails.root, 'app/assets/images/'), '') }
+    preload_asset_pathnames = preload_image_pathnames_for_device.collect { |path| image_path(path) }
+    preload_asset_pathnames.collect { |path| '"' + path + '"' }.join (",")
+  end
+%>
+
+RetinaDetector =
+  useRetinaImages: ->
+    @isHighDensity() || @isRetina()
+
+  isHighDensity: ->
+    ((window.matchMedia && (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches || window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) || (window.devicePixelRatio && window.devicePixelRatio > 1.3));
+
+  isRetina: ->
+    ((window.matchMedia && (window.matchMedia('only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-resolution: 75.6dpcm)').matches || window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2)').matches)) || (window.devicePixelRatio && window.devicePixelRatio > 2)) && /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
+
+PRELOADED_REPORT_IMAGES = [ <%= preload_pathnames_javascript_array('reports/formats/*.png') %>, <%= preload_pathnames_javascript_array('reports/actions/*.png') %>]
+PRELOADED_RETINA_REPORT_IMAGES = [ <%= preload_pathnames_javascript_array('reports/formats/*.png', retina: true) %>, <%= preload_pathnames_javascript_array('reports/actions/*.png', retina: true) %>]
+
+reportImages = if RetinaDetector.useRetinaImages() then PRELOADED_RETINA_REPORT_IMAGES else PRELOADED_REPORT_IMAGES
+
+jQuery('body').append("<div id='preload-images' style='position: absolute; left: -100000px;'></div>")
+
+_.each reportImages, (src) ->
+  jQuery('#preload-images').append("<img src='#{src}'>")

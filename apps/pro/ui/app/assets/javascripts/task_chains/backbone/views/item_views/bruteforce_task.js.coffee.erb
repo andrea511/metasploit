@@ -1,0 +1,163 @@
+
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/bruteforce_task') %>'
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+  'apps/brute_force_guess/brute_force_guess_app'
+], ($, Template, TaskConfigView) ->
+  class BruteforceTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/bruteforce_task']
+
+    VALIDATION_URL: "/workspaces/#{WORKSPACE_ID}/tasks/validate_bruteforce"
+
+    ui: _.extend({}, TaskConfigView.prototype.ui,{
+      file_label: '.file-upload-region label p'
+      file_input: '.file-upload-region input'
+    })
+
+    onShow:() ->
+      if @model.get('clonedModel')
+        @payloadModel = Pro.request 'shared:payloadSettings:entities', @model.get('clonedModel').get('payloadModel')
+        @mutationModel = Pro.request 'mutationOptions:entities', @model.get('clonedModel').get('mutationModel')
+      #If existing task and not yet cached
+      if @model.get('task')? and !@form_cache?
+        if @model.get('task').form_hash.payload_settings?
+          @payloadModel = Pro.request 'shared:payloadSettings:entities', _.pick(@model.get('task').form_hash, 'payload_settings')
+        if @model.get('task').form_hash.mutation_options?
+          @mutationModel = Pro.request 'mutationOptions:entities', _.pick(@model.get('task').form_hash, 'mutation_options')
+
+      @storedModel ?= new Backbone.Model({})
+      @controller = new Pro.BruteForceGuessApp.Index.Controller(
+        taskChain:true,
+        region: @configRegion,
+        payloadModel: @payloadModel,
+        mutationModel: @mutationModel
+      )
+
+      _.defer(@loadPartial)
+
+    loadPartial: (url,func,args) =>
+      #If existing task and not yet cached
+      if @model.get('task')? and !@form_cache?
+        Backbone.Syphon.deserialize(@controller._mainView, @model.get('task').form_hash,exclude: ["quick_bruteforce[file]"])
+        @controller.quickBruteforce.useLastUploaded(@model.get('task').file_upload?.url || @model.get('task').form_hash.quick_bruteforce.use_last_uploaded)
+        @controller.quickBruteforce.restoreUIState(restoreFileInput:false)
+        @_initErrorMessages()
+        @trigger('loaded')
+      else
+        #If not a cloned task and form is cached
+        if @form_cache? and !@model.get('cloned')?
+          #TODO: Restore Cached Form
+          @_applyStashedFileInput(@$el)
+          @_restoreFileLabel()
+          @controller.quickBruteforce.file_input.rebindFileInput()
+
+          # Restore Form and State
+          Backbone.Syphon.deserialize(
+                  @controller._mainView,
+                  @storedModel.toJSON(),
+                  exclude: [
+                    "quick_bruteforce[file]"
+                    "clone_file_warning"
+                  ]
+          )
+          @controller.quickBruteforce.restoreUIState()
+
+          # Restore option after view manually restored from deserialized data.
+          $('[name="clone_file_warning"]',@controller._mainView.$el).val(@storedModel.get('clone_file_warning'))
+
+          @_initErrorMessages()
+        else
+          #If a cloned task
+          if @model.get('cloned')?
+            excludeInputs = [
+              "quick_bruteforce[file]"
+            ]
+
+            #Clone use_last_uploaded if file input was not changed
+            if @model.get('clonedModel').get('bruteforce').quick_bruteforce.use_last_uploaded == ''
+                excludeInputs << "quick_bruteforce[use_last_uploaded]"
+
+            #If cred import larger than the max chunk size exclude cred text area contents
+            if @model.get('clonedModel').get('bruteforce').quick_bruteforce.creds.import_cred_pairs.use_file_contents and @model.get('clonedModel').get('bruteforce').quick_bruteforce.use_last_uploaded == ''
+
+              excludeInputs = excludeInputs.concat [
+                    "quick_bruteforce[creds][import_cred_pairs][data]",
+                    "text_area_status",
+                    "import_pair_count"
+                  ]
+            #When Cloning set the import count to all the creds minus the creds in file upload.
+            @model.get('clonedModel').get('bruteforce').import_pair_count = @model.get('clonedModel').get('bruteforce').text_area_count
+            #@model.get('clonedModel').get('bruteforce').clone_file_warning = true
+
+            #Exlude file params we don't want to clone
+            Backbone.Syphon.deserialize(
+                    @controller._mainView,
+                    @model.get('clonedModel').get('bruteforce'),
+                    exclude: excludeInputs
+            )
+
+            @model.set('cloned',null)
+            @controller.quickBruteforce.restoreUIState()
+
+
+            if func
+              func.call(args)
+          else
+            #If brand new task
+            @trigger('loaded')
+            @_initErrorMessages()
+
+
+      #TODO: Cache form/restore form logic
+      @trigger('loaded')
+
+    _initErrorMessages: ->
+      if typeof @ui.errors != "string"
+        if @errors
+          @controller.quickBruteforce._mainView.showErrors(@errors)
+
+    _setCache: () ->
+      super
+
+    formModel: () ->
+      @payloadModel = @controller.quickBruteforce.payloadModel
+      @mutationModel = @controller.quickBruteforce.mutationModel
+
+      Pro.request "new:brute_force_guess_form:entity",
+        bruteforce: @storedModel?.toJSON()
+        payloadModel: @payloadModel?.toJSON()
+        mutationModel: @mutationModel?.toJSON()
+
+    _storeForm: (opts={callSuper:true}) ->
+      super if opts.callSuper
+
+      @storedModel.set(Backbone.Syphon.serialize(@controller._mainView,exclude: ["quick_bruteforce[file]"]))
+
+      @storedForm = Pro.request "new:brute_force_guess_form:entity",
+        bruteforce: @storedModel?.toJSON()
+        payloadModel: @controller.quickBruteforce.payloadModel?.toJSON()
+        mutationModel: @controller.quickBruteforce.mutationModel?.toJSON()
+
+    onBeforeClose: ->
+      super
+      @_validate("URL")
+      @payloadModel = @controller.quickBruteforce.payloadModel
+      @mutationModel = @controller.quickBruteforce.mutationModel
+
+    _restoreFileLabel: ->
+      @controller.quickBruteforce.file_input.resetLabel()
+
+    _triggerValidated: (model,response,options) =>
+      if response.responseJSON?.errors
+        @errors = response.responseJSON.errors
+        $(document).trigger('showErrorPie',@)
+      else
+        @errors = null
+      $(document).trigger('validated',@)
+
+    _validate: (url, overrides=[]) ->
+      if @storedForm?
+        @controller.quickBruteforce.validateBruteForce(@_triggerValidated)
+      @bindUIElements()
+      @_stashFileInput()

@@ -1,0 +1,38 @@
+
+$border-color: #ccc;
+
+ul {
+  li.tab {
+    position: relative;
+    top: 1px;
+    padding: 9px 14px 9px 14px;
+    display: inline-block;
+    border-top-radius: 5px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    margin-right: 5px;
+    min-width: 100px;
+    text-align: center;
+
+    .invalid{
+      color:red;
+    }
+
+    &.active {
+      border: 1px solid $border-color;
+      border-bottom: 1px solid #fff;
+      background-color: #ffffff;
+      color: #000;
+    }
+
+  }
+}
+
+.tab-content {
+  background-color: #ffffff;
+  border: 1px solid $border-color;
+  padding: 10px;
+  margin-bottom: 10px;
+  min-height: 80px;
+  overflow-y: auto;
+}

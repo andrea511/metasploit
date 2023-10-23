@@ -1,0 +1,17 @@
+<% breadcrumb link_to("Project Settings", edit_workspace_path(@workspace)) %>
+<% title "Project Settings" %>
+
+
+<div class="one_col_no_sidebar">
+	<%= required_label %>
+
+	<%= semantic_form_for @workspace do |f| %>
+		<%= render 'form', :f => f %>
+
+		<%= f.actions do -%>
+			<span class="btn">
+				<%= f.submit "Update Project", :class => "save" %>
+			</span>
+		<% end -%>
+	<% end %>
+</div>

@@ -1,0 +1,2 @@
+$('#sessions').html("<%= escape_javascript(render :partial =>'sessions', :object => @sessions)%>")
+$('#workspace_nav').replaceWith("<%= escape_javascript(render :partial => 'generic/tabs')%>")

@@ -1,0 +1,811 @@
+/* line 1, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs {
+  background: #eee;
+  border-radius: 5px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  width: 100%;
+}
+/* line 8, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs li {
+  float: left;
+}
+/* line 11, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs li:first-child a {
+  padding-left: 3em;
+  border-radius: 5px 0 0 5px;
+}
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs li.active a {
+  color: #fff;
+  background-color: #CD5710;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+/* line 21, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs li.active a::after {
+  border-left-color: #CD5710;
+}
+/* line 27, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs li.active:hover {
+  background: none;
+}
+/* line 30, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs li.active::after, .breadcrumbs li.active::before {
+  content: normal;
+}
+/* line 38, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs a {
+  font-size: 14px;
+  padding: 1em 3em 1em 3em;
+  float: left;
+  text-decoration: none;
+  color: #444;
+  position: relative;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: #f2f2f2;
+}
+/* line 49, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs a:hover {
+  background: #fff;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs a::after, .breadcrumbs a::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  margin-top: -2em;
+  border-top: 2em solid transparent;
+  border-bottom: 2em solid transparent;
+  border-left: 1em solid;
+  right: -1em;
+}
+/* line 64, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs a::after {
+  z-index: 2;
+  border-left-color: #f2f2f2;
+}
+/* line 69, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs a::before {
+  border-left-color: #ccc;
+  right: -1.1em;
+  z-index: 1;
+}
+/* line 75, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/breadcrumbs.scss */
+.breadcrumbs a:hover::after {
+  border-left-color: #fff;
+}
+
+/* line 19, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+.header-region.content-container h1, .header-region.content-container h2 {
+  color: #010101;
+  font-weight: 100;
+  padding-left: 12px;
+}
+
+/* line 25, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+.header-region.content-container {
+  height: 55px;
+  position: relative;
+  min-width: 1000px;
+  border: 1px solid #e7e7e7;
+  background-image: -moz-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+  background-image: -webkit-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+  background-image: -ms-linear-gradient(90deg, whitesmoke 0%, #f9f9f9 7%, #fcfcfc 100%);
+}
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+.header-region.content-container h1 {
+  margin: 0px;
+  font-size: 24px;
+  line-height: 52px;
+}
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+.header-region.content-container h2 {
+  margin: 0px;
+  color: #a5a5a5;
+  font-size: 12px;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+.header-region.content-container:after {
+  bottom: -4px;
+  content: " ";
+  display: block;
+  height: 4px;
+  width: 99.9%;
+  left: 1px;
+  position: absolute;
+  margin: 0 auto;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.09);
+}
+/* line 68, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+.header-region.content-container > div:first-child {
+  border: 1px solid white;
+  height: 100%;
+}
+
+/* line 74, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+.content-region.content-container {
+  border: 1px solid #efefef;
+  background-color: #f2f2f2;
+  margin: 0 auto;
+  width: 98%;
+  position: relative;
+}
+/* line 82, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+.content-region.content-container:after {
+  bottom: -2px;
+  height: 2px;
+  left: 2px;
+  display: block;
+  width: 99.7%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.07);
+  content: " ";
+}
+
+/* line 95, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/components/header_bar.scss */
+.content-region.content-container > div:first-child {
+  margin: 0 15px 15px 15px;
+  padding: 10px 10px;
+  border-bottom-radius: 5px;
+  border: 1px solid #ddd;
+  border-top: 0px;
+  background-color: #fff;
+}
+
+/* line 3, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_badges.scss */
+.count, .badge {
+  display: inline-block;
+  border-radius: 11px;
+  height: 18px;
+  min-width: 18px;
+  line-height: 16px;
+  margin-bottom: -1px;
+  border: 1px solid #1c2324;
+  font-size: 10px;
+  font-weight: 600;
+  color: #1c2324;
+  background-color: #ffffff;
+  text-align: center;
+  padding: 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+/* line 20, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/shared/_badges.scss */
+.notification-dot {
+  height: 6px;
+  width: 6px;
+  background-color: #c91114;
+  border-radius: 50%;
+  border: 1px solid white;
+  display: inline-block;
+  position: relative;
+  top: -8px;
+  left: -4px;
+}
+
+/* line 5, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.right {
+  margin-right: 1px;
+  margin-top: 0px;
+}
+
+/* line 10, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.reuse-title {
+  min-height: 36px;
+  margin-bottom: 0px;
+}
+
+/* line 15, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.launch-container {
+  min-height: 710px;
+}
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.launch-container a {
+  display: block;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 0;
+  width: 92%;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px 18px !important;
+}
+
+/* line 34, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow {
+  top: -40px;
+  position: absolute;
+  right: 10px;
+  left: 10px;
+  height: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  background-image: linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+/* line 47, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow:hover {
+  background-image: linear-gradient(top, #f2f2f2 0%, #d8d8d8 100%);
+}
+/* line 49, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow:hover .icon {
+  background-color: #008a00;
+}
+/* line 52, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow:hover .title:after {
+  border-left-color: #008a00;
+}
+/* line 56, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow:active {
+  background-image: linear-gradient(top, #d9d9d9 0%, #bfbfbf 100%);
+}
+/* line 58, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow:active .icon {
+  background-color: #007000;
+}
+/* line 61, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow:active .title:after {
+  border-left-color: #007000;
+}
+/* line 65, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow .icon {
+  height: 30px;
+  display: inline-block;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  bottom: -1px;
+  line-height: 30px;
+  font-size: 16px;
+  color: white;
+  background-color: #009900;
+  border: 1px solid #007a00;
+  font-weight: 600;
+  width: 19px;
+  text-align: center;
+  -moz-border-radius-topleft: 3px;
+  /* Gecko */
+  -webkit-border-top-left-radius: 3px;
+  /* Webkit */
+  -khtml-border-top-left-radius: 3px;
+  /* Konqueror */
+  border-top-left-radius: 3px;
+  /* CSS3 */
+  -moz-border-radius-topright: 0;
+  /* Gecko */
+  -webkit-border-top-right-radius: 0;
+  /* Webkit */
+  -khtml-border-top-right-radius: 0;
+  /* Konqueror */
+  border-top-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  /* Webkit */
+  -khtml-border-bottom-right-radius: 0;
+  /* Konqueror */
+  border-bottom-right-radius: 0;
+  /* CSS3 */
+  -moz-border-radius-bottomleft: 3px;
+  /* Gecko */
+  -webkit-border-bottom-left-radius: 3px;
+  /* Webkit */
+  -khtml-border-bottom-left-radius: 3px;
+  /* Konqueror */
+  border-bottom-left-radius: 3px;
+  /* CSS3 */
+}
+/* line 81, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow .icon span {
+  z-index: 999;
+  position: relative;
+  left: 4px;
+}
+/* line 88, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow .title {
+  font-size: 1em;
+  color: black;
+  line-height: 28px;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.1);
+  text-align: center;
+  display: block;
+  padding-left: 16px;
+}
+/* line 98, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow .title:before {
+  content: "";
+  width: 0;
+  height: 0;
+  left: 18px;
+  top: -1px;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid #007a00;
+  position: absolute;
+}
+/* line 109, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.btn-arrow .title:after {
+  content: "";
+  width: 0;
+  height: 0;
+  left: 17px;
+  top: -1px;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid #009900;
+  position: absolute;
+}
+
+/* line 123, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.right-side {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: ease-out top 0.6s;
+}
+
+/* line 131, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.brute-force-header .crumbs-region {
+  margin-top: 4px;
+  display: inline-block;
+  float: right;
+  margin-right: 6px;
+}
+/* line 137, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.brute-force-header .crumbs-region .launchable {
+  color: white;
+  background-image: linear-gradient(#61bcdc, #3586a4);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+/* line 142, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.brute-force-header .crumbs-region .launchable:hover {
+  text-decoration: none;
+  background-image: linear-gradient(#48b1d6, #2e738d);
+}
+/* line 146, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.brute-force-header .crumbs-region .launchable:active {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
+}
+/* line 154, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.brute-force-header .title {
+  line-height: 52px;
+  vertical-align: top;
+  display: inline-block;
+}
+
+/* line 179, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+li.select2-highlighted {
+  background: #eee !important;
+  color: #333 !important;
+}
+
+/* line 162, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+ul.select2-results a.right {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  border-radius: 3px;
+  color: #777;
+}
+/* line 171, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+ul.select2-results a.right:hover {
+  background: rgba(0, 0, 0, 0.07);
+  text-decoration: none;
+  color: #333;
+}
+
+/* line 190, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .next-button a, .target-selection-view .next-button a, .review-view .next-button a {
+  padding: 1em;
+  border-radius: 5px;
+  background-color: #5DA0C7;
+  color: white;
+  font-weight: bold;
+}
+/* line 199, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .review-options, .target-selection-view .review-options, .review-view .review-options {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* line 202, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .review-options h3, .target-selection-view .review-options h3, .review-view .review-options h3 {
+  font-size: 13px;
+  font-weight: 200;
+}
+/* line 207, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .review-options .container, .target-selection-view .review-options .container, .review-view .review-options .container {
+  padding-bottom: 10px;
+  margin-top: 10px;
+  background-color: #fffff;
+  border: 1px solid #cbcbcb;
+}
+/* line 212, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .review-options .container > div, .target-selection-view .review-options .container > div, .review-view .review-options .container > div {
+  margin-bottom: 10px;
+}
+/* line 217, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .review-options .timeout-field, .target-selection-view .review-options .timeout-field, .review-view .review-options .timeout-field {
+  display: inline-block;
+  margin-right: 5px;
+}
+/* line 221, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .review-options .timeout-field label, .target-selection-view .review-options .timeout-field label, .review-view .review-options .timeout-field label {
+  display: block;
+  color: #999999;
+}
+/* line 227, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .review-options .timeout-label, .target-selection-view .review-options .timeout-label, .review-view .review-options .timeout-label {
+  height: 41px;
+  line-height: 1.4;
+  vertical-align: top;
+  color: #333333;
+  font-weight: bold;
+}
+/* line 235, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .review-options input[type=text], .target-selection-view .review-options input[type=text], .review-view .review-options input[type=text] {
+  width: 40px;
+}
+/* line 241, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .copy, .target-selection-view .copy, .review-view .copy {
+  padding-top: 55px;
+  font-weight: 100;
+}
+/* line 244, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .copy p, .target-selection-view .copy p, .review-view .copy p {
+  margin-bottom: 5px;
+}
+/* line 249, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view ul.flow-widget, .target-selection-view ul.flow-widget, .review-view ul.flow-widget {
+  display: inline-block;
+  float: right;
+}
+/* line 252, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view ul.flow-widget li, .target-selection-view ul.flow-widget li, .review-view ul.flow-widget li {
+  display: inline-block;
+  width: 170px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+/* line 261, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .selection-indicator, .cred-selection-view .header-region, .target-selection-view .selection-indicator, .target-selection-view .header-region, .review-view .selection-indicator, .review-view .header-region {
+  display: none;
+}
+/* line 265, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups, .cred-selection-view .selected-targets, .cred-selection-view .options, .target-selection-view .credential-groups, .target-selection-view .selected-targets, .target-selection-view .options, .review-view .credential-groups, .review-view .selected-targets, .review-view .options {
+  margin-top: 5px;
+  position: relative;
+  -moz-border-radius: 5px;
+  /* Gecko */
+  -webkit-border-radius: 5px;
+  /* Webkit */
+  -khtml-border-radius: 5px;
+  /* Konqueror */
+  border-radius: 5px;
+  /* CSS3 */
+}
+/* line 272, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .lazy-list-component.nano, .cred-selection-view .selected-targets .lazy-list-component.nano, .cred-selection-view .options .lazy-list-component.nano, .target-selection-view .credential-groups .lazy-list-component.nano, .target-selection-view .selected-targets .lazy-list-component.nano, .target-selection-view .options .lazy-list-component.nano, .review-view .credential-groups .lazy-list-component.nano, .review-view .selected-targets .lazy-list-component.nano, .review-view .options .lazy-list-component.nano {
+  width: auto;
+  height: 100%;
+}
+/* line 275, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .lazy-list-component.nano .nano-content, .cred-selection-view .selected-targets .lazy-list-component.nano .nano-content, .cred-selection-view .options .lazy-list-component.nano .nano-content, .target-selection-view .credential-groups .lazy-list-component.nano .nano-content, .target-selection-view .selected-targets .lazy-list-component.nano .nano-content, .target-selection-view .options .lazy-list-component.nano .nano-content, .review-view .credential-groups .lazy-list-component.nano .nano-content, .review-view .selected-targets .lazy-list-component.nano .nano-content, .review-view .options .lazy-list-component.nano .nano-content {
+  padding: 10px;
+}
+/* line 276, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .lazy-list-component.nano .nano-pane, .cred-selection-view .selected-targets .lazy-list-component.nano .nano-pane, .cred-selection-view .options .lazy-list-component.nano .nano-pane, .target-selection-view .credential-groups .lazy-list-component.nano .nano-pane, .target-selection-view .selected-targets .lazy-list-component.nano .nano-pane, .target-selection-view .options .lazy-list-component.nano .nano-pane, .review-view .credential-groups .lazy-list-component.nano .nano-pane, .review-view .selected-targets .lazy-list-component.nano .nano-pane, .review-view .options .lazy-list-component.nano .nano-pane {
+  background: #888;
+}
+/* line 277, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .lazy-list-component.nano .nano-slider, .cred-selection-view .selected-targets .lazy-list-component.nano .nano-slider, .cred-selection-view .options .lazy-list-component.nano .nano-slider, .target-selection-view .credential-groups .lazy-list-component.nano .nano-slider, .target-selection-view .selected-targets .lazy-list-component.nano .nano-slider, .target-selection-view .options .lazy-list-component.nano .nano-slider, .review-view .credential-groups .lazy-list-component.nano .nano-slider, .review-view .selected-targets .lazy-list-component.nano .nano-slider, .review-view .options .lazy-list-component.nano .nano-slider {
+  background: #111;
+}
+/* line 278, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .lazy-list-component.nano .content, .cred-selection-view .selected-targets .lazy-list-component.nano .content, .cred-selection-view .options .lazy-list-component.nano .content, .target-selection-view .credential-groups .lazy-list-component.nano .content, .target-selection-view .selected-targets .lazy-list-component.nano .content, .target-selection-view .options .lazy-list-component.nano .content, .review-view .credential-groups .lazy-list-component.nano .content, .review-view .selected-targets .lazy-list-component.nano .content, .review-view .options .lazy-list-component.nano .content {
+  right: -16px;
+}
+/* line 281, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .lazy-list-component.nano .pane, .cred-selection-view .selected-targets .lazy-list-component.nano .pane, .cred-selection-view .options .lazy-list-component.nano .pane, .target-selection-view .credential-groups .lazy-list-component.nano .pane, .target-selection-view .selected-targets .lazy-list-component.nano .pane, .target-selection-view .options .lazy-list-component.nano .pane, .review-view .credential-groups .lazy-list-component.nano .pane, .review-view .selected-targets .lazy-list-component.nano .pane, .review-view .options .lazy-list-component.nano .pane {
+  margin-right: 1px;
+}
+/* line 284, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .lazy-list-component.nano .loading, .cred-selection-view .selected-targets .lazy-list-component.nano .loading, .cred-selection-view .options .lazy-list-component.nano .loading, .target-selection-view .credential-groups .lazy-list-component.nano .loading, .target-selection-view .selected-targets .lazy-list-component.nano .loading, .target-selection-view .options .lazy-list-component.nano .loading, .review-view .credential-groups .lazy-list-component.nano .loading, .review-view .selected-targets .lazy-list-component.nano .loading, .review-view .options .lazy-list-component.nano .loading {
+  background-image: url(/assets/spinner-e008bc0bca2fa6f9b9c113fad73551230961baec88c06b20997ec50171bb2b6b.gif);
+  height: 16px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+/* line 292, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups div.dropdown-container, .cred-selection-view .selected-targets div.dropdown-container, .cred-selection-view .options div.dropdown-container, .target-selection-view .credential-groups div.dropdown-container, .target-selection-view .selected-targets div.dropdown-container, .target-selection-view .options div.dropdown-container, .review-view .credential-groups div.dropdown-container, .review-view .selected-targets div.dropdown-container, .review-view .options div.dropdown-container {
+  padding: 0 5px 5px 5px;
+  border-bottom: 1px solid #f0f0f0;
+}
+/* line 296, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups div.dropdown-container div.dropdown, .cred-selection-view .selected-targets div.dropdown-container div.dropdown, .cred-selection-view .options div.dropdown-container div.dropdown, .target-selection-view .credential-groups div.dropdown-container div.dropdown, .target-selection-view .selected-targets div.dropdown-container div.dropdown, .target-selection-view .options div.dropdown-container div.dropdown, .review-view .credential-groups div.dropdown-container div.dropdown, .review-view .selected-targets div.dropdown-container div.dropdown, .review-view .options div.dropdown-container div.dropdown {
+  width: 100%;
+}
+/* line 299, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups div.dropdown-container .loading, .cred-selection-view .selected-targets div.dropdown-container .loading, .cred-selection-view .options div.dropdown-container .loading, .target-selection-view .credential-groups div.dropdown-container .loading, .target-selection-view .selected-targets div.dropdown-container .loading, .target-selection-view .options div.dropdown-container .loading, .review-view .credential-groups div.dropdown-container .loading, .review-view .selected-targets div.dropdown-container .loading, .review-view .options div.dropdown-container .loading {
+  background-image: url(/assets/spinner-e008bc0bca2fa6f9b9c113fad73551230961baec88c06b20997ec50171bb2b6b.gif);
+  height: 16px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+/* line 307, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .border, .cred-selection-view .selected-targets .border, .cred-selection-view .options .border, .target-selection-view .credential-groups .border, .target-selection-view .selected-targets .border, .target-selection-view .options .border, .review-view .credential-groups .border, .review-view .selected-targets .border, .review-view .options .border {
+  border: 1px solid #ccc;
+  border-top: 0;
+  min-height: 150px;
+}
+/* line 312, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .header, .cred-selection-view .selected-targets .header, .cred-selection-view .options .header, .target-selection-view .credential-groups .header, .target-selection-view .selected-targets .header, .target-selection-view .options .header, .review-view .credential-groups .header, .review-view .selected-targets .header, .review-view .options .header {
+  text-transform: uppercase;
+  background: #a1a1a1;
+  color: #fff;
+  padding: 3px 6px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+/* line 319, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .header .badge, .cred-selection-view .selected-targets .header .badge, .cred-selection-view .options .header .badge, .target-selection-view .credential-groups .header .badge, .target-selection-view .selected-targets .header .badge, .target-selection-view .options .header .badge, .review-view .credential-groups .header .badge, .review-view .selected-targets .header .badge, .review-view .options .header .badge {
+  background: transparent;
+  color: white;
+  border-color: white;
+  padding-left: 0 4px;
+  position: relative;
+  bottom: 1px;
+  left: 2px;
+}
+/* line 328, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .header .clear, .cred-selection-view .selected-targets .header .clear, .cred-selection-view .options .header .clear, .target-selection-view .credential-groups .header .clear, .target-selection-view .selected-targets .header .clear, .target-selection-view .options .header .clear, .review-view .credential-groups .header .clear, .review-view .selected-targets .header .clear, .review-view .options .header .clear {
+  float: right;
+  display: inline-block;
+  padding: 0 3px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+}
+/* line 335, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .header .clear:hover, .cred-selection-view .selected-targets .header .clear:hover, .cred-selection-view .options .header .clear:hover, .target-selection-view .credential-groups .header .clear:hover, .target-selection-view .selected-targets .header .clear:hover, .target-selection-view .options .header .clear:hover, .review-view .credential-groups .header .clear:hover, .review-view .selected-targets .header .clear:hover, .review-view .options .header .clear:hover {
+  text-decoration: none;
+  color: #eee;
+}
+/* line 339, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .header .clear:active, .cred-selection-view .selected-targets .header .clear:active, .cred-selection-view .options .header .clear:active, .target-selection-view .credential-groups .header .clear:active, .target-selection-view .selected-targets .header .clear:active, .target-selection-view .options .header .clear:active, .review-view .credential-groups .header .clear:active, .review-view .selected-targets .header .clear:active, .review-view .options .header .clear:active {
+  color: #bbb;
+}
+/* line 344, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .load-more, .cred-selection-view .selected-targets .load-more, .cred-selection-view .options .load-more, .target-selection-view .credential-groups .load-more, .target-selection-view .selected-targets .load-more, .target-selection-view .options .load-more, .review-view .credential-groups .load-more, .review-view .selected-targets .load-more, .review-view .options .load-more {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+/* line 347, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .load-more a, .cred-selection-view .selected-targets .load-more a, .cred-selection-view .options .load-more a, .target-selection-view .credential-groups .load-more a, .target-selection-view .selected-targets .load-more a, .target-selection-view .options .load-more a, .review-view .credential-groups .load-more a, .review-view .selected-targets .load-more a, .review-view .options .load-more a {
+  outline: 0;
+}
+/* line 351, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .empty, .cred-selection-view .selected-targets .empty, .cred-selection-view .options .empty, .target-selection-view .credential-groups .empty, .target-selection-view .selected-targets .empty, .target-selection-view .options .empty, .review-view .credential-groups .empty, .review-view .selected-targets .empty, .review-view .options .empty {
+  padding: 15px 6px;
+}
+/* line 354, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups select[name=import], .cred-selection-view .selected-targets select[name=import], .cred-selection-view .options select[name=import], .target-selection-view .credential-groups select[name=import], .target-selection-view .selected-targets select[name=import], .target-selection-view .options select[name=import], .review-view .credential-groups select[name=import], .review-view .selected-targets select[name=import], .review-view .options select[name=import] {
+  width: 100%;
+}
+/* line 357, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups a.save, .cred-selection-view .selected-targets a.save, .cred-selection-view .options a.save, .target-selection-view .credential-groups a.save, .target-selection-view .selected-targets a.save, .target-selection-view .options a.save, .review-view .credential-groups a.save, .review-view .selected-targets a.save, .review-view .options a.save {
+  font-weight: 100;
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  display: block;
+  padding: 8px 5px;
+  text-align: center;
+  background-color: white;
+  border-top: 1px solid #efefef;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+/* line 368, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups a.save:hover, .cred-selection-view .selected-targets a.save:hover, .cred-selection-view .options a.save:hover, .target-selection-view .credential-groups a.save:hover, .target-selection-view .selected-targets a.save:hover, .target-selection-view .options a.save:hover, .review-view .credential-groups a.save:hover, .review-view .selected-targets a.save:hover, .review-view .options a.save:hover {
+  background-color: #f3f3f3;
+}
+/* line 373, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .target-list, .cred-selection-view .selected-targets .target-list, .cred-selection-view .options .target-list, .target-selection-view .credential-groups .target-list, .target-selection-view .selected-targets .target-list, .target-selection-view .options .target-list, .review-view .credential-groups .target-list, .review-view .selected-targets .target-list, .review-view .options .target-list {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+/* line 377, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .target-list .target-row, .cred-selection-view .selected-targets .target-list .target-row, .cred-selection-view .options .target-list .target-row, .target-selection-view .credential-groups .target-list .target-row, .target-selection-view .selected-targets .target-list .target-row, .target-selection-view .options .target-list .target-row, .review-view .credential-groups .target-list .target-row, .review-view .selected-targets .target-list .target-row, .review-view .options .target-list .target-row {
+  position: relative;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding-left: 8px;
+}
+/* line 382, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .target-list .target-row .nano, .cred-selection-view .selected-targets .target-list .target-row .nano, .cred-selection-view .options .target-list .target-row .nano, .target-selection-view .credential-groups .target-list .target-row .nano, .target-selection-view .selected-targets .target-list .target-row .nano, .target-selection-view .options .target-list .target-row .nano, .review-view .credential-groups .target-list .target-row .nano, .review-view .selected-targets .target-list .target-row .nano, .review-view .options .target-list .target-row .nano {
+  height: 100%;
+}
+/* line 386, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .target-list .target-row .arrow-container, .cred-selection-view .selected-targets .target-list .target-row .arrow-container, .cred-selection-view .options .target-list .target-row .arrow-container, .target-selection-view .credential-groups .target-list .target-row .arrow-container, .target-selection-view .selected-targets .target-list .target-row .arrow-container, .target-selection-view .options .target-list .target-row .arrow-container, .review-view .credential-groups .target-list .target-row .arrow-container, .review-view .selected-targets .target-list .target-row .arrow-container, .review-view .options .target-list .target-row .arrow-container {
+  position: absolute;
+  top: 14px;
+  left: 0;
+}
+/* line 391, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .target-list .target-row .title, .cred-selection-view .credential-groups .target-list .target-row .subtitle, .cred-selection-view .selected-targets .target-list .target-row .title, .cred-selection-view .selected-targets .target-list .target-row .subtitle, .cred-selection-view .options .target-list .target-row .title, .cred-selection-view .options .target-list .target-row .subtitle, .target-selection-view .credential-groups .target-list .target-row .title, .target-selection-view .credential-groups .target-list .target-row .subtitle, .target-selection-view .selected-targets .target-list .target-row .title, .target-selection-view .selected-targets .target-list .target-row .subtitle, .target-selection-view .options .target-list .target-row .title, .target-selection-view .options .target-list .target-row .subtitle, .review-view .credential-groups .target-list .target-row .title, .review-view .credential-groups .target-list .target-row .subtitle, .review-view .selected-targets .target-list .target-row .title, .review-view .selected-targets .target-list .target-row .subtitle, .review-view .options .target-list .target-row .title, .review-view .options .target-list .target-row .subtitle {
+  padding-left: 10px;
+}
+/* line 395, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .target-list .target-row a.expand, .cred-selection-view .credential-groups .target-list .target-row a.contract, .cred-selection-view .selected-targets .target-list .target-row a.expand, .cred-selection-view .selected-targets .target-list .target-row a.contract, .cred-selection-view .options .target-list .target-row a.expand, .cred-selection-view .options .target-list .target-row a.contract, .target-selection-view .credential-groups .target-list .target-row a.expand, .target-selection-view .credential-groups .target-list .target-row a.contract, .target-selection-view .selected-targets .target-list .target-row a.expand, .target-selection-view .selected-targets .target-list .target-row a.contract, .target-selection-view .options .target-list .target-row a.expand, .target-selection-view .options .target-list .target-row a.contract, .review-view .credential-groups .target-list .target-row a.expand, .review-view .credential-groups .target-list .target-row a.contract, .review-view .selected-targets .target-list .target-row a.expand, .review-view .selected-targets .target-list .target-row a.contract, .review-view .options .target-list .target-row a.expand, .review-view .options .target-list .target-row a.contract {
+  cursor: pointer;
+  background-image: url(/assets/creds/group_expand-5cd49e99a21d15af68148a39dc89e7dbd28edf2efaef7b653fb3e2e8df406281.png);
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 3px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+/* line 407, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .target-list .target-row a.contract, .cred-selection-view .selected-targets .target-list .target-row a.contract, .cred-selection-view .options .target-list .target-row a.contract, .target-selection-view .credential-groups .target-list .target-row a.contract, .target-selection-view .selected-targets .target-list .target-row a.contract, .target-selection-view .options .target-list .target-row a.contract, .review-view .credential-groups .target-list .target-row a.contract, .review-view .selected-targets .target-list .target-row a.contract, .review-view .options .target-list .target-row a.contract {
+  background-image: url(/assets/creds/group_contract-3e93c3f53f6b776c63a5b2c646cf34273203bdacc627e01c097c7594ccb33bde.png);
+}
+/* line 411, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .target-list .target-row a.right, .cred-selection-view .selected-targets .target-list .target-row a.right, .cred-selection-view .options .target-list .target-row a.right, .target-selection-view .credential-groups .target-list .target-row a.right, .target-selection-view .selected-targets .target-list .target-row a.right, .target-selection-view .options .target-list .target-row a.right, .review-view .credential-groups .target-list .target-row a.right, .review-view .selected-targets .target-list .target-row a.right, .review-view .options .target-list .target-row a.right {
+  height: 50px !important;
+}
+/* line 415, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups .target-list .target-row .toggle-info, .cred-selection-view .selected-targets .target-list .target-row .toggle-info, .cred-selection-view .options .target-list .target-row .toggle-info, .target-selection-view .credential-groups .target-list .target-row .toggle-info, .target-selection-view .selected-targets .target-list .target-row .toggle-info, .target-selection-view .options .target-list .target-row .toggle-info, .review-view .credential-groups .target-list .target-row .toggle-info, .review-view .selected-targets .target-list .target-row .toggle-info, .review-view .options .target-list .target-row .toggle-info {
+  line-height: 17px;
+  margin-right: 3px;
+  font-weight: 100;
+  background: #f8f8f8;
+  padding: 3px;
+  margin-bottom: 5px;
+}
+/* line 429, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .credential-groups ul.groups li.group .subgroup, .cred-selection-view .selected-targets ul.groups li.group .subgroup, .cred-selection-view .options ul.groups li.group .subgroup, .target-selection-view .credential-groups ul.groups li.group .subgroup, .target-selection-view .selected-targets ul.groups li.group .subgroup, .target-selection-view .options ul.groups li.group .subgroup, .review-view .credential-groups ul.groups li.group .subgroup, .review-view .selected-targets ul.groups li.group .subgroup, .review-view .options ul.groups li.group .subgroup {
+  background: #f0f0f0;
+  border-bottom-color: #e9e9e9;
+  cursor: default;
+}
+/* line 438, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row, .cred-selection-view div.target-row, .target-selection-view div.group-row, .target-selection-view div.target-row, .review-view div.group-row, .review-view div.target-row {
+  cursor: default;
+  position: relative;
+  font-size: 11px;
+  color: #444444;
+  font-weight: 600;
+  border-bottom: 1px solid #f1f1f1;
+  padding: 0 5px;
+  background: white;
+}
+/* line 447, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row:hover, .cred-selection-view div.target-row:hover, .target-selection-view div.group-row:hover, .target-selection-view div.target-row:hover, .review-view div.group-row:hover, .review-view div.target-row:hover {
+  background: #fff;
+  color: #444;
+}
+/* line 451, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row a.right, .cred-selection-view div.target-row a.right, .target-selection-view div.group-row a.right, .target-selection-view div.target-row a.right, .review-view div.group-row a.right, .review-view div.target-row a.right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  height: auto;
+  color: #bbb;
+  vertical-align: middle;
+  font-size: 16px;
+}
+/* line 461, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row a.right:hover, .cred-selection-view div.target-row a.right:hover, .target-selection-view div.group-row a.right:hover, .target-selection-view div.target-row a.right:hover, .review-view div.group-row a.right:hover, .review-view div.target-row a.right:hover {
+  color: #999;
+}
+/* line 464, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row a.right:active, .cred-selection-view div.target-row a.right:active, .target-selection-view div.group-row a.right:active, .target-selection-view div.target-row a.right:active, .review-view div.group-row a.right:active, .review-view div.target-row a.right:active {
+  color: #666;
+}
+/* line 467, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row a.right span, .cred-selection-view div.target-row a.right span, .target-selection-view div.group-row a.right span, .target-selection-view div.target-row a.right span, .review-view div.group-row a.right span, .review-view div.target-row a.right span {
+  height: auto;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  margin-top: -50%;
+  right: 8px;
+}
+/* line 477, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row div.title, .cred-selection-view div.target-row div.title, .target-selection-view div.group-row div.title, .target-selection-view div.target-row div.title, .review-view div.group-row div.title, .review-view div.target-row div.title {
+  line-height: 27px;
+  height: 25px;
+  overflow: hidden;
+  margin-right: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* line 484, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row div.title span.username, .cred-selection-view div.target-row div.title span.username, .target-selection-view div.group-row div.title span.username, .target-selection-view div.target-row div.title span.username, .review-view div.group-row div.title span.username, .review-view div.target-row div.title span.username {
+  font-weight: 600;
+  color: #000;
+}
+/* line 488, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row div.title span.private, .cred-selection-view div.target-row div.title span.private, .target-selection-view div.group-row div.title span.private, .target-selection-view div.target-row div.title span.private, .review-view div.group-row div.title span.private, .review-view div.target-row div.title span.private {
+  color: #979797;
+  font-weight: 300;
+}
+/* line 493, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view div.group-row div.subtitle, .cred-selection-view div.target-row div.subtitle, .target-selection-view div.group-row div.subtitle, .target-selection-view div.target-row div.subtitle, .review-view div.group-row div.subtitle, .review-view div.target-row div.subtitle {
+  line-height: 20px;
+  margin-bottom: 5px;
+  color: #979797;
+  font-weight: 300;
+}
+/* line 502, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .back-edit .large-12, .target-selection-view .back-edit .large-12, .review-view .back-edit .large-12 {
+  text-align: center;
+  padding: 0;
+  border: 1px solid #ccc;
+}
+/* line 506, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .back-edit .large-12 a, .target-selection-view .back-edit .large-12 a, .review-view .back-edit .large-12 a {
+  width: 100%;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+}
+/* line 513, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.cred-selection-view .back-edit .large-12 a:hover, .target-selection-view .back-edit .large-12 a:hover, .review-view .back-edit .large-12 a:hover {
+  background: #fafafa;
+}
+
+/* line 523, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.review-view .credential-groups .border, .review-view .credential-groups .cred-rows, .review-view .credential-groups .cred-rows > div, .review-view .selected-targets .border, .review-view .selected-targets .cred-rows, .review-view .selected-targets .cred-rows > div {
+  height: 640px;
+  border-bottom: 0;
+}
+/* line 529, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.review-view .review-options .header {
+  background-color: #efefef;
+  color: #999999;
+  border: 1px solid #cbcbcb;
+}
+/* line 534, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.review-view .review-options .border {
+  height: 680px;
+  padding-bottom: 40px;
+}
+
+/* line 541, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+a.btn.primary.launch {
+  display: block;
+  text-align: center;
+  margin-left: 0;
+  margin-top: 10px;
+}
+
+/* line 549, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.ie9 a.filter-toggle:after {
+  content: '^' !important;
+}
+
+/* line 554, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/brute_force/reuse.scss */
+.target-selection-view .help-icon, .cred-selection-view .help-icon {
+  bottom: auto;
+  top: 24px;
+  right: 18px;
+}

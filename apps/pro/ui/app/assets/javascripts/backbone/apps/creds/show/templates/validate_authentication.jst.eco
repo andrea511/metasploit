@@ -1,0 +1,5 @@
+<% if @model.get('attempting_login'): %>
+  <div class='loading'></div>
+<% else: %>
+  <div class='key'></div>
+<% end %>

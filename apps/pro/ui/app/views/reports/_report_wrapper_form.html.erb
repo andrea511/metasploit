@@ -1,0 +1,44 @@
+<% if local_assigns.has_key?(:error) %>
+  <div class="errors">
+    <%= error %>
+  </div>
+<% end %>
+
+<%= semantic_form_for [@workspace, @report] do |f| %>
+  <div class="one_col_no_sidebar">
+    <% if @custom %>
+      <%= f.input :report_type, :as => :hidden, :input_html => {:value => :custom} %>
+      <%= render :partial => 'reports/report_custom_resources_table', :locals => {:f => f} %>
+      <%= render :partial => 'reports/report_template', :locals => {:f => f} %>
+    <% else %>
+      <%= render :partial => 'reports/report_type', :locals => {:f => f} %>
+    <% end %>
+  </div>
+
+  <% unless @custom && @report_custom_templates.blank? %>
+    <div id="report_wrapper">
+      <%= f.hidden_field :workspace_id %>
+      <div class="one_col_no_sidebar">
+        <%= render :partial => 'reports/report_format',      :locals => {:f => f} %>
+        <%= render :partial => 'reports/report_name',        :locals => {:f => f} %>
+        <%= render :partial => 'reports/campaign_selection', :locals => {:f => f} %>
+        <%= render :partial => 'reports/address_settings',   :locals => {:f => f} %>
+        <%= render :partial => 'reports/custom_logo',        :locals => {:f => f} %>
+        <% unless @custom %>
+          <%= render :partial => 'reports/report_sections',    :locals => {:f => f} %>
+          <%= render :partial => 'reports/report_options',     :locals => {:f => f} %>
+        <% end %>
+        <%= render :partial => 'reports/result_order',       :locals => {:f => f} %>
+        <%= render :partial => 'reports/report_email',       :locals => {:f => f} %>
+        <%= render :partial => 'reports/submit_button',      :locals => {:f => f} %>
+      </div>
+    </div>
+  <% end %>
+
+<% end %>
+
+<% if local_assigns.has_key?(:set_dependency) && flash[:warning] %>
+  <div class="dependency hidden">
+    <%= render :partial => 'generic/flash_messages' %>
+  </div>
+<% end %>

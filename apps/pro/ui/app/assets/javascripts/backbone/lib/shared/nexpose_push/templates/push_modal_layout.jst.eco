@@ -1,0 +1,63 @@
+<div class="push-text">
+  <p class="push-note">Vulnerabilities not sourced from Nexpose will not be pushed.</p>
+  <% if @has_exceptions: %>
+      <p>Please select following:</p>
+      <p>
+          <div class="msg">
+            <form id="exception-info">
+              <div class="foundation">
+                <div class="row push-row">
+                  <div class="columns large-4">
+                    <label>Reason</label>
+                  </div>
+
+                  <div class="columns large-8">
+                    <select name="reason">
+                      <% for key,val of @reasons: %>
+                      <option value="<%= key %>"><%= val %></option>
+                      <% end %>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row push-row">
+                  <div class="columns large-4">
+                    <label>Expiration Date</label>
+                  </div>
+
+                  <div class="columns large-8">
+                    <input class='datetime' type="text" name="expiration_date" readonly=""readonly" />
+                  </div>
+                </div>
+
+                <div class="row push-row">
+                  <div class="columns large-4"></div>
+                  <div class="columns large-8">
+                    <div>
+                      <label>
+                        <input type="checkbox" name="approve" />
+                        Automatically Approve
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+
+                <div class="row push-row">
+                  <div class="columns large-12">
+                    <div>
+                      <label>
+                        Append comment to vulnerabilities that will be pushed.
+                      </label>
+                    </div>
+                    <div><textarea type="text" name="comments" /></div>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+          </div>
+      </p>
+  <% end %>
+</div>

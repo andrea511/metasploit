@@ -1,0 +1,136 @@
+@import "css3-mixins";
+
+$modal-action-strip-height: 45px;
+$modal-dist-from-top: 131px;
+$max-width: 1326px;
+
+.rollup-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 100%;
+  visibility: hidden;
+  background: #fff;
+  transition: all, .3s;
+  // Our modals are at 800, need to appear above rollup.
+  z-index: 798;
+  padding-bottom: $modal-action-strip-height+10px;
+  &.up {
+    visibility: visible;
+    top: 0;
+    background: rgba(0,0,0, .3);
+  }
+  div.content-frame {
+    @include box-shadow(0, -2px, 16px 2px, rgba(0,0,0,.5));
+    position: absolute;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    top: $modal-dist-from-top;
+    left: 0;
+    right: 0;
+    background: #fff;
+    bottom: $modal-action-strip-height;
+    div.content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+  &>div.actions {
+    position: absolute;
+    text-align: right;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: $modal-action-strip-height;
+    padding: 0 10px;
+    background: #f6f6f6;
+    box-shadow: 0 -2px 4px rgba(0,0,0, .25);
+    &>span.btn {
+      margin-top: 7px;
+      margin-right: 15px;
+      a {
+      }
+    }
+    &>a.link3 {
+      vertical-align: top;
+      margin-top: 7px;
+      margin-right: 15px;
+    }
+  }
+  div.row {
+    position: relative;
+    transition: left .3s;
+    .cell {
+
+    }
+  }
+  a.close {
+    position: absolute;
+    padding: 8px;
+    top: 0;
+    right: 2px;
+    z-index: 999;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 22px;
+    color: #777;
+    &:hover {
+      color: #333;
+    }
+  }
+
+  &>div.header, div.rollup-header {
+    position: absolute;
+    top: $modal-dist-from-top;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    h3 {
+      $h3-height: 38px;
+      font-size: 16px;
+      margin: 0;
+      height: $h3-height;
+      line-height: $h3-height;
+    }
+    .action-btn {
+      vertical-align: bottom;
+      margin: 0 0 3px 10px;
+    }
+  }
+  &>div.header {
+    box-shadow: 0 33px 21px 10px rgba(255, 255, 255, 1);
+    &.small-shadow {
+      box-shadow: 0 9px 9px 5px rgba(255, 255, 255, 1);
+    }
+  }
+
+  .max-width {
+    max-width: $max-width+40px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  div.rollup-header {
+    top: 0;
+    h3 { display: inline-block; }
+    a.btn {
+      position: relative;
+      bottom: 2px;
+      vertical-align: middle;
+    }
+    label.status {
+      position: relative;
+      bottom: 1px;
+      margin-left: 5px;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+<% title "User Administration - #{h(@user.username)}" %>
+<% breadcrumb admin_users_link, link_to(h(@user.username), edit_admin_user_path(@user)) %>
+<% include_javascript "admin_users" %>
+
+<% content_for :header_buttons do %>
+	<span class="btn">
+		<%= link_to "Back to User List", admin_users_path, :class => "back" %>
+	</span>
+<% end %>
+
+<%=  semantic_form_for [:admin, @user] do |f| %>
+	<%= render 'fields', :f => f %>
+<% end %> <!-- form -->
+
+<%= semantic_form_for [:admin, @user] do |f| %>
+	<%= render "users/change_password_fields", :f => f %>
+<% end %>
+
+<%= nonced_javascript_tag do %>
+  (function() {
+    jQuery(function($) {
+      // check or uncheck all checkboxes as long as they are not disabled
+      $checkboxes = $("#workspace_checkboxes").find('input[type=checkbox]').not(":disabled");
+    
+      $('#all_workspaces').click(function() {
+        if ($(this).is(':checked')) {
+          $checkboxes.prop('checked',true);                
+        } else {
+          $checkboxes.prop('checked',false);                
+        }
+      });
+    });
+  }).call(this);
+<% end %>
+

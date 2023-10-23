@@ -1,0 +1,81 @@
+grammar BooleanExpression
+  rule expr
+    term b:(c:(multi+) / '') {
+      def search_recursive(scope, controller, grouped, me, workspace)
+        if b.text_value.blank?
+          term.search_recursive(scope, controller, grouped, me, workspace)
+        else
+          nodes = ([term] + b.c.elements.map { |el| [el.op, el.term] }).flatten
+
+          # reorder the nodes into one AND and one OR operation.
+          #
+          # this is not so pretty. there is a way to specify
+          # operator precedence in a grammar, but i cannot figure it out.
+          # so i wrote some procedural code to reorder things. it works okay.
+          ands, ors = [], []
+          nodes.each_with_index do |curr, i|
+            if i.even?
+              # check if we are ANDING my man
+              if nodes[i+1].blank?
+                if nodes[i-1].present?
+                  if ['||', '|', nil].include?(nodes[i-1].text_value)
+                    ors << curr
+                  end
+                else
+                  ors << curr
+                end
+              elsif ['&&', '&'].include?(nodes[i+1].text_value)
+                ands << curr
+                ands << nodes[i+2]
+              else
+                ors << curr
+              end
+            end
+          end
+
+          and_sql = ands.uniq.map do |a|
+            r = a.search_recursive(scope, controller, grouped, me, workspace)
+            if r.kind_of?(ActiveRecord::Relation) then r.to_sql else r end
+          end.compact.join(") INTERSECT (")
+
+          # collapse and interate the ORs
+          or_sql = ors.uniq.map do |o|
+            r = o.search_recursive(scope, controller, grouped, me, workspace)
+            if r.kind_of?(ActiveRecord::Relation) then r.to_sql else r end
+          end.compact.join(") UNION (")
+
+          if and_sql.present? and or_sql.present?
+            "( #{and_sql} ) UNION ( #{or_sql} )"
+          elsif and_sql.present?
+            "( #{and_sql} )"
+          elsif or_sql.present?
+            "( #{or_sql} )"
+          end
+        end
+      end 
+    }
+  end
+  rule multi
+    [\s]* op [\s]* term [\s]*
+  end
+  rule op
+    '&&' / '&' / '||' / '|'
+  end
+  rule parens
+    '(' [\s]* expr [\s]* ')' {
+      def search_recursive(scope, controller, grouped, me, workspace)
+        expr.search_recursive(scope, controller, grouped, me, workspace)
+      end
+    }
+  end
+  rule term
+    parens / s_term
+  end
+  rule s_term
+    [^\s^&^|^(^)]+ {
+      def search_recursive(scope, controller, grouped, me, workspace)
+        me.pro_search_iter(controller, grouped, text_value, workspace)
+      end
+    }
+  end
+end

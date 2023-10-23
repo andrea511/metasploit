@@ -1,0 +1,15 @@
+.foundation.row.columns.backbone-tabs
+  %ul.nav
+    {{#each tabs}}
+    {{#if_eq hideOnZero compare=undefined }}
+    {{> shared/layouts/_tabs }}
+    {{/if_eq}}
+
+    {{#if_eq hideOnZero compare=true}}
+    {{#if_gt count compare=0}}
+    {{> shared/layouts/_tabs}}
+    {{/if_gt}}
+    {{/if_eq}}
+
+    {{/each}}
+  .content.tab-loading

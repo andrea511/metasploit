@@ -1,0 +1,20 @@
+<% breadcrumb link_to(h(@workspace.name), workspace_path(@workspace)),
+	link_to(@host.address, host_path(@host)),
+	link_to("Edit Authentication Token", edit_cred_path(@cred))
+%>
+<% title "Edit Authentication Token (#{h @host.name || "Unknown"} - #{ h @host.address })" %>
+
+
+<div class="one_col_no_sidebar">
+	<%= required_label %>
+
+	<%= semantic_form_for @cred do |f| %>
+		<%= render 'form', :f => f %>
+
+		<%= f.actions do -%>
+			<span class="btn">
+				<%= f.submit "Update Authentication Token", :class => "save" %>
+			</span>
+		<% end -%>
+	<% end %>
+</div>

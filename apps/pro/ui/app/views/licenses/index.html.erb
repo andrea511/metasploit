@@ -1,0 +1,25 @@
+<% title "License" %>
+
+<div id="license">
+  <%= render "licenses/license", :license => @license, :hide_change_key => true %>
+</div>
+
+<%= rapid7_purchase_form(h @license.product_key) %>
+
+<h2>Request New License</h2>
+
+<p><%= registration_message %></p>
+<%= render "licenses/request_product_key" %>
+
+
+<h2>Change License</h2>
+
+<p>If you have a new product key, paste it below and click the Activate License button.</p>
+<%= render "licenses/activate_product_key" %>
+
+
+<% if @license.revertable? %>
+	<h3>Revert to Previous License</h3>
+  <p>A previous license has been found. If you would like to switch to the old license, simply click the Revert License button below.</p>
+  <%= render "licenses/revert_product_key" %>
+<% end %>

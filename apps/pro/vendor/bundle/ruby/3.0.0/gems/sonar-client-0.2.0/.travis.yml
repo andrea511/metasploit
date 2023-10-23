@@ -1,0 +1,26 @@
+language: ruby
+sudo: false
+cache: bundler
+rvm:
+  - '2.4.5'
+  - '2.5.5'
+  - '2.6.5'
+  - '2.7.1'
+  - 'jruby-head'
+before_install:
+  - gem install bundler
+  - gem update bundler
+  - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
+  - rake --version
+before_script:
+  - bundle exec rake --version
+script: bundle exec rspec
+notifications:
+  email:
+    - r7_labs@rapid7.com
+#
+# Environment variables should be set in Travis repository settings per
+# https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
+#
+# Required vars are SONAR_API_URL, SONAR_EMAIL, and SONAR_TOKEN
+#

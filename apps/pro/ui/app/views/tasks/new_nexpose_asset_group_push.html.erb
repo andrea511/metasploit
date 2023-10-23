@@ -1,0 +1,89 @@
+<% title h(@title) %>
+<% breadcrumb workspace_link, link_to("Nexpose Asset Group Push", "#") %>
+<% include_view_javascript %>
+
+<% if @task.consoles.length == 0 %>
+
+	<div class="errors">
+	<% if current_user and current_user.admin? %>
+		<p>No <a href="<%= nexpose_consoles_path %>" target="nexpose_consoles">Nexpose Consoles</a> are available.</p>
+	<% else %>
+		<p>No Nexpose Consoles have been defined. Please login as an administrator to configure Nexpose Consoles</p>
+	<% end %>
+	</div>
+
+	<span class="btn"><%= link_to "Back", :back, :class => "back" %></span>
+
+<% elsif @task.no_valid_hosts %>
+
+	<div class='errors'><p>The selected hosts were not sourced from a Nexpose Scan or Import.</p></div>
+
+	<span class="btn"><%= link_to "Back", :back, :class => "back" %></span>
+
+<% else %>
+
+<%= required_label %>
+
+<%= semantic_form_for @task, :url => start_nexpose_asset_group_push_path, :remote => true, :complete => "enableSubmitButtons();" do |f| %>
+	<%= f.hidden_field :workspace_id %>
+
+	<div id="popup_errors">
+		<% unless @task.valid? || params[:whitelist_string].nil? %>
+			<div class="errors">
+				<p>
+				<%=h @task.error %>
+				</p>
+			</div>
+		<% end %>
+	</div>
+
+	<div class="one_col_no_sidebar">
+
+		<%= f.inputs "Nexpose Asset Group Configuration" do -%>
+			<%= f.input :nexpose_console, {:label => "Nexpose Console", :as => :select, :required => true}.merge(nexpose_console_select_options(@task.consoles)) %>
+			<%= f.input :group_name, :label => "Asset Group Name", :required => true %>
+			<%= f.input :group_desc, :label => "Asset Group Description", :required => true, :as => :text %>
+			<%= f.input :whitelist_string, :label => "Asset Group Devices", :as => :text, :required => true %>
+		<% end -%>
+
+		<%= f.help_link :nexpose_console do -%>
+			<h3>Nexpose Console</h3>
+			<p> Specify the Nexpose Console where the asset group should be created.</p>		
+		<% end -%>
+
+		<%= f.help_link :group_name do -%>
+			<h3>Group Name</h3>
+			<p> Specify the Asset Group name, must not already exist.</p>		
+		<% end -%>
+
+		<%= f.help_link :group_desc do -%>
+			<h3>Group Description</h3>
+			<p> Specify the Asset Group description.</p>		
+		<% end -%>
+
+		<%= f.help_link :whitelist_string do -%>
+			<h3>Asset Group Devices</h3>
+			<p>
+				Specify the list of addresses to be included in this asset group. All listed addresses must have been sourced from a Nexpose Scan or Import.
+				The Nexpose Console must have matching device identifiers for each submitted address.
+			</p>		
+		<% end -%>
+
+    <% if @no_launch.blank? %>
+      <%= f.actions do -%>
+        <span class="btn">
+          <%= f.submit "Create Asset Group", :class => "nexpose", :id => 'popup_submit' %>
+        </span>
+      <% end -%>
+    <% end -%>
+
+
+	</div> <!-- end div.one_col_with_sidebar -->
+
+<% end %>
+
+<%= add_disable_overlay([:pro]) if not @licensed %>
+
+<% end %>
+
+

@@ -1,0 +1,244 @@
+require 'pathname'
+
+# During build, the Gemfile is temporarily moved and
+# we must manually define the project root
+if ENV['MSP_ROOT']
+  root = Pathname.new(ENV['MSP_ROOT'])
+else
+  root = Pathname.new(__FILE__).parent
+end
+metamodules_load_path = root.join('metamodules', 'lib').expand_path.to_path
+
+unless $LOAD_PATH.include? metamodules_load_path
+  $LOAD_PATH.unshift metamodules_load_path
+end
+
+require 'metasploit/pro/metamodules'
+
+source 'https://rubygems.org'
+
+# All gems are listed alphabetically within their own group or sections.  When adding a gem please add a comment above
+# the declaration explaining why the gem was added.
+
+#
+# Root
+#
+rails_version_constraints = '~> 7.0'
+gem 'rails', *rails_version_constraints
+
+
+Metasploit::Pro::Metamodules.gemspecs(self)
+
+# Unset the flag to cleanup
+ENV['FRAMEWORK_FLAG'] = nil
+
+# Allows importing hosts and services from Sonar (https://sonar.labs.rapid7.com/)
+gem 'sonar-client'
+
+gem 'metasploit-framework', require: ['metasploit/framework', 'rex']
+
+# Used for Backup & Restore
+gem 'sys-filesystem'
+
+gem 'responders'
+# explicit require for sprockets-rails due to race condition
+gem 'sprockets-rails'
+
+# Use memoist for memoization because ActiveSupport::Memoizable has been removed from Rails
+gem 'memoist'
+# markdown formatting
+gem 'redcarpet'
+gem 'liquid', '~> 2.6.2'
+# Make white listed rails routes available in javasript
+gem 'js-routes', "~> 1.4"
+# Delayed jobs on linux needs daemons
+gem 'daemons', :platforms => :ruby
+# Used to pass static data to javasript from Ruby
+gem 'gon'
+# Jbuilder for Builder-eque JSON templates
+gem 'jbuilder'
+# Javascript framework for the UI
+gem 'jquery-rails'
+# Pagination
+gem 'kaminari'
+#gem 'mail', '~> 2.6.6'
+# MIME type identification for files
+gem 'mime-types'
+# RestClient needed for nexpose vuln verification
+gem 'rest-client'
+# RestClient needs ffi on windows but does not explicitly require it
+gem 'ffi', '1.15.4'
+# parses robot.txt files for thin
+gem 'robots'
+# webserver
+gem 'thin'
+# treetop is needed by the mail gem, but for some reason isn't properly
+# included when omitting development and test bundler groups
+gem 'treetop', '~> 1.4.15'
+# Bower for front-end dependency management
+gem "bower-rails"
+# lock nio4r until a new release of 2.5.9+
+# see https://github.com/socketry/nio4r/pull/277
+gem 'nio4r', '2.5.2'
+gem 'zeitwerk'
+gem 'timeout', '~> 0.1.0'
+# mini_portile2 is required to enable consistent nokogiri requirements cross platform
+gem 'mini_portile2'
+
+#
+# pcap group from metasploit-framework
+#
+gem 'pcaprub'
+
+# Secure web headers and XSS defense-in-depth
+gem 'secure_headers'
+# restirct sqlite3 due to change in build process for 1.5
+gem 'sqlite3', '~> 1.4.0'
+
+#
+# Extension gems.
+#
+
+# JSON parsing
+gem 'json'
+# RPC library for API calls in controllers
+gem 'msgpack'
+# Parses HTML for webpage cloner
+# lock nokogiri due to compile issues
+gem 'nokogiri'
+# arel-helpers: Useful tools to help construct database queries with ActiveRecord and Arel.
+gem 'arel-helpers'
+
+#
+# Active Record
+
+# State machine functionality for ActiveRecord and ActiveModel
+gem 'state_machines-activerecord'
+# mimemagic debacle of 2021 
+# https://github.com/minad/mimemagic/issues/97
+# https://github.com/rails/rails/issues/41750
+#gem 'mimemagic', '0.3.5'
+
+#
+# Windows-only gems used by prosvc.  All are extension gems, so they must be have fixed version to match pre-compiled
+# gems.
+#
+
+# Dependency of windows-api
+# version pinned to pre-installed version in ruby/lib
+gem 'win32-api', '1.10.1', :platform => 'mingw'
+# Allow thin to run as a Windows service in thin_service_install.rb
+# version pinned to pre-installed version in ruby/lib
+gem 'win32-service', '2.2.0', :platform => 'mingw'
+# Dependency for win32-service
+gem 'ffi-win32-extensions', '1.0.4', :platform => 'mingw'
+# Dependency of windows-pr
+# version pinned to pre-installed version in ruby/lib
+gem 'windows-api', '0.4.4', :platform => 'mingw'
+# Allows using windows calls as methods instead of as procs
+# version pinned to pre-installed version in ruby/lib
+gem 'windows-pr', '1.2.6', :platform => 'mingw'
+# Use gem over expanded local files
+gem 'ruby-wmi', '0.4.0', :require => false
+
+#
+# Groups - listed alphabetically
+#
+
+# DO NOT add debuggers or other debugging gems to the Gemfile.  The various debuggers will interfere with each other.
+# gem 'debugger' specifically interferes with the 'ruby-debug-ide' gem installed by Rubymine.  As a courtesy to other
+# developers using different debuggers, install and require your debuggers as needed using plain gem install and
+# manually requiring the debugger file OR modify the Gemfile, but DO NOT commit the change.
+group :development do
+  #
+  # Asset Compilation
+  #
+
+  # CoffeeScript integration in rails
+  gem 'coffee-rails'
+  # We have compile errors with >=1.5.  These can probably be fixed and this line removed.
+  gem 'coffee-script-source', '< 1.5'
+  # Coffeescript client-side templates
+  gem 'eco'
+  # CoffeeScript to JavaScript conversion
+  gem 'execjs'
+  # Handlebars integration in rails
+  # locked due to 4.6.0+ chnages https://handlebarsjs.com/api-reference/runtime-options.html#options-to-control-prototype-access
+  # not compatible with some tag and service creation modals
+  gem 'handlebars_assets', '0.23.7'
+  gem 'haml-rails'
+  gem 'haml', '	~> 5.0'
+  # Add non digest url versions of assets
+  gem 'non-stupid-digest-assets'
+  # Sass integration in rails
+  # sass-rails pinned to < 5.1 as compass-rails has it pinned:
+  #   https://github.com/Compass/compass-rails/blob/ee9660d8936952b529f4efce177cd88b08829f7e/compass-rails.gemspec#L21
+  gem 'sass-rails', '< 5.1'
+  # JavaScript virtual machine for execjs
+  gem 'mini_racer'
+  # JavaScript minification
+  gem 'uglifier'
+
+  # replaces standard error page with interactive stack and REPL in each stack frame.
+  gem 'better_errors'
+  # enables REPL and local/instance variable inspection for better_errors
+  gem 'binding_of_caller'
+  # static analysis security scanner for Rails.  Used on Jenkins.
+  gem 'brakeman'
+  # generate API documentation
+  gem 'yard'
+  # gem "yard-cucumber"
+  gem "rails-erd"
+  gem 'pry-byebug'
+end
+
+group :development, :test do
+  # running documentation generation tasks and rspec tasks
+  gem 'rake'
+  # automatically load factories
+  gem 'factory_bot_rails'
+  # Needs to be in development as well as test so that `rake spec` works.
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  # teaspoon is a javascript test runner for Rails
+  gem 'teaspoon-jasmine'
+  # Adding in awesome_print for better console output
+  # colorizes and formats rails console, it can be added to your ~/.irbrc
+  # require "awesome_print"; AwesomePrint.irb!.
+  gem 'awesome_print'
+  # Foreman to manage all the process we are starting to use
+  gem 'foreman'
+  # Using faker for development and testing of the nexpose integration
+  gem 'faker'
+  gem 'parallel_tests'
+  gem 'rack-delay'
+end
+
+group :test do
+  # Needed to work around a regression between capybara 2.7.1 and xpath 2.1
+  # XXX remove when capybara is updated to work with xpath 2.1
+  gem 'xpath'
+  gem 'capybara'
+  gem 'capybara-json'
+  gem 'ci_reporter_rspec'
+  # Rails integrations for cucumber
+  gem 'cucumber'
+  gem 'cucumber-rails', require: false
+  gem 'diff-lcs'
+  gem 'database_cleaner'
+  gem 'fivemat'
+  gem 'headless'
+  gem 'rbvmomi'
+  gem 'rspec_junit_formatter'
+  gem 'webdrivers'
+  # add matchers from shoulda, such as validates_presence_of, which are useful for testing validations
+  gem 'shoulda-matchers'
+  gem 'timecop'
+  gem 'spork'
+  # record HTTP responses from Sonar
+  gem 'vcr'
+  # mocking library used by vcr to record and replay cassettes
+  gem 'webmock', require: false
+  # new requirement for capybara with rails 5.1+
+  gem 'puma'
+end

@@ -1,0 +1,7 @@
+<div class="step">
+	<%= link_to "Show all events", workspace_events_path(@workspace), :style => "float: right" %>
+	<h3>Recent Events</h3>
+	<div class="stepInfo" style='padding:0; background-image: none; border-top: 0;'>
+		<%= render 'events/events', :events => @workspace.recent_events %>
+	</div>
+</div>

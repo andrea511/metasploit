@@ -1,0 +1,6 @@
+<% title "Session history for #{@session.id}" %>
+<% breadcrumb workspace_link, sessions_link, session_link, link_to("History", session_history_path(@workspace, @session.id)) %>
+
+<%= render 'sessions/props' %>
+
+<%= render 'sessions/history_table', :events => @events %>

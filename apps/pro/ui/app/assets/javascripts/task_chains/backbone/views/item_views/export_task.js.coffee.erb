@@ -1,0 +1,32 @@
+define [
+  'jquery',
+  '<%= javascript_path('templates/task_chains/item_views/nexpose_exception_push_task') %>',
+  '<%= javascript_path('task_chains/backbone/views/item_views/task_config') %>'
+], ($, Template, TaskConfigView) ->
+  class ExportTask extends TaskConfigView
+    template: HandlebarsTemplates['task_chains/item_views/nexpose_exception_push_task']
+
+    VALIDATION_URL: "/workspaces/#{WORKSPACE_ID}/tasks/validate_nexpose_exception_push"
+
+    ui: _.extend({}, TaskConfigView.prototype.ui,{
+      'center': '.center'
+      'search_form' : '.center .searchform'
+    })
+
+    onShow:() ->
+      @loadPartial("/workspaces/#{WORKSPACE_ID}/tasks/new_nexpose_exception_push.html?task_chain=t", @_afterLoad,@)
+
+    onBeforeClose: =>
+      super
+      @_validate(@VALIDATION_URL)
+
+    _afterLoad: =>
+      consoles = JSON.parse($('meta[name=consoles]').attr('content')).map (console) -> console.name
+      $('#exception-push-header', @el).text('Push to Nexpose');
+      $('#nexpose_push_task_description', @el).remove();
+      $('#exception-push-header', @el).after("<div id='nexpose_push_task_description' class='center'>Push Exceptions and Validations in workspace to the following Nexpose Consoles at time of execution: #{consoles.join(', ')}</div>")
+      @ui.form.attr('action', "#{Routes.workspace_nexpose_result_export_runs_path(WORKSPACE_ID)}")
+      @ui.form.attr('method', "POST")
+      @ui.form.append("<input type='hidden' name='authenticity_token' value='#{$('meta[name=csrf-token]').attr('content')}' />")
+      @ui.form.append('<input name="utf8" type="hidden" value="✓"/>')
+      @ui.form.append("<input type='hidden' name='workspace_id' value='#{WORKSPACE_ID}' />")

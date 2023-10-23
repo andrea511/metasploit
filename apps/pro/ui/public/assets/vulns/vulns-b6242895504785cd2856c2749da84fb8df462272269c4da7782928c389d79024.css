@@ -1,0 +1,86 @@
+/* line 2, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+#vulns-table td table tr {
+  border-bottom: 0;
+}
+/* line 4, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+#vulns-table td table tr td {
+  padding: 0;
+}
+/* line 9, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+#vulns-table.vuln-validation td div[data-status="not_exploitable"] {
+  font-weight: bold;
+  color: black;
+}
+/* line 13, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+#vulns-table.vuln-validation td div[data-status="exploited"] {
+  color: #CB615E;
+  font-weight: bold;
+}
+/* line 17, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+#vulns-table.vuln-validation td div[data-status="not_exploited"] {
+  color: #69B45E;
+  font-weight: bold;
+}
+
+/* line 23, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns {
+  float: right;
+  margin-bottom: 5px;
+}
+/* line 26, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .create-exception {
+  display: inline-block;
+}
+/* line 28, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .create-exception .dropdown-list {
+  display: none;
+  border: 1px solid grey;
+  border-top: none;
+  background-color: white;
+  position: absolute;
+  margin-top: 23px;
+  padding: 2px 0px 2px 0px;
+  z-index: 1;
+}
+/* line 37, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .create-exception .dropdown-list li {
+  padding: 0px 10px 0px 10px;
+}
+/* line 39, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .create-exception .dropdown-list li:hover {
+  background-color: #a9a9a9;
+}
+/* line 44, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .create-exception .arrow {
+  position: relative;
+  margin-left: -3px;
+}
+/* line 47, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .create-exception .arrow .btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-left: none;
+}
+/* line 53, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .create-exception .arrow .btn a {
+  padding-left: 4px;
+  padding-right: 2px;
+}
+/* line 60, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .create-exception .btn {
+  margin-right: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+/* line 65, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .create-exception .arrow {
+  display: inline-block;
+}
+/* line 70, /home/jenkins/workspace/Release-Build-Installers-Windows64/pro/ui/app/assets/stylesheets/vulns/vulns.scss */
+.btns .dropdown {
+  padding-right: 2px;
+  padding-left: 2px;
+  background-image: none;
+}

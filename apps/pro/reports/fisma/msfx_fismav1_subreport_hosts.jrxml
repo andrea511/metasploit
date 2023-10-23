@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fisma_subreport_hosts" language="groovy" pageWidth="562" pageHeight="802" columnWidth="562" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="07448905-5899-460b-9dc1-287cd0dea445">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{style_template_dir} + "common_styles.jrtx"]]></template>
+	<style name="table 1" backcolor="#FFFFD0">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tableService" uuid="21167879-2be7-43d3-9a61-bba51411ade7">
+		<queryString language="xPath">
+			<![CDATA[/services/service]]>
+		</queryString>
+		<field name="name" class="java.lang.String">
+			<fieldDescription><![CDATA[name]]></fieldDescription>
+		</field>
+		<field name="proto" class="java.lang.String">
+			<fieldDescription><![CDATA[protocol]]></fieldDescription>
+		</field>
+		<field name="port" class="java.lang.String">
+			<fieldDescription><![CDATA[port]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="tableCred" uuid="38f3c6d9-e470-4b5b-91d5-9c2ea67bea4a">
+		<queryString language="xPath">
+			<![CDATA[/credentials/credential]]>
+		</queryString>
+		<field name="public" class="java.lang.String">
+			<fieldDescription><![CDATA[public]]></fieldDescription>
+		</field>
+		<field name="private" class="java.lang.String">
+			<fieldDescription><![CDATA[private]]></fieldDescription>
+		</field>
+		<field name="private_type" class="java.lang.String">
+			<fieldDescription><![CDATA[private_type]]></fieldDescription>
+		</field>
+		<field name="origin_type" class="java.lang.String">
+			<fieldDescription><![CDATA[origin/type]]></fieldDescription>
+		</field>
+		<field name="origin_detail" class="java.lang.String">
+			<fieldDescription><![CDATA[origin/detail]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="tableVuln" uuid="b60ed04f-9ff5-421d-afcb-082986346c1a">
+		<queryString language="xPath">
+			<![CDATA[/vulns/vuln]]>
+		</queryString>
+		<field name="name" class="java.lang.String">
+			<fieldDescription><![CDATA[name]]></fieldDescription>
+		</field>
+		<field name="exploited_at" class="java.lang.String">
+			<fieldDescription><![CDATA[exploited_at]]></fieldDescription>
+		</field>
+		<field name="module" class="java.lang.String">
+			<fieldDescription><![CDATA[module]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="tableControl" uuid="75e985ce-2bf5-4706-9c46-a1b0d6c68247">
+		<queryString language="xPath">
+			<![CDATA[/controls/control]]>
+		</queryString>
+		<field name="name" class="java.lang.String">
+			<fieldDescription><![CDATA[name]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="sport" class="java.lang.String">
+		<parameterDescription><![CDATA[When set, this subreport should produce a service table.]]></parameterDescription>
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cport" class="java.lang.String">
+		<parameterDescription><![CDATA[When set, this subreport should produce a cred table.]]></parameterDescription>
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="vuln_related" class="java.lang.Boolean" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cred_related" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="style_template_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="xPath">
+		<![CDATA[/result/details/hosts/host]]>
+	</queryString>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[@address]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="os" class="java.lang.String">
+		<fieldDescription><![CDATA[os]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement uuid="47d180a3-64c9-4818-b6c4-40c99311d41d" x="0" y="7" width="287" height="20"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Host: " + $F{address} + ($F{name} ? (" (" + $F{name} + ")") : "" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="47d180a3-64c9-4818-b6c4-40c99311d41d" x="302" y="7" width="260" height="20"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["OS: " + $F{os}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50">
+			<printWhenExpression><![CDATA[$P{sport} != null]]></printWhenExpression>
+			<componentElement>
+				<reportElement uuid="4bdd9c46-1cb9-445a-8f20-6a04389ac67d" key="table 1" x="136" y="17" width="285" height="25">
+					<printWhenExpression><![CDATA[$P{sport} != null]]></printWhenExpression>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tableService" uuid="538a7788-85d9-4433-b8f1-96010c2b48f4">
+						<dataSourceExpression><![CDATA[$P{REPORT_DATA_SOURCE}.subDataSource("host/services/service")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="e20c88b2-b2c9-4c68-9ccd-6d69ee1f0597">
+						<jr:columnHeader style="table 1_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="51ba7228-9b9a-489b-9c89-07081f2f1e58" x="4" y="4" width="82" height="16"/>
+								<textElement/>
+								<text><![CDATA[Service]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="2d6e99e4-8bab-46d5-a059-5367bad87975" x="4" y="4" width="82" height="16"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{name} == null ? "<unknown>" : $F{name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="b9c007dc-cb9b-46b3-acb8-5ee272a56945">
+						<jr:columnHeader style="table 1_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="fcded68e-e877-4f83-8154-35c11b94cdac" x="4" y="4" width="82" height="16"/>
+								<textElement/>
+								<text><![CDATA[Port]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="2d828033-c217-476c-97f9-e1945ad85621" x="4" y="4" width="82" height="16"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{port} + "/" + $F{proto}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="b14e7821-6251-4462-8ccd-d9bf05144f7f" x="0" y="0" width="562" height="16">
+					<printWhenExpression><![CDATA[$P{sport} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Discovered Services:]]></text>
+			</staticText>
+		</band>
+		<band height="53">
+			<printWhenExpression><![CDATA[$P{cred_related}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="0707b703-7bf6-442e-98dd-0ab17f46d5cd" x="0" y="0" width="562" height="16">
+					<printWhenExpression><![CDATA[$P{cport} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Discovered Credentials:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="0cd3e81f-2d72-49bb-bcb8-3659b6d271df" key="table 1" style="table_text" x="10" y="16" width="552" height="25"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tableCred" uuid="4603733f-efb0-4004-8551-6999851e1e9f">
+						<dataSourceExpression><![CDATA[$P{REPORT_DATA_SOURCE}.subDataSource("host/credentials/credential")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="80" uuid="d4564c31-2113-4b84-9356-c1ace1a8f7dd">
+						<jr:columnHeader style="table 1_CH" height="21" rowSpan="1">
+							<textField>
+								<reportElement uuid="0a1764b6-6552-47ba-803d-3960572022ef" style="table_text_padded" x="0" y="0" width="79" height="20"/>
+								<textElement markup="none"/>
+								<textFieldExpression><![CDATA["Public"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="25" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="0e3704e6-f9bc-40d3-b2e9-a3d4ef54022a" style="table_text_padded" x="0" y="0" width="80" height="25"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{public}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="78260479-b431-4669-8e5b-fe3614964c83">
+						<jr:columnHeader style="table 1_CH" height="21" rowSpan="1">
+							<textField>
+								<reportElement uuid="0a1764b6-6552-47ba-803d-3960572022ef" style="table_text_padded" x="0" y="0" width="90" height="21"/>
+								<textElement markup="none"/>
+								<textFieldExpression><![CDATA["Private Type"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="25" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="0e3704e6-f9bc-40d3-b2e9-a3d4ef54022a" style="table_text_padded" x="0" y="0" width="90" height="25"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{private_type} ? $F{private_type} : "None"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="175" uuid="9c30a54b-47b0-4c9c-b46d-ad46fe4bbd67">
+						<jr:columnHeader style="table 1_CH" height="21" rowSpan="1">
+							<textField>
+								<reportElement uuid="326baa54-cda9-4aed-a03e-0818ebdebb2f" style="table_text_padded" x="0" y="0" width="175" height="20"/>
+								<textElement markup="none"/>
+								<textFieldExpression><![CDATA["Private"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="25" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="a6429c9a-de30-463c-8e2d-70371fbe0787" style="table_text_padded" x="0" y="0" width="175" height="25"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{private_type} ?
+  $F{private} :
+  "*BLANK*"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="68" uuid="646705b6-e726-46fe-bb15-c315a4315ca7">
+						<jr:columnHeader style="table 1_CH" height="21" rowSpan="1">
+							<textField>
+								<reportElement uuid="1e5522af-4abd-4041-b0fa-f240d51690d0" style="table_text_padded" x="0" y="0" width="68" height="20"/>
+								<textElement markup="none"/>
+								<textFieldExpression><![CDATA["Origin"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="25" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="a6429c9a-de30-463c-8e2d-70371fbe0787" style="table_text_padded" x="0" y="0" width="68" height="25"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{origin_type}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="138" uuid="a0065970-00e1-4f1f-a0bf-cb87f8918f5c">
+						<jr:columnHeader style="table 1_CH" height="21" rowSpan="1">
+							<textField>
+								<reportElement uuid="9564c003-32b4-46a9-941e-67120a52f3f1" style="table_text_padded" x="0" y="0" width="138" height="20"/>
+								<textElement markup="none"/>
+								<textFieldExpression><![CDATA["Origin Detail"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="25" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="a6429c9a-de30-463c-8e2d-70371fbe0787" style="table_text_padded" x="0" y="0" width="138" height="25"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{origin_detail}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="50">
+			<printWhenExpression><![CDATA[$P{vuln_related}]]></printWhenExpression>
+			<staticText>
+				<reportElement uuid="d5c9dfa0-05d0-491c-bf4e-81dd9056113a" x="0" y="0" width="562" height="16"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Successful Exploits:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="b376d44e-373e-4fa1-b494-a9aef3524677" key="table 1" x="10" y="16" width="552" height="25"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tableVuln" uuid="7c0fc4d2-8951-4480-857e-df61a7fc9b86">
+						<dataSourceExpression><![CDATA[$P{REPORT_DATA_SOURCE}.subDataSource("host/vulns/vuln")]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="173" uuid="8053dba1-6692-4f3d-94a1-1fc32345bd36">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="0a1764b6-6552-47ba-803d-3960572022ef" style="table_text_padded" x="0" y="0" width="173" height="30"/>
+								<textElement markup="none"/>
+								<textFieldExpression><![CDATA["Vulnerability"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="32" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="0e3704e6-f9bc-40d3-b2e9-a3d4ef54022a" style="table_text_padded" x="0" y="0" width="173" height="32"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="232" uuid="565f77f0-d0a6-40c0-9119-1923d35c89ca">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="0a1764b6-6552-47ba-803d-3960572022ef" style="table_text_padded" x="0" y="0" width="232" height="30"/>
+								<textElement markup="none"/>
+								<textFieldExpression><![CDATA["Metasploit module"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="32" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="0e3704e6-f9bc-40d3-b2e9-a3d4ef54022a" style="table_text_padded" x="0" y="0" width="232" height="32"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{module}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="120" uuid="58dc8a6e-f308-40a7-b048-dfb7931c52be">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="0a1764b6-6552-47ba-803d-3960572022ef" style="table_text_padded" x="0" y="0" width="120" height="30"/>
+								<textElement markup="none"/>
+								<textFieldExpression><![CDATA["Exploited on"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="32" rowSpan="1">
+							<textField textAdjust="StretchHeight">
+								<reportElement uuid="0e3704e6-f9bc-40d3-b2e9-a3d4ef54022a" style="table_text_padded" x="0" y="0" width="120" height="32"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{exploited_at}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

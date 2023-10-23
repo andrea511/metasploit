@@ -1,0 +1,43 @@
+<% title "Web Templates" -%>
+<% include_javascript 'social_engineering/web_templates/_index' -%>
+
+<% breadcrumb workspace_link,
+	social_engineering_campaigns_link,
+	social_engineering_web_templates_link
+%>
+
+<%= form_tag do %>
+	<div class="analysis-control-bar">
+		<div class="control-bar-items">
+			<span class="button"><%= link_to "New Web Template", new_workspace_social_engineering_web_template_path(@workspace), :class => "new" %></span>
+			<span class="button any">
+        <%= submit_delete(delete_workspace_social_engineering_web_templates_path(@workspace), 'Delete selected Web Templates?') %>
+			</span>
+		</div>
+	</div>
+
+	<table class="sortable list" id="web-templates-table">
+		<thead>
+		<tr>
+			<th class="checkbox"><%= check_box_tag "all_hosts", false %></th>
+			<%= sortable_th "Name", "name" %>
+			<%= sortable_th "Creator", "creator" %>
+			<%= sortable_th "Creation Date", "created_at" %>
+		</tr>
+		</thead>
+		<tbody>
+
+		<% @web_templates.each do |web_template| %>
+		<tr class="<%=h row_cycle %>">
+			<td width="1"><%= check_box_tag("web_template_ids[]", web_template.id, false, :id => nil) %></td>
+			<td><%= link_to(web_template.name, edit_workspace_social_engineering_web_template_path(@workspace, web_template)) %></td>
+			<td><%= web_template.user.username %></td>
+			<td><%= web_template.created_at %></td>
+		</tr>
+		<% end %>
+
+		</tbody>
+	</table>
+
+<% end %>
+

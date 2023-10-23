@@ -1,0 +1,102 @@
+define [
+  '<%= javascript_path("templates/apps/views/no_app_runs_view") %>',
+  '<%= javascript_path("templates/apps/views/app_run_view") %>',
+  '<%= javascript_path("apps/backbone/views/layouts/app_stat_modal_layout") %>',
+  'jquery',
+  '<%= javascript_path("apps/backbone/models/app_run") %>'
+], (NoRunsTemplate, AppRunViewTemplate, AppStatModalLayout, $, AppRun) ->
+
+  ABORT_CONFIRM_MSG = 'Are you sure you want to abort this MetaModule? You will '+
+                      'not be able to start it again.'
+
+  class NoItemsView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['apps/views/no_app_runs_view']
+
+  class AppRunView extends Backbone.Marionette.ItemView
+    template: HandlebarsTemplates['apps/views/app_run_view']
+    modelEvents:
+      "change:run_stats": 'tasksChanged'
+      "change:status": 'render'
+    events:
+      'click a.delete': 'deleteClicked'
+      'click a.stop': 'stopClicked'
+    tasksChanged: => @render()
+    serializeData: => _.extend(super, statData: @model.runStatHash())
+
+    stopClicked: (e) =>
+      e.preventDefault() if e
+      return if $(e.currentTarget).hasClass('ui-disabled')
+      return unless confirm(ABORT_CONFIRM_MSG)
+      @model.abort().complete => @model.fetch(
+        success: => setTimeout((=> @model.fetch()), 4000)
+      ) # check twice to make sure it doesnt hang at status: running
+      $(e.currentTarget).addClass('ui-disabled').fadeTo(.1, .5)
+
+    deleteClicked: (e) =>
+      e.preventDefault()
+      return unless confirm('Are you sure you want to delete the results'+
+                            ' from this App Run?')
+      # disable the row from further clicks
+      $(@el).click((e)->e.stopImmediatePropagation())
+      $(@el).fadeTo(0, .6)
+      @model.destroy()
+
+  class AppRunsCollectionView extends Backbone.Marionette.CollectionView
+    childView: AppRunView
+    emptyView: NoItemsView
+
+    events:
+      'click a.findings': 'findingsClicked'
+
+    initialize: =>
+      @$el.addClass('tab-loading')
+      @collection.on('sync', => @$el.removeClass('tab-loading'))
+      $selMeta = $('meta[name=selected_app_run]')
+      @selId = $selMeta.attr('content')
+      $selMeta.remove()
+
+    appendHtml: (collectionView, itemView) =>
+      # insert the item at its actual index
+      itemIndex = collectionView.collection.indexOf(itemView.model)
+      collectionView.$el.insertAt(itemIndex, itemView.$el)
+
+    findingsClicked: (e) =>
+      e.preventDefault() if e
+      appRun = @_findAppRunFromEvent(e)
+      @_showStatsForAppRun(appRun)
+
+    _findAppRunFromEvent: (e) =>
+      idx = $(e.currentTarget).parents('.row').first().parent().index()
+      @collection.models[idx]
+
+    _showStatsForAppRun: (appRun) =>
+      if appRun.get('tasks')?[0]?.presenter?.length
+        # uses the new-style task findings page
+        initProRequire ['apps/tasks/show/show_controller', 'entities/task'], =>
+          controller = null
+          @rollupModal = new RollupModalView(
+            buttons: [{name: 'Close', class: 'primary close'}]
+            onClose: => controller.destroy()
+          )
+          @rollupModal.open()
+          region = new Backbone.Marionette.Region(el: $('.content', @rollupModal.el))
+          task = new Pro.Entities.Task(id: appRun.get('tasks')[0].id, workspace_id: WORKSPACE_ID)
+          controller = new Pro.TasksApp.Show.Controller(task: task, region: region)
+      else
+        @rollupLayout = new AppStatModalLayout(appRun: appRun)
+        @rollupModal = new RollupModalView(
+          buttons: [{name: 'Close', class: 'primary close'}]
+          onClose: => @rollupLayout.onClose()
+        )
+        @rollupModal.open()
+        region = new Backbone.Marionette.Region(el: $('.content', @rollupModal.el))
+        region.show(@rollupLayout)
+
+    onRender: =>
+      if @selId && @selId.length > 0
+        # look up the AppRun, since its loaded!
+        appRun = new AppRun(id: parseInt(@selId))
+        @selId = null
+        appRun.fetch(
+          success: => @_showStatsForAppRun(appRun)
+        )

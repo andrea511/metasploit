@@ -1,0 +1,130 @@
+#!/usr/bin/env ruby
+
+def get_boot_time
+	::Time.at(::Time.now.to_i - ::File.read('/proc/uptime').split(/\s+/).first.to_i)
+end
+
+def get_pid(pid_file)
+	return nil unless ::File.exist?(pid_file)
+	pid = ::File.read(pid_file).strip.to_i
+	return nil unless pid > 0
+	# Ignore+remove pid files which predate the system's boot time...
+	if ::File.stat(pid_file).mtime < get_boot_time
+		::File.delete(pid_file)
+		return nil
+	end
+	pid
+end
+
+def get_pro_pid(base)
+	get_pid(::File.join(base, "apps", "pro", "engine", "tmp", "prosvc.pid"))
+end
+
+def get_nginx_pid(base)
+	get_pid(::File.join(base, "nginx", "temp", "nginx.pid"))
+end
+
+def get_nginx_path(base)
+	arch = 'unknown'
+	binary = 'nginx'
+	case RUBY_PLATFORM
+	when /x86_64-linux/
+		arch = "linux64"
+	when /i[3456]86-linux/
+		arch = "linux32"
+	when /mingw32/
+		arch = "win32"
+		binary = 'nginxr7.exe'
+	end
+
+	path = File.join(base, 'nginx', 'sbin', binary)
+
+	# If we can't find the arch file, see if there is a generic
+	# file (such as the symlink added by debian installers)
+	unless File.exist?(path)
+		generic_path = File.join(base, 'nginx', 'bin', binary)
+		if ::File.exist?(generic_path)
+			path = generic_path
+		end
+	end
+
+	path
+end
+
+
+# Get our bearings
+@cwd = File.dirname(__FILE__)
+@pro = File.expand_path(File.join(@cwd, "..", "..", "..", ".."))
+@ppid = get_pro_pid(@pro)
+@npid = get_nginx_pid(@pro)
+
+# Parse arguments
+@act = ARGV.shift
+
+case @act
+when "start"
+	if @ppid and (Process.kill(0, @ppid).to_i rescue 0) == 1
+		puts "prosvc already running"
+	elsif @npid and (Process.kill(0, @npid).to_i rescue 0) == 1
+		puts "nginx already running"
+	else
+		swap_config = File.join(@pro, 'apps', 'pro', 'engine', 'tmp', 'swap_config')
+		if File.exist?(swap_config) && File.read(swap_config).strip == '1'
+			system("ruby #{File.join(@pro, 'apps', 'pro', 'ui', 'script', 'swap.rb')}")
+		end
+
+		Dir.chdir(File.join(@pro, "apps", "pro", "engine"))
+		system("nohup ruby prosvc.rb -E production >prosvc_stdout.log 2>prosvc_stderr.log &")
+		puts "prosvc is starting"
+		puts "nginx is starting"
+	end
+
+when "stop"
+	if @ppid
+		::Process.kill(2, @ppid) rescue nil
+		sleep(1)
+		::Process.kill(9, @ppid) rescue nil
+	end
+
+	system("pkill -9 -f 'prosvc.rb|^prosvc'")
+
+	if @npid
+		if RUBY_PLATFORM =~ /mingw32/
+			system("%SystemRoot%/System32/taskkill.exe /F /IM nginxr7.exe > NUL 2>NUL")
+		else
+			nginx_path = get_nginx_path(@pro)
+			nginx_conf = File.join(@pro, 'nginx', 'conf', 'nginx.conf')
+			system("\"#{nginx_path}\" -c \"#{nginx_conf}\" -s stop >/dev/null 2>&1")
+		end
+		sleep(1)
+		:Process.kill(2, @npid) rescue nil
+		sleep(1)
+		:Process.kill(9, @npid) rescue nil
+	end
+
+	puts "prosvc is stopped"
+	puts "nginx is stopped"
+
+when "status"
+	if @ppid
+		if (Process.kill(0, @ppid).to_i rescue 0) == 1
+			puts "prosvc is running"
+		else
+			puts "prosvc is stopped"
+		end
+	else
+		puts "prosvc is stopped"
+	end
+
+	if @npid
+		if (Process.kill(0, @npid).to_i rescue 0) == 1
+			puts "nginx is running"
+		else
+			puts "nginx is stopped"
+		end
+	else
+		puts "nginx is stopped"
+	end
+else
+	exit(0)
+end

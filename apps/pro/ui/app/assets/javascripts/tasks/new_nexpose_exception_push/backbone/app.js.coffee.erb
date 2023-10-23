@@ -1,0 +1,11 @@
+define [
+    'jquery',
+    '<%= javascript_path("tasks/new_nexpose_exception_push/backbone/controllers/exception_push_controller") %>'
+], ($, ExceptionPushController) ->
+  class App
+    start: =>
+      app = new Backbone.Marionette.Application
+      app.addInitializer ->
+        exception_push = new ExceptionPushController()
+        exception_push.start()
+      app.start()

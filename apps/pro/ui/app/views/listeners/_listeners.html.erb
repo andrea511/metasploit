@@ -1,0 +1,82 @@
+<div class="listeners">
+
+  <p>
+    Listeners can be used to handle persistent agents from compromised systems. Every listener requires a unique combination of address and port and must be
+    associated with a specific project. Any incoming (compatible) connection to this listener will register a session within the associated project.
+  </p>
+
+<%= form_tag delete_listeners_path, :method => :delete do %>
+  <div class="control-bar">
+    <span class="button">
+      <%= link_to "New Listener", new_listener_path, :class => "new" %>
+    </span>
+    <span class="button">
+      <%= submit_tag "Delete", :class => "delete", :id => 'listener-delete-submit' %>
+    </span>
+  </div>
+
+  <table id="listener_list" class="list">
+    <thead>
+      <th class="checkbox"><%= check_box_tag "all_listeners", true %></th>
+      <th>Scope</th>
+      <th>Project</th>
+      <th>Owner</th>
+      <th>Payload</th>
+      <th>Macro</th>
+      <th>Enabled</th>
+      <th>Status</th>
+      <th>Updated</th>
+    </thead>
+    <tbody>
+    <% @listeners.each do |listener| %>
+    <tr id="<%=h dom_id(listener) %>" class="<%=h row_cycle %>">
+      <td><%= check_box_tag("listener_ids[]", listener.id, false, :id => nil) %></td>
+      <td>
+        <%= link_to(h(listener.name), edit_listener_path(listener)) %>
+      </td>
+      <td>
+        <%= link_to(h(listener.workspace.name), workspace_path(listener.workspace)) %>
+      </td>
+      <td>
+        <%=h listener.owner %>
+      </td>
+      <td>
+        <%=h listener.payload %>
+      </td>
+      <td>
+        <%=h listener.macro %>
+      </td>
+      <td>
+        <%=h listener.enabled ? "Yes" : "No" %>
+      </td>
+      <td class='toggle'>
+        <%=
+          listener.status == "Active" ?
+          ( link_to("Active", listener_stop_path(listener), :data => { :confirm => 'Stop this Listener?' } ) ) :
+          ( link_to("Inactive", listener_start_path(listener), :data => { :confirm => 'Start this Listener?' } ) )
+        %>
+      </td>
+      <td>
+        <%= listener.updated_at %>
+      </td>
+    </tr>
+    <% end %>
+    <% if @listeners.empty? %>
+      <td colspan=9 align=center>
+        No Persistent Listeners
+      </td>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+</div>
+
+<%= nonced_javascript_tag do %>
+  (function() {
+    jQuery(function($) {
+      $("#all_listeners").checkAll($("#listener_list"));
+    });
+  }).call(this);
+<% end %>
+

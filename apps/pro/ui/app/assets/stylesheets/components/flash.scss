@@ -1,0 +1,42 @@
+@import '../shared/variables';
+@import 'css3-mixins';
+@import 'jquery.growl';
+
+$notice-background-color: $new-notification-color;
+
+.growl {
+  font-family: $base-font-stack;
+  opacity: 1;
+
+  .growl-notice {
+    color: white;
+    background: $notice-background-color;
+  }
+
+  .banner-message {
+    margin-top: 6px;
+
+    a {
+      color: rgb(179, 0, 25);
+    }
+
+    ol {
+      list-style-type: disc;
+      padding-left: 14px;
+      clear: both;
+      font-size: 11px !important;
+    }
+
+    // Use this if the you're announcing coverage for a vuln with its own marketing department.
+    /*.shellshock-logo {
+      height: 57px;
+      width: 60px;
+      background-image: image-url('shellshock.png');
+      @include image-2x(image-path('shellshock@2x.png'), 57px, 60px);
+      background-repeat: no-repeat;
+      background-position: center center;
+      float: left;
+      margin: 3px 10px 10px 10px;
+    }*/
+  }
+}

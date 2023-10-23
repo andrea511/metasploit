@@ -1,0 +1,8 @@
+define ['<%= javascript_path('templates/fuzzing/layouts/fuzzing_frame_layout') %>'], (Template) ->
+  class FuzzingFrameLayout extends Backbone.Marionette.LayoutView
+    template: HandlebarsTemplates['fuzzing/layouts/fuzzing_frame_layout']
+
+    regions:
+      top_row: '.top-row'
+      middle_row: '.middle-row'
+      bottom_row: '.bottom-row'

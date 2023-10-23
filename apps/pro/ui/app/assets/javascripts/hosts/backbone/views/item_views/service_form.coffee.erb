@@ -1,0 +1,52 @@
+define [
+  'jquery',
+  '<%= javascript_path("shared/backbone/views/modal_form") %>',
+  '<%= javascript_path("templates/hosts/item_views/service_form") %>',
+  #TODO Move Notifiation Center Event Aggregator to Shared Dir
+  '<%= javascript_path("shared/notification-center/backbone/event_aggregators/event_aggregator") %>'
+], ($, ModalForm, Template, EventAggregator) ->
+  class ServiceForm extends ModalForm
+    template: HandlebarsTemplates['hosts/item_views/service_form']
+
+    events: _.extend({}, ModalForm.prototype.events, {
+      'submit form': '_formSubmitted',
+    })
+
+    initialize: ({@host_id}) ->
+
+    onRender: =>
+      _.defer => $(':input:visible', @el).first().focus()
+
+    _postForm: =>
+      data = $('form', @el).serialize()
+      $.ajax
+        url: @submitURL()
+        method: 'post'
+        data: data
+        dataType: 'json'
+        success: @_update_table
+        error: (xhr) =>
+          json = $.parseJSON(xhr.responseText)
+          @_renderErrors(json.error)
+
+    _formSubmitted: (e) =>
+      e.preventDefault()
+      @_postForm()
+
+
+    _update_table: =>
+      EventAggregator.trigger('serviceForm:rowAdded')
+      EventAggregator.trigger('redrawTable')
+      @.$el.trigger('destroy')
+
+    #
+    # Helper methods
+    #
+    _renderErrors: (errors) =>
+      $('.error',@el).remove()
+      _.each errors, (v, k) =>
+        name = "aaData[#{k}]"
+        $msg = $('<div />', class: 'error').text(v[0])
+        $("input[name='#{name}']", @el).addClass('invalid').after($msg)
+
+    submitURL: => "/hosts/#{@host_id}/create_service.json"

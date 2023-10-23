@@ -1,0 +1,8 @@
+<div class='btns'>
+	<span class="btn">
+	  <%= link_to "Edit", @portable_file_path + "/edit", :class => "edit" %>
+	</span>
+	<span class="btn">
+	  <%= link_to 'Delete', @portable_file_path, :data => { :confirm => 'Are you sure?', :method => :delete, :remote => true }, :class => 'delete' %>
+	</span>
+</div>

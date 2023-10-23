@@ -1,0 +1,14 @@
+<div class='header'>
+  <h3 class='max-width'>{{ this.title }} </h3>
+  <div class='page-circles'>
+    {% for (var idx = 0; idx < this.pageNames.length; idx++) { %}
+      {% var cssClass = (idx > 0) ? '' : 'selected' %}
+      <div class='cell {{ cssClass }}'>
+        <div class='page-circle'>
+          {{ idx+1 }}
+        </div>
+        {{ this.pageNames[idx] }}
+      </div>
+    {% } %}
+  </div>
+</div>

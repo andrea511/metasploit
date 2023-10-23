@@ -1,0 +1,16 @@
+define [
+  'jquery'
+], ($) ->
+  class ResultException extends Backbone.Model
+    defaults:
+      result_exceptions: []
+      module_detail: {}
+    url: (extension='.json') =>
+      "/workspaces/#{WORKSPACE_ID}/tasks/new_nexpose_exception_push#{extension}"
+
+  class ResultExceptionCollection extends Backbone.Collection
+    model: ResultException
+    url: (extension='.json') =>
+      "/workspaces/#{WORKSPACE_ID}/tasks/new_nexpose_exception_push#{extension}"
+
+  return {model: ResultException, collection: ResultExceptionCollection}
